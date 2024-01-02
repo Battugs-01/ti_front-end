@@ -22,31 +22,31 @@ const reducer: AuthReducerType = (state, action) => {
 };
 
 const AuthContext = createContext<AuthContextType>([
-  { authorized: false, init: false },
+  { authorized: true, init: false },
   () => {},
 ]);
 
 export const AuthProvider = ({ children }: Props) => {
   const [state, setState] = useReducer(reducer, {
-    authorized: false,
-    init: false,
+    authorized: true,
+    init: true,
   });
-  const _info = useRequest(auth.info, {
-    manual: true,
-    onSuccess: (data) => {
-      setState([Action.SIGN_IN, data]);
-      setState([Action.INIT, true]);
-    },
-    onError: () => {
-      auth.removeToken();
-      setState([Action.SIGN_OUT]);
-      setState([Action.INIT, true]);
-    },
-  });
+  // const _info = useRequest(auth.info, {
+  //   manual: true,
+  //   onSuccess: (data) => {
+  //     setState([Action.SIGN_IN, data]);
+  //     setState([Action.INIT, true]);
+  //   },
+  //   onError: () => {
+  //     auth.removeToken();
+  //     setState([Action.SIGN_OUT]);
+  //     setState([Action.INIT, true]);
+  //   },
+  // });
 
-  useEffect(() => {
-    _info.run();
-  }, []);
+  // useEffect(() => {
+  //   _info.run();
+  // }, []);
 
   return (
     <AuthContext.Provider value={[state, setState]}>
