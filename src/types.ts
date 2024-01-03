@@ -1,8 +1,10 @@
+import { RadioChangeEvent } from "antd";
 import { Merchant } from "service/merchant/type";
 
 export interface FilterFormButton {
   value: FilterDeadline;
   label: string;
+  onChange?: (e: RadioChangeEvent) => void
 }
 
 export interface ActionComponentProps<T> {

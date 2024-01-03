@@ -52,8 +52,8 @@ const DashboardPage: FC = () => {
         hideFilter
         hideSearch
       />
-      <DashboardSection />
-      <div className="grid grid-cols-10 gap-5">
+      {/* <DashboardSection /> */}
+      {/* <div className="grid grid-cols-10 gap-5">
         <div className="col-span-10 xl:col-span-6">
           <Graph />
         </div>
@@ -72,7 +72,7 @@ const DashboardPage: FC = () => {
         <div className="col-span-10 xl:col-span-6 bg-white rounded-xl h-full w-full shadow-sm">
           <LatestMerchants />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

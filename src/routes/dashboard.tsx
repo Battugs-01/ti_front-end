@@ -7,8 +7,8 @@ const MerchantServicePage = lazy(
 const MerchantServicePermissionPage = lazy(
   () => import("pages/dashboard/merchant/permission")
 );
-const MerchantPage = lazy(() => import("pages/dashboard/merchant/user"));
 
+const MerchantPage = lazy(() => import("pages/dashboard/merchant/user"));
 const SettingsPage = lazy(() => import("pages/dashboard/settings/index"));
 const NotificationPage = lazy(
   () => import("pages/dashboard/notifications/index")
