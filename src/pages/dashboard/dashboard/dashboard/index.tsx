@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import { FC, useEffect } from "react";
 import dashboard from "service/dashboard";
 import { atomFormDashboard } from "../store";
+import DashboardAccessCard from "components/access-card";
 
 const DashboardSection: FC = () => {
   const { data, run, loading } = useRequest(dashboard.dashboardStats, {
@@ -28,13 +29,20 @@ const DashboardSection: FC = () => {
   }, [form]);
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  2xl:grid-cols-6  gap-6">
+    <div className="grid">
+      <div className="flex flex-col gap-6">
         <DashboardCard
-          description="Үйлчилгээ үзээлсэн тоо"
+          description="Үйлчилгээ үзүүлсэн тоо"
           label="Давхардсан тоогоор"
           amount={data?.total_merchants}
           percent={data?.merchant_percent}
+          loading={loading}
+        />
+        <DashboardAccessCard
+          description="Асрамжийн газрын хүртээмж"
+          label="Хугацаа дуусах:"
+          amount={data?.total_merchants || 12}
+          percent={data?.merchant_percent || 12 / 8}
           loading={loading}
         />
       </div>
