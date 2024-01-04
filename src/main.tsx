@@ -18,12 +18,11 @@ root.render(
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: "#7F56D9",
+        colorPrimary: "#144E5A",
         fontFamily: "Inter",
         colorBorder: "#D0D5DD",
       },
     }}
-
     locale={enUSIntl}
   >
     <AuthProvider>

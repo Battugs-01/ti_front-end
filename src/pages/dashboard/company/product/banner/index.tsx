@@ -105,7 +105,7 @@ export const BannerList = () => {
             return (
               <div className="flex items-center gap-2">
                 <Progress
-                  strokeColor={"#7F56D9"}
+                  strokeColor={"#144E5A"}
                   percent={
                     dayjs(record.end_date).isAfter(dayjs())
                       ? ((totaldays - current) * 100) / totaldays

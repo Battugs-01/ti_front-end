@@ -100,9 +100,9 @@ export const FormAudienceSection = ({ formRef }: Props) => {
           </p>
           <ProFormSlider
             fieldProps={{
-              trackStyle: { backgroundColor: "#7F56D9" },
+              trackStyle: { backgroundColor: "#144E5A" },
               railStyle: { background: "#EAECF0" },
-              handleStyle: { backgroundColor: "#7F56D9" },
+              handleStyle: { backgroundColor: "#144E5A" },
             }}
             name="age"
             range
