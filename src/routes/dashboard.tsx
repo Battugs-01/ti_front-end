@@ -24,6 +24,13 @@ const ProductsPage = lazy(() => import("pages/dashboard/products/index"));
 const DashboardPage = lazy(() => import("pages/dashboard/dashboard/index"));
 const SponsoredPage = lazy(() => import("pages/dashboard/sponsored/index"));
 
+// GOVERNMENT
+const RequestPage = lazy(() => import("pages/government/requests/index"));
+const ReportPage = lazy(() => import("pages/government/report/index"));
+const CaregiverPage = lazy(() => import("pages/government/caregiver/index"));
+const OrphanPage = lazy(() => import("pages/government/orphan/index"));
+const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "merchant/service/all",
@@ -89,6 +96,31 @@ const dashboardRoutes: IRoute[] = [
     key: "sponsored",
     path: "sponsored",
     component: <SponsoredPage />,
+  },
+  {
+    key: "requests",
+    path: "requests",
+    component: <RequestPage />,
+  },
+  {
+    key: "report",
+    path: "report",
+    component: <ReportPage />,
+  },
+  {
+    key: "caregiver",
+    path: "caregiver",
+    component: <CaregiverPage />,
+  },
+  {
+    key: "orphan",
+    path: "orphan",
+    component: <OrphanPage />,
+  },
+  {
+    key: "gov-settings",
+    path: "gov-settings",
+    component: <GovSettingsPage />,
   },
 ];
 

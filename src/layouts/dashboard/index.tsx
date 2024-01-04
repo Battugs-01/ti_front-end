@@ -6,23 +6,24 @@ import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Footer from "./footer";
 import Header from "./header";
 import { GroupedMenu } from "./menu";
+import { GovernmentMenu } from "./menuGovernment";
 // import { Image } from "antd";
 
 type Props = {
   children?: any;
   props?: any;
 };
-const DashboardLayout: FC<Props> = ({ }) => {
+const DashboardLayout: FC<Props> = ({}) => {
   const [{ authorized }] = useAuthContext();
   const navigate = useNavigate();
-
+  const isGovernment = true;
   if (!authorized) return <Navigate to={"/auth/login"} />;
 
   return (
     <div id="pro-layout">
       <ProLayout
         collapsedButtonRender={false}
-        menuDataRender={() => GroupedMenu}
+        menuDataRender={() => (isGovernment ? GovernmentMenu : GroupedMenu)}
         menuItemRender={(item: any) => {
           return (
             <Link to={item.path || "/dashboard/dashboard"}>
@@ -37,12 +38,10 @@ const DashboardLayout: FC<Props> = ({ }) => {
         }}
         disableMobile={false}
         onMenuHeaderClick={() => navigate("/dashboard/dashboard")}
-        menuProps={{
-         
-        }}
+        menuProps={{}}
         menu={{
           defaultOpenAll: true,
-          autoClose: false, 
+          autoClose: false,
         }}
         subMenuItemRender={(item) => {
           return (
@@ -52,7 +51,6 @@ const DashboardLayout: FC<Props> = ({ }) => {
             </div>
           );
         }}
-        
         // menuHeaderRender={(_: any, titleDom: any) => {
         //   return <Link to="/dashboard/dashboard" className=" hidden md:flex h-20  min-[1000px]:h-24">
         //     <Image src="/images/logo.jpg" alt="logo" width={32} height={32} className="rounded-lg w-8 h-8 min-[1000px]:w-20 min-[1000px]:h-20 relative min-[1000px]:-left-5" onClick={() => navigate("/dashboard/dashboard")} />
@@ -65,7 +63,7 @@ const DashboardLayout: FC<Props> = ({ }) => {
           overflowY: "auto",
           height: "calc(100vh - 60px)",
           fontFamily: "'Inter', sans-serif",
-          background: "#E7EDEE "
+          background: "#E7EDEE",
         }}
         layout="side"
         colorWeak={false}

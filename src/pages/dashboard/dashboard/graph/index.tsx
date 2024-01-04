@@ -101,7 +101,7 @@ const Graph: FC = () => {
         color={({ seriesField }) => {
           const before =
             seriesField?.includes("Last") || seriesField?.includes("Yesterday");
-          return before ? "#B692F6" : "#7F56D9";
+          return before ? "#B692F6" : "#144E5A";
         }}
         smooth
         lineStyle={({ seriesField }) => {
@@ -109,7 +109,7 @@ const Graph: FC = () => {
             seriesField?.includes("Last") || seriesField?.includes("Yesterday");
           return {
             lineWidth: 2,
-            shadowColor: before ? "#B692F6" : "#7F56D9",
+            shadowColor: before ? "#B692F6" : "#144E5A",
             shadowBlur: before ? 0 : 4,
           };
         }}

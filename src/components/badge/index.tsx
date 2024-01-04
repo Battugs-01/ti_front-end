@@ -3,15 +3,15 @@ import React, { FC } from "react";
 interface Props {
   title: string;
   color?:
-  | "gray"
-  | "green"
-  | "red"
-  | "yellow"
-  | "blue"
-  | "indigo"
-  | "purple"
-  | "pink"
-  | string;
+    | "gray"
+    | "green"
+    | "red"
+    | "yellow"
+    | "blue"
+    | "indigo"
+    | "purple"
+    | "pink"
+    | string;
 }
 
 const Badge: FC<Props> = ({ title, color }) => {
@@ -24,7 +24,7 @@ const Badge: FC<Props> = ({ title, color }) => {
       colorClass = "bg-green-100 text-green-700";
       break;
     case "red":
-      colorClass = "bg-red-100 text-red-700";
+      colorClass = "bg-[#DD695C] text-white";
       break;
     case "yellow":
       colorClass = "bg-yellow-100 text-yellow-700";
