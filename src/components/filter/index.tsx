@@ -141,11 +141,11 @@ export const FilterForm = ({
             initialValue={FilterDeadline.Month}
           />
 
-          <div className={` absolute right-0 top-0 z-10 cursor-pointer h-10 `}>
+          <div className={`absolute right-0 top-0 z-10 cursor-pointer h-10 `}>
             <div
               className={`custom-ant-date-range-picker ${
                 isSelectedDate
-                  ? "w-80 opacity-100 -mt-[1px] -mr-4 md:mr-0 animate-scaleX"
+                  ? "w-80 opacity-0 -mt-[1px] -mr-4 md:mr-0 animate-scaleX"
                   : "opacity-0 ml-0 mr-0 w-24"
               } `}
             >
@@ -172,7 +172,7 @@ export const FilterForm = ({
       </div>
 
       <div className="flex items-center flex-wrap gap-2">
-        <div className={`relative ${hideDatePicker && "hidden"}`}>
+        {/* <div className={`relative ${hideDatePicker && "hidden"}`}>
           <div
             className={`${
               isSelectedDate ? "" : "hover:border-purple-500"
@@ -217,8 +217,8 @@ export const FilterForm = ({
             >
               Custom date
             </Button>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
         <ProFormText
           name={"search"}
           placeholder={"Search"}
