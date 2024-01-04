@@ -31,39 +31,10 @@ const DashboardSection: FC = () => {
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  2xl:grid-cols-6  gap-6">
         <DashboardCard
-          label="Total Merchants"
+          description="Үйлчилгээ үзээлсэн тоо"
+          label="Давхардсан тоогоор"
           amount={data?.total_merchants}
           percent={data?.merchant_percent}
-          loading={loading}
-        />
-        <DashboardCard
-          label="Total Income"
-          amount={data?.total_income}
-          percent={data?.income_percent}
-          loading={loading}
-        />
-        <DashboardCard
-          label="Total Online Customers"
-          amount={data?.total_online_customers}
-          percent={data?.online_customer_percent}
-          loading={loading}
-        />
-        <DashboardCard
-          label="Total Commission"
-          amount={data?.total_commission_amount}
-          percent={data?.commission_percent}
-          loading={loading}
-        />
-        <DashboardCard
-          label="Total Sales/Order"
-          amount={data?.total_sales}
-          percent={data?.sales_percent}
-          loading={loading}
-        />
-        <DashboardCard
-          label="Total Customers"
-          amount={data?.total_customers}
-          percent={data?.customer_percent}
           loading={loading}
         />
       </div>

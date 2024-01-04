@@ -203,7 +203,7 @@ export const FilterForm = ({
               />
             </div>
           </div>
-          <div
+          {/* <div
             className={`${
               isSelectedDate ? "w-[19rem]" : "w-36"
             } flex justify-end `}
@@ -217,7 +217,7 @@ export const FilterForm = ({
             >
               Custom date
             </Button>
-          </div>
+          </div> */}
         </div>
         <ProFormText
           name={"search"}

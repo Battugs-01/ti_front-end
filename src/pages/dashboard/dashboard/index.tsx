@@ -52,12 +52,12 @@ const DashboardPage: FC = () => {
         hideFilter
         hideSearch
       />
-      {/* <DashboardSection /> */}
-      {/* <div className="grid grid-cols-10 gap-5">
-        <div className="col-span-10 xl:col-span-6">
+      <DashboardSection />
+      <div className="grid grid-cols-10 gap-5">
+        {/* <div className="col-span-10 xl:col-span-6">
           <Graph />
-        </div>
-        <div className={sectionClassName}>
+        </div> */}
+        {/* <div className={sectionClassName}>
           <EventSlots />
         </div>
         <div className="col-span-10 xl:col-span-6 bg-white rounded-xl h-full w-full shadow-sm">
@@ -65,14 +65,14 @@ const DashboardPage: FC = () => {
         </div>
         <div className={sectionClassName}>
           <TopReviews />
-        </div>
-        <div className={sectionClassName}>
+        </div> */}
+        {/* <div className={sectionClassName}>
           <LatestTransactions />
         </div>
         <div className="col-span-10 xl:col-span-6 bg-white rounded-xl h-full w-full shadow-sm">
           <LatestMerchants />
-        </div>
-      </div> */}
+        </div> */}
+      </div>
     </div>
   );
 };

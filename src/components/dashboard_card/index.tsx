@@ -3,6 +3,7 @@ import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { formatNumber, moneyFormat } from "utils/index";
 export type CardProps = {
   label: string;
+  description : string;
   amount?: number;
   percent?: number;
   isMoney?: boolean;
@@ -16,6 +17,7 @@ const DashboardCard = ({
   isMoney = false,
   loading = false,
   customItem,
+  description,
 }: CardProps) => {
   return (
     <Card
@@ -24,8 +26,9 @@ const DashboardCard = ({
       }}
       className="shadow-md max-w-[300px] min-h-[120px]"
       loading={loading}
-    >
-      <span className="text-gray-600 font-medium">{label} </span>
+      >
+      <span className="font-size:1rem font-semibold">{description} </span>
+      <span className="text-gray-600 text-sm font-normal">{label} </span>
       <div className="flex items-center justify-between mt-3">
         <div className="text-gray-900 text-2xl font-semibold -tracking-tight">
           {moneyFormat(amount)} {isMoney && "₮"}
