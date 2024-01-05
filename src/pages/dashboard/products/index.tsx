@@ -8,7 +8,7 @@ import CouponTab from "./coupon";
 import EventTaxTab from "./event_tax";
 import NewsTab from "./news";
 import ProductTab from "./product";
-
+import CareInformation from "./care-information";
 
 const ServicePage = () => {
   const [tab, setTab] = useState(ProductType.event);
@@ -27,32 +27,33 @@ const ServicePage = () => {
             key: ProductType.coupon,
             label: <Tooltip title="Coupon Products"> Coupon</Tooltip>,
           },
-          {
-            key: ProductType.product,
-            label: <Tooltip title="Product Products"> Product</Tooltip>,
-          },
-          {
-            key: ProductType.banner,
-            label: <Tooltip title="Banner Products"> Banner</Tooltip>,
-          },
-          {
-            key: ProductType.news,
-            label: <Tooltip title="News Products"> News</Tooltip>,
-          },
+          // {
+          //   key: ProductType.product,
+          //   label: <Tooltip title="Product Products"> Product</Tooltip>,
+          // },
+          // {
+          //   key: ProductType.banner,
+          //   label: <Tooltip title="Banner Products"> Banner</Tooltip>,
+          // },
+          // {
+          //   key: ProductType.news,
+          //   label: <Tooltip title="News Products"> News</Tooltip>,
+          // },
         ]}
       />
 
-      <ProductForm />
-
+      {/* <ProductForm /> */}
+      {/* <EventTaxTab /> */}
+      {/* <EventTaxTab /> */}
       <IfCondition
         condition={tab === ProductType.event}
-        whenTrue={<EventTaxTab />}
+        whenTrue={<CareInformation />}
       />
       <IfCondition
         condition={tab === ProductType.coupon}
-        whenTrue={<CouponTab />}
+        whenTrue={<EventTaxTab />}
       />
-      <IfCondition
+      {/* <IfCondition
         condition={tab === ProductType.product}
         whenTrue={<ProductTab />}
       />
@@ -63,7 +64,7 @@ const ServicePage = () => {
       <IfCondition
         condition={tab === ProductType.news}
         whenTrue={<NewsTab />}
-      />
+      /> */}
     </div>
   );
 };

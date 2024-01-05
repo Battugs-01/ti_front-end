@@ -10,25 +10,28 @@ export const PageHeader = ({ title, subTitle }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const pathName : string[] = location.pathname
+  const pathName: string[] = location.pathname
     .split("/")
     .filter((el) => el.length > 0)
     ?.slice(1, 2);
-  
-  const HeaderName = (pathName : string[]) => {
-    let result = ""; 
+
+  const HeaderName = (pathName: string[]) => {
+    let result = "";
     switch (pathName[0]) {
       case "dashboard":
-        result = "Нүүр хуудас"
+        result = "Нүүр хуудас";
         break;
       case "customers":
-        result = "Бүртгэлийн маягт"
+        result = "Бүртгэлийн маягт";
+        break;
+      case "products":
+        result = "Асруулагчийн жагсаалт";
         break;
       default:
-          break;
+        break;
     }
-    return result
-  }
+    return result;
+  };
 
   return (
     <div>

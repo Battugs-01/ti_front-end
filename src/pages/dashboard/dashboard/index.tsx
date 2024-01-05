@@ -63,7 +63,7 @@ const DashboardPage: FC = () => {
         </div>
         <TopReviews />
       </div>
-      <div className="col-span-1 grid grid-cols-3 gap-5">
+      <div className="col-span-1 grid md:grid-cols-3 gap-5">
         <CareGiver />
         <LatestTransactions />
       </div>

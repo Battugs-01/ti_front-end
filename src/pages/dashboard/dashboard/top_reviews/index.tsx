@@ -97,7 +97,6 @@ const TopReviews: FC = () => {
             type="line"
             showInfo={false}
             strokeLinecap="butt"
-            // trailColor={"#E5E5E5"}
           />
         </Tooltip>
         {/* <Progress

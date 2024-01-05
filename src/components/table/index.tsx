@@ -15,7 +15,15 @@ import {
   InActiveButton,
   StopPagination,
 } from "..";
-
+import refreshIcon from "assets/icons/Button.svg";
+import gridIcon from "assets/icons/grid-01.svg";
+import { CiGrid41 } from "react-icons/ci";
+import listIcon from "assets/icons/list.svg";
+import { Button, Card } from "antd";
+import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
+import { BiSearch } from "react-icons/bi";
+import { RiFilter3Fill } from "react-icons/ri";
+import { FaListUl } from "react-icons/fa6";
 type Props<T> = ProTableProps<T, any, any> & {
   CreateComponent?: React.FC<ActionComponentProps<T>>;
   DetailComponent?: React.FC<ActionComponentProps<T>>;
@@ -24,10 +32,13 @@ type Props<T> = ProTableProps<T, any, any> & {
   columns?: ProColumns<T, any>[];
   hideAction?: boolean;
   total?: number;
+  hideSearch?: boolean;
+  hideFilter?: boolean;
   hideCreateButton?: boolean;
   refresh?: (value?: any) => void;
   toolbarItems?: React.ReactNode;
   details?: T[];
+  title?: string;
   customActions?: (value: T) => React.ReactNode;
   RemoveModelConfig?: RemoveModelConfig<T>;
   DeActivateModelConfig?: RemoveModelConfig<T>;
@@ -38,13 +49,19 @@ type Props<T> = ProTableProps<T, any, any> & {
   customHeaderTitle?: React.ReactNode;
   noShadow?: boolean;
   selectedId?: number;
+  hideToggle?: boolean;
   page?: number;
   limit?: number;
 };
+
 export const ITable = <T extends {}>({
   CreateComponent,
   UpdateComponent,
   DetailComponent,
+  title,
+  hideSearch,
+  hideFilter,
+  hideToggle = false,
   RemoveComponent,
   columns,
   hideAction = false,
@@ -77,170 +94,232 @@ export const ITable = <T extends {}>({
   const [detail, setDetail] = useState<T>();
   const [remove, setRemove] = useState<T>();
   const [deactivate, setDeactivate] = useState<T>();
+  const [selectedToggle, setSelectedToggle] = useState<string>("list");
 
+  const form = useRef<ProFormInstance>();
+  const checkIfChanged = () => {
+    const { deadline, full_date, ...rest } =
+      form.current?.getFieldsValue() || {};
+    const arr = Object.values(rest || {});
+    return arr.some((el: any) => (el?.length || 0) > 0 && el);
+  };
+  const handleToggle = (toggleType: string) => {
+    setSelectedToggle(toggleType);
+  };
   return (
     <>
-      <ProTable
-        id="main-table"
-        onRow={(record) => {
-          return {
-            onClick: () => {
-              if (DetailComponent) {
-                setDetail(record);
+      <Card>
+        <div className="flex justify-between">
+          {
+            <>
+              <div className="flex space-x-2">
+                <span className="text-gray-900 text-lg font-medium">
+                  {customHeaderTitle}
+                </span>
+              </div>
+              {rest.headerTitle}
+            </>
+          }
+          <div className="flex gap-2 flex-wrap">
+            {hideToggle ? (
+              <div className="flex">
+                <Button
+                  size="large"
+                  className={`flex items-center  text-sm gap-2 font-semibold  relative ${
+                    hideFilter && "hidden"
+                  }`}
+                  type={selectedToggle === "list" ? "primary" : "text"}
+                  onClick={() => handleToggle("list")}
+                  icon={
+                    <FaListUl className="text-lg text-primary items-center flex ml-2.5" />
+                  }
+                ></Button>
+                <Button
+                  size="large"
+                  className={`flex items-center  text-sm gap-2 font-semibold  relative `}
+                  type={selectedToggle === "grid" ? "primary" : "text"}
+                  onClick={() => handleToggle("grid")}
+                  icon={
+                    <CiGrid41 className="text-lg text-primary items-center flex ml-2.5" />
+                  }
+                ></Button>
+              </div>
+            ) : (
+              ""
+            )}
+            <Button
+              size="large"
+              className={`flex items-center  text-sm gap-2 font-semibold  relative`}
+              icon={
+                <RiFilter3Fill className="text-lg text-primary items-center flex ml-2.5" />
               }
-            },
-            className: DetailComponent && "cursor-pointer",
-          };
-        }}
-        {...rest}
-        toolBarRender={() => [
-          <div className="flex items-center gap-2 flex-wrap">
+            >
+              {checkIfChanged() && (
+                <div className="absolute -top-1 -right-1 w-2 z-[10] h-2 bg-red-500 rounded-full"></div>
+              )}
+            </Button>
+            <ProFormText
+              name={"text"}
+              placeholder={"Хайх"}
+              hidden={hideSearch}
+              fieldProps={{
+                size: "large",
+                className: "text-sm flex",
+                prefix: <BiSearch color="#66708066" size={20} />, // Add the icon as a prefix here
+              }}
+            />
+            <div className="">
+              <img
+                src={refreshIcon}
+                alt="refresh"
+                onClick={() => refresh?.()}
+              />
+            </div>
             {toolbarItems}
             <CreateButton
               size="large"
               className={`${hideCreateButton && "hidden"}`}
               onClick={() => setCreate(true)}
             />
-          </div>,
-        ]}
-        cardProps={{
-          className: "px-0 rounded-xl",
-          bordered: true,
-          bodyStyle: {
-            paddingInline: 0,
-          },
-        }}
-        headerTitle={
-          customHeaderTitle ? (
-            customHeaderTitle
-          ) : (
-            <>
-              <div className="flex items-center space-x-2">
-                <span className="text-gray-900 text-lg font-medium">Total</span>
-                <IBadge showZero count={total ?? 0} />
-              </div>
-              {rest.headerTitle}
-            </>
-          )
-        }
-        toolbar={{
-          className: "px-6",
-        }}
-        actionRef={actionRef}
-        options={{
-          reload: () => {
-            refresh?.();
-          },
-          setting: false,
-          density: false,
-        }}
-        rowKey={`id`}
-        scroll={{ x: "auto" }}
-        className={noShadow ? "rounded-xl" : ` shadow-sm  rounded-xl`}
-        size="small"
-        search={false}
-        pagination={{
-          className: "px-6 font-semibold text-gray-500",
-          pageSize: pageData.limit,
-          pageSizeOptions: [20, 50, 100, 200, 500],
-          showSizeChanger: true,
-          onChange: (page, size) => {
-            setPageData({ page, limit: size });
-            refresh && refresh({ page: page ? page - 1 : page, limit: size });
-          },
-          showTotal: (total, range) => {
-            return (
-              <div className="font-semibold text-gray-500">
-                {range[0]}-{range[1]} of {total} items
-              </div>
-            );
-          },
-          total,
-          showLessItems: true,
-          onShowSizeChange: (page, size) => {
-            setPageData({ page, limit: size });
-            refresh && refresh({ page: page ? page - 1 : page, limit: size });
-          },
-
-          responsive: true,
-        }}
-        columns={[
-          {
-            title: "№",
-            align: "center",
-            width: 60,
-            fixed: "left",
-            dataIndex: "index",
-            valueType: "index",
-            className: "text-gray-600",
-            render: (_value, _record, index) =>
-              (pageData.page || 1) * (pageData.limit || 1) +
-              (index + 1) -
-              (pageData.limit || 1),
-          },
-          ...(columns as any),
-          {
-            hideInTable: hideAction,
-            title: "",
-            fixed: "right",
-            dataIndex: "action",
-            align: "right",
-
-            render: (_, record) => {
-              return (
-                <StopPagination>
-                  <div className="gap-2 flex  items-center">
-                    {customActions && customActions(record)}
-                    {showDetailButton && (
-                      <DetailButton
-                        onClick={() => {
-                          setDetail(record);
-                        }}
-                      />
-                    )}
-                    {UpdateComponent && (
-                      <EditButton
-                        style={{
-                          opacity: hideEditButton?.(record) ? 0.5 : 1,
-                          cursor: hideEditButton?.(record)
-                            ? "not-allowed"
-                            : "pointer",
-                        }}
-                        onClick={() => {
-                          hideEditButton?.(record) ? null : setUpdate(record);
-                        }}
-                      />
-                    )}
-                    {(RemoveModelConfig || RemoveComponent) && (
-                      <DeleteButton
-                        onClick={() => {
-                          setRemove(record);
-                        }}
-                      />
-                    )}
-
-                    {DeActivateModelConfig && (
-                      <InActiveButton
-                        style={{
-                          opacity: hideEditButton?.(record) ? 0.5 : 1,
-                          cursor: hideEditButton?.(record)
-                            ? "not-allowed"
-                            : "pointer",
-                        }}
-                        onClick={() => {
-                          hideEditButton?.(record)
-                            ? null
-                            : setDeactivate(record);
-                        }}
-                      />
-                    )}
+          </div>
+        </div>
+        {selectedToggle === "list" ? (
+          <ProTable
+            id="main-table"
+            onRow={(record) => {
+              return {
+                onClick: () => {
+                  if (DetailComponent) {
+                    setDetail(record);
+                  }
+                },
+                className: DetailComponent && "cursor-pointer",
+              };
+            }}
+            {...rest}
+            actionRef={actionRef}
+            options={{
+              // reload: () => {
+              //   refresh?.();
+              // },
+              reload: false,
+              setting: false,
+              density: false,
+            }}
+            rowKey={`id`}
+            scroll={{ x: "auto" }}
+            size="small"
+            search={false}
+            pagination={{
+              className: "px-6 font-semibold text-gray-500",
+              pageSize: pageData.limit,
+              pageSizeOptions: [20, 50, 100, 200, 500],
+              showSizeChanger: true,
+              onChange: (page, size) => {
+                setPageData({ page, limit: size });
+                refresh &&
+                  refresh({ page: page ? page - 1 : page, limit: size });
+              },
+              showTotal: (total, range) => {
+                return (
+                  <div className="font-semibold text-gray-500">
+                    {range[0]}-{range[1]} of {total} items
                   </div>
-                </StopPagination>
-              );
-            },
-          },
-        ]}
-      />
+                );
+              },
+              total,
+              showLessItems: true,
+              onShowSizeChange: (page, size) => {
+                setPageData({ page, limit: size });
+                refresh &&
+                  refresh({ page: page ? page - 1 : page, limit: size });
+              },
+
+              responsive: true,
+            }}
+            columns={[
+              {
+                title: "№",
+                align: "center",
+                width: 60,
+                fixed: "left",
+                dataIndex: "index",
+                valueType: "index",
+                className: "text-gray-600",
+                render: (_value, _record, index) =>
+                  (pageData.page || 1) * (pageData.limit || 1) +
+                  (index + 1) -
+                  (pageData.limit || 1),
+              },
+              ...(columns as any),
+              {
+                hideInTable: hideAction,
+                title: "",
+                fixed: "right",
+                dataIndex: "action",
+                align: "right",
+
+                render: (_, record) => {
+                  return (
+                    <StopPagination>
+                      <div className="gap-2 flex  items-center">
+                        {customActions && customActions(record)}
+                        {showDetailButton && (
+                          <DetailButton
+                            onClick={() => {
+                              setDetail(record);
+                            }}
+                          />
+                        )}
+                        {UpdateComponent && (
+                          <EditButton
+                            style={{
+                              opacity: hideEditButton?.(record) ? 0.5 : 1,
+                              cursor: hideEditButton?.(record)
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                            onClick={() => {
+                              hideEditButton?.(record)
+                                ? null
+                                : setUpdate(record);
+                            }}
+                          />
+                        )}
+                        {(RemoveModelConfig || RemoveComponent) && (
+                          <DeleteButton
+                            onClick={() => {
+                              setRemove(record);
+                            }}
+                          />
+                        )}
+
+                        {DeActivateModelConfig && (
+                          <InActiveButton
+                            style={{
+                              opacity: hideEditButton?.(record) ? 0.5 : 1,
+                              cursor: hideEditButton?.(record)
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                            onClick={() => {
+                              hideEditButton?.(record)
+                                ? null
+                                : setDeactivate(record);
+                            }}
+                          />
+                        )}
+                      </div>
+                    </StopPagination>
+                  );
+                },
+              },
+            ]}
+          />
+        ) : (
+          <div>sda</div>
+        )}
+      </Card>
       {CreateComponent && (
         <CreateComponent
           open={create}

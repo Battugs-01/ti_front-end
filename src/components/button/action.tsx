@@ -17,7 +17,7 @@ export const CreateButton = ({ ...rest }: PropsCreate) => {
       icon={<IoAddCircleOutline size={20} />}
       type="primary"
     >
-      Add
+      Бүртгэх
     </Button>
   );
 };

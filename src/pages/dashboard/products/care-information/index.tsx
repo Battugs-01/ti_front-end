@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Button, notification } from "antd";
+import { Button, Card, notification } from "antd";
 import { ExportButton, ITable } from "components/index";
 import { useAtom } from "jotai";
 import { FC, useEffect } from "react";
@@ -22,10 +22,11 @@ import {
 } from "../column";
 import { DetailProduct } from "../modal/detail";
 import { atomProductForm } from "../store";
-import { CreateEvent } from "./create";
-import { UpdateEVent } from "./update";
+import { divIcon } from "leaflet";
+// import { CreateEvent } from "./create";
+// import { UpdateEVent } from "./update";
 
-const EventTaxTab: FC = () => {
+const CareInformation: FC = () => {
   const [form] = useAtom(atomProductForm);
   const list = useRequest(product.list, {
     manual: true,
@@ -49,11 +50,13 @@ const EventTaxTab: FC = () => {
 
   return (
     <>
-      <ITable<Product>
-        dataSource={list.data?.items}
-        loading={list.loading}
-        total={list.data?.total}
-        refresh={(values) => run(values)}
+      <ITable<any>
+        columns={[
+          {
+            dataIndex: "sda",
+            key: "sda",
+          },
+        ]}
         toolbarItems={
           <div className="flex">
             <ExportButton
@@ -65,38 +68,13 @@ const EventTaxTab: FC = () => {
                 );
               }}
             />
-            {/* <Button>asd</Button> */}
           </div>
         }
-        columns={[
-          ProductColumnName,
-          ProductColumnStatus,
-          ProductColumnType,
-          ProductColumnHost,
-          ProductColumnLimitation,
-          ...ProductColumnDates,
-          ProductColumnDiscountDuration,
-          ProductColumnTicket,
-          ProductColumnUnitSold,
-          ProductColumnPrice,
-          ProductColumnDiscount,
-          ProductColumnAmount,
-        ]}
-        CreateComponent={CreateEvent}
-        UpdateComponent={UpdateEVent}
-        RemoveModelConfig={{
-          action: product.remove,
-          config: (record) => ({
-            title: "Remove",
-            uniqueKey: record?.id ?? 0,
-            display: record?.name,
-            body: record,
-          }),
-        }}
-        DetailComponent={DetailProduct}
+        customHeaderTitle="Асруулагчдын дэлгэрэнгүй мэдээлэл"
+        hideToggle
       />
     </>
   );
 };
 
-export default EventTaxTab;
+export default CareInformation;

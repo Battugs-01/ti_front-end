@@ -11,7 +11,8 @@ import { Link } from "react-router-dom";
 import dashboard from "service/dashboard";
 import { moneyFormat, tableCellFixed } from "utils/index";
 import { atomFormDashboard } from "../store";
-
+import CustomerLine from "components/customer_line";
+import ArrowIcon from "assets/icons/arrow-right.svg";
 const buttons = [
   {
     label: "Income",
@@ -50,7 +51,35 @@ const LatestTransactions: FC = () => {
 
   return (
     <>
-      <Card className="h-full" title={"Сүүлийн шилжилт хөдөлгөөн"}></Card>
+      <>
+        <Card
+          className="h-full"
+          title={
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">
+                Сүүлийн шилжилт хөдөлгөөн
+              </span>
+              <div className="flex">
+                <span className="text-lg font-semibold mr-2">Бүгд</span>
+                <img src={ArrowIcon} />
+              </div>
+            </div>
+          }
+        >
+          <CustomerLine
+            name="Баттөгс"
+            img="BA"
+            status="cancelled"
+            date="12/31/2023"
+          />
+          <CustomerLine
+            name="Хайр"
+            img="XA"
+            status="inprogress"
+            date="12/31/2023"
+          />
+        </Card>
+      </>
     </>
     // <div>
     //   {tab === "income" ? (

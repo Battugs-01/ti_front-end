@@ -9,6 +9,14 @@ export enum ProductStatusType {
   ended = "ended",
   notStarted = "not_started",
 }
+
+export enum LatestCarestType {
+  inprogress = "inprogress",
+  cancelled = "cancelled",
+  ended = "ended",
+  notStarted = "not_started",
+}
+
 export enum ProductCategoryType {
   club = "club",
   event = "event",

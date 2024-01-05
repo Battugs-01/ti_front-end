@@ -57,7 +57,7 @@ export const ExportButton = ({ loading, ...rest }: PropsExport) => {
         // />
       }
     >
-      <span className="ml-2">{rest.title ?? "Export"}</span>
+      <span className="ml-2">{rest.title ?? "Татах"}</span>
     </Button>
   );
 };
