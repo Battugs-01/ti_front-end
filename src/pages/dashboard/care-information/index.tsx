@@ -1,6 +1,6 @@
 import { useRequest } from "ahooks";
 import { Button, Card, notification } from "antd";
-import { ExportButton, ITable } from "components/index";
+import { ExportButton, FilterForm, ITable } from "components/index";
 import { useAtom } from "jotai";
 import { FC, useEffect, useState } from "react";
 import { exportFromTable } from "utils/export";
@@ -10,6 +10,7 @@ import { divIcon } from "leaflet";
 import { UpdateService } from "./update";
 import { DetailService } from "./detail";
 import { CreateService } from "./create";
+import InitTableHeader from "components/table-header";
 // import { CreateEvent } from "./create";
 // import { UpdateEVent } from "./update";
 
@@ -51,7 +52,13 @@ const CareInformation: FC = () => {
   // };
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <FilterForm
+        initialValues={{
+          ...form,
+        }}
+      />
+      <InitTableHeader customHeaderTitle="Асруулагчдын дэлгэрэнгүй мэдээлэл" />
       <ITable<any>
         total={data?.total}
         // loading={list.loading}
@@ -131,7 +138,7 @@ const CareInformation: FC = () => {
         customHeaderTitle="Асруулагчдын дэлгэрэнгүй мэдээлэл"
         hideToggle
       />
-    </>
+    </div>
   );
 };
 

@@ -49,6 +49,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   hideToggle?: boolean;
   page?: number;
   limit?: number;
+  // customListType? : (records) => void
 };
 
 export const ITable = <T extends {}>({
@@ -79,6 +80,7 @@ export const ITable = <T extends {}>({
   selectedId,
   page,
   limit,
+  // customListType,
   ...rest
 }: Props<T>) => {
   const [pageData, setPageData] = useState<{ page: number; limit: number }>({
