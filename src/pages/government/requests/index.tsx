@@ -154,7 +154,7 @@ const items = [
 const RequestPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.decide);
   return (
-    <div className="w-full">
+    <div className={`w-full custom-ant-card-padding-remove`}>
       <div className="px-4 pt-4 bg-white border border-gray-200 rounded-xl mb-4 flex-col gap-4">
         <div className="text-lg font-semibold">Хүсэлтүүд</div>
         <Tabs
@@ -181,7 +181,7 @@ const RequestPage: React.FC = () => {
       />
       <IfCondition
         condition={tab === RequestType.saved}
-        whenTrue={<Saved data={data?.filter((value) => value?.state === 0)} />}
+        whenTrue={<Saved data={data} />}
       />
       <IfCondition
         condition={tab === RequestType.putOnHold}

@@ -3,7 +3,6 @@ import { FilterForm } from "components/filter";
 import React, { useMemo } from "react";
 import List from "../../components/list";
 import moment from "moment";
-import "../style/index.less";
 import { CardData } from "service/gov-requests";
 
 type PutOnHoldType = {

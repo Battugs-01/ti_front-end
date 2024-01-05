@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { IRoute } from "./types";
-
+import ReportPage from "pages/government/report/index";
 const MerchantServicePage = lazy(
   () => import("pages/dashboard/merchant/service")
 );
@@ -26,7 +26,7 @@ const SponsoredPage = lazy(() => import("pages/dashboard/sponsored/index"));
 
 // GOVERNMENT
 const RequestPage = lazy(() => import("pages/government/requests/index"));
-const ReportPage = lazy(() => import("pages/government/report/index"));
+// const ReportPage = () => import("pages/government/report/index");
 const CaregiverPage = lazy(() => import("pages/government/caregiver/index"));
 const OrphanPage = lazy(() => import("pages/government/orphan/index"));
 const GovSettingsPage = lazy(() => import("pages/government/settings/index"));

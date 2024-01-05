@@ -1,11 +1,9 @@
-import { Avatar, Card } from "antd";
+import { Card } from "antd";
 import { FilterForm } from "components/filter";
-import React from "react";
-import List from "../../components/list";
 import moment from "moment";
-import "../style/index.less";
+import React from "react";
 import { CardData } from "service/gov-requests";
-
+import List from "../../components/list";
 type DecideType = {
   data: CardData[];
 };
@@ -15,8 +13,8 @@ const Decide: React.FC<DecideType> = ({ data }) => {
     <Card
       title={
         <div
-          className="px-6 py-5"
           style={{ borderBottom: "1px solid #EAECF0" }}
+          className="px-6 py-5"
         >
           <FilterForm />
         </div>

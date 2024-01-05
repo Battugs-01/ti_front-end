@@ -1,7 +1,11 @@
-import { FC } from "react";
+import List from "./list";
 
-const ReportPage: FC = () => {
-  return <div>This is report page</div>;
+const ReportPage: React.FC = () => {
+  return (
+    <div>
+      <List />
+    </div>
+  );
 };
 
 export default ReportPage;

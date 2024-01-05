@@ -4,7 +4,6 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 import tsconfigPaths from "vite-tsconfig-paths";
 // import { VitePWA } from "vite-plugin-pwa";
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -17,6 +16,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
+        relativeUrls: true,
         modifyVars: {
           "@primary-color": "#3c3f57",
           "@font-family": "'Inter', sans-serif",
@@ -39,7 +39,6 @@ export default defineConfig({
     reactRefresh(),
     tsconfigPaths(),
     nodePolyfills(),
-   
 
     // VitePWA({
     //   registerType: "autoUpdate",
