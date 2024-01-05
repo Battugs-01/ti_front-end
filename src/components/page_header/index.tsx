@@ -21,11 +21,11 @@ export const PageHeader = ({ title, subTitle }: Props) => {
       case "dashboard":
         result = "Нүүр хуудас";
         break;
+      case "care-information":
+        result = "Асруулагчийн жагсаалт";
+        break;
       case "customers":
         result = "Бүртгэлийн маягт";
-        break;
-      case "products":
-        result = "Асруулагчийн жагсаалт";
         break;
       default:
         break;

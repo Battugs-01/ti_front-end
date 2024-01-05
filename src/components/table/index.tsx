@@ -1,29 +1,26 @@
+import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
 import ProTable, {
   ActionType,
   ProColumns,
   ProTableProps,
 } from "@ant-design/pro-table";
+import { Button, Card } from "antd";
+import refreshIcon from "assets/icons/Button.svg";
 import { RemoveModal } from "components/modal";
 import React, { useRef, useState } from "react";
+import { BiSearch } from "react-icons/bi";
+import { CiGrid41 } from "react-icons/ci";
+import { FaListUl } from "react-icons/fa6";
+import { RiFilter3Fill } from "react-icons/ri";
 import { ActionComponentProps, RemoveModelConfig } from "types";
 import {
   CreateButton,
   DeleteButton,
   DetailButton,
   EditButton,
-  IBadge,
   InActiveButton,
   StopPagination,
 } from "..";
-import refreshIcon from "assets/icons/Button.svg";
-import gridIcon from "assets/icons/grid-01.svg";
-import { CiGrid41 } from "react-icons/ci";
-import listIcon from "assets/icons/list.svg";
-import { Button, Card } from "antd";
-import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
-import { BiSearch } from "react-icons/bi";
-import { RiFilter3Fill } from "react-icons/ri";
-import { FaListUl } from "react-icons/fa6";
 type Props<T> = ProTableProps<T, any, any> & {
   CreateComponent?: React.FC<ActionComponentProps<T>>;
   DetailComponent?: React.FC<ActionComponentProps<T>>;
@@ -52,6 +49,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   hideToggle?: boolean;
   page?: number;
   limit?: number;
+  // customListType? : (records) => void
 };
 
 export const ITable = <T extends {}>({
@@ -82,6 +80,7 @@ export const ITable = <T extends {}>({
   selectedId,
   page,
   limit,
+  // customListType,
   ...rest
 }: Props<T>) => {
   const [pageData, setPageData] = useState<{ page: number; limit: number }>({
@@ -108,11 +107,15 @@ export const ITable = <T extends {}>({
   };
   return (
     <>
-      <Card>
-        <div className="flex justify-between">
+      <Card
+        bodyStyle={{
+          padding: "0px",
+        }}
+      >
+        <div className="flex justify-between pt-6 pr-6 pb-0 pl-6">
           {
             <>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 py-1.5">
                 <span className="text-gray-900 text-lg font-medium">
                   {customHeaderTitle}
                 </span>
@@ -185,6 +188,7 @@ export const ITable = <T extends {}>({
         </div>
         {selectedToggle === "list" ? (
           <ProTable
+            className="p-0 m-0"
             id="main-table"
             onRow={(record) => {
               return {
@@ -241,7 +245,7 @@ export const ITable = <T extends {}>({
               {
                 title: "№",
                 align: "center",
-                width: 60,
+                width: 30,
                 fixed: "left",
                 dataIndex: "index",
                 valueType: "index",

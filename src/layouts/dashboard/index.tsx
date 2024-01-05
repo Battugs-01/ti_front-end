@@ -57,11 +57,12 @@ const DashboardLayout: FC<Props> = ({}) => {
         //   </Link>;
         // }}
         rightContentRender={() => <Header />}
-        footerRender={() => <Footer />}
+        // footerRender={() => <Footer />}
         contentStyle={{
           margin: 0,
           overflowY: "auto",
-          height: "calc(100vh - 60px)",
+          height: "calc(100vh - 1px)",
+          // height: "100%",
           fontFamily: "'Inter', sans-serif",
           background: "#E7EDEE",
         }}

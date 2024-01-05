@@ -82,12 +82,12 @@ export const GroupedMenu: GroupedMenuProps[] = [
       {
         icon: <img src={List} />,
         name: "Асруулагчийн жагсаалт",
-        path: "/dashboard/products",
+        path: "/dashboard/care-information",
       },
       {
         icon: <img src={UserRight} />,
         name: "Шилжилт хөдөлгөөн",
-        path: "/dashboard/merchant/service/permission",
+        path: "/dashboard/products",
       },
       {
         icon: <img src={UserX} />,

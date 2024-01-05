@@ -23,7 +23,9 @@ const OrdersPage = lazy(() => import("pages/dashboard/orders/index"));
 const ProductsPage = lazy(() => import("pages/dashboard/products/index"));
 const DashboardPage = lazy(() => import("pages/dashboard/dashboard/index"));
 const SponsoredPage = lazy(() => import("pages/dashboard/sponsored/index"));
-
+const CareInformation = lazy(
+  () => import("pages/dashboard/care-information/index")
+);
 // GOVERNMENT
 const RequestPage = lazy(() => import("pages/government/requests/index"));
 // const ReportPage = () => import("pages/government/report/index");
@@ -32,6 +34,16 @@ const OrphanPage = lazy(() => import("pages/government/orphan/index"));
 const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
 
 const dashboardRoutes: IRoute[] = [
+  {
+    key: "dashboard",
+    path: "dashboard",
+    component: <DashboardPage />,
+  },
+  {
+    key: "care-information",
+    path: "care-information",
+    component: <CareInformation />,
+  },
   {
     key: "merchant/service/all",
     path: "merchant/service/all",
@@ -86,11 +98,6 @@ const dashboardRoutes: IRoute[] = [
     key: "products",
     path: "products",
     component: <ProductsPage />,
-  },
-  {
-    key: "dashboard",
-    path: "dashboard",
-    component: <DashboardPage />,
   },
   {
     key: "sponsored",
