@@ -17,6 +17,7 @@ import LatestTransactions from "./latest_transactions";
 import { atomFormDashboard } from "./store";
 import TopReviews from "./top_reviews";
 import TopTen from "./top_ten";
+import CareGiver from "./latest-care";
 
 const DashboardPage: FC = () => {
   const [form, setForm] = useAtom(atomFormDashboard);
@@ -52,11 +53,22 @@ const DashboardPage: FC = () => {
         hideFilter
         hideSearch
       />
-      <DashboardSection />
-      <div className="grid grid-cols-10 gap-5">
-        {/* <div className="col-span-10 xl:col-span-6">
+      <div
+        className="grid grid-cols-1 md:grid-cols-4 gap-4 "
+        // style={{ gridTemplateColumns: "40% 30% 30%" }}
+      >
+        <DashboardSection />
+        <div className="col-span-1 md:col-span-2">
           <Graph />
-        </div> */}
+        </div>
+        <TopReviews />
+      </div>
+      <div className="col-span-1 grid grid-cols-3 gap-5">
+        <CareGiver />
+        <LatestTransactions />
+      </div>
+      <div className="grid grid-cols-10 gap-5">
+        <div className="col-span-10 xl:col-span-6"></div>
         {/* <div className={sectionClassName}>
           <EventSlots />
         </div>
