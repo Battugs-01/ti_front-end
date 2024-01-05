@@ -17,7 +17,9 @@ const List: React.FC<ListProps> = ({
   return (
     <div
       className="bg-white w-full"
-      style={{ borderBottom: "1px solid #EAECF0" }}
+      style={{
+        borderBottom: "1px solid #EAECF0",
+      }}
     >
       <div className="w-full flex items-center p-4 justify-between">
         <div className="flex items-center gap-4">

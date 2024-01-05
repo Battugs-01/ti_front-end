@@ -19,3 +19,12 @@ export type RightContentType = {
   state?: Number;
   date?: any;
 };
+
+export interface CardData {
+  image?: string;
+  name?: string;
+  surname?: string;
+  registrationNumber?: string;
+  state?: Number;
+  date?: any;
+}

@@ -1,8 +1,12 @@
-import { Avatar, Badge } from "antd";
 import React from "react";
 import { RightContentType } from "service/gov-requests";
-import GovBadge from "components/badge/government";
-import { EditButton } from "components/index";
+import { CustomButton } from "pages/government/components/button";
+import { Badge, Cascader } from "antd";
+import EditIcon from "assets/icons/edit.svg";
+import CheckIcon from "assets/icons/check.svg";
+import TransferIcon from "assets/icons/transfer.svg";
+import LoomIcon from "assets/government/icons/loom.svg";
+import ArrowIcon from "assets/icons/arrow.svg";
 
 const color = "#144E5A";
 
@@ -15,10 +19,61 @@ const RightContent: React.FC<RightContentType> = ({ state, date }) => {
             <div>Мэдээлэл шинэчилсэн:</div>
             <div className="font-bold">{date}</div>
           </div>
-          <EditButton title="Мэдээлэл засах" />
+          <CustomButton title="Мэдээлэл засах" icon={<img src={EditIcon} />} />
         </div>
       );
-      break;
+    }
+    case 1: {
+      return (
+        <div className="w-full flex items-center gap-8">
+          <div className="flex items-center gap-1 text-sm text-[#475467]">
+            <div>Хүлээлэгт оруулсан:</div>
+            <div className="font-bold">{date}</div>
+            <Badge status="default" />
+            <div className="font-bold">17:36</div>
+          </div>
+          <Cascader placeholder="Асрамжийн газар сонгох" />
+          <CustomButton title="Хуваарьлах" icon={<img src={CheckIcon} />} />
+        </div>
+      );
+    }
+    case 2: {
+      return (
+        <div className="w-full flex items-center gap-8">
+          <div className="flex items-center gap-1 text-sm text-[#475467]">
+            <div>Сүүлд ирсэн:</div>
+            <div className="font-bold">{date}</div>
+          </div>
+          <CustomButton title="Хүлээн авах" icon={<img src={CheckIcon} />} />
+        </div>
+      );
+    }
+    case 3: {
+      return (
+        <div className="w-full flex items-center gap-8">
+          <div className="flex items-center gap-2 text-sm text-[#475467]">
+            <img src={LoomIcon} />
+            <div className="font-bold">Батсүмбэрийн Улсын асрамжийн газар</div>
+            <Badge status="default" />
+            <div>Гарах огноо:</div>
+            <div className="font-bold">{date}</div>
+          </div>
+          <CustomButton title="Шилжүүлэх" icon={<img src={TransferIcon} />} />
+        </div>
+      );
+    }
+    case 4: {
+      return (
+        <div className="w-full flex items-center gap-8">
+          <div className="flex items-center gap-1 text-sm text-[#475467]">
+            <img src={LoomIcon} />
+            <div className="font-bold">Батсүмбэрийн Улсын асрамжийн газар</div>
+            <img src={ArrowIcon} />
+            <Cascader placeholder="Асрамжийн газар сонгох" />
+          </div>
+          <CustomButton title="Шилжүүлэх" icon={<img src={TransferIcon} />} />
+        </div>
+      );
     }
   }
 };
