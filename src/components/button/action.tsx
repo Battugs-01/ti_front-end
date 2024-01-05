@@ -7,6 +7,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
+import EditIcon from "assets/icons/edit.svg";
 
 type PropsCreate = ButtonProps;
 export const CreateButton = ({ ...rest }: PropsCreate) => {
@@ -68,13 +69,14 @@ export const DetailButton = ({
 
 export const EditButton = ({ ...rest }: ButtonProps) => {
   return (
-    <Tooltip title="Edit">
+    <Tooltip title={rest.title}>
       <Button
         {...rest}
-        type="ghost"
-        className=" flex gap-1 items-center font-medium px-1"
+        type="primary"
+        className=" flex gap-1 items-center font-medium px-3 py-2"
       >
-        <TbEdit size={20} className="text-gray-700" />
+        <img src={EditIcon} />
+        {rest?.title}
       </Button>
     </Tooltip>
   );

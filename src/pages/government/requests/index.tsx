@@ -10,6 +10,120 @@ import PutOnHold from "./tabs/putOnHold";
 import Migration from "./tabs/migration";
 import Decided from "./tabs/decided";
 
+const data = [
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 0,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 1,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 2,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 3,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 4,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 4,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 0,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 0,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 1,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 2,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 3,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 4,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 4,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 0,
+    date: Date.now(),
+  },
+];
 const items = [
   {
     key: RequestType.decide,
@@ -63,20 +177,23 @@ const RequestPage: React.FC = () => {
 
       <IfCondition
         condition={tab === RequestType.decide}
-        whenTrue={<Decide />}
+        whenTrue={<Decide data={data} />}
       />
-      <IfCondition condition={tab === RequestType.saved} whenTrue={<Saved />} />
+      <IfCondition
+        condition={tab === RequestType.saved}
+        whenTrue={<Saved data={data?.filter((value) => value?.state === 0)} />}
+      />
       <IfCondition
         condition={tab === RequestType.putOnHold}
-        whenTrue={<PutOnHold />}
+        whenTrue={<PutOnHold data={data} />}
       />
       <IfCondition
         condition={tab === RequestType.migration}
-        whenTrue={<Migration />}
+        whenTrue={<Migration data={data} />}
       />
       <IfCondition
         condition={tab === RequestType.decided}
-        whenTrue={<Decided />}
+        whenTrue={<Decided data={data} />}
       />
     </div>
   );
