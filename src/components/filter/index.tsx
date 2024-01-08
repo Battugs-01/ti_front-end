@@ -176,53 +176,6 @@ export const FilterForm = ({
       </div>
 
       <div className="flex items-center flex-wrap gap-2">
-        {/* <div className={`relative ${hideDatePicker && "hidden"}`}>
-          <div
-            className={`${
-              isSelectedDate ? "" : "hover:border-purple-500"
-            } border border-solid border-transparent  rounded-md absolute right-0 z-10 cursor-pointer h-10 `}
-          >
-            <div
-              className={`custom-ant-date-range-picker ${
-                isSelectedDate
-                  ? "w-80 opacity-100 mr-0 -mt-[1px] sm:-mr-4 animate-scaleX"
-                  : " w-36 opacity-0 ml-0"
-              } `}
-            >
-              <ProFormDateRangePicker
-                name="full_date"
-                className="text-gray-700 cursor-pointer"
-                allowClear={false}
-                hidden={hideDatePicker}
-                fieldProps={{
-                  size: "large",
-                  className: "text-sm",
-                  suffixIcon: <FiCalendar className="text-gray-700 text-xl" />,
-                  onChange(_, formatString) {
-                    if (formatString.length === 2) {
-                      setSelectedDate(true);
-                    }
-                  },
-                }}
-              />
-            </div>
-          </div>
-          {/* <div
-            className={`${
-              isSelectedDate ? "w-[19rem]" : "w-36"
-            } flex justify-end `}
-          >
-            <Button
-              size="large"
-              className={`flex items-center   gap-2 font-semibold text-sm ${
-                isSelectedDate ? "opacity-0" : "opacity-100"
-              } `}
-              icon={<FiCalendar size={20} className=" text-primary" />}
-            >
-              Custom date
-            </Button>
-          </div>
-        </div> */}
         <ProFormText
           name={"search"}
           placeholder={"Search"}

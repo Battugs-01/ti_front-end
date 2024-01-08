@@ -43,7 +43,7 @@ export const GroupedMenu: GroupedMenuProps[] = [
       {
         icon: <img src={File03} />,
         name: "Тайлан",
-        path: "/dashboard/sponsored",
+        path: "/dashboard/report",
       },
       {
         icon: <img src={Currency} />,

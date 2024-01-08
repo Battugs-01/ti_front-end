@@ -7,7 +7,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
-import EditIcon from "assets/icons/edit.svg";
+import EditIcon from "assets/icons/edit-05.svg";
 
 type PropsCreate = ButtonProps;
 export const CreateButton = ({ ...rest }: PropsCreate) => {
@@ -42,7 +42,7 @@ export const DeleteButton = ({ ...rest }: ButtonProps) => {
         {...rest}
         color="red"
         className="text-red-500 flex gap-1 items-center font-medium px-1"
-        type="ghost"
+        type="link"
       >
         <FiTrash2 size={20} />
       </Button>
@@ -59,7 +59,7 @@ export const DetailButton = ({
       <Button
         {...rest}
         className="flex gap-1 items-center font-medium px-1"
-        type="ghost"
+        type="link"
       >
         <AiOutlineEye size={20} className={color ? color : " text-gray-700"} />
       </Button>
@@ -72,8 +72,9 @@ export const EditButton = ({ ...rest }: ButtonProps) => {
     <Tooltip title={rest.title}>
       <Button
         {...rest}
-        type="primary"
-        className=" flex gap-1 items-center font-medium px-3 py-2"
+        // type="primary"
+        className=" flex gap-1 items-center font-medium px-3 py-1"
+        type="link"
       >
         <img src={EditIcon} />
         {rest?.title}
@@ -94,7 +95,7 @@ export const InActiveButton = ({
         {...rest}
         color="red"
         className="text-red-500 flex items-center gap-1 font-medium px-1"
-        type="ghost"
+        type="link"
       >
         <MdOutlineClose size={20} />
       </Button>
@@ -114,7 +115,7 @@ export const CheckButton = ({
         {...rest}
         color="red"
         className=" flex items-center gap-1 font-medium px-1"
-        type="ghost"
+        type="link"
       >
         <MdOutlineCheckCircleOutline className="text-success-600" size={20} />
       </Button>
@@ -146,7 +147,7 @@ export const PermissionButton = ({ ...rest }) => {
       <Button
         {...rest}
         className="text-gray-700 flex items-center gap-1 font-medium px-1"
-        type="ghost"
+        type="link"
       >
         <RiUserSettingsLine size={20} />
       </Button>

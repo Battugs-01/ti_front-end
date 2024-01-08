@@ -17,11 +17,11 @@ import {
 } from "service/merchantService/type";
 import { ActionComponentProps } from "types";
 import { formatTimeToDate } from "utils/index";
-import { Details } from "../products/modal/parts/details";
+import { Details } from "../../products/modal/parts/details";
 import { Contact } from "pages/dashboard/merchant/service/modals/parts/contact";
-import { Location } from "../products/modal/parts/location";
+import { Location } from "../../products/modal/parts/location";
 import { TimeTable } from "pages/dashboard/merchant/service/modals/parts/timeTable";
-import { Images } from "../products/modal/parts/images";
+import { Images } from "../../products/modal/parts/images";
 import { Settings } from "pages/dashboard/merchant/service/modals/parts/settings";
 // import { Contact } from "./parts/contact";
 // import { Details } from "./parts/details";

@@ -15,7 +15,7 @@ export interface ActionComponentProps<T> {
   details?: T[];
 }
 export interface RemoveModelConfig<T> {
-  action: (id: number) => Promise<SuccessResponse>;
+  action?: (id: number) => Promise<SuccessResponse>;
   config: (record?: T) => {
     uniqueKey?: number;
     display: React.ReactNode;

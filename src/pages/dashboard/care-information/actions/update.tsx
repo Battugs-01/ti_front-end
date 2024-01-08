@@ -19,10 +19,10 @@ import {
   formatTimeToDate,
   getImageSeperate,
 } from "utils/index";
-import { Details } from "../products/modal/parts/details";
+import { Details } from "../../products/modal/parts/details";
 import { Contact } from "pages/dashboard/merchant/service/modals/parts/contact";
 import { TimeTable } from "pages/dashboard/merchant/service/modals/parts/timeTable";
-import { Images } from "../products/modal/parts/images";
+import { Images } from "../../products/modal/parts/images";
 import { DetailService } from "pages/dashboard/merchant/service/modals/detail";
 import { Location } from "pages/dashboard/merchant/service/modals/parts/location";
 import { Settings } from "pages/dashboard/merchant/service/modals/parts/settings";

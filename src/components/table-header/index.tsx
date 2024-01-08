@@ -1,36 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "antd"; // Import your component library
 import { BiSearch } from "react-icons/bi";
 import { CiGrid41 } from "react-icons/ci";
 import { FaListUl } from "react-icons/fa6";
 import refreshIcon from "assets/icons/Button.svg";
-import ProTable, {
-  ActionType,
-  ProColumns,
-  ProTableProps,
-} from "@ant-design/pro-table";
 import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
 import { RiFilter3Fill } from "react-icons/ri";
-import {
-  CreateButton,
-  DeleteButton,
-  DetailButton,
-  EditButton,
-  InActiveButton,
-  StopPagination,
-} from "..";
+import { CreateButton } from "..";
 
 interface TableHeaderProps {
   customHeaderTitle: string;
   hideToggle?: boolean;
   hideFilter?: boolean;
   selectedToggle: string;
-  handleToggle: (toggle: string) => void;
-  hideSearch: boolean;
+  handleToggle: Function;
+  hideSearch?: boolean;
   refresh?: () => void;
   toolbarItems: React.ReactNode;
-  hideCreateButton: boolean;
-  setCreate: (value: boolean) => void;
+  hideCreateButton?: boolean;
+  setCreate?: (value: boolean) => void;
 }
 
 const InitTableHeader: React.FC<TableHeaderProps> = ({
@@ -53,8 +41,9 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
     const arr = Object.values(rest || {});
     return arr.some((el: any) => (el?.length || 0) > 0 && el);
   };
+
   return (
-    <div className="flex justify-between pt-6 pr-6 pb-0 pl-6">
+    <div className="flex justify-between pt-2 pr-6 pb-0 pl-6">
       <>
         <div className="flex space-x-2 py-1.5">
           <span className="text-gray-900 text-lg font-medium">
@@ -117,7 +106,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
         <CreateButton
           size="large"
           className={`${hideCreateButton && "hidden"}`}
-          onClick={() => setCreate(true)}
+          onClick={() => setCreate?.(true)}
         />
       </div>
     </div>
