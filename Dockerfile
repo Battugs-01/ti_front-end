@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:16 as builder
+FROM node:18-alpine as builder
 WORKDIR /next/app
 COPY package.json ./
 COPY yarn.lock ./
