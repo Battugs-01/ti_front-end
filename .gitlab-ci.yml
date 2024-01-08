@@ -7,10 +7,10 @@ dev:
   stage: dev
   script:
     - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
-    - docker build -t registry.fibo.cloud/adb/frontend:$CI_COMMIT_SHORT_SHA .
-    - docker push registry.fibo.cloud/adb/frontend:$CI_COMMIT_SHORT_SHA
-    - docker ps --quiet --filter="name=frontend" | xargs --no-run-if-empty docker rm -f
-    - docker run -dt -p 3000:80 --restart always --name frontend registry.fibo.cloud/adb/frontend:$CI_COMMIT_SHORT_SHA
+    - docker build -t registry.fibo.cloud/adb/goverment:$CI_COMMIT_SHORT_SHA .
+    - docker push registry.fibo.cloud/adb/goverment:$CI_COMMIT_SHORT_SHA
+    - docker ps --quiet --filter="name=goverment" | xargs --no-run-if-empty docker rm -f
+    - docker run -dt -p 3001:80 --restart always --name goverment registry.fibo.cloud/adb/goverment:$CI_COMMIT_SHORT_SHA
     - docker image prune -f
     - docker builder prune -f
   tags:
