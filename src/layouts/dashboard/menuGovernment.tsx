@@ -16,31 +16,31 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
   {
     icon: <img src={RequestIcon} />,
     name: "Хүсэлтүүд",
-    path: "/dashboard/requests",
+    path: "/dashboard/government/requests",
     children: [],
   },
   {
     icon: <img src={ReportIcon} />,
     name: "Тайлан",
-    path: "/dashboard/report",
+    path: "/dashboard/government/report",
     children: [],
   },
   {
     icon: <img src={CaregiverIcon} />,
     name: "Асруулагч",
-    path: "/dashboard/caregiver",
+    path: "/dashboard/government/caregiver",
     children: [],
   },
   {
     icon: <img src={OrphanIcon} />,
     name: "Асрамжийн газар",
-    path: "/dashboard/orphan",
+    path: "/dashboard/government/orphan",
     children: [],
   },
   {
     icon: <img src={SettingsIcon} />,
     name: "Тохиргоо",
-    path: "/dashboard/gov-settings",
+    path: "/dashboard/government/gov-settings",
     children: [],
   },
 ];
