@@ -23,6 +23,7 @@ const Decide: React.FC<DecideType> = ({ data }) => {
       <div>
         {data?.map((card, key) => (
           <List
+            key={key}
             image={card?.image}
             name={card?.name}
             surname={card?.surname}

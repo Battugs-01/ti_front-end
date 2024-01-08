@@ -29,6 +29,14 @@ const Badge: FC<Props> = ({ status, desc }) => {
       text = "Хүсэлт гаргасан";
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
+    case 5:
+      text = "Нас барсан";
+      colorClass = "bg-red-50 text-red-700";
+      break;
+    case 6:
+      text = "Албадан гаргасан";
+      colorClass = "bg-red-50 text-red-700";
+      break;
     default:
       colorClass = "bg-gray-100 text-gray-700";
       break;

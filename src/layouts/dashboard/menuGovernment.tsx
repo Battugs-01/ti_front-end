@@ -40,7 +40,7 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
   {
     icon: <img src={SettingsIcon} />,
     name: "Тохиргоо",
-    path: "/dashboard/government/gov-settings",
+    path: "/dashboard/government/settings",
     children: [],
   },
 ];

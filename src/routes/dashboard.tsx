@@ -1,6 +1,5 @@
 import { lazy } from "react";
 import { IRoute } from "./types";
-import ReportPage from "pages/government/report/index";
 const MerchantServicePage = lazy(
   () => import("pages/dashboard/merchant/service")
 );
@@ -28,10 +27,13 @@ const CareInformation = lazy(
 );
 // GOVERNMENT
 const RequestPage = lazy(() => import("pages/government/requests/index"));
-// const ReportPage = () => import("pages/government/report/index");
+const ReportPage = lazy(() => import("pages/government/report/index"));
 const CaregiverPage = lazy(() => import("pages/government/caregiver/index"));
 const OrphanPage = lazy(() => import("pages/government/orphan/index"));
 const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
+const CaregiverDetail = lazy(
+  () => import("pages/government/caregiver/detail/index")
+);
 
 const dashboardRoutes: IRoute[] = [
   {
@@ -105,29 +107,34 @@ const dashboardRoutes: IRoute[] = [
     component: <SponsoredPage />,
   },
   {
-    key: "government/requests",
-    path: "gov-requests",
+    key: "gov-requests",
+    path: "government/requests",
     component: <RequestPage />,
   },
   {
-    key: "government/report",
-    path: "gov-report",
+    key: "gov-report",
+    path: "government/report",
     component: <ReportPage />,
   },
   {
-    key: "government/caregiver",
-    path: "gov-caregiver",
+    key: "gov-caregiver",
+    path: "government/caregiver",
     component: <CaregiverPage />,
   },
   {
-    key: "government/orphan",
-    path: "gov-orphan",
+    key: "gov-orphan",
+    path: "government/orphan",
     component: <OrphanPage />,
   },
   {
-    key: "government/gov-settings",
-    path: "gov-settings",
+    key: "gov-settings",
+    path: "government/settings",
     component: <GovSettingsPage />,
+  },
+  {
+    key: "caregiver-detail",
+    path: "government/caregiver/:id",
+    component: <CaregiverDetail />,
   },
 ];
 

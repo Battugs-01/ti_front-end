@@ -13,3 +13,17 @@ export const CustomButton = ({ ...rest }: ButtonProps) => {
     </Tooltip>
   );
 };
+
+export const DefaultButton = ({ ...rest }: ButtonProps) => {
+  return (
+    <Tooltip title={rest.title}>
+      <Button
+        {...rest}
+        type="default"
+        className=" flex gap-1 items-center font-medium px-3 py-2"
+      >
+        {rest?.title}
+      </Button>
+    </Tooltip>
+  );
+};
