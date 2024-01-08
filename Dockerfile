@@ -1,10 +1,10 @@
-FROM mhart/alpine-node:16 as builder
+FROM node:18-alpine as builder
 WORKDIR /next/app
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn
 COPY . .
-COPY prod_env ./.env
+# COPY prod_env ./.env
 RUN yarn build
 
 # production environment
