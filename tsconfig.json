@@ -32,5 +32,5 @@
     "target": "ESNext",
     "useDefineForClassFields": true
   },
-  "include": ["./src", "client.d.ts"]
+  "include": ["./src", "client.d.ts", "global.d.ts"]
 }

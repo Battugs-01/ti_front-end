@@ -2,7 +2,6 @@ import { LeftOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Card, Tabs } from "antd";
 import LoomIcon from "assets/government/icons/loom.svg";
 import TransferIcon from "assets/icons/transfer.svg";
-
 import {
   CustomButton,
   DefaultButton,
@@ -73,7 +72,10 @@ const Header: React.FC<HeaderType> = ({ changeTab, data }) => {
     <Card
       title={
         <div className="flex items-center gap-4">
-          <DefaultButton title="Буцах" icon={<LeftOutlined />} />
+          <DefaultButton
+            title="Буцах"
+            icon={<LeftOutlined rev={undefined} />}
+          />
           <Avatar size={36} style={{ background: color }} shape="circle">
             {data[0].image}
           </Avatar>

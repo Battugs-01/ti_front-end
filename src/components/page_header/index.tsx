@@ -35,12 +35,12 @@ export const PageHeader = ({ title, subTitle }: Props) => {
 
   return (
     <div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-4">
         <RiHome6Line
           size={20}
           color="#667085"
           className="cursor-pointer"
-          onClick={() => navigate("/dashboard/dashboard")}
+          onClick={() => navigate("dashboard/government/requests")}
         />
 
         <div className="text-lg text-gray-300">/</div>
@@ -57,7 +57,6 @@ export const PageHeader = ({ title, subTitle }: Props) => {
           })}
         </div>
       </div>
-      <div className="w-full bg-gray-100 h-[1px] mb-4 mt-3" />
     </div>
   );
 };

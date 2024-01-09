@@ -93,14 +93,14 @@ module.exports = {
       },
       textColor: {},
       animation: {
-        scaleX: 'scaleX 0.5s ease-in-out alternate',
+        scaleX: "scaleX 0.5s ease-in-out alternate",
       },
       keyframes: {
         scaleX: {
-          '0%': { transform: 'scaleX(0.6)' },
-          '100%': { transform: 'scaleX(1)' },
-        }
-      }
+          "0%": { transform: "scaleX(0.6)" },
+          "100%": { transform: "scaleX(1)" },
+        },
+      },
     },
   },
 };

@@ -34,6 +34,7 @@ const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
 const CaregiverDetail = lazy(
   () => import("pages/government/caregiver/detail/index")
 );
+const OrphanDetail = lazy(() => import("pages/government/orphan/detail/index"));
 
 const dashboardRoutes: IRoute[] = [
   {
@@ -135,6 +136,11 @@ const dashboardRoutes: IRoute[] = [
     key: "caregiver-detail",
     path: "government/caregiver/:id",
     component: <CaregiverDetail />,
+  },
+  {
+    key: "orphan-detail",
+    path: "government/orphan/:id",
+    component: <OrphanDetail />,
   },
 ];
 

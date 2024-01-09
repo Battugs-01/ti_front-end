@@ -26,7 +26,7 @@ const DashboardLayout: FC<Props> = ({}) => {
         menuDataRender={() => (isGovernment ? GovernmentMenu : GroupedMenu)}
         menuItemRender={(item: any) => {
           return (
-            <Link to={item.path || "/dashboard/dashboard"}>
+            <Link to={item.path || "/dashboard/government/requests"}>
               <div
                 className={`text-white flex font-semibold items-center gap-4 rounded-lg px-1 `}
               >
@@ -37,7 +37,7 @@ const DashboardLayout: FC<Props> = ({}) => {
           );
         }}
         disableMobile={false}
-        onMenuHeaderClick={() => navigate("/dashboard/dashboard")}
+        onMenuHeaderClick={() => navigate("/dashboard/government/requests")}
         menuProps={{}}
         menu={{
           defaultOpenAll: true,

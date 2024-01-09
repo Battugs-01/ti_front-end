@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button } from "antd"; // Import your component library
+import { Button, ButtonProps } from "antd"; // Import your component library
 import { BiSearch } from "react-icons/bi";
 import { CiGrid41 } from "react-icons/ci";
 import { FaListUl } from "react-icons/fa6";
@@ -12,9 +12,11 @@ interface TableHeaderProps {
   customHeaderTitle: string;
   hideToggle?: boolean;
   hideFilter?: boolean;
-  selectedToggle: string;
-  handleToggle: Function;
+  selectedToggle?: string;
+  addButtonName?: string;
+  handleToggle?: Function;
   hideSearch?: boolean;
+  hideCreate?: boolean;
   refresh?: () => void;
   toolbarItems: React.ReactNode;
   hideCreateButton?: boolean;
@@ -26,8 +28,10 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   hideToggle,
   hideFilter,
   selectedToggle,
+  addButtonName,
   handleToggle,
   hideSearch,
+  hideCreate,
   refresh,
   toolbarItems,
   hideCreateButton,
@@ -46,7 +50,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
     <div className="flex justify-between pt-2 pr-6 pb-0 pl-6">
       <>
         <div className="flex space-x-2 py-1.5">
-          <span className="text-gray-900 text-lg font-medium">
+          <span className="text-gray-900 text-lg font-medium ">
             {customHeaderTitle}
           </span>
         </div>
@@ -60,7 +64,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
                 hideFilter && "hidden"
               }`}
               type={selectedToggle === "list" ? "primary" : "text"}
-              onClick={() => handleToggle("list")}
+              onClick={() => handleToggle?.("list")}
               icon={
                 <FaListUl className="text-lg text-primary items-center flex ml-2.5" />
               }
@@ -69,7 +73,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
               size="large"
               className={`flex items-center  text-sm gap-2 font-semibold  relative `}
               type={selectedToggle === "grid" ? "primary" : "text"}
-              onClick={() => handleToggle("grid")}
+              onClick={() => handleToggle?.("grid")}
               icon={
                 <CiGrid41 className="text-lg text-primary items-center flex ml-2.5" />
               }
@@ -103,11 +107,16 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           <img src={refreshIcon} alt="refresh" onClick={() => refresh?.()} />
         </div>
         {toolbarItems}
-        <CreateButton
-          size="large"
-          className={`${hideCreateButton && "hidden"}`}
-          onClick={() => setCreate?.(true)}
-        />
+        {!hideCreate ? (
+          <CreateButton
+            size="large"
+            className={`${hideCreateButton && "hidden"}`}
+            onClick={() => setCreate?.(true)}
+            addButtonName={addButtonName}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

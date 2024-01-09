@@ -66,7 +66,7 @@ const MainRoutes: FC = () => {
         path="*"
         element={
           authorized ? (
-            <Navigate to="/dashboard/dashboard" />
+            <Navigate to="/dashboard/government/requests" />
           ) : (
             <Navigate to="/auth/login" />
           )

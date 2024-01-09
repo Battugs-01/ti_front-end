@@ -25,7 +25,7 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
-      navigate("/dashboard/dashboard");
+      navigate("/dashboard/government/requests");
       notification.success({
         message: "Success",
       });

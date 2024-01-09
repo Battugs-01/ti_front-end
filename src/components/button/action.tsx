@@ -9,8 +9,12 @@ import { RiUserSettingsLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
 import EditIcon from "assets/icons/edit-05.svg";
 
-type PropsCreate = ButtonProps;
-export const CreateButton = ({ ...rest }: PropsCreate) => {
+// type PropsCreate = ButtonProps;
+interface PropsCreate extends ButtonProps {
+  addButtonName?: string;
+}
+
+export const CreateButton = ({ addButtonName, ...rest }: PropsCreate) => {
   return (
     <Button
       {...rest}
@@ -18,7 +22,7 @@ export const CreateButton = ({ ...rest }: PropsCreate) => {
       icon={<IoAddCircleOutline size={20} />}
       type="primary"
     >
-      Бүртгэх
+      {addButtonName || "Бүртгэх"}
     </Button>
   );
 };
@@ -127,7 +131,13 @@ export const ConfirmButton = ({ ...rest }: ButtonProps) => {
   return (
     <Button
       {...rest}
-      icon={<CheckCircleOutlined className="text-white " size={20} />}
+      icon={
+        <CheckCircleOutlined
+          className="text-white "
+          size={20}
+          rev={undefined}
+        />
+      }
       color="green"
       type="default"
       style={{
