@@ -9,7 +9,7 @@ import { RiFilter3Fill } from "react-icons/ri";
 import { CreateButton } from "..";
 
 interface TableHeaderProps {
-  customHeaderTitle: string;
+  customHeaderTitle?: string;
   hideToggle?: boolean;
   hideFilter?: boolean;
   selectedToggle?: string;
@@ -21,6 +21,8 @@ interface TableHeaderProps {
   toolbarItems: React.ReactNode;
   hideCreateButton?: boolean;
   setCreate?: (value: boolean) => void;
+  hideTitle?: boolean;
+  leftContent?: any;
 }
 
 const InitTableHeader: React.FC<TableHeaderProps> = ({
@@ -35,6 +37,8 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   refresh,
   toolbarItems,
   hideCreateButton,
+  hideTitle = false,
+  leftContent,
   setCreate,
 }) => {
   const form = useRef<ProFormInstance>();
@@ -50,9 +54,13 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
     <div className="flex justify-between pt-2 pr-6 pb-0 pl-6">
       <>
         <div className="flex space-x-2 py-1.5">
-          <span className="text-gray-900 text-lg font-medium ">
-            {customHeaderTitle}
-          </span>
+          {hideTitle ? (
+            leftContent
+          ) : (
+            <span className="text-gray-900 text-lg font-medium ">
+              {customHeaderTitle}
+            </span>
+          )}
         </div>
       </>
       <div className="flex gap-2 flex-wrap">

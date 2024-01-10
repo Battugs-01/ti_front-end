@@ -1,4 +1,4 @@
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, ButtonProps, Tooltip } from "antd";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiCheckCircle } from "react-icons/bi";
@@ -127,26 +127,35 @@ export const CheckButton = ({
   );
 };
 
+export const CloseButton = ({ ...rest }: ButtonProps) => {
+  return (
+    <Button
+      {...rest}
+      icon={<CloseOutlined className="text-white " size={20} rev={undefined} />}
+      type="default"
+      style={{
+        backgroundColor: "#DD695C",
+        borderColor: "#DD695C",
+        color: "#fff",
+      }}
+    >
+      {rest?.title}
+    </Button>
+  );
+};
 export const ConfirmButton = ({ ...rest }: ButtonProps) => {
   return (
     <Button
       {...rest}
-      icon={
-        <CheckCircleOutlined
-          className="text-white "
-          size={20}
-          rev={undefined}
-        />
-      }
-      color="green"
+      icon={<CheckOutlined className="text-white " size={20} rev={undefined} />}
       type="default"
       style={{
-        backgroundColor: "#039855",
-        borderColor: "#039855",
+        backgroundColor: "#144E5A",
+        borderColor: "#144E5A",
         color: "#fff",
       }}
     >
-      Confirm
+      {rest?.title}
     </Button>
   );
 };

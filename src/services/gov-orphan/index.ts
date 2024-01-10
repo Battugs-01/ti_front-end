@@ -26,3 +26,9 @@ export enum RadioType {
   salary = "Salary",
   dcare = "Died carer",
 }
+
+export enum RadioFormType {
+  ba1a = "Б-АС-1.1А",
+  ba1b = "Б-АС-1.1Б",
+  ba12 = "Б-АС-1.2",
+}

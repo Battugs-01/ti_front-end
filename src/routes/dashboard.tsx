@@ -28,6 +28,7 @@ const CareInformation = lazy(
 // GOVERNMENT
 const RequestPage = lazy(() => import("pages/government/requests/index"));
 const ReportPage = lazy(() => import("pages/government/report/index"));
+const ReportDetail = lazy(() => import("pages/government/report/detail/index"));
 const CaregiverPage = lazy(() => import("pages/government/caregiver/index"));
 const OrphanPage = lazy(() => import("pages/government/orphan/index"));
 const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
@@ -116,6 +117,11 @@ const dashboardRoutes: IRoute[] = [
     key: "gov-report",
     path: "government/report",
     component: <ReportPage />,
+  },
+  {
+    key: "gov-report-info",
+    path: "government/report/:id",
+    component: <ReportDetail />,
   },
   {
     key: "gov-caregiver",

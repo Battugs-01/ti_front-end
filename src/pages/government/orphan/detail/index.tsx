@@ -31,7 +31,7 @@ const OrphanDetail: React.FC = () => {
   return (
     <div className="custom-ant-card-padding-border-remove">
       <div className="mb-4">
-        <Header changeTab={changeTab} data={data} />
+        <Header changeTab={changeTab} data={data} tab={tab} />
       </div>
       <IfCondition
         condition={tab === TabType.employees}
