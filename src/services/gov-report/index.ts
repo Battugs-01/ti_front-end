@@ -6,3 +6,10 @@ export type ItemProps = {
   newArrived?: number;
   description?: String;
 };
+
+export interface ItemInterface {
+  orphanName: String;
+  year: number;
+  status: number;
+  date: any;
+}
