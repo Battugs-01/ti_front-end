@@ -15,3 +15,23 @@ export interface ItemInterface {
   bankNumber?: String;
   id?: number;
 }
+
+export interface FormInterface {
+  formTitle?: String;
+  formNo?: String;
+  id?: number;
+}
+
+export interface FormDetailInterface {
+  formTitle?: String;
+  formNo?: String;
+  id?: number;
+  lastUpdated?: any;
+  clauseList?: ClauseInterface[];
+}
+
+export interface ClauseInterface {
+  clauseId: number;
+  clauseDescription: String;
+  clauseContent: String;
+}

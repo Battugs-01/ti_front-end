@@ -95,23 +95,27 @@ export const RightSettings: React.FC = () => {
   return (
     <div className="mt-6 custom-ant-card-padding-remove">
       <Card>
-        <InitTableHeader
-          customHeaderTitle="Эрхийн тохиргоо"
-          toolbarItems={
-            <div className="flex">
-              <ExportButton
-                onClick={() => {
-                  exportFromTable(
-                    ["Ажилчдын жагсаалт"],
-                    window.document.getElementById("main-table") as HTMLElement,
-                    window
-                  );
-                }}
-              />
-            </div>
-          }
-          hideCreate
-        />
+        <div style={{ borderBottom: "1px solid #EAECF0" }} className="mt-5">
+          <InitTableHeader
+            customHeaderTitle="Эрхийн тохиргоо"
+            toolbarItems={
+              <div className="flex">
+                <ExportButton
+                  onClick={() => {
+                    exportFromTable(
+                      ["Ажилчдын жагсаалт"],
+                      window.document.getElementById(
+                        "main-table"
+                      ) as HTMLElement,
+                      window
+                    );
+                  }}
+                />
+              </div>
+            }
+            hideCreate
+          />
+        </div>
         <List data={data} />
       </Card>
     </div>
