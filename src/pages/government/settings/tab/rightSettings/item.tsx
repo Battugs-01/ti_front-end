@@ -1,0 +1,72 @@
+import { ItemInterface } from "service/gov-settings";
+import MailchimpIcon from "assets/government/icons/mail-chimp.svg";
+import PhoneIcon from "assets/government/icons/phone.svg";
+import MailIcon from "assets/government/icons/mail.svg";
+import { Badge } from "antd";
+import { Bank } from "components/bank";
+import EditIcon from "assets/government/icons/edit.svg";
+import KeyIcon from "assets/government/icons/key.svg";
+import TrashIcon from "assets/government/icons/trash.svg";
+
+export const Item: React.FC<ItemInterface> = ({
+  orphanName,
+  firstName,
+  lastName,
+  position,
+  phone,
+  mail,
+  company,
+  bankName,
+  bankNumber,
+  id,
+}) => {
+  return (
+    <div className="p-4 w-full">
+      <div className="flex items-center justify-between w-full">
+        <div className="flex items-center gap-4 w-3/4">
+          <div>
+            <img src={MailchimpIcon} />
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            <div className="font-bold ">{orphanName}</div>
+            <div className="flex gap-2 items-center">
+              <div className="font-bold">{firstName}</div>
+              <div>{lastName}</div>
+              <Badge status="default" text={position} />
+              <Badge status="default" />
+              <div className="flex items-center gap-1">
+                <img src={PhoneIcon} />
+                <div>{phone}</div>
+              </div>
+              <Badge status="default" />
+              <div className="flex items-center gap-1">
+                <img src={MailIcon} />
+                <div>{mail}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 w-1/4 justify-end">
+          <div className="flex flex-col items-end gap-1">
+            <div>{company}</div>
+            <div className="flex items-center gap-1">
+              <Bank bankName={bankName} />
+              <div className="font-bold">{bankNumber}</div>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <div className="p-[10px]">
+              <img src={EditIcon} />
+            </div>
+            <div className="p-[10px]">
+              <img src={KeyIcon} />
+            </div>
+            <div className="p-[10px]">
+              <img src={TrashIcon} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -48,6 +48,7 @@ export const ExportButton = ({ loading, ...rest }: PropsExport) => {
           style={{
             fontSize: 20,
           }}
+          rev={undefined}
         />
         // <AiOutlineCloudUpload
         //   style={{

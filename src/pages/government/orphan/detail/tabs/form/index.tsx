@@ -2,6 +2,8 @@ import { Card, Radio, Tabs } from "antd";
 import InitTableHeader from "components/table-header";
 import { RadioFormType } from "service/gov-orphan";
 import { MainForms } from "./mainForms";
+import { exportFromTable } from "utils/export";
+import { ExportButton } from "components/index";
 
 export const Form: React.FC = () => {
   return (
@@ -11,7 +13,21 @@ export const Form: React.FC = () => {
           <InitTableHeader
             hideTitle
             hideCreate
-            toolbarItems={undefined}
+            toolbarItems={
+              <div className="flex">
+                <ExportButton
+                  onClick={() => {
+                    exportFromTable(
+                      ["Ажилчдын жагсаалт"],
+                      window.document.getElementById(
+                        "main-table"
+                      ) as HTMLElement,
+                      window
+                    );
+                  }}
+                />
+              </div>
+            }
             leftContent={
               <Radio.Group defaultValue={RadioFormType.ba1a}>
                 <Radio.Button value={RadioFormType.ba1a}>
