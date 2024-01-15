@@ -7,7 +7,8 @@ import Footer from "./footer";
 import Header from "./header";
 import { GroupedMenu } from "./menu";
 import { GovernmentMenu } from "./menuGovernment";
-// import { Image } from "antd";
+import { Image } from "antd";
+import Logo from "assets/government/icons/image36.svg";
 
 type Props = {
   children?: any;
@@ -68,7 +69,18 @@ const DashboardLayout: FC<Props> = ({}) => {
         }}
         layout="side"
         colorWeak={false}
-        // logo={<Image src="/images/logo.jpg" alt="logo" className="hidden md:flex rounded-lg shrink-0 w-8 h-8 min-[1000px]:w-20 min-[1000px]:h-20" onClick={() => navigate("/dashboard/dashboard")} />}
+        logo={
+          <div className="flex items-center gap-2">
+            <img
+              src={Logo}
+              alt="logo"
+              onClick={() => navigate("/dashboard/government/requests")}
+            />
+            <div className="text-white text-sm">
+              Хөдөлмөр, халамжийн үйлчилгээний ерөнхий газар
+            </div>
+          </div>
+        }
         logoStyle={{
           // height: "20vh",
           marginTop: "3vh",

@@ -9,12 +9,18 @@ import FiletextIcon from "assets/government/icons/file-text.svg";
 import { FormDetailInterface } from "service/gov-settings";
 import moment from "moment";
 import PlusIcon from "assets/government/icons/plus.svg";
+import { useState } from "react";
+import { CreateClause } from "./actions/createClause";
 
 type HeaderType = {
   data?: FormDetailInterface[];
 };
 
 export const Header: React.FC<HeaderType> = ({ data }) => {
+  const [openModal, isOpenModal] = useState<boolean>(false);
+  const cancelModal = () => {
+    isOpenModal(false);
+  };
   return (
     <Card>
       <div className="p-4 w-full flex justify-between items-center">
@@ -45,10 +51,17 @@ export const Header: React.FC<HeaderType> = ({ data }) => {
             </div>
           </div>
           <div>
-            <CustomButton title="Заалт нэмэх" icon={<img src={PlusIcon} />} />
+            <CustomButton
+              title="Заалт нэмэх"
+              icon={<img src={PlusIcon} />}
+              onClick={() => {
+                isOpenModal(true);
+              }}
+            />
           </div>
         </div>
       </div>
+      <CreateClause openModal={openModal} cancelModal={cancelModal} />
     </Card>
   );
 };

@@ -9,20 +9,18 @@ import KeyIcon from "assets/government/icons/key.svg";
 import TrashIcon from "assets/government/icons/trash.svg";
 import { useState } from "react";
 import { IModalForm } from "components/modal";
+import { CreateOrphan } from "./actions/createOrphan";
 
-export const Item: React.FC<ItemInterface> = ({
-  orphanName,
-  firstName,
-  lastName,
-  position,
-  phone,
-  mail,
-  company,
-  bankName,
-  bankNumber,
-  id,
-}) => {
-  const [openModal,setModalOpen]=useState<boolean>(false);
+type ItemType = {
+  data?: ItemInterface;
+  id?: number;
+};
+
+export const Item: React.FC<ItemType> = ({ data, id }) => {
+  const [openModal, setModalOpen] = useState<boolean>(false);
+  const cancelModal = () => {
+    setModalOpen(false);
+  };
   return (
     <div className="p-4 w-full">
       <div className="flex items-center justify-between w-full">
@@ -31,35 +29,40 @@ export const Item: React.FC<ItemInterface> = ({
             <img src={MailchimpIcon} />
           </div>
           <div className="flex flex-col items-start gap-2">
-            <div className="font-bold ">{orphanName}</div>
+            <div className="font-bold ">{data?.orphanName}</div>
             <div className="flex gap-2 items-center">
-              <div className="font-bold">{firstName}</div>
-              <div>{lastName}</div>
-              <Badge status="default" text={position} />
+              <div className="font-bold">{data?.firstName}</div>
+              <div>{data?.lastName}</div>
+              <Badge status="default" text={data?.position} />
               <Badge status="default" />
               <div className="flex items-center gap-1">
                 <img src={PhoneIcon} />
-                <div>{phone}</div>
+                <div>{data?.phone}</div>
               </div>
               <Badge status="default" />
               <div className="flex items-center gap-1">
                 <img src={MailIcon} />
-                <div>{mail}</div>
+                <div>{data?.mail}</div>
               </div>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-4 w-1/4 justify-end">
           <div className="flex flex-col items-end gap-1">
-            <div>{company}</div>
+            <div>{data?.company}</div>
             <div className="flex items-center gap-1">
-              <Bank bankName={bankName} />
-              <div className="font-bold">{bankNumber}</div>
+              <Bank bankName={data?.bankName} />
+              <div className="font-bold">{data?.bankNumber}</div>
             </div>
           </div>
           <div className="flex items-center">
-            <div className="p-[10px]" onClick={()=>{console.log("hello"); setModalOpen(true)}}>
-              <img src={EditIcon}/>
+            <div
+              className="p-[10px]"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              <img src={EditIcon} />
             </div>
             <div className="p-[10px]">
               <img src={KeyIcon} />
@@ -70,7 +73,12 @@ export const Item: React.FC<ItemInterface> = ({
           </div>
         </div>
       </div>
-       <IModalForm title="Hello" open={openModal}/>
+      <CreateOrphan
+        data={data}
+        id={id}
+        openModal={openModal}
+        cancelModal={cancelModal}
+      />
     </div>
   );
 };

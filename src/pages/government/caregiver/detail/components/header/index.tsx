@@ -71,7 +71,7 @@ const Header: React.FC<HeaderType> = ({ changeTab, data }) => {
   return (
     <Card
       title={
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-4 my-4">
           <DefaultButton
             title="Буцах"
             icon={<LeftOutlined rev={undefined} />}
@@ -79,10 +79,14 @@ const Header: React.FC<HeaderType> = ({ changeTab, data }) => {
           <Avatar size={36} style={{ background: color }} shape="circle">
             {data[0].image}
           </Avatar>
+          <div className="flex items-center gap-2">
+            <div>{data?.[0]?.name}</div>
+            <div>{data?.[0]?.surname}</div>
+          </div>
         </div>
       }
       extra={
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mr-4 my-4">
           <img src={LoomIcon} />
           <div>Батсүмбэрийн Улсын асрамжийн газар</div>
           <Badge status="default" />
@@ -94,22 +98,24 @@ const Header: React.FC<HeaderType> = ({ changeTab, data }) => {
         </div>
       }
     >
-      <Tabs
-        defaultActiveKey={DetailType.history}
-        onChange={changeTab}
-        items={items?.map((el) => {
-          return {
-            key: el?.key,
-            label: (
-              <div className="flex items-center gap-2">
-                {el?.icon && <img src={el?.icon} />}
-                {el?.label}
-                {/* {el.title && <Badge title={el.title} color="red" />} */}
-              </div>
-            ),
-          };
-        })}
-      />
+      <div className="mx-4">
+        <Tabs
+          defaultActiveKey={DetailType.history}
+          onChange={changeTab}
+          items={items?.map((el) => {
+            return {
+              key: el?.key,
+              label: (
+                <div className="flex items-center gap-2">
+                  {el?.icon && <img src={el?.icon} />}
+                  {el?.label}
+                  {/* {el.title && <Badge title={el.title} color="red" />} */}
+                </div>
+              ),
+            };
+          })}
+        />
+      </div>
     </Card>
   );
 };

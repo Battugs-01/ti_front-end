@@ -1,5 +1,9 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import CardList from "./cardList";
+import { FilterForm } from "components/filter";
+import { CustomButton } from "../components/button";
+import PlusIcon from "assets/government/icons/plus.svg";
+import { CreateOrphan } from "./action/createOrphan";
 
 const data = [
   {
@@ -148,9 +152,26 @@ const data = [
 ];
 
 const OrphanPage: FC = () => {
+  const [modalOpen, isModalOpen] = useState<boolean>(false);
+  const cancelModal = () => {
+    isModalOpen(false);
+  };
   return (
     <div>
+      <div className="mb-6">
+        <FilterForm
+          isSearch
+          customState={
+            <CustomButton
+              icon={<img src={PlusIcon} />}
+              title="Нэмэх"
+              onClick={() => isModalOpen(true)}
+            />
+          }
+        />
+      </div>
       <CardList data={data} />
+      <CreateOrphan openModal={modalOpen} cancelModal={cancelModal} />
     </div>
   );
 };

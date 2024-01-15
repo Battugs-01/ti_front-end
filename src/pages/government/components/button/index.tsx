@@ -6,7 +6,7 @@ export const CustomButton = ({ ...rest }: ButtonProps) => {
       <Button
         {...rest}
         type="primary"
-        className=" flex gap-1 items-center font-medium p-4"
+        className="flex items-center font-medium p-4"
       >
         {rest?.title}
       </Button>

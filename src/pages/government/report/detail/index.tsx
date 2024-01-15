@@ -4,7 +4,7 @@ import Info from "./info";
 const ReportDetail: React.FC = () => {
   return (
     <div>
-      <div>
+      <div className="mb-5">
         <Header />
       </div>
       <div className="custom-ant-card-padding-remove">

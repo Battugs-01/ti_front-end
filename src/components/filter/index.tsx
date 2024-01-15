@@ -1,43 +1,35 @@
-import { FilterOutlined } from "@ant-design/icons";
 import ProForm, {
   ProFormDateRangePicker,
   ProFormInstance,
-  ProFormItem,
   ProFormProps,
   ProFormRadio,
   ProFormText,
 } from "@ant-design/pro-form";
-import { Button, Divider, Popover, Radio } from "antd";
+import { Button, Popover } from "antd";
 import React, { useEffect, useRef, useState } from "react";
-import { BsList } from "react-icons/bs";
 import { FilterDeadline, FilterFormButton } from "types";
-import { IfCondition } from "..";
 import { FiCalendar } from "react-icons/fi";
 import { RiFilter3Fill } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 
 type Props = ProFormProps & {
-  showMap?: boolean;
-  filters?: React.ReactNode;
   customHeadFilters?: React.ReactNode;
+  customIncomeFilters?: React.ReactNode;
+  customMoneyFilters?: React.ReactNode;
+  customState?: React.ReactNode;
   showGroupButton?: boolean;
-  onMapClick?: () => void;
-  hideFilter?: boolean;
-  hideSearch?: boolean;
   hideDatePicker?: boolean;
-  isMapShowing?: boolean;
+  isSearch?: boolean;
 };
 export const FilterForm = ({
-  showMap = false,
-  filters,
   showGroupButton = true,
   customHeadFilters,
-  hideFilter = false,
-  onMapClick,
   initialValues,
-  isMapShowing,
-  hideSearch = false,
+  customMoneyFilters,
+  customState,
+  customIncomeFilters,
   hideDatePicker = false,
+  isSearch = false,
   ...rest
 }: Props) => {
   const [isCustomDate, setCustomDate] = useState(false);
@@ -93,13 +85,7 @@ export const FilterForm = ({
     }
   }, [initialValues, isCustomDate]);
 
-  const checkIfChanged = () => {
-    const { deadline, full_date, ...rest } =
-      form.current?.getFieldsValue() || {};
-    const arr = Object.values(rest || {});
-    return arr.some((el: any) => (el?.length || 0) > 0 && el);
-  };
-
+  console.log(isSearch, "hjjjjjj");
   const content = (
     <ProForm
       {...rest}
@@ -109,26 +95,8 @@ export const FilterForm = ({
       className="space-y-2 flex items-center justify-between flex-wrap"
     >
       <div className="flex items-center flex-wrap gap-2 md:gap-0">
-        <IfCondition
-          condition={showMap}
-          whenTrue={
-            <ProFormItem>
-              <Button
-                size="large"
-                type="primary"
-                className="flex items-center  space-x-2"
-                icon={isMapShowing ? <BsList /> : <img src="/svg/map.svg" />}
-                onClick={onMapClick}
-              >
-                {isMapShowing ? "List" : "Map"}
-              </Button>
-            </ProFormItem>
-          }
-        />
-        <div
-          className="gap-2 custom-ant-radio-button relative "
-          // onClick={() => setSelectedDate(false)}
-        >
+        {customHeadFilters}
+        <div className="gap-2 custom-ant-radio-button relative ">
           <ProFormRadio.Group
             hidden={!showGroupButton}
             name={"deadline"}
@@ -155,7 +123,7 @@ export const FilterForm = ({
             >
               <ProFormDateRangePicker
                 name="full_date"
-                className="text-gray-700 cursor-pointer m-0"
+                className="text-gray-700 cursor-pointer m-0  ant-layot-picker"
                 allowClear={false}
                 hidden={hideDatePicker}
                 fieldProps={{
@@ -172,54 +140,21 @@ export const FilterForm = ({
             </div>
           </div>
         </div>
-        {customHeadFilters}
-      </div>
-
-      <div className="flex items-center flex-wrap gap-2">
         <ProFormText
-          name={"search"}
-          placeholder={"Search"}
-          hidden={hideSearch}
+          name={"text"}
+          placeholder={"Хайх"}
+          hidden={!isSearch}
           fieldProps={{
             size: "large",
-            className: "text-sm",
+            className: "text-sm flex",
             prefix: <BiSearch color="#66708066" size={20} />, // Add the icon as a prefix here
           }}
         />
-        <Popover
-          trigger="click"
-          content={
-            <div style={{ width: 250 }} className="p-3">
-              {filters}
-              <Divider type="horizontal" />
-              <div className="flex items-center justify-end">
-                <Button
-                  type="text"
-                  className="text-primary text-sm"
-                  onClick={() => {
-                    form.current?.resetFields();
-                  }}
-                >
-                  Clear
-                </Button>
-              </div>
-            </div>
-          }
-        >
-          <Button
-            size="large"
-            className={`flex items-center  text-sm gap-2 font-semibold  relative ${
-              hideFilter && "hidden"
-            }`}
-            icon={<RiFilter3Fill className="text-lg text-primary" />}
-          >
-            {checkIfChanged() && (
-              <div className="absolute -top-1 -right-1 w-2 z-[10] h-2 bg-red-500 rounded-full"></div>
-            )}
-            Filters
-          </Button>
-        </Popover>
+        {customIncomeFilters}
+        {customMoneyFilters}
       </div>
+
+      <div className="flex items-center flex-wrap gap-2">{customState}</div>
     </ProForm>
   );
 

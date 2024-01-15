@@ -59,26 +59,28 @@ const data = [
 const Info: React.FC = () => {
   return (
     <Card>
-      <InitTableHeader
-        hideCreate
-        refresh={() => {}}
-        customHeaderTitle="Төрөлжсөн асрамжийн үйл ажиллагаа эрхэлдэг аж ахуйн нэгж, байгууллагын цалин хөлсний мэдээлэл"
-        toolbarItems={
-          <div className="flex">
-            <ExportButton
-              onClick={() => {
-                exportFromTable(
-                  [
-                    "Төрөлжсөн асрамжийн үйл ажиллагаа эрхэлдэг аж ахуйн нэгж, байгууллагын цалин хөлсний мэдээлэл",
-                  ],
-                  window.document.getElementById("main-table") as HTMLElement,
-                  window
-                );
-              }}
-            />
-          </div>
-        }
-      />
+      <div className="mt-4">
+        <InitTableHeader
+          hideCreate
+          refresh={() => {}}
+          customHeaderTitle="Төрөлжсөн асрамжийн үйл ажиллагаа эрхэлдэг аж ахуйн нэгж, байгууллагын цалин хөлсний мэдээлэл"
+          toolbarItems={
+            <div className="flex">
+              <ExportButton
+                onClick={() => {
+                  exportFromTable(
+                    [
+                      "Төрөлжсөн асрамжийн үйл ажиллагаа эрхэлдэг аж ахуйн нэгж, байгууллагын цалин хөлсний мэдээлэл",
+                    ],
+                    window.document.getElementById("main-table") as HTMLElement,
+                    window
+                  );
+                }}
+              />
+            </div>
+          }
+        />
+      </div>
       <List data={data} />
     </Card>
   );

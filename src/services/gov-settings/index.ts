@@ -14,6 +14,7 @@ export interface ItemInterface {
   bankName?: String;
   bankNumber?: String;
   id?: number;
+  amount?: number;
 }
 
 export interface FormInterface {

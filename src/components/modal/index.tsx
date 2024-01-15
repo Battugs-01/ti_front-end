@@ -3,6 +3,7 @@ import {
   ModalForm,
   ModalFormProps,
   ProFormInstance,
+  DrawerForm,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Typography, notification } from "antd";
@@ -14,6 +15,8 @@ type Props = ModalFormProps & {
   children?: React.ReactNode;
   title?: React.ReactNode;
   footer?: React.ReactNode;
+  cancelText?: React.ReactNode;
+  okText?: React.ReactNode;
 };
 
 export const IModalForm = ({
@@ -21,6 +24,8 @@ export const IModalForm = ({
   onSuccess: onDone,
   title,
   footer,
+  cancelText,
+  okText,
   ...rest
 }: Props) => {
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
@@ -40,7 +45,6 @@ export const IModalForm = ({
   return (
     <ModalForm
       {...rest}
-
       onFinishFailed={(err) => {
         notification.info({ message: "Please, fill the require fields." });
       }}
@@ -49,20 +53,25 @@ export const IModalForm = ({
         block: "center",
         inline: "center",
       }}
-      children={<div className="px-7">{rest.children}</div>}
+      children={<div className="px-10">{rest.children}</div>}
       title={
         <div className="flex items-center justify-between px-6 py-4">
           <div className="text-base text-gray-800 font-semibold">{title}</div>
           <Button
-            type="primary"
+            type="link"
             onClick={() =>
               rest.modalProps?.onCancel && rest.modalProps.onCancel(null as any)
             }
-            icon={<CloseOutlined className="text-gray-500" size={12} rev={undefined} />}
+            icon={
+              <CloseOutlined
+                className="text-gray-500"
+                size={12}
+                rev={undefined}
+              />
+            }
           />
         </div>
       }
-
       layout="horizontal"
       className="p-7 pt-4 "
       labelCol={{
@@ -90,14 +99,14 @@ export const IModalForm = ({
                       rest.modalProps?.onCancel(null as any)
                     }
                   >
-                    Cancel
+                    {cancelText}
                   </Button>
                   <Button
                     type="primary"
                     onClick={onSubmit}
                     loading={submit.loading}
                   >
-                    Save
+                    {okText}
                   </Button>
                 </div>
               </div>
