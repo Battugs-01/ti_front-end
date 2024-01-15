@@ -7,7 +7,7 @@ type CardListType = {
 const CardList: React.FC<CardListType> = ({ data }) => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 custom-ant-card-padding-remove">
         {data?.map((card, key) => (
           <Item
             key={key}

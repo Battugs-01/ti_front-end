@@ -22,17 +22,17 @@ const Item: React.FC<CardInterface> = ({
 }) => {
   return (
     <Link to={`${id}`}>
-      <Card className="hover:border-1 hover:border-solid hover:border-[#144E5A] hover:shadow-[0_0_0_4px_rgba(0,78,90,0.25)]">
-        <div className="flex items-center text-gray-600 gap-2 ">
-          <div>
+      <Card className="w-full hover:border-1 hover:border-solid hover:border-[#144E5A] hover:shadow-[0_0_0_4px_rgba(0,78,90,0.25)]">
+        <div className="w-full flex items-center text-gray-600 gap-2 p-4">
+          <div className="w-1/12">
             <img src={StatusPage} />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col w-11/12">
             <div className="flex items-center gap-2 pb-2">
               <div className="text-gray-700 font-bold">{orphanName}</div>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 w-60">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
                   <img src={EmployeeIcon} />
                   <span>{emplopyees}</span>
@@ -59,7 +59,7 @@ const Item: React.FC<CardInterface> = ({
                   </div>
                 </div>
               </div>
-              <div className="w-44">
+              <div className="">
                 <div className="flex items-center gap-1 justify-end">
                   <img src={HeartIcon} />
                   <div className="font-bold">

@@ -54,11 +54,11 @@ export const IModalForm = ({
         <div className="flex items-center justify-between px-6 py-4">
           <div className="text-base text-gray-800 font-semibold">{title}</div>
           <Button
-            type="ghost"
+            type="primary"
             onClick={() =>
               rest.modalProps?.onCancel && rest.modalProps.onCancel(null as any)
             }
-            icon={<CloseOutlined className="text-gray-500" size={12} />}
+            icon={<CloseOutlined className="text-gray-500" size={12} rev={undefined} />}
           />
         </div>
       }

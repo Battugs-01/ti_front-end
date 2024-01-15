@@ -7,6 +7,8 @@ import { Bank } from "components/bank";
 import EditIcon from "assets/government/icons/edit.svg";
 import KeyIcon from "assets/government/icons/key.svg";
 import TrashIcon from "assets/government/icons/trash.svg";
+import { useState } from "react";
+import { IModalForm } from "components/modal";
 
 export const Item: React.FC<ItemInterface> = ({
   orphanName,
@@ -20,6 +22,7 @@ export const Item: React.FC<ItemInterface> = ({
   bankNumber,
   id,
 }) => {
+  const [openModal,setModalOpen]=useState<boolean>(false);
   return (
     <div className="p-4 w-full">
       <div className="flex items-center justify-between w-full">
@@ -55,8 +58,8 @@ export const Item: React.FC<ItemInterface> = ({
             </div>
           </div>
           <div className="flex items-center">
-            <div className="p-[10px]">
-              <img src={EditIcon} />
+            <div className="p-[10px]" onClick={()=>{console.log("hello"); setModalOpen(true)}}>
+              <img src={EditIcon}/>
             </div>
             <div className="p-[10px]">
               <img src={KeyIcon} />
@@ -67,6 +70,7 @@ export const Item: React.FC<ItemInterface> = ({
           </div>
         </div>
       </div>
+       <IModalForm title="Hello" open={openModal}/>
     </div>
   );
 };
