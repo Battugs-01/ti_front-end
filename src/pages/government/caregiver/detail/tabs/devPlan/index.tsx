@@ -2,6 +2,11 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import pdfFile from "assets/government/pdf/example.pdf";
 import { Card } from "antd";
+import {
+  CustomButton,
+  DefaultButton,
+} from "pages/government/components/button";
+import PrintIcon from "assets/government/icons/print.svg";
 
 export const DevPlan: React.FC = () => {
   return (
@@ -18,6 +23,15 @@ export const DevPlan: React.FC = () => {
         >
           <Viewer fileUrl={pdfFile} />
         </Worker>
+      </div>
+      <div
+        className="pt-4 text-base"
+        style={{ borderTop: "1px solid #E5E7EB" }}
+      >
+        <div className="flex items-center justify-end gap-4">
+          <DefaultButton icon={<img src={PrintIcon} />} title="Татах" />
+          <CustomButton icon={<img src={PrintIcon} />} title="Хэвлэх" />
+        </div>
       </div>
     </Card>
   );
