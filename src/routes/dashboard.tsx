@@ -39,6 +39,27 @@ const OrphanDetail = lazy(() => import("pages/government/orphan/detail/index"));
 const SettingsFormDetail = lazy(
   () => import("pages/government/settings/tab/formList/detail/index")
 );
+const SalaryList = lazy(
+  () => import("pages/government/report/detail/tab/salaryInfo/salaryList/index")
+);
+const MigrationList = lazy(
+  () =>
+    import(
+      "pages/government/report/detail/tab/migrationNews/migrationList/index"
+    )
+);
+const DCaregiverList = lazy(
+  () =>
+    import(
+      "pages/government/report/detail/tab/dcaregiverNews/dcaregiverList/index"
+    )
+);
+const CaregiverList = lazy(
+  () =>
+    import(
+      "pages/government/report/detail/tab/caregiverNews/caregiverList/index"
+    )
+);
 
 const dashboardRoutes: IRoute[] = [
   {
@@ -155,6 +176,26 @@ const dashboardRoutes: IRoute[] = [
     key: "settings-form-detail",
     path: "government/settings/:id",
     component: <SettingsFormDetail />,
+  },
+  {
+    key: "gov-report-salary-list",
+    path: "government/report/:id/salary/:list",
+    component: <SalaryList />,
+  },
+  {
+    key: "gov-report-migration-list",
+    path: "government/report/:id/migration/:list",
+    component: <MigrationList />,
+  },
+  {
+    key: "gov-report-dcare-list",
+    path: "government/report/:id/dcare/:list",
+    component: <DCaregiverList />,
+  },
+  {
+    key: "gov-report-caregiver-list",
+    path: "government/report/:id/caregiver/:list",
+    component: <CaregiverList />,
   },
 ];
 

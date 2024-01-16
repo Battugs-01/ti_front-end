@@ -88,7 +88,7 @@ export const ITable = <T extends {}>({
           density: false,
         }}
         rowKey={`id`}
-        scroll={{ x: "auto" }}
+        // scroll={{ x: "auto" }}
         size="small"
         search={false}
         pagination={{

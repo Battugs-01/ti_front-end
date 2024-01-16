@@ -7,7 +7,7 @@ import { exportFromTable } from "utils/export";
 import { employeeList } from "api/app";
 import { moneyFormat } from "utils/index";
 
-export const Salary: React.FC = () => {
+const SalaryList: React.FC = () => {
   const [create, setCreate] = useState<boolean>(false);
   const { data, loading, run } = useRequest(employeeList);
   const columns = [
@@ -82,34 +82,38 @@ export const Salary: React.FC = () => {
     },
   ];
   return (
-    <Card className="pt-4">
-      <InitTableHeader
-        hideCreate
-        refresh={() => {}}
-        customHeaderTitle="Цалин хөлсний мэдээлэл"
-        setCreate={setCreate}
-        toolbarItems={
-          <div className="flex">
-            <ExportButton
-              onClick={() => {
-                exportFromTable(
-                  ["Цалин хөлсний мэдээлэл"],
-                  window.document.getElementById("main-table") as HTMLElement,
-                  window
-                );
-              }}
-            />
-          </div>
-        }
-      />
-      <ITable
-        hideAction
-        create={false}
-        columns={columns}
-        loading={loading}
-        dataSource={data?.users}
-        // CreateComponent={}
-      />
-    </Card>
+    <div className="custom-ant-card-padding-remove">
+      <Card className="pt-4">
+        <InitTableHeader
+          hideCreate
+          refresh={() => {}}
+          customHeaderTitle="Цалин хөлсний мэдээлэл"
+          setCreate={setCreate}
+          toolbarItems={
+            <div className="flex">
+              <ExportButton
+                onClick={() => {
+                  exportFromTable(
+                    ["Цалин хөлсний мэдээлэл"],
+                    window.document.getElementById("main-table") as HTMLElement,
+                    window
+                  );
+                }}
+              />
+            </div>
+          }
+        />
+        <ITable
+          create={false}
+          columns={columns}
+          loading={loading}
+          dataSource={data?.users}
+          hideAction
+          // CreateComponent={}
+        />
+      </Card>
+    </div>
   );
 };
+
+export default SalaryList;

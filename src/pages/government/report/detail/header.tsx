@@ -4,14 +4,19 @@ import React, { Fragment, useState } from "react";
 import { FilterReportButton, FilterTypeline } from "service/gov-report";
 import { calculateDeadlineDate } from "utils/index";
 import FileCheck from "assets/government/icons/fileCheck.svg";
+import { RadioChangeEvent } from "antd";
 
-const Header: React.FC = () => {
+type HeaderType = {
+  changeTab?: (e: RadioChangeEvent) => void;
+  tab?: String;
+};
+
+const Header: React.FC<HeaderType> = ({ changeTab, tab }) => {
   const [filter, setFilter] = useState<object>({
     page: 0,
     pageSize: 20,
   });
 
-  const [tab, setTab] = useState<String>(FilterTypeline.A13);
   const buttons: FilterReportButton[] = [
     {
       value: FilterTypeline.A13,
@@ -57,17 +62,13 @@ const Header: React.FC = () => {
             fieldProps={{
               size: "large",
               value: tab,
-              onChange: (e) => {
-                setTab(e.target.value);
-              },
+              onChange: changeTab,
             }}
             options={buttons?.map((el) => ({
               ...el,
-              onChange: (e) => {
-                setTab(e.target.value);
-              },
+              onChange: changeTab,
             }))}
-            initialValue={FilterTypeline.A14}
+            initialValue={tab}
           />
         }
         customState={

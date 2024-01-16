@@ -1,5 +1,5 @@
 export type ItemProps = {
-  id?: number;
+  id?: String;
   formName?: String;
   totalArrived?: number;
   totalFile?: number;
@@ -8,6 +8,7 @@ export type ItemProps = {
 };
 
 export interface ItemInterface {
+  id?: number;
   orphanName: String;
   year: number;
   status: number;

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { exportFromTable } from "utils/export";
 import { employeeList } from "api/app";
 
-export const Migration: React.FC = () => {
+const MigrationList: React.FC = () => {
   const [create, setCreate] = useState<boolean>(false);
   const { data, loading, run } = useRequest(employeeList);
   const columns = [
@@ -63,34 +63,38 @@ export const Migration: React.FC = () => {
     },
   ];
   return (
-    <Card className="pt-4">
-      <InitTableHeader
-        hideCreate
-        refresh={() => {}}
-        customHeaderTitle="Шилжилт хөдөлгөөний мэдээлэл"
-        setCreate={setCreate}
-        toolbarItems={
-          <div className="flex">
-            <ExportButton
-              onClick={() => {
-                exportFromTable(
-                  ["Шилжилт хөдөлгөөний мэдээлэл"],
-                  window.document.getElementById("main-table") as HTMLElement,
-                  window
-                );
-              }}
-            />
-          </div>
-        }
-      />
-      <ITable
-        hideAction
-        create={false}
-        columns={columns}
-        loading={loading}
-        dataSource={data?.users}
-        // CreateComponent={}
-      />
-    </Card>
+    <div className="custom-ant-card-padding-remove">
+      <Card className="pt-4">
+        <InitTableHeader
+          hideCreate
+          refresh={() => {}}
+          customHeaderTitle="Шилжилт хөдөлгөөний мэдээлэл"
+          setCreate={setCreate}
+          toolbarItems={
+            <div className="flex">
+              <ExportButton
+                onClick={() => {
+                  exportFromTable(
+                    ["Шилжилт хөдөлгөөний мэдээлэл"],
+                    window.document.getElementById("main-table") as HTMLElement,
+                    window
+                  );
+                }}
+              />
+            </div>
+          }
+        />
+        <ITable
+          hideAction
+          create={false}
+          columns={columns}
+          loading={loading}
+          dataSource={data?.users}
+          // CreateComponent={}
+        />
+      </Card>
+    </div>
   );
 };
+
+export default MigrationList;

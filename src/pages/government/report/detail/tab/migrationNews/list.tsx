@@ -12,6 +12,7 @@ export const List: React.FC<ListType> = ({ data }) => {
       <div>
         {data?.map((card, key) => (
           <Item
+            id={card?.id}
             key={key}
             year={card?.year}
             orphanName={card?.orphanName}

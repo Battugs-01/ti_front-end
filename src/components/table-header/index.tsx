@@ -51,9 +51,9 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   };
 
   return (
-    <div className="flex justify-between pt-2 pr-6 pb-0 pl-6">
+    <div className="flex justify-between pt-2 pr-6 pb-0 pl-6 w-full">
       <>
-        <div className="flex space-x-2 py-1.5">
+        <div className="flex space-x-2 py-1.5 w-1/2">
           {hideTitle ? (
             leftContent
           ) : (

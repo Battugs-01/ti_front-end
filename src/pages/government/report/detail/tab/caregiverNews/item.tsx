@@ -3,12 +3,14 @@ import { ItemInterface } from "service/gov-report";
 import LoomIcon from "assets/government/icons/loom.svg";
 import EyeIcon from "assets/government/icons/eye.svg";
 import { CustomButton } from "pages/government/components/button";
+import { Link } from "react-router-dom";
 
 export const Item: React.FC<ItemInterface> = ({
   orphanName,
   year,
   status,
   date,
+  id,
 }) => {
   return (
     <div style={{ borderBottom: "1px solid #EAECF0" }}>
@@ -24,7 +26,9 @@ export const Item: React.FC<ItemInterface> = ({
           <div>
             Илгээсэн: <span className="font-bold">{date}</span>
           </div>
-          <CustomButton icon={<img src={EyeIcon} />} title="Харах" />
+          <Link to={`caregiver/${id}`}>
+            <CustomButton icon={<img src={EyeIcon} />} title="Харах" />
+          </Link>
         </div>
       </div>
     </div>
