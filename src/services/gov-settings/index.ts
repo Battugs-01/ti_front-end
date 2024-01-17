@@ -3,6 +3,13 @@ export enum RadioType {
   forms = "List of forms",
 }
 
+
+export interface UserApi{
+  data?:{
+    body?:UserList[]
+  }
+}
+
 export interface UserList {
   createdAt?: Date;
   email?: String;

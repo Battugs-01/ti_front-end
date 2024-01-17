@@ -1,15 +1,16 @@
 import { IModalForm } from "components/modal";
-import { ItemInterface } from "service/gov-settings";
-import { UserForm } from "../create/userForm";
+import { ItemInterface, UserList } from "service/gov-settings";
+import { UserForm } from "./userForm/index";
 import governmentUser from "service/gov-settings/request";
 
 type EditUserType = {
-  // data?:;
+  data?:UserList;
   isOpenModal?: boolean;
   cancelModal?: () => void;
 };
 
 export const EditUser: React.FC<EditUserType> = ({
+  data,
   isOpenModal,
   cancelModal,
 }) => {
@@ -23,10 +24,10 @@ export const EditUser: React.FC<EditUserType> = ({
         cancelText="Болих"
         modalProps={{ onCancel: cancelModal }}
         onRequest={async (values) => {
-          return governmentUser.create({ ...values });
+          return governmentUser.updateUser({ ...values },data?.id);
         }}
       >
-        <UserForm />
+        <UserForm data={data}/>
       </IModalForm>
     </div>
   );

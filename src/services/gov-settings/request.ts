@@ -8,14 +8,22 @@ namespace governmentUser {
     });
   export const getUsers = (body: any) =>
     http.post("/user/list", {
-      hasAuth: true,
+      hasAuth: true,  
       body,
     });
-  export const updateUser = (body: any) =>
-    http.put("/user", {
+  export const getUser = (id: any) =>
+    http.get(`/user/${id}`, {
       hasAuth: true,
-      body,
     });
+  export const updateUser=(body:any,id:any)=>
+  http.put(`/user/${id}`,{
+    hasAuth:true,
+    body
+  })
+  export const deleteUser=(id:any)=>
+  http.del(`/user/${id}`,{
+    hasAuth:true,
+  })
 }
 
 export default governmentUser;

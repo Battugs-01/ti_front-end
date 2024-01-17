@@ -99,8 +99,7 @@ export const PermissionSettings: React.FC = () => {
   const [isOpenModal, setModalOpen] = useState<boolean>(false);
   //   const userList=useRequest()
   const userList = useRequest(
-    () => governmentUser.getUsers({ current: 1, pageSize: 20 }),
-    {}
+    () => governmentUser.getUsers({ current: 1, pageSize: 20 })
   );
   console.log(userList.data, "this is data");
   const cancelModal = () => {
@@ -131,7 +130,7 @@ export const PermissionSettings: React.FC = () => {
             }
           />
         </div>
-        {/* <List data={userList?.data?.items} /> */}
+        <List data={(userList?.data as any)?.items ?? []} />
         <CreateUser isOpenModal={isOpenModal} cancelModal={cancelModal} />
       </Card>
     </div>

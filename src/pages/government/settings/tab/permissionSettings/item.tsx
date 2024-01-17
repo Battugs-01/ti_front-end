@@ -1,4 +1,4 @@
-import { ItemInterface, UserList } from "service/gov-settings";
+import { ItemInterface, UserApi, UserList } from "service/gov-settings";
 import PhoneIcon from "assets/government/icons/phone.svg";
 import MailIcon from "assets/government/icons/mail.svg";
 import { Avatar, Badge } from "antd";
@@ -18,9 +18,8 @@ type ItemType = {
 
 export const Item: React.FC<ItemType> = ({ data }) => {
   const [editModal, setEditModal] = useState<boolean>(false);
-  console.log(data?.id, "this is id");
   const userInfo = useRequest(
-    () => governmentUser.updateUser({ id: data?.id }),
+    () => governmentUser.getUser(data?.id),
     {
       manual: true,
       onSuccess: () => {
@@ -28,13 +27,25 @@ export const Item: React.FC<ItemType> = ({ data }) => {
       },
     }
   );
+  const userDelete = useRequest(
+    () => governmentUser.deleteUser(data?.id),
+    {
+      manual: true,
+      onSuccess: () => {
+        console.log("Amjilttai ustlaa");
+      },
+    }
+  );
   const cancelModal = () => {
+
     setEditModal(false);
   };
   const openEdit = () => {
     userInfo.run();
   };
-  console.log(userInfo.data, "this is data ");
+  const deleteUser=()=>{
+    userDelete.run();
+  }
   return (
     <div className="p-4 w-full text-base">
       <div className="w-full flex items-center p-4 justify-between">
@@ -66,10 +77,11 @@ export const Item: React.FC<ItemType> = ({ data }) => {
             title="Устгах"
             icon={<img src={TrashIcon} />}
             isDelete
+            onClick={deleteUser}
           />
         </div>
       </div>
-      <EditUser isOpenModal={editModal} cancelModal={cancelModal} />
+      <EditUser isOpenModal={editModal} cancelModal={cancelModal} data={userInfo?.data ?? []}/>
       {/* <CreateOrphan
         data={data}
         id={id}

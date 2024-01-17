@@ -4,9 +4,9 @@ import PhoneIcon from "assets/government/icons/phone.svg";
 import MailIcon from "assets/government/icons/mail.svg";
 import { Badge } from "antd";
 import { Bank } from "components/bank";
-import EditIcon from "assets/government/icons/edit.svg";
-import EyeIcon from "assets/government/icons/eye.svg";
+import EditIcon from "assets/government/icons/editButton.svg";
 import { useState } from "react";
+import { CustomButton } from "../components/button";
 // import { CreateOrphan } from "./actions/createOrphan";
 
 type ItemType = {
@@ -55,17 +55,7 @@ export const Item: React.FC<ItemType> = ({ data, id }) => {
             </div>
           </div>
           <div className="flex items-center">
-            <div
-              className="p-[10px]"
-              onClick={() => {
-                setModalOpen(true);
-              }}
-            >
-              <img src={EditIcon} />
-            </div>
-            <div className="p-[10px]">
-              <img src={EyeIcon} />
-            </div>
+            <CustomButton title="Засах" icon={<img src={EditIcon}/>}/>
           </div>
         </div>
       </div>

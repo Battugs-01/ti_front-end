@@ -2,13 +2,13 @@ import { ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { Checkbox, Col, Row, Table } from "antd";
 import { SectionField } from "components/index";
 import { useState } from "react";
-import { ItemInterface } from "service/gov-settings";
+import { ItemInterface, UserList } from "service/gov-settings";
 
 type UserFormType = {
-  //   data?: ItemInterface;
+    data?: UserList;
 };
 
-const data = [
+const source= [
   {
     key: 1,
     name: "Хүсэлтүүд",
@@ -39,9 +39,8 @@ const data = [
   },
 ];
 
-export const UserForm: React.FC<UserFormType> = ({}) => {
+export const UserForm: React.FC<UserFormType> = ({data}) => {
   const [selectAll, setSelectAll] = useState(false);
-
   const handleSelectAllChange = (checked: boolean) => {
     setSelectAll(checked);
   };
@@ -97,13 +96,13 @@ export const UserForm: React.FC<UserFormType> = ({}) => {
         <Col span={12}>
           <SectionField
             label="Овог"
-            children={<ProFormText placeholder="Овог" name="last_name" />}
+            children={<ProFormText initialValue={data?.last_name} placeholder="Овог" name="last_name" />}
           />
         </Col>
         <Col span={12}>
           <SectionField
             label="Нэр"
-            children={<ProFormText placeholder="Нэр" name="first_name" />}
+            children={<ProFormText initialValue={data?.first_name} placeholder="Нэр" name="first_name" />}
           />
         </Col>
       </Row>
@@ -112,7 +111,7 @@ export const UserForm: React.FC<UserFormType> = ({}) => {
           <SectionField
             label="Албан тушаал"
             children={
-              <ProFormText placeholder="Албан тушаал" name="position" />
+              <ProFormText initialValue={data?.position} placeholder="Албан тушаал" name="position" />
             }
           />
         </Col>
@@ -124,6 +123,7 @@ export const UserForm: React.FC<UserFormType> = ({}) => {
                 fieldProps={{
                   addonBefore: "+976",
                 }}
+                initialValue={data?.phone}
                 placeholder="Утас"
                 name="phone_number"
               />
@@ -136,7 +136,7 @@ export const UserForm: React.FC<UserFormType> = ({}) => {
           <SectionField
             label="Цахим шуудан"
             children={
-              <ProFormText placeholder="sample@example.domain" name="email" />
+              <ProFormText initialValue={data?.email} placeholder="sample@example.domain" name="email" />
             }
           />
         </Col>
@@ -166,7 +166,7 @@ export const UserForm: React.FC<UserFormType> = ({}) => {
       >
         Бүгдийг идэвхжүүлэх
       </Checkbox>
-      <Table columns={columns} dataSource={data} pagination={false} />
+      <Table columns={columns} dataSource={source} pagination={false} />
     </div>
   );
 };
