@@ -131,7 +131,7 @@ export const PermissionSettings: React.FC = () => {
             }
           />
         </div>
-        <List data={userList?.data?.items} />
+        {/* <List data={userList?.data?.items} /> */}
         <CreateUser isOpenModal={isOpenModal} cancelModal={cancelModal} />
       </Card>
     </div>
