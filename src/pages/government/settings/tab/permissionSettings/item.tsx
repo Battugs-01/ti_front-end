@@ -50,8 +50,8 @@ export const Item: React.FC<ItemType> = ({ data }) => {
     <div className="p-4 w-full text-base">
       <div className="w-full flex items-center p-4 justify-between">
         <div className="flex items-center gap-2">
-          <Avatar size={36} style={{ background: "#144E5A" }} shape="circle">
-            BA
+          <Avatar size={36} style={{ background: "#144E5A" }} shape="circle" className="uppercase">
+            {data?.email?.substring(0,2)}
           </Avatar>
           <div className="font-bold">{data?.first_name}</div>
           <div>{data?.last_name}</div>
