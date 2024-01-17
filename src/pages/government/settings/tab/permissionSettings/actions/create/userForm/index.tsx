@@ -1,0 +1,172 @@
+import { ProFormSelect, ProFormText } from "@ant-design/pro-form";
+import { Checkbox, Col, Row, Table } from "antd";
+import { SectionField } from "components/index";
+import { useState } from "react";
+import { ItemInterface } from "service/gov-settings";
+
+type OrphanFormType = {
+  //   data?: ItemInterface;
+};
+
+const data = [
+  {
+    key: 1,
+    name: "Хүсэлтүүд",
+    isCreate: false,
+    isSaw: true,
+    isEdit: true,
+  },
+  {
+    key: 2,
+    name: "Тайлан",
+    isCreate: false,
+    isSaw: true,
+    isEdit: false,
+  },
+  {
+    key: 3,
+    name: "Асруулагч",
+    isCreate: true,
+    isSaw: true,
+    isEdit: true,
+  },
+  {
+    key: 4,
+    name: "Асрамжийн газар",
+    isCreate: true,
+    isSaw: true,
+    isEdit: true,
+  },
+];
+
+export const UserForm: React.FC<OrphanFormType> = ({}) => {
+  const [selectAll, setSelectAll] = useState(false);
+
+  const handleSelectAllChange = (checked: boolean) => {
+    setSelectAll(checked);
+  };
+
+  const columns = [
+    {
+      title: "Нэр",
+      dataIndex: "name",
+      key: "name",
+      render: (val: any) => <div className="font-bold p-4">{val}</div>,
+    },
+    {
+      title: "Үүсгэх",
+      dataIndex: "isCreate",
+      key: "isCreate",
+      render: (val: any, record: any) => (
+        <SectionField
+          children={
+            <Checkbox
+              disabled={!val}
+              checked={val && selectAll}
+              className="px-4 py-2"
+            />
+          }
+        />
+      ),
+    },
+    {
+      title: "Харах",
+      dataIndex: "isSaw",
+      key: "isSaw",
+      render: (val: any, record: any) => (
+        <SectionField
+          children={<Checkbox disabled={!val} checked={val && selectAll} />}
+        />
+      ),
+    },
+    {
+      title: "Засах",
+      dataIndex: "isEdit",
+      key: "isEdit",
+      render: (val: any, record: any) => (
+        <SectionField
+          children={<Checkbox disabled={!val} checked={val && selectAll} />}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <div>
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <SectionField
+            label="Овог"
+            children={<ProFormText placeholder="Овог" name="last_name" />}
+          />
+        </Col>
+        <Col span={12}>
+          <SectionField
+            label="Нэр"
+            children={<ProFormText placeholder="Нэр" name="first_name" />}
+          />
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <SectionField
+            label="Албан тушаал"
+            children={
+              <ProFormText placeholder="Албан тушаал" name="position" />
+            }
+          />
+        </Col>
+        <Col span={12}>
+          <SectionField
+            label="Утас"
+            children={
+              <ProFormText
+                fieldProps={{
+                  addonBefore: "+976",
+                }}
+                placeholder="Утас"
+                name="phone_number"
+              />
+            }
+          />
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <SectionField
+            label="Цахим шуудан"
+            children={
+              <ProFormText placeholder="sample@example.domain" name="email" />
+            }
+          />
+        </Col>
+        <Col span={12}>
+          <SectionField
+            label="Нууц үг"
+            children={
+              <ProFormText.Password
+                placeholder="*************"
+                name="password"
+              />
+            }
+          />
+        </Col>
+      </Row>
+
+      <div
+        className="font-medium text-lg mb-4 pt-5"
+        style={{ borderTop: "1px solid #EAECF0" }}
+      >
+        Хандах эрхийн зөвшөөрөл
+      </div>
+      <Checkbox
+        className="text-gray-900 mb-4"
+        checked={selectAll}
+        onChange={(e) => handleSelectAllChange(e.target.checked)}
+      >
+        Бүгдийг идэвхжүүлэх
+      </Checkbox>
+      <Table columns={columns} dataSource={data} pagination={false} />
+    </div>
+  );
+};

@@ -5,7 +5,7 @@ import {
   ProFormUploadDraggerProps,
 } from "@ant-design/pro-form";
 import { FieldRequireMessage } from "config";
-
+import EditIcon from "assets/icons/featured-icon.svg";
 type PropsDragger = ProFormUploadDraggerProps & {
   validator?: (value: any) => Promise<any>;
   required?: boolean;
@@ -22,12 +22,14 @@ export const UploadDraggerButton = ({
         title={
           <div className="w-full h-full space-x-2 text-sm text-gray-600">
             <div className="text-primary">
-              <span className=" font-semibold  text-primary-700 mr-1">
-                Click to upload
+              <div>
+                <img src={EditIcon} />
+              </div>
+              <span className=" font-semibold  text-[#144E5A] mr-1">
+                Файл оруулах
               </span>
-              or drag and drop SVG
             </div>
-            <div className="">SVG,PNG,JPG or GIF (max, 800x800px)</div>
+            <div className="">SVG,PNG,JPG or GIF (Хэмжээ :800*400px)</div>
           </div>
         }
         icon={false}

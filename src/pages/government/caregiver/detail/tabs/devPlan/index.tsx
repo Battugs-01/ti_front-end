@@ -7,6 +7,7 @@ import {
   DefaultButton,
 } from "pages/government/components/button";
 import PrintIcon from "assets/government/icons/print.svg";
+import DownloadIcon from "assets/government/icons/download.svg";
 
 export const DevPlan: React.FC = () => {
   return (
@@ -29,7 +30,7 @@ export const DevPlan: React.FC = () => {
         style={{ borderTop: "1px solid #E5E7EB" }}
       >
         <div className="flex items-center justify-end gap-4">
-          <DefaultButton icon={<img src={PrintIcon} />} title="Татах" />
+          <DefaultButton icon={<img src={DownloadIcon} />} title="Татах" />
           <CustomButton icon={<img src={PrintIcon} />} title="Хэвлэх" />
         </div>
       </div>

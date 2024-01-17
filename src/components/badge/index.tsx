@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 interface Props {
-  title: string;
+  title?: String;
   color?:
     | "gray"
     | "green"
@@ -14,7 +14,7 @@ interface Props {
     | string;
 }
 
-const Badge: FC<Props> = ({ title, color }) => {
+const IBadge: FC<Props> = ({ title, color }) => {
   let colorClass = "bg-gray-100 text-gray-700";
   switch (color) {
     case "gray":
@@ -54,4 +54,4 @@ const Badge: FC<Props> = ({ title, color }) => {
   );
 };
 
-export default Badge;
+export default IBadge;

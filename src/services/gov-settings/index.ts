@@ -3,6 +3,18 @@ export enum RadioType {
   forms = "List of forms",
 }
 
+export interface UserList {
+  createdAt?: Date;
+  email?: String;
+  first_name?: String;
+  id?: number;
+  isActive?: boolean;
+  last_name?: String;
+  phone?: String;
+  position?: String;
+  updatedAt?: Date;
+}
+
 export interface ItemInterface {
   orphanName?: String;
   firstName?: String;

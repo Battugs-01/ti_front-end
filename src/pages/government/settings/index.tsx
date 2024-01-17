@@ -4,9 +4,11 @@ import { RadioType } from "service/gov-settings";
 import { IfCondition } from "components/condition";
 import { RightSettings } from "./tab/rightSettings";
 import { FormList } from "./tab/formList";
+import { PermissionSettings } from "./tab/permissionSettings";
 
 const SettingsPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RadioType.settings);
+
   const changeTab = (e: SetStateAction<any>) => {
     setTab(e.target.value);
   };
@@ -15,7 +17,7 @@ const SettingsPage: React.FC = () => {
       <Header changeTab={changeTab} />
       <IfCondition
         condition={tab === RadioType.settings}
-        whenTrue={<RightSettings />}
+        whenTrue={<PermissionSettings />}
       />
       <IfCondition
         condition={tab === RadioType.forms}

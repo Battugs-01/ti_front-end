@@ -15,7 +15,7 @@ import { LoginData } from "service/auth/type";
 import { authService } from "service/firebase";
 
 const Login: FC = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const formRef = useRef<ProFormInstance<LoginData>>();
   const [, setAuth] = useAuthContext();
   const userData = auth.getRememberUser();
@@ -30,15 +30,16 @@ const Login: FC = () => {
         message: "Success",
       });
     },
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
   });
   return (
     <div style={{ maxWidth: 380 }} className="bg-white rounded-xl p-6">
-      <div className="text-center">
-        <img
-          src="/images/logo.jpg"
-          alt="logo"
-          style={{ height: 75, borderRadius: 1000 }}
-        />
+      <div className="align-left flex justify-start">
+        {/* <img src="/images/logo.jpg" alt="logo" style={{ borderRadius: 1000 }} /> */}
       </div>
       <ProForm<LoginData>
         formRef={formRef}
@@ -48,55 +49,35 @@ const Login: FC = () => {
           className: "font-medium",
         }}
         onFinish={async (data: LoginData) => {
-          setLoading(true);
           auth.rememberUser(data);
 
           const sendJSON = { ...data, email: data.email.toLowerCase() };
-          try {
-            let user = await authService.signInWithEmailAndPassword(
-              sendJSON.email,
-              sendJSON.password
-            );
-            let firebaseUserClaims = await user.user?.getIdTokenResult();
-            await login.runAsync({
-              id_token: firebaseUserClaims?.token,
-            });
-          } catch (err: any) {
-            if (err?.code === AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
-              notification.error({
-                message:
-                  "Олон удаа нэвтрэх нэр нууц үгээ буруу оруулсан байна. Түр хугацааны дараа дахин оролдоно уу",
-              });
-            } else {
-              notification.error({
-                message: "Таны имэйл эсвэл нууц үг буруу байна.",
-              });
-            }
-          }
-          setLoading(false);
+
+          await login.runAsync(sendJSON);
         }}
         submitter={{
           render: () => (
             <Button
               block
               type="primary"
-              loading={loading}
-              disabled={loading}
+              loading={login.loading}
+              disabled={login.loading}
               htmlType="submit"
               size="large"
               className="mt-7 "
             >
-              Sign In
+              Нэвтрэх
             </Button>
           ),
         }}
       >
+        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">Нэвтрэх</div>
         <div className="space-y-5">
           <ProFormText
             width="md"
             name="email"
-            placeholder="Enter your email"
-            label="Email"
+            placeholder="И-мэйл"
+            label="Нэвтрэх и-мэйл"
             fieldProps={{ size: "large" }}
             rules={[
               {
@@ -106,9 +87,9 @@ const Login: FC = () => {
           />
           <ProFormText.Password
             width="md"
-            label="Password"
+            label="Нууц үг"
             name="password"
-            placeholder="Enter your password"
+            placeholder="Нууц үг"
             fieldProps={{ size: "large" }}
             rules={[
               {
@@ -116,7 +97,7 @@ const Login: FC = () => {
               },
             ]}
           />
-          <div className="flex items-center space-x-3 custom-ant-item-margin-remove  ">
+          <div className="flex items-center space-x-3 custom-ant-item-margin-remove">
             <ProFormCheckbox
               id="remember"
               name="remember"
@@ -129,7 +110,7 @@ const Login: FC = () => {
               }}
             />
             <label htmlFor="remember" className="text-gray-700">
-              Remember me
+              Нэвтрэх нэр сануулах
             </label>
           </div>
         </div>

@@ -1,12 +1,18 @@
 import { Button, ButtonProps, Tooltip } from "antd";
 
-export const CustomButton = ({ ...rest }: ButtonProps) => {
+interface CustomButtonProps extends ButtonProps {
+  isDelete?: boolean;
+}
+
+export const CustomButton = ({ ...rest }: CustomButtonProps) => {
   return (
     <Tooltip title={rest.title}>
       <Button
         {...rest}
         type="primary"
-        className="flex items-center font-medium p-4"
+        className={`${
+          rest?.isDelete && "bg-[#DD695C]"
+        } flex items-center font-medium p-4`}
       >
         {rest?.title}
       </Button>
