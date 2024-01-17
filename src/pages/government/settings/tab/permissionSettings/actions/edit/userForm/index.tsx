@@ -4,7 +4,7 @@ import { SectionField } from "components/index";
 import { useState } from "react";
 import { ItemInterface } from "service/gov-settings";
 
-type OrphanFormType = {
+type UserFormType = {
   //   data?: ItemInterface;
 };
 
@@ -39,7 +39,7 @@ const data = [
   },
 ];
 
-export const UserForm: React.FC<OrphanFormType> = ({}) => {
+export const UserForm: React.FC<UserFormType> = ({}) => {
   const [selectAll, setSelectAll] = useState(false);
 
   const handleSelectAllChange = (checked: boolean) => {
