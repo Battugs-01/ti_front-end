@@ -19,6 +19,7 @@ export const Item: React.FC<ItemType> = ({ data, id }) => {
   const cancelModal = () => {
     setModalOpen(false);
   };
+  console.log("hhh");
   return (
     <div className="p-4 w-full">
       <div className="flex items-center justify-between w-full">
