@@ -6,7 +6,7 @@ const tokenKey = "app.token";
 const userKey = "app.user";
 namespace auth {
   export const login = (body?: any) =>
-    http.post<LoginResponse>("auth/login", {
+    http.post<LoginResponse>("ministry/auth/login", {
       body,
     });
   // export const singOut = () => auth.signOut();
@@ -18,7 +18,8 @@ namespace auth {
   export const removeToken = () => localStorage.removeItem(tokenKey);
   export const getToken = () => localStorage.getItem(tokenKey);
 
-  export const info = () => http.get<Admin>("auth/info", { hasAuth: true });
+  export const info = () =>
+    http.get<Admin>("ministry/auth/info", { hasAuth: true });
 
   export const rememberUser = (values: LoginData) => {
     if (values.remember) {

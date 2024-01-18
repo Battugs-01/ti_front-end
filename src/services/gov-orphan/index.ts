@@ -1,16 +1,33 @@
+export interface DataType {
+  items: CardInterface[];
+  total: number;
+}
+
 export interface CardInterface {
-  orphanName: String;
-  status: number;
-  emplopyees: number;
-  plan: number;
-  bedNumber: number;
-  bedNumberMax: number;
-  report: number;
-  reportMax: number;
-  donation: number;
-  id: number;
-  date?: any;
+  id?: number;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  organization_name: String;
+  logo_id: number;
+  is_active: boolean;
+  email: String;
+  contact: UserInterface;
+  payment: PaymentInterface;
   name: String;
+  created_user_id: number;
+}
+
+export interface UserInterface {
+  first_name: String;
+  last_name: String;
+  position: String;
+  phone: String;
+}
+export interface PaymentInterface {
+  bank_name: String;
+  account_number: String;
+  reciever_name: String;
 }
 
 export enum TabType {

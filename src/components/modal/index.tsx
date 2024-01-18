@@ -53,7 +53,7 @@ export const IModalForm = ({
         block: "center",
         inline: "center",
       }}
-      children={<div className="px-10">{rest.children}</div>}
+      children={<div className="p-8">{rest.children}</div>}
       title={
         <div className="flex items-center justify-between px-6 py-4">
           <div className="text-base text-gray-800 font-semibold">{title}</div>
@@ -72,8 +72,7 @@ export const IModalForm = ({
           />
         </div>
       }
-      layout="horizontal"
-      className="p-7 pt-4 "
+      layout="vertical"
       labelCol={{
         span: 12,
       }}

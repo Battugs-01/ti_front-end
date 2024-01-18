@@ -5,10 +5,10 @@ import { useState } from "react";
 import { ItemInterface, UserList } from "service/gov-settings";
 
 type UserFormType = {
-    data?: UserList;
+  data?: UserList;
 };
 
-const source= [
+const source = [
   {
     key: 1,
     name: "Хүсэлтүүд",
@@ -39,7 +39,7 @@ const source= [
   },
 ];
 
-export const UserForm: React.FC<UserFormType> = ({data}) => {
+export const UserForm: React.FC<UserFormType> = ({ data }) => {
   const [selectAll, setSelectAll] = useState(false);
   const handleSelectAllChange = (checked: boolean) => {
     setSelectAll(checked);
@@ -83,9 +83,7 @@ export const UserForm: React.FC<UserFormType> = ({data}) => {
       dataIndex: "isEdit",
       key: "isEdit",
       render: (val: any, record: any) => (
-        <SectionField
-          children={<Checkbox disabled={!val} checked={val && selectAll} />}
-        />
+        <Checkbox disabled={!val} checked={val && selectAll} />
       ),
     },
   ];
@@ -94,61 +92,57 @@ export const UserForm: React.FC<UserFormType> = ({data}) => {
     <div>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Овог"
-            children={<ProFormText initialValue={data?.last_name} placeholder="Овог" name="last_name" />}
+            initialValue={data?.last_name}
+            placeholder="Овог"
+            name="last_name"
           />
         </Col>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Нэр"
-            children={<ProFormText initialValue={data?.first_name} placeholder="Нэр" name="first_name" />}
+            initialValue={data?.first_name}
+            placeholder="Нэр"
+            name="first_name"
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Албан тушаал"
-            children={
-              <ProFormText initialValue={data?.position} placeholder="Албан тушаал" name="position" />
-            }
+            initialValue={data?.position}
+            placeholder="Албан тушаал"
+            name="position"
           />
         </Col>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Утас"
-            children={
-              <ProFormText
-                fieldProps={{
-                  addonBefore: "+976",
-                }}
-                initialValue={data?.phone}
-                placeholder="Утас"
-                name="phone_number"
-              />
-            }
+            fieldProps={{
+              addonBefore: "+976",
+            }}
+            initialValue={data?.phone}
+            placeholder="Утас"
+            name="phone_number"
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Цахим шуудан"
-            children={
-              <ProFormText initialValue={data?.email} placeholder="sample@example.domain" name="email" />
-            }
+            initialValue={data?.email}
+            placeholder="sample@example.domain"
+            name="email"
           />
         </Col>
         <Col span={12}>
-          <SectionField
+          <ProFormText.Password
+            placeholder="*************"
+            name="password"
             label="Нууц үг"
-            children={
-              <ProFormText.Password
-                placeholder="*************"
-                name="password"
-              />
-            }
           />
         </Col>
       </Row>

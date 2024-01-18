@@ -1,28 +1,25 @@
+import { CardInterface, DataType } from ".";
 import http from "..";
 
 namespace orphanUser {
   export const create = (body: any) =>
-    http.post("/carecenter", {
+    http.post("ministry/carecenter", {
       hasAuth: true,
       body,
     });
-  export const getUsers = (body: any) =>
-    http.post("/user/list", {
+  export const getOrphan = (id: any) =>
+    http.get<any>(`ministry/carecenter/${id}`, {
+      hasAuth: true,
+    });
+  export const edit = (body: any, id: any) =>
+    http.put(`ministry/carecenter/${id}`, {
       hasAuth: true,
       body,
     });
-  export const getUser = (id: any) =>
-    http.get(`/user/${id}`, {
-      hasAuth: true,
-    });
-  export const updateUser = (body: any, id: any) =>
-    http.put(`/user/${id}`, {
+  export const getList = (body: any) =>
+    http.post<DataType>(`ministry/carecenter/list`, {
       hasAuth: true,
       body,
-    });
-  export const deleteUser = (id: any) =>
-    http.del(`/user/${id}`, {
-      hasAuth: true,
     });
 }
 

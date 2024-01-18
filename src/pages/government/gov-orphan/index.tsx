@@ -2,9 +2,11 @@ import { Card } from "antd";
 import { ExportButton } from "components/index";
 import InitTableHeader from "components/table-header";
 import { exportFromTable } from "utils/export";
-import { List } from "./list";
 import { useState } from "react";
-import { CreateOrphan } from "./action/createOrphan";
+import { CreateOrphan } from "./action/create/createOrphan";
+import { Item } from "./item";
+import { useRequest } from "ahooks";
+import orphanUser from "service/gov-orphan/requests";
 
 const data = [
   {
@@ -95,6 +97,10 @@ const data = [
 
 const GovOrphan: React.FC = () => {
   const [isOpenModal, setModalOpen] = useState<boolean>(false);
+  const orphanList = useRequest(() =>
+    orphanUser.getList({ current: 1, pageSize: 20 })
+  );
+  console.log(orphanList.data, "jkkkk");
   const openModal = () => {
     setModalOpen(true);
   };
@@ -126,7 +132,11 @@ const GovOrphan: React.FC = () => {
             }
           />
         </div>
-        <List data={data} />
+        <div>
+          {orphanList?.data?.items?.map((item, key) => {
+            return <Item key={key} data={item} />;
+          })}
+        </div>
         <CreateOrphan openModal={isOpenModal} cancelModal={cancelModal} />
       </Card>
     </div>

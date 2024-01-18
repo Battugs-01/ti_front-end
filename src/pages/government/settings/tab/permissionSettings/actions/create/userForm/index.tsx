@@ -95,60 +95,44 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
     <div>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
-            label="Овог"
-            children={<ProFormText placeholder="Овог" name="last_name" />}
-          />
+          <ProFormText placeholder="Овог" name="last_name" label={"Овог"} />
         </Col>
         <Col span={12}>
-          <SectionField
-            label="Нэр"
-            children={<ProFormText placeholder="Нэр" name="first_name" />}
-          />
+          <ProFormText placeholder="Нэр" name="first_name" label="Нэр" />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
+          <ProFormText
+            placeholder="Албан тушаал"
+            name="position"
             label="Албан тушаал"
-            children={
-              <ProFormText placeholder="Албан тушаал" name="position" />
-            }
           />
         </Col>
         <Col span={12}>
-          <SectionField
+          <ProFormText
             label="Утас"
-            children={
-              <ProFormText
-                fieldProps={{
-                  addonBefore: "+976",
-                }}
-                placeholder="Утас"
-                name="phone_number"
-              />
-            }
+            fieldProps={{
+              addonBefore: "+976",
+            }}
+            placeholder="Утас"
+            name="phone_number"
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <SectionField
+          <ProFormText
+            placeholder="sample@example.domain"
+            name="email"
             label="Цахим шуудан"
-            children={
-              <ProFormText placeholder="sample@example.domain" name="email" />
-            }
           />
         </Col>
         <Col span={12}>
-          <SectionField
+          <ProFormText.Password
+            placeholder="*************"
+            name="password"
             label="Нууц үг"
-            children={
-              <ProFormText.Password
-                placeholder="*************"
-                name="password"
-              />
-            }
           />
         </Col>
       </Row>

@@ -18,12 +18,7 @@ type ItemType = {
 
 export const Item: React.FC<ItemType> = ({ data }) => {
   const [editModal, setEditModal] = useState<boolean>(false);
-  const userInfo = useRequest(() => governmentUser.getUser(data?.id), {
-    manual: true,
-    onSuccess: () => {
-      setEditModal(true);
-    },
-  });
+
   const userDelete = useRequest(() => governmentUser.deleteUser(data?.id), {
     manual: true,
     onSuccess: () => {
@@ -33,15 +28,12 @@ export const Item: React.FC<ItemType> = ({ data }) => {
   const cancelModal = () => {
     setEditModal(false);
   };
-  const openEdit = () => {
-    userInfo.run();
-  };
   const deleteUser = () => {
     userDelete.run();
   };
   return (
     <div
-      className="p-4 w-full text-base"
+      className="w-full text-base"
       style={{ borderBottom: "1px solid #EAECF0" }}
     >
       <div className="w-full flex items-center p-4 justify-between">
@@ -72,7 +64,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
           <CustomButton
             title="Засах"
             icon={<img src={EditIcon} />}
-            onClick={openEdit}
+            onClick={() => setEditModal(true)}
           />
           <CustomButton
             title="Устгах"
@@ -85,7 +77,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
       <EditUser
         isOpenModal={editModal}
         cancelModal={cancelModal}
-        data={userInfo?.data ?? []}
+        id={data?.id}
       />
       {/* <CreateOrphan
         data={data}

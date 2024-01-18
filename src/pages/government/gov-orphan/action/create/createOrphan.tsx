@@ -1,8 +1,9 @@
 import { IModalForm } from "components/modal";
-import { OrphanForm } from "./orphanForm";
+import { OrphanForm } from "./orphanForm/index";
 import orphanUser from "service/gov-orphan/requests";
 import { useRequest } from "ahooks";
 import uploadFile from "service/uploadFile";
+import { CardInterface } from "service/gov-orphan";
 
 type CreateOrphanType = {
   openModal?: boolean;
@@ -27,13 +28,13 @@ export const CreateOrphan: React.FC<CreateOrphanType> = ({
       onRequest={async (values) => {
         // uploadImage.runAsync(values?.files);
         return orphanUser.create({
-          contract: {
+          contact: {
             first_name: values?.first_name,
             last_name: values?.last_name,
             phone: values?.phone,
             position: "Position",
           },
-          is_active: true,
+          is_active: values?.is_active,
           logo_id: 2,
           email: values?.email,
           organization_name: values?.organization_name,

@@ -13,19 +13,24 @@ export const PageHeader = ({ title, subTitle }: Props) => {
   const pathName: string[] = location.pathname
     .split("/")
     .filter((el) => el.length > 0)
-    ?.slice(1, 2);
-
+    ?.slice(2, 3);
   const HeaderName = (pathName: string[]) => {
     let result = "";
     switch (pathName[0]) {
-      case "dashboard":
-        result = "Нүүр хуудас";
+      case "requests":
+        result = "Хүсэлтүүд";
         break;
-      case "care-information":
-        result = "Асруулагчийн жагсаалт";
+      case "report":
+        result = "Тайлан";
         break;
-      case "customers":
-        result = "Бүртгэлийн маягт";
+      case "caregiver":
+        result = "Асруулагч";
+        break;
+      case "orphan":
+        result = "Асрамжийн газар";
+        break;
+      case "settings":
+        result = "Тохиргоо";
         break;
       default:
         break;
