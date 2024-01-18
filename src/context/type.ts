@@ -3,7 +3,7 @@ import { Admin } from "service/auth/type";
 export interface DataType {
   authorized?: boolean;
   user?: Admin;
-  init: boolean;
+  init?: boolean;
 }
 export enum Action {
   SIGN_OUT = "SIGN_OUT",

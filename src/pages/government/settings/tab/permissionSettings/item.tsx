@@ -18,40 +18,41 @@ type ItemType = {
 
 export const Item: React.FC<ItemType> = ({ data }) => {
   const [editModal, setEditModal] = useState<boolean>(false);
-  const userInfo = useRequest(
-    () => governmentUser.getUser(data?.id),
-    {
-      manual: true,
-      onSuccess: () => {
-        setEditModal(true);
-      },
-    }
-  );
-  const userDelete = useRequest(
-    () => governmentUser.deleteUser(data?.id),
-    {
-      manual: true,
-      onSuccess: () => {
-        console.log("Amjilttai ustlaa");
-      },
-    }
-  );
+  const userInfo = useRequest(() => governmentUser.getUser(data?.id), {
+    manual: true,
+    onSuccess: () => {
+      setEditModal(true);
+    },
+  });
+  const userDelete = useRequest(() => governmentUser.deleteUser(data?.id), {
+    manual: true,
+    onSuccess: () => {
+      console.log("Amjilttai ustlaa");
+    },
+  });
   const cancelModal = () => {
-
     setEditModal(false);
   };
   const openEdit = () => {
     userInfo.run();
   };
-  const deleteUser=()=>{
+  const deleteUser = () => {
     userDelete.run();
-  }
+  };
   return (
-    <div className="p-4 w-full text-base">
+    <div
+      className="p-4 w-full text-base"
+      style={{ borderBottom: "1px solid #EAECF0" }}
+    >
       <div className="w-full flex items-center p-4 justify-between">
         <div className="flex items-center gap-2">
-          <Avatar size={36} style={{ background: "#144E5A" }} shape="circle" className="uppercase">
-            {data?.email?.substring(0,2)}
+          <Avatar
+            size={36}
+            style={{ background: "#144E5A" }}
+            shape="circle"
+            className="uppercase"
+          >
+            {data?.email?.substring(0, 2)}
           </Avatar>
           <div className="font-bold">{data?.first_name}</div>
           <div>{data?.last_name}</div>
@@ -81,7 +82,11 @@ export const Item: React.FC<ItemType> = ({ data }) => {
           />
         </div>
       </div>
-      <EditUser isOpenModal={editModal} cancelModal={cancelModal} data={userInfo?.data ?? []}/>
+      <EditUser
+        isOpenModal={editModal}
+        cancelModal={cancelModal}
+        data={userInfo?.data ?? []}
+      />
       {/* <CreateOrphan
         data={data}
         id={id}

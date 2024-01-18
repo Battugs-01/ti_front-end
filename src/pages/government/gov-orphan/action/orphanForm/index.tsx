@@ -21,14 +21,12 @@ export const OrphanForm: React.FC = () => {
         children={
           <ProFormText
             placeholder="Байгууллагын нэр оруулна уу"
-            name="companyName"
+            name="organization_name"
           />
         }
       />
       <SectionContainer
-        children={
-          <UploadDraggerButton name={"bannerImages"} required={false} />
-        }
+        children={<UploadDraggerButton name={"files"} required={false} />}
         label="Байгууллагын лого"
       />
       <div className="mb-5">
@@ -47,13 +45,13 @@ export const OrphanForm: React.FC = () => {
         <Col span={12}>
           <SectionField
             label="Овог"
-            children={<ProFormText placeholder="Овог" name="surname" />}
+            children={<ProFormText placeholder="Овог" name="last_name" />}
           />
         </Col>
         <Col span={12}>
           <SectionField
             label="Нэр"
-            children={<ProFormText placeholder="Нэр" name="name" />}
+            children={<ProFormText placeholder="Нэр" name="first_name" />}
           />
         </Col>
       </Row>
@@ -75,7 +73,7 @@ export const OrphanForm: React.FC = () => {
       />
       <SectionField
         label="Цахим шуудан"
-        children={<ProFormText placeholder="Имэйл" name="mail" />}
+        children={<ProFormText placeholder="Имэйл" name="email" />}
       />
       <div
         className="font-medium text-lg mb-4 pt-5"
@@ -88,7 +86,7 @@ export const OrphanForm: React.FC = () => {
           <SectionField
             label="Банкны нэр"
             children={
-              <ProFormSelect placeholder="Банкны нэр" name="bankName" />
+              <ProFormSelect placeholder="Банкны нэр" name="bank_name" />
             }
           />
         </Col>
@@ -98,7 +96,7 @@ export const OrphanForm: React.FC = () => {
             children={
               <ProFormText
                 placeholder="Компанийн дансны дугаар"
-                name="bankNumber"
+                name="account_number"
               />
             }
           />
@@ -113,7 +111,7 @@ export const OrphanForm: React.FC = () => {
       <SectionField
         label="Хүлээн авагчийн нэр"
         children={
-          <ProFormText placeholder="Хүлээн авагчийн нэр" name="company" />
+          <ProFormText placeholder="Хүлээн авагчийн нэр" name="reciever_name" />
         }
       />
       <SectionField

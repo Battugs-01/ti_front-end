@@ -18,8 +18,7 @@ namespace auth {
   export const removeToken = () => localStorage.removeItem(tokenKey);
   export const getToken = () => localStorage.getItem(tokenKey);
 
-  export const info = () =>
-    http.get<Admin>("admin/auth/info", { hasAuth: true });
+  export const info = () => http.get<Admin>("auth/info", { hasAuth: true });
 
   export const rememberUser = (values: LoginData) => {
     if (values.remember) {

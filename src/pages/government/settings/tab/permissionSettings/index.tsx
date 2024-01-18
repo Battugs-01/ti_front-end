@@ -97,11 +97,13 @@ const data = [
 
 export const PermissionSettings: React.FC = () => {
   const [isOpenModal, setModalOpen] = useState<boolean>(false);
-  //   const userList=useRequest()
-  const userList = useRequest(
-    () => governmentUser.getUsers({ current: 1, pageSize: 20 })
+  const userList = useRequest(() =>
+    governmentUser.getUsers({ current: 1, pageSize: 20 })
   );
-  console.log(userList.data, "this is data");
+  const refreshList = () => {
+    userList.run();
+    setModalOpen(false);
+  };
   const cancelModal = () => {
     setModalOpen(false);
   };
@@ -110,6 +112,7 @@ export const PermissionSettings: React.FC = () => {
       <Card loading={userList?.loading}>
         <div style={{ borderBottom: "1px solid #EAECF0" }} className="mt-5">
           <InitTableHeader
+            refresh={refreshList}
             addButtonName="Нэмэх"
             setCreate={setModalOpen}
             customHeaderTitle="Системд хандах эрхийн тохиргоо"
@@ -131,7 +134,7 @@ export const PermissionSettings: React.FC = () => {
           />
         </div>
         <List data={(userList?.data as any)?.items ?? []} />
-        <CreateUser isOpenModal={isOpenModal} cancelModal={cancelModal} />
+        <CreateUser isOpenModal={isOpenModal} cancelModal={refreshList} />
       </Card>
     </div>
   );

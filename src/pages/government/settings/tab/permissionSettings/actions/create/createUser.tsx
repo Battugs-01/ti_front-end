@@ -15,7 +15,7 @@ export const CreateUser: React.FC<CreateOrphanType> = ({
   return (
     <div>
       <IModalForm
-        onSuccess={() => cancelModal}
+        onSuccess={cancelModal}
         title={"Нэмэх"}
         open={isOpenModal}
         okText="Нэмэх"
