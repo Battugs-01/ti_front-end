@@ -8,11 +8,10 @@ import { UploadDraggerButton } from "components/index";
 import { CardInterface } from "service/gov-orphan";
 
 type FormType = {
-  data: CardInterface;
+  data?: CardInterface;
 };
 
 export const OrphanForm: React.FC<FormType> = ({ data }) => {
-  console.log(data, "jjj");
   return (
     <div>
       <ProFormText

@@ -1,30 +1,39 @@
-import { ItemInterface, UserApi, UserList } from "service/gov-settings";
-import PhoneIcon from "assets/government/icons/phone.svg";
-import MailIcon from "assets/government/icons/mail.svg";
-import { Avatar, Badge } from "antd";
-import EditIcon from "assets/government/icons/editButton.svg";
-import TrashIcon from "assets/government/icons/trashButton.svg";
-import { useState } from "react";
-import IBadge from "components/badge";
-import { EditUser } from "./actions/edit/editUser";
-import { CustomButton } from "pages/government/components/button";
 import { useRequest } from "ahooks";
+import { Avatar, Badge, notification } from "antd";
+import EditIcon from "assets/government/icons/editButton.svg";
+import MailIcon from "assets/government/icons/mail.svg";
+import PhoneIcon from "assets/government/icons/phone.svg";
+import TrashIcon from "assets/government/icons/trashButton.svg";
+import IBadge from "components/badge";
+import { CustomButton } from "pages/government/components/button";
+import { useState } from "react";
+import { UserList } from "service/gov-settings";
 import governmentUser from "service/gov-settings/request";
-// import { CreateOrphan } from "./actions/createOrphan";
+import { EditUser } from "./actions/edit/editUser";
 
 type ItemType = {
   data?: UserList;
+  refresh?: () => void;
 };
 
-export const Item: React.FC<ItemType> = ({ data }) => {
+export const Item: React.FC<ItemType> = ({ data, refresh }) => {
   const [editModal, setEditModal] = useState<boolean>(false);
+
+  const userInfo = useRequest(() => governmentUser.getUser(data?.id), {
+    manual: true,
+    onSuccess: () => {
+      setEditModal(true);
+    },
+  });
 
   const userDelete = useRequest(() => governmentUser.deleteUser(data?.id), {
     manual: true,
     onSuccess: () => {
-      console.log("Amjilttai ustlaa");
+      refresh && refresh();
+      notification?.success({ message: "Амжилттай устлаа" });
     },
   });
+
   const cancelModal = () => {
     setEditModal(false);
   };
@@ -64,7 +73,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
           <CustomButton
             title="Засах"
             icon={<img src={EditIcon} />}
-            onClick={() => setEditModal(true)}
+            onClick={() => userInfo?.run()}
           />
           <CustomButton
             title="Устгах"
@@ -77,14 +86,8 @@ export const Item: React.FC<ItemType> = ({ data }) => {
       <EditUser
         isOpenModal={editModal}
         cancelModal={cancelModal}
-        id={data?.id}
+        data={userInfo?.data}
       />
-      {/* <CreateOrphan
-        data={data}
-        id={id}
-        openModal={openModal}
-        cancelModal={cancelModal}
-      /> */}
     </div>
   );
 };

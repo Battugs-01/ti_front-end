@@ -6,16 +6,18 @@ import governmentUser from "service/gov-settings/request";
 type CreateOrphanType = {
   isOpenModal?: boolean;
   cancelModal?: () => void;
+  onSuccess?: () => void;
 };
 
 export const CreateUser: React.FC<CreateOrphanType> = ({
   isOpenModal,
   cancelModal,
+  onSuccess,
 }) => {
   return (
     <div>
       <IModalForm
-        onSuccess={cancelModal}
+        successData={onSuccess}
         title={"Нэмэх"}
         open={isOpenModal}
         okText="Нэмэх"

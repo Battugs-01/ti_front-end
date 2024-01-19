@@ -3,9 +3,10 @@ import { OrphanForm } from "./orphanForm/index";
 import orphanUser from "service/gov-orphan/requests";
 import { useRequest } from "ahooks";
 import uploadFile from "service/uploadFile";
+import { CardInterface } from "service/gov-orphan";
 
 type UpdateOrphanType = {
-  id?: number;
+  data?: CardInterface;
   openModal?: boolean;
   cancelModal?: () => void;
 };
@@ -13,9 +14,8 @@ type UpdateOrphanType = {
 export const UpdateOrphan: React.FC<UpdateOrphanType> = ({
   openModal,
   cancelModal,
-  id,
+  data,
 }) => {
-  const orphanInfo = useRequest(() => orphanUser.getOrphan(id));
   const uploadImage = useRequest(uploadFile.create, {
     manual: true,
   });
@@ -48,11 +48,11 @@ export const UpdateOrphan: React.FC<UpdateOrphanType> = ({
               reciever_name: values?.reciever_name,
             },
           },
-          id
+          data?.id
         );
       }}
     >
-      <OrphanForm data={orphanInfo?.data} />
+      <OrphanForm data={data} />
     </IModalForm>
   );
 };

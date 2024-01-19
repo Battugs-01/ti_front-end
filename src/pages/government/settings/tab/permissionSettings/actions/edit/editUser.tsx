@@ -5,17 +5,16 @@ import governmentUser from "service/gov-settings/request";
 import { useRequest } from "ahooks";
 
 type EditUserType = {
-  id?: number;
+  data?: UserList;
   isOpenModal?: boolean;
   cancelModal?: () => void;
 };
 
 export const EditUser: React.FC<EditUserType> = ({
-  id,
+  data,
   isOpenModal,
   cancelModal,
 }) => {
-  const userInfo = useRequest(() => governmentUser.getUser(id));
   return (
     <div>
       <IModalForm
@@ -26,10 +25,10 @@ export const EditUser: React.FC<EditUserType> = ({
         cancelText="Болих"
         modalProps={{ onCancel: cancelModal }}
         onRequest={async (values) => {
-          return governmentUser.updateUser({ ...values }, id);
+          return governmentUser.updateUser({ ...values }, data?.id);
         }}
       >
-        <UserForm data={userInfo?.data} />
+        <UserForm data={data} />
       </IModalForm>
     </div>
   );

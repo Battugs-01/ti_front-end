@@ -3,11 +3,15 @@ export enum RadioType {
   forms = "List of forms",
 }
 
+export interface UserApi {
+  data?: {
+    body?: UserList[];
+  };
+}
 
-export interface UserApi{
-  data?:{
-    body?:UserList[]
-  }
+export interface UserListApi {
+  total?: number;
+  items?: UserList[];
 }
 
 export interface UserList {

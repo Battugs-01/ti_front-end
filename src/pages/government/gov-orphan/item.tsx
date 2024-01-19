@@ -11,6 +11,7 @@ import { useRequest } from "ahooks";
 import orphanUser from "service/gov-orphan/requests";
 import { UpdateOrphan } from "./action/update/updateOrphan";
 import { CardInterface } from "service/gov-orphan";
+import { Link } from "react-router-dom";
 // import { CreateOrphan } from "./actions/createOrphan";
 
 type ItemType = {
@@ -19,7 +20,15 @@ type ItemType = {
 
 export const Item: React.FC<ItemType> = ({ data }) => {
   const [openModal, setModalOpen] = useState<boolean>(false);
-
+  const orphanInfo = useRequest(() => orphanUser.getOrphan(data?.id), {
+    manual: true,
+    onSuccess: () => {
+      setModalOpen(true);
+    },
+  });
+  const openEdit = () => {
+    orphanInfo.run();
+  };
   const cancelModal = () => {
     setModalOpen(false);
   };
@@ -32,7 +41,11 @@ export const Item: React.FC<ItemType> = ({ data }) => {
             <img src={MailchimpIcon} />
           </div>
           <div className="flex flex-col items-start gap-2">
-            <div className="font-bold ">{data?.organization_name}</div>
+            <Link to={`${data?.id}`}>
+              <div className="font-bold text-base text-gray-700">
+                {data?.organization_name}
+              </div>
+            </Link>
             <div className="flex gap-2 items-center">
               <div className="font-bold">{data?.contact?.first_name}</div>
               <div>{data?.contact?.last_name}</div>
@@ -62,7 +75,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
             <CustomButton
               title="Засах"
               icon={<img src={EditIcon} />}
-              onClick={() => setModalOpen(true)}
+              onClick={openEdit}
             />
           </div>
         </div>
@@ -70,7 +83,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
       <UpdateOrphan
         openModal={openModal}
         cancelModal={cancelModal}
-        id={data?.id}
+        data={orphanInfo?.data}
       />
     </div>
   );

@@ -17,6 +17,7 @@ type Props = ModalFormProps & {
   footer?: React.ReactNode;
   cancelText?: React.ReactNode;
   okText?: React.ReactNode;
+  successData?: () => void;
 };
 
 export const IModalForm = ({
@@ -26,12 +27,14 @@ export const IModalForm = ({
   footer,
   cancelText,
   okText,
+  successData,
   ...rest
 }: Props) => {
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
     manual: true,
     onSuccess: () => {
       onDone && onDone();
+      successData && successData();
       notification.success({
         message: "Successfully",
       });

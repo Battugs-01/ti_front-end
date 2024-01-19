@@ -1,13 +1,14 @@
+import { UserListApi } from ".";
 import http from "..";
 
 namespace governmentUser {
   export const create = (body: any) =>
-    http.post("/ministry/user", {
+    http.post<any>("/ministry/user", {
       hasAuth: true,
       body,
     });
   export const getUsers = (body: any) =>
-    http.post("/ministry/user/list", {
+    http.post<UserListApi>("/ministry/user/list", {
       hasAuth: true,
       body,
     });

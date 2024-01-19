@@ -2,11 +2,11 @@ import { Card } from "antd";
 import { ExportButton } from "components/index";
 import InitTableHeader from "components/table-header";
 import { exportFromTable } from "utils/export";
-import { List } from "./list";
 import { useState } from "react";
 import { CreateUser } from "./actions/create/createUser";
 import { useRequest } from "ahooks";
 import governmentUser from "service/gov-settings/request";
+import { Item } from "./item";
 
 const data = [
   {
@@ -133,8 +133,14 @@ export const PermissionSettings: React.FC = () => {
             }
           />
         </div>
-        <List data={(userList?.data as any)?.items ?? []} />
-        <CreateUser isOpenModal={isOpenModal} cancelModal={refreshList} />
+        {userList?.data?.items?.map((item, key) => {
+          return <Item key={key} data={item} />;
+        })}
+        <CreateUser
+          isOpenModal={isOpenModal}
+          cancelModal={cancelModal}
+          onSuccess={refreshList}
+        />
       </Card>
     </div>
   );
