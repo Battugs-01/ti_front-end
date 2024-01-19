@@ -17,7 +17,7 @@ export const Bank: React.FC<BankType> = ({ bankName }) => {
           <img src={Khan} />
         </div>
       );
-    case "Khas":
+    case "khas_bank":
       return (
         <div>
           <img src={Khas} />

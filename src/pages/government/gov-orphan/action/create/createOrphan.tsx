@@ -41,7 +41,7 @@ export const CreateOrphan: React.FC<CreateOrphanType> = ({
           password: values?.password,
           payment: {
             account_number: values?.account_number,
-            bank_name: "Khan",
+            bank_name: values?.bank_name,
             reciever_name: values?.reciever_name,
           },
         });

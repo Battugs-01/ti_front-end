@@ -9,6 +9,7 @@ type Props = {
 };
 
 const reducer: AuthReducerType = (state, action) => {
+  console.log(action, "this is action");
   switch (action[0]) {
     case Action.SIGN_IN:
       return { ...state, user: action[1], authorized: true };

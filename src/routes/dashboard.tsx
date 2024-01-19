@@ -36,7 +36,9 @@ const GovSettingsPage = lazy(() => import("pages/government/settings/index"));
 const CaregiverDetail = lazy(
   () => import("pages/government/caregiver/detail/index")
 );
-const OrphanDetail = lazy(() => import("pages/government/orphan/detail/index"));
+const OrphanDetail = lazy(
+  () => import("pages/government/gov-orphan/detail/index")
+);
 const SettingsFormDetail = lazy(
   () => import("pages/government/settings/tab/formList/detail/index")
 );

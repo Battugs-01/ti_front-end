@@ -170,7 +170,7 @@ const OrphanPage: FC = () => {
           }
         />
       </div>
-      <CardList data={data} />
+      {/* <CardList data={data} /> */}
       <CreateOrphan openModal={modalOpen} cancelModal={cancelModal} />
     </div>
   );

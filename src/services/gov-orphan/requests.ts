@@ -21,6 +21,11 @@ namespace orphanUser {
       hasAuth: true,
       body,
     });
+  export const getEmployeeList = (body: any, id: any) =>
+    http.get(`ministry/carecenter/employee/list/${id}`, {
+      hasAuth: true,
+      body,
+    });
 }
 
 export default orphanUser;

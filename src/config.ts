@@ -8,6 +8,17 @@ import {
 import { NotificationType } from "service/notifications/types";
 import { ProductCategoryType } from "service/product/type";
 import { Week } from "types";
+import Khan from "assets/government/img/khan.png";
+import Khas from "assets/government/img/khas.png";
+import Trade from "assets/government/img/trade.png";
+import Golomt from "assets/government/img/golomt.png";
+import State from "assets/government/img/govBank.png";
+import National from "assets/government/img/bank1.png";
+import Chingis from "assets/government/img/bank2.png";
+import Capitron from "assets/government/img/bank3.png";
+import Trans from "assets/government/img/bank4.png";
+import Wallet from "assets/government/img/wallet.png";
+
 export const deleteConfirm = "delete me";
 export const deleteConfirmReg = /^delete me$/g;
 export const FieldRequireMessage = "The field is required";
@@ -378,7 +389,6 @@ export const NOTIFICATION_TYPES = Object.freeze([
   },
 ]);
 
-
 export const LANGUAGES = Object.freeze([
   {
     label: "Mongolia",
@@ -400,4 +410,108 @@ export const LANGUAGES = Object.freeze([
     label: "Russia",
     value: "ru",
   },
-])
+]);
+
+export const BankList = Object.freeze([
+  {
+    image: Khan,
+    label: "Хаан банк",
+    value: "khan_bank",
+  },
+  {
+    image: Khas,
+    label: "Хас банк",
+    value: "khas_bank",
+  },
+  {
+    image: State,
+    label: "Төрийн банк",
+    value: "state_bank",
+  },
+  {
+    image: Trade,
+    label: "Худалдаа хөгжлийн банк",
+    value: "trade_development_bank",
+  },
+  {
+    image: Golomt,
+    label: "Голомт банк",
+    value: "golomt_bank",
+  },
+  {
+    image: National,
+    label: "Үндэсний ХОБанк",
+    value: "national_bank",
+  },
+  {
+    image: Capitron,
+    label: "Капитрон банк",
+    value: "capitron_bank",
+  },
+  {
+    image: Chingis,
+    label: "Чингис хаан банк",
+    value: "chingis_bank",
+  },
+  {
+    image: Wallet,
+    label: "Монгол банк",
+    value: "mongol_bank",
+  },
+  {
+    image: Trans,
+    label: "Тээвэр хөгжлийн банк",
+    value: "trans_bank",
+  },
+  {
+    image: Wallet,
+    label: "Ариг банк",
+    value: "arig_bank",
+  },
+  {
+    image: Wallet,
+    label: "М банк",
+    value: "m_bank",
+  },
+  {
+    image: Wallet,
+    label: "Төрийн сан",
+    value: "state_fund",
+  },
+  {
+    image: Wallet,
+    label: "МҮЦК төв",
+    value: "msc_center",
+  },
+  {
+    image: Wallet,
+    label: "Ард кредит",
+    value: "ard_credit",
+  },
+  {
+    image: Wallet,
+    label: "Hi Pay",
+    value: "hi_pay",
+  },
+  {
+    image: Wallet,
+    label: "Мобифинанс",
+    value: "mobifinance",
+  },
+  // {
+  //   image: Wallet,
+  //   label: "ҮЦаас төвлөрсөн хадгаламж төв",
+  //   value: "mobifinance",
+  // },
+  // {
+  //   image: Wallet,
+  //   label: "Мобифинанс",
+  //   value: "mobifinance",
+  // },
+]);
+
+// value: "mobifinance",
+// value: "hi_pay",
+// value: "msc_center",
+// value: "ard_credit",
+// value: "state_fund",

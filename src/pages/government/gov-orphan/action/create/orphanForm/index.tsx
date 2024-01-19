@@ -1,18 +1,12 @@
 import {
-  ProFormCaptcha,
   ProFormSelect,
   ProFormSwitch,
   ProFormText,
-  ProFormUploadButton,
 } from "@ant-design/pro-form";
-import { Col, Row, Switch } from "antd";
-import {
-  SectionContainer,
-  SectionField,
-  UploadDraggerButton,
-} from "components/index";
-import { SectionFieldReverse } from "components/modal/section";
-import { ItemInterface } from "service/gov-settings";
+import { RequestOptionsType } from "@ant-design/pro-utils";
+import { Col, Row } from "antd";
+import { UploadDraggerButton } from "components/index";
+import { BankList } from "config";
 
 export const OrphanForm: React.FC = () => {
   return (
@@ -82,6 +76,14 @@ export const OrphanForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={10}>
           <ProFormSelect
+            options={BankList.map(({ label, value, image }) => ({
+              label: (
+                <div className="flex gap-2 items-center">
+                  <img src={image} /> <div>{label}</div>
+                </div>
+              ),
+              value,
+            }))}
             placeholder="Банкны нэр"
             name="bank_name"
             label="Банкны нэр"
