@@ -5,7 +5,7 @@ namespace orphanUser {
   export const create = (body: any) =>
     http.post("ministry/carecenter", {
       hasAuth: true,
-      body,
+      body, 
     });
   export const getOrphan = (id: any) =>
     http.get<any>(`ministry/carecenter/${id}`, {
@@ -22,7 +22,7 @@ namespace orphanUser {
       body,
     });
   export const getEmployeeList = (body: any, id: any) =>
-    http.get(`ministry/carecenter/employee/list/${id}`, {
+   http.get(`ministry/carecenter/employee/list/${id}`, {
       hasAuth: true,
       body,
     });

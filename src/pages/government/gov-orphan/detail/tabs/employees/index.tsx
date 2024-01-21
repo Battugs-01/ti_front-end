@@ -1,4 +1,4 @@
-import { Avatar, Card } from "antd";
+import { Avatar, Card, notification } from "antd";
 import { ExportButton, ITable } from "components/index";
 import { useRequest } from "ahooks";
 import InitTableHeader from "components/table-header";
@@ -8,36 +8,39 @@ import orphanUser from "service/gov-orphan/requests";
 import { CardInterface } from "service/gov-orphan";
 import { calculateDeadlineDate } from "utils/index";
 import { FilterDeadline } from "types";
+import { useAtom } from "jotai";
+import { atomWorkersForm } from "utils/store";
 
 type EmployeeType = {
   data: CardInterface;
 };
 
 export const Employees: React.FC<EmployeeType> = ({ data }) => {
-  console.log(data, "kkk");
+  const [form, setForm] = useAtom(atomWorkersForm);
+
   // const [create, setCreate] = useState<boolean>(false);
-  const employeeList = useRequest(() =>
-    orphanUser.getEmployeeList(
-      {
-        pageSize: 20,
-        current: 1,
-        query: "",
-        sortDate: {
-          start_day: calculateDeadlineDate(FilterDeadline.Month)?.map((el) =>
-            el.format("YYYY-MM-DD")
-          )[0],
-          end_day: calculateDeadlineDate(FilterDeadline.Month)?.map((el) =>
-            el.format("YYYY-MM-DD")
-          )[1],
-        },
+  const employeeList = useRequest(
+    orphanUser.getEmployeeList,{
+      manual:true,
+      onSuccess: (hello) => {
+        console.log(hello, "hello");
       },
-      data?.id
-    )
+      onError: (err) =>
+        notification.error({
+          message: err.message,
+        }),
+    }
   );
   useEffect(() => {
-    employeeList?.run();
-  }, [data]);
-  console.log(employeeList.data, "jjjj");
+    run();
+  }, [form]);
+
+  const run = (values?: any) => {
+    employeeList.run({
+      ...form,
+      ...values,
+    },data?.id);
+  };
   const columns = [
     {
       title: "Овог",
@@ -96,7 +99,7 @@ export const Employees: React.FC<EmployeeType> = ({ data }) => {
     <Card className="pt-4">
       <InitTableHeader
         hideCreate
-        refresh={() => {}}
+        refresh={() => employeeList.run({...form},data?.id)}
         customHeaderTitle="Ажилчдын жагсаалт"
         // setCreate={setCreate}
         toolbarItems={
@@ -113,12 +116,13 @@ export const Employees: React.FC<EmployeeType> = ({ data }) => {
           </div>
         }
       />
-      <ITable
+      <ITable<any>
         create={false}
         columns={columns}
+        form={form}
+        setForm={setForm}
         loading={employeeList?.loading}
         dataSource={employeeList?.data}
-        // CreateComponent={}
       />
     </Card>
   );

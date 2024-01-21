@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 const AuthLayout: FC = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3">
+    <div className="grid grid-cols-1 sm:grid-cols-10">
       <div
-        className="hidden sm:block col-span-2 h-screen "
+        className="hidden sm:block col-span-7 h-screen "
         style={{
           backgroundImage: "url('/background/login.png')",
           backgroundSize: "cover",
@@ -26,7 +26,7 @@ const AuthLayout: FC = () => {
         </div>
       </div>
       <div
-        className="col-span-1 w-full h-screen flex justify-center items-center xs:w-full"
+        className="col-span-3 w-full h-screen flex justify-center items-center xs:w-full"
         style={{
           backgroundSize: "cover",
         }}

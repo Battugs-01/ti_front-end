@@ -23,7 +23,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   total?: number;
   refresh?: (value?: any) => void;
   details?: T[];
-  create: boolean;
+  create?: boolean;
   customActions?: (value: T) => React.ReactNode;
   RemoveModelConfig?: RemoveModelConfig<T>;
   DeActivateModelConfig?: RemoveModelConfig<T>;
@@ -34,8 +34,12 @@ type Props<T> = ProTableProps<T, any, any> & {
   noShadow?: boolean;
   selectedId?: number;
   page?: number;
+  form?: any;
+  setForm?: any;
   limit?: number;
   setCreate?: Function;
+  scroll?: any;
+  actionWidth?: number;
   // customListType? : (records) => void
 };
 
@@ -50,8 +54,11 @@ export const ITable = <T extends {}>({
   hideAction = false,
   total,
   refresh,
+  setForm,
   details,
   customActions,
+  scroll,
+  form,
   RemoveModelConfig,
   DeActivateModelConfig,
   onPaginationChange,
@@ -60,12 +67,13 @@ export const ITable = <T extends {}>({
   noShadow = false,
   page,
   limit,
+  actionWidth,
   ...rest
 }: Props<T>) => {
-  const [pageData, setPageData] = useState<{ page: number; limit: number }>({
-    page: 1,
-    limit: limit ?? 20,
-  });
+  // const [pageData, setPageData] = useState<{ page: number; limit: number }>({
+  //   page: 1,
+  //   limit: limit ?? 20,
+  // });
   const actionRef = useRef<ActionType>();
   const [update, setUpdate] = useState<T>();
   const [detail, setDetail] = useState<T>();
@@ -75,7 +83,8 @@ export const ITable = <T extends {}>({
   return (
     <>
       <ProTable
-        className="p-0 m-0"
+        // className="remove-padding-table"
+        className="p-0 m-0 remove-padding-table "
         id="main-table"
         {...rest}
         actionRef={actionRef}
@@ -88,17 +97,22 @@ export const ITable = <T extends {}>({
           density: false,
         }}
         rowKey={`id`}
-        // scroll={{ x: "auto" }}
+        scroll={scroll}
         size="small"
         search={false}
         pagination={{
           className: "px-6 font-semibold text-gray-500",
-          pageSize: pageData.limit,
+          pageSize: form?.pageSize,
           pageSizeOptions: [20, 50, 100, 200, 500],
           showSizeChanger: true,
           onChange: (page, size) => {
-            setPageData({ page, limit: size });
-            refresh && refresh({ page: page ? page - 1 : page, limit: size });
+            // setPageData({ page, limit: size });
+            // atomServiceProductForm()
+            setForm({
+              ...form,
+              current: page ? page - 1 : 0,
+              pageSize: size,
+            });
           },
           showTotal: (total, range) => {
             return (
@@ -110,8 +124,7 @@ export const ITable = <T extends {}>({
           total,
           showLessItems: true,
           onShowSizeChange: (page, size) => {
-            setPageData({ page, limit: size });
-            refresh && refresh({ page: page ? page - 1 : page, limit: size });
+            setForm({ current: page, pageSize: size });
           },
 
           responsive: true,
@@ -120,15 +133,15 @@ export const ITable = <T extends {}>({
           {
             title: "№",
             align: "center",
-            width: 30,
+            width: 50,
             fixed: "left",
             dataIndex: "index",
             valueType: "index",
             className: "text-gray-600",
             render: (_value, _record, index) =>
-              (pageData.page || 1) * (pageData.limit || 1) +
+              (form?.current || 1) * (form?.pageSize || 1) +
               (index + 1) -
-              (pageData.limit || 1),
+              (form?.pageSize || 1),
           },
           ...(columns as any),
           {
@@ -137,11 +150,11 @@ export const ITable = <T extends {}>({
             fixed: "right",
             dataIndex: "action",
             align: "right",
-
+            width: actionWidth || 200,
             render: (_, record) => {
               return (
                 <StopPagination>
-                  <div className="gap-2 flex  items-center">
+                  <div className="gap-2 flex items-center justify-center">
                     {customActions && customActions(record)}
                     {DetailComponent && (
                       <DetailButton
@@ -203,14 +216,14 @@ export const ITable = <T extends {}>({
 
       {CreateComponent && (
         <CreateComponent
-          open={create}
+          open={create || false}
           onCancel={() => setCreate?.(false)}
           onFinish={() => {
             setCreate?.(false);
             refresh &&
               refresh({
-                ...pageData,
-                page: pageData.page ? pageData.page - 1 : 0,
+                ...form,
+                page: form.current ? form.current - 1 : 0,
               });
           }}
           details={details}
@@ -225,8 +238,8 @@ export const ITable = <T extends {}>({
             setUpdate(undefined);
             refresh &&
               refresh({
-                ...pageData,
-                page: pageData.page ? pageData.page - 1 : 0,
+                ...form,
+                page: form?.current ? form?.current - 1 : 0,
               });
           }}
           details={details}
@@ -249,8 +262,8 @@ export const ITable = <T extends {}>({
             setRemove(undefined);
             refresh &&
               refresh({
-                ...pageData,
-                page: pageData.page ? pageData.page - 1 : 0,
+                ...form,
+                page: form.current ? form.current - 1 : 0,
               });
           }}
           details={details}
@@ -263,8 +276,8 @@ export const ITable = <T extends {}>({
           onDone={() => {
             refresh &&
               refresh({
-                ...pageData,
-                page: pageData.page ? pageData.page - 1 : 0,
+                ...form,
+                page: form.current ? form.current - 1 : 0,
               });
             setRemove(undefined);
           }}
@@ -280,8 +293,8 @@ export const ITable = <T extends {}>({
           onDone={() => {
             refresh &&
               refresh({
-                ...pageData,
-                page: pageData.page ? pageData.page - 1 : 0,
+                ...form,
+                page: form.current ? form.current - 1 : 0,
               });
             setDeactivate(undefined);
           }}
