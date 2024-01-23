@@ -2,14 +2,13 @@ import { Avatar, Card, notification } from "antd";
 import { ExportButton, ITable } from "components/index";
 import { useRequest } from "ahooks";
 import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { exportFromTable } from "utils/export";
 import orphanUser from "service/gov-orphan/requests";
 import { CardInterface } from "service/gov-orphan";
-import { calculateDeadlineDate } from "utils/index";
-import { FilterDeadline } from "types";
 import { useAtom } from "jotai";
 import { atomWorkersForm } from "utils/store";
+import moment from "moment";
 
 type EmployeeType = {
   data: CardInterface;
@@ -18,33 +17,30 @@ type EmployeeType = {
 export const Employees: React.FC<EmployeeType> = ({ data }) => {
   const [form, setForm] = useAtom(atomWorkersForm);
 
-  // const [create, setCreate] = useState<boolean>(false);
-  const employeeList = useRequest(
-    orphanUser.getEmployeeList,{
-      manual:true,
-      onSuccess: (hello) => {
-        console.log(hello, "hello");
-      },
-      onError: (err) =>
-        notification.error({
-          message: err.message,
-        }),
-    }
-  );
+  const employeeList = useRequest(orphanUser.getEmployeeList, {
+    manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
   useEffect(() => {
     run();
   }, [form]);
 
   const run = (values?: any) => {
-    employeeList.run({
-      ...form,
-      ...values,
-    },data?.id);
+    employeeList.run(
+      {
+        ...form,
+        ...values,
+      },
+      data?.id || 0
+    );
   };
   const columns = [
     {
       title: "Овог",
-      dataIndex: "lastName",
+      dataIndex: "last_name",
       render: (val: any, record: any) => {
         return (
           <div className="flex items-center gap-2">
@@ -56,19 +52,20 @@ export const Employees: React.FC<EmployeeType> = ({ data }) => {
     },
     {
       title: "Нэр",
-      dataIndex: "firstName",
+      dataIndex: "first_name",
     },
     {
       title: "Ургийн овог",
-      dataIndex: "maidenName",
+      dataIndex: "family_name",
     },
     {
       title: "Төрсөн огноо",
-      dataIndex: "birthDate",
+      dataIndex: "birth_date",
+      render: (val: any) => moment(val).format("l"),
     },
     {
       title: "Регистрийн дугаар",
-      dataIndex: "birthDate",
+      dataIndex: "rd",
     },
     {
       title: "Хүйс",
@@ -80,26 +77,27 @@ export const Employees: React.FC<EmployeeType> = ({ data }) => {
     },
     {
       title: "Албан тушаал",
-      dataIndex: "birthDate",
+      dataIndex: "position",
+    },
+    {
+      title: "Үндсэн ажилтан эсэх",
+      dataIndex: "",
     },
     {
       title: "Үндсэн цалин",
-      dataIndex: "birthDate",
-    },
-    {
-      title: "Нийт ажилласан жил",
-      dataIndex: "birthDate",
+      dataIndex: "salary",
     },
     {
       title: "Ажилласан жил",
-      dataIndex: "birthDate",
+      dataIndex: "",
     },
   ];
   return (
     <Card className="pt-4">
       <InitTableHeader
+        loading={employeeList?.loading}
         hideCreate
-        refresh={() => employeeList.run({...form},data?.id)}
+        refresh={() => employeeList.run({ ...form }, data?.id)}
         customHeaderTitle="Ажилчдын жагсаалт"
         // setCreate={setCreate}
         toolbarItems={
@@ -122,7 +120,7 @@ export const Employees: React.FC<EmployeeType> = ({ data }) => {
         form={form}
         setForm={setForm}
         loading={employeeList?.loading}
-        dataSource={employeeList?.data}
+        dataSource={employeeList?.data?.items}
       />
     </Card>
   );

@@ -23,6 +23,7 @@ interface TableHeaderProps {
   setCreate?: (value: boolean) => void;
   hideTitle?: boolean;
   leftContent?: any;
+  loading?: boolean;
 }
 
 const InitTableHeader: React.FC<TableHeaderProps> = ({
@@ -40,6 +41,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   hideTitle = false,
   leftContent,
   setCreate,
+  loading,
 }) => {
   const form = useRef<ProFormInstance>();
 
@@ -111,7 +113,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             prefix: <BiSearch color="#66708066" size={20} />, // Add the icon as a prefix here
           }}
         />
-        <div className="">
+        <div>
           <img src={refreshIcon} alt="refresh" onClick={() => refresh?.()} />
         </div>
         {toolbarItems}

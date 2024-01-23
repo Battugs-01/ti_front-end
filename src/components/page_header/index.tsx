@@ -32,6 +32,9 @@ export const PageHeader = ({ title, subTitle }: Props) => {
       case "settings":
         result = "Тохиргоо";
         break;
+      case "feedback":
+        result = "Санал, хүсэлт";
+        break;
       default:
         break;
     }

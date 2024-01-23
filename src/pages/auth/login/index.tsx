@@ -25,7 +25,7 @@ const Login: FC = () => {
       setAuth([Action.SIGN_IN, data.user]);
       navigate("/dashboard/government/requests");
       notification.success({
-        message: "Success",
+        message: "Амжилттай нэвтэрлээ.",
       });
     },
     onError: (err) => {
