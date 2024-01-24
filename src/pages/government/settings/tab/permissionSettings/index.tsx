@@ -7,6 +7,7 @@ import { CreateUser } from "./actions/create/createUser";
 import { useRequest } from "ahooks";
 import governmentUser from "service/gov-settings/request";
 import { Item } from "./item";
+import CustomPagination from "components/pagination";
 
 const data = [
   {
@@ -133,14 +134,19 @@ export const PermissionSettings: React.FC = () => {
             }
           />
         </div>
-        {userList?.data?.items?.map((item, key) => {
-          return <Item key={key} data={item} />;
-        })}
-        <CreateUser
-          isOpenModal={isOpenModal}
-          cancelModal={cancelModal}
-          onSuccess={refreshList}
-        />
+        <div>
+          {userList?.data?.items?.map((item, key) => {
+            return <Item key={key} data={item} />;
+          })}
+          <CreateUser
+            isOpenModal={isOpenModal}
+            cancelModal={cancelModal}
+            onSuccess={refreshList}
+          />
+        </div>
+        <div className="flex justify-end mb-4 mx-6">
+          <CustomPagination total={userList.data?.total} />
+        </div>
       </Card>
     </div>
   );

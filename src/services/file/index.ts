@@ -4,18 +4,14 @@ import http from "..";
 
 namespace file {
   export const upload = async ({
-    name,
-    bucket_name,
     file,
     onUploadProgress,
   }: SingleFileUpload) => {
     const body = new FormData();
 
-    body.append("name", name);
-    body.append("file", file);
-    body.append("bucket_name", bucket_name);
+    body.append("files", file);
 
-    return http.post<FileRecord>("global/file/upload", {
+    return http.post<FileRecord>("/upload/files", {
       body,
       hasAuth: true,
       onUploadProgress: onUploadProgress,

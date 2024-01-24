@@ -7,6 +7,7 @@ import { CreateOrphan } from "./action/create/createOrphan";
 import { Item } from "./item";
 import { useRequest } from "ahooks";
 import orphanUser from "service/gov-orphan/requests";
+import CustomPagination from "components/pagination";
 
 const GovOrphan: React.FC = () => {
   const [isOpenModal, setModalOpen] = useState<boolean>(false);
@@ -52,6 +53,12 @@ const GovOrphan: React.FC = () => {
           })}
         </div>
         <CreateOrphan openModal={isOpenModal} cancelModal={cancelModal} />
+        <div
+          className="flex justify-end mb-4 px-6"
+          style={{ borderTop: "1px solid #EAECF0" }}
+        >
+          <CustomPagination total={orphanList?.data?.total} />
+        </div>
       </Card>
     </div>
   );

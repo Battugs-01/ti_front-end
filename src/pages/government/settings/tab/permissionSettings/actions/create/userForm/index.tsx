@@ -1,4 +1,8 @@
-import { ProFormSelect, ProFormText } from "@ant-design/pro-form";
+import {
+  ProFormCheckbox,
+  ProFormSelect,
+  ProFormText,
+} from "@ant-design/pro-form";
 import { Checkbox, Col, Row, Table } from "antd";
 import { SectionField } from "components/index";
 import { useState } from "react";
@@ -41,6 +45,7 @@ const data = [
 
 export const UserForm: React.FC<OrphanFormType> = ({}) => {
   const [selectAll, setSelectAll] = useState(false);
+  const [select, setSelect] = useState(false);
 
   const handleSelectAllChange = (checked: boolean) => {
     setSelectAll(checked);
@@ -62,8 +67,12 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
           children={
             <Checkbox
               disabled={!val}
-              checked={val && selectAll}
+              checked={val && (selectAll ? selectAll : select)}
               className="px-4 py-2"
+              onChange={(e) => {
+                setSelect((prev) => !prev);
+                setSelectAll(false);
+              }}
             />
           }
         />
@@ -75,7 +84,16 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
       key: "isSaw",
       render: (val: any, record: any) => (
         <SectionField
-          children={<Checkbox disabled={!val} checked={val && selectAll} />}
+          children={
+            <Checkbox
+              disabled={!val}
+              checked={val && (selectAll || select)}
+              onChange={(e) => {
+                setSelect((prev) => !prev);
+                setSelectAll(false);
+              }}
+            />
+          }
         />
       ),
     },
@@ -85,7 +103,16 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
       key: "isEdit",
       render: (val: any, record: any) => (
         <SectionField
-          children={<Checkbox disabled={!val} checked={val && selectAll} />}
+          children={
+            <Checkbox
+              disabled={!val}
+              checked={val && (selectAll ? selectAll : select)}
+              onChange={(e) => {
+                setSelect((prev) => !prev);
+                setSelectAll(false);
+              }}
+            />
+          }
         />
       ),
     },
@@ -144,6 +171,7 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
         Хандах эрхийн зөвшөөрөл
       </div>
       <Checkbox
+        name="all"
         className="text-gray-900 mb-4"
         checked={selectAll}
         onChange={(e) => handleSelectAllChange(e.target.checked)}

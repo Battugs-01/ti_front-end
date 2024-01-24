@@ -4,6 +4,8 @@ import orphanUser from "service/gov-orphan/requests";
 import { useRequest } from "ahooks";
 import uploadFile from "service/uploadFile";
 import { CardInterface } from "service/gov-orphan";
+import { notification } from "antd";
+import file from "service/file";
 
 type CreateOrphanType = {
   openModal?: boolean;
@@ -14,8 +16,12 @@ export const CreateOrphan: React.FC<CreateOrphanType> = ({
   openModal,
   cancelModal,
 }) => {
-  const uploadImage = useRequest(uploadFile.create, {
+  const upload = useRequest(file.upload, {
     manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
   });
   return (
     <IModalForm
@@ -26,7 +32,9 @@ export const CreateOrphan: React.FC<CreateOrphanType> = ({
       okText="Нэмэх"
       modalProps={{ onCancel: cancelModal }}
       onRequest={async (values) => {
-        // uploadImage.runAsync(values?.files);
+        if (values.files) {
+          await upload.runAsync({ file: values?.files[0].originFileObj });
+        }
         return orphanUser.create({
           contact: {
             first_name: values?.first_name,

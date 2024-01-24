@@ -3,6 +3,10 @@ import { FeedbackType } from "service/gov-feedback/type";
 import InfoIcon from "assets/icons/info-circle.svg";
 import { useState } from "react";
 import Badge from "components/badge";
+import { IfCondition } from "components/condition";
+import Decide from "./tabs/decide";
+import Decided from "./tabs/decided";
+import Transfered from "./tabs/transfered";
 
 const items = [
   {
@@ -46,6 +50,18 @@ const FeedbackPage: React.FC = () => {
           })}
         />
       </div>
+      <IfCondition
+        condition={tab === FeedbackType.decide}
+        whenTrue={<Decide />}
+      />
+      <IfCondition
+        condition={tab === FeedbackType.decided}
+        whenTrue={<Decided />}
+      />
+      <IfCondition
+        condition={tab === FeedbackType.transfered}
+        whenTrue={<Transfered />}
+      />
     </div>
   );
 };

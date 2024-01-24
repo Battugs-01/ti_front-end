@@ -1,20 +1,15 @@
 import React from "react";
 import { Pagination } from "antd";
 
-const CustomPagination: React.FC = () => (
+type PaginationType = {
+  total?: number;
+};
+
+const CustomPagination: React.FC<PaginationType> = ({ total }) => (
   <>
-    <div
-      className="mt-5"
-      style={{
-        position: "absolute",
-        right: 10,
-        bottom: 5,
-        marginBottom: 10,
-        marginTop: 10,
-      }}
-    >
+    <div className="mt-5">
       <Pagination
-        total={85}
+        total={total}
         showTotal={(total, range) => (
           <div className="font-semibold text-gray-500">
             {range[0]}-{range[1]} of {total} items

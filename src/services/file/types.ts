@@ -9,8 +9,6 @@ export interface StorageFile {
 }
 
 export interface SingleFileUpload {
-  name: string;
-  bucket_name: string;
   file: any;
   onUploadProgress?: (progressEvent: any) => void;
 }
