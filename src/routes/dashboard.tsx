@@ -63,6 +63,7 @@ const CaregiverList = lazy(
       "pages/government/report/detail/tab/caregiverNews/caregiverList/index"
     )
 );
+const EmployeePage = lazy(() => import("pages/government/employees/index"));
 const Feedback = lazy(() => import("pages/government/feedback/index"));
 
 const dashboardRoutes: IRoute[] = [
@@ -205,6 +206,11 @@ const dashboardRoutes: IRoute[] = [
     key: "gov-feedback",
     path: "government/feedback",
     component: <Feedback />,
+  },
+  {
+    key: "gov-employees",
+    path: "government/employees",
+    component: <EmployeePage />,
   },
 ];
 

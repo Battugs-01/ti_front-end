@@ -5,7 +5,7 @@ import CaregiverIcon from "assets/icons/caregiver.svg";
 import OrphanIcon from "assets/icons/orphan.svg";
 import SettingsIcon from "assets/icons/settings.svg";
 import FeedbackIcon from "assets/government/icons/request.svg";
-
+import EmployeesIcon from "assets/government/icons/users.svg";
 export interface GovernmentMenuProps {
   icon: any;
   path: string;
@@ -36,6 +36,12 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
     icon: <img src={OrphanIcon} />,
     name: "Асрамжийн газар",
     path: "/dashboard/government/orphan",
+    children: [],
+  },
+  {
+    icon: <img src={EmployeesIcon} />,
+    name: "Ажилчдын жагсаалт",
+    path: "/dashboard/government/employees",
     children: [],
   },
   {

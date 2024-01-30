@@ -35,6 +35,9 @@ export const PageHeader = ({ title, subTitle }: Props) => {
       case "feedback":
         result = "Санал, хүсэлт";
         break;
+      case "employees":
+        result = "Ажилчдын жагсаалт";
+        break;
       default:
         break;
     }

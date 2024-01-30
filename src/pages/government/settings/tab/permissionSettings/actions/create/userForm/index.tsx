@@ -44,13 +44,16 @@ const data = [
 ];
 
 export const UserForm: React.FC<OrphanFormType> = ({}) => {
-  const [selectAll, setSelectAll] = useState(false);
-  const [select, setSelect] = useState(false);
+  const [selectAll, setSelectAll] = useState(true);
+  const [select, setSelect] = useState({
+    recordKey: null,
+    columnKey: null,
+    selected: false,
+  });
 
   const handleSelectAllChange = (checked: boolean) => {
     setSelectAll(checked);
   };
-
   const columns = [
     {
       title: "Нэр",
@@ -67,12 +70,8 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
           children={
             <Checkbox
               disabled={!val}
-              checked={val && (selectAll ? selectAll : select)}
-              className="px-4 py-2"
-              onChange={(e) => {
-                setSelect((prev) => !prev);
-                setSelectAll(false);
-              }}
+              checked={val && selectAll ? selectAll : select.selected}
+              onChange={() => setSelectAll(false)}
             />
           }
         />
@@ -87,11 +86,8 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
           children={
             <Checkbox
               disabled={!val}
-              checked={val && (selectAll || select)}
-              onChange={(e) => {
-                setSelect((prev) => !prev);
-                setSelectAll(false);
-              }}
+              onChange={(e) => {}}
+              checked={val && (selectAll ? selectAll : undefined)}
             />
           }
         />
@@ -101,22 +97,22 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
       title: "Засах",
       dataIndex: "isEdit",
       key: "isEdit",
-      render: (val: any, record: any) => (
-        <SectionField
-          children={
-            <Checkbox
-              disabled={!val}
-              checked={val && (selectAll ? selectAll : select)}
-              onChange={(e) => {
-                setSelect((prev) => !prev);
-                setSelectAll(false);
-              }}
-            />
-          }
-        />
-      ),
+      render: (val: any, record: any) => {
+        return (
+          <SectionField
+            children={
+              <Checkbox
+                disabled={!val}
+                onChange={(e) => {}}
+                defaultChecked={val && selectAll}
+              />
+            }
+          />
+        );
+      },
     },
   ];
+  columns?.map((val) => console.log(val.key));
 
   return (
     <div>
