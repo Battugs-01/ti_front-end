@@ -66,6 +66,9 @@ const CaregiverList = lazy(
 const EmployeePage = lazy(() => import("pages/government/employees/index"));
 const Feedback = lazy(() => import("pages/government/feedback/index"));
 
+// this is social workers router
+const CustomerPage = lazy(() => import("pages/socialWorker/customer/index"));
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "dashboard",
@@ -211,6 +214,11 @@ const dashboardRoutes: IRoute[] = [
     key: "gov-employees",
     path: "government/employees",
     component: <EmployeePage />,
+  },
+  {
+    key: "social-worker",
+    path: "socialWorker/customer",
+    component: <CustomerPage />,
   },
 ];
 
