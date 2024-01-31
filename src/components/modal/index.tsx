@@ -17,6 +17,7 @@ type Props = ModalFormProps & {
   footer?: React.ReactNode;
   cancelText?: React.ReactNode;
   okText?: React.ReactNode;
+  cancelVisible?: boolean;
   successData?: () => void;
 };
 
@@ -28,6 +29,7 @@ export const IModalForm = ({
   cancelText,
   okText,
   successData,
+  cancelVisible = true,
   ...rest
 }: Props) => {
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
@@ -95,14 +97,16 @@ export const IModalForm = ({
               <div className="flex items-center justify-between w-full px-10 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300 py-5">
                 <div className="w-full flex">{footer}</div>
                 <div className="flex items-center gap-1">
-                  <Button
-                    onClick={() =>
-                      rest.modalProps?.onCancel &&
-                      rest.modalProps?.onCancel(null as any)
-                    }
-                  >
-                    {cancelText}
-                  </Button>
+                  {!cancelVisible && (
+                    <Button
+                      onClick={() =>
+                        rest.modalProps?.onCancel &&
+                        rest.modalProps?.onCancel(null as any)
+                      }
+                    >
+                      {cancelText}
+                    </Button>
+                  )}
                   <Button
                     type="primary"
                     onClick={onSubmit}

@@ -3,7 +3,7 @@ import { Button, ButtonProps, Tooltip } from "antd";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiCheckCircle } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoAddOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
@@ -19,7 +19,7 @@ export const CreateButton = ({ addButtonName, ...rest }: PropsCreate) => {
     <Button
       {...rest}
       className={`flex items-center   font-medium gap-1 ${rest.className}`}
-      icon={<IoAddCircleOutline size={20} />}
+      icon={<IoAddOutline size={20} />}
       type="primary"
     >
       {addButtonName || "Бүртгэх"}

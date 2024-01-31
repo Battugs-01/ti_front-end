@@ -67,7 +67,7 @@ const MainRoutes: FC = () => {
         element={
           authorized ? (
             isSocialworker ? (
-              <Navigate to="/dashboard/socialWorker" />
+              <Navigate to="/dashboard/socialWorker/customer" />
             ) : (
               <Navigate to="/dashboard/government/requests" />
             )
