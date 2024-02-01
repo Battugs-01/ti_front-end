@@ -43,22 +43,6 @@ const data = [
     name: "Battulga",
     surname: "Enkhtur",
     registrationNumber: "МИ95091515",
-    state: 4,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 4,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
     state: 0,
     date: Date.now(),
   },
@@ -68,6 +52,22 @@ const data = [
     surname: "Enkhtur",
     registrationNumber: "МИ95091515",
     state: 0,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 1,
+    date: Date.now(),
+  },
+  {
+    image: "BE",
+    name: "Battulga",
+    surname: "Enkhtur",
+    registrationNumber: "МИ95091515",
+    state: 3,
     date: Date.now(),
   },
   {
@@ -99,7 +99,7 @@ const data = [
     name: "Battulga",
     surname: "Enkhtur",
     registrationNumber: "МИ95091515",
-    state: 4,
+    state: 2,
     date: Date.now(),
   },
   {
@@ -107,7 +107,7 @@ const data = [
     name: "Battulga",
     surname: "Enkhtur",
     registrationNumber: "МИ95091515",
-    state: 4,
+    state: 1,
     date: Date.now(),
   },
   {
@@ -158,6 +158,22 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.all}
         whenTrue={<All data={data} />}
+      />
+      <IfCondition
+        condition={tab === RequestType.saved}
+        whenTrue={<All data={data?.filter((val,index)=>val.state===0)} />}
+      />
+      <IfCondition
+        condition={tab === RequestType.putOnHold}
+        whenTrue={<All data={data?.filter((val,index)=>val.state===3)} />}
+      />
+      <IfCondition
+        condition={tab === RequestType.returned}
+        whenTrue={<All data={data?.filter((val,index)=>val.state===2)} />}
+      />
+      <IfCondition
+        condition={tab === RequestType.requestSend}
+        whenTrue={<All data={data?.filter((val,index)=>val.state===1)} />}
       />
     </Fragment>
   );

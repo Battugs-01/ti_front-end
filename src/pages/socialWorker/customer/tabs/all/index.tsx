@@ -18,12 +18,13 @@ import {
   CustomButton,
   DefaultButton,
 } from "pages/government/components/button";
-
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import { HealthForm } from "./caregiver-create/health-condition";
 import { SendForm } from "./caregiver-create/request-send";
 import LeftIcon from "assets/government/icons/left-icon.svg";
+import SearchIcon from "assets/government/icons/search.svg";
+import { CreateForm } from "./create";
 
 type AllProps = {
   data?: ListData[];
@@ -31,24 +32,32 @@ type AllProps = {
 
 export const All: React.FC<AllProps> = ({ data }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [isStepModal, setStepModal] = useState<boolean>(false);
   const [current, setCurrent] = useState(0);
   const cancelModal = () => {
     setOpenModal(false);
   };
+  const cancelStepModal=()=>{
+    setStepModal(false);
+  }
+  const nextModal=()=>{
+    setOpenModal(false);
+    setStepModal(true);
+  }
   return (
     <div className="custom-ant-card-padding-border-remove mt-6">
       <Card>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={() => {}}
-            customHeaderTitle="Бүгд"
+            customHeaderTitle="Нийт (6)"
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">
                 <ExportButton
                   onClick={() => {
                     exportFromTable(
-                      ["Бүгд"],
+                      ["Нийт (6)"],
                       window.document.getElementById(
                         "main-table"
                       ) as HTMLElement,
@@ -159,10 +168,10 @@ export const All: React.FC<AllProps> = ({ data }) => {
             return (
               <IModalForm
                 successData={() => {}}
-                modalProps={{ onCancel: cancelModal }}
+                modalProps={{ onCancel: cancelStepModal }}
                 title={"Асруулагч нэмэх"}
                 footer={submitter}
-                open={isOpenModal}
+                open={isStepModal}
                 width={1064}
               >
                 {dom}
@@ -172,7 +181,9 @@ export const All: React.FC<AllProps> = ({ data }) => {
         >
           <StepsForm.StepForm
             name="giver-info"
-            title={"Асруулагчийн хувийн мэдээлэл"}
+            title={<div className="text-[#344054] font-semibold mt-1">
+            Асруулагчийн хувийн мэдээлэл
+          </div>}
             onFinish={async () => {
               return true;
             }}
@@ -181,7 +192,9 @@ export const All: React.FC<AllProps> = ({ data }) => {
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="documents"
-            title=" Бүрдүүлэх бичиг баримт"
+            title={<div className="text-[#344054] font-semibold mt-1">
+            Бүрдүүлэх бичиг баримт
+          </div>}
             onFinish={async () => {
               return true;
             }}
@@ -190,7 +203,9 @@ export const All: React.FC<AllProps> = ({ data }) => {
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="health"
-            title="Эрүүл мэндийн байдал"
+            title={<div className="text-[#344054] font-semibold mt-1">
+            Эрүүл мэндийн байдал
+          </div>}
             onFinish={async () => {
               return true;
             }}
@@ -199,7 +214,9 @@ export const All: React.FC<AllProps> = ({ data }) => {
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="request"
-            title="Хүсэлт илгээх"
+            title={<div className="text-[#344054] font-semibold mt-1">
+            Хүсэлт илгээх
+          </div>}
             onFinish={async () => {
               return true;
             }}
@@ -207,6 +224,9 @@ export const All: React.FC<AllProps> = ({ data }) => {
             <SendForm />
           </StepsForm.StepForm>
         </StepsForm>
+        <IModalForm open={isOpenModal} width={724} title="Асруулагч нэмэх" modalProps={{onCancel:cancelModal,onOk:nextModal}} okText={<div className="flex items-center gap-2"><img src={SearchIcon}/> <div>Хайх</div></div>}>
+          <CreateForm/>
+        </IModalForm>
         {/* 
         <CareGiverForm /> */}
       </Card>

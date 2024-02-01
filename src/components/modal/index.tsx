@@ -39,7 +39,7 @@ export const IModalForm = ({
       onDone && onDone();
       successData && successData();
       notification.success({
-        message: "Successfully",
+        message: "Амжилттай",
       });
     },
     onError: (err) =>
@@ -98,11 +98,8 @@ export const IModalForm = ({
         render: ({ submit: onSubmit }) => {
           return (
             (rest.submitter || rest.submitter === undefined) && (
-              <div className="flex items-center justify-between w-full px-10 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300 py-5">
+              <div className="flex items-center justify-between w-full p-6 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300">
                 <div className="w-full flex">{footer}</div>
-                {isCustomFooter ? (
-                  footer
-                ) : (
                   <div className="flex items-center gap-1">
                     {cancelText && (
                       <Button
@@ -117,14 +114,13 @@ export const IModalForm = ({
                     {okText && (
                       <Button
                         type="primary"
-                        onClick={onSubmit}
+                        onClick={()=>{ rest?.modalProps?.onOk && rest.modalProps?.onOk(null as any); onSubmit()}}
                         loading={submit.loading}
                       >
                         {okText}
                       </Button>
                     )}
                   </div>
-                )}
               </div>
             )
           );
