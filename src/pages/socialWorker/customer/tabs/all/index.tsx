@@ -75,6 +75,23 @@ export const All: React.FC<AllProps> = ({ data }) => {
         >
           <CareGiverForm />
         </IModalForm>
+        {/* <IModalForm
+          successData={() => {}}
+          modalProps={{ onCancel: cancelModal }}
+          title={"Асруулагч нэмэх"}
+          okText={
+            <div className="flex items-center gap-2">
+              {" "}
+              <img src={SearchIcon} alt="search" />
+              <div>Хайх</div>
+            </div>
+          }
+          cancelVisible={true}
+          open={isOpenModal}
+          width={724}
+        >
+          <CreateForm />
+        </IModalForm> */}
       </Card>
     </div>
   );

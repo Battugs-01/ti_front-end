@@ -17,9 +17,8 @@ export const CareGiverForm: React.FC = () => {
     setCurrent(value);
   };
   return (
-    <div>
+    <div className="m-auto">
       <Steps
-        className="custom-steps"
         current={current}
         onChange={onChange}
         progressDot={(icon, { index, status }) => {

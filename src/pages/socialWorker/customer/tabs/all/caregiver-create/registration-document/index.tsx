@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { UploadDraggerButton } from "components/index";
+import { UploadButton, UploadDraggerButton } from "components/index";
 
 const uploadDocument = [
   [
@@ -43,23 +43,72 @@ const uploadDocument = [
     },
   ],
 ];
+const uploadFile = [
+  [
+    {
+      name: "identity_card",
+      label: "Иргэний үнэмлэх",
+    },
+    {
+      name: "property_inquiry",
+      label: "Эд хөрөнгийн лавлагаа",
+    },
+  ],
+  [
+    {
+      name: "inquiry_have_children",
+      label: "Үр хүүхэдтэй эсэх лавлагаа",
+    },
+    {
+      name: "sibling_inquiry",
+      label: "Ах дүүтэй эсэх лавлагаа",
+    },
+  ],
+  [
+    {
+      name: "is_married",
+      label: "Гэрлэсэн эсэх",
+    },
+    {
+      name: "is_divorce",
+      label: "Гэрлэлт цуцлалсан эсэх",
+    },
+  ],
+];
 
 export const RegistrationForm: React.FC = () => {
   return (
     <div className="py-8 px-12">
-      {uploadDocument?.map((val, key) => (
-        <Row gutter={[16, 16]} key={key}>
-          {val?.map((el, index) => (
-            <Col span={12}>
-              <UploadDraggerButton
-                name={el?.name}
-                label={el?.label}
-                key={index}
-              />
-            </Col>
-          ))}
-        </Row>
-      ))}
+      <div className="mb-5">
+        {uploadDocument?.map((val, key) => (
+          <Row gutter={[16, 16]} key={key}>
+            {val?.map((el, index) => (
+              <Col span={12}>
+                <UploadDraggerButton
+                  name={el?.name}
+                  label={el?.label}
+                  key={index}
+                />
+              </Col>
+            ))}
+          </Row>
+        ))}
+      </div>
+      <div className="pt-5" style={{ borderTop: "1px solid #EAECF0" }}>
+        {uploadFile?.map((val, key) => (
+          <Row gutter={[16, 16]} key={key}>
+            {val?.map((el, index) => (
+              <Col span={12}>
+                <UploadDraggerButton
+                  name={el?.name}
+                  label={el?.label}
+                  key={index}
+                />
+              </Col>
+            ))}
+          </Row>
+        ))}
+      </div>
     </div>
   );
 };

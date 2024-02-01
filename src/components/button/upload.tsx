@@ -20,13 +20,13 @@ export const UploadDraggerButton = ({
       <ProFormUploadDragger
         {...rest}
         title={
-          <div className="w-full h-full space-x-2 text-sm text-gray-600">
+          <div className="w-full h-full bg-[#E7EDEE] space-x-2 text-sm text-gray-600">
             <div className="text-primary">
               <div>
                 <img src={EditIcon} />
               </div>
               <span className=" font-semibold  text-[#144E5A] mr-1">
-                Файл оруулах
+                Файл хавсаргах
               </span>
             </div>
             <div className="">SVG,PNG,JPG or GIF (Хэмжээ :800*400px)</div>
