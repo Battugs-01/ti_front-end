@@ -14,7 +14,7 @@ import { useState } from "react";
 export const CaregiverInfoForm: React.FC = () => {
   const [isDisability, setDisability] = useState<boolean>(false);
   return (
-    <div className="py-8 px-12">
+    <div className="px-4">
       <Row gutter={[16, 16]}>
         <Col>
           <ProFormUploadButton

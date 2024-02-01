@@ -4,6 +4,7 @@ import {
   ModalFormProps,
   ProFormInstance,
   DrawerForm,
+  StepsForm,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Typography, notification } from "antd";
@@ -17,8 +18,8 @@ type Props = ModalFormProps & {
   footer?: React.ReactNode;
   cancelText?: React.ReactNode;
   okText?: React.ReactNode;
-  cancelVisible?: boolean;
   successData?: () => void;
+  isCustomFooter?: boolean;
 };
 
 export const IModalForm = ({
@@ -29,7 +30,7 @@ export const IModalForm = ({
   cancelText,
   okText,
   successData,
-  cancelVisible = true,
+  isCustomFooter,
   ...rest
 }: Props) => {
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
@@ -47,7 +48,10 @@ export const IModalForm = ({
       }),
   });
 
+
+
   return (
+    
     <ModalForm
       {...rest}
       onFinishFailed={(err) => {
@@ -79,7 +83,7 @@ export const IModalForm = ({
       }
       layout="vertical"
       labelCol={{
-        span: 12,
+        span: 24,
       }}
       labelAlign="left"
       colProps={{
@@ -96,25 +100,31 @@ export const IModalForm = ({
             (rest.submitter || rest.submitter === undefined) && (
               <div className="flex items-center justify-between w-full px-10 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300 py-5">
                 <div className="w-full flex">{footer}</div>
-                <div className="flex items-center gap-1">
-                  {!cancelVisible && (
-                    <Button
-                      onClick={() =>
-                        rest.modalProps?.onCancel &&
-                        rest.modalProps?.onCancel(null as any)
-                      }
-                    >
-                      {cancelText}
-                    </Button>
-                  )}
-                  <Button
-                    type="primary"
-                    onClick={onSubmit}
-                    loading={submit.loading}
-                  >
-                    {okText}
-                  </Button>
-                </div>
+                {isCustomFooter ? (
+                  footer
+                ) : (
+                  <div className="flex items-center gap-1">
+                    {cancelText && (
+                      <Button
+                        onClick={() =>
+                          rest.modalProps?.onCancel &&
+                          rest.modalProps?.onCancel(null as any)
+                        }
+                      >
+                        {cancelText}
+                      </Button>
+                    )}
+                    {okText && (
+                      <Button
+                        type="primary"
+                        onClick={onSubmit}
+                        loading={submit.loading}
+                      >
+                        {okText}
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
             )
           );

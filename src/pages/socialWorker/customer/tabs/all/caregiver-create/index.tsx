@@ -49,16 +49,32 @@ export const CareGiverForm: React.FC = () => {
         }}
         items={[
           {
-            title: "Асруулагчийн хувийн мэдээлэл",
+            title: (
+              <div className="text-[#344054] font-semibold mt-1">
+                Асруулагчийн хувийн мэдээлэл
+              </div>
+            ),
           },
           {
-            title: "Бүрдүүлэх бичиг баримт",
+            title: (
+              <div className="text-[#344054] font-semibold mt-1">
+                Бүрдүүлэх бичиг баримт
+              </div>
+            ),
           },
           {
-            title: "Эрүүл мэндийн байдал",
+            title: (
+              <div className="text-[#344054] font-semibold mt-1">
+                Эрүүл мэндийн байдал
+              </div>
+            ),
           },
           {
-            title: "Хүсэлт илгээх",
+            title: (
+              <div className="text-[#344054] font-semibold mt-1">
+                Хүсэлт илгээх
+              </div>
+            ),
           },
         ]}
       />

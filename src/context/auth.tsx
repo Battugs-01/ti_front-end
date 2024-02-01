@@ -9,7 +9,6 @@ type Props = {
 };
 
 const reducer: AuthReducerType = (state, action) => {
-  console.log(action, "this is action");
   switch (action[0]) {
     case Action.SIGN_IN:
       return { ...state, user: action[1], authorized: true };
@@ -30,7 +29,7 @@ const AuthContext = createContext<AuthContextType>([
 export const AuthProvider = ({ children }: Props) => {
   const [state, setState] = useReducer(reducer, {
     authorized: false,
-    init: true,
+    init: false,
   });
   const _info = useRequest(auth.info, {
     manual: true,

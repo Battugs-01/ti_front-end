@@ -57,7 +57,7 @@ const uploadDocument = [
 
 export const HealthForm: React.FC = () => {
   return (
-    <div className="py-8 px-12">
+    <div className=" px-4">
       {uploadDocument?.map((val, key) => (
         <Row gutter={[16, 16]} key={key}>
           {val?.map((el, index) => (

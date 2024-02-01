@@ -27,7 +27,7 @@ const Menu: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <Badge count={2}>
+          <Badge count={2} size="small">
             <img src={NotificationIcon} alt="notf" />
           </Badge>
           <div className="flex items-center gap-3">

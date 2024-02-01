@@ -78,7 +78,7 @@ const uploadFile = [
 
 export const RegistrationForm: React.FC = () => {
   return (
-    <div className="py-8 px-12">
+    <div className=" px-4">
       <div className="mb-5">
         {uploadDocument?.map((val, key) => (
           <Row gutter={[16, 16]} key={key}>

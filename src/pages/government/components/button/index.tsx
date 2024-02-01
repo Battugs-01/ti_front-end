@@ -2,6 +2,7 @@ import { Button, ButtonProps, Tooltip } from "antd";
 
 interface CustomButtonProps extends ButtonProps {
   isDelete?: boolean;
+  extraIcon?: React.ReactNode;
 }
 
 export const CustomButton = ({ ...rest }: CustomButtonProps) => {
@@ -14,7 +15,10 @@ export const CustomButton = ({ ...rest }: CustomButtonProps) => {
           rest?.isDelete && "bg-[#DD695C]"
         } flex items-center font-medium p-4`}
       >
-        {rest?.title}
+        <div className="flex items-center gap-1">
+          {rest?.title}
+          {rest?.extraIcon}
+        </div>
       </Button>
     </Tooltip>
   );
