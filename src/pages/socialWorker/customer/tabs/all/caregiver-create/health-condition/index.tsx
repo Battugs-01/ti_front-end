@@ -63,7 +63,7 @@ export const HealthForm: React.FC = () => {
           {val?.map((el, index) => (
             <Col span={12}>
               <UploadDraggerButton
-                name={el?.name}
+                name={["laboratory_tests", el?.name]}
                 label={el?.label}
                 key={index}
               />

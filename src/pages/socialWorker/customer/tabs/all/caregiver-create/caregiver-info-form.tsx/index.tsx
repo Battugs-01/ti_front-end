@@ -7,12 +7,23 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-form";
+import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
 import { useState } from "react";
+import address from "service/address";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
 export const CaregiverInfoForm: React.FC = () => {
   const [isDisability, setDisability] = useState<boolean>(false);
+  const city = useRequest(address.city, {});
+  const district = useRequest(address.district, {
+    manual: true,
+  });
+  const khoroo = useRequest(address.khoroo, {
+    manual: true,
+  });
+  console.log(city.data, "jjjj");
+
   return (
     <div className="px-4">
       <Row gutter={[16, 16]}>
@@ -166,7 +177,7 @@ export const CaregiverInfoForm: React.FC = () => {
         <Col span={8}>
           <Row gutter={[16, 16]}>
             <Col span={12}>
-              <ProFormDigit 
+              <ProFormDigit
                 name="family_count"
                 placeholder="3"
                 label={"Ам бүл"}
@@ -247,9 +258,35 @@ export const CaregiverInfoForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <ProFormSelect
-            name="city_id"
+            name={["address", "city_id"]}
             placeholder="Борлууд"
             label={"Аймаг/Нийслэл"}
+            initialValue={0}
+            options={city.data?.map((item: any) => {
+              return {
+                label: item.name,
+                value: item.id,
+              };
+            })}
+            // request={async () => {
+            //   await city.runAsync();
+            //   console.log("all: ", city.data);
+            //   console.log(
+            //     "city :",
+            //     city.data?.map((item: any) => {
+            //       return {
+            //         label: item.name,
+            //         value: item.id,
+            //       };
+            //     })
+            //   );
+            //   return city.data?.map((item: any) => {
+            //     return {
+            //       label: item.name,
+            //       value: item.id,
+            //     };
+            //   });
+            // }}
             // rules={[
             //   {
             //     required: true,
@@ -260,9 +297,10 @@ export const CaregiverInfoForm: React.FC = () => {
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name="district_id"
+            name={["address", "district_id"]}
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
+            initialValue={0}
             // rules={[
             //   {
             //     required: true,
@@ -273,9 +311,10 @@ export const CaregiverInfoForm: React.FC = () => {
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name="street"
+            name={["address", "street"]}
             placeholder="Даваацэрэн"
             label={"Баг/Хороо"}
+            initialValue={"Street"}
             // rules={[
             //   {
             //     required: true,
@@ -288,9 +327,10 @@ export const CaregiverInfoForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={16}>
           <ProFormSelect
-            name="khoroo_id"
+            name={["address", "khoroo_id"]}
             placeholder="Эрчим хүчний гудамж, Ирээдүй хотхон"
             label={"Гудамж / Хороолол"}
+            initialValue={0}
             // rules={[
             //   {
             //     required: true,
@@ -301,9 +341,10 @@ export const CaregiverInfoForm: React.FC = () => {
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name="door_number"
+            name={["address", "description"]}
             placeholder="103-44 тоот"
             label={"Хашаа / Хаалгын дугаар"}
+            initialValue={"Test"}
             // rules={[
             //   {
             //     required: true,

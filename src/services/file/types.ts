@@ -1,4 +1,5 @@
 export interface FileRecord {
+  id: any;
   path: string;
 }
 

@@ -43,7 +43,7 @@ export const uploadDocument = [
     },
   ],
 ];
- export const uploadFile = [
+export const uploadFile = [
   [
     {
       name: "elderly_document_identity_card",
@@ -85,7 +85,7 @@ export const RegistrationForm: React.FC = () => {
             {val?.map((el, index) => (
               <Col span={12}>
                 <UploadDraggerButton
-                  name={el?.name}
+                  name={["documents", el?.name]}
                   label={el?.label}
                   key={index}
                 />
@@ -100,7 +100,7 @@ export const RegistrationForm: React.FC = () => {
             {val?.map((el, index) => (
               <Col span={12}>
                 <UploadDraggerButton
-                  name={el?.name}
+                  name={["documents", el?.name]}
                   label={el?.label}
                   key={index}
                 />
