@@ -20,21 +20,18 @@ namespace file {
 
   export const uploads = async ({
     files,
-    names,
-    bucket_name,
   }: MultiFileUpload) => {
     const body = new FormData();
 
     if (files.length === 0) {
       return [];
-    }
+    } 
     files.forEach((file, ind) => {
-      body.append("names", names[ind]);
-      body.append("files", file.originFileObj);
-      body.append("bucket_name", bucket_name);
+      console.log(file[0],"jjjj");
+      body.append("files", file[0].originFileObj);
     });
 
-    return http.post<FileRecord[]>("global/file/multi/upload", {
+    return http.post<FileRecord[]>("upload/files", {
       body,
       hasAuth: true,
     });

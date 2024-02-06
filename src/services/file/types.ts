@@ -19,7 +19,5 @@ export interface SplashFileUpload {
 }
 
 export interface MultiFileUpload {
-  names: string[];
-  bucket_name: string;
   files: any[];
 }

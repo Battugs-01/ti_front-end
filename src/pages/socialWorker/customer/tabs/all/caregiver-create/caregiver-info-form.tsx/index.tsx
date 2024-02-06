@@ -120,12 +120,13 @@ export const CaregiverInfoForm: React.FC = () => {
                 name="gender"
                 placeholder="Эрэгтэй"
                 label={"Хүйс"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Энэ талбарийг оруулах шаардлагатай!",
-                  },
-                ]}
+                initialValue={0}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Энэ талбарийг оруулах шаардлагатай!",
+                //   },
+                // ]}
               />
             </Col>
           </Row>
@@ -137,32 +138,36 @@ export const CaregiverInfoForm: React.FC = () => {
             name="education"
             placeholder="Сонгох"
             label={"Боловсрол"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            initialValue={"Бүрэн дунд"}
+
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name="is_wedding"
+            name="marriage"
             placeholder="Гэрлэсэн"
             label={"Гэрлэлтийн байдал"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            initialValue={"Гэрлэсэн"}
+
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
         <Col span={8}>
           <Row gutter={[16, 16]}>
             <Col span={12}>
-              <ProFormDigit
-                name="family_number"
+              <ProFormDigit 
+                name="family_count"
                 placeholder="3"
                 label={"Ам бүл"}
                 rules={[
@@ -175,7 +180,7 @@ export const CaregiverInfoForm: React.FC = () => {
             </Col>
             <Col span={12}>
               <ProFormDigit
-                name="child_number"
+                name="children_count"
                 placeholder="4"
                 label={"Хүүхдийн тоо"}
                 rules={[
@@ -192,7 +197,7 @@ export const CaregiverInfoForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormTextArea
-            name="reasons"
+            name="reason"
             placeholder={"Асруулах болсон шалтгааныг дэлгэрэнгүй бичнэ үү."}
             label="Асрамжийн газарт асруулах шалтгаан"
             rules={[
@@ -207,7 +212,7 @@ export const CaregiverInfoForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormSwitch
-            name="disability"
+            name="is_disability"
             label="Хөгжлийн бэрхшээлтэй эсэх"
             fieldProps={{
               onChange: (checked) => {
@@ -221,7 +226,7 @@ export const CaregiverInfoForm: React.FC = () => {
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <ProFormTextArea
-              name="disability_text"
+              name="disability_desc"
               placeholder={"Тийм бол онош, ХЧА-ын хувь"}
               rules={[
                 {
@@ -242,28 +247,28 @@ export const CaregiverInfoForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <ProFormSelect
-            name="capital"
+            name="city_id"
             placeholder="Борлууд"
             label={"Аймаг/Нийслэл"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name="district"
+            name="district_id"
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
         <Col span={8}>
@@ -271,27 +276,27 @@ export const CaregiverInfoForm: React.FC = () => {
             name="street"
             placeholder="Даваацэрэн"
             label={"Баг/Хороо"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={16}>
           <ProFormSelect
-            name="horoolol"
+            name="khoroo_id"
             placeholder="Эрчим хүчний гудамж, Ирээдүй хотхон"
             label={"Гудамж / Хороолол"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
         <Col span={8}>
@@ -299,12 +304,12 @@ export const CaregiverInfoForm: React.FC = () => {
             name="door_number"
             placeholder="103-44 тоот"
             label={"Хашаа / Хаалгын дугаар"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Энэ талбарийг оруулах шаардлагатай!",
+            //   },
+            // ]}
           />
         </Col>
       </Row>

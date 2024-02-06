@@ -1,76 +1,76 @@
 import { Col, Row } from "antd";
 import { UploadButton, UploadDraggerButton } from "components/index";
 
-const uploadDocument = [
+export const uploadDocument = [
   [
     {
-      name: "care_nursing_home",
+      name: "elderly_document_care_requet",
       label: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
     },
     {
-      name: "insurance_book",
+      name: "elderly_document_insurance_notebook",
       label: "Эрүүл мэндийн даатгалын дэвтэр",
     },
   ],
   [
     {
-      name: "inquiry_pension",
+      name: "elderly_document_is_pension_inquiry",
       label: "Тэтгэвэр авдаг эсэх лавлагаа",
     },
     {
-      name: "pension_loan",
+      name: "elderly_document_pension_loan;",
       label: "Тэтгэврийн зээлтэй эсэх",
     },
   ],
   [
     {
-      name: "disability",
+      name: "elderly_document_is_disability_inquiry",
       label: "Хөгжлийн бэрхшээлтэй эсэх лавлагаа",
     },
     {
-      name: "welfare_services",
+      name: "welderly_document_other_welfare_services_inquiry",
       label: "Халамжийн бусад үйлчилгээ авдаг эсэх лавлагаа",
     },
   ],
   [
     {
-      name: "insurance_discounts",
+      name: "elderly_document_insurance_discounts_inquiry",
       label: "Даатгалын хөнгөлөлттэй эсэх лавлагаа",
     },
     {
-      name: "discounted_rated_resort",
+      name: "elderly_document_care_center_discount_inquiry",
       label: "Амралт сувилалд хөнгөлөлттэй үнээр хамрагддаг эсэх лавлагаа",
     },
   ],
 ];
-const uploadFile = [
+ export const uploadFile = [
   [
     {
-      name: "identity_card",
+      name: "elderly_document_identity_card",
       label: "Иргэний үнэмлэх",
     },
     {
-      name: "property_inquiry",
+      name: "elderly_document_property_inquiry",
       label: "Эд хөрөнгийн лавлагаа",
     },
   ],
   [
     {
-      name: "inquiry_have_children",
+      name: "elderly_document_is_have_children_inquiry",
       label: "Үр хүүхэдтэй эсэх лавлагаа",
     },
     {
-      name: "sibling_inquiry",
+      name: "elderly_document_is_have_sibling_inquiry",
       label: "Ах дүүтэй эсэх лавлагаа",
     },
   ],
   [
     {
-      name: "is_married",
+      name: "elderly_document_is_married_inquiry",
       label: "Гэрлэсэн эсэх",
     },
     {
-      name: "is_divorce",
+      name: "elderly_document_is_divorce_inquiry",
       label: "Гэрлэлт цуцлалсан эсэх",
     },
   ],
