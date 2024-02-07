@@ -6,14 +6,19 @@ namespace orphanElderly {
       hasAuth: true,
       body,
     });
-  export const getOrphan = (id: any) =>
-    http.get<any>(`ministry/carecenter/${id}`, {
-      hasAuth: true,
-    });
-  export const edit = (body: any, id: any) =>
-    http.put(`ministry/carecenter/${id}`, {
+  export const elderlyList = (body: any) =>
+    http.post<any>(`ministry/elderly/list`, {
       hasAuth: true,
       body,
+    });
+  export const elderlyEdit = (body: any, id: any) =>
+    http.put(`ministry/elderly/${id}`, {
+      hasAuth: true,
+      body,
+    });
+  export const getElderly = (id: any) =>
+    http.get(`ministry/elderly/${id}`, {
+      hasAuth: true,
     });
 }
 

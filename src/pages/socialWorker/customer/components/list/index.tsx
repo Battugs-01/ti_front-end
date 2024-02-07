@@ -13,7 +13,9 @@ const List: React.FC<ListProps> = ({
   registrationNumber,
   state,
   date,
+  id,
 }) => {
+  console.log(state, "jjjj");
   return (
     <div
       className="bg-white"
@@ -33,7 +35,7 @@ const List: React.FC<ListProps> = ({
           <CareGiverBadge status={state} />
         </div>
         <div>
-          <RightContent date={date} state={state} />
+          <RightContent date={date} state={state} id={id} />
         </div>
       </div>
     </div>

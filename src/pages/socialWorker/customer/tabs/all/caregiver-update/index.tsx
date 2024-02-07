@@ -3,9 +3,6 @@ import { Modal, message } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import { useState } from "react";
-import { CaregiverInfoForm } from "./caregiver-info-form.tsx";
-import { RegistrationForm } from "./registration-document/index.js";
 import { HealthForm } from "./health-condition/index.js";
 import { SendForm } from "./request-send/index.js";
 import {
@@ -23,17 +20,23 @@ import {
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
+import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
+import { RegistrationForm } from "./registration-document/index.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
   isStepModal?: boolean;
+  id: number;
 };
 
-export const CareGiverCreate: React.FC<CaregiverType> = ({
+export const CareGiverUpdate: React.FC<CaregiverType> = ({
   cancelStepModal,
   isStepModal,
+  id,
 }) => {
-  const elderly = useRequest(orphanElderly.create, {
+  const elderly = useRequest(async () => orphanElderly.getElderly(id));
+  console.log(elderly?.data, "asdaaa");
+  const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
     onSuccess() {
       message.success("Амжилттай");
@@ -57,7 +60,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
     <div>
       <StepsForm
         onFinish={async (val) => {
-          console.log(val, "val");
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
           });
@@ -72,18 +74,21 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const docs = arrToObj(data, val?.documents);
           const request = arrToObj(requestData, val?.request);
           const health = labFormat(healthData, val?.laboratorytests);
-          elderly.runAsync({
-            ...val,
-            care_center_id: 2,
-            profile_id: 70,
-            address: {
-              ...val?.address,
+          elderlyEdit.runAsync(
+            {
+              ...val,
+              care_center_id: 2,
+              profile_id: 70,
+              address: {
+                ...val?.address,
+              },
+              laboratory_tests: health,
+              documents: docs,
+              request: request,
+              birth_date: dayjs(val?.birth_date).toDate(),
             },
-            laboratory_tests: health,
-            documents: docs,
-            request: request,
-            birth_date: dayjs(val?.birth_date).toDate(),
-          });
+            1
+          );
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
@@ -162,7 +167,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               title={
                 <div className="p-6">
                   <div className="font-semibold">
-                    Үйлчлүүлэгч нэмэх (РЕ96124578)
+                    Үйлчлүүлэгч засах (РЕ96124578)
                   </div>
                 </div>
               }
@@ -176,16 +181,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             >
               {dom}
             </Modal>
-            // <IModalForm
-            //   successData={() => {}}
-            //   modalProps={{ onCancel: cancelStepModal }}
-            //   title={"Асруулагч нэмэх"}
-            //   footer={submitter}
-            //   open={isStepModal}
-            //   width={1064}
-            // >
-            //   {dom}
-            // </IModalForm>
           );
         }}
       >
@@ -200,7 +195,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <CaregiverInfoForm />
+          <CaregiverInfoForm data={elderly?.data} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"

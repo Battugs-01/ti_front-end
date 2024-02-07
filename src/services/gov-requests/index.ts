@@ -37,6 +37,7 @@ export type ListProps = {
 export type RightContentType = {
   state?: Number;
   date?: any;
+  id?: any;
 };
 
 export interface CardData {

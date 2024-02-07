@@ -4,6 +4,8 @@ import { IfCondition } from "components/condition";
 import { Fragment, useState } from "react";
 import { RequestType } from "service/social-worker/customer/type";
 import { All } from "./tabs/all";
+import { useRequest } from "ahooks";
+import orphanElderly from "service/social-worker/customer";
 
 const data = [
   {
@@ -122,7 +124,10 @@ const data = [
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
-
+  const list = useRequest(async () =>
+    orphanElderly.elderlyList({ current: 0, pageSize: 20 })
+  );
+  console.log(list?.data, "jjjj");
   return (
     <Fragment>
       <Radio.Group
@@ -157,24 +162,24 @@ const CustomerPage: React.FC = () => {
       </Radio.Group>
       <IfCondition
         condition={tab === RequestType.all}
-        whenTrue={<All data={data} />}
+        whenTrue={<All data={list?.data?.items} total={list?.data?.total} />}
       />
-      <IfCondition
+      {/* <IfCondition
         condition={tab === RequestType.saved}
-        whenTrue={<All data={data?.filter((val,index)=>val.state===0)} />}
+        whenTrue={<All data={data?.filter((val, index) => val.state === 0)} />}
       />
       <IfCondition
         condition={tab === RequestType.putOnHold}
-        whenTrue={<All data={data?.filter((val,index)=>val.state===3)} />}
+        whenTrue={<All data={data?.filter((val, index) => val.state === 3)} />}
       />
       <IfCondition
         condition={tab === RequestType.returned}
-        whenTrue={<All data={data?.filter((val,index)=>val.state===2)} />}
+        whenTrue={<All data={data?.filter((val, index) => val.state === 2)} />}
       />
       <IfCondition
         condition={tab === RequestType.requestSend}
-        whenTrue={<All data={data?.filter((val,index)=>val.state===1)} />}
-      />
+        whenTrue={<All data={data?.filter((val, index) => val.state === 1)} />}
+      /> */}
     </Fragment>
   );
 };

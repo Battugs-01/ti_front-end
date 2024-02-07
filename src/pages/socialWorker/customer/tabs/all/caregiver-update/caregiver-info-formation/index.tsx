@@ -12,9 +12,15 @@ import { Col, Row, Upload } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
+import { ElderlyInterface } from "service/social-worker/customer/type";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
-export const CaregiverInfoForm: React.FC = () => {
+type FormType = {
+  data?: ElderlyInterface;
+};
+
+export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
+  console.log(data, "sdu");
   const [isDisability, setDisability] = useState<boolean>(false);
   const city = useRequest(address.city, {
     manual: true,
@@ -51,6 +57,7 @@ export const CaregiverInfoForm: React.FC = () => {
             name="family_name"
             placeholder="Борлууд"
             label={"Ургийн овог"}
+            initialValue={data?.family_name}
             rules={[
               {
                 required: true,
@@ -64,6 +71,7 @@ export const CaregiverInfoForm: React.FC = () => {
             name="last_name"
             placeholder="Буянтогтох"
             label={"Овог"}
+            initialValue={data?.last_name}
             rules={[
               {
                 required: true,
@@ -76,7 +84,8 @@ export const CaregiverInfoForm: React.FC = () => {
           <ProFormText
             name="first_name"
             placeholder="Даваацэрэн"
-            label={"Ургийн овог"}
+            label={"Нэр"}
+            initialValue={data?.first_name}
             rules={[
               {
                 required: true,
@@ -92,6 +101,7 @@ export const CaregiverInfoForm: React.FC = () => {
             name="rd"
             placeholder="ЖУ234234324"
             label={"Регистрийн дугаар"}
+            initialValue={data?.rd}
             rules={[
               {
                 required: true,

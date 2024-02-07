@@ -12,7 +12,7 @@ const root = createRoot(domNode);
 
 notification.config({
   placement: "topRight",
-  className: "  custom-ant-notification-message p-4",
+  className: "custom-ant-notification-message p-4",
 });
 root.render(
   <ConfigProvider
