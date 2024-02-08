@@ -1,4 +1,5 @@
 import http from "service/index";
+import { ElderlyInterface } from "./type";
 
 namespace orphanElderly {
   export const create = (body: any) =>
@@ -17,7 +18,7 @@ namespace orphanElderly {
       body,
     });
   export const getElderly = (id: any) =>
-    http.get(`ministry/elderly/${id}`, {
+    http.get<ElderlyInterface>(`ministry/elderly/${id}`, {
       hasAuth: true,
     });
 }

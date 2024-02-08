@@ -124,10 +124,9 @@ const data = [
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
-  const list = useRequest(async () =>
+  const list = useRequest(() =>
     orphanElderly.elderlyList({ current: 0, pageSize: 20 })
   );
-  console.log(list?.data, "jjjj");
   return (
     <Fragment>
       <Radio.Group
@@ -162,7 +161,9 @@ const CustomerPage: React.FC = () => {
       </Radio.Group>
       <IfCondition
         condition={tab === RequestType.all}
-        whenTrue={<All data={list?.data?.items} total={list?.data?.total} />}
+        whenTrue={
+          <All data={list?.data?.items} total={list?.data?.total} list={list} />
+        }
       />
       {/* <IfCondition
         condition={tab === RequestType.saved}

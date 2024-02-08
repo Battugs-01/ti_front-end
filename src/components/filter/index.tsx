@@ -85,7 +85,6 @@ export const FilterForm = ({
     }
   }, [initialValues, isCustomDate]);
 
-  console.log(isSearch, "hjjjjjj");
   const content = (
     <ProForm
       {...rest}

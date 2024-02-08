@@ -34,7 +34,7 @@ export interface ElderlyInterface {
   id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: null;
+  deleted_at: Date;
   care_center_id: number;
   profile_id: number;
   family_name: string;

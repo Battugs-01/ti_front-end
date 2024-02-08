@@ -15,7 +15,6 @@ const List: React.FC<ListProps> = ({
   date,
   id,
 }) => {
-  console.log(state, "jjjj");
   return (
     <div
       className="bg-white"

@@ -1,5 +1,5 @@
 import { StepsForm } from "@ant-design/pro-form";
-import { Modal, message } from "antd";
+import { Modal, message, notification } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
@@ -36,11 +36,15 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const elderly = useRequest(orphanElderly.create, {
     manual: true,
     onSuccess() {
-      message.success("Амжилттай");
+      notification.success({
+        message: "Амжилттай",
+      });
       cancelStepModal?.();
     },
     onError() {
-      message.error("Амжилтгүй");
+      notification.success({
+        message: "Алдаа гарлаа",
+      });
       cancelStepModal?.();
     },
   });
@@ -57,15 +61,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
     <div>
       <StepsForm
         onFinish={async (val) => {
-          console.log(val, "val");
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
           });
-          console.log(data, "data");
           const healthData = await filesHealth.runAsync({
             files: Object.values(val.laboratory_tests || {}),
           });
-          console.log(healthData, "this is health data");
           const requestData = await filesRequest.runAsync({
             files: Object.values(val.request || {}),
           });

@@ -1,4 +1,4 @@
-import { Card, message } from "antd";
+import { Card } from "antd";
 import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
 import InitTableHeader from "components/table-header";
@@ -18,9 +18,10 @@ import CustomPagination from "components/pagination";
 type AllProps = {
   data?: ListElderly[];
   total?: number;
+  list?: any;
 };
 
-export const All: React.FC<AllProps> = ({ data, total }) => {
+export const All: React.FC<AllProps> = ({ data, total, list }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
 
@@ -34,13 +35,15 @@ export const All: React.FC<AllProps> = ({ data, total }) => {
     setOpenModal(false);
     setStepModal(true);
   };
-  console.log();
+  const refreshList = () => {
+    list?.run();
+  };
   return (
     <div className="custom-ant-card-padding-border-remove mt-6">
-      <Card>
+      <Card loading={list?.loading}>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
-            refresh={() => {}}
+            refresh={refreshList}
             customHeaderTitle={`Нийт (${total})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
@@ -84,7 +87,7 @@ export const All: React.FC<AllProps> = ({ data, total }) => {
         <IModalForm
           open={isOpenModal}
           width={724}
-          title="Асруулагч нэмэх"
+          title="Үйлчлүүлэгч нэмэх"
           modalProps={{ onCancel: cancelModal, onOk: nextModal }}
           okText={
             <div className="flex items-center gap-2">

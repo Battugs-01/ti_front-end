@@ -22,6 +22,11 @@ import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
+import { PageLoading } from "@ant-design/pro-layout";
+import {
+  Documents,
+  ElderlyInterface,
+} from "service/social-worker/customer/type.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -35,7 +40,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   id,
 }) => {
   const elderly = useRequest(async () => orphanElderly.getElderly(id));
-  console.log(elderly?.data, "asdaaa");
   const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
     onSuccess() {
@@ -195,7 +199,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <CaregiverInfoForm data={elderly?.data} />
+          {elderly?.loading ? (
+            <PageLoading />
+          ) : (
+            <CaregiverInfoForm data={elderly?.data as ElderlyInterface} />
+          )}
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"
@@ -208,7 +216,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <RegistrationForm />
+          {elderly?.loading ? (
+            <PageLoading />
+          ) : (
+            <RegistrationForm data={elderly?.data?.documents} />
+          )}
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="health"

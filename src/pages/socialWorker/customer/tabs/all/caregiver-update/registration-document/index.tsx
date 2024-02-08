@@ -1,5 +1,6 @@
 import { Col, Row } from "antd";
 import { UploadButton, UploadDraggerButton } from "components/index";
+import { Documents } from "service/social-worker/customer/type";
 
 export const uploadDocument = [
   [
@@ -76,7 +77,21 @@ export const uploadFile = [
   ],
 ];
 
-export const RegistrationForm: React.FC = () => {
+type RegistrationType = {
+  data?: Documents;
+};
+
+export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
+  console.log(data?.care_center_discount_inquiry[0].file_name, "hjdfh");
+  if (data) console.log(Object.values(data), "sda");
+  const initialValue = [
+    {
+      uid: "1",
+      name: data?.care_center_discount_inquiry[0].original_name,
+      status: "done",
+      url: `http://103.41.112.73:9000/${data?.care_center_discount_inquiry[0].physical_path}`,
+    },
+  ];
   return (
     <div className="px-8">
       <div className="mb-5">
@@ -85,6 +100,7 @@ export const RegistrationForm: React.FC = () => {
             {val?.map((el, index) => (
               <Col span={12}>
                 <UploadDraggerButton
+                  initialValue={initialValue}
                   name={["documents", el?.name]}
                   label={el?.label}
                   key={index}

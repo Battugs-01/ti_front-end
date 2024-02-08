@@ -20,7 +20,6 @@ type FormType = {
 };
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
-  console.log(data, "sdu");
   const [isDisability, setDisability] = useState<boolean>(false);
   const city = useRequest(address.city, {
     manual: true,
@@ -115,6 +114,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             name="birth_date"
             placeholder="2023/02/01"
             label={"Төрсөн огноо"}
+            initialValue={data?.birth_date}
             rules={[
               {
                 required: true,
@@ -129,6 +129,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
               <ProFormDigit
                 name="age"
                 placeholder="55"
+                initialValue={data?.age}
                 label={"Нас"}
                 rules={[
                   {
@@ -193,6 +194,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
                 name="family_count"
                 placeholder="3"
                 label={"Ам бүл"}
+                initialValue={data?.family_count}
                 rules={[
                   {
                     required: true,
@@ -205,6 +207,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
               <ProFormDigit
                 name="children_count"
                 placeholder="4"
+                initialValue={data?.children_count}
                 label={"Хүүхдийн тоо"}
                 rules={[
                   {
@@ -223,6 +226,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             name="reason"
             placeholder={"Асруулах болсон шалтгааныг дэлгэрэнгүй бичнэ үү."}
             label="Асрамжийн газарт асруулах шалтгаан"
+            initialValue={data?.reason}
             rules={[
               {
                 required: true,
@@ -237,6 +241,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
           <ProFormSwitch
             name="is_disability"
             label="Хөгжлийн бэрхшээлтэй эсэх"
+            initialValue={data?.is_disability}
             fieldProps={{
               onChange: (checked) => {
                 setDisability(checked);
@@ -251,6 +256,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             <ProFormTextArea
               name="disability_desc"
               placeholder={"Тийм бол онош, ХЧА-ын хувь"}
+              initialValue={data?.disability_desc}
               rules={[
                 {
                   required: true,

@@ -18,16 +18,13 @@ namespace file {
     });
   };
 
-  export const uploads = async ({
-    files,
-  }: MultiFileUpload) => {
+  export const uploads = async ({ files }: MultiFileUpload) => {
     const body = new FormData();
 
     if (files.length === 0) {
       return [];
-    } 
+    }
     files.forEach((file, ind) => {
-      console.log(file[0],"jjjj");
       body.append("files", file[0].originFileObj);
     });
 
