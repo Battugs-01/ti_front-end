@@ -6,8 +6,8 @@ interface Props {
 }
 
 const Badge: FC<Props> = ({ status, desc }) => {
-  let text = "Хадгалагдсан";
-  let colorClass = "bg-gray-100 text-gray-700";
+  let text = "Хүсэлт гаргасан";
+  let colorClass = "bg-[#FFFAEB] text-[#B54708]";
   switch (status) {
     case 0:
       text = "Хадгалагдсан";
@@ -38,7 +38,7 @@ const Badge: FC<Props> = ({ status, desc }) => {
       colorClass = "bg-red-50 text-red-700";
       break;
     default:
-      colorClass = "bg-gray-100 text-gray-700";
+      colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
   }
   return (

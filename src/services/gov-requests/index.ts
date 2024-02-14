@@ -32,12 +32,15 @@ export type ListProps = {
   registrationNumber?: string;
   state?: Number;
   date?: any;
+  time?: string;
 };
 
 export type RightContentType = {
+  showDetail?: () => void;
   state?: Number;
   date?: any;
   id?: any;
+  time?: string;
 };
 
 export interface CardData {

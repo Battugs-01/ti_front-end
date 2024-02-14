@@ -9,6 +9,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
+import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
@@ -103,12 +104,15 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             placeholder="ЖУ234234324"
             label={"Регистрийн дугаар"}
             initialValue={data?.rd}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={
+              (FORM_ITEM_RULE(),
+              [
+                {
+                  pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
+                  message: "Энэ талбар РД байх ёстой",
+                },
+              ])
+            }
           />
         </Col>
         <Col span={8}>

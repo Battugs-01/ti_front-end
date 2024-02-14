@@ -21,7 +21,7 @@ import Wallet from "assets/government/img/wallet.png";
 
 export const deleteConfirm = "delete me";
 export const deleteConfirmReg = /^delete me$/g;
-export const FieldRequireMessage = "The field is required";
+export const FieldRequireMessage = "Энэ талбарийг оруулах шаардлагатай!";
 
 export const FORM_ITEM_RULE: (value?: any) => Rule[] = (value?: any) => [
   { message: FieldRequireMessage, required: true, ...value },
