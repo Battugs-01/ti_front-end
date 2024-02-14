@@ -20,7 +20,9 @@ type FormType = {
 };
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
-  const [isDisability, setDisability] = useState<boolean>(false);
+  const [isDisability, setDisability] = useState<boolean>(
+    data?.is_disability || false
+  );
   const city = useRequest(address.city, {
     manual: true,
   });
@@ -239,6 +241,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormSwitch
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
             name="is_disability"
             label="Хөгжлийн бэрхшээлтэй эсэх"
             initialValue={data?.is_disability}

@@ -3,7 +3,6 @@ import { Modal, message, notification } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import { useState } from "react";
 import { CaregiverInfoForm } from "./caregiver-info-form.tsx";
 import { RegistrationForm } from "./registration-document/index.js";
 import { HealthForm } from "./health-condition/index.js";

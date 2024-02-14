@@ -16,7 +16,7 @@ const DashboardLayout: FC<Props> = ({}) => {
   const [{ authorized }] = useAuthContext();
   const navigate = useNavigate();
   if (!authorized) return <Navigate to={"/auth/login"} />;
-  const isSocialworker = true;
+  const isSocialworker = false;
   return (
     <div id="pro-layout">
       {isSocialworker ? (

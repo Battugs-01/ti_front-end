@@ -17,11 +17,10 @@ import CustomPagination from "components/pagination";
 
 type AllProps = {
   data?: ListElderly[];
-  total?: number;
   list?: any;
 };
 
-export const All: React.FC<AllProps> = ({ data, total, list }) => {
+export const All: React.FC<AllProps> = ({ data, list }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
 
@@ -44,7 +43,7 @@ export const All: React.FC<AllProps> = ({ data, total, list }) => {
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${total})`}
+            customHeaderTitle={`Нийт (${list?.data?.total})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">
@@ -80,7 +79,7 @@ export const All: React.FC<AllProps> = ({ data, total, list }) => {
             className="flex justify-end mb-4 px-6"
             style={{ borderTop: "1px solid #EAECF0" }}
           >
-            <CustomPagination total={total} />
+            <CustomPagination total={list?.data?.total} />
           </div>
         </div>
 
