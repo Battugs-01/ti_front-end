@@ -15,7 +15,7 @@ const LeftDetail: React.FC<LeftDetailProps> = ({
   const color = "#146135";
   const avatar = "AA";
   return (
-    <Card>
+    <Card className="min-h-screen">
       <div className="flex justify-center flex-col items-center">
         <Avatar shape="circle" style={{ backgroundColor: color }} size={80}>
           {avatar.toUpperCase()}

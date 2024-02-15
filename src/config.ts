@@ -57,6 +57,24 @@ export const SERVICE_OPERATION_TYPES = Object.freeze([
     label: "Things To Do",
   },
 ]);
+
+
+export enum GenderType {
+  male = 0,
+  female = 1,
+}
+
+export const workersGenderArray = Object.freeze([
+  {
+    label: "Эр",
+    value: GenderType.male,
+  },
+  {
+    label: "Эм",
+    value: GenderType.female,
+  },
+]);
+
 export const SERVICE_CATEGORY_TYPES = Object.freeze([
   {
     value: ServiceCategory.cocktail,

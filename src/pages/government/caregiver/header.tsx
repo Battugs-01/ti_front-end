@@ -13,7 +13,7 @@ const Header: React.FC<HeaderType> = (props) => {
   return (
     <Card
       title={
-        <div style={{ borderBottom: "1px solid #EAECF0" }}>
+        <div className="mt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             customHeaderTitle="Асруулагчдын дэлгэрэнгүй мэдээлэл"
             selectedToggle={""}

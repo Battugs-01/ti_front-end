@@ -63,7 +63,7 @@ export interface DefinitionGovernor {
   deleted_at: null;
   file_name: FileName;
   original_name: OriginalName;
-  physical_path: PhysicalPath;
+  physical_path: String;
   extention: Extention;
   file_size: number;
 }

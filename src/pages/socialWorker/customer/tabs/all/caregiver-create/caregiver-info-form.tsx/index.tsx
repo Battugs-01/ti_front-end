@@ -9,6 +9,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
+import { workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
@@ -97,6 +98,10 @@ export const CaregiverInfoForm: React.FC = () => {
                 required: true,
                 message: "Энэ талбарийг оруулах шаардлагатай!",
               },
+              {
+                pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
+                message: "Энэ талбар РД байх ёстой",
+              },
             ]}
           />
         </Col>
@@ -132,6 +137,7 @@ export const CaregiverInfoForm: React.FC = () => {
               <ProFormSelect
                 name="gender"
                 placeholder="Эрэгтэй"
+                options={workersGenderArray.map((el) => ({ ...el }))}
                 label={"Хүйс"}
                 initialValue={0}
                 // rules={[

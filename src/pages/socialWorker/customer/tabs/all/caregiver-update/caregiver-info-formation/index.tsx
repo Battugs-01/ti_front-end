@@ -9,7 +9,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
@@ -149,6 +149,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
               <ProFormSelect
                 name="gender"
                 placeholder="Эрэгтэй"
+                options={workersGenderArray.map((el) => ({ ...el }))}
                 label={"Хүйс"}
                 initialValue={0}
                 // rules={[

@@ -9,7 +9,7 @@ const RightDetail: React.FC<any> = ({ data, items }) => {
     console.log(key);
   };
   return (
-    <Card>
+    <Card className="min-h-full overflow-y-visible">
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </Card>
   );

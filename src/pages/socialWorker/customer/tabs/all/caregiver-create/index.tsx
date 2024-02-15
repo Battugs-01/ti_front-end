@@ -66,12 +66,15 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const healthData = await filesHealth.runAsync({
             files: Object.values(val.laboratory_tests || {}),
           });
+          console.log(healthData, "health sda");
           const requestData = await filesRequest.runAsync({
             files: Object.values(val.request || {}),
           });
           const docs = arrToObj(data, val?.documents);
           const request = arrToObj(requestData, val?.request);
+          // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
           const health = labFormat(healthData, val?.laboratorytests);
+          console.log(health, "this is health");
           elderly.runAsync({
             ...val,
             care_center_id: 2,

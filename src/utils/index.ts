@@ -305,6 +305,26 @@ export const formatNumber = (value?: number) => {
   return value.toFixed(1);
 };
 
+export const formatKB = (value: number, decimals = 1) => {
+  const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  if (value === 0) return "0";
+  const k: number = 1024;
+  const i = Math.floor(Math.log(value) / Math.log(k));
+  const tmp = k ** i;
+  const dm = decimals < 0 ? 0 : decimals;
+  return `${parseFloat((value / tmp).toFixed(dm))}${sizes[i]}`;
+};
+
+export const formatMB = (value = 0, decimals = 2) => {
+  const sizes = ["KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  if (value === 0) return "0";
+  const k: number = 1024;
+  const i = Math.floor(Math.log(value) / Math.log(k));
+  const tmp = k ** i;
+  const dm = decimals < 0 ? 0 : decimals;
+  return `${parseFloat((value / tmp).toFixed(dm))} ${sizes[i]}`;
+};
+
 export const getDatePeriodType = (gapDays?: number) => {
   if (!gapDays) return "";
   if (gapDays <= 1) return "hour";
