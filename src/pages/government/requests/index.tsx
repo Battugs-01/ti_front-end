@@ -162,7 +162,9 @@ const RequestPage: React.FC = () => {
 
       <IfCondition
         condition={tab === RequestType.decide}
-        whenTrue={<Decide data={elderlyList?.data?.items} />}
+        whenTrue={
+          <Decide data={elderlyList?.data?.items} run={elderlyList?.run} />
+        }
       />
       {/* <IfCondition
         condition={tab === RequestType.saved}

@@ -11,7 +11,8 @@ export interface LoginResponse {
 
 export interface Admin {
   email: string;
-  firstName: string;
+  first_name: string;
   id: string;
   lastName: string;
+  position: string;
 }

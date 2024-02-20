@@ -13,6 +13,7 @@ import { Modal } from "antd";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { UnderReview } from "./under_review";
+import { Distribute } from "./distribute";
 
 type FormModalProps = {
   visibleDetail?: boolean;
@@ -163,7 +164,7 @@ export const FormModal: React.FC<FormModalProps> = ({
             return true;
           }}
         >
-          Хуваарилах
+          <Distribute />
         </StepsForm.StepForm>
       </StepsForm>
     </div>

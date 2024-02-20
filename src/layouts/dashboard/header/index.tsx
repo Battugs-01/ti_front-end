@@ -12,15 +12,17 @@ const Header: FC = () => {
   const { email } = user.user || {};
   const avatar = email?.substring(0, 2) || "AA";
   const color = "#146135";
+  console.log(user.user, "jjjjjj");
   return (
     <>
-      <div className=" p-4 justify-between items-start w-full text-black lg:text-white lg:flex hidden">
-        <div className="">
+      <div className="p-4 justify-between items-center w-full text-black lg:text-white lg:flex hidden">
+        <div className="flex items-center gap-2">
           <Avatar shape="circle" style={{ backgroundColor: color }} size={40}>
             {avatar.toUpperCase()}
           </Avatar>
-          <div>
-            <p>{user.user?.email}</p>
+          <div className="flex flex-col gap-1">
+            <p className="m-0">{user.user?.email}</p>
+            <p className="m-0 text-[#A0B6BA]">{user?.user?.position}</p>
           </div>
         </div>
         <div

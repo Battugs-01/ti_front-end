@@ -1,7 +1,7 @@
 import { ElderlyInterface } from "service/social-worker/customer/type";
 import PowerIcon from "assets/government/icons/powerpoint.svg";
 import { formatMB } from "utils/index";
-import EyeIcon from "assets/government/icons/eye.svg";
+import EyeIcon from "assets/government/icons/dark-eye.svg";
 import DownloadIcon from "assets/government/icons/download_cloud.svg";
 import { Link } from "react-router-dom";
 
@@ -67,12 +67,12 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
               </div>
             </div>
             <div className="flex gap-2 items-center">
-              <div className="p-4 cursor-pointer">
+              <div className="p-4 cursor-pointer text-gray-600">
                 <img src={EyeIcon} alt="see" />
               </div>
               <a
                 href={`http://103.41.112.73:9000/${value?.path}`}
-                className="p-4 cursor-pointer"
+                className="p-4 cursor-pointer text-gray-600"
                 target="blank"
                 download
               >

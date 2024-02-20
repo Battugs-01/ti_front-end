@@ -25,6 +25,7 @@ const DashboardLayout: FC<Props> = ({}) => {
         </WorkerLayout>
       ) : (
         <ProLayout
+          siderWidth={280}
           collapsedButtonRender={false}
           menuDataRender={() => GovernmentMenu}
           menuItemRender={(item: any) => {

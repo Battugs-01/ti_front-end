@@ -14,7 +14,6 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
 import { ElderlyInterface } from "service/social-worker/customer/type";
-// import PlusIcon from "assets/government/icons/plus-gray.svg";
 
 type FormType = {
   data?: ElderlyInterface;

@@ -10,9 +10,10 @@ import CustomPagination from "components/pagination";
 import { ListElderly } from "service/social-worker/customer/type";
 type DecideType = {
   data: ListElderly[];
+  run?: () => void;
 };
 
-const Decide: React.FC<DecideType> = ({ data }) => {
+const Decide: React.FC<DecideType> = ({ data, run }) => {
   const [create, setCreate] = useState<boolean>(false);
 
   return (
@@ -25,7 +26,10 @@ const Decide: React.FC<DecideType> = ({ data }) => {
           <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
             <InitTableHeader
               hideCreate
-              refresh={() => {}}
+              refresh={() => {
+                console.log("jjjj");
+                run?.();
+              }}
               customHeaderTitle="Шийдвэрлэх хүсэлтүүд"
               setCreate={setCreate}
               toolbarItems={
