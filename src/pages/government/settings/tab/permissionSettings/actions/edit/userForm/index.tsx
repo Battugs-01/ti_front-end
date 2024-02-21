@@ -1,6 +1,7 @@
 import { ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { Checkbox, Col, Row, Table } from "antd";
 import { SectionField } from "components/index";
+import { FORM_ITEM_RULE } from "config";
 import { useState } from "react";
 import { ItemInterface, UserList } from "service/gov-settings";
 
@@ -97,6 +98,7 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             initialValue={data?.last_name}
             placeholder="Овог"
             name="last_name"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={12}>
@@ -105,6 +107,7 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             initialValue={data?.first_name}
             placeholder="Нэр"
             name="first_name"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -115,6 +118,7 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             initialValue={data?.position}
             placeholder="Албан тушаал"
             name="position"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={12}>
@@ -126,6 +130,7 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             initialValue={data?.phone}
             placeholder="Утас"
             name="phone_number"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -136,6 +141,12 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             initialValue={data?.email}
             placeholder="sample@example.domain"
             name="email"
+            rules={[
+              {
+                pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                message: "Энэ талбар и-мэйл хаяг байх ёстой",
+              },
+            ]}
           />
         </Col>
         <Col span={12}>
@@ -143,6 +154,7 @@ export const UserForm: React.FC<UserFormType> = ({ data }) => {
             placeholder="*************"
             name="password"
             label="Нууц үг"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>

@@ -5,6 +5,7 @@ import {
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { UploadDraggerButton } from "components/index";
+import { FORM_ITEM_RULE } from "config";
 import { CardInterface } from "service/gov-orphan";
 
 type FormType = {
@@ -19,11 +20,13 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
         label="Байгууллагын нэр"
         placeholder="Байгууллагын нэр оруулна уу"
         name="organization_name"
+        rules={FORM_ITEM_RULE()}
       />
       <UploadDraggerButton
         name={"files"}
         required={false}
         label="Байгууллагын лого"
+        rules={FORM_ITEM_RULE()}
       />
       <div className="mb-5">
         <ProFormSwitch
@@ -31,6 +34,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
           className="m-0 p-0"
           name="is_active"
           label="Идэвхтэй эсэх"
+          rules={FORM_ITEM_RULE()}
         />
       </div>
       <div
@@ -46,6 +50,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
             placeholder="Овог"
             name="last_name"
             label="Овог"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={12}>
@@ -54,6 +59,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
             placeholder="Нэр"
             name="first_name"
             label="Нэр"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -62,6 +68,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
         placeholder="Албан тушаал"
         name="position"
         label="Албан тушаал"
+        rules={FORM_ITEM_RULE()}
       />
       <ProFormText
         initialValue={data?.contact?.phone}
@@ -71,6 +78,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
         placeholder="Утас"
         name="phone"
         label="Утас"
+        rules={FORM_ITEM_RULE()}
       />
       <div
         className="font-medium text-lg mb-4 pt-5"
@@ -97,6 +105,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
             placeholder="Банкны нэр"
             name="bank_name"
             label="Банкны нэр"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={14}>
@@ -105,6 +114,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
             placeholder="Компанийн дансны дугаар"
             name="account_number"
             label="Компанийн дансны дугаар"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -112,12 +122,14 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
         placeholder={"Утасны дугаар"}
         name="Socialpay"
         label="Утасны дугаар"
+        rules={FORM_ITEM_RULE()}
       />
       <ProFormText
         initialValue={data?.payment?.reciever_name}
         placeholder="Хүлээн авагчийн нэр"
         name="reciever_name"
         label="Хүлээн авагчийн нэр"
+        rules={FORM_ITEM_RULE()}
       />
       <ProFormText
         label="Хэвтэн эмчлүүлэх төлбөр"
@@ -126,6 +138,7 @@ export const OrphanForm: React.FC<FormType> = ({ data }) => {
         }}
         placeholder="50’000₮"
         name="amount"
+        rules={FORM_ITEM_RULE()}
       />
 
       {/* <SectionField

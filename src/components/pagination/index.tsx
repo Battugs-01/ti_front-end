@@ -9,6 +9,7 @@ const CustomPagination: React.FC<PaginationType> = ({ total }) => (
   <>
     <div className="mt-5">
       <Pagination
+        onChange={(e) => console.log(e)}
         total={total}
         showTotal={(total, range) => (
           <div className="font-semibold text-gray-500">

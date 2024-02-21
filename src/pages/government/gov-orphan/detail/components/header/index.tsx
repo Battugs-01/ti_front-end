@@ -74,33 +74,33 @@ const Header: React.FC<HeaderType> = ({ changeTab, data, tab }) => {
           <div className="flex items-center gap-1">
             <img src={EmployeeIcon} />
             <div>Ажилчид:</div>
-            <div>{data?.emplopyees}</div>
+            <div>{}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={CalendarIcon} />
             <div>Сүүлийн сард:</div>
-            <div>{data?.plan}</div>
+            <div>{}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={BedIcon} />
             <div>Орны тоо:</div>
-            <div>{data?.bedNumber}</div>
-            <div>/ {data?.bedNumberMax}</div>
+            <div>{}</div>
+            <div>/ {}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={ReportIcon} />
             <div>Тайлан:</div>
-            <div>{data?.report}</div>
-            <div>/ {data?.reportMax}</div>
+            <div>{}</div>
+            <div>/ {}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={HeartIcon} />
             <div>Хандив:</div>
-            <div>{moneyFormat(data?.donation, "mnt")}</div>
+            <div>{moneyFormat(1222, "mnt")}</div>
           </div>
           {tab === TabType.form ? (
             <div className="flex items-center gap-4">
@@ -112,8 +112,8 @@ const Header: React.FC<HeaderType> = ({ changeTab, data, tab }) => {
               <Badge status="default" />
               <div className="flex items-center gap-1">
                 <img src={CheckCircle} />
-                <div>{data?.name}</div>
-                <div>{moment(data?.date).format("l")}</div>
+                <div>{}</div>
+                <div>{moment().format("l")}</div>
               </div>
             </Fragment>
           )}

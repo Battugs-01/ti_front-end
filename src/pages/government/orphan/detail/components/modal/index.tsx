@@ -21,18 +21,22 @@ export const ConfirmModal: React.FC<ModalType> = ({
 }) => {
   return (
     <Modal
-      title={title}
+      title={
+        <div className="p-6">
+          <div className="font-semibold">{title}</div>
+        </div>
+      }
       open={isModalOpen}
       width={width}
       onCancel={handleCancel}
       footer={() => {
         return (
-          <Fragment>
+          <div className="p-6">
             <Button type="default" onClick={handleCancel}>
               Болих
             </Button>
             <ConfirmButton title="Магадлан итгэмжлэх" onClick={handleOk} />
-          </Fragment>
+          </div>
         );
       }}
     >

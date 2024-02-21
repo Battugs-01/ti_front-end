@@ -74,33 +74,33 @@ const Header: React.FC<HeaderType> = ({ changeTab, data, tab }) => {
           <div className="flex items-center gap-1">
             <img src={EmployeeIcon} />
             <div>Ажилчид:</div>
-            <div>{data[0].emplopyees}</div>
+            <div>{}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={CalendarIcon} />
             <div>Сүүлийн сард:</div>
-            <div>{data[0].plan}</div>
+            <div>{}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={BedIcon} />
             <div>Орны тоо:</div>
-            <div>{data[0].bedNumber}</div>
-            <div>/ {data[0].bedNumberMax}</div>
+            <div>{}</div>
+            <div>/ {}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={ReportIcon} />
             <div>Тайлан:</div>
-            <div>{data[0].report}</div>
-            <div>/ {data[0].reportMax}</div>
+            <div>{}</div>
+            <div>/ {}</div>
           </div>
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={HeartIcon} />
             <div>Хандив:</div>
-            <div>{moneyFormat(data[0].donation, "mnt")}</div>
+            <div>{moneyFormat(1222, "mnt")}</div>
           </div>
           {tab === TabType.form ? (
             <div className="flex items-center gap-4">
@@ -113,7 +113,7 @@ const Header: React.FC<HeaderType> = ({ changeTab, data, tab }) => {
               <div className="flex items-center gap-1">
                 <img src={CheckCircle} />
                 <div>{data[0]?.name}</div>
-                <div>{moment(data[0]?.date).format("l")}</div>
+                <div>{moment().format("l")}</div>
               </div>
             </Fragment>
           )}

@@ -3,13 +3,30 @@ import PowerIcon from "assets/government/icons/powerpoint.svg";
 import { formatMB } from "utils/index";
 import EyeIcon from "assets/government/icons/dark-eye.svg";
 import DownloadIcon from "assets/government/icons/download_cloud.svg";
+import Download from "assets/government/icons/white-download.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Modal } from "antd";
+import {
+  CustomButton,
+  DefaultButton,
+} from "pages/government/components/button";
+import LeftArrow from "assets/government/icons/left-icon.svg";
+
+interface DocumentList {
+  name?: String;
+  size?: number;
+  path?: String;
+}
 
 type DocumentsType = {
   data?: ElderlyInterface;
 };
 
 export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
+  const [isFileOpen, setFileOpen] = useState<DocumentList | undefined>(
+    undefined
+  );
   const documentList = [
     {
       name: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
@@ -67,7 +84,10 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
               </div>
             </div>
             <div className="flex gap-2 items-center">
-              <div className="p-4 cursor-pointer text-gray-600">
+              <div
+                className="p-4 cursor-pointer text-gray-600"
+                onClick={() => setFileOpen(value)}
+              >
                 <img src={EyeIcon} alt="see" />
               </div>
               <a
@@ -82,6 +102,41 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
           </div>
         );
       })}
+      {isFileOpen && (
+        <Modal
+          title={
+            <div className="p-6">
+              <div className="font-semibold">{isFileOpen?.name}</div>
+            </div>
+          }
+          open={isFileOpen}
+          width={1144}
+          onCancel={() => setFileOpen(undefined)}
+          footer={
+            <div
+              className="flex items-center gap-2 p-6 justify-end"
+              style={{ borderTop: "1px solid #D0D5DD" }}
+            >
+              <DefaultButton
+                icon={<img src={LeftArrow} />}
+                title="Буцах"
+                onClick={() => setFileOpen(undefined)}
+              />
+              <CustomButton icon={<img src={Download} />} title="Татах" />
+            </div>
+          }
+        >
+          <div className="bg-[#F0F2F5] pt-5">
+            <iframe
+              style={{ border: "none" }}
+              src={`http://103.41.112.73:9000/${isFileOpen?.path}`}
+              width={1050}
+              height={850}
+              className="mx-12"
+            ></iframe>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
