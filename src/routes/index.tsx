@@ -30,7 +30,6 @@ const MainRoutes: FC = () => {
       children: auhtRoutes,
     });
   }
-  const isSocialworker = true;
   return (
     <Routes>
       {/* Other Routes */}
@@ -66,11 +65,7 @@ const MainRoutes: FC = () => {
         path="*"
         element={
           authorized ? (
-            isSocialworker ? (
-              <Navigate to="/dashboard/socialWorker/customer" />
-            ) : (
-              <Navigate to="/dashboard/government/requests" />
-            )
+            <Navigate to="/dashboard/socialWorker/customer" />
           ) : (
             <Navigate to="/auth/login" />
           )
