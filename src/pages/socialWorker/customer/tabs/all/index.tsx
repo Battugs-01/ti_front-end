@@ -98,10 +98,12 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
         </IModalForm>
         {/* 
         <CareGiverForm /> */}
-        <CareGiverCreate
-          cancelStepModal={cancelStepModal}
-          isStepModal={isStepModal}
-        />
+        {isStepModal && (
+          <CareGiverCreate
+            cancelStepModal={cancelStepModal}
+            isStepModal={isStepModal}
+          />
+        )}
       </Card>
     </div>
   );

@@ -22,6 +22,7 @@ import {
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
+import laboratory from "service/laboratory_tests/index.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -47,6 +48,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
+  const labTests = useRequest(async () => laboratory.get());
   const filesDoc = useRequest(file.uploads, {
     manual: true,
   });
@@ -56,6 +58,8 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
+  console.log(labTests.data, "test");
+
   return (
     <div>
       <StepsForm
