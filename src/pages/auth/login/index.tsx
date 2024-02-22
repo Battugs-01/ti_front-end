@@ -65,7 +65,7 @@ const Login: FC = () => {
               disabled={login.loading}
               htmlType="submit"
               size="large"
-              className="mt-7 "
+              className="mt-7"
             >
               Нэвтрэх
             </Button>

@@ -31,6 +31,9 @@ export const FormModal: React.FC<FormModalProps> = ({
   return (
     <div>
       <StepsForm
+        onFinish={async (values) => {
+          console.log("this is finish function", values);
+        }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
             switch (status) {
