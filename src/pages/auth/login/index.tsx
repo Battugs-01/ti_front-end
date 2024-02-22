@@ -23,10 +23,7 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
-      const isSocialworker = true;
-      isSocialworker
-        ? navigate("dashboard/socialWorker/customer")
-        : navigate("/dashboard/government/requests");
+      navigate("dashboard/socialWorker/customer");
       notification.success({
         message: "Амжилттай нэвтэрлээ.",
       });
