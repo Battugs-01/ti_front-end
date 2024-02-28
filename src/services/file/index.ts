@@ -25,7 +25,9 @@ namespace file {
       return [];
     }
     files.forEach((file, ind) => {
-      body.append("files", file[0].originFileObj);
+      file.map((item: any) => {
+        body.append("files", item.originFileObj);
+      });
     });
 
     return http.post<FileRecord[]>("upload/files", {

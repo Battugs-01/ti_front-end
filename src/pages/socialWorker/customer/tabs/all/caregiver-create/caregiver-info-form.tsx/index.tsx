@@ -13,6 +13,7 @@ import { workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
+import laboratory from "service/laboratory_tests";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
 export const CaregiverInfoForm: React.FC = () => {
@@ -26,7 +27,6 @@ export const CaregiverInfoForm: React.FC = () => {
   const khoroo = useRequest(address.khoroo, {
     manual: true,
   });
-
   return (
     <div className="px-8">
       <Row gutter={[16, 16]}>

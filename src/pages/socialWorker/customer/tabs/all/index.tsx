@@ -43,7 +43,7 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${list?.data?.total})`}
+            customHeaderTitle={`Нийт (${list?.data?.total || 0})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">

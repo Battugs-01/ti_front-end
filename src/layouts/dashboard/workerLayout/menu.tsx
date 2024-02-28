@@ -33,7 +33,7 @@ const Menu: React.FC = () => {
           {/* <Badge count={2} size="small">
             <img src={NotificationIcon} alt="notf"/>
           </Badge> */}
-          <NotificationComponent />
+          {/* <NotificationComponent /> */}
           <div className="flex items-center gap-3">
             <Avatar>BA</Avatar>
             <div className="flex flex-col justify-center items-start">

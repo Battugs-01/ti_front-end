@@ -58,7 +58,6 @@ export const SERVICE_OPERATION_TYPES = Object.freeze([
   },
 ]);
 
-
 export enum GenderType {
   male = 0,
   female = 1,
@@ -72,6 +71,27 @@ export const workersGenderArray = Object.freeze([
   {
     label: "Эм",
     value: GenderType.female,
+  },
+]);
+
+export enum RoleType {
+  agentlag = 1,
+  aimag = 2,
+  sum = 3,
+}
+
+export const selectRole = Object.freeze([
+  {
+    label: "Агентлаг",
+    value: RoleType.agentlag,
+  },
+  {
+    label: "Аймаг / Хот",
+    value: RoleType.aimag,
+  },
+  {
+    label: "Сум / Дүүрэг",
+    value: RoleType.aimag,
   },
 ]);
 

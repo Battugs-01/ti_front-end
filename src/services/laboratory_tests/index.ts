@@ -1,8 +1,8 @@
 import http from "service/index";
 
 namespace laboratory {
-  export const get = () => {
-    http.get("ministry/elderly/laboratory_tests", {
+  export const get = async () => {
+    return http.get("socialworker/elderly/laboratory_tests", {
       hasAuth: true,
     });
   };

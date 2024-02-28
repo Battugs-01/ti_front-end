@@ -23,6 +23,7 @@ import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import laboratory from "service/laboratory_tests/index.js";
+import { useEffect } from "react";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -48,7 +49,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
-  const labTests = useRequest(async () => laboratory.get());
+  const labTests = useRequest(laboratory.get, {
+    manual: true,
+  });
   const filesDoc = useRequest(file.uploads, {
     manual: true,
   });
@@ -58,8 +61,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
-  console.log(labTests.data, "test");
-
+  useEffect(() => {
+    labTests?.run();
+  }, []);
+  console.log(labTests?.data, "test");
   return (
     <div>
       <StepsForm
@@ -77,11 +82,14 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const docs = arrToObj(data, val?.documents);
           const request = arrToObj(requestData, val?.request);
           // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
-          const health = labFormat(healthData, val?.laboratorytests);
+          const health = labFormat(
+            healthData,
+            val?.laboratory_tests,
+            labTests?.data
+          );
           console.log(health, "this is health");
           elderly.runAsync({
             ...val,
-            care_center_id: 2,
             profile_id: 70,
             address: {
               ...val?.address,
@@ -137,6 +145,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <DefaultButton
+                    onClick={() => {
+                      onSubmit && onSubmit();
+                    }}
                     icon={<img src={SaveIcon} />}
                     title="Түр хадгалах"
                   />
