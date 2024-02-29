@@ -287,15 +287,16 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             name={["address", "city_id"]}
             placeholder="Борлууд"
             label={"Аймаг/Нийслэл"}
+            initialValue={data?.city_id}
             // options={city.data?.map((item: any) => {
             //   return {
             //     label: item.name,
             //     value: item.id,
             //   };
             // })}
-            onChange={(val) => {
-              district.run(val);
-            }}
+            // onChange={(val) => {
+            //   district.run(val);
+            // }}
             request={async () => {
               const data = await city.runAsync();
               return data?.map((item: any) => {
@@ -321,13 +322,23 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             onChange={(value) => {
               khoroo.run(value);
             }}
-            options={district.data?.map((item: any) => {
-              console.log(item, "this is item");
-              return {
-                label: item?.name,
-                value: item?.id,
-              };
-            })}
+            request={async () => {
+              const districtData = await district?.runAsync(data?.city_id);
+              return districtData?.map((item: any) => {
+                return {
+                  label: item.name,
+                  value: item.id,
+                };
+              });
+            }}
+            // options={district.data?.map((item: any) => {
+            //   console.log(item, "this is item");
+            //   return {
+            //     label: item?.name,
+            //     value: item?.id,
+            //   };
+            // })}
+            initialValue={data?.district_id}
             rules={[
               {
                 required: true,
@@ -341,13 +352,16 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             name={["address", "street"]}
             placeholder="Даваацэрэн"
             label={"Баг/Хороо"}
-            initialValue={"Street"}
-            options={khoroo?.data?.map((item: any) => {
-              return {
-                label: item?.name,
-                value: item?.id,
-              };
-            })}
+            initialValue={data?.khoroo_id}
+            request={async () => {
+              const khorooData = await khoroo?.runAsync(data?.district_id);
+              return khorooData?.map((item: any) => {
+                return {
+                  label: item.name,
+                  value: item.id,
+                };
+              });
+            }}
             rules={[
               {
                 required: true,

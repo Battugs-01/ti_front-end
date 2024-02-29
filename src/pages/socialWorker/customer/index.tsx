@@ -6,6 +6,7 @@ import { RequestType } from "service/social-worker/customer/type";
 import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
+import { Saved } from "./tabs/saved";
 
 const data = [
   {
@@ -163,11 +164,16 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.all}
         whenTrue={<All data={list?.data?.items} list={list} />}
       />
-      {/* <IfCondition
-        condition={tab === RequestType.saved}
-        whenTrue={<All data={data?.filter((val, index) => val.state === 0)} />}
-      />
       <IfCondition
+        condition={tab === RequestType.saved}
+        whenTrue={
+          <Saved
+            data={list?.data?.items?.filter((val, index) => val?.status === 1)}
+            list={list}
+          />
+        }
+      />
+      {/* <IfCondition
         condition={tab === RequestType.putOnHold}
         whenTrue={<All data={data?.filter((val, index) => val.state === 3)} />}
       />

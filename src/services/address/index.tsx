@@ -11,7 +11,7 @@ namespace address {
       hasAuth: true,
     });
   export const khoroo = (id: any) =>
-    http.get<ResponseType[]>(`/public/address/district/${id}`, {
+    http.get<ResponseType[]>(`/public/address/khoroo/${id}`, {
       hasAuth: true,
     });
 }

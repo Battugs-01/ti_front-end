@@ -21,8 +21,8 @@ const reducer: AuthReducerType = (state, action) => {
   }
 };
 
-const AuthContext = createContext<AuthContextType>([
-  { authorized: false, init: false },
+export const AuthContext = createContext<AuthContextType>([
+  { authorized: false, init: false, user: undefined },
   () => {},
 ]);
 

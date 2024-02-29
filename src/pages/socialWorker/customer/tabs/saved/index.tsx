@@ -1,26 +1,23 @@
 import { Card } from "antd";
 import { ExportButton } from "components/index";
-import { IModalForm } from "components/modal";
 import InitTableHeader from "components/table-header";
-import moment from "moment";
 import { useState } from "react";
-import { ListElderly } from "service/social-worker/customer/type";
+import { DataType, ListElderly } from "service/social-worker/customer/type";
 import { exportFromTable } from "utils/export";
 import List from "../../components/list";
-import { useRequest } from "ahooks";
-import SearchIcon from "assets/government/icons/search.svg";
-import file from "service/file";
-import orphanElderly from "service/social-worker/customer";
-import { CreateForm } from "./create";
-import { CareGiverCreate } from "./caregiver-create";
+import moment from "moment";
 import CustomPagination from "components/pagination";
+import { IModalForm } from "components/modal";
+import SearchIcon from "assets/government/icons/search.svg";
+import { CreateForm } from "../all/create";
+import { CareGiverCreate } from "../all/caregiver-create";
 
-type AllProps = {
+type SavedProps = {
   data?: ListElderly[];
   list?: any;
 };
 
-export const All: React.FC<AllProps> = ({ data, list }) => {
+export const Saved: React.FC<SavedProps> = ({ data, list }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
 
@@ -43,7 +40,7 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${list?.data?.total || 0})`}
+            customHeaderTitle={`Нийт (${data?.length || 0})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">
@@ -97,7 +94,7 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
           <CreateForm />
         </IModalForm>
         {/* 
-        <CareGiverForm /> */}
+    <CareGiverForm /> */}
         {isStepModal && (
           <CareGiverCreate
             cancelStepModal={cancelStepModal}

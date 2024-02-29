@@ -3,14 +3,16 @@ import UserIcon from "assets/government/icons/user.svg";
 import NotificationIcon from "assets/government/icons/notification.svg";
 import LogoutIcon from "assets/government/icons/logout.svg";
 import { Avatar, Badge } from "antd";
-import { useAuthContext } from "context/auth";
+import { AuthContext, useAuthContext } from "context/auth";
 import { useNavigate } from "react-router-dom";
 import { Action } from "context/type";
 import auth from "service/auth";
 import NotificationComponent from "../notifcation";
+import { useContext } from "react";
 
 const Menu: React.FC = () => {
   const [_, setAuth] = useAuthContext();
+  const [user] = useContext(AuthContext);
   const navigate = useNavigate();
   return (
     <div className="w-full bg-[#144E5A] text-white h-[72px]">
@@ -37,8 +39,10 @@ const Menu: React.FC = () => {
           <div className="flex items-center gap-3">
             <Avatar>BA</Avatar>
             <div className="flex flex-col justify-center items-start">
-              <div className="text-sm">{"E.Battulga"}</div>
-              <div className="text-sm text-[#A0B6BA]">{"Нийгмийн ажилтан"}</div>
+              <div className="text-sm">{user?.user?.first_name}</div>
+              <div className="text-sm text-[#A0B6BA]">
+                {user?.user?.position}
+              </div>
             </div>
             <div
               className="p-2 rounded-md cursor-pointer"

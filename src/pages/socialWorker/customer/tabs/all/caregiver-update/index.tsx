@@ -27,6 +27,8 @@ import {
   Documents,
   ElderlyInterface,
 } from "service/social-worker/customer/type.js";
+import laboratory from "service/laboratory_tests/index.js";
+import { useEffect } from "react";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -51,6 +53,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
+  const labTests = useRequest(laboratory.get, {
+    manual: true,
+  });
   const filesDoc = useRequest(file.uploads, {
     manual: true,
   });
@@ -60,6 +65,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
+  useEffect(() => {
+    labTests?.run();
+  }, []);
   return (
     <div>
       <StepsForm
@@ -67,17 +75,19 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
           });
-          console.log(data, "data");
           const healthData = await filesHealth.runAsync({
             files: Object.values(val.laboratory_tests || {}),
           });
-          console.log(healthData, "this is health data");
           const requestData = await filesRequest.runAsync({
             files: Object.values(val.request || {}),
           });
           const docs = arrToObj(data, val?.documents);
           const request = arrToObj(requestData, val?.request);
-          const health = labFormat(healthData, val?.laboratorytests);
+          const health = labFormat(
+            healthData,
+            val?.laboratory_tests,
+            labTests?.data
+          );
           elderlyEdit.runAsync(
             {
               ...val,

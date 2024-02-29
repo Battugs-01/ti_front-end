@@ -34,7 +34,7 @@ const List: React.FC<ListProps> = ({
           <CareGiverBadge status={state} />
         </div>
         <div>
-          <RightContent date={date} state={state} id={id} />
+          <RightContent date={date} state={state || 0} id={id} />
         </div>
       </div>
     </div>

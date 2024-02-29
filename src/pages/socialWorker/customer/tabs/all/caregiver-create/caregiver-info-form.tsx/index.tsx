@@ -77,7 +77,7 @@ export const CaregiverInfoForm: React.FC = () => {
           <ProFormText
             name="first_name"
             placeholder="Даваацэрэн"
-            label={"Ургийн овог"}
+            label={"Нэр"}
             rules={[
               {
                 required: true,
@@ -320,7 +320,7 @@ export const CaregiverInfoForm: React.FC = () => {
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name={["address", "street"]}
+            name={["address", "khoroo_id"]}
             placeholder="Даваацэрэн"
             label={"Баг/Хороо"}
             initialValue={"Street"}
@@ -341,31 +341,29 @@ export const CaregiverInfoForm: React.FC = () => {
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={16}>
-          <ProFormSelect
-            name={["address", "khoroo_id"]}
+          <ProFormText
+            name={["address", "street"]}
             placeholder="Эрчим хүчний гудамж, Ирээдүй хотхон"
             label={"Гудамж / Хороолол"}
-            initialValue={0}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Энэ талбарийг оруулах шаардлагатай!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Энэ талбарийг оруулах шаардлагатай!",
+              },
+            ]}
           />
         </Col>
         <Col span={8}>
-          <ProFormSelect
+          <ProFormText
             name={["address", "description"]}
             placeholder="103-44 тоот"
             label={"Хашаа / Хаалгын дугаар"}
-            initialValue={"Test"}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Энэ талбарийг оруулах шаардлагатай!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Энэ талбарийг оруулах шаардлагатай!",
+              },
+            ]}
           />
         </Col>
       </Row>

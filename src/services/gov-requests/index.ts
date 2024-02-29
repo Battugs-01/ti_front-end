@@ -30,14 +30,14 @@ export type ListProps = {
   name?: string;
   surname?: string;
   registrationNumber?: string;
-  state?: Number;
+  state?: number;
   date?: any;
   time?: string;
 };
 
 export type RightContentType = {
   showDetail?: () => void;
-  state?: Number;
+  state?: number;
   date?: any;
   id?: any;
   time?: string;

@@ -23,7 +23,7 @@ import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import laboratory from "service/laboratory_tests/index.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -34,6 +34,15 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   cancelStepModal,
   isStepModal,
 }) => {
+  const toDistrict = useRequest(orphanElderly.sendToDistrict, {
+    manual: true,
+    onSuccess() {
+      notification.success({
+        message: "Амжилттай хүсэлт илгээгдлээ.",
+      });
+      setSendRequest(false);
+    },
+  });
   const elderly = useRequest(orphanElderly.create, {
     manual: true,
     onSuccess() {
@@ -49,6 +58,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
+  const [sendRequest, setSendRequest] = useState(false);
   const labTests = useRequest(laboratory.get, {
     manual: true,
   });
@@ -87,8 +97,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             val?.laboratory_tests,
             labTests?.data
           );
-          console.log(health, "this is health");
-          elderly.runAsync({
+          const elderlyData = await elderly.runAsync({
             ...val,
             profile_id: 70,
             address: {
@@ -99,6 +108,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             request: request,
             birth_date: dayjs(val?.birth_date).toDate(),
           });
+          sendRequest && toDistrict.run(elderlyData?.id);
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
@@ -163,6 +173,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Дараагийнх"

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 interface Props {
-  status?: 0 | 1 | 2 | 3 | Number;
+  status?: 1 | 2 | 3 | 4 | Number;
   desc?: String;
 }
 
@@ -9,19 +9,19 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
   let text = "Хадгалагдсан";
   let colorClass = "bg-gray-100 text-gray-700";
   switch (status) {
-    case 0:
+    case 1:
       text = "Хадгалагдсан";
       colorClass = "bg-gray-100 text-gray-700";
       break;
-    case 1:
+    case 2:
       text = "Хүсэлт илгээсэн";
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
-    case 2:
+    case 3:
       text = "Буцаагдсан";
       colorClass = "bg-red-50 text-red-700";
       break;
-    case 3:
+    case 4:
       text = "Хүлээлэгт оруулсан";
       colorClass = "bg-blue-50 text-blue-700";
       break;

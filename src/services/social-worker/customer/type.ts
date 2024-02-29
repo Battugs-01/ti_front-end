@@ -1,3 +1,8 @@
+export interface DataType {
+  items: ListElderly[];
+  total: number;
+}
+
 export enum RequestType {
   all = "all",
   saved = "saved",
@@ -9,8 +14,7 @@ export interface ListElderly {
   id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: null;
-  care_center_id: number;
+  care_center_id?: number;
   profile_id: number;
   family_name: string;
   first_name: string;
@@ -28,13 +32,20 @@ export interface ListElderly {
   children_count: number;
   situational: null;
   definition_governor: null;
+  modified_user_id?: number;
+  created_user_id: number;
+  city_id: number;
+  district_id: number;
+  khoroo_id: number;
+  status: number;
+  ordinances: null;
+  welfare_documents: null;
 }
 
 export interface ElderlyInterface {
   id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
   care_center_id: number;
   profile_id: number;
   family_name: string;
@@ -54,6 +65,14 @@ export interface ElderlyInterface {
   documents: Documents;
   situational: DefinitionGovernor[];
   definition_governor: DefinitionGovernor[];
+  modified_user_id: number;
+  created_user_id: number;
+  city_id: number;
+  district_id: number;
+  khoroo_id: number;
+  status: number;
+  ordinances: null;
+  welfare_documents: null;
 }
 
 export interface DefinitionGovernor {

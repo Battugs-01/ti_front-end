@@ -11,7 +11,7 @@ namespace file {
 
     body.append("files", file);
 
-    return http.post<FileRecord>("/upload/files", {
+    return http.post<FileRecord[]>("/upload/files", {
       body,
       hasAuth: true,
       onUploadProgress: onUploadProgress,

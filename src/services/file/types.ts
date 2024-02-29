@@ -1,6 +1,12 @@
 export interface FileRecord {
-  id: any;
-  path: string;
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  file_name: string;
+  original_name: string;
+  physical_path: string;
+  extention: string;
+  file_size: number;
 }
 
 export interface StorageFile {
