@@ -8,18 +8,30 @@ import {
   ProFormUploadButton,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Col, Row, Upload } from "antd";
-import { RcFile } from "antd/lib/upload";
-import { UploadDraggerButton } from "components/index";
+import { Col, Row, Upload, notification } from "antd";
 import { workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
-import laboratory from "service/laboratory_tests";
+import file from "service/file";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
-export const CaregiverInfoForm: React.FC = () => {
+type FormType = {
+  form?: any;
+};
+
+export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
   const [isDisability, setDisability] = useState<boolean>(false);
+  const uploadProfile = useRequest(file.upload, {
+    manual: true,
+    onSuccess: (data) => {
+      console.log(data, "this is data");
+    },
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
   const city = useRequest(address.city, {
     manual: true,
   });
@@ -39,12 +51,6 @@ export const CaregiverInfoForm: React.FC = () => {
                 <div className="text-xs ">Зураг оруулах</div>
               </div>
             }
-            action={(file: RcFile) => {
-              console.log(file, "this is file");
-              return new Promise((resolve, reject) => {
-                resolve(`http://103.41.112.73:9000/${file?.type}`);
-              });
-            }}
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             max={2}
             fieldProps={{
@@ -288,6 +294,7 @@ export const CaregiverInfoForm: React.FC = () => {
             //   };
             // })}
             onChange={(val) => {
+              form.resetFields(["address.district_id", "address.khoroo_id"]);
               district.run(val);
             }}
             request={async () => {
@@ -313,6 +320,7 @@ export const CaregiverInfoForm: React.FC = () => {
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
+              form.resetFields(["address.khoroo_id"]);
               khoroo.run(value);
             }}
             options={district.data?.map((item: any) => {

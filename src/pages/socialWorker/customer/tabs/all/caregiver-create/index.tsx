@@ -24,6 +24,7 @@ import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import laboratory from "service/laboratory_tests/index.js";
 import { useEffect, useState } from "react";
+import { useForm } from "antd/lib/form/Form.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -58,6 +59,8 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
+  const [form] = useForm();
+
   const [sendRequest, setSendRequest] = useState(false);
   const labTests = useRequest(laboratory.get, {
     manual: true,
@@ -78,6 +81,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   return (
     <div>
       <StepsForm
+        formProps={{
+          form,
+        }}
         onFinish={async (val) => {
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
@@ -229,7 +235,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <CaregiverInfoForm />
+          <CaregiverInfoForm form={form} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"

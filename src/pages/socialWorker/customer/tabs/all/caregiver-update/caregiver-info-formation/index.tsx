@@ -9,6 +9,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
+import { useForm } from "antd/lib/form/Form";
 import { FORM_ITEM_RULE, workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -17,12 +18,14 @@ import { ElderlyInterface } from "service/social-worker/customer/type";
 
 type FormType = {
   data?: ElderlyInterface;
+  form?: any;
 };
 
-export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
+export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
   const [isDisability, setDisability] = useState<boolean>(
     data?.is_disability || false
   );
+
   const city = useRequest(address.city, {
     manual: true,
   });
@@ -287,16 +290,17 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             name={["address", "city_id"]}
             placeholder="Борлууд"
             label={"Аймаг/Нийслэл"}
-            initialValue={data?.city_id}
+            initialValue={data?.address?.city_id}
             // options={city.data?.map((item: any) => {
             //   return {
             //     label: item.name,
             //     value: item.id,
             //   };
             // })}
-            // onChange={(val) => {
-            //   district.run(val);
-            // }}
+            onChange={(val) => {
+              form?.resetFields(["address.district_id", "address.khoroo_id"]);
+              district.run(val);
+            }}
             request={async () => {
               const data = await city.runAsync();
               return data?.map((item: any) => {
@@ -320,25 +324,17 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
+              form?.resetFields(["address.khoroo_id"]);
               khoroo.run(value);
             }}
-            request={async () => {
-              const districtData = await district?.runAsync(data?.city_id);
-              return districtData?.map((item: any) => {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              });
-            }}
-            // options={district.data?.map((item: any) => {
-            //   console.log(item, "this is item");
-            //   return {
-            //     label: item?.name,
-            //     value: item?.id,
-            //   };
-            // })}
-            initialValue={data?.district_id}
+            options={district.data?.map((item: any) => {
+              console.log(item, "this is item");
+              return {
+                label: item?.name,
+                value: item?.id,
+              };
+            })}
+            initialValue={data?.address?.district_id}
             rules={[
               {
                 required: true,
@@ -349,19 +345,16 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
         </Col>
         <Col span={8}>
           <ProFormSelect
-            name={["address", "street"]}
+            name={["address", "khoroo_id"]}
             placeholder="Даваацэрэн"
             label={"Баг/Хороо"}
-            initialValue={data?.khoroo_id}
-            request={async () => {
-              const khorooData = await khoroo?.runAsync(data?.district_id);
-              return khorooData?.map((item: any) => {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              });
-            }}
+            initialValue={data?.address?.khoroo_id}
+            options={khoroo?.data?.map((item: any) => {
+              return {
+                label: item?.name,
+                value: item?.id,
+              };
+            })}
             rules={[
               {
                 required: true,
@@ -373,11 +366,11 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={16}>
-          <ProFormSelect
-            name={["address", "khoroo_id"]}
+          <ProFormText
+            name={["address", "street"]}
             placeholder="Эрчим хүчний гудамж, Ирээдүй хотхон"
             label={"Гудамж / Хороолол"}
-            initialValue={0}
+            initialValue={data?.address?.street}
             // rules={[
             //   {
             //     required: true,
@@ -387,11 +380,11 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
           />
         </Col>
         <Col span={8}>
-          <ProFormSelect
+          <ProFormText
             name={["address", "description"]}
             placeholder="103-44 тоот"
             label={"Хашаа / Хаалгын дугаар"}
-            initialValue={"Test"}
+            initialValue={data?.address?.description}
             // rules={[
             //   {
             //     required: true,

@@ -29,6 +29,7 @@ import {
 } from "service/social-worker/customer/type.js";
 import laboratory from "service/laboratory_tests/index.js";
 import { useEffect } from "react";
+import { useForm } from "antd/lib/form/Form.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -53,6 +54,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
+  const [form] = useForm();
   const labTests = useRequest(laboratory.get, {
     manual: true,
   });
@@ -71,6 +73,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   return (
     <div>
       <StepsForm
+        formProps={{
+          form,
+        }}
         onFinish={async (val) => {
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
@@ -91,7 +96,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           elderlyEdit.runAsync(
             {
               ...val,
-              care_center_id: 2,
               profile_id: 70,
               address: {
                 ...val?.address,
@@ -212,7 +216,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           {elderly?.loading ? (
             <PageLoading />
           ) : (
-            <CaregiverInfoForm data={elderly?.data as ElderlyInterface} />
+            <CaregiverInfoForm
+              data={elderly?.data as ElderlyInterface}
+              form={form}
+            />
           )}
         </StepsForm.StepForm>
         <StepsForm.StepForm

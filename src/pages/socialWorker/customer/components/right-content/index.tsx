@@ -5,6 +5,7 @@ import EditIcon from "assets/icons/edit.svg";
 import EyeIcon from "assets/government/icons/eye.svg";
 import { CareGiverUpdate } from "../../tabs/all/caregiver-update";
 import { Detail } from "../../detail/formModal";
+import { ElderlyStatus } from "service/social-worker/customer/type";
 
 const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -16,7 +17,7 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
     setIsDetail(false);
   };
   switch (state) {
-    case 1: {
+    case ElderlyStatus.ElderlySave: {
       return (
         <Fragment>
           <div className="w-full flex items-center gap-8">
@@ -40,7 +41,7 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
         </Fragment>
       );
     }
-    case 2: {
+    case ElderlyStatus.ElderlyRequestSendToDistrict: {
       return (
         <Fragment>
           <div className="w-full flex items-center gap-8">
@@ -65,12 +66,54 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
         </Fragment>
       );
     }
-    case 3: {
+    case ElderlyStatus.WaitDistrict: {
       return (
-        <div className="flex items-center gap-1 text-sm text-[#475467]">
-          <div>Илгээсэн огноо:</div>
-          <div className="font-bold">{date}</div>
-        </div>
+        <Fragment>
+          <div className="w-full flex items-center gap-8">
+            <div className="flex items-center gap-1 text-sm text-[#475467]">
+              <div>Илгээсэн огноо:</div>
+              <div className="font-bold">{date}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+          </div>
+          {isDetail && (
+            <Detail
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.ElderlyRequestSendSendToCareCenter: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-8">
+            <div className="flex items-center gap-1 text-sm text-[#475467]">
+              <div>Огноо:</div>
+              <div className="font-bold">{date}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              // onClick={() => setIsDetail(true)}
+            />
+          </div>
+          {isDetail && (
+            <Detail
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+            />
+          )}
+        </Fragment>
       );
     }
     case 5: {
@@ -96,6 +139,14 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
       return (
         <div className="flex items-center gap-1 text-sm text-[#475467]">
           <div>Хүлээлэгт оруулсан огноо:</div>
+          <div className="font-bold">{date}</div>
+        </div>
+      );
+    }
+    case ElderlyStatus.ReturnSum: {
+      return (
+        <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div>Буцаагдсан огноо:</div>
           <div className="font-bold">{date}</div>
         </div>
       );

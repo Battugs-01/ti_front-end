@@ -1,6 +1,20 @@
+import { ElderlyInterface } from "service/social-worker/customer/type";
 export interface DataType {
   items: ListElderly[];
   total: number;
+}
+
+export enum ElderlyStatus {
+  ElderlySave = 1,
+  ElderlyRequestSendToDistrict = 2,
+  ElderlyRequestSendSendToCareCenter = 3,
+  ElderlyWaiting = 4,
+  ElderlyAllocated = 5,
+  ElderlyTakingCare = 6,
+  ElderlyCareCenterReturned = 7,
+  ElderlyDied = 8,
+  ReturnSum = 9,
+  WaitDistrict = 10,
 }
 
 export enum RequestType {
@@ -55,7 +69,6 @@ export interface ElderlyInterface {
   id: number;
   created_at: Date;
   updated_at: Date;
-  care_center_id: number;
   profile_id: number;
   family_name: string;
   first_name: string;
@@ -71,52 +84,66 @@ export interface ElderlyInterface {
   marriage: string;
   family_count: number;
   children_count: number;
+  laboratory_tests: LaboratoryTest[];
+  address: Address;
   documents: Documents;
   situational: DefinitionGovernor[];
   definition_governor: DefinitionGovernor[];
-  modified_user_id: number;
   created_user_id: number;
+}
+
+export interface Address {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  elderly_id: number;
   city_id: number;
+  city: City;
   district_id: number;
+  district: City;
   khoroo_id: number;
-  status: number;
-  ordinances: null;
-  welfare_documents: null;
+  khoroo: City;
+  street: string;
+  description: string;
+}
+
+export interface City {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  code?: string;
+  name: string;
+  is_active: boolean;
+  city_id?: number;
+  district_id?: number;
+  description?: string;
 }
 
 export interface DefinitionGovernor {
   id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: null;
-  file_name: FileName;
+  file_name: string;
   original_name: OriginalName;
-  physical_path: String;
+  physical_path: string;
   extention: Extention;
   file_size: number;
 }
 
 export enum Extention {
-  PNG = "png",
-}
-
-export enum FileName {
-  Cls6Cdfg0000101T6Vr2G7EimPNG = "cls6cdfg0000101t6vr2g7eim.png",
+  Empty = "",
+  PDF = "pdf",
 }
 
 export enum OriginalName {
-  ChelPNG = "chel.png",
-}
-
-export enum PhysicalPath {
-  ImagesCls6Cdfg0000101T6Vr2G7EimPNG = "images/cls6cdfg0000101t6vr2g7eim.png",
+  Empty = "",
+  Sample1PDF = "sample (1).pdf",
 }
 
 export interface Documents {
   id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: null;
   elderly_id: number;
   is_pension_loan: boolean;
   care_request: DefinitionGovernor[];
@@ -124,7 +151,7 @@ export interface Documents {
   is_pension_inquiry: DefinitionGovernor[];
   pension_loan: DefinitionGovernor[];
   is_disability_inquiry: DefinitionGovernor[];
-  other_welfare_services_inquiry: DefinitionGovernor[];
+  other_welfare_services_inquiry: any[];
   insurance_discounts_inquiry: DefinitionGovernor[];
   care_center_discount_inquiry: DefinitionGovernor[];
   identity_card: DefinitionGovernor[];
@@ -133,4 +160,14 @@ export interface Documents {
   is_have_sibling_inquiry: DefinitionGovernor[];
   is_married_inquiry: DefinitionGovernor[];
   is_divorce_inquiry: DefinitionGovernor[];
+}
+
+export interface LaboratoryTest {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  elderly_id: number;
+  laboratory_test_id: number;
+  laboratory_test: City;
+  files: DefinitionGovernor[];
 }

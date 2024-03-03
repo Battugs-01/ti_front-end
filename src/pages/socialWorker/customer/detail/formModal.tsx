@@ -15,6 +15,7 @@ import orphanElderly from "service/social-worker/customer";
 import { UnderReview } from "./under_review";
 import { Distribute } from "./distribute";
 import file from "service/file";
+import { useState } from "react";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -30,6 +31,8 @@ export const Detail: React.FC<DetailProps> = ({
   status,
 }) => {
   // ? TODO
+  const [isWaiting, setIsWaiting] = useState<boolean>(false);
+  const [isReturn, setIsReturn] = useState<boolean>(false);
   const elderlyDetail = useRequest(() => orphanElderly.getElderly(id));
   const distributeOrphan = useRequest(orphanElderly.distribute, {
     manual: true,
@@ -130,10 +133,18 @@ export const Detail: React.FC<DetailProps> = ({
                     <DefaultButton
                       icon={<img src={SaveIcon} />}
                       title="Нийгмийн ажилтанруу буцаах"
+                      onClick={() => {
+                        setIsReturn(true);
+                        onSubmit && onSubmit();
+                      }}
                     />
                     <DefaultButton
                       icon={<img src={SaveIcon} />}
                       title="Хүлээлэгт оруулах"
+                      onClick={() => {
+                        setIsWaiting(true);
+                        onSubmit && onSubmit();
+                      }}
                     />
                     <CustomButton
                       onClick={() => {
@@ -193,6 +204,14 @@ export const Detail: React.FC<DetailProps> = ({
             </div>
           }
           onFinish={async () => {
+            if (isWaiting) {
+              distributeOrphan.run(
+                {
+                  status: 10,
+                },
+                id
+              );
+            }
             return true;
           }}
         >
