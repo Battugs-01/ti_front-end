@@ -61,16 +61,17 @@ export const Detail: React.FC<DetailProps> = ({
       <StepsForm
         onFinish={async (values) => {
           const ordinances = await ordinancesFile.runAsync({
-            file: values?.Ordinances_file_ids[0].originFileObj,
+            file: values?.ordinances_file_ids[0].originFileObj,
           });
           const welfare = await welfareFile.runAsync({
-            file: values?.Welfare_document_file_ids[0].originFileObj,
+            file: values?.welfare_document_file_ids[0].originFileObj,
           });
           distributeOrphan.run(
             {
-              status: status,
-              Ordinances_file_ids: [ordinances[0]?.id],
-              Welfare_document_file_ids: [welfare[0]?.id],
+              care_center_id: values?.care_center_id,
+              status: 3,
+              ordinances_file_ids: [ordinances[0]?.id],
+              welfare_document_file_ids: [welfare[0]?.id],
             },
             id
           );

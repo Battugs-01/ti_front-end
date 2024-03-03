@@ -66,11 +66,11 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
           {data?.map((card, key) => (
             <List
               key={key}
-              image={card?.first_name?.substring(0, 2).toUpperCase()}
-              name={card?.first_name}
-              surname={card?.last_name}
-              registrationNumber={card?.rd}
-              id={card.id}
+              image={card?.elderly?.first_name?.substring(0, 2).toUpperCase()}
+              name={card?.elderly?.first_name}
+              surname={card?.elderly?.last_name}
+              registrationNumber={card?.elderly?.rd}
+              id={card?.elderly_id}
               state={card?.status}
               date={moment(card?.created_at).format("l")}
             />

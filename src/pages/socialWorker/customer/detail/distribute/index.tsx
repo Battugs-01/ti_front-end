@@ -64,14 +64,14 @@ export const Distribute: React.FC = () => {
         <Row gutter={[16, 16]}>
           <Col span={12}>
             <UploadDraggerButton
-              name={"Ordinances_file_ids"}
+              name={"ordinances_file_ids"}
               required
               label="Аймаг, дүүргийн засаг даргын захирамж"
             />
           </Col>
           <Col span={12}>
             <UploadDraggerButton
-              name={"Welfare_document_file_ids"}
+              name={"welfare_document_file_ids"}
               required
               label="Хөдөлмөр, халамжийн үйлчилгээний газар, хэлтсийн албан тоот"
             />

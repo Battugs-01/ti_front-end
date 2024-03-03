@@ -10,11 +10,26 @@ export enum RequestType {
   returned = "returned",
   requestSend = "requestSend",
 }
+
 export interface ListElderly {
   id: number;
   created_at: Date;
   updated_at: Date;
-  care_center_id?: number;
+  created_user_id: number;
+  elderly_id: number;
+  elderly: Elderly;
+  status: number;
+  city_id: number;
+  district_id: number;
+  khoroo_id: number;
+  ordinances: null;
+  welfare_documents: null;
+}
+
+export interface Elderly {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
   profile_id: number;
   family_name: string;
   first_name: string;
@@ -30,16 +45,10 @@ export interface ListElderly {
   marriage: string;
   family_count: number;
   children_count: number;
+  address: null;
   situational: null;
   definition_governor: null;
-  modified_user_id?: number;
   created_user_id: number;
-  city_id: number;
-  district_id: number;
-  khoroo_id: number;
-  status: number;
-  ordinances: null;
-  welfare_documents: null;
 }
 
 export interface ElderlyInterface {

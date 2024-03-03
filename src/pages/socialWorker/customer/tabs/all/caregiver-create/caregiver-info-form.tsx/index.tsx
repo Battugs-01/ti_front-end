@@ -9,6 +9,8 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload } from "antd";
+import { RcFile } from "antd/lib/upload";
+import { UploadDraggerButton } from "components/index";
 import { workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -37,6 +39,12 @@ export const CaregiverInfoForm: React.FC = () => {
                 <div className="text-xs ">Зураг оруулах</div>
               </div>
             }
+            action={(file: RcFile) => {
+              console.log(file, "this is file");
+              return new Promise((resolve, reject) => {
+                resolve(`http://103.41.112.73:9000/${file?.type}`);
+              });
+            }}
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             max={2}
             fieldProps={{
@@ -44,6 +52,10 @@ export const CaregiverInfoForm: React.FC = () => {
               listType: "picture-card",
             }}
           />
+          {/* <UploadDraggerButton
+            name="profile_id"
+            label={"Цээж зураг (3x4 хэмжээтэй)"}
+          /> */}
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
