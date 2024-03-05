@@ -24,7 +24,6 @@ import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import laboratory from "service/laboratory_tests/index.js";
 import { useEffect, useState } from "react";
-import { useForm } from "antd/lib/form/Form.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -59,7 +58,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
     },
   });
-  const [form] = useForm();
 
   const [sendRequest, setSendRequest] = useState(false);
   const labTests = useRequest(laboratory.get, {
@@ -74,6 +72,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
+  const uploadProfile = useRequest(file.upload, {
+    manual: true,
+  });
   useEffect(() => {
     labTests?.run();
   }, []);
@@ -81,10 +82,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   return (
     <div>
       <StepsForm
-        formProps={{
-          form,
-        }}
         onFinish={async (val) => {
+          const profile = await uploadProfile.runAsync({
+            file: val?.profile?.[0]?.originFileObj,
+          });
           const data = await filesDoc.runAsync({
             files: Object.values(val.documents || {}),
           });
@@ -105,7 +106,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           );
           const elderlyData = await elderly.runAsync({
             ...val,
-            profile_id: 10,
+            profile_id: profile[0]?.id,
             address: {
               ...val?.address,
             },
@@ -171,6 +172,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Хүсэлт илгээх"
@@ -179,7 +181,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
-                        setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Дараагийнх"
@@ -235,7 +236,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <CaregiverInfoForm form={form} />
+          <CaregiverInfoForm />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"

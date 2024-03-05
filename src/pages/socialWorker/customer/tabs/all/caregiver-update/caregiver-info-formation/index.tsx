@@ -18,10 +18,9 @@ import { ElderlyInterface } from "service/social-worker/customer/type";
 
 type FormType = {
   data?: ElderlyInterface;
-  form?: any;
 };
 
-export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
+export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
   const [isDisability, setDisability] = useState<boolean>(
     data?.is_disability || false
   );
@@ -47,10 +46,15 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
               </div>
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
+            name={"profile"}
             max={2}
+            // initialValue={data}
             fieldProps={{
               name: "file",
               listType: "picture-card",
+              beforeUpload: () => {
+                return false;
+              },
             }}
           />
         </Col>
@@ -298,7 +302,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
             //   };
             // })}
             onChange={(val) => {
-              form?.resetFields(["address.district_id", "address.khoroo_id"]);
               district.run(val);
             }}
             request={async () => {
@@ -324,7 +327,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
-              form?.resetFields(["address.khoroo_id"]);
               khoroo.run(value);
             }}
             options={district.data?.map((item: any) => {

@@ -10,10 +10,8 @@ import {
 import { useRequest } from "ahooks";
 import { Col, Row, Upload, notification } from "antd";
 import { workersGenderArray } from "config";
-import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
-import file from "service/file";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
 type FormType = {
@@ -22,16 +20,6 @@ type FormType = {
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
   const [isDisability, setDisability] = useState<boolean>(false);
-  const uploadProfile = useRequest(file.upload, {
-    manual: true,
-    onSuccess: (data) => {
-      console.log(data, "this is data");
-    },
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
   const city = useRequest(address.city, {
     manual: true,
   });
@@ -41,6 +29,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
   const khoroo = useRequest(address.khoroo, {
     manual: true,
   });
+
   return (
     <div className="px-8">
       <Row gutter={[16, 16]}>
@@ -53,9 +42,13 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             max={2}
+            name="profile"
             fieldProps={{
               name: "file",
               listType: "picture-card",
+              beforeUpload: () => {
+                return false;
+              },
             }}
           />
           {/* <UploadDraggerButton
@@ -294,7 +287,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             //   };
             // })}
             onChange={(val) => {
-              form.resetFields(["address.district_id", "address.khoroo_id"]);
               district.run(val);
             }}
             request={async () => {
@@ -320,7 +312,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
-              form.resetFields(["address.khoroo_id"]);
               khoroo.run(value);
             }}
             options={district.data?.map((item: any) => {
