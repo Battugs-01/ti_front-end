@@ -109,7 +109,7 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
               <div className="font-semibold">{isFileOpen?.name}</div>
             </div>
           }
-          open={isFileOpen}
+          open={!!isFileOpen}
           width={1144}
           onCancel={() => setFileOpen(undefined)}
           footer={

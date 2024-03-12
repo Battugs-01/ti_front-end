@@ -84,7 +84,7 @@ export const RegistrationForm: React.FC = () => {
           <Row gutter={[16, 16]} key={key}>
             {val?.map((el, index) => (
               <Col span={12}>
-                <UploadDraggerButton
+                <UploadButton
                   required={false}
                   name={["documents", el?.name]}
                   label={el?.label}
@@ -100,8 +100,9 @@ export const RegistrationForm: React.FC = () => {
           <Row gutter={[16, 16]} key={key}>
             {val?.map((el, index) => (
               <Col span={12}>
-                <UploadDraggerButton
+                <UploadButton
                   required={false}
+                  // fileList={}
                   name={["documents", el?.name]}
                   label={el?.label}
                   key={index}

@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { UploadDraggerButton } from "components/index";
+import { UploadButton, UploadDraggerButton } from "components/index";
 
 const uploadDocument = [
   [
@@ -62,7 +62,7 @@ export const HealthForm: React.FC = () => {
         <Row gutter={[16, 16]} key={key}>
           {val?.map((el, index) => (
             <Col span={12}>
-              <UploadDraggerButton
+              <UploadButton
                 name={["laboratory_tests", el?.name]}
                 label={el?.label}
                 key={index}

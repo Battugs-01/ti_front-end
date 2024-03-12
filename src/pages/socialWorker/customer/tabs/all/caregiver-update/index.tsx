@@ -3,7 +3,6 @@ import { Modal, message } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import { HealthForm } from "./health-condition/index.js";
 import { SendForm } from "./request-send/index.js";
 import {
   arrToObj,
@@ -242,7 +241,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <HealthForm />
+          {/* <HealthForm data={elderly?.data?.laboratory_tests || []} /> */}
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="request"
@@ -255,7 +254,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <SendForm />
+          <SendForm data={elderly?.data} />
         </StepsForm.StepForm>
       </StepsForm>
     </div>

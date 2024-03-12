@@ -1,4 +1,3 @@
-import { ElderlyInterface } from "service/social-worker/customer/type";
 export interface DataType {
   items: ListElderly[];
   total: number;
@@ -84,7 +83,7 @@ export interface ElderlyInterface {
   marriage: string;
   family_count: number;
   children_count: number;
-  laboratory_tests: LaboratoryTest[];
+  laboratory_tests: LaboratoryTests[];
   address: Address;
   documents: Documents;
   situational: DefinitionGovernor[];
@@ -162,12 +161,31 @@ export interface Documents {
   is_divorce_inquiry: DefinitionGovernor[];
 }
 
-export interface LaboratoryTest {
+export interface LaboratoryTests {
   id: number;
   created_at: Date;
   updated_at: Date;
   elderly_id: number;
   laboratory_test_id: number;
-  laboratory_test: City;
-  files: DefinitionGovernor[];
+  laboratory_test: LaboratoryTest;
+  files: File[];
+}
+
+export interface File {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  file_name: string;
+  original_name: OriginalName;
+  physical_path: string;
+  extention: Extention;
+  file_size: number;
+}
+export interface LaboratoryTest {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+  description: string;
+  is_active: boolean;
 }

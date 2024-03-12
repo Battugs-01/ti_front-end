@@ -99,11 +99,11 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
               <div>Огноо:</div>
               <div className="font-bold">{date}</div>
             </div>
-            <CustomButton
+            {/* <CustomButton
               title="Дэлгэрэнгүй харах"
               icon={<img src={EyeIcon} />}
               // onClick={() => setIsDetail(true)}
-            />
+            /> */}
           </div>
           {isDetail && (
             <Detail
