@@ -3,13 +3,17 @@ import { Pagination } from "antd";
 
 type PaginationType = {
   total?: number;
+  setPagination?: (page: number, pageSize: number) => void;
 };
 
-const CustomPagination: React.FC<PaginationType> = ({ total }) => (
+const CustomPagination: React.FC<PaginationType> = ({
+  total,
+  setPagination,
+}) => (
   <>
     <div className="mt-5">
       <Pagination
-        onChange={(e) => console.log(e)}
+        onChange={setPagination}
         total={total}
         showTotal={(total, range) => (
           <div className="font-semibold text-gray-500">

@@ -380,3 +380,8 @@ export const newFileUploads = async (files: any[], uploadMulti: any) => {
 
   return oldFileIDs.concat(ids);
 };
+
+export const initPagination = {
+  page: 1,
+  pageSize: 20,
+};
