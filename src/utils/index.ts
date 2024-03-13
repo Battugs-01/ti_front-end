@@ -133,7 +133,7 @@ export const getImageSeperate = (
   let changedImages = files?.filter((el: any) => !el.isBefore);
   return { unChangedImages, changedImages };
 };
-
+// export const
 export const formatTimeToDate = (str: string) => {
   let value = str.split(":");
   if (!value || value?.length !== 3) return undefined;
@@ -348,4 +348,35 @@ export const getDeadlineByRangeDate = (fullDate?: string[]) => {
   if (gapDays <= 90) return FilterDeadline.ThreeMonth;
   if (gapDays <= 6 * 30) return FilterDeadline.SixMonth;
   return FilterDeadline.Year;
+};
+
+export const newFileUploads = async (files: any[], uploadMulti: any) => {
+  const oldFileIDs: number[] = [];
+
+  files.map((file) => {
+    if (!file?.uid.includes("rc-upload")) {
+      oldFileIDs.push(parseInt(file.uid));
+    }
+  });
+
+  const ids = await uploadMulti
+    .runAsync({
+      names: files?.reduce<string[]>((acc, record) => {
+        if (record?.uid.includes("rc-upload")) {
+          acc.push(record.fileName || "");
+          return acc;
+        }
+        return acc;
+      }, []),
+      files: files?.reduce<string[]>((acc, record) => {
+        if (record?.uid.includes("rc-upload")) {
+          acc.push(record);
+          return acc;
+        }
+        return acc;
+      }, []),
+    })
+    .then((el: any) => el.map((el: any) => el.id));
+
+  return oldFileIDs.concat(ids);
 };

@@ -1,46 +1,41 @@
 import { StepsForm } from "@ant-design/pro-form";
-import { Modal, message } from "antd";
+import { PageLoading } from "@ant-design/pro-layout";
+import { useRequest } from "ahooks";
+import { Modal, message, notification } from "antd";
+import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
+import LeftIcon from "assets/government/icons/left-icon.svg";
+import SaveIcon from "assets/government/icons/save.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import { SendForm } from "./request-send/index.js";
-import {
-  arrToObj,
-  labFormat,
-} from "pages/socialWorker/customer/util/arrToObj.js";
-import { useRequest } from "ahooks";
-import orphanElderly from "service/social-worker/customer/index.js";
-import file from "service/file/index.js";
-import dayjs from "dayjs";
+import moment from "moment";
 import {
   CustomButton,
   DefaultButton,
 } from "pages/government/components/button/index.js";
-import ArrowRight from "assets/government/icons/arrow-right.svg";
-import SaveIcon from "assets/government/icons/save.svg";
-import LeftIcon from "assets/government/icons/left-icon.svg";
-import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
-import { RegistrationForm } from "./registration-document/index.js";
-import { PageLoading } from "@ant-design/pro-layout";
-import {
-  Documents,
-  ElderlyInterface,
-} from "service/social-worker/customer/type.js";
-import laboratory from "service/laboratory_tests/index.js";
+import { labFormatUpdate } from "pages/socialWorker/customer/util/arrToObj.js";
 import { useEffect } from "react";
+import file from "service/file/index.js";
+import laboratory from "service/laboratory_tests/index.js";
+import orphanElderly from "service/social-worker/customer/index.js";
+import { ElderlyInterface } from "service/social-worker/customer/type.js";
+import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
+import { HealthForm } from "./health-condition/index.js";
+import { RegistrationForm } from "./registration-document/index.js";
+import { SendForm } from "./request-send/index.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
-  isStepModal?: boolean;
+  data?: ElderlyInterface;
   id: number;
 };
 
 export const CareGiverUpdate: React.FC<CaregiverType> = ({
   cancelStepModal,
-  isStepModal,
+  data,
   id,
 }) => {
-  const elderly = useRequest(async () => orphanElderly.getElderly(id));
+  // const elderly = useRequest(async () => orphanElderly.getElderly(id));
   const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
     onSuccess() {
@@ -64,40 +59,256 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
+  const uploadProfile = useRequest(file.upload, {
+    manual: true,
+  });
+  const uploadMulti = useRequest(file.uploadsMulti, {
+    manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
+
+  const newFileUploads = async (files: any[]) => {
+    const oldFileIDs: number[] = [];
+    console.log(files, "this is files");
+    files.map((file) => {
+      if (!file?.uid.includes("rc-upload")) {
+        oldFileIDs.push(parseInt(file.uid));
+      }
+    });
+
+    const ids = await uploadMulti
+      .runAsync({
+        names: files?.reduce<string[]>((acc, record) => {
+          if (record?.uid) {
+            if (record?.uid?.includes("rc-upload")) {
+              acc.push(record.fileName || "");
+              return acc;
+            }
+          }
+          return acc;
+        }, []),
+        files: files?.reduce<string[]>((acc, record) => {
+          if (record?.uid.includes("rc-upload")) {
+            acc.push(record);
+            return acc;
+          }
+          return acc;
+        }, []),
+      })
+      .then((el: any) => el.map((el: any) => el.id));
+
+    return oldFileIDs.concat(ids);
+  };
+  const labFileUploads = async (files: any[]) => {
+    const oldFileIDs: number[] = [];
+    console.log(files, "this is files");
+    files.map((file) => {
+      if (!file?.uid.includes("rc-upload")) {
+        oldFileIDs.push(parseInt(file.uid));
+      }
+    });
+
+    const ids = await uploadMulti
+      .runAsync({
+        names: files?.reduce<string[]>((acc, record) => {
+          if (record?.uid) {
+            if (record?.uid?.includes("rc-upload")) {
+              acc.push(record.fileName || "");
+              return acc;
+            }
+          }
+          return acc;
+        }, []),
+        files: files?.reduce<string[]>((acc, record) => {
+          if (record?.uid.includes("rc-upload")) {
+            acc.push(record);
+            return acc;
+          }
+          return acc;
+        }, []),
+      })
+      .then((el: any) => el.map((el: any) => el.id));
+
+    return oldFileIDs.concat(ids);
+  };
   useEffect(() => {
     labTests?.run();
   }, []);
   return (
     <div>
       <StepsForm
+        // initialValues={{
+        //   name: data.anem
+        //   upload: adkjaskld
+        // }}
         onFinish={async (val) => {
-          const data = await filesDoc.runAsync({
-            files: Object.values(val.documents || {}),
+          const reqData: any = {};
+          console.log(val, "this is value");
+          const profile = await uploadProfile.runAsync({
+            file: val?.profile?.[0]?.originFileObj,
           });
-          const healthData = await filesHealth.runAsync({
-            files: Object.values(val.laboratory_tests || {}),
-          });
-          const requestData = await filesRequest.runAsync({
-            files: Object.values(val.request || {}),
-          });
-          const docs = arrToObj(data, val?.documents);
-          const request = arrToObj(requestData, val?.request);
-          const health = labFormat(
-            healthData,
+          val.documents.elderly_document_care_requet = await newFileUploads(
+            val?.documents?.elderly_document_care_requet
+          );
+          val.documents.elderly_document_insurance_notebook =
+            await newFileUploads(
+              val?.documents?.elderly_document_insurance_notebook
+            );
+          val.documents.elderly_document_is_pension_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_pension_inquiry
+            );
+          val.documents["elderly_document_pension_loan;"] =
+            await newFileUploads(
+              val?.documents["elderly_document_pension_loan;"]
+            );
+          val.documents.elderly_document_is_disability_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_disability_inquiry
+            );
+          val.documents.elderly_document_other_welfare_services_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_other_welfare_services_inquiry
+            );
+          val.documents.elderly_document_insurance_discounts_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_insurance_discounts_inquiry
+            );
+          val.documents.elderly_document_care_center_discount_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_care_center_discount_inquiry
+            );
+
+          val.documents.elderly_document_identity_card = await newFileUploads(
+            val?.documents?.elderly_document_identity_card
+          );
+          val.documents.elderly_document_property_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_property_inquiry
+            );
+          val.documents.elderly_document_is_have_children_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_have_children_inquiry
+            );
+          val.documents.elderly_document_is_have_sibling_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_have_sibling_inquiry
+            );
+          val.documents.elderly_document_is_married_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_married_inquiry
+            );
+          val.documents.elderly_document_is_divorce_inquiry =
+            await newFileUploads(
+              val?.documents?.elderly_document_is_divorce_inquiry
+            );
+
+          val.request.situational_file_ids = await newFileUploads(
+            val?.request?.situational_file_ids
+          );
+          val.request.definition_governor_file_ids = await newFileUploads(
+            val?.request?.definition_governor_file_ids
+          );
+          console.log(val?.documents, "this is val documents");
+
+          val.laboratory_tests.health_check_sheet = await newFileUploads(
+            val?.laboratory_tests?.health_check_sheet
+          );
+          val.laboratory_tests.blood_test = await newFileUploads(
+            val?.laboratory_tests?.blood_test
+          );
+          val.laboratory_tests.analysis_urine = await newFileUploads(
+            val?.laboratory_tests?.analysis_urine
+          );
+          val.laboratory_tests.biochemical = await newFileUploads(
+            val?.laboratory_tests?.biochemical
+          );
+          val.laboratory_tests.sputum = await newFileUploads(
+            val?.laboratory_tests?.sputum
+          );
+          val.laboratory_tests.syphilis = await newFileUploads(
+            val?.laboratory_tests?.syphilis
+          );
+          val.laboratory_tests.abdominal = await newFileUploads(
+            val?.laboratory_tests?.abdominal
+          );
+          val.laboratory_tests.heart_recording = await newFileUploads(
+            val?.laboratory_tests?.heart_recording
+          );
+          val.laboratory_tests.lungs = await newFileUploads(
+            val?.laboratory_tests?.lungs
+          );
+          val.laboratory_tests.mental_health = await newFileUploads(
+            val?.laboratory_tests?.mental_health
+          );
+          console.log(val?.laboratory_tests, "this is lab tests");
+          console.log(
+            Object.values(val?.laboratory_tests),
+            "this is lab tests object"
+          );
+          console.log(
+            Object.keys(val?.laboratory_tests),
+            "this is lab tests keys"
+          );
+          console.log(labTests?.data, "this is lab tests data");
+          const healthData = labFormatUpdate(
             val?.laboratory_tests,
             labTests?.data
           );
+          // const uploadedRequest = uploadedFiles(
+          //   Object.values(val?.request || {})
+          // );
+          // const uploadedDocument = uploadedFiles(
+          //   Object.values(val?.documents || {})
+          // );
+          // const uploadedLab = uploadedFiles(
+          //   Object.values(val?.laboratory_tests || {})
+          // );
+          // const data = await filesDoc.runAsync({
+          //   files: Object.values(document || {}),
+          // });
+          // const healthData = await filesHealth.runAsync({
+          //   files: Object.values(lab || {}),
+          // });
+          // const requestData = await filesRequest.runAsync({
+          //   files: Object.values(requestFile || {}),
+          // });
+          // // const arrData = [];
+          // // const arrHealth = [];
+          // // const arrRequest = [];
+          // console.log(data, "data");
+          // console.log(healthData, "health data");
+          // console.log(requestData, "request data");
+          // const docs = arrToObj(
+          //   uploadedDocument.push(arrData.push(data)),
+          //   val?.documents
+          // );
+          // const request = arrToObj(
+          //   uploadedRequest.push(arrRequest.push(requestData)),
+          //   val?.request
+          // );
+          // const health = labFormat(
+          //   uploadedLab.push(arrHealth.push(healthData)),
+          //   val?.laboratory_tests,
+          //   labTests?.data
+          // );
+          // console.log(docs, "docs");
+          // console.log(request, "request");
+          // console.log(health, "health");
           elderlyEdit.runAsync(
             {
               ...val,
-              profile_id: 70,
+              profile_id: profile[0]?.id,
               address: {
                 ...val?.address,
               },
-              laboratory_tests: health,
-              documents: docs,
-              request: request,
-              birth_date: dayjs(val?.birth_date).toDate(),
+              laboratory_tests: healthData,
+              documents: val?.documents,
+              request: val?.request,
+              birth_date: moment(val?.birth_date)?.toDate(),
             },
             id
           );
@@ -147,6 +358,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <DefaultButton
+                    onClick={() => {
+                      onSubmit && onSubmit();
+                    }}
                     icon={<img src={SaveIcon} />}
                     title="Түр хадгалах"
                   />
@@ -189,7 +403,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                 </div>
               }
               onCancel={cancelStepModal}
-              open={isStepModal}
+              open={!!data}
             >
               {dom}
             </Modal>
@@ -197,6 +411,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
         }}
       >
         <StepsForm.StepForm
+          initialValues={{
+            family_name: data?.family_name,
+          }}
           name="giver-info"
           title={
             <div className="text-[#344054] font-semibold mt-1">
@@ -207,10 +424,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          {elderly?.loading ? (
+          {!data ? (
             <PageLoading />
           ) : (
-            <CaregiverInfoForm data={elderly?.data as ElderlyInterface} />
+            <CaregiverInfoForm data={data as ElderlyInterface} />
           )}
         </StepsForm.StepForm>
         <StepsForm.StepForm
@@ -224,10 +441,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          {elderly?.loading ? (
+          {!data ? (
             <PageLoading />
           ) : (
-            <RegistrationForm data={elderly?.data?.documents} />
+            <RegistrationForm data={data?.documents} />
           )}
         </StepsForm.StepForm>
         <StepsForm.StepForm
@@ -241,7 +458,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          {/* <HealthForm data={elderly?.data?.laboratory_tests || []} /> */}
+          <HealthForm data={data?.laboratory_tests || []} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="request"
@@ -254,7 +471,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <SendForm data={elderly?.data} />
+          <SendForm data={data} />
         </StepsForm.StepForm>
       </StepsForm>
     </div>

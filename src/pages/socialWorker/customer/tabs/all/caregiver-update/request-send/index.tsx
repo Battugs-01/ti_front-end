@@ -1,7 +1,12 @@
 import { Col, Row } from "antd";
 import { UploadButton } from "components/index";
+import { ElderlyInterface } from "service/social-worker/customer/type";
 
-export const SendForm: React.FC = () => {
+type SendFormType = {
+  data?: ElderlyInterface;
+};
+
+export const SendForm: React.FC<SendFormType> = ({ data }) => {
   return (
     <div className="px-8">
       <Row gutter={[16, 16]}>
@@ -10,6 +15,14 @@ export const SendForm: React.FC = () => {
             name={["request", "situational_file_ids"]}
             required
             label="Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас"
+            initialValue={data?.situational?.map((val, index) => ({
+              uid: `${val?.id}`,
+              id: `${val?.id}`,
+              name: val?.original_name,
+              status: "done",
+              url: `http://103.41.112.73:9000/${val?.physical_path}`,
+              size: val?.file_size,
+            }))}
           />
         </Col>
         <Col span={12}>
@@ -17,6 +30,14 @@ export const SendForm: React.FC = () => {
             name={["request", "definition_governor_file_ids"]}
             required
             label="Сум, хорооны Засаг даргын тодорхойлолт"
+            initialValue={data?.definition_governor?.map((val, index) => ({
+              uid: `${val?.id}`,
+              id: `${val?.id}`,
+              name: val?.original_name,
+              status: "done",
+              url: `http://103.41.112.73:9000/${val?.physical_path}`,
+              size: val?.file_size,
+            }))}
           />
         </Col>
       </Row>

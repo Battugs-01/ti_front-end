@@ -5,13 +5,22 @@ import EditIcon from "assets/icons/edit.svg";
 import EyeIcon from "assets/government/icons/eye.svg";
 import { CareGiverUpdate } from "../../tabs/all/caregiver-update";
 import { Detail } from "../../detail/formModal";
-import { ElderlyStatus } from "service/social-worker/customer/type";
+import {
+  ElderlyInterface,
+  ElderlyStatus,
+} from "service/social-worker/customer/type";
+import { useRequest } from "ahooks";
+import orphanElderly from "service/social-worker/customer";
 
 const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
-  const [isEdit, setEdit] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
+  const elderly = useRequest(async () => orphanElderly.getElderly(id), {
+    manual: true,
+  });
+
   const cancelModal = () => {
-    setEdit(false);
+    setEdit(undefined);
   };
   const cancelDetail = () => {
     setIsDetail(false);
@@ -28,12 +37,15 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
             <CustomButton
               title="Мэдээлэл засах"
               icon={<img src={EditIcon} />}
-              onClick={() => setEdit(true)}
+              onClick={async () => {
+                const data = await elderly?.runAsync();
+                setEdit(data);
+              }}
             />
           </div>
           {isEdit && (
             <CareGiverUpdate
-              isStepModal={isEdit}
+              data={isEdit}
               cancelStepModal={cancelModal}
               id={id}
             />
@@ -162,12 +174,15 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
             <CustomButton
               title="Мэдээлэл засах"
               icon={<img src={EditIcon} />}
-              onClick={() => setEdit(true)}
+              onClick={() => {
+                elderly?.run();
+                setEdit(elderly?.data);
+              }}
             />
           </div>
           {isEdit && (
             <CareGiverUpdate
-              isStepModal={isEdit}
+              data={isEdit}
               cancelStepModal={cancelModal}
               id={id}
             />

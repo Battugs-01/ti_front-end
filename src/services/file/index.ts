@@ -1,5 +1,10 @@
 import { AntdFile } from "types";
-import { FileRecord, MultiFileUpload, SingleFileUpload } from "./types";
+import {
+  FileRecord,
+  MultiFileUpload,
+  MultiFileUploads,
+  SingleFileUpload,
+} from "./types";
 import http from "..";
 
 namespace file {
@@ -33,6 +38,27 @@ namespace file {
     return http.post<FileRecord[]>("upload/files", {
       body,
       hasAuth: true,
+    });
+  };
+  export const uploadsMulti = async ({
+    files,
+    names,
+    onUploadProgress,
+  }: MultiFileUploads) => {
+    const body = new FormData();
+
+    if (files.length === 0) {
+      return [];
+    }
+    files.forEach((file, ind) => {
+      body.append("names", names[ind]);
+      body.append("files", file.originFileObj);
+    });
+
+    return http.post<FileRecord[]>("/upload/files", {
+      body,
+      hasAuth: true,
+      onUploadProgress: onUploadProgress,
     });
   };
 

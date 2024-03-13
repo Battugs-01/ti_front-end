@@ -26,5 +26,11 @@ export interface SplashFileUpload {
 }
 
 export interface MultiFileUpload {
+  // names: string[];
   files: any[];
+}
+export interface MultiFileUploads {
+  names: string[];
+  files: any[];
+  onUploadProgress?: (progressEvent: any) => void;
 }

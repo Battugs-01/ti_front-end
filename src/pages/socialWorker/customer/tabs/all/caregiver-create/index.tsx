@@ -92,7 +92,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const healthData = await filesHealth.runAsync({
             files: Object.values(val.laboratory_tests || {}),
           });
-          console.log(healthData, "health sda");
+          console.log(healthData, "health");
           const requestData = await filesRequest.runAsync({
             files: Object.values(val.request || {}),
           });
