@@ -7,7 +7,7 @@ const AuthLayout: FC = () => {
       <div
         className="hidden sm:block col-span-7 h-screen "
         style={{
-          backgroundImage: "url('/background/login.png')",
+          backgroundImage: "url('/background/login.svg')",
           backgroundSize: "cover",
           backgroundColor: "",
         }}
@@ -15,12 +15,10 @@ const AuthLayout: FC = () => {
         <div className="bg-[#144E5A] hidden sm:block col-span-2 h-screen opacity-70 relative">
           <div className="flex items-start flex-col justify-end h-full absolute bottom-24 left-32 gap-6">
             <div className="text-white text-5xl">
-              Where Compassion Meets Exceptional Care
+              Халамж, нийгмийн ажилтны удирдлагын систем
             </div>
-            <div className="text-white text-xl">
-              Nurturing community embracing elderly wisdom, providing
-              compassionate care and a secure, fulfilling environment for
-              well-being and happiness.
+            <div className="text-white text-3xl">
+              Төрөлжсөн ахмадын асрамжийн газрын систем
             </div>
           </div>
         </div>

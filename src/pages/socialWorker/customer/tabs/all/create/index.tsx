@@ -7,12 +7,6 @@ export const CreateForm: React.FC = () => {
         label="Регистрийн дугаар"
         placeholder="Регистрийн дугаар оруулна уу?"
         name="rd"
-        rules={[
-          {
-            required:true,
-            message:"Энэ талбарийг оруулах шаардлагатай!"
-          }
-        ]}
       />
     </div>
   );

@@ -35,9 +35,9 @@ const Login: FC = () => {
     },
   });
   return (
-    <div style={{ maxWidth: 400 }} className="bg-white rounded-xl">
+    <div className="bg-white rounded-xl w-full px-16">
       <div className="align-left flex justify-start">
-        <img src="/images/logo.jpg" alt="logo" style={{ borderRadius: 1000 }} />
+        <img src="/images/logo1.png" alt="logo" width={300} className="mb-7" />
       </div>
       <ProForm<LoginData>
         formRef={formRef}
@@ -72,7 +72,6 @@ const Login: FC = () => {
         <div className="text-3xl font-semibold mb-3 ml-0 pl-0">Нэвтрэх</div>
         <div className="space-y-1">
           <ProFormText
-            width="md"
             name="email"
             placeholder="И-мэйл"
             label="Нэвтрэх и-мэйл"
@@ -85,7 +84,6 @@ const Login: FC = () => {
             ]}
           />
           <ProFormText.Password
-            width="md"
             label="Нууц үг"
             name="password"
             placeholder="Нууц үг"
