@@ -5,17 +5,21 @@ export interface DataType {
 
 export interface CardInterface {
   id?: number;
+  capacity: number;
+  reserved: number;
+  name: String;
+  logo: Logo;
+}
+
+export interface Logo {
+  id: number;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
-  organization_name: String;
-  logo_id: number;
-  is_active: boolean;
-  email: String;
-  contact: UserInterface;
-  payment: PaymentInterface;
-  name: String;
-  created_user_id: number;
+  file_name: String;
+  original_name: String;
+  physical_path: String;
+  extention: String;
+  file_size: number;
 }
 
 export interface UserInterface {

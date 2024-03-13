@@ -66,6 +66,7 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
           {data?.map((card, key) => (
             <List
               key={key}
+              url={card?.elderly?.profile?.physical_path}
               image={card?.elderly?.first_name?.substring(0, 2).toUpperCase()}
               name={card?.elderly?.first_name}
               surname={card?.elderly?.last_name}

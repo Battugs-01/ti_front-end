@@ -1,4 +1,4 @@
-import { StepsForm } from "@ant-design/pro-form";
+import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
 import { Modal, message, notification } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -23,7 +23,8 @@ import ArrowRight from "assets/government/icons/arrow-right.svg";
 import SaveIcon from "assets/government/icons/save.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import laboratory from "service/laboratory_tests/index.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import moment from "moment";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -79,9 +80,11 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
     labTests?.run();
   }, []);
   console.log(labTests?.data, "test");
+  const formRef = useRef<ProFormInstance>();
   return (
     <div>
       <StepsForm
+        formRef={formRef}
         onFinish={async (val) => {
           const profile = await uploadProfile.runAsync({
             file: val?.profile?.[0]?.originFileObj,
@@ -113,7 +116,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             laboratory_tests: health,
             documents: docs,
             request: request,
-            birth_date: dayjs(val?.birth_date).toDate(),
+            birth_date: moment(val?.birth_date).toDate(),
           });
           sendRequest && toDistrict.run(elderlyData?.id);
         }}
@@ -236,7 +239,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <CaregiverInfoForm />
+          <CaregiverInfoForm form={formRef.current} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"

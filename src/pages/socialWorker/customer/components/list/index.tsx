@@ -7,6 +7,7 @@ import CareGiverBadge from "components/badge/caregiver";
 const color = "#144E5A";
 
 const List: React.FC<ListProps> = ({
+  url,
   image,
   name,
   surname,
@@ -24,9 +25,12 @@ const List: React.FC<ListProps> = ({
     >
       <div className="flex items-center p-4 justify-between">
         <div className="flex items-center gap-2">
-          <Avatar size={36} style={{ background: color }} shape="circle">
-            {image}
-          </Avatar>
+          <Avatar
+            size={36}
+            style={{ background: color }}
+            shape="circle"
+            src={`http://103.41.112.73:9000/${url}`}
+          />
           <div className="font-bold uppercase">{name}</div>
           <div>{surname}</div>
           <Badge status="default" />

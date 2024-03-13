@@ -28,7 +28,7 @@ export const uploadDocument = [
       label: "Хөгжлийн бэрхшээлтэй эсэх лавлагаа",
     },
     {
-      name: "welderly_document_other_welfare_services_inquiry",
+      name: "elderly_document_other_welfare_services_inquiry",
       label: "Халамжийн бусад үйлчилгээ авдаг эсэх лавлагаа",
     },
   ],

@@ -2,7 +2,10 @@ import { Radio } from "antd";
 import IBadge from "components/badge";
 import { IfCondition } from "components/condition";
 import { Fragment, useState } from "react";
-import { RequestType } from "service/social-worker/customer/type";
+import {
+  ElderlyStatus,
+  RequestType,
+} from "service/social-worker/customer/type";
 import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
@@ -136,17 +139,33 @@ const CustomerPage: React.FC = () => {
       >
         <Radio.Button value={RequestType.all} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Бүгд</div> <IBadge title="6" color="gray" />
+            <div>Бүгд</div> <IBadge title={list?.data?.total} color="gray" />
           </div>
         </Radio.Button>
         <Radio.Button value={RequestType.saved} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Хадгалагдсан</div> <IBadge title="3" color="gray" />
+            <div>Хадгалагдсан</div>{" "}
+            <IBadge
+              title={
+                list?.data?.items?.filter(
+                  (val) => val?.status === ElderlyStatus?.ElderlySave
+                ).length
+              }
+              color="gray"
+            />
           </div>
         </Radio.Button>
         <Radio.Button value={RequestType.putOnHold} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Хүлээлэгт оруулсан</div> <IBadge title="1" color="gray" />
+            <div>Хүлээлэгт оруулсан</div>{" "}
+            <IBadge
+              title={
+                list?.data?.items?.filter(
+                  (val) => val?.status === ElderlyStatus.WaitDistrict
+                ).length
+              }
+              color="gray"
+            />
           </div>
         </Radio.Button>
         <Radio.Button value={RequestType.returned} className="h-10">
@@ -168,16 +187,25 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.saved}
         whenTrue={
           <Saved
-            data={list?.data?.items?.filter((val, index) => val?.status === 1)}
+            data={list?.data?.items?.filter(
+              (val, index) => val?.status === ElderlyStatus.ElderlySave
+            )}
+            list={list}
+          />
+        }
+      />
+      <IfCondition
+        condition={tab === RequestType.putOnHold}
+        whenTrue={
+          <All
+            data={list?.data?.items?.filter(
+              (val) => val?.status === ElderlyStatus.WaitDistrict
+            )}
             list={list}
           />
         }
       />
       {/* <IfCondition
-        condition={tab === RequestType.putOnHold}
-        whenTrue={<All data={data?.filter((val, index) => val.state === 3)} />}
-      />
-      <IfCondition
         condition={tab === RequestType.returned}
         whenTrue={<All data={data?.filter((val, index) => val.state === 2)} />}
       />

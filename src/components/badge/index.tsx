@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 interface Props {
-  title?: String;
+  title?: String | number;
   color?:
     | "gray"
     | "green"

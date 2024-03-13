@@ -17,7 +17,7 @@ namespace orphanUser {
       body,
     });
   export const getList = (body: any) =>
-    http.post<DataType>(`ministry/carecenter/list`, {
+    http.get<CardInterface[]>(`ministry/carecenter/approved/care_centers`, {
       hasAuth: true,
       body,
     });

@@ -33,6 +33,7 @@ export type ListProps = {
   state?: number;
   date?: any;
   time?: string;
+  url?: string;
 };
 
 export type RightContentType = {

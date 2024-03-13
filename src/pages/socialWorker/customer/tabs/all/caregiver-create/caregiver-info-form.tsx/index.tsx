@@ -1,6 +1,7 @@
 import {
   ProFormDatePicker,
   ProFormDigit,
+  ProFormInstance,
   ProFormSelect,
   ProFormSwitch,
   ProFormText,
@@ -15,7 +16,7 @@ import address from "service/address";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
 
 type FormType = {
-  form?: any;
+  form?: ProFormInstance;
 };
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
@@ -287,6 +288,10 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             //   };
             // })}
             onChange={(val) => {
+              console.log(val, "lll");
+
+              form?.setFieldValue(["address", "district_id"], undefined);
+              form?.setFieldValue(["address", "khoroo_id"], undefined);
               district.run(val);
             }}
             request={async () => {
@@ -312,6 +317,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             placeholder="Буянтогтох"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
+              form?.setFieldValue(["address", "khoroo_id"], undefined);
               khoroo.run(value);
             }}
             options={district.data?.map((item: any) => {

@@ -18,31 +18,25 @@ export const Distribute: React.FC = () => {
     <div className="custom-radio-group">
       <ProFormRadio.Group
         name="care_center_id"
-        options={orphanList?.data?.items?.map(
+        options={orphanList?.data?.map(
           (val: CardInterface, key: number): OrphanOptions => {
             return {
               label: (
                 <div className="flex items-center gap-3" key={key}>
                   <Avatar
-                    // src={`http://103.41.112.73:9000/`}
+                    src={`http://103.41.112.73:9000/${val?.logo?.physical_path}`}
                     shape="circle"
                     style={{ backgroundColor: "#146135" }}
                     size={40}
-                  >
-                    HU
-                  </Avatar>
+                  />
                   <div className="flex items-start flex-col gap-1 justify-start">
-                    <div className="font-bold text-base">
-                      {val?.organization_name}
-                    </div>
+                    <div className="font-bold text-base">{val?.name}</div>
                     <div className="flex items-center gap-1">
                       <img src={BedIcon} />
                       <div>Орны тоо:</div>
                       <div>
-                        <span className="font-bold">
-                          {val?.created_user_id}
-                        </span>
-                        / {val?.id}
+                        <span className="font-bold">{val?.reserved}</span>/{" "}
+                        {val?.capacity}
                       </div>
                     </div>
                   </div>

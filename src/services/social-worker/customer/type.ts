@@ -62,6 +62,7 @@ export interface Elderly {
   situational: null;
   definition_governor: null;
   created_user_id: number;
+  profile: File;
 }
 
 export interface ElderlyInterface {
