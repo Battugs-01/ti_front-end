@@ -1,11 +1,10 @@
 import { MenuDataItem } from "@ant-design/pro-layout";
 import RequestIcon from "assets/icons/requests.svg";
-import ReportIcon from "assets/icons/report.svg";
 import CaregiverIcon from "assets/icons/caregiver.svg";
 import OrphanIcon from "assets/icons/orphan.svg";
-import SettingsIcon from "assets/icons/settings.svg";
 import FeedbackIcon from "assets/government/icons/request.svg";
 import EmployeesIcon from "assets/government/icons/users.svg";
+import LockIcon from "assets/government/icons/lock.svg";
 export interface GovernmentMenuProps {
   icon: any;
   path: string;
@@ -16,19 +15,13 @@ export interface GovernmentMenuProps {
 export const GovernmentMenu: GovernmentMenuProps[] = [
   {
     icon: <img src={RequestIcon} />,
-    name: "Хүсэлтүүд",
+    name: "Хүсэлт",
     path: "/dashboard/government/requests",
     children: [],
   },
   {
-    icon: <img src={ReportIcon} />,
-    name: "Тайлан",
-    path: "/dashboard/government/report",
-    children: [],
-  },
-  {
     icon: <img src={CaregiverIcon} />,
-    name: "Асруулагч",
+    name: "Үйлчлүүлэгч",
     path: "/dashboard/government/caregiver",
     children: [],
   },
@@ -40,7 +33,7 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
   },
   {
     icon: <img src={EmployeesIcon} />,
-    name: "Ажилчдын жагсаалт",
+    name: "Албан хаагчид",
     path: "/dashboard/government/employees",
     children: [],
   },
@@ -51,8 +44,8 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
     children: [],
   },
   {
-    icon: <img src={SettingsIcon} />,
-    name: "Тохиргоо",
+    icon: <img src={LockIcon} />,
+    name: "Эрхийн тохиргоо",
     path: "/dashboard/government/settings",
     children: [],
   },

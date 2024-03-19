@@ -13,7 +13,7 @@ namespace orphanElderly {
       body,
     });
   export const elderlyEdit = (body: any, id: any) =>
-    http.put(`socialworker/elderly/${id}`, {
+    http.put<ElderlyInterface>(`socialworker/elderly/${id}`, {
       hasAuth: true,
       body,
     });

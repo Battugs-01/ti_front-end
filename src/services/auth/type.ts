@@ -1,3 +1,5 @@
+import { Address } from "service/social-worker/customer/type";
+
 export interface LoginData {
   email: string;
   password: string;
@@ -10,9 +12,17 @@ export interface LoginResponse {
 }
 
 export interface Admin {
-  email: string;
+  id: number;
+  created_at: Date;
+  updated_at: Date;
   first_name: string;
-  id: string;
-  lastName: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  is_active: boolean;
   position: string;
+  user_type: number;
+  city_id: number;
+  city: Address;
+  district_id: number;
 }

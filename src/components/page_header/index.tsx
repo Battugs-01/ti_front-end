@@ -18,7 +18,7 @@ export const PageHeader = ({ title, subTitle }: Props) => {
     let result = "";
     switch (pathName[0]) {
       case "requests":
-        result = "Хүсэлтүүд";
+        result = "Хүсэлт";
         break;
       case "report":
         result = "Тайлан";

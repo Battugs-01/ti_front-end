@@ -6,11 +6,13 @@ interface LeftDetailProps {
   items: any;
   last_name?: string;
   first_name?: string;
+  url?: string;
 }
 const LeftDetail: React.FC<LeftDetailProps> = ({
   items,
   last_name,
   first_name,
+  url,
 }) => {
   const color = "#146135";
   const avatar = "AA";

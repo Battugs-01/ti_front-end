@@ -1,3 +1,5 @@
+import { ListElderly } from "service/social-worker/customer/type";
+
 export enum RequestType {
   decide = "decide",
   saved = "saved",
@@ -36,12 +38,17 @@ export type ListProps = {
   url?: string;
 };
 
+export type ElderlyListProps = {
+  data?: ListElderly;
+};
+
 export type RightContentType = {
   showDetail?: () => void;
   state?: number;
   date?: any;
   id?: any;
   time?: string;
+  data?: ListElderly;
 };
 
 export interface CardData {
@@ -52,4 +59,15 @@ export interface CardData {
   registrationNumber?: string;
   state?: Number;
   date?: any;
+}
+
+export enum FilterDocumentline {
+  contract = 0,
+  client_doc = 1,
+  health_doc = 2,
+}
+
+export interface FilterDocumentButton {
+  value: FilterDocumentline;
+  label: string;
 }

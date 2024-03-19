@@ -1,56 +1,38 @@
 import { Avatar, Badge } from "antd";
-import React, { useState } from "react";
-import { ListProps } from "service/gov-requests";
-import GovBadge from "components/badge/government";
+import React from "react";
+import { ElderlyListProps } from "service/gov-requests";
 import RightContent from "../right-content";
-import { FormModal } from "../../tabs/decide/detail/formModal";
+import CareGiverBadge from "components/badge/caregiver";
+import moment from "moment";
 
 const color = "#144E5A";
 
-const List: React.FC<ListProps> = ({
-  name,
-  surname,
-  registrationNumber,
-  date,
-  time,
-  id,
-}) => {
-  const [visibleDetail, setDetail] = useState<boolean>(false);
-  const showDetail = () => {
-    setDetail(true);
-  };
-  const cancelDetail = () => {
-    setDetail(false);
-  };
+const List: React.FC<ElderlyListProps> = ({ data }) => {
   return (
     <div
-      className="bg-white w-full"
+      className="bg-white"
       style={{
         borderBottom: "1px solid #EAECF0",
       }}
     >
-      <div className="w-full flex items-center p-4 justify-between">
-        <div className="flex items-center gap-4">
-          <Avatar size={36} style={{ background: color }} shape="circle">
-            {name?.substring(0, 2).toUpperCase()}
-          </Avatar>
-          <div className="font-bold uppercase">{name}</div>
-          <div>{surname}</div>
+      <div className="flex items-center p-4 justify-between">
+        <div className="flex items-center gap-2">
+          <Avatar
+            size={36}
+            style={{ background: color }}
+            shape="circle"
+            src={`http://103.41.112.73:9000/${data?.elderly?.profile?.physical_path}`}
+          />
+          <div className="font-bold uppercase">{data?.elderly?.first_name}</div>
+          <div>{data?.elderly?.last_name}</div>
           <Badge status="default" />
-          <div className="text-[#475467]">{registrationNumber}</div>
-          <GovBadge />
+          <div className="text-[#475467]">{data?.elderly?.rd}</div>
+          <CareGiverBadge status={data?.status} />
         </div>
         <div>
-          <RightContent date={date} time={time} showDetail={showDetail} />
+          <RightContent data={data} />
         </div>
       </div>
-      {visibleDetail && (
-        <FormModal
-          visibleDetail={visibleDetail}
-          cancelDetail={cancelDetail}
-          id={id}
-        />
-      )}
     </div>
   );
 };

@@ -29,6 +29,8 @@ export interface ListElderly {
   created_at: Date;
   updated_at: Date;
   created_user_id: number;
+  created_user: CreatedUser;
+  modified_user_id: number;
   elderly_id: number;
   elderly: Elderly;
   status: number;
@@ -37,6 +39,25 @@ export interface ListElderly {
   khoroo_id: number;
   ordinances: null;
   welfare_documents: null;
+}
+
+export interface CreatedUser {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  is_active: boolean;
+  position: string;
+  user_type: number;
+  city_id: number;
+  city: City;
+  district_id: number;
+  district: City;
+  khoroo_id: number;
+  khoroo: City;
 }
 
 export interface Elderly {

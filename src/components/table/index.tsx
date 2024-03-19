@@ -40,6 +40,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   setCreate?: Function;
   scroll?: any;
   actionWidth?: number;
+  hidePagination?: boolean;
   // customListType? : (records) => void
 };
 
@@ -68,6 +69,7 @@ export const ITable = <T extends {}>({
   page,
   limit,
   actionWidth,
+  hidePagination,
   ...rest
 }: Props<T>) => {
   // const [pageData, setPageData] = useState<{ page: number; limit: number }>({
@@ -100,35 +102,34 @@ export const ITable = <T extends {}>({
         scroll={scroll}
         size="small"
         search={false}
-        pagination={{
-          className: "px-6 font-semibold text-gray-500",
-          pageSize: form?.pageSize,
-          pageSizeOptions: [20, 50, 100, 200, 500],
-          showSizeChanger: true,
-          onChange: (page, size) => {
-            // setPageData({ page, limit: size });
-            // atomServiceProductForm()
-            setForm({
-              ...form,
-              current: page ? page - 1 : 0,
-              pageSize: size,
-            });
-          },
-          showTotal: (total, range) => {
-            return (
-              <div className="font-semibold text-gray-500">
-                {range[0]}-{range[1]} of {total} items
-              </div>
-            );
-          },
-          total,
-          showLessItems: true,
-          onShowSizeChange: (page, size) => {
-            setForm({ current: page, pageSize: size });
-          },
-
-          responsive: true,
-        }}
+        pagination={
+          !hidePagination && {
+            className: "px-6 font-semibold text-gray-500",
+            pageSize: form?.pageSize,
+            pageSizeOptions: [20, 50, 100, 200, 500],
+            showSizeChanger: true,
+            onChange: (page, size) => {
+              setForm({
+                ...form,
+                current: page,
+                pageSize: size,
+              });
+            },
+            showTotal: (total, range) => {
+              return (
+                <div className="font-semibold text-gray-500">
+                  {range[0]}-{range[1]} of {total} items
+                </div>
+              );
+            },
+            total,
+            showLessItems: true,
+            onShowSizeChange: (page, size) => {
+              setForm({ current: page, pageSize: size });
+            },
+            responsive: true,
+          }
+        }
         columns={[
           {
             title: "№",

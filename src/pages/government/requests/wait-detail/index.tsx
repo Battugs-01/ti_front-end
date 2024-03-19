@@ -1,7 +1,7 @@
 import { ModalForm } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
-import { UnderReview } from "./under_review";
+import { UnderReview } from "../components/under_review";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -10,7 +10,7 @@ type DetailProps = {
   status?: number;
 };
 
-export const Detail: React.FC<DetailProps> = ({
+export const WaitDetail: React.FC<DetailProps> = ({
   visibleDetail,
   cancelDetail,
   id,
@@ -32,23 +32,6 @@ export const Detail: React.FC<DetailProps> = ({
           </div>
         }
         submitter={false}
-        // onFinish={async (values) => {
-        //   const ordinances = await ordinancesFile.runAsync({
-        //     file: values?.ordinances_file_ids[0].originFileObj,
-        //   });
-        //   const welfare = await welfareFile.runAsync({
-        //     file: values?.welfare_document_file_ids[0].originFileObj,
-        //   });
-        //   distributeOrphan.run(
-        //     {
-        //       care_center_id: values?.care_center_id,
-        //       status: 3,
-        //       ordinances_file_ids: [ordinances[0]?.id],
-        //       welfare_document_file_ids: [welfare[0]?.id],
-        //     },
-        //     id
-        //   );
-        // }}
       >
         <UnderReview data={elderlyDetail?.data} />
       </ModalForm>

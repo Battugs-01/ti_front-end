@@ -110,6 +110,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
           items={leftitems}
           last_name={data?.last_name}
           first_name={data?.first_name}
+          // url={data?}
         />
       </div>
       <div className="w-[65%]">

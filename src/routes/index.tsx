@@ -11,7 +11,7 @@ const AuthLayout = lazy(() => import("layout/auth"));
 const DashboardLayout = lazy(() => import("layout/dashboard"));
 
 const MainRoutes: FC = () => {
-  const [{ authorized }] = useAuthContext();
+  const [{ authorized, user }] = useAuthContext();
 
   const routes: IRoute[] = [
     {
@@ -65,7 +65,11 @@ const MainRoutes: FC = () => {
         path="*"
         element={
           authorized ? (
-            <Navigate to="/dashboard/socialWorker/customer" />
+            user?.user_type === 3 ? (
+              <Navigate to="/dashboard/socialWorker/customer" />
+            ) : (
+              <Navigate to="/dashboard/government/requests" />
+            )
           ) : (
             <Navigate to="/auth/login" />
           )

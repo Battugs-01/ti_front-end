@@ -7,10 +7,7 @@ import { useState } from "react";
 import { ListElderly } from "service/social-worker/customer/type";
 import { exportFromTable } from "utils/export";
 import List from "../../components/list";
-import { useRequest } from "ahooks";
 import SearchIcon from "assets/government/icons/search.svg";
-import file from "service/file";
-import orphanElderly from "service/social-worker/customer";
 import { CreateForm } from "./create";
 import { CareGiverCreate } from "./caregiver-create";
 import CustomPagination from "components/pagination";
@@ -27,9 +24,11 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
   const cancelModal = () => {
     setOpenModal(false);
   };
+
   const cancelStepModal = () => {
     setStepModal(false);
   };
+
   const nextModal = () => {
     setOpenModal(false);
     setStepModal(true);

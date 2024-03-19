@@ -14,7 +14,7 @@ import {
   DefaultButton,
 } from "pages/government/components/button/index.js";
 import { labFormatUpdate } from "pages/socialWorker/customer/util/arrToObj.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import file from "service/file/index.js";
 import laboratory from "service/laboratory_tests/index.js";
 import orphanElderly from "service/social-worker/customer/index.js";
@@ -35,6 +35,8 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   data,
   id,
 }) => {
+  const [sendRequest, setSendRequest] = useState(false);
+
   // const elderly = useRequest(async () => orphanElderly.getElderly(id));
   const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
@@ -49,6 +51,15 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   });
   const labTests = useRequest(laboratory.get, {
     manual: true,
+  });
+  const toDistrict = useRequest(orphanElderly.sendToDistrict, {
+    manual: true,
+    onSuccess() {
+      notification.success({
+        message: "Амжилттай хүсэлт илгээгдлээ.",
+      });
+      setSendRequest(false);
+    },
   });
   const filesDoc = useRequest(file.uploads, {
     manual: true,
@@ -298,10 +309,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           // console.log(docs, "docs");
           // console.log(request, "request");
           // console.log(health, "health");
-          elderlyEdit.runAsync(
+          const elderlyData = await elderlyEdit.runAsync(
             {
               ...val,
-              profile_id: profile[0]?.id,
+              // profile_id: profile[0]?.id,
+              profile_id: 637,
               address: {
                 ...val?.address,
               },
@@ -312,6 +324,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             },
             id
           );
+          sendRequest && toDistrict.run(elderlyData?.id);
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
@@ -368,9 +381,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
-                      title="Хүсэлт илгээх"
+                      title="Дахин хүсэлт илгээх"
                     />
                   ) : (
                     <CustomButton
