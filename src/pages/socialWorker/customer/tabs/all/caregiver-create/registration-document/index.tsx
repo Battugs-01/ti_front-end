@@ -1,17 +1,7 @@
 import { Col, Row } from "antd";
 import { UploadButton, UploadDraggerButton } from "components/index";
 
-export const uploadDocument = [
-  [
-    {
-      name: "elderly_document_care_requet",
-      label: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
-    },
-    {
-      name: "elderly_document_insurance_notebook",
-      label: "Эрүүл мэндийн даатгалын дэвтэр",
-    },
-  ],
+export const pensionDocument = [
   [
     {
       name: "elderly_document_is_pension_inquiry",
@@ -22,6 +12,9 @@ export const uploadDocument = [
       label: "Тэтгэврийн зээлтэй эсэх",
     },
   ],
+];
+
+export const uploadDocument = [
   [
     {
       name: "elderly_document_is_disability_inquiry",
@@ -42,8 +35,20 @@ export const uploadDocument = [
       label: "Амралт сувилалд хөнгөлөлттэй үнээр хамрагддаг эсэх лавлагаа",
     },
   ],
+  [
+    {
+      name: "elderly_document_insurance_notebook",
+      label: "Эрүүл мэндийн даатгалын дэвтэр",
+    },
+  ],
 ];
 export const uploadFile = [
+  [
+    {
+      name: "elderly_document_care_requet",
+      label: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
+    },
+  ],
   [
     {
       name: "elderly_document_identity_card",
@@ -79,36 +84,60 @@ export const uploadFile = [
 export const RegistrationForm: React.FC = () => {
   return (
     <div className="px-8">
-      <div className="mb-5">
-        {uploadDocument?.map((val, key) => (
-          <Row gutter={[16, 16]} key={key}>
-            {val?.map((el, index) => (
-              <Col span={12}>
-                <UploadButton
-                  name={["documents", el?.name]}
-                  label={el?.label}
-                  key={index}
-                />
-              </Col>
-            ))}
-          </Row>
-        ))}
+      <div>
+        <div className="text-lg font-medium mb-4">Тэтгэврийн мэдээлэл</div>
+        <div>
+          {pensionDocument?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  <UploadButton
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5 pt-5" style={{ borderTop: "1px solid #EAECF0" }}>
+        <div className="text-lg font-medium mb-4">Нийгмийн хамгаалал</div>
+        <div>
+          {uploadDocument?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  <UploadButton
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
       </div>
       <div className="pt-5" style={{ borderTop: "1px solid #EAECF0" }}>
-        {uploadFile?.map((val, key) => (
-          <Row gutter={[16, 16]} key={key}>
-            {val?.map((el, index) => (
-              <Col span={12}>
-                <UploadButton
-                  // fileList={}
-                  name={["documents", el?.name]}
-                  label={el?.label}
-                  key={index}
-                />
-              </Col>
-            ))}
-          </Row>
-        ))}
+        <div className="text-lg font-medium mb-4">Бусад</div>
+        <div>
+          {uploadFile?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  <UploadButton
+                    // fileList={}
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
       </div>
     </div>
   );
