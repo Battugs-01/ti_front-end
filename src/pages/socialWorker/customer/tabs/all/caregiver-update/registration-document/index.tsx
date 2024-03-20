@@ -9,33 +9,7 @@ type RegistrationType = {
 };
 
 export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
-  const uploadDocument = [
-    [
-      {
-        name: "elderly_document_care_requet",
-        label: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
-        initialValue: data?.care_request?.map((val, index) => ({
-          uid: `${val?.id}`,
-          id: `${val?.id}`,
-          name: val?.original_name || "",
-          status: "done",
-          url: `http://103.41.112.73:9000/${val?.physical_path}`,
-          size: val?.file_size || 0,
-        })),
-      },
-      {
-        name: "elderly_document_insurance_notebook",
-        label: "Эрүүл мэндийн даатгалын дэвтэр",
-        initialValue: data?.insurance_notebook?.map((val, index) => ({
-          uid: `${val?.id}`,
-          id: `${val?.id}`,
-          name: val?.original_name || "",
-          status: "done",
-          url: `http://103.41.112.73:9000/${val?.physical_path}`,
-          size: val?.file_size || 0,
-        })),
-      },
-    ],
+  const pensionDocument = [
     [
       {
         name: "elderly_document_is_pension_inquiry",
@@ -62,6 +36,8 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
         })),
       },
     ],
+  ];
+  const uploadDocument = [
     [
       {
         name: "elderly_document_is_disability_inquiry",
@@ -90,6 +66,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
         ),
       },
     ],
+
     [
       {
         name: "elderly_document_insurance_discounts_inquiry",
@@ -116,8 +93,36 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
         })),
       },
     ],
+    [
+      {
+        name: "elderly_document_insurance_notebook",
+        label: "Эрүүл мэндийн даатгалын дэвтэр",
+        initialValue: data?.insurance_notebook?.map((val, index) => ({
+          uid: `${val?.id}`,
+          id: `${val?.id}`,
+          name: val?.original_name || "",
+          status: "done",
+          url: `http://103.41.112.73:9000/${val?.physical_path}`,
+          size: val?.file_size || 0,
+        })),
+      },
+    ],
   ];
   const uploadFile = [
+    [
+      {
+        name: "elderly_document_care_requet",
+        label: "Асрамжийн газарт асруулахыг хүссэн өргөдөл",
+        initialValue: data?.care_request?.map((val, index) => ({
+          uid: `${val?.id}`,
+          id: `${val?.id}`,
+          name: val?.original_name || "",
+          status: "done",
+          url: `http://103.41.112.73:9000/${val?.physical_path}`,
+          size: val?.file_size || 0,
+        })),
+      },
+    ],
     [
       {
         name: "elderly_document_identity_card",
@@ -199,38 +204,63 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
   ];
   return (
     <div className="px-8">
-      <div className="mb-5">
-        {uploadDocument?.map((val, key) => (
-          <Row gutter={[16, 16]} key={key}>
-            {val?.map((el, index) => (
-              <Col span={12}>
-                {console.log(el?.initialValue, "initialValue")}
-                <UploadButton
-                  initialValue={el?.initialValue}
-                  name={["documents", el?.name]}
-                  label={el?.label}
-                  key={index}
-                />
-              </Col>
-            ))}
-          </Row>
-        ))}
+      <div>
+        <div className="text-lg font-medium mb-4">Тэтгэврийн мэдээлэл</div>
+        <div>
+          {pensionDocument?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  <UploadButton
+                    initialValue={el?.initialValue}
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5 pt-5" style={{ borderTop: "1px solid #EAECF0" }}>
+        <div className="text-lg font-medium mb-4">Нийгмийн хамгаалал</div>
+        <div>
+          {uploadDocument?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  {console.log(el?.initialValue, "initialValue")}
+                  <UploadButton
+                    initialValue={el?.initialValue}
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
       </div>
       <div className="pt-5" style={{ borderTop: "1px solid #EAECF0" }}>
-        {uploadFile?.map((val, key) => (
-          <Row gutter={[16, 16]} key={key}>
-            {val?.map((el, index) => (
-              <Col span={12}>
-                <UploadButton
-                  initialValue={el?.initialValue}
-                  name={["documents", el?.name]}
-                  label={el?.label}
-                  key={index}
-                />
-              </Col>
-            ))}
-          </Row>
-        ))}
+        <div className="text-lg font-medium mb-4">Бусад</div>
+        <div>
+          {uploadFile?.map((val, key) => (
+            <Row gutter={[16, 16]} key={key}>
+              {val?.map((el, index) => (
+                <Col span={12}>
+                  <UploadButton
+                    initialValue={el?.initialValue}
+                    name={["documents", el?.name]}
+                    label={el?.label}
+                    key={index}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </div>
       </div>
     </div>
   );
