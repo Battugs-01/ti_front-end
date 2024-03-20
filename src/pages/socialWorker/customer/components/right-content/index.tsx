@@ -157,10 +157,27 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
     }
     case ElderlyStatus.ReturnSum: {
       return (
-        <div className="flex items-center gap-1 text-sm text-[#475467]">
-          <div>Буцаагдсан огноо:</div>
-          <div className="font-bold">{date}</div>
-        </div>
+        <Fragment>
+          <div className="w-full flex items-center gap-8">
+            <div className="flex items-center gap-1 text-sm text-[#475467]">
+              <div>Илгээсэн огноо:</div>
+              <div className="font-bold">{date}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+          </div>
+          {isDetail && (
+            <Detail
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+            />
+          )}
+        </Fragment>
       );
     }
     default: {

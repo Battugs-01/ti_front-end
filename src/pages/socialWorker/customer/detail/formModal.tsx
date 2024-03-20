@@ -2,6 +2,8 @@ import { ModalForm } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { UnderReview } from "./under_review";
+import { CustomButton } from "pages/government/components/button";
+import EditIcon from "assets/government/icons/edit.svg";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -31,7 +33,23 @@ export const Detail: React.FC<DetailProps> = ({
             </div>
           </div>
         }
-        submitter={false}
+        submitter={{
+          render: ({ submit: onsubmit }) => {
+            return (
+              <div className="flex justify-end items-center">
+                <div className="flex items-center gap-2">
+                  <CustomButton
+                    onClick={() => {
+                      onsubmit && onsubmit();
+                    }}
+                    extraIcon={<img src={EditIcon} />}
+                    title="Мэдээлэл засах"
+                  />
+                </div>
+              </div>
+            );
+          },
+        }}
         // onFinish={async (values) => {
         //   const ordinances = await ordinancesFile.runAsync({
         //     file: values?.ordinances_file_ids[0].originFileObj,

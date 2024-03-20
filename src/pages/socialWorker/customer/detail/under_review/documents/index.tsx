@@ -7,6 +7,7 @@ import { ElderlyInterface } from "service/social-worker/customer/type";
 import { ClientDoc } from "./client_doc";
 import { HealthDoc } from "./health_doc";
 import { FilterDocumentButton, FilterDocumentline } from "service/gov-requests";
+import { Contract } from "./contract";
 
 type DocumentsType = {
   data?: ElderlyInterface;
@@ -53,11 +54,20 @@ export const Documents: React.FC<DocumentsType> = ({ data }) => {
         />
       </div>
       <IfCondition
-        condition={tab === 1}
+        condition={tab === FilterDocumentline.contract}
+        whenTrue={
+          <Contract
+            situationalData={data?.situational}
+            governorData={data?.definition_governor}
+          />
+        }
+      />
+      <IfCondition
+        condition={tab === FilterDocumentline.client_doc}
         whenTrue={<ClientDoc data={data?.documents} />}
       />
       <IfCondition
-        condition={tab === 2}
+        condition={tab === FilterDocumentline.health_doc}
         whenTrue={<HealthDoc data={data?.laboratory_tests} />}
       />
     </>
