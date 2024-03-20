@@ -61,18 +61,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       setSendRequest(false);
     },
   });
-  const filesDoc = useRequest(file.uploads, {
-    manual: true,
-  });
-  const filesHealth = useRequest(file.uploads, {
-    manual: true,
-  });
-  const filesRequest = useRequest(file.uploads, {
-    manual: true,
-  });
-  const uploadProfile = useRequest(file.upload, {
-    manual: true,
-  });
   const uploadMulti = useRequest(file.uploadsMulti, {
     manual: true,
     onError: (err) =>
@@ -151,16 +139,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   return (
     <div>
       <StepsForm
-        // initialValues={{
-        //   name: data.anem
-        //   upload: adkjaskld
-        // }}
         onFinish={async (val) => {
           const reqData: any = {};
-          console.log(val, "this is value");
-          const profile = await uploadProfile.runAsync({
-            file: val?.profile?.[0]?.originFileObj,
-          });
+          val.profile = await newFileUploads(val?.profile);
           val.documents.elderly_document_care_requet = await newFileUploads(
             val?.documents?.elderly_document_care_requet
           );
@@ -269,51 +250,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             val?.laboratory_tests,
             labTests?.data
           );
-          // const uploadedRequest = uploadedFiles(
-          //   Object.values(val?.request || {})
-          // );
-          // const uploadedDocument = uploadedFiles(
-          //   Object.values(val?.documents || {})
-          // );
-          // const uploadedLab = uploadedFiles(
-          //   Object.values(val?.laboratory_tests || {})
-          // );
-          // const data = await filesDoc.runAsync({
-          //   files: Object.values(document || {}),
-          // });
-          // const healthData = await filesHealth.runAsync({
-          //   files: Object.values(lab || {}),
-          // });
-          // const requestData = await filesRequest.runAsync({
-          //   files: Object.values(requestFile || {}),
-          // });
-          // // const arrData = [];
-          // // const arrHealth = [];
-          // // const arrRequest = [];
-          // console.log(data, "data");
-          // console.log(healthData, "health data");
-          // console.log(requestData, "request data");
-          // const docs = arrToObj(
-          //   uploadedDocument.push(arrData.push(data)),
-          //   val?.documents
-          // );
-          // const request = arrToObj(
-          //   uploadedRequest.push(arrRequest.push(requestData)),
-          //   val?.request
-          // );
-          // const health = labFormat(
-          //   uploadedLab.push(arrHealth.push(healthData)),
-          //   val?.laboratory_tests,
-          //   labTests?.data
-          // );
-          // console.log(docs, "docs");
-          // console.log(request, "request");
-          // console.log(health, "health");
           const elderlyData = await elderlyEdit.runAsync(
             {
               ...val,
               // profile_id: profile[0]?.id,
-              profile_id: 637,
+              profile_id: val?.profile[0],
               address: {
                 ...val?.address,
               },

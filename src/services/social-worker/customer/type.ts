@@ -111,6 +111,7 @@ export interface ElderlyInterface {
   situational: DefinitionGovernor[];
   definition_governor: DefinitionGovernor[];
   created_user_id: number;
+  profile: File;
 }
 
 export interface Address {

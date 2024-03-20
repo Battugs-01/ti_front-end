@@ -42,7 +42,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
               </div>
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
-            max={2}
+            max={1}
+            required
             name="profile"
             fieldProps={{
               name: "file",

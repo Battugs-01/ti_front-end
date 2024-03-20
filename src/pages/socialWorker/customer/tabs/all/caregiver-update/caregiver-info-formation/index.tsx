@@ -14,6 +14,7 @@ import { FORM_ITEM_RULE, workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useState } from "react";
 import address from "service/address";
+import file from "service/file";
 import { ElderlyInterface } from "service/social-worker/customer/type";
 
 type FormType = {
@@ -47,8 +48,17 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data }) => {
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             name={"profile"}
-            max={2}
-            // initialValue={data}
+            max={1}
+            initialValue={[
+              {
+                uid: `${data?.id}`,
+                id: `${data?.id}`,
+                name: data?.profile?.original_name || "",
+                status: "done",
+                url: file.fileToUrl(data?.profile?.physical_path || ""),
+                size: data?.profile?.file_size || 0,
+              },
+            ]}
             fieldProps={{
               name: "file",
               listType: "picture-card",

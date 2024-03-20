@@ -62,6 +62,7 @@ export const Detail: React.FC<DetailProps> = ({
   return (
     <div>
       <StepsForm
+        current={1}
         onFinish={async (values) => {
           const ordinances = await ordinancesFile.runAsync({
             file: values?.ordinances_file_ids[0].originFileObj,
@@ -183,7 +184,7 @@ export const Detail: React.FC<DetailProps> = ({
           );
         }}
       >
-        {/* <StepsForm.StepForm
+        <StepsForm.StepForm
           name="registered"
           title={
             <div className="text-[#344054] font-semibold mt-2 ml-8">
@@ -195,7 +196,7 @@ export const Detail: React.FC<DetailProps> = ({
           }}
         >
           Бүртгэсэн
-        </StepsForm.StepForm> */}
+        </StepsForm.StepForm>
         <StepsForm.StepForm
           name="under_review"
           title={
