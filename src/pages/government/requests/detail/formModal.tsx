@@ -2,9 +2,10 @@ import { StepsForm } from "@ant-design/pro-form";
 import {
   CustomButton,
   DefaultButton,
+  DeleteButton,
 } from "pages/government/components/button/index.js";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
-import SaveIcon from "assets/government/icons/save.svg";
+import ReturnIcon from "assets/government/icons/return.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -16,6 +17,8 @@ import { Distribute } from "../components/distribute";
 import file from "service/file";
 import { useState } from "react";
 import { UnderReview } from "../components/under_review";
+import { CancelModal } from "./cancelModal";
+import { ElderlyInterface } from "service/social-worker/customer/type";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -30,9 +33,11 @@ export const Detail: React.FC<DetailProps> = ({
   id,
   status,
 }) => {
+  const [current, setCurrent] = useState(1);
+
   // ? TODO
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
-  const [isReturn, setIsReturn] = useState<boolean>(false);
+  const [isReturn, setIsReturn] = useState<ElderlyInterface>();
   const elderlyDetail = useRequest(() => orphanElderly.getElderly(id));
   const distributeOrphan = useRequest(orphanElderly.distribute, {
     manual: true,
@@ -43,6 +48,7 @@ export const Detail: React.FC<DetailProps> = ({
       cancelDetail?.();
     },
   });
+  console.log("return data", isReturn);
   const ordinancesFile = useRequest(file.upload, {
     manual: true,
     onError: () => {
@@ -62,7 +68,7 @@ export const Detail: React.FC<DetailProps> = ({
   return (
     <div>
       <StepsForm
-        // current={1}
+        current={current}
         onFinish={async (values) => {
           const ordinances = await ordinancesFile.runAsync({
             file: values?.ordinances_file_ids[0].originFileObj,
@@ -124,6 +130,7 @@ export const Detail: React.FC<DetailProps> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        // setCurrent(2);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Хуваарилах"
@@ -131,25 +138,28 @@ export const Detail: React.FC<DetailProps> = ({
                   </>
                 ) : (
                   <>
-                    <DefaultButton
-                      icon={<img src={SaveIcon} />}
-                      title="Нийгмийн ажилтанруу буцаах"
+                    <DeleteButton
+                      icon={<img src={ReturnIcon} />}
+                      title="Буцаах"
+                      isDelete
                       onClick={() => {
-                        setIsReturn(true);
+                        setIsReturn(elderlyDetail?.data);
+                        // cancelDetail?.();
                         onSubmit && onSubmit();
                       }}
                     />
-                    <DefaultButton
+                    {/* <DefaultButton
                       icon={<img src={SaveIcon} />}
                       title="Хүлээлэгт оруулах"
                       onClick={() => {
                         setIsWaiting(true);
                         onSubmit && onSubmit();
                       }}
-                    />
+                    /> */}
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setCurrent(2);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Хуваарилах"
@@ -232,6 +242,16 @@ export const Detail: React.FC<DetailProps> = ({
           <Distribute />
         </StepsForm.StepForm>
       </StepsForm>
+      <CancelModal
+        data={isReturn}
+        onCancel={() => setIsReturn(undefined)}
+        onFinish={async () => {
+          console.log("this is val");
+          setIsReturn(undefined);
+        }}
+      />
+      {/* {isReturn && (
+        <CancelModal}  */}
     </div>
   );
 };

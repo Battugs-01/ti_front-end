@@ -24,13 +24,30 @@ export const CustomButton = ({ ...rest }: CustomButtonProps) => {
   );
 };
 
-export const DefaultButton = ({ ...rest }: ButtonProps) => {
+export const DefaultButton = ({ ...rest }: CustomButtonProps) => {
   return (
     <Tooltip title={rest.title}>
       <Button
         {...rest}
-        type="default"
-        className=" flex gap-1 items-center font-medium px-3 py-2"
+        type={`${rest?.isDelete ? "primary" : "default"}`}
+        className={`${
+          rest?.isDelete && "bg-[#DD695C]"
+        } flex gap-1 items-center font-medium px-3 py-2`}
+      >
+        {rest?.title}
+      </Button>
+    </Tooltip>
+  );
+};
+export const DeleteButton = ({ ...rest }: CustomButtonProps) => {
+  return (
+    <Tooltip title={rest.title}>
+      <Button
+        {...rest}
+        type={`${rest?.isDelete ? "primary" : "default"}`}
+        className={
+          "bg-[#FEE4E2] text-[#D92D20] flex gap-1 items-center font-medium px-3 py-2"
+        }
       >
         {rest?.title}
       </Button>

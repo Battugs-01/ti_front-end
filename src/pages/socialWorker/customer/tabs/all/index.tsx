@@ -15,6 +15,7 @@ import CustomPagination from "components/pagination";
 type AllProps = {
   data?: ListElderly[];
   list?: any;
+  // setPagination: (page: number, pageSize: number) => void;
 };
 
 export const All: React.FC<AllProps> = ({ data, list }) => {

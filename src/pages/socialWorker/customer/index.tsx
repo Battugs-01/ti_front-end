@@ -11,121 +11,6 @@ import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { Saved } from "./tabs/saved";
 
-const data = [
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 0,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 1,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 2,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 3,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 0,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 0,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 1,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 3,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 1,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 2,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 3,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 2,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 1,
-    date: Date.now(),
-  },
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 0,
-    date: Date.now(),
-  },
-];
-
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
   const list = useRequest(() =>
@@ -170,12 +55,29 @@ const CustomerPage: React.FC = () => {
         </Radio.Button>
         <Radio.Button value={RequestType.returned} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Буцаагдсан</div> <IBadge title="1" color="gray" />
+            <div>Буцаагдсан</div>{" "}
+            <IBadge
+              title={
+                list?.data?.items?.filter(
+                  (val) => val?.status === ElderlyStatus.ReturnSum
+                ).length
+              }
+              color="gray"
+            />
           </div>
         </Radio.Button>
         <Radio.Button value={RequestType.requestSend} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Хүсэлт илгээсэн</div> <IBadge title="1" color="gray" />
+            <div>Хүсэлт илгээсэн</div>{" "}
+            <IBadge
+              title={
+                list?.data?.items?.filter(
+                  (val) =>
+                    val?.status === ElderlyStatus.ElderlyRequestSendToDistrict
+                ).length
+              }
+              color="gray"
+            />
           </div>
         </Radio.Button>
       </Radio.Group>
@@ -198,6 +100,7 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.putOnHold}
         whenTrue={
           <All
+            // set
             data={list?.data?.items?.filter(
               (val) => val?.status === ElderlyStatus.WaitDistrict
             )}
@@ -205,14 +108,27 @@ const CustomerPage: React.FC = () => {
           />
         }
       />
-      {/* <IfCondition
+      <IfCondition
         condition={tab === RequestType.returned}
-        whenTrue={<All data={data?.filter((val, index) => val.state === 2)} />}
+        whenTrue={
+          <All
+            data={list?.data?.items?.filter(
+              (val) => val?.status === ElderlyStatus.ReturnSum
+            )}
+          />
+        }
       />
       <IfCondition
         condition={tab === RequestType.requestSend}
-        whenTrue={<All data={data?.filter((val, index) => val.state === 1)} />}
-      /> */}
+        whenTrue={
+          <All
+            data={list?.data?.items?.filter(
+              (val) =>
+                val?.status === ElderlyStatus.ElderlyRequestSendToDistrict
+            )}
+          />
+        }
+      />
     </Fragment>
   );
 };
