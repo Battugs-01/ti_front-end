@@ -15,10 +15,16 @@ import CustomPagination from "components/pagination";
 type AllProps = {
   data?: ListElderly[];
   list?: any;
-  // setPagination: (page: number, pageSize: number) => void;
+  setPagination: (page: number, pageSize: number) => void;
+  current?: number;
 };
 
-export const All: React.FC<AllProps> = ({ data, list }) => {
+export const All: React.FC<AllProps> = ({
+  data,
+  list,
+  setPagination,
+  current,
+}) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
 
@@ -80,7 +86,11 @@ export const All: React.FC<AllProps> = ({ data, list }) => {
             className="flex justify-end mb-4 px-6"
             style={{ borderTop: "1px solid #EAECF0" }}
           >
-            <CustomPagination total={list?.data?.total} />
+            <CustomPagination
+              total={list?.data?.total}
+              setPagination={setPagination}
+              // current={}
+            />
           </div>
         </div>
 

@@ -382,6 +382,6 @@ export const newFileUploads = async (files: any[], uploadMulti: any) => {
 };
 
 export const initPagination = {
-  page: 1,
-  pageSize: 20,
+  current: 1,
+  pageSize: 10,
 };

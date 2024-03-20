@@ -18,7 +18,7 @@ const RequestPage: React.FC = () => {
   });
 
   useEffect(() => {
-    list.run({ initPagination });
+    list.run({ ...page });
   }, []);
   const cancelModal = () => {
     setOpenModal(false);
@@ -31,9 +31,10 @@ const RequestPage: React.FC = () => {
     setStepModal(true);
   };
   const refreshList = () => {
-    list?.run(page);
+    list?.run({ ...page });
   };
   const setPagination = (page: number, pageSize: number) => {
+    setPage({ current: page, pageSize });
     list?.run({ current: page, pageSize });
   };
   return (
@@ -73,6 +74,7 @@ const RequestPage: React.FC = () => {
             style={{ borderTop: "1px solid #EAECF0" }}
           >
             <CustomPagination
+              current={page.current}
               total={list?.data?.total}
               setPagination={setPagination}
             />

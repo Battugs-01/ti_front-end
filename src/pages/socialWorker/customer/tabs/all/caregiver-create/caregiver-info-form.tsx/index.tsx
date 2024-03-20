@@ -43,7 +43,12 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             max={1}
-            required
+            rules={[
+              {
+                required: true,
+                message: "Энэ талбарийг оруулах шаардлагатай!",
+              },
+            ]}
             name="profile"
             fieldProps={{
               name: "file",
@@ -280,7 +285,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "city_id"]}
-            placeholder="Борлууд"
+            placeholder="Аймаг/Нийслэл"
             label={"Аймаг/Нийслэл"}
             // options={city.data?.map((item: any) => {
             //   return {
@@ -315,7 +320,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "district_id"]}
-            placeholder="Буянтогтох"
+            placeholder="Сум/Дүүрэг"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
               form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -339,9 +344,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "khoroo_id"]}
-            placeholder="Даваацэрэн"
+            placeholder="Баг/Хороо"
             label={"Баг/Хороо"}
-            initialValue={"Street"}
             options={khoroo?.data?.map((item: any) => {
               return {
                 label: item?.name,

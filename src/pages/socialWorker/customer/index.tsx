@@ -1,7 +1,7 @@
 import { Radio } from "antd";
 import IBadge from "components/badge";
 import { IfCondition } from "components/condition";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ElderlyStatus,
   RequestType,
@@ -10,12 +10,21 @@ import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { Saved } from "./tabs/saved";
+import { initPagination } from "utils/index";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
-  const list = useRequest(() =>
-    orphanElderly.elderlyList({ current: 0, pageSize: 20 })
-  );
+  const [page, setPage] = useState(initPagination);
+  const list = useRequest(orphanElderly.elderlyList, {
+    manual: true,
+  });
+  useEffect(() => {
+    list.run({ ...page });
+  }, []);
+  const setPagination = (page: number, pageSize: number) => {
+    setPage({ current: page, pageSize });
+    list?.run({ current: page, pageSize });
+  };
   return (
     <Fragment>
       <Radio.Group
@@ -83,7 +92,14 @@ const CustomerPage: React.FC = () => {
       </Radio.Group>
       <IfCondition
         condition={tab === RequestType.all}
-        whenTrue={<All data={list?.data?.items} list={list} />}
+        whenTrue={
+          <All
+            current={page.current}
+            data={list?.data?.items}
+            list={list}
+            setPagination={setPagination}
+          />
+        }
       />
       <IfCondition
         condition={tab === RequestType.saved}
@@ -100,7 +116,8 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.putOnHold}
         whenTrue={
           <All
-            // set
+            current={page.current}
+            setPagination={setPagination}
             data={list?.data?.items?.filter(
               (val) => val?.status === ElderlyStatus.WaitDistrict
             )}
@@ -112,6 +129,8 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.returned}
         whenTrue={
           <All
+            current={page.current}
+            setPagination={setPagination}
             data={list?.data?.items?.filter(
               (val) => val?.status === ElderlyStatus.ReturnSum
             )}
@@ -122,6 +141,8 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.requestSend}
         whenTrue={
           <All
+            current={page.current}
+            setPagination={setPagination}
             data={list?.data?.items?.filter(
               (val) =>
                 val?.status === ElderlyStatus.ElderlyRequestSendToDistrict

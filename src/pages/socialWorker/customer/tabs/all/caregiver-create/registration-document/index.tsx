@@ -85,7 +85,6 @@ export const RegistrationForm: React.FC = () => {
             {val?.map((el, index) => (
               <Col span={12}>
                 <UploadButton
-                  required={false}
                   name={["documents", el?.name]}
                   label={el?.label}
                   key={index}
@@ -101,7 +100,6 @@ export const RegistrationForm: React.FC = () => {
             {val?.map((el, index) => (
               <Col span={12}>
                 <UploadButton
-                  required={false}
                   // fileList={}
                   name={["documents", el?.name]}
                   label={el?.label}
