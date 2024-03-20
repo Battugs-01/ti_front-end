@@ -62,7 +62,7 @@ export const Detail: React.FC<DetailProps> = ({
   return (
     <div>
       <StepsForm
-        current={1}
+        // current={1}
         onFinish={async (values) => {
           const ordinances = await ordinancesFile.runAsync({
             file: values?.ordinances_file_ids[0].originFileObj,
