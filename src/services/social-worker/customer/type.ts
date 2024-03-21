@@ -22,6 +22,7 @@ export enum RequestType {
   putOnHold = "putOnHold",
   returned = "returned",
   requestSend = "requestSend",
+  takingCare = "takingCare",
 }
 
 export interface ListElderly {

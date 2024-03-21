@@ -21,9 +21,7 @@ const CareInformation: FC = () => {
   const [data, setData] = useState<any>();
   const [selectedToggle, setSelectedToggle] = useState<string>("grid");
   const [create, setCreate] = useState<boolean>(false);
-  console.log(create, "sda");
   const handleToggle = (value: string) => {
-    console.log(value, "sda");
     setSelectedToggle(value);
   };
   // const list = useRequest(product.list, {

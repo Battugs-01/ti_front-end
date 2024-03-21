@@ -17,6 +17,7 @@ export enum DetailType {
 }
 export enum CaregiverType {
   all = "all",
+  distribute = "distribute",
   died = "died",
   forcedReleace = "forcedReleace",
   putOnHold = "putOnHold",
@@ -24,6 +25,7 @@ export enum CaregiverType {
   releasedOwnRequest = "releasedOwnRequest",
   saved = "saved",
   takingCare = "takingCare",
+  canceled = "canceled",
 }
 
 export type ListProps = {
@@ -32,7 +34,7 @@ export type ListProps = {
   name?: string;
   surname?: string;
   registrationNumber?: string;
-  state?: number;
+  state?: Number;
   date?: any;
   time?: string;
   url?: string;
@@ -44,7 +46,7 @@ export type ElderlyListProps = {
 
 export type RightContentType = {
   showDetail?: () => void;
-  state?: number;
+  state?: Number;
   date?: any;
   id?: any;
   time?: string;

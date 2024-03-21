@@ -25,6 +25,9 @@ const CustomerPage: React.FC = () => {
     setPage({ current: page, pageSize });
     list?.run({ current: page, pageSize });
   };
+  const refreshList = () => {
+    list?.run({ ...page });
+  };
   return (
     <Fragment>
       <Radio.Group
@@ -89,11 +92,25 @@ const CustomerPage: React.FC = () => {
             />
           </div>
         </Radio.Button>
+        <Radio.Button value={RequestType.takingCare} className="h-10">
+          <div className="flex items-center gap-2 h-full">
+            <div>Үйлчлүүлж байгаа</div>{" "}
+            <IBadge
+              title={
+                list?.data?.items?.filter(
+                  (val) => val?.status === ElderlyStatus.ElderlyTakingCare
+                ).length
+              }
+              color="gray"
+            />
+          </div>
+        </Radio.Button>
       </Radio.Group>
       <IfCondition
         condition={tab === RequestType.all}
         whenTrue={
           <All
+            refreshList={refreshList}
             current={page.current}
             data={list?.data?.items}
             list={list}
@@ -104,7 +121,10 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.saved}
         whenTrue={
-          <Saved
+          <All
+            refreshList={refreshList}
+            current={page.current}
+            setPagination={setPagination}
             data={list?.data?.items?.filter(
               (val, index) => val?.status === ElderlyStatus.ElderlySave
             )}
@@ -116,6 +136,7 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.putOnHold}
         whenTrue={
           <All
+            refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
             data={list?.data?.items?.filter(
@@ -129,6 +150,7 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.returned}
         whenTrue={
           <All
+            refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
             data={list?.data?.items?.filter(
@@ -141,11 +163,25 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.requestSend}
         whenTrue={
           <All
+            refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
             data={list?.data?.items?.filter(
               (val) =>
                 val?.status === ElderlyStatus.ElderlyRequestSendToDistrict
+            )}
+          />
+        }
+      />
+      <IfCondition
+        condition={tab === RequestType.takingCare}
+        whenTrue={
+          <All
+            refreshList={refreshList}
+            current={page.current}
+            setPagination={setPagination}
+            data={list?.data?.items?.filter(
+              (val) => val?.status === ElderlyStatus.ElderlyTakingCare
             )}
           />
         }

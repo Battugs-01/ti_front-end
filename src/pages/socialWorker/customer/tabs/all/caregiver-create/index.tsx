@@ -1,5 +1,5 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
-import { Modal, message, notification } from "antd";
+import { Modal, notification } from "antd";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
@@ -14,7 +14,6 @@ import {
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer/index.js";
 import file from "service/file/index.js";
-import dayjs from "dayjs";
 import {
   CustomButton,
   DefaultButton,
@@ -29,12 +28,17 @@ import moment from "moment";
 type CaregiverType = {
   cancelStepModal?: () => void;
   isStepModal?: boolean;
+  refreshList?: () => void;
 };
 
 export const CareGiverCreate: React.FC<CaregiverType> = ({
   cancelStepModal,
   isStepModal,
+  refreshList,
 }) => {
+  const [info, setInfo] = useState<any>({});
+  const [documents, setDocuments] = useState<any>({});
+  const [isSave, setSave] = useState(false);
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
     onSuccess() {
@@ -42,6 +46,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         message: "Амжилттай хүсэлт илгээгдлээ.",
       });
       setSendRequest(false);
+      refreshList?.();
     },
   });
   const elderly = useRequest(orphanElderly.create, {
@@ -50,12 +55,15 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       notification.success({
         message: "Амжилттай",
       });
+      setSave(false);
       cancelStepModal?.();
+      refreshList?.();
     },
     onError() {
       notification.success({
         message: "Алдаа гарлаа",
       });
+      setSave(false);
       cancelStepModal?.();
     },
   });
@@ -79,7 +87,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   useEffect(() => {
     labTests?.run();
   }, []);
-  console.log(labTests?.data, "test");
   const formRef = useRef<ProFormInstance>();
   return (
     <div>
@@ -164,13 +171,16 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <DefaultButton
-                    onClick={() => {
-                      onSubmit && onSubmit();
-                    }}
-                    icon={<img src={SaveIcon} />}
-                    title="Түр хадгалах"
-                  />
+                  {step !== 0 && (
+                    <DefaultButton
+                      onClick={() => {
+                        onSubmit && onSubmit();
+                        setSave(true);
+                      }}
+                      icon={<img src={SaveIcon} />}
+                      title="Түр хадгалах"
+                    />
+                  )}
                   {step === 3 ? (
                     <CustomButton
                       onClick={() => {
@@ -200,9 +210,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               width={1064}
               title={
                 <div className="p-6">
-                  <div className="font-semibold">
-                    Үйлчлүүлэгч нэмэх (РЕ96124578)
-                  </div>
+                  <div className="font-semibold">Үйлчлүүлэгч нэмэх</div>
                 </div>
               }
               footer={
@@ -215,16 +223,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             >
               {dom}
             </Modal>
-            // <IModalForm
-            //   successData={() => {}}
-            //   modalProps={{ onCancel: cancelStepModal }}
-            //   title={"Асруулагч нэмэх"}
-            //   footer={submitter}
-            //   open={isStepModal}
-            //   width={1064}
-            // >
-            //   {dom}
-            // </IModalForm>
           );
         }}
       >
@@ -236,6 +234,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             </div>
           }
           onFinish={async (val) => {
+            setInfo(val);
             return true;
           }}
         >
@@ -249,6 +248,27 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             </div>
           }
           onFinish={async (values: any) => {
+            if (isSave) {
+              const profile = await uploadProfile.runAsync({
+                file: info?.profile?.[0]?.originFileObj,
+              });
+              const data = await filesDoc.runAsync({
+                files: Object.values(values.documents || {}),
+              });
+              const docs = arrToObj(data, values?.documents);
+              elderly.runAsync({
+                ...info,
+                ...values,
+                profile_id: profile[0]?.id,
+                address: {
+                  ...info?.address,
+                },
+                documents: docs,
+                birth_date: moment(info?.birth_date).toDate(),
+              });
+            } else {
+              setDocuments(values);
+            }
             return true;
           }}
         >
@@ -262,6 +282,36 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             </div>
           }
           onFinish={async (values: any) => {
+            console.log(values, "values");
+            if (isSave) {
+              const profile = await uploadProfile.runAsync({
+                file: info?.profile?.[0]?.originFileObj,
+              });
+              const data = await filesDoc.runAsync({
+                files: Object.values(documents.documents || {}),
+              });
+              const healthData = await filesHealth.runAsync({
+                files: Object.values(values.laboratory_tests || {}),
+              });
+              const health = labFormat(
+                healthData,
+                values?.laboratory_tests,
+                labTests?.data
+              );
+              const docs = arrToObj(data, documents?.documents);
+              elderly.runAsync({
+                ...info,
+                ...values,
+                profile_id: profile[0]?.id,
+                address: {
+                  ...info?.address,
+                },
+                laboratory_tests: health,
+                documents: docs,
+                birth_date: moment(info?.birth_date).toDate(),
+              });
+            }
+
             return true;
           }}
         >

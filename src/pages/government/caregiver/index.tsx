@@ -13,6 +13,7 @@ import Died from "./tabs/died";
 import ForcedRelease from "./tabs/forcedRelease";
 import ReleasedOwnRequest from "./tabs/releasedOwnRequest";
 import Header from "./header";
+import { FilterForm } from "components/filter";
 
 const data = [
   {
@@ -160,61 +161,81 @@ const data = [
     date: Date.now(),
   },
 ];
+// const items = [
+//   {
+//     key: RequestType.decide,
+//     label: "Шийдвэрлэх",
+//     title: "20",
+//   },
+//   {
+//     key: RequestType.saved,
+//     label: "Хадгалсан",
+//     title: "12",
+//     icon: InfoIcon,
+//   },
+//   {
+//     key: RequestType.putOnHold,
+//     label: "Хүлээлэгт оруулсан",
+//     title: "6",
+//   },
+//   {
+//     key: RequestType.migration,
+//     label: "Шилжилт хөдөлгөөн",
+//     title: "2",
+//   },
+//   {
+//     key: RequestType.decided,
+//     label: "Шийдвэрлэсэн",
+//   },
+// ];
 const items = [
   {
-    key: RequestType.decide,
-    label: "Шийдвэрлэх",
+    key: CaregiverType.all,
+    label: "Бүгд",
     title: "20",
   },
   {
-    key: RequestType.saved,
-    label: "Хадгалсан",
-    title: "12",
-    icon: InfoIcon,
-  },
-  {
-    key: RequestType.putOnHold,
-    label: "Хүлээлэгт оруулсан",
+    key: CaregiverType.distribute,
+    label: "Хуваарилсан",
     title: "6",
   },
   {
-    key: RequestType.migration,
-    label: "Шилжилт хөдөлгөөн",
-    title: "2",
+    key: CaregiverType.takingCare,
+    label: "Үйлчлүүлж байгаа",
   },
   {
-    key: RequestType.decided,
-    label: "Шийдвэрлэсэн",
+    key: CaregiverType.putOnHold,
+    label: "Хүлээлэгт орсон",
+  },
+  {
+    key: CaregiverType.canceled,
+    label: "Цуцлагдсан",
   },
 ];
 const RequestPage: React.FC = () => {
   const [tab, setTab] = useState<String>(CaregiverType.all);
   return (
     <div className={`w-full custom-ant-card-padding-remove`}>
-      <div className="mb-6">
-        <Radio.Group
-          defaultValue={CaregiverType.all}
-          onChange={(e) => setTab(e.target.value)}
-        >
-          <Radio.Button value={CaregiverType.all}>Бүгд</Radio.Button>
-          <Radio.Button value={CaregiverType.takingCare}>
-            Асруулж байгаа
-          </Radio.Button>
-          <Radio.Button value={CaregiverType.saved}>Хадгалсан</Radio.Button>
-          <Radio.Button value={CaregiverType.putOnHold}>
-            Хүлээлэгт оруулсан
-          </Radio.Button>
-          <Radio.Button value={CaregiverType.registered}>
-            Бүртгүүлсэн
-          </Radio.Button>
-          <Radio.Button value={CaregiverType.died}>Нас барсан</Radio.Button>
-          <Radio.Button value={CaregiverType.forcedReleace}>
-            Албадан гаргасан
-          </Radio.Button>
-          <Radio.Button value={CaregiverType.releasedOwnRequest}>
-            Өөрийн хүсэлтээр гарсан
-          </Radio.Button>
-        </Radio.Group>
+      <div className="px-4 pt-4 bg-white border border-gray-200 rounded-xl mb-4 flex-col gap-4">
+        <div className="text-lg font-semibold">Үйлчлүүлэгчид</div>
+        <Tabs
+          defaultActiveKey={CaregiverType.all}
+          onChange={(e) => setTab(e)}
+          items={items?.map((el) => {
+            return {
+              key: el?.key,
+              label: (
+                <div className="flex items-center gap-2">
+                  {el?.label}
+                  {el.title && <Badge title={el.title} color="gray" />}
+                </div>
+              ),
+            };
+          })}
+        />
+      </div>
+      <div className="mb-4">
+        <FilterForm />
       </div>
       <IfCondition
         condition={tab === CaregiverType.all}

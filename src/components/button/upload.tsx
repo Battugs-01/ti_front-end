@@ -6,7 +6,7 @@ import {
 } from "@ant-design/pro-form";
 import { FieldRequireMessage } from "config";
 import EditIcon from "assets/icons/featured-icon.svg";
-import { formatMB } from "utils/index";
+import { formatKB, formatMB } from "utils/index";
 import FilesImage from "assets/icons/files.svg";
 import Trash from "assets/icons/trash.svg";
 import { CloudDownloadOutlined } from "@ant-design/icons";
@@ -96,7 +96,7 @@ export const UploadButton = ({
                   <div className="flex flex-col">
                     <p className="text-sm font-medium m-0 p-0">{file.name}</p>
                     <p className="text-[#475467] font-normal text-sm p-0 m-0">
-                      {formatMB(file.size!, 1)}
+                      {formatKB(file.size!, 1)}
                     </p>
                   </div>
                 </div>

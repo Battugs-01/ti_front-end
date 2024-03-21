@@ -24,7 +24,7 @@ export const PageHeader = ({ title, subTitle }: Props) => {
         result = "Тайлан";
         break;
       case "caregiver":
-        result = "Асруулагч";
+        result = "Үйлчлүүлэгч";
         break;
       case "orphan":
         result = "Асрамжийн газар";

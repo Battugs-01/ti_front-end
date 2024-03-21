@@ -18,12 +18,14 @@ type PropsCancel = ModalFormProps & {
   onCancel: () => void;
   data?: ElderlyInterface;
   onFinish?: () => void;
+  cancelDetail?: () => void;
 };
 
 export const CancelModal = ({
   onCancel,
   data,
   onFinish,
+  cancelDetail,
   ...rest
 }: PropsCancel) => {
   const formRef = useRef<ProFormInstance>();
@@ -35,6 +37,7 @@ export const CancelModal = ({
         message: "Амжилттай",
       }),
         onFinish && onFinish();
+      cancelDetail?.();
     },
 
     onError: (err) => {
@@ -42,6 +45,7 @@ export const CancelModal = ({
         message: err.message,
       }),
         onFinish && onFinish();
+      cancelDetail?.();
     },
   });
   return (

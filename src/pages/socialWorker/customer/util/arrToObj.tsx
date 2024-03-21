@@ -74,9 +74,10 @@ export const filterLabTest = (id: number, data: LaboratoryTests[]) => {
       url: `http://103.41.112.73:9000/${val?.physical_path}`,
       size: val?.file_size || 0,
     }));
-  return (
-    result || [
-      { uid: "0", name: "file.pdf", status: "done", url: "", size: 123 },
-    ]
-  );
+  return result;
+  // return (
+  //   result || [
+  //     { uid: "0", name: "file.pdf", status: "done", url: "", size: 123 },
+  //   ]
+  // );
 };

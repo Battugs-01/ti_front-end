@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { UploadButton, UploadDraggerButton } from "components/index";
+import { UploadButton } from "components/index";
 
 export const pensionDocument = [
   [
@@ -92,6 +92,7 @@ export const RegistrationForm: React.FC = () => {
               {val?.map((el, index) => (
                 <Col span={12}>
                   <UploadButton
+                    required={false}
                     name={["documents", el?.name]}
                     label={el?.label}
                     key={index}
@@ -110,6 +111,7 @@ export const RegistrationForm: React.FC = () => {
               {val?.map((el, index) => (
                 <Col span={12}>
                   <UploadButton
+                    required={false}
                     name={["documents", el?.name]}
                     label={el?.label}
                     key={index}
@@ -129,6 +131,7 @@ export const RegistrationForm: React.FC = () => {
                 <Col span={12}>
                   <UploadButton
                     // fileList={}
+                    required={false}
                     name={["documents", el?.name]}
                     label={el?.label}
                     key={index}

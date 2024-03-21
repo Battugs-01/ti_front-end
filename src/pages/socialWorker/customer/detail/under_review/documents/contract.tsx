@@ -11,7 +11,7 @@ import {
   DefinitionGovernor,
   Documents,
 } from "service/social-worker/customer/type";
-import { formatMB } from "utils/index";
+import { formatKB, formatMB } from "utils/index";
 
 type DocumentsType = {
   situationalData?: DefinitionGovernor[];
@@ -72,7 +72,7 @@ export const Contract: React.FC<DocumentsType> = ({
                   <span className="font-normal text-sm text-gray-600">
                     Хэмжээ :{" "}
                     <span className="font-bold">
-                      {formatMB(record?.size, 2)}
+                      {formatKB(record?.size || 0, 1)}
                     </span>
                   </span>
                 </div>

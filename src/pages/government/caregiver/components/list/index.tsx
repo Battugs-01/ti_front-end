@@ -2,7 +2,7 @@ import { Avatar, Badge } from "antd";
 import React from "react";
 import { ListProps } from "service/gov-requests";
 import GovBadge from "components/badge/government";
-import RightContent from "../rightContent/index";
+import { RightContent } from "../rightContent/index";
 import { Link } from "react-router-dom";
 
 const color = "#144E5A";

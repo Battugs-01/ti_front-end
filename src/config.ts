@@ -21,7 +21,7 @@ import Wallet from "assets/government/img/wallet.png";
 
 export const deleteConfirm = "delete me";
 export const deleteConfirmReg = /^delete me$/g;
-export const FieldRequireMessage = "Энэ талбарийг оруулах шаардлагатай!";
+export const FieldRequireMessage = "Энэ талбарыг оруулах шаардлагатай!";
 
 export const FORM_ITEM_RULE: (value?: any) => Rule[] = (value?: any) => [
   { message: FieldRequireMessage, required: true, ...value },
@@ -71,6 +71,80 @@ export const workersGenderArray = Object.freeze([
   {
     label: "Эм",
     value: GenderType.female,
+  },
+]);
+
+export const EducationType = Object.freeze([
+  {
+    label: "Боловсролгүй",
+    value: "Боловсролгүй",
+  },
+  {
+    label: "Бага",
+    value: "Бага",
+  },
+  {
+    label: "Дунд",
+    value: "Дунд",
+  },
+  {
+    label: "Суурь",
+    value: "Суурь",
+  },
+  {
+    label: "Бүрэн дунд",
+    value: "Бүрэн дунд",
+  },
+  {
+    label: "Техникийн болон мэргэжлийн",
+    value: "Техникийн болон мэргэжлийн",
+  },
+  {
+    label: "Тусгай мэргэжлийн дунд",
+    value: "Тусгай мэргэжлийн дунд",
+  },
+  {
+    label: "Дипломын болон дээд",
+    value: "Дипломын болон дээд",
+  },
+  {
+    label: "Бакалаврын дээд",
+    value: "Бакалаврын дээд",
+  },
+  {
+    label: "Магистр",
+    value: "Магистр",
+  },
+  {
+    label: "Доктор",
+    value: "Доктор",
+  },
+]);
+
+export const MaritalStatus = Object.freeze([
+  {
+    label: "Огт гэрлээгүй",
+    value: "Огт гэрлээгүй",
+  },
+  {
+    label: "Гэрлэсэн (Батлуулсан)",
+    value: "Гэрлэсэн (Батлуулсан)",
+  },
+  {
+    label: "Гэрлэсэн (Батлуулаагүй)",
+    value: "Гэрлэсэн (Батлуулаагүй)",
+  },
+  {
+    label: "Тусгаарласан",
+    value: "Тусгаарласан",
+  },
+  {
+    label: "Цуцалсан",
+    value: "Цуцалсан",
+  },
+  {
+    label: "Бэлэвсэн",
+    value: "Бэлэвсэн",
   },
 ]);
 

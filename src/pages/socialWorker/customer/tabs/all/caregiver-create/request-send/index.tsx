@@ -8,14 +8,14 @@ export const SendForm: React.FC = () => {
         <Col span={12}>
           <UploadButton
             name={["request", "situational_file_ids"]}
-            required
+            required={false}
             label="Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас"
           />
         </Col>
         <Col span={12}>
           <UploadButton
             name={["request", "definition_governor_file_ids"]}
-            required
+            required={false}
             label="Сум, хорооны Засаг даргын тодорхойлолт"
           />
         </Col>

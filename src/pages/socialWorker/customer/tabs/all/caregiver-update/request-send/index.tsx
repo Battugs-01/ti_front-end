@@ -13,7 +13,7 @@ export const SendForm: React.FC<SendFormType> = ({ data }) => {
         <Col span={12}>
           <UploadButton
             name={["request", "situational_file_ids"]}
-            required
+            required={false}
             label="Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас"
             initialValue={data?.situational?.map((val, index) => ({
               uid: `${val?.id}`,
@@ -28,7 +28,7 @@ export const SendForm: React.FC<SendFormType> = ({ data }) => {
         <Col span={12}>
           <UploadButton
             name={["request", "definition_governor_file_ids"]}
-            required
+            required={false}
             label="Сум, хорооны Засаг даргын тодорхойлолт"
             initialValue={data?.definition_governor?.map((val, index) => ({
               uid: `${val?.id}`,

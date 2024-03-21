@@ -14,6 +14,7 @@ import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { UnderReview } from "./under_review";
 import { Distribute } from "./distribute";
+import CareGiverBadge from "components/badge/caregiver";
 
 type FormModalProps = {
   visibleDetail?: boolean;
@@ -114,8 +115,9 @@ export const FormModal: React.FC<FormModalProps> = ({
               onCancel={cancelDetail}
               title={
                 <div className="p-6">
-                  <div className="font-semibold">
-                    Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл (РЕ96124578)
+                  <div className="font-semibold flex items-center gap-3">
+                    <div>Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл</div>
+                    {/* <CareGiverBadge status={status} /> */}
                   </div>
                 </div>
               }

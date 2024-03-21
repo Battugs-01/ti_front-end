@@ -10,7 +10,12 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, Row, Upload, notification } from "antd";
-import { workersGenderArray } from "config";
+import {
+  EducationType,
+  FORM_ITEM_RULE,
+  MaritalStatus,
+  workersGenderArray,
+} from "config";
 import { useState } from "react";
 import address from "service/address";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
@@ -43,12 +48,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             }
             label={"Цээж зураг (3x4 хэмжээтэй)"}
             max={1}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
             name="profile"
             fieldProps={{
               name: "file",
@@ -70,12 +70,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="family_name"
             placeholder="Борлууд"
             label={"Ургийн овог"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -83,12 +78,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="last_name"
             placeholder="Буянтогтох"
             label={"Овог"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -96,12 +86,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="first_name"
             placeholder="Даваацэрэн"
             label={"Нэр"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -111,16 +96,19 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="rd"
             placeholder="ЖУ234234324"
             label={"Регистрийн дугаар"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-              {
-                pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
-                message: "Энэ талбар РД байх ёстой",
-              },
-            ]}
+            rules={
+              (FORM_ITEM_RULE(),
+              [
+                {
+                  required: true,
+                  message: "Энэ талбарыг оруулах шаардлагатай!",
+                },
+                {
+                  pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
+                  message: "Энэ талбар РД байх ёстой",
+                },
+              ])
+            }
           />
         </Col>
         <Col span={8}>
@@ -128,12 +116,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="birth_date"
             placeholder="2023/02/01"
             label={"Төрсөн огноо"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -143,12 +126,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 name="age"
                 placeholder="55"
                 label={"Нас"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Энэ талбарийг оруулах шаардлагатай!",
-                  },
-                ]}
+                rules={FORM_ITEM_RULE()}
               />
             </Col>
             <Col span={12}>
@@ -157,13 +135,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 placeholder="Эрэгтэй"
                 options={workersGenderArray.map((el) => ({ ...el }))}
                 label={"Хүйс"}
-                initialValue={0}
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Энэ талбарийг оруулах шаардлагатай!",
-                //   },
-                // ]}
+                rules={FORM_ITEM_RULE()}
               />
             </Col>
           </Row>
@@ -175,14 +147,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="education"
             placeholder="Сонгох"
             label={"Боловсрол"}
-            initialValue={"Бүрэн дунд"}
-
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Энэ талбарийг оруулах шаардлагатай!",
-            //   },
-            // ]}
+            options={EducationType.map((el) => ({ ...el }))}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -190,14 +156,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="marriage"
             placeholder="Гэрлэсэн"
             label={"Гэрлэлтийн байдал"}
-            initialValue={"Гэрлэсэн"}
-
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Энэ талбарийг оруулах шаардлагатай!",
-            //   },
-            // ]}
+            options={MaritalStatus.map((el) => ({ ...el }))}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -207,12 +167,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 name="family_count"
                 placeholder="3"
                 label={"Ам бүл"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Энэ талбарийг оруулах шаардлагатай!",
-                  },
-                ]}
+                rules={FORM_ITEM_RULE()}
               />
             </Col>
             <Col span={12}>
@@ -220,12 +175,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 name="children_count"
                 placeholder="4"
                 label={"Хүүхдийн тоо"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Энэ талбарийг оруулах шаардлагатай!",
-                  },
-                ]}
+                rules={FORM_ITEM_RULE()}
               />
             </Col>
           </Row>
@@ -237,12 +187,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="reason"
             placeholder={"Асруулах болсон шалтгааныг дэлгэрэнгүй бичнэ үү."}
             label="Асрамжийн газарт асруулах шалтгаан"
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -265,12 +210,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             <ProFormTextArea
               name="disability_desc"
               placeholder={"Тийм бол онош, ХЧА-ын хувь"}
-              rules={[
-                {
-                  required: true,
-                  message: "Энэ талбарийг оруулах шаардлагатай!",
-                },
-              ]}
+              rules={FORM_ITEM_RULE()}
             />
           </Col>
         </Row>
@@ -309,12 +249,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 };
               });
             }}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -333,12 +268,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 value: item?.id,
               };
             })}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -352,12 +282,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 value: item?.id,
               };
             })}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
@@ -367,12 +292,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name={["address", "street"]}
             placeholder="Эрчим хүчний гудамж, Ирээдүй хотхон"
             label={"Гудамж / Хороолол"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={8}>
@@ -380,12 +300,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name={["address", "description"]}
             placeholder="103-44 тоот"
             label={"Хашаа / Хаалгын дугаар"}
-            rules={[
-              {
-                required: true,
-                message: "Энэ талбарийг оруулах шаардлагатай!",
-              },
-            ]}
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>

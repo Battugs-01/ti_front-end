@@ -8,7 +8,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import file from "service/file";
 import { Documents } from "service/social-worker/customer/type";
-import { formatMB } from "utils/index";
+import { formatKB, formatMB } from "utils/index";
 
 type DocumentsType = {
   data?: Documents;
@@ -137,7 +137,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
                   <span className="font-normal text-sm text-gray-600">
                     Хэмжээ :{" "}
                     <span className="font-bold">
-                      {formatMB(record?.size, 2)}
+                      {formatKB(record?.size || 0, 2)}
                     </span>
                   </span>
                 </div>

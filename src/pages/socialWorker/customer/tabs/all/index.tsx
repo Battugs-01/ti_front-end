@@ -17,6 +17,7 @@ type AllProps = {
   list?: any;
   setPagination: (page: number, pageSize: number) => void;
   current?: number;
+  refreshList: () => void;
 };
 
 export const All: React.FC<AllProps> = ({
@@ -24,6 +25,7 @@ export const All: React.FC<AllProps> = ({
   list,
   setPagination,
   current,
+  refreshList,
 }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
@@ -40,16 +42,16 @@ export const All: React.FC<AllProps> = ({
     setOpenModal(false);
     setStepModal(true);
   };
-  const refreshList = () => {
-    list?.run();
-  };
+  // const refreshList = () => {
+  //   list?.run();
+  // };
   return (
     <div className="custom-ant-card-padding-border-remove mt-6">
       <Card loading={list?.loading}>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${list?.data?.total || 0})`}
+            customHeaderTitle={`Нийт (${data?.length || 0})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">
@@ -89,7 +91,7 @@ export const All: React.FC<AllProps> = ({
             <CustomPagination
               total={list?.data?.total}
               setPagination={setPagination}
-              // current={}
+              current={current}
             />
           </div>
         </div>
@@ -111,6 +113,7 @@ export const All: React.FC<AllProps> = ({
         <CareGiverForm /> */}
         {isStepModal && (
           <CareGiverCreate
+            refreshList={refreshList}
             cancelStepModal={cancelStepModal}
             isStepModal={isStepModal}
           />

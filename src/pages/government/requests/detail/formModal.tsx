@@ -19,6 +19,7 @@ import { useState } from "react";
 import { UnderReview } from "../components/under_review";
 import { CancelModal } from "./cancelModal";
 import { ElderlyInterface } from "service/social-worker/customer/type";
+import CareGiverBadge from "components/badge/caregiver";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -125,6 +126,7 @@ export const Detail: React.FC<DetailProps> = ({
                       title={"Буцах"}
                       onClick={() => {
                         onPre();
+                        setCurrent(1);
                       }}
                     />
                     <CustomButton
@@ -178,8 +180,9 @@ export const Detail: React.FC<DetailProps> = ({
               onCancel={cancelDetail}
               title={
                 <div className="p-6">
-                  <div className="font-semibold">
-                    Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл (РЕ96124578)
+                  <div className="font-semibold flex items-center gap-3">
+                    <div>Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл</div>
+                    <CareGiverBadge status={status} />
                   </div>
                 </div>
               }
@@ -245,6 +248,7 @@ export const Detail: React.FC<DetailProps> = ({
       <CancelModal
         data={isReturn}
         onCancel={() => setIsReturn(undefined)}
+        cancelDetail={cancelDetail}
         onFinish={async () => {
           console.log("this is val");
           setIsReturn(undefined);

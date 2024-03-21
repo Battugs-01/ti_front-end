@@ -80,10 +80,10 @@ export const HealthForm: React.FC<HealthType> = ({ data }) => {
       {uploadDocument?.map((val, key) => (
         <Row gutter={[16, 16]} key={key}>
           {val?.map((el, index) => (
-            <Col span={12}>
-              {console.log(el?.initialValue, "initialValuejsaklfdj")}
+            <Col span={12} key={index}>
               <UploadButton
                 // fileList={el?.initialValue}
+                required={false}
                 initialValue={el?.initialValue}
                 name={["laboratory_tests", el?.name]}
                 label={el?.label}

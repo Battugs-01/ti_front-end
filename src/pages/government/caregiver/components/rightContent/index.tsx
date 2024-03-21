@@ -10,7 +10,7 @@ import ArrowIcon from "assets/icons/arrow.svg";
 
 const color = "#144E5A";
 
-const RightContent: React.FC<RightContentType> = ({ state, date }) => {
+export const RightContent: React.FC<RightContentType> = ({ state, date }) => {
   switch (state) {
     case 0: {
       return (
@@ -32,7 +32,6 @@ const RightContent: React.FC<RightContentType> = ({ state, date }) => {
             <Badge status="default" />
             <div className="font-bold">17:36</div>
           </div>
-          <Cascader placeholder="Асрамжийн газар сонгох" />
           <CustomButton title="Хуваарьлах" icon={<img src={CheckIcon} />} />
         </div>
       );
@@ -68,8 +67,6 @@ const RightContent: React.FC<RightContentType> = ({ state, date }) => {
           <div className="flex items-center gap-1 text-sm text-[#475467]">
             <img src={LoomIcon} />
             <div className="font-bold">Батсүмбэрийн Улсын асрамжийн газар</div>
-            <img src={ArrowIcon} />
-            <Cascader placeholder="Асрамжийн газар сонгох" />
           </div>
           <CustomButton title="Шилжүүлэх" icon={<img src={TransferIcon} />} />
         </div>
@@ -97,7 +94,16 @@ const RightContent: React.FC<RightContentType> = ({ state, date }) => {
         </div>
       );
     }
+    default: {
+      return (
+        <div className="w-full flex items-center gap-8">
+          <div className="flex items-center gap-1 text-sm text-[#475467]">
+            <div>Ватиканы Католик шашны ТГ аймаг дахь</div>
+            <div className="font-bold">{date}</div>
+          </div>
+          <CustomButton title="Хуваарьлах" icon={<img src={CheckIcon} />} />
+        </div>
+      );
+    }
   }
 };
-
-export default RightContent;

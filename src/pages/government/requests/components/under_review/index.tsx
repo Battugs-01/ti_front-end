@@ -60,6 +60,28 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
       value: data?.children_count,
     },
   ];
+  const addressInfo = [
+    {
+      name: "Аймаг / Нийслэл",
+      value: data?.address?.city?.name,
+    },
+    {
+      name: "Сум /Дүүрэг",
+      value: data?.address?.district?.name,
+    },
+    {
+      name: "Баг / Хороо",
+      value: data?.address?.khoroo?.name,
+    },
+    {
+      name: "Гудамж / Хороолол",
+      value: data?.address?.street,
+    },
+    {
+      name: "Хашаа / Хаалганы дугаар",
+      value: data?.address?.description,
+    },
+  ];
   const rightDetail = [
     {
       key: "1",
@@ -99,7 +121,25 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     {
       key: "2",
       label: <div className="font-semibold text-base">Оршин суугаа хаяг</div>,
-      children: <p>He</p>,
+      children: (
+        <div>
+          {addressInfo?.map((item, index: number) => {
+            return (
+              <div
+                key={index}
+                className="mb-4 pt-0 mt-0 w-full flex justify-between"
+              >
+                <div className="text-[#475467] mt-2 col-span-1 text-base font-normal w-[60%]">
+                  {item.name}
+                </div>
+                <div className="mt-2 w-[40%] font-bold text-base ">
+                  {item.value}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ),
     },
   ];
 
@@ -110,7 +150,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
           items={leftitems}
           last_name={data?.last_name}
           first_name={data?.first_name}
-          // url={data?}
+          url={data?.profile?.physical_path || ""}
         />
       </div>
       <div className="w-[65%]">

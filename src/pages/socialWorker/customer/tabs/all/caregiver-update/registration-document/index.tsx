@@ -212,6 +212,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
               {val?.map((el, index) => (
                 <Col span={12}>
                   <UploadButton
+                    required={false}
                     initialValue={el?.initialValue}
                     name={["documents", el?.name]}
                     label={el?.label}
@@ -232,6 +233,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
                 <Col span={12}>
                   {console.log(el?.initialValue, "initialValue")}
                   <UploadButton
+                    required={false}
                     initialValue={el?.initialValue}
                     name={["documents", el?.name]}
                     label={el?.label}
@@ -251,6 +253,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
               {val?.map((el, index) => (
                 <Col span={12}>
                   <UploadButton
+                    required={false}
                     initialValue={el?.initialValue}
                     name={["documents", el?.name]}
                     label={el?.label}
