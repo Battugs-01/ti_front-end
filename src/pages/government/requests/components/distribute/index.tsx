@@ -1,10 +1,11 @@
 import { ProFormCheckbox, ProFormRadio } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Avatar, Card, Col, Row } from "antd";
+import { Alert, Avatar, Card, Col, Row } from "antd";
 import orphanUser from "service/gov-orphan/requests";
 import BedIcon from "assets/government/icons/bed.svg";
 import { UploadDraggerButton } from "components/index";
 import { CardInterface } from "service/gov-orphan";
+import ExclamaionMarkIcon from "assets/government/icons/exclamation-mark.svg";
 
 type OrphanOptions = {
   label: JSX.Element;
@@ -12,13 +13,28 @@ type OrphanOptions = {
   style: React.CSSProperties;
 };
 
-export const Distribute: React.FC = () => {
-  const orphanList = useRequest(() => orphanUser?.getList({}));
+type DistributeProps={
+  data?: CardInterface[]
+}
+
+export const Distribute: React.FC<DistributeProps> = ({data}) => {
   return (
     <div className="custom-radio-group">
+      {
+        data?.length === 0 ? <Alert
+        className="bg-[#E7EDEE] text-slate-700 mb-4 mx-12"
+        style={{ border: "1px solid #D0D5DD" }}
+        type="info"
+        message={
+          <div className="text-slate-700 font-semibold flex items-center gap-3">
+            <img src={ExclamaionMarkIcon} alt="image" />
+            <div>Батлагдсан асрамжийн газар байхгүй байна.</div>
+          </div>
+        }
+      /> : 
       <ProFormRadio.Group
         name="care_center_id"
-        options={orphanList?.data?.map(
+        options={data?.map(
           (val: CardInterface, key: number): OrphanOptions => {
             return {
               label: (
@@ -54,6 +70,7 @@ export const Distribute: React.FC = () => {
           }
         )}
       />
+        }
       <div className="px-12">
         <Row gutter={[16, 16]}>
           <Col span={12}>

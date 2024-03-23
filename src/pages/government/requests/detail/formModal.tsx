@@ -20,6 +20,7 @@ import { UnderReview } from "../components/under_review";
 import { CancelModal } from "./cancelModal";
 import { ElderlyInterface } from "service/social-worker/customer/type";
 import CareGiverBadge from "components/badge/caregiver";
+import orphanUser from "service/gov-orphan/requests";
 
 type DetailProps = {
   visibleDetail?: boolean;
@@ -35,6 +36,7 @@ export const Detail: React.FC<DetailProps> = ({
   status,
 }) => {
   const [current, setCurrent] = useState(1);
+  const orphanList = useRequest(() => orphanUser?.getList({}));
 
   // ? TODO
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
@@ -130,6 +132,7 @@ export const Detail: React.FC<DetailProps> = ({
                       }}
                     />
                     <CustomButton
+                    disabled={orphanList?.data?.length === 0}
                       onClick={() => {
                         onSubmit && onSubmit();
                         // setCurrent(2);
@@ -242,7 +245,7 @@ export const Detail: React.FC<DetailProps> = ({
             return true;
           }}
         >
-          <Distribute />
+          <Distribute data={orphanList?.data}/>
         </StepsForm.StepForm>
       </StepsForm>
       <CancelModal
