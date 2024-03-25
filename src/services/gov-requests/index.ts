@@ -29,15 +29,7 @@ export enum CaregiverType {
 }
 
 export type ListProps = {
-  id?: number;
-  image?: string;
-  name?: string;
-  surname?: string;
-  registrationNumber?: string;
-  state?: Number;
-  date?: any;
-  time?: string;
-  url?: string;
+  data?: ListElderly;
 };
 
 export type ElderlyListProps = {
@@ -51,6 +43,7 @@ export type RightContentType = {
   id?: any;
   time?: string;
   data?: ListElderly;
+  updatedDate?: any;
 };
 
 export interface CardData {

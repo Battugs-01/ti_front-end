@@ -3,18 +3,12 @@ import React from "react";
 import { ListProps } from "service/gov-requests";
 import RightContent from "../right-content";
 import CareGiverBadge from "components/badge/caregiver";
+import moment from "moment";
 
 const color = "#144E5A";
 
 const List: React.FC<ListProps> = ({
-  url,
-  image,
-  name,
-  surname,
-  registrationNumber,
-  state,
-  date,
-  id,
+  data
 }) => {
   return (
     <div
@@ -29,16 +23,16 @@ const List: React.FC<ListProps> = ({
             size={36}
             style={{ background: color }}
             shape="circle"
-            src={`http://103.41.112.73:9000/${url}`}
+            src={`http://103.41.112.73:9000/${data?.elderly?.profile?.physical_path}`}
           />
-          <div className="font-bold uppercase">{name}</div>
-          <div>{surname}</div>
+          <div className="font-bold uppercase">{data?.elderly?.first_name}</div>
+          <div>{data?.elderly?.last_name}</div>
           <Badge status="default" />
-          <div className="text-[#475467]">{registrationNumber}</div>
-          <CareGiverBadge status={state} />
+          <div className="text-[#475467]">{data?.elderly?.rd}</div>
+          <CareGiverBadge status={data?.status} />
         </div>
         <div>
-          <RightContent date={date} state={state || 0} id={id} />
+          <RightContent updatedDate={moment(data?.updated_at).format("l")} date={moment(data?.created_at).format("l")} state={data?.status || 0} id={data?.elderly_id} />
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { SectionContainer } from "components/index";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import orphanElderly from "service/social-worker/customer";
@@ -29,7 +29,7 @@ export const CancelModal = ({
   ...rest
 }: PropsCancel) => {
   const formRef = useRef<ProFormInstance>();
-
+  const [descCount, setDescCount] = useState<number>(0);
   const cancelRequest = useRequest(orphanElderly?.distribute, {
     manual: true,
     onSuccess: () => {
@@ -84,6 +84,7 @@ export const CancelModal = ({
                 className="bg-error-400 text-sm flex items-center justify-center"
                 type="primary"
                 onClick={cancelRequest}
+                disabled={descCount > 275}
               >
                 <IoMdClose
                   accentHeight={11.67}
@@ -91,7 +92,7 @@ export const CancelModal = ({
                   size={13}
                   className="mx-2"
                 />
-                Татгалзах
+                Буцаах
               </Button>
             </div>
           );
@@ -112,7 +113,11 @@ export const CancelModal = ({
         <ProFormTextArea
           name="description"
           placeholder="Шалтгаан дэлгэрэнгүй"
+          fieldProps={{
+            onChange: (e) => setDescCount(e.target.value.length),
+          }}
         />
+        <div>{descCount <= 275 ? `${275-descCount} тэмдэгт үлдсэн` : "Тэмдэгтийн тоо хэтэрсэн байна."}</div>
       </div>
     </ModalForm>
   );

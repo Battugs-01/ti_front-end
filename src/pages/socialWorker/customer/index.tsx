@@ -9,8 +9,8 @@ import {
 import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
-import { Saved } from "./tabs/saved";
 import { initPagination } from "utils/index";
+import { Layout } from "./tabs/layout";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
@@ -110,6 +110,7 @@ const CustomerPage: React.FC = () => {
         condition={tab === RequestType.all}
         whenTrue={
           <All
+            totalItems={list?.data?.total}
             refreshList={refreshList}
             current={page.current}
             data={list?.data?.items}
@@ -121,7 +122,7 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.saved}
         whenTrue={
-          <All
+          <Layout
             refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
@@ -135,7 +136,7 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.putOnHold}
         whenTrue={
-          <All
+          <Layout
             refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
@@ -149,7 +150,7 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.returned}
         whenTrue={
-          <All
+          <Layout
             refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
@@ -162,7 +163,7 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.requestSend}
         whenTrue={
-          <All
+          <Layout
             refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}
@@ -176,7 +177,7 @@ const CustomerPage: React.FC = () => {
       <IfCondition
         condition={tab === RequestType.takingCare}
         whenTrue={
-          <All
+          <Layout
             refreshList={refreshList}
             current={page.current}
             setPagination={setPagination}

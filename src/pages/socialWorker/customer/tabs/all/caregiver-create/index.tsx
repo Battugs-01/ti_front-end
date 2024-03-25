@@ -60,7 +60,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       refreshList?.();
     },
     onError() {
-      notification.success({
+      notification.error({
         message: "Алдаа гарлаа",
       });
       setSave(false);

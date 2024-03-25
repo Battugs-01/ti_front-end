@@ -339,7 +339,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                       }}
                       loading={elderlyEdit.loading}
                       extraIcon={<img src={ArrowRight} />}
-                      title="Дахин хүсэлт илгээх"
+                      title={"Хүсэлт илгээх"}
                     />
                   ) : (
                     <CustomButton

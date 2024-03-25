@@ -29,7 +29,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       name: "Хүйс",
-      value: data?.gender,
+      value: data?.gender === 0 ? "Эрэгтэй" : "Эмэгтэй",
     },
     {
       name: "Боловсрол",
@@ -53,7 +53,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       name: "Хөгжлийн бэрхшээлтэй эсэх",
-      value: data?.is_disability,
+      value: data?.is_disability ? "Тийм" : "Үгүй",
     },
     {
       name: "Онош, ХЧА-ын хувь",
@@ -90,7 +90,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       key: "2",
-      label: "Бүрдүүлсэн бичиг баримт",
+      label: "Бичиг баримт",
       children: <Documents data={data} />,
     },
   ];

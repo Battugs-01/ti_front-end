@@ -18,6 +18,7 @@ type AllProps = {
   setPagination: (page: number, pageSize: number) => void;
   current?: number;
   refreshList: () => void;
+  totalItems?: number;
 };
 
 export const All: React.FC<AllProps> = ({
@@ -26,6 +27,7 @@ export const All: React.FC<AllProps> = ({
   setPagination,
   current,
   refreshList,
+  totalItems
 }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
@@ -51,7 +53,7 @@ export const All: React.FC<AllProps> = ({
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${data?.length || 0})`}
+            customHeaderTitle={`Нийт (${totalItems || 0})`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">
@@ -73,15 +75,8 @@ export const All: React.FC<AllProps> = ({
         <div className="w-full">
           {data?.map((card, key) => (
             <List
-              key={key}
-              url={card?.elderly?.profile?.physical_path}
-              image={card?.elderly?.first_name?.substring(0, 2).toUpperCase()}
-              name={card?.elderly?.first_name}
-              surname={card?.elderly?.last_name}
-              registrationNumber={card?.elderly?.rd}
-              id={card?.elderly_id}
-              state={card?.status}
-              date={moment(card?.created_at).format("l")}
+             data={card}
+             key={key}
             />
           ))}
           <div

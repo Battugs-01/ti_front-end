@@ -12,7 +12,7 @@ import {
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 
-const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
+const RightContent: React.FC<RightContentType> = ({ state, date, id,updatedDate }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
   const elderly = useRequest(async () => orphanElderly.getElderly(id), {
@@ -161,7 +161,7 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id }) => {
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Илгээсэн огноо:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"
