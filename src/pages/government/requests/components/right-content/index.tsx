@@ -13,8 +13,9 @@ import { Detail } from "../../detail/formModal";
 import moment from "moment";
 import { Badge } from "antd";
 import { WaitDetail } from "../../wait-detail";
+import CheckIcon from "assets/government/icons/white-check.svg";
 
-const RightContent: React.FC<RightContentType> = ({ data }) => {
+const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
   const elderly = useRequest(
@@ -81,12 +82,14 @@ const RightContent: React.FC<RightContentType> = ({ data }) => {
               </div>
             </div>
             <CustomButton
-              title={<div className="py-2 px-4">Шийдвэрлэх</div>}
+              icon={<img src={CheckIcon} />}
+              title={<div>Шийдвэрлэх</div>}
               onClick={() => setIsDetail(true)}
             />
           </div>
           {isDetail && (
             <Detail
+              refreshList={refreshList}
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
@@ -150,7 +153,7 @@ const RightContent: React.FC<RightContentType> = ({ data }) => {
         </Fragment>
       );
     }
-    case 5: {
+    case ElderlyStatus.ElderlyAllocated: {
       return (
         <div className="w-full flex items-center gap-8">
           <div className="flex items-center gap-2 text-sm text-[#475467]">
@@ -171,24 +174,41 @@ const RightContent: React.FC<RightContentType> = ({ data }) => {
         </div>
       );
     }
-    case 4: {
-      return (
-        <div className="flex items-center gap-1 text-sm text-[#475467]">
-          <div>Хүлээлэгт оруулсан огноо:</div>
-          <div className="font-bold">
-            {moment(data?.created_at).format("l")}
-          </div>
-        </div>
-      );
-    }
     case ElderlyStatus.ReturnSum: {
       return (
-        <div className="flex items-center gap-1 text-sm text-[#475467]">
-          <div>Буцаагдсан огноо:</div>
-          <div className="font-bold">
-            {moment(data?.created_at).format("l")}
+        <Fragment>
+          <div className="w-full flex items-center gap-8">
+            <div className="flex items-center gap-2 text-sm text-[#475467]">
+              <div className="font-bold">
+                {`${data?.created_user?.last_name.substring(0, 1)}.${
+                  data?.created_user?.first_name
+                }`}
+              </div>
+              <Badge status="default" />
+              <div>Илгээсэн огноо:</div>
+              <div className="font-bold">
+                {moment(data?.updated_at).format("l")}
+              </div>
+              <Badge status="default" />
+              <div className="font-bold">
+                {moment(data?.updated_at).format("HH:mm")}
+              </div>
+            </div>
+            <CustomButton
+              title="Шалтгаан харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
           </div>
-        </div>
+          {isDetail && (
+            <WaitDetail
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={data?.status || 0}
+              id={data?.elderly_id}
+            />
+          )}
+        </Fragment>
       );
     }
     default: {

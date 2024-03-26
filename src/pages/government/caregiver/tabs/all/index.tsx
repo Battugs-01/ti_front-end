@@ -9,16 +9,7 @@ const All: React.FC<AllType> = ({ data }) => {
   return (
     <div>
       {data?.map((card, key) => (
-        <List
-          key={key}
-          image={card?.image}
-          name={card?.name}
-          surname={card?.surname}
-          registrationNumber={card?.registrationNumber}
-          state={card?.state}
-          date={moment(card?.date).format("l")}
-          id={card.id}
-        />
+        <List key={key} data={card} />
       ))}
     </div>
   );

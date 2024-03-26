@@ -7,7 +7,7 @@ import moment from "moment";
 
 const color = "#144E5A";
 
-const List: React.FC<ElderlyListProps> = ({ data }) => {
+const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
   return (
     <div
       className="bg-white"
@@ -30,7 +30,7 @@ const List: React.FC<ElderlyListProps> = ({ data }) => {
           <CareGiverBadge status={data?.status} />
         </div>
         <div>
-          <RightContent data={data} />
+          <RightContent data={data} refreshList={refreshList} />
         </div>
       </div>
     </div>

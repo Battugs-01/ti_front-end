@@ -117,7 +117,11 @@ export const CancelModal = ({
             onChange: (e) => setDescCount(e.target.value.length),
           }}
         />
-        <div>{descCount <= 275 ? `${275-descCount} тэмдэгт үлдсэн` : "Тэмдэгтийн тоо хэтэрсэн байна."}</div>
+        <div>
+          {descCount <= 275
+            ? `${275 - descCount} тэмдэгт үлдсэн`
+            : "Тэмдэгтийн тоо хэтэрсэн байна."}
+        </div>
       </div>
     </ModalForm>
   );

@@ -31,6 +31,7 @@ const RequestPage: React.FC = () => {
     setStepModal(true);
   };
   const refreshList = () => {
+    console.log("sssssdaa");
     list?.run({ ...page });
   };
   const setPagination = (page: number, pageSize: number) => {
@@ -67,7 +68,7 @@ const RequestPage: React.FC = () => {
         </div>
         <div className="w-full">
           {list?.data?.items?.map((card, key) => (
-            <List key={key} data={card} />
+            <List key={key} data={card} refreshList={refreshList} />
           ))}
           <div
             className="flex justify-end mb-4 px-6"

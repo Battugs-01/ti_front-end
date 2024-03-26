@@ -27,6 +27,7 @@ type DetailProps = {
   cancelDetail?: () => void;
   id?: number;
   status?: number;
+  refreshList?: () => void;
 };
 
 export const Detail: React.FC<DetailProps> = ({
@@ -34,6 +35,7 @@ export const Detail: React.FC<DetailProps> = ({
   cancelDetail,
   id,
   status,
+  refreshList,
 }) => {
   const [current, setCurrent] = useState(1);
   const orphanList = useRequest(() => orphanUser?.getList({}));
@@ -48,6 +50,14 @@ export const Detail: React.FC<DetailProps> = ({
       notification.success({
         message: "Амжилттай",
       });
+      refreshList?.();
+      cancelDetail?.();
+    },
+    onError: () => {
+      notification.error({
+        message: "Алдаа гарлаа",
+      });
+      refreshList?.();
       cancelDetail?.();
     },
   });
@@ -132,7 +142,7 @@ export const Detail: React.FC<DetailProps> = ({
                       }}
                     />
                     <CustomButton
-                    disabled={orphanList?.data?.length === 0}
+                      disabled={orphanList?.data?.length === 0}
                       onClick={() => {
                         onSubmit && onSubmit();
                         // setCurrent(2);
@@ -245,7 +255,7 @@ export const Detail: React.FC<DetailProps> = ({
             return true;
           }}
         >
-          <Distribute data={orphanList?.data}/>
+          <Distribute data={orphanList?.data} />
         </StepsForm.StepForm>
       </StepsForm>
       <CancelModal
@@ -253,7 +263,7 @@ export const Detail: React.FC<DetailProps> = ({
         onCancel={() => setIsReturn(undefined)}
         cancelDetail={cancelDetail}
         onFinish={async () => {
-          console.log("this is val");
+          refreshList?.();
           setIsReturn(undefined);
         }}
       />

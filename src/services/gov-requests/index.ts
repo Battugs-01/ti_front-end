@@ -31,12 +31,17 @@ export enum CaregiverType {
 export type ListProps = {
   data?: ListElderly;
 };
+export type ListElderlyProps = {
+  data?: any;
+};
 
 export type ElderlyListProps = {
+  refreshList?: () => void;
   data?: ListElderly;
 };
 
 export type RightContentType = {
+  refreshList?: () => void;
   showDetail?: () => void;
   state?: Number;
   date?: any;
