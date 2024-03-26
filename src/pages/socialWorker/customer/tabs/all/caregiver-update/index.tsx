@@ -322,8 +322,8 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                   {step !== 0 && (
                     <DefaultButton
                       onClick={() => {
-                        setLoading(true);
                         onSubmit && onSubmit();
+                        setLoading(true);
                         setSave(true);
                       }}
                       loading={loading}
@@ -335,9 +335,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setLoading(true);
                         setSendRequest(true);
                       }}
-                      loading={elderlyEdit.loading}
+                      loading={loading}
                       extraIcon={<img src={ArrowRight} />}
                       title={"Хүсэлт илгээх"}
                     />

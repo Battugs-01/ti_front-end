@@ -39,6 +39,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const [info, setInfo] = useState<any>({});
   const [documents, setDocuments] = useState<any>({});
   const [isSave, setSave] = useState(false);
+  const [submitting,setSubmitting]=useState(false);
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
     onSuccess() {
@@ -58,11 +59,13 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       setSave(false);
       cancelStepModal?.();
       refreshList?.();
+      setSubmitting(false);
     },
     onError() {
       notification.error({
         message: "Алдаа гарлаа",
       });
+      setSubmitting(false);
       setSave(false);
       cancelStepModal?.();
     },
@@ -173,8 +176,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                 <div className="flex items-center gap-2">
                   {step !== 0 && (
                     <DefaultButton
+                    loading={submitting}
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setSubmitting(true);
                         setSave(true);
                       }}
                       icon={<img src={SaveIcon} />}
@@ -183,8 +188,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                   )}
                   {step === 3 ? (
                     <CustomButton
+                    loading={submitting}
                       onClick={() => {
                         onSubmit && onSubmit();
+                        setSubmitting(true);
                         setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
