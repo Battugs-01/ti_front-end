@@ -1,7 +1,7 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Modal, message, notification } from "antd";
+import { Modal, notification } from "antd";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -18,7 +18,10 @@ import { useEffect, useRef, useState } from "react";
 import file from "service/file/index.js";
 import laboratory from "service/laboratory_tests/index.js";
 import orphanElderly from "service/social-worker/customer/index.js";
-import { ElderlyInterface } from "service/social-worker/customer/type.js";
+import {
+  ElderlyInterface,
+  ElderlyStatus,
+} from "service/social-worker/customer/type.js";
 import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
 import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
@@ -28,12 +31,16 @@ type CaregiverType = {
   cancelStepModal?: () => void;
   data?: ElderlyInterface;
   id: number;
+  refreshList?: () => void;
+  status?: Number;
 };
 
 export const CareGiverUpdate: React.FC<CaregiverType> = ({
   cancelStepModal,
   data,
   id,
+  status,
+  refreshList,
 }) => {
   const [sendRequest, setSendRequest] = useState(false);
   const [isSave, setSave] = useState(false);
@@ -45,13 +52,17 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     manual: true,
     onSuccess() {
       setLoading(false);
-      message.success("Амжилттай");
+      notification.success({
+        message: "Амжилттай",
+      });
       cancelStepModal?.();
+      isSave && refreshList?.();
     },
     onError() {
       setLoading(false);
-      message.error("Амжилтгүй");
+      notification.error({ message: "Амжилтгүй" });
       cancelStepModal?.();
+      isSave && refreshList?.();
     },
   });
   const labTests = useRequest(laboratory.get, {
@@ -64,6 +75,13 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
         message: "Амжилттай хүсэлт илгээгдлээ.",
       });
       setSendRequest(false);
+      refreshList?.();
+    },
+    onError() {
+      setLoading(false);
+      notification.error({ message: "Амжилтгүй" });
+      setSendRequest(false);
+      refreshList?.();
     },
   });
   const uploadMulti = useRequest(file.uploadsMulti, {
@@ -274,6 +292,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             id
           );
           sendRequest && toDistrict.run(elderlyData?.id);
+          setTimeout(() => {
+            refreshList?.();
+          }, 500);
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
@@ -340,7 +361,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                       }}
                       loading={loading}
                       extraIcon={<img src={ArrowRight} />}
-                      title={"Хүсэлт илгээх"}
+                      title={
+                        status === ElderlyStatus.ReturnSum
+                          ? "Дахин хүсэлт илгээх"
+                          : "Хүсэлт илгээх"
+                      }
                     />
                   ) : (
                     <CustomButton

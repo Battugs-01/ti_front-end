@@ -74,11 +74,11 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               <Badge status="default" />
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
-                {moment(data?.created_at).format("l")}
+                {moment(data?.updated_at).format("l")}
               </div>
               <Badge status="default" />
               <div className="font-bold">
-                {moment(data?.created_at).format("HH:mm")}
+                {moment(data?.updated_at).format("HH:mm")}
               </div>
             </div>
             <CustomButton

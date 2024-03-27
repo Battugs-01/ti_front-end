@@ -29,6 +29,7 @@ export enum CaregiverType {
 }
 
 export type ListProps = {
+  refreshList?: () => void;
   data?: ListElderly;
 };
 export type ListElderlyProps = {

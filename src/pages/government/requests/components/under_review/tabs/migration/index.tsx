@@ -17,7 +17,7 @@ export const Migration: React.FC<MigrationType> = ({ data }) => {
             <img src={CheckIcon} />
           </div>
           <div className="flex-col flex gap-1 items-start">
-            <div className="font-medium">Бүртгэл үүслээ</div>
+            <div className="font-medium">Хүсэлт гаргасан</div>
             <div>{moment(data?.created_at).format("YYYY-MM-DD HH:mm:ss")}</div>
           </div>
         </div>

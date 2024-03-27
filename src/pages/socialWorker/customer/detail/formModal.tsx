@@ -10,6 +10,7 @@ import { ElderlyInterface } from "service/social-worker/customer/type";
 import CareGiverBadge from "components/badge/caregiver";
 
 type DetailProps = {
+  refreshList?: () => void;
   visibleDetail?: boolean;
   cancelDetail?: () => void;
   id?: number;
@@ -21,6 +22,7 @@ export const Detail: React.FC<DetailProps> = ({
   cancelDetail,
   id,
   status,
+  refreshList,
 }) => {
   // ? TODO
   const [edit, setEdit] = useState<ElderlyInterface>();
@@ -82,11 +84,15 @@ export const Detail: React.FC<DetailProps> = ({
       >
         <UnderReview data={elderlyDetail?.data} />
       </ModalForm>
-      <CareGiverUpdate
-        cancelStepModal={cancelModal}
-        data={edit}
-        id={elderlyDetail?.data?.id || 0}
-      />
+      {edit && (
+        <CareGiverUpdate
+          status={status || 0}
+          refreshList={refreshList}
+          cancelStepModal={cancelModal}
+          data={edit}
+          id={elderlyDetail?.data?.id || 0}
+        />
+      )}
     </div>
   );
 };

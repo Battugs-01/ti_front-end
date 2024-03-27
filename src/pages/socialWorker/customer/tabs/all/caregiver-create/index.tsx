@@ -58,7 +58,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       });
       setSave(false);
       cancelStepModal?.();
-      refreshList?.();
+      isSave && refreshList?.();
       setSubmitting(false);
     },
     onError() {
@@ -67,7 +67,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       });
       setSubmitting(false);
       setSave(false);
-      refreshList?.();
+      isSave && refreshList?.();
       cancelStepModal?.();
     },
   });

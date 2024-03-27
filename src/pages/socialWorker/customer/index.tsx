@@ -26,6 +26,7 @@ const CustomerPage: React.FC = () => {
     list?.run({ current: page, pageSize });
   };
   const refreshList = () => {
+    console.log("refresh will work....");
     list?.run({ ...page });
   };
   return (

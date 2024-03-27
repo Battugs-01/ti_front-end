@@ -12,7 +12,13 @@ import {
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 
-const RightContent: React.FC<RightContentType> = ({ state, date, id,updatedDate }) => {
+const RightContent: React.FC<RightContentType> = ({
+  state,
+  date,
+  id,
+  updatedDate,
+  refreshList,
+}) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
   const elderly = useRequest(async () => orphanElderly.getElderly(id), {
@@ -45,6 +51,7 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id,updatedDate 
           </div>
           {isEdit && (
             <CareGiverUpdate
+              refreshList={refreshList}
               data={isEdit}
               cancelStepModal={cancelModal}
               id={id}
@@ -171,6 +178,7 @@ const RightContent: React.FC<RightContentType> = ({ state, date, id,updatedDate 
           </div>
           {isDetail && (
             <Detail
+              refreshList={refreshList}
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={state || 0}
