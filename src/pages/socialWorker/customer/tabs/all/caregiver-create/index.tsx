@@ -47,7 +47,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         message: "Амжилттай хүсэлт илгээгдлээ.",
       });
       setSendRequest(false);
-      refreshList?.();
     },
   });
   const elderly = useRequest(orphanElderly.create, {
@@ -58,7 +57,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       });
       setSave(false);
       cancelStepModal?.();
-      isSave && refreshList?.();
       setSubmitting(false);
     },
     onError() {
@@ -67,7 +65,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       });
       setSubmitting(false);
       setSave(false);
-      isSave && refreshList?.();
       cancelStepModal?.();
     },
   });
@@ -130,6 +127,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             birth_date: moment(val?.birth_date).toDate(),
           });
           sendRequest && toDistrict.run(elderlyData?.id);
+          setTimeout(() => {
+            refreshList?.();
+          }, 500);
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {

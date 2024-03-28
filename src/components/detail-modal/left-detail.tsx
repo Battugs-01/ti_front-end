@@ -7,7 +7,7 @@ interface LeftDetailProps {
   items: any;
   last_name?: string;
   first_name?: string;
-  url: string;
+  url?: string;
 }
 const LeftDetail: React.FC<LeftDetailProps> = ({
   items,
@@ -23,7 +23,7 @@ const LeftDetail: React.FC<LeftDetailProps> = ({
           shape="circle"
           style={{ backgroundColor: color }}
           size={80}
-          src={file.fileToUrl(url)}
+          src={file.fileToUrl(url || "")}
         >
           {first_name?.substring(0, 2).toUpperCase()}
         </Avatar>

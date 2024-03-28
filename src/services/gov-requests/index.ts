@@ -18,12 +18,7 @@ export enum DetailType {
 export enum CaregiverType {
   all = "all",
   distribute = "distribute",
-  died = "died",
-  forcedReleace = "forcedReleace",
   putOnHold = "putOnHold",
-  registered = "regitered",
-  releasedOwnRequest = "releasedOwnRequest",
-  saved = "saved",
   takingCare = "takingCare",
   canceled = "canceled",
 }

@@ -124,38 +124,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
 
     return oldFileIDs.concat(ids);
   };
-  const labFileUploads = async (files: any[]) => {
-    const oldFileIDs: number[] = [];
-    console.log(files, "this is files");
-    files.map((file) => {
-      if (!file?.uid.includes("rc-upload")) {
-        oldFileIDs.push(parseInt(file.uid));
-      }
-    });
-
-    const ids = await uploadMulti
-      .runAsync({
-        names: files?.reduce<string[]>((acc, record) => {
-          if (record?.uid) {
-            if (record?.uid?.includes("rc-upload")) {
-              acc.push(record.fileName || "");
-              return acc;
-            }
-          }
-          return acc;
-        }, []),
-        files: files?.reduce<string[]>((acc, record) => {
-          if (record?.uid.includes("rc-upload")) {
-            acc.push(record);
-            return acc;
-          }
-          return acc;
-        }, []),
-      })
-      .then((el: any) => el.map((el: any) => el.id));
-
-    return oldFileIDs.concat(ids);
-  };
   useEffect(() => {
     labTests?.run();
   }, []);
@@ -166,6 +134,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       <StepsForm
         formRef={formRef}
         onFinish={async (val) => {
+          console.log("start");
           const reqData: any = {};
           val.profile = await newFileUploads(val?.profile);
           val.documents.elderly_document_care_requet = await newFileUploads(
@@ -276,6 +245,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             val?.laboratory_tests,
             labTests?.data
           );
+          console.log("end");
           const elderlyData = await elderlyEdit.runAsync(
             {
               ...val,

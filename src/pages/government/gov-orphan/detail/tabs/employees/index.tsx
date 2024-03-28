@@ -7,7 +7,7 @@ import { exportFromTable } from "utils/export";
 import orphanUser from "service/gov-orphan/requests";
 import { CardInterface } from "service/gov-orphan";
 import { useAtom } from "jotai";
-import { atomWorkersForm } from "utils/store";
+import { atomForm } from "utils/store";
 import moment from "moment";
 
 type EmployeeType = {
@@ -15,7 +15,7 @@ type EmployeeType = {
 };
 
 export const Employees: React.FC<EmployeeType> = ({ data }) => {
-  const [form, setForm] = useAtom(atomWorkersForm);
+  const [form, setForm] = useAtom(atomForm);
 
   const employeeList = useRequest(orphanUser.getEmployeeList, {
     manual: true,

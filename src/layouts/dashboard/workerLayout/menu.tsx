@@ -10,6 +10,17 @@ import auth from "service/auth";
 import NotificationComponent from "../notifcation";
 import { useContext } from "react";
 
+const triangleStyle: React.CSSProperties = {
+  width: 0,
+  height: 0,
+  borderStyle: "solid",
+  borderWidth: "0 12px 12px 12px",
+  borderColor: "transparent transparent #E7EDEE transparent",
+  position: "absolute",
+  top: "145%",
+  left: "55%",
+  transform: "translateX(-50%)",
+};
 const Menu: React.FC = () => {
   const [_, setAuth] = useAuthContext();
   const [user] = useContext(AuthContext);
@@ -25,9 +36,10 @@ const Menu: React.FC = () => {
             </div>
           </div>
           <div className="">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               <img src={UserIcon} alt="user" />
               <div>Үйлчлүүлэгч</div>
+              <div style={triangleStyle}></div>
             </div>
           </div>
         </div>

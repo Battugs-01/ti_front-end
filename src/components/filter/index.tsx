@@ -3,68 +3,68 @@ import ProForm, {
   ProFormInstance,
   ProFormProps,
   ProFormRadio,
-  ProFormText,
 } from "@ant-design/pro-form";
 import { Button, Popover } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { FilterDeadline, FilterFormButton } from "types";
 import { FiCalendar } from "react-icons/fi";
 import { RiFilter3Fill } from "react-icons/ri";
-import { BiSearch } from "react-icons/bi";
+import { calculateDeadlineDate } from "utils/index";
 
 type Props = ProFormProps & {
   customHeadFilters?: React.ReactNode;
-  customIncomeFilters?: React.ReactNode;
-  customMoneyFilters?: React.ReactNode;
+  others?: React.ReactNode;
   customState?: React.ReactNode;
+  hideFilters?: boolean;
   showGroupButton?: boolean;
   hideDatePicker?: boolean;
-  isSearch?: boolean;
+  selectedDate?: string;
+  setSelectedDate?: Function;
 };
 export const FilterForm = ({
   showGroupButton = true,
   customHeadFilters,
   initialValues,
-  customMoneyFilters,
+  others,
+  hideFilters,
   customState,
-  customIncomeFilters,
   hideDatePicker = false,
-  isSearch = false,
   ...rest
 }: Props) => {
   const [isCustomDate, setCustomDate] = useState(false);
-  const [isSelectedDate, setSelectedDate] = useState(false);
+
+  const [isSelectedDate, setIsSelectedDate] = useState(false);
 
   const buttons: FilterFormButton[] = [
     {
       value: FilterDeadline.FullHours,
       label: "24 цаг",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.Week,
       label: "7 хоног",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.Month,
       label: "30 хоног",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.ThreeMonth,
       label: "3 сар",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.SixMonth,
       label: "6 сар",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.Year,
       label: "1 жил",
-      onChange: () => setSelectedDate(false),
+      onChange: () => setIsSelectedDate(false),
     },
     {
       value: FilterDeadline.All,
@@ -95,64 +95,68 @@ export const FilterForm = ({
     >
       <div className="flex items-center flex-wrap gap-2 md:gap-0">
         {customHeadFilters}
-        <div className="gap-2 custom-ant-radio-button relative ">
-          <ProFormRadio.Group
-            hidden={!showGroupButton}
-            name={"deadline"}
-            radioType="button"
-            fieldProps={{
-              onChange: () => setSelectedDate(false),
-              size: "large",
-            }}
-            options={buttons?.map((el) => ({ ...el }))}
-            initialValue={FilterDeadline.Month}
-          />
-
-          <div
-            className={`absolute ${
-              isSelectedDate ? "-right-[223px]" : "right-0"
-            } top-[1px] z-10 cursor-pointer h-10`}
-          >
+        {hideFilters ? null : (
+          <div className="gap-2 custom-ant-radio-button relative ">
+            <ProFormRadio.Group
+              hidden={!showGroupButton}
+              name={"deadline"}
+              radioType="button"
+              fieldProps={{
+                onChange: (e) => {
+                  setIsSelectedDate(false);
+                  rest.setSelectedDate?.({
+                    ...initialValues,
+                    sortDate: {
+                      start_day: calculateDeadlineDate(e.target.value)?.map(
+                        (el) => el.format("YYYY-MM-DD")
+                      )[0],
+                      end_day: calculateDeadlineDate(e.target.value)?.map(
+                        (el) => el.format("YYYY-MM-DD")
+                      )[1],
+                    },
+                  });
+                },
+                size: "large",
+              }}
+              options={buttons?.map((el) => ({ ...el }))}
+              initialValue={FilterDeadline.Month}
+            />
             <div
-              className={`custom-ant-date-range-picker ${
-                isSelectedDate
-                  ? "w-80 opacity-100 -mt-[1px] -mr-4 md:mr-0 animate-scaleX"
-                  : "opacity-0 ml-0 mr-0 w-24"
-              } `}
+              className={`absolute ${
+                isSelectedDate ? "-right-[223px]" : "right-0"
+              } top-[1px] z-10 cursor-pointer h-10`}
             >
-              <ProFormDateRangePicker
-                name="full_date"
-                className="text-gray-700 cursor-pointer m-0  ant-layot-picker"
-                allowClear={false}
-                hidden={hideDatePicker}
-                fieldProps={{
-                  size: "large",
-                  className: "text-sm m-0",
-                  suffixIcon: <FiCalendar className="text-gray-700 text-xl" />,
-                  onChange(_, formatString) {
-                    if (formatString.length === 2) {
-                      setSelectedDate(true);
-                    }
-                  },
-                }}
-              />
+              <div
+                className={`custom-ant-date-range-picker ${
+                  isSelectedDate
+                    ? "w-80 opacity-100 -mt-[1px] -mr-4 md:mr-0 animate-scaleX"
+                    : "opacity-0 ml-0 mr-0 w-24"
+                } `}
+              >
+                <ProFormDateRangePicker
+                  name="full_date"
+                  className="text-gray-700 cursor-pointer m-0  ant-layot-picker"
+                  allowClear={false}
+                  hidden={hideDatePicker}
+                  fieldProps={{
+                    size: "large",
+                    className: "text-sm m-0",
+                    suffixIcon: (
+                      <FiCalendar className="text-gray-700 text-xl" />
+                    ),
+                    onChange(_, formatString) {
+                      if (formatString.length === 2) {
+                        setIsSelectedDate(true);
+                      }
+                    },
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <ProFormText
-          name={"text"}
-          placeholder={"Хайх"}
-          hidden={!isSearch}
-          fieldProps={{
-            size: "large",
-            className: "text-sm flex",
-            prefix: <BiSearch color="#66708066" size={20} />, // Add the icon as a prefix here
-          }}
-        />
-        {customIncomeFilters}
-        {customMoneyFilters}
+        )}
+        {others}
       </div>
-
       <div className="flex items-center flex-wrap gap-2">{customState}</div>
     </ProForm>
   );

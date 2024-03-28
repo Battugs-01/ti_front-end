@@ -381,6 +381,18 @@ export const newFileUploads = async (files: any[], uploadMulti: any) => {
   return oldFileIDs.concat(ids);
 };
 
+export const initFilter = {
+  current: 1,
+  pageSize: 10,
+  sortDate: {
+    start_day: calculateDeadlineDate(FilterDeadline.Month)?.map((el) =>
+      el.format("YYYY-MM-DD")
+    )[0],
+    end_day: calculateDeadlineDate(FilterDeadline.Month)?.map((el) =>
+      el.format("YYYY-MM-DD")
+    )[1],
+  },
+};
 export const initPagination = {
   current: 1,
   pageSize: 10,

@@ -1,6 +1,5 @@
 import { Radio } from "antd";
 import IBadge from "components/badge";
-import { IfCondition } from "components/condition";
 import { Fragment, useEffect, useState } from "react";
 import {
   ElderlyStatus,
@@ -10,7 +9,7 @@ import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { initPagination } from "utils/index";
-import { Layout } from "./tabs/layout";
+import { caregiverFilterSum } from "utils/caregiver-filter";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
@@ -19,14 +18,13 @@ const CustomerPage: React.FC = () => {
     manual: true,
   });
   useEffect(() => {
-    list.run({ ...page });
-  }, []);
+    list.run({ ...page, status: caregiverFilterSum(tab) });
+  }, [tab]);
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });
-    list?.run({ current: page, pageSize });
+    list?.run({ current: page, pageSize, status: caregiverFilterSum(tab) });
   };
   const refreshList = () => {
-    console.log("refresh will work....");
     list?.run({ ...page });
   };
   return (
@@ -107,86 +105,13 @@ const CustomerPage: React.FC = () => {
           </div>
         </Radio.Button>
       </Radio.Group>
-      <IfCondition
-        condition={tab === RequestType.all}
-        whenTrue={
-          <All
-            totalItems={list?.data?.total}
-            refreshList={refreshList}
-            current={page.current}
-            data={list?.data?.items}
-            list={list}
-            setPagination={setPagination}
-          />
-        }
-      />
-      <IfCondition
-        condition={tab === RequestType.saved}
-        whenTrue={
-          <Layout
-            refreshList={refreshList}
-            current={page.current}
-            setPagination={setPagination}
-            data={list?.data?.items?.filter(
-              (val, index) => val?.status === ElderlyStatus.ElderlySave
-            )}
-            list={list}
-          />
-        }
-      />
-      <IfCondition
-        condition={tab === RequestType.putOnHold}
-        whenTrue={
-          <Layout
-            refreshList={refreshList}
-            current={page.current}
-            setPagination={setPagination}
-            data={list?.data?.items?.filter(
-              (val) => val?.status === ElderlyStatus.WaitDistrict
-            )}
-            list={list}
-          />
-        }
-      />
-      <IfCondition
-        condition={tab === RequestType.returned}
-        whenTrue={
-          <Layout
-            refreshList={refreshList}
-            current={page.current}
-            setPagination={setPagination}
-            data={list?.data?.items?.filter(
-              (val) => val?.status === ElderlyStatus.ReturnSum
-            )}
-          />
-        }
-      />
-      <IfCondition
-        condition={tab === RequestType.requestSend}
-        whenTrue={
-          <Layout
-            refreshList={refreshList}
-            current={page.current}
-            setPagination={setPagination}
-            data={list?.data?.items?.filter(
-              (val) =>
-                val?.status === ElderlyStatus.ElderlyRequestSendToDistrict
-            )}
-          />
-        }
-      />
-      <IfCondition
-        condition={tab === RequestType.takingCare}
-        whenTrue={
-          <Layout
-            refreshList={refreshList}
-            current={page.current}
-            setPagination={setPagination}
-            data={list?.data?.items?.filter(
-              (val) => val?.status === ElderlyStatus.ElderlyTakingCare
-            )}
-          />
-        }
+      <All
+        totalItems={list?.data?.total}
+        refreshList={refreshList}
+        current={page.current}
+        data={list?.data?.items}
+        list={list}
+        setPagination={setPagination}
       />
     </Fragment>
   );

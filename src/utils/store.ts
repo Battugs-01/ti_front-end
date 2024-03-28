@@ -9,7 +9,7 @@ export interface FilterFormType {
   pageSize: number;
   current: number;
 }
-export const atomWorkersForm = atom<FilterFormType>({
+export const atomForm = atom<FilterFormType>({
   pageSize: 20,
   current: 0,
   sortDate: {

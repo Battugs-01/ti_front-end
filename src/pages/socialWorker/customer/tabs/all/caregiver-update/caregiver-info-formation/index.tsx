@@ -43,7 +43,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
     manual: true,
   });
   const cityId = form?.getFieldValue(["address", "city_id"]);
-  console.log(cityId, "this is cityId");
   useEffect(() => {
     if (cityId) {
       district.run(cityId);
@@ -297,7 +296,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
               form?.setFieldValue(["address", "khoroo_id"], undefined);
             }}
             options={district.data?.map((item: any) => {
-              console.log(item, "this is item");
               return {
                 label: item?.name,
                 value: item?.id,

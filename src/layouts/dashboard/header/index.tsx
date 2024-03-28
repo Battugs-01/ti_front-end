@@ -12,7 +12,6 @@ const Header: FC = () => {
   const { email } = user.user || {};
   const avatar = email?.substring(0, 2) || "AA";
   const color = "#146135";
-  console.log(user.user, "jjjjjj");
   return (
     <>
       <div className="p-4 justify-between items-center w-full text-black lg:text-white lg:flex hidden">

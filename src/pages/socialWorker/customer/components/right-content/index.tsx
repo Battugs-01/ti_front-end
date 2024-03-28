@@ -38,7 +38,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Мэдээлэл шинэчилсэн:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
               title="Мэдээлэл засах"
@@ -66,7 +66,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Илгээсэн огноо:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"
@@ -91,7 +91,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Илгээсэн огноо:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"
@@ -116,7 +116,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Огноо:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             {/* <CustomButton
               title="Дэлгэрэнгүй харах"
@@ -154,12 +154,56 @@ const RightContent: React.FC<RightContentType> = ({
         </div>
       );
     }
-    case 4: {
+    case ElderlyStatus.ElderlyWaiting: {
       return (
-        <div className="flex items-center gap-1 text-sm text-[#475467]">
-          <div>Хүлээлэгт оруулсан огноо:</div>
-          <div className="font-bold">{date}</div>
-        </div>
+        <Fragment>
+          <div className="flex items-center gap-8 text-sm text-[#475467]">
+            <div className="flex items-center gap-1 text-sm text-[#475467]">
+              <div>Хүлээлэгт оруулсан огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.ElderlyTakingCare: {
+      return (
+        <Fragment>
+          <div className="flex items-center gap-8 text-sm text-[#475467]">
+            <div className="flex items-center gap-1 text-sm text-[#475467]">
+              <div>Хүлээж авсан огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+            />
+          )}
+        </Fragment>
       );
     }
     case ElderlyStatus.ReturnSum: {
@@ -194,7 +238,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-1 text-sm text-[#475467]">
               <div>Мэдээлэл шинэчилсэн:</div>
-              <div className="font-bold">{date}</div>
+              <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
               title="Мэдээлэл засах"

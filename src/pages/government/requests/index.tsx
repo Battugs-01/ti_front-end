@@ -6,42 +6,54 @@ import InitTableHeader from "components/table-header";
 import React, { useEffect, useState } from "react";
 import orphanElderly from "service/social-worker/customer";
 import { exportFromTable } from "utils/export";
+import { initFilter } from "utils/index";
 import List from "./components/list";
-import { initPagination } from "utils/index";
+import { ElderlyStatus } from "service/social-worker/customer/type";
 
 const RequestPage: React.FC = () => {
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [isStepModal, setStepModal] = useState<boolean>(false);
-  const [page, setPage] = useState(initPagination);
+  // const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  // const [isStepModal, setStepModal] = useState<boolean>(false);
+  const [filter, setFilter] = useState(initFilter);
   const list = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
 
   useEffect(() => {
-    list.run({ ...page });
-  }, []);
-  const cancelModal = () => {
-    setOpenModal(false);
-  };
-  const cancelStepModal = () => {
-    setStepModal(false);
-  };
-  const nextModal = () => {
-    setOpenModal(false);
-    setStepModal(true);
-  };
+    list.run({
+      ...filter,
+      status: [
+        ElderlyStatus.ReturnSum,
+        ElderlyStatus.ElderlyRequestSendToDistrict,
+      ],
+    });
+  }, [filter]);
+  // const cancelModal = () => {
+  //   setOpenModal(false);
+  // };
+  // const cancelStepModal = () => {
+  //   setStepModal(false);
+  // };
+  // const nextModal = () => {
+  //   setOpenModal(false);
+  //   setStepModal(true);
+  // };
   const refreshList = () => {
-    console.log("sssssdaa");
-    list?.run({ ...page });
+    list?.run({
+      ...filter,
+      status: [
+        ElderlyStatus.ReturnSum,
+        ElderlyStatus.ElderlyRequestSendToDistrict,
+      ],
+    });
   };
-  const setPagination = (page: number, pageSize: number) => {
-    setPage({ current: page, pageSize });
-    list?.run({ current: page, pageSize });
+  const setPagination = (pageNumber: number, pageSize: number) => {
+    setFilter({ ...filter, current: pageNumber, pageSize });
+    list?.run({ ...filter, current: pageNumber, pageSize });
   };
   return (
     <div className="custom-ant-card-padding-border-remove">
       <div className="mb-4">
-        <FilterForm />
+        <FilterForm initialValues={{ ...filter }} setSelectedDate={setFilter} />
       </div>
       <Card loading={list?.loading}>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
@@ -75,7 +87,7 @@ const RequestPage: React.FC = () => {
             style={{ borderTop: "1px solid #EAECF0" }}
           >
             <CustomPagination
-              current={page.current}
+              current={filter.current}
               total={list?.data?.total}
               setPagination={setPagination}
             />

@@ -1,58 +1,49 @@
-import { SetStateAction, useState } from "react";
-import Header from "./components/header";
-import { DetailType } from "service/gov-requests";
-import { IfCondition } from "components/condition";
-import { HistoryMigration } from "./tabs/historyMigration";
-import { PensionInfo } from "./tabs/pensionInfo";
-import { DevPlan } from "./tabs/devPlan";
-import { PersonalCase } from "./tabs/personalCase";
-import { FoodCard } from "./tabs/foodCard";
-import { DiagnosticCard } from "./tabs/diagnosticCard";
+import { ModalForm } from "@ant-design/pro-form";
+import { useRequest } from "ahooks";
+import orphanElderly from "service/social-worker/customer";
+import CareGiverBadge from "components/badge/caregiver";
+import { UnderReview } from "./under_review";
 
-const data = [
-  {
-    image: "BE",
-    name: "Battulga",
-    surname: "Enkhtur",
-    registrationNumber: "МИ95091515",
-    state: 1,
-    date: Date.now(),
-    id: 95,
-  },
-];
+type DetailProps = {
+  visibleDetail?: boolean;
+  cancelDetail?: () => void;
+  id?: number;
+  status?: number;
+};
 
-const CaregiverDetail: React.FC = () => {
-  const [tab, setTab] = useState<String>(DetailType.history);
-  const changeTab = (e: SetStateAction<String>) => {
-    setTab(e);
-  };
+export const Detail: React.FC<DetailProps> = ({
+  visibleDetail,
+  cancelDetail,
+  id,
+  status,
+}) => {
+  const elderlyDetail = useRequest(() => orphanElderly.getElderly(id));
   return (
     <div>
-      <div className="custom-ant-card-padding-border-remove mb-6">
-        <Header changeTab={changeTab} data={data} />
-      </div>
-      <IfCondition
-        condition={tab === DetailType.history}
-        whenTrue={<HistoryMigration />}
-      />
-      <IfCondition
-        condition={tab === DetailType.case}
-        whenTrue={<PersonalCase />}
-      />
-      <IfCondition condition={tab === DetailType.plan} whenTrue={<DevPlan />} />
-      <IfCondition
-        condition={tab === DetailType.pension}
-        whenTrue={<PensionInfo />}
-      />
-      <IfCondition
-        condition={tab === DetailType.food}
-        whenTrue={<FoodCard />}
-      />
-      <IfCondition
-        condition={tab === DetailType.diagnostic}
-        whenTrue={<DiagnosticCard />}
-      />
+      <ModalForm
+        width={1330}
+        open={visibleDetail}
+        modalProps={{ onCancel: cancelDetail }}
+        title={
+          <div className="p-6">
+            <div className="font-semibold flex items-center gap-3">
+              <div>Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл</div>
+              <CareGiverBadge status={status} />
+            </div>
+          </div>
+        }
+        submitter={{
+          render: ({ submit: onsubmit }) => {
+            return (
+              <div className="flex justify-end items-center w-full  p-6 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300">
+                <div className="flex items-center gap-2"></div>
+              </div>
+            );
+          },
+        }}
+      >
+        <UnderReview data={elderlyDetail?.data} />
+      </ModalForm>
     </div>
   );
 };
-export default CaregiverDetail;

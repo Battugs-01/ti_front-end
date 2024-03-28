@@ -36,7 +36,7 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
       break;
     case ElderlyStatus.ElderlyCareCenterReturned:
       text = "Цуцлагдсан";
-      colorClass = "bg-blue-50 text-blue-700";
+      colorClass = "bg-red-50 text-red-700";
       break;
     case ElderlyStatus.ElderlyDied:
       text = "Нас барсан";

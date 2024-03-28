@@ -8,12 +8,12 @@ type WorkerLayoutType = {
 const WorkerLayout: React.FC<WorkerLayoutType> = ({ children }) => {
   return (
     <Fragment>
-      <div className="bg-[#E7EDEE] font-inter bg-color-body min-h-screen">
-        <div>
+      <div className="bg-[#E7EDEE] font-inter bg-color-body min-h-screen relative">
+        <div className="z-0">
           <Menu />
         </div>
         <div>
-          <div className="px-6 pt-8 pb-12">{children}</div>
+          <div className="px-6 pt-8 pb-12 z-50">{children}</div>
         </div>
       </div>
     </Fragment>
