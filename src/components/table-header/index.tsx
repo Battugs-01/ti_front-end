@@ -3,11 +3,10 @@ import { Button, ButtonProps } from "antd"; // Import your component library
 import { BiSearch } from "react-icons/bi";
 import { CiGrid41 } from "react-icons/ci";
 import { FaListUl } from "react-icons/fa6";
-import refreshIcon from "assets/icons/Button.svg";
 import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
 import { RiFilter3Fill } from "react-icons/ri";
 import { CreateButton } from "..";
-
+import refreshIcon from "assets/government/icons/refresh.svg";
 interface TableHeaderProps {
   customHeaderTitle?: string;
   hideToggle?: boolean;
@@ -114,7 +113,14 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           }}
         />
         <div>
-          <img src={refreshIcon} alt="refresh" onClick={() => refresh?.()} />
+          <Button
+            size="large"
+            className={`flex items-center justify-center font-semibold`}
+            type="default"
+            icon={<img src={refreshIcon} alt="refresh" />}
+            onClick={() => refresh?.()}
+          ></Button>
+          {/* <img src={refreshIcon} alt="refresh" onClick={() => refresh?.()} /> */}
         </div>
         {toolbarItems}
         {!hideCreate ? (
