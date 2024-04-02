@@ -14,4 +14,4 @@ dev:
     - docker image prune -f
     - docker builder prune -f
   tags:
-    - deploy
+    - adb-deploy
