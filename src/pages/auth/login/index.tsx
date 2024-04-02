@@ -7,7 +7,7 @@ import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { LoginData } from "service/auth/type";
@@ -37,7 +37,7 @@ const Login: FC = () => {
   return (
     <div className="bg-white rounded-xl w-full px-16">
       <div className="align-left flex justify-start">
-        <img src="/images/logo1.png" alt="logo" width={300} className="mb-7" />
+        <img src="/burtgel/images/logo1.png" alt="logo" width={300} className="mb-7" />
       </div>
       <ProForm<LoginData>
         formRef={formRef}

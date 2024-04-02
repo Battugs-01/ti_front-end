@@ -51,7 +51,7 @@ export const IModalForm = ({
 
 
   return (
-    
+
     <ModalForm
       {...rest}
       onFinishFailed={(err) => {
@@ -100,27 +100,27 @@ export const IModalForm = ({
             (rest.submitter || rest.submitter === undefined) && (
               <div className="flex items-center justify-between w-full p-6 border-t border-solid border-b-0 border-l-0 border-r-0 border-gray-300">
                 <div className="w-full flex">{footer}</div>
-                  <div className="flex items-center gap-1">
-                    {cancelText && (
-                      <Button
-                        onClick={() =>
-                          rest.modalProps?.onCancel &&
-                          rest.modalProps?.onCancel(null as any)
-                        }
-                      >
-                        {cancelText}
-                      </Button>
-                    )}
-                    {okText && (
-                      <Button
-                        type="primary"
-                        onClick={()=>{ rest?.modalProps?.onOk && rest.modalProps?.onOk(null as any); onSubmit()}}
-                        loading={submit.loading}
-                      >
-                        {okText}
-                      </Button>
-                    )}
-                  </div>
+                <div className="flex items-center gap-1">
+                  {cancelText && (
+                    <Button
+                      onClick={() =>
+                        rest.modalProps?.onCancel &&
+                        rest.modalProps?.onCancel(null as any)
+                      }
+                    >
+                      {cancelText}
+                    </Button>
+                  )}
+                  {okText && (
+                    <Button
+                      type="primary"
+                      onClick={() => { rest?.modalProps?.onOk && rest.modalProps?.onOk(null as any); onSubmit() }}
+                      loading={submit.loading}
+                    >
+                      {okText}
+                    </Button>
+                  )}
+                </div>
               </div>
             )
           );
@@ -220,7 +220,7 @@ export const RemoveModal = ({
         return false;
       }}
     >
-      <img src="/icons/delete.png" width={48} height={48} className="mb-4" />
+      <img src="/burtgel/icons/delete.png" width={48} height={48} className="mb-4" />
       <div className=" text-lg font-semibold text-gray-900  mb-2">
         {display}
       </div>
