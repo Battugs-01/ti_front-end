@@ -7,10 +7,10 @@ dev:
   stage: dev
   script:
     - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
-    - docker build -t registry.fibo.cloud/adb/social_worker:$CI_COMMIT_SHORT_SHA .
-    - docker push registry.fibo.cloud/adb/social_worker:$CI_COMMIT_SHORT_SHA
-    - docker ps --quiet --filter="name=social_worker" | xargs --no-run-if-empty docker rm -f
-    - docker run -dt -p 3002:80 --restart always --name social_worker registry.fibo.cloud/adb/social_worker:$CI_COMMIT_SHORT_SHA
+    - docker build -t registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA .
+    - docker push registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA
+    - docker ps --quiet --filter="name=burtgel" | xargs --no-run-if-empty docker rm -f
+    - docker run -dt -p 3002:80 --restart always --name burtgel registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA
     - docker image prune -f
     - docker builder prune -f
   tags:
