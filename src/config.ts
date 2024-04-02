@@ -148,6 +148,17 @@ export const MaritalStatus = Object.freeze([
   },
 ]);
 
+export const isDisablity = Object.freeze([
+  {
+    label: "Тийм",
+    value: true,
+  },
+  {
+    label: "Үгүй",
+    value: false,
+  },
+]);
+
 export enum RoleType {
   agentlag = 1,
   aimag = 2,
