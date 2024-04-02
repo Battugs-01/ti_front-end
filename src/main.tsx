@@ -26,7 +26,7 @@ root.render(
     locale={enUSIntl}
   >
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/burtgel">
         <Routes />
       </BrowserRouter>
     </AuthProvider>
