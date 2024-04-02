@@ -17,6 +17,7 @@ const CustomerPage: React.FC = () => {
   const list = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
+  const elderlyCount = useRequest(async () => orphanElderly.elderly_counts());
   useEffect(() => {
     list.run({ ...page, status: caregiverFilterSum(tab) });
   }, [tab]);
@@ -31,11 +32,29 @@ const CustomerPage: React.FC = () => {
     <Fragment>
       <Radio.Group
         defaultValue={RequestType.all}
-        onChange={(e) => setTab(e.target.value)}
+        onChange={(e) => {
+          setPage(initPagination);
+          setTab(e.target.value);
+        }}
       >
         <Radio.Button value={RequestType.all} className="h-10">
           <div className="flex items-center gap-2 h-full">
-            <div>Бүгд</div> <IBadge title={list?.data?.total} color="gray" />
+            <div>Бүгд</div>{" "}
+            <IBadge
+              title={elderlyCount?.data?.reduce((a, b) => {
+                if (
+                  b.status === ElderlyStatus?.ElderlySave ||
+                  b.status === ElderlyStatus?.ElderlyWaiting ||
+                  b.status === ElderlyStatus?.ReturnSum ||
+                  b.status === ElderlyStatus?.ElderlyRequestSendToDistrict ||
+                  b.status === ElderlyStatus?.ElderlyTakingCare
+                ) {
+                  return a + b.count;
+                }
+                return a;
+              }, 0)}
+              color="gray"
+            />
           </div>
         </Radio.Button>
         <Radio.Button value={RequestType.saved} className="h-10">
@@ -43,9 +62,9 @@ const CustomerPage: React.FC = () => {
             <div>Хадгалагдсан</div>{" "}
             <IBadge
               title={
-                list?.data?.items?.filter(
-                  (val) => val?.status === ElderlyStatus?.ElderlySave
-                ).length
+                elderlyCount?.data?.find(
+                  (val) => val.status === ElderlyStatus.ElderlySave
+                )?.count
               }
               color="gray"
             />
@@ -56,9 +75,9 @@ const CustomerPage: React.FC = () => {
             <div>Хүлээлэгт оруулсан</div>{" "}
             <IBadge
               title={
-                list?.data?.items?.filter(
-                  (val) => val?.status === ElderlyStatus.WaitDistrict
-                ).length
+                elderlyCount?.data?.find(
+                  (val) => val.status === ElderlyStatus.ElderlyWaiting
+                )?.count
               }
               color="gray"
             />
@@ -69,9 +88,9 @@ const CustomerPage: React.FC = () => {
             <div>Буцаагдсан</div>{" "}
             <IBadge
               title={
-                list?.data?.items?.filter(
-                  (val) => val?.status === ElderlyStatus.ReturnSum
-                ).length
+                elderlyCount?.data?.find(
+                  (val) => val.status === ElderlyStatus.ReturnSum
+                )?.count
               }
               color="gray"
             />
@@ -82,10 +101,10 @@ const CustomerPage: React.FC = () => {
             <div>Хүсэлт илгээсэн</div>{" "}
             <IBadge
               title={
-                list?.data?.items?.filter(
+                elderlyCount?.data?.find(
                   (val) =>
-                    val?.status === ElderlyStatus.ElderlyRequestSendToDistrict
-                ).length
+                    val.status === ElderlyStatus.ElderlyRequestSendToDistrict
+                )?.count
               }
               color="gray"
             />
@@ -96,9 +115,9 @@ const CustomerPage: React.FC = () => {
             <div>Үйлчлүүлж байгаа</div>{" "}
             <IBadge
               title={
-                list?.data?.items?.filter(
-                  (val) => val?.status === ElderlyStatus.ElderlyTakingCare
-                ).length
+                elderlyCount?.data?.find(
+                  (val) => val.status === ElderlyStatus.ElderlyTakingCare
+                )?.count
               }
               color="gray"
             />

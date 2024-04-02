@@ -29,10 +29,6 @@ type FormType = {
 };
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
-  const [isDisability, setDisability] = useState<boolean>(
-    data?.is_disability || false
-  );
-
   const city = useRequest(address.city, {
     manual: true,
   });
@@ -222,34 +218,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
           />
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <ProFormSwitch
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            name="is_disability"
-            label="Хөгжлийн бэрхшээлтэй эсэх"
-            initialValue={data?.is_disability}
-            fieldProps={{
-              onChange: (checked) => {
-                setDisability(checked);
-              },
-            }}
-          />
-        </Col>
-      </Row>
-      {isDisability && (
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <ProFormTextArea
-              name="disability_desc"
-              placeholder={"Тийм бол онош, ХЧА-ын хувь"}
-              initialValue={data?.disability_desc}
-              rules={FORM_ITEM_RULE()}
-            />
-          </Col>
-        </Row>
-      )}
+
       <div
         className="pt-5 text-lg font-medium"
         style={{ borderTop: "1px solid #EAECF0" }}

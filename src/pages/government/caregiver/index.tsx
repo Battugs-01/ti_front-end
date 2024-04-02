@@ -11,6 +11,8 @@ import { exportFromTable } from "utils/export";
 import { initFilter } from "utils/index";
 import List from "./list";
 import { caregiverFilterDistrict } from "utils/caregiver-filter";
+import { ElderlyStatus } from "service/social-worker/customer/type";
+import Badge from "components/badge";
 
 const RequestPage: React.FC = () => {
   const [tab, setTab] = useState<String>(CaregiverType.all);
@@ -18,6 +20,7 @@ const RequestPage: React.FC = () => {
   const elderlyList = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
+  const elderlyCount = useRequest(async () => orphanElderly.elderly_counts());
   useEffect(() => {
     elderlyList.run({ ...filter, status: caregiverFilterDistrict(tab) });
   }, [filter, tab]);
@@ -25,24 +28,45 @@ const RequestPage: React.FC = () => {
     {
       key: CaregiverType.all,
       label: "Бүгд",
-      // title: "20",
+      title: elderlyCount?.data?.reduce((a, b) => {
+        if (
+          b.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter ||
+          b.status === ElderlyStatus.ElderlyTakingCare ||
+          b.status === ElderlyStatus.ElderlyWaiting ||
+          b.status === ElderlyStatus.ElderlyCareCenterReturned
+        ) {
+          return a + b.count;
+        }
+        return a;
+      }, 0),
     },
     {
       key: CaregiverType.distribute,
       label: "Хуваарилсан",
-      // title: "6",
+      title: elderlyCount?.data?.find(
+        (val) => val.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter
+      )?.count,
     },
     {
       key: CaregiverType.takingCare,
       label: "Үйлчлүүлж байгаа",
+      title: elderlyCount?.data?.find(
+        (val) => val.status === ElderlyStatus.ElderlyTakingCare
+      )?.count,
     },
     {
       key: CaregiverType.putOnHold,
       label: "Хүлээлэгт орсон",
+      title: elderlyCount?.data?.find(
+        (val) => val.status === ElderlyStatus.ElderlyWaiting
+      )?.count,
     },
     {
       key: CaregiverType.canceled,
       label: "Цуцлагдсан",
+      title: elderlyCount?.data?.find(
+        (val) => val.status === ElderlyStatus.ElderlyCareCenterReturned
+      )?.count,
     },
   ];
 
@@ -67,14 +91,17 @@ const RequestPage: React.FC = () => {
         <div className="text-lg font-semibold">Үйлчлүүлэгчид</div>
         <Tabs
           defaultActiveKey={CaregiverType.all}
-          onChange={(e) => setTab(e)}
+          onChange={(e) => {
+            setFilter(initFilter);
+            setTab(e);
+          }}
           items={items?.map((el) => {
             return {
               key: el?.key,
               label: (
                 <div className="flex items-center gap-2">
                   {el?.label}
-                  {/* {el.title && <Badge title={el.title} color="gray" />} */}
+                  {el.title && <Badge title={el.title} color="gray" />}
                 </div>
               ),
             };

@@ -4,6 +4,8 @@ import { ListProps } from "service/gov-requests";
 import RightContent from "../right-content";
 import CareGiverBadge from "components/badge/caregiver";
 import moment from "moment";
+import { CareCenter } from "service/social-worker/customer/type";
+import file from "service/file";
 
 const color = "#144E5A";
 
@@ -21,7 +23,7 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
             size={36}
             style={{ background: color }}
             shape="circle"
-            src={`http://103.41.112.73:9000/${data?.elderly?.profile?.physical_path}`}
+            src={file.fileToUrl(data?.elderly?.profile?.physical_path || "")}
           />
           <div className="font-bold uppercase">{data?.elderly?.first_name}</div>
           <div>{data?.elderly?.last_name}</div>
@@ -36,6 +38,7 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
             date={moment(data?.created_at).format("l")}
             state={data?.status || 0}
             id={data?.elderly_id}
+            careCenter={data?.care_center as CareCenter}
           />
         </div>
       </div>

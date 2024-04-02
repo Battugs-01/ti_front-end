@@ -1,3 +1,5 @@
+import { DisabilityTypeInterface, Logo } from "service/base/type";
+
 export interface DataType {
   items: ListElderly[];
   total: number;
@@ -40,6 +42,47 @@ export interface ListElderly {
   khoroo_id: number;
   ordinances: null;
   welfare_documents: null;
+  care_center_id: number;
+  care_center: CareCenter;
+}
+export interface CareCenter {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  organization_name: string;
+  organization_code: string;
+  logo_id: number;
+  logo: Logo;
+  is_active: boolean;
+  description: string;
+  contact: Contact;
+  email: string;
+  payment: Payment;
+  created_user_id: number;
+  is_accreditation: boolean;
+  status: number;
+  approved_user_id: number;
+  donations: Donations;
+  document: null;
+  time_schedules: null;
+  accreditations: null;
+}
+export interface Payment {
+  bank_name: string;
+  account_number: string;
+  receiver_name: string;
+}
+export interface Contact {
+  first_name: string;
+  last_name: string;
+  position: string;
+  phone: string;
+}
+
+export interface Donations {
+  description: string;
+  longitude: string;
+  latitude: string;
 }
 
 export interface CreatedUser {
@@ -113,6 +156,8 @@ export interface ElderlyInterface {
   definition_governor: DefinitionGovernor[];
   created_user_id: number;
   profile: File;
+  disability_types: DisabilityTypeInterface[];
+  disability_percent: number;
 }
 
 export interface Address {

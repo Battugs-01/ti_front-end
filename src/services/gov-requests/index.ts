@@ -1,4 +1,4 @@
-import { ListElderly } from "service/social-worker/customer/type";
+import { CareCenter, ListElderly } from "service/social-worker/customer/type";
 
 export enum RequestType {
   decide = "decide",
@@ -45,6 +45,7 @@ export type RightContentType = {
   time?: string;
   data?: ListElderly;
   updatedDate?: any;
+  careCenter?: CareCenter;
 };
 
 export interface CardData {
@@ -66,4 +67,9 @@ export enum FilterDocumentline {
 export interface FilterDocumentButton {
   value: FilterDocumentline;
   label: string;
+}
+
+export interface tabCounts {
+  status: number;
+  count: number;
 }

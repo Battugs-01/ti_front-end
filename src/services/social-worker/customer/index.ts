@@ -1,5 +1,7 @@
 import http from "service/index";
 import { DataType, ElderlyInterface } from "./type";
+import { DisabilityTypeInterface } from "service/base/type";
+import { tabCounts } from "service/gov-requests";
 
 namespace orphanElderly {
   export const create = (body: any) =>
@@ -29,6 +31,17 @@ namespace orphanElderly {
     http.put(`socialworker/elderly/toCareCenter/${id}`, {
       hasAuth: true,
       body,
+    });
+  export const disability_type = () =>
+    http.get<DisabilityTypeInterface[]>(
+      `socialworker/public/disability_types`,
+      {
+        hasAuth: true,
+      }
+    );
+  export const elderly_counts = () =>
+    http.get<tabCounts[]>(`socialworker/elderly/counts`, {
+      hasAuth: true,
     });
 }
 

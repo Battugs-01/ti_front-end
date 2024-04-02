@@ -11,12 +11,15 @@ import {
 } from "service/social-worker/customer/type";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
+import { Avatar } from "antd";
+import file from "service/file";
 
 const RightContent: React.FC<RightContentType> = ({
   state,
   date,
   id,
   updatedDate,
+  careCenter,
   refreshList,
 }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
@@ -184,9 +187,18 @@ const RightContent: React.FC<RightContentType> = ({
       return (
         <Fragment>
           <div className="flex items-center gap-8 text-sm text-[#475467]">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
-              <div>Хүлээж авсан огноо:</div>
-              <div className="font-bold">{updatedDate}</div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 text-sm text-[#475467]">
+                <Avatar
+                  size={18}
+                  src={file.fileToUrl(careCenter?.logo?.physical_path || "")}
+                />
+                <div className="font-bold">{careCenter?.organization_name}</div>
+              </div>
+              <div className="flex items-center gap-1 text-sm text-[#475467]">
+                <div>Хүлээж авсан огноо:</div>
+                <div className="font-bold">{updatedDate}</div>
+              </div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"

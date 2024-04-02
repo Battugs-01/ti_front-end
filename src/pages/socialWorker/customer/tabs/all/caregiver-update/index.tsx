@@ -623,7 +623,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             return true;
           }}
         >
-          <HealthForm data={data?.laboratory_tests || []} />
+          <HealthForm data={data as ElderlyInterface} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="request"

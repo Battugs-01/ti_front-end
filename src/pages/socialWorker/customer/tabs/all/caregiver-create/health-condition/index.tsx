@@ -1,8 +1,15 @@
 import { Alert, Col, Row } from "antd";
 import { UploadButton } from "components/index";
 import ExclamaionMarkIcon from "assets/government/icons/exclamation-mark.svg";
-import { ProFormDigit, ProFormRadio, ProFormSelect } from "@ant-design/pro-form";
+import {
+  ProFormDigit,
+  ProFormRadio,
+  ProFormSelect,
+} from "@ant-design/pro-form";
 import { disabilityType, FORM_ITEM_RULE, isDisablity } from "config";
+import { useRequest } from "ahooks";
+import orphanElderly from "service/social-worker/customer";
+import { useState } from "react";
 
 const uploadDocument = [
   [
@@ -59,26 +66,44 @@ const uploadDocument = [
 ];
 
 export const HealthForm: React.FC = () => {
+  const [isDisability, setDisability] = useState<boolean>(false);
+  const disabilityList = useRequest(orphanElderly.disability_type, {
+    manual: true,
+  });
   return (
-    <div className="px-8">
-     <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <ProFormRadio.Group
-                name="is_disability"
-                radioType="button"
-                fieldProps={{
-                  size: "large",
-                }}
-                label={"Хөгжлийн бэрхшээлтэй эсэх"}
-                rules={FORM_ITEM_RULE()}
-                options={isDisablity.map((el) => ({ ...el }))} 
-              />
-            </Col>
+    <div className="px-8 custom-multi-selector">
+      <Row gutter={[16, 16]}>
+        <Col span={6}>
+          <ProFormRadio.Group
+            name="is_disability"
+            radioType="button"
+            fieldProps={{
+              onChange: (e) => {
+                setDisability(e.target.value);
+              },
+              size: "large",
+            }}
+            label={"Хөгжлийн бэрхшээлтэй эсэх"}
+            rules={FORM_ITEM_RULE()}
+            options={isDisablity.map((el) => ({ ...el }))}
+          />
+        </Col>
+        {isDisability && (
+          <>
             <Col span={11}>
               <ProFormSelect
                 name="disability_type_ids"
                 fieldProps={{
                   mode: "multiple",
+                }}
+                request={async () => {
+                  const data = await disabilityList.runAsync();
+                  return data?.map((item: any) => {
+                    return {
+                      label: item.name,
+                      value: item.id,
+                    };
+                  });
                 }}
                 placeholder="Төрөл"
                 label={"Хөгжлийн бэрхшээлийн төрөл"}
@@ -97,7 +122,9 @@ export const HealthForm: React.FC = () => {
                 rules={FORM_ITEM_RULE()}
               />
             </Col>
-          </Row> 
+          </>
+        )}
+      </Row>
       <Alert
         className="bg-[#E7EDEE] text-slate-700 mb-4"
         style={{ border: "1px solid #D0D5DD" }}

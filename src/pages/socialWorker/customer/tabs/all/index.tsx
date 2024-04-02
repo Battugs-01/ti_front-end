@@ -53,7 +53,7 @@ export const All: React.FC<AllProps> = ({
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
-            customHeaderTitle={`Нийт (${totalItems || 0})`}
+            customHeaderTitle={`Үйлчлүүлэгчдийн жагсаалт`}
             setCreate={() => setOpenModal(true)}
             toolbarItems={
               <div className="flex">

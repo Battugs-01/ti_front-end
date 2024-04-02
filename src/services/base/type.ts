@@ -1,3 +1,4 @@
+import { Disability } from "./../../config";
 export interface Address {
   id: number;
   created_at: Date;
@@ -5,4 +6,25 @@ export interface Address {
   code: string;
   name: string;
   is_active: boolean;
+}
+
+export interface DisabilityTypeInterface {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  is_active: boolean;
+  name: string;
+  code: string;
+  description: string;
+}
+
+export interface Logo {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  file_name: string;
+  original_name: string;
+  physical_path: string;
+  extention: string;
+  file_size: number;
 }

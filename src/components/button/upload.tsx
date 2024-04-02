@@ -83,6 +83,7 @@ export const UploadButton = ({
         {...rest}
         title={title}
         label={label}
+        extra="PNG, JPG, PDF (Хэмжээ :800*400px)"
         // max={1}
         width={400}
         fieldProps={{
