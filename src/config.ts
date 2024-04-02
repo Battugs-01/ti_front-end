@@ -159,6 +159,22 @@ export const isDisablity = Object.freeze([
   },
 ]);
 
+
+export enum Disability{
+  A21 = 0,
+  C36 = 1,
+}
+export const disabilityType = Object.freeze([
+  {
+    label: "A21",
+    value: Disability.A21,
+  },
+  {
+    label: "C36",
+    value: Disability.C36,
+  },
+]);
+
 export enum RoleType {
   agentlag = 1,
   aimag = 2,

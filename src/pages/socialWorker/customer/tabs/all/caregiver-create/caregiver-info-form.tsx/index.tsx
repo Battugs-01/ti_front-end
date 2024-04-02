@@ -207,7 +207,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
           />
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
+      {/* <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormSwitch
             name="is_disability"
@@ -230,7 +230,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             />
           </Col>
         </Row>
-      )}
+      )} */}
       <div
         className="pt-5 text-lg font-medium"
         style={{ borderTop: "1px solid #EAECF0" }}

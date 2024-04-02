@@ -2,7 +2,7 @@ import { Alert, Col, Row } from "antd";
 import { UploadButton } from "components/index";
 import ExclamaionMarkIcon from "assets/government/icons/exclamation-mark.svg";
 import { ProFormDigit, ProFormRadio, ProFormSelect } from "@ant-design/pro-form";
-import { FORM_ITEM_RULE, isDisablity } from "config";
+import { disabilityType, FORM_ITEM_RULE, isDisablity } from "config";
 
 const uploadDocument = [
   [
@@ -61,7 +61,7 @@ const uploadDocument = [
 export const HealthForm: React.FC = () => {
   return (
     <div className="px-8">
-    {/* <Row gutter={[16, 16]}>
+     <Row gutter={[16, 16]}>
             <Col span={6}>
               <ProFormRadio.Group
                 name="is_disability"
@@ -76,18 +76,19 @@ export const HealthForm: React.FC = () => {
             </Col>
             <Col span={11}>
               <ProFormSelect
-                name="family_count"
+                name="disability_type_ids"
                 fieldProps={{
                   mode: "multiple",
                 }}
                 placeholder="Төрөл"
                 label={"Хөгжлийн бэрхшээлийн төрөл"}
                 rules={FORM_ITEM_RULE()}
+                options={disabilityType?.map((el) => ({ ...el }))}
               />
             </Col>
             <Col span={7}>
               <ProFormDigit
-                name="children_count"
+                name="disability_percent"
                 placeholder="Жишээ нь: 10%"
                 fieldProps={{
                   addonAfter: "%",
@@ -96,7 +97,7 @@ export const HealthForm: React.FC = () => {
                 rules={FORM_ITEM_RULE()}
               />
             </Col>
-          </Row> */}
+          </Row> 
       <Alert
         className="bg-[#E7EDEE] text-slate-700 mb-4"
         style={{ border: "1px solid #D0D5DD" }}
