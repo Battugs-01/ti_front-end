@@ -6,6 +6,7 @@ import moment from "moment";
 import { CustomButton } from "../components/button";
 import EyeIcon from "assets/government/icons/eye.svg";
 import { Detail } from "./detail";
+import file from "service/file";
 
 const color = "#144E5A";
 
@@ -27,7 +28,7 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
             size={36}
             style={{ background: color }}
             shape="circle"
-            src={`http://103.41.112.73:9000/${data?.elderly?.profile?.physical_path}`}
+            src={file.fileToUrl(data?.elderly?.profile?.physical_path || "")}
           />
           <div className="font-bold uppercase">{data?.elderly?.first_name}</div>
           <div>{data?.elderly?.last_name}</div>
@@ -38,10 +39,14 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
         <div>
           <div className="w-full flex items-center gap-8">
             <div className="flex items-center gap-2 text-sm text-[#475467]">
+              <Avatar
+                src={file.fileToUrl(
+                  data?.care_center?.logo?.physical_path || ""
+                )}
+                size={18}
+              />
               <div className="font-bold">
-                {`${data?.created_user?.last_name.substring(0, 1)}.${
-                  data?.created_user?.first_name
-                }`}
+                {data?.care_center?.organization_name}
               </div>
               <Badge status="default" />
               <div>Огноо:</div>

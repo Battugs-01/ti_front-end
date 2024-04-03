@@ -26,6 +26,7 @@ import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
 import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
 import { SendForm } from "./request-send/index.js";
+import CareGiverBadge from "components/badge/caregiver.js";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -357,7 +358,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
               width={1064}
               title={
                 <div className="p-6">
-                  <div className="font-semibold">Үйлчлүүлэгч засах</div>
+                  <div className="font-semibold flex items-center gap-3">
+                    <div>Үйлчлүүлэгч засах ({data?.rd})</div>
+                    <CareGiverBadge status={status} />
+                  </div>
                 </div>
               }
               footer={

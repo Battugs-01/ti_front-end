@@ -26,7 +26,7 @@ const CustomerPage: React.FC = () => {
     list?.run({ current: page, pageSize, status: caregiverFilterSum(tab) });
   };
   const refreshList = () => {
-    list?.run({ ...page });
+    list?.run({ ...page, status: caregiverFilterSum(tab) });
   };
   return (
     <Fragment>

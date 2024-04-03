@@ -46,6 +46,7 @@ export type RightContentType = {
   data?: ListElderly;
   updatedDate?: any;
   careCenter?: CareCenter;
+  rd?: string;
 };
 
 export interface CardData {

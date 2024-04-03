@@ -21,6 +21,7 @@ const RightContent: React.FC<RightContentType> = ({
   updatedDate,
   careCenter,
   refreshList,
+  rd,
 }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
@@ -83,6 +84,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>
@@ -108,6 +110,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>
@@ -133,6 +136,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>
@@ -178,6 +182,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>
@@ -213,6 +218,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>
@@ -239,6 +245,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              rd={rd}
             />
           )}
         </Fragment>

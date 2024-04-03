@@ -72,12 +72,12 @@ const RequestPage: React.FC = () => {
 
   const setPagination = (pageNumber: number, pageSize: number) => {
     setFilter({ ...filter, current: pageNumber, pageSize });
-    elderlyList?.run({
-      ...filter,
-      current: pageNumber,
-      pageSize,
-      status: caregiverFilterDistrict(tab),
-    });
+    // elderlyList?.run({
+    //   ...filter,
+    //   current: pageNumber,
+    //   pageSize,
+    //   status: caregiverFilterDistrict(tab),
+    // });
   };
   const refreshList = () => {
     elderlyList?.run({

@@ -15,6 +15,7 @@ type DetailProps = {
   cancelDetail?: () => void;
   id?: number;
   status?: Number;
+  rd?: string;
 };
 
 export const Detail: React.FC<DetailProps> = ({
@@ -23,6 +24,7 @@ export const Detail: React.FC<DetailProps> = ({
   id,
   status,
   refreshList,
+  rd,
 }) => {
   // ? TODO
   const [edit, setEdit] = useState<ElderlyInterface>();
@@ -39,7 +41,7 @@ export const Detail: React.FC<DetailProps> = ({
         title={
           <div className="p-6">
             <div className="font-semibold flex items-center gap-3">
-              <div>Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл</div>
+              <div>Үйлчлүүлэгчийн дэлгэрэнгүй мэдээлэл ({rd})</div>
               <CareGiverBadge status={status} />
             </div>
           </div>

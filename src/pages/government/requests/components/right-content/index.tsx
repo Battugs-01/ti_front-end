@@ -14,6 +14,7 @@ import moment from "moment";
 import { Badge } from "antd";
 import { WaitDetail } from "../../wait-detail";
 import CheckIcon from "assets/government/icons/white-check.svg";
+import IBadge from "components/badge";
 
 const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
@@ -71,6 +72,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
                   data?.created_user?.first_name
                 }`}
               </div>
+              <IBadge color="gray" title={data?.created_user?.position} />
               <Badge status="default" />
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
@@ -184,6 +186,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
                   data?.created_user?.first_name
                 }`}
               </div>
+              <IBadge color="gray" title={data?.created_user?.position} />
               <Badge status="default" />
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
