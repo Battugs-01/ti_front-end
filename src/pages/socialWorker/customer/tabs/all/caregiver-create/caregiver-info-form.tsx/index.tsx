@@ -51,7 +51,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={[
               {
                 validator: (_, file) => {
-                  if (file.length === 0) return Promise.resolve();
+
+                  if (!file || file.length === 0) return Promise.resolve();
                   if (
                     file[0].type === "image/jpeg" ||
                     file[0].type === "image/png"
