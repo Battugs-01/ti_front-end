@@ -70,7 +70,6 @@ export const FilterForm = ({
       value: FilterDeadline.All,
       label: "Сонгох",
       onChange: (e) => {
-        console.log(e);
         setCustomDate(true);
       },
     },

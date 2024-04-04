@@ -7,12 +7,12 @@ import { UploadDraggerButton } from "components/index";
 
 export const Distribute: React.FC = () => {
   const orphanList = useRequest(() => orphanUser?.getList({}));
-  console.log(orphanList?.data, "data");
+  console.log(orphanList?.data, "hello data");
   return (
     <div>
       <ProFormRadio.Group name="radio">
         <div className="grid-cols-2 grid gap-5 mx-12 custom-ant-card-padding-border-remove">
-          {orphanList?.data?.items?.map((val, key) => {
+          {orphanList?.data?.map((val, key) => {
             return (
               <Card className="pt-4 px-4">
                 <ProFormRadio initialValue={val?.id}>
@@ -27,17 +27,13 @@ export const Distribute: React.FC = () => {
                       HU
                     </Avatar>
                     <div className="flex items-start flex-col gap-1 justify-start">
-                      <div className="font-bold text-base">
-                        {val?.organization_name}
-                      </div>
+                      <div className="font-bold text-base">{val?.name}</div>
                       <div className="flex items-center gap-1">
                         <img src={BedIcon} />
                         <div>Орны тоо:</div>
                         <div>
-                          <span className="font-bold">
-                            {val?.created_user_id}
-                          </span>
-                          / {val?.id}
+                          <span className="font-bold">{val?.reserved}</span>/{" "}
+                          {val?.capacity}
                         </div>
                       </div>
                     </div>

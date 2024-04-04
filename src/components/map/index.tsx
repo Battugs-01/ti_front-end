@@ -17,8 +17,6 @@ const LeafletMap: FC<Props> = ({
   position,
   onPositionChange,
 }) => {
-  console.log(markers);
-
   return (
     <MapContainer
       center={CENTER_MAP}

@@ -27,7 +27,6 @@ const Decide: React.FC<DecideType> = ({ data, run }) => {
             <InitTableHeader
               hideCreate
               refresh={() => {
-                console.log("jjjj");
                 run?.();
               }}
               customHeaderTitle="Шийдвэрлэх хүсэлтүүд"

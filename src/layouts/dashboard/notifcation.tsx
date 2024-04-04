@@ -12,9 +12,7 @@ const NotificationComponent = () => {
 
   const list = useRequest(governmentUser.getUsers, {
     manual: true,
-    onSuccess: (hello) => {
-      console.log(hello, "hello");
-    },
+    onSuccess: (hello) => {},
     onError: (err) =>
       notification.error({
         message: err.message,

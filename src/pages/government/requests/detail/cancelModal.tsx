@@ -99,7 +99,6 @@ export const CancelModal = ({
         },
       }}
       onFinish={async (values) => {
-        console.log("values", values);
         if (
           !!data &&
           (await cancelRequest.runAsync({ ...values, status: 9 }, data?.id))

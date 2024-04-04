@@ -6,7 +6,6 @@ const RightDetail: React.FC<any> = ({ data, items }) => {
   const color = "#146135";
   const avatar = "AA";
   const onChange = (key: String) => {
-    console.log(key);
   };
   return (
     <Card className="min-h-full overflow-y-visible">

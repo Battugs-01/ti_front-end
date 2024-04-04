@@ -61,7 +61,6 @@ export const Detail: React.FC<DetailProps> = ({
       cancelDetail?.();
     },
   });
-  console.log("return data", isReturn);
   const ordinancesFile = useRequest(file.upload, {
     manual: true,
     onError: () => {
