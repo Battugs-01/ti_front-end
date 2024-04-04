@@ -135,7 +135,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       <StepsForm
         formRef={formRef}
         onFinish={async (val) => {
-          console.log("start");
           const reqData: any = {};
           val.profile = await newFileUploads(val?.profile);
           val.documents.elderly_document_care_requet = await newFileUploads(
@@ -200,7 +199,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           val.request.definition_governor_file_ids = await newFileUploads(
             val?.request?.definition_governor_file_ids
           );
-          console.log(val?.documents, "this is val documents");
 
           val.laboratory_tests.health_check_sheet = await newFileUploads(
             val?.laboratory_tests?.health_check_sheet
@@ -232,21 +230,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           val.laboratory_tests.mental_health = await newFileUploads(
             val?.laboratory_tests?.mental_health
           );
-          console.log(val?.laboratory_tests, "this is lab tests");
-          console.log(
-            Object.values(val?.laboratory_tests),
-            "this is lab tests object"
-          );
-          console.log(
-            Object.keys(val?.laboratory_tests),
-            "this is lab tests keys"
-          );
-          console.log(labTests?.data, "this is lab tests data");
           const healthData = labFormatUpdate(
             val?.laboratory_tests,
             labTests?.data
           );
-          console.log("end");
           const elderlyData = await elderlyEdit.runAsync(
             {
               ...val,
@@ -410,9 +397,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           }
           onFinish={async (val: any) => {
             if (isSave) {
-              console.log(info?.profile, "this is info profile");
               info.profile = await newFileUploads(info?.profile);
-              console.log(info?.profile, "this is info profile after");
               val.documents.elderly_document_care_requet = await newFileUploads(
                 val?.documents?.elderly_document_care_requet
               );
@@ -470,7 +455,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                 await newFileUploads(
                   val?.documents?.elderly_document_is_divorce_inquiry
                 );
-              console.log(info?.address, "this is info address");
               await elderlyEdit.runAsync(
                 {
                   ...val,
@@ -505,10 +489,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             </div>
           }
           onFinish={async (val: any) => {
-            console.log(val, "this is val health");
-            console.log(info, "this is info health");
-            console.log(documents, "this is documents health");
-            console.log("isSave", isSave);
             if (isSave) {
               info.profile = await newFileUploads(info?.profile);
               documents.documents.elderly_document_care_requet =

@@ -112,7 +112,7 @@ export const UserForm: React.FC<OrphanFormType> = ({}) => {
       },
     },
   ];
-  columns?.map((val) => console.log(val.key));
+  columns?.map((val) => {});
 
   return (
     <div>

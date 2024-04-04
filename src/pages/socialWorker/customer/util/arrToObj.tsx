@@ -21,9 +21,6 @@ export const labFormat = (data: any, value: any, labTest: any) => {
     return;
   }
   let count = 0;
-  console.log(data, "data");
-  console.log(Object?.values(value), "value");
-  console.log(labTest, "labTest");
 
   const struct = Object?.values(value)?.reduce(
     (acc: any, el: any, key: number) => {
@@ -39,7 +36,6 @@ export const labFormat = (data: any, value: any, labTest: any) => {
     },
     []
   );
-  console.log(struct, "struct");
   // const arrId = data?.reduce((acc: any, obj: any) => {
   //   acc.push(obj.id);
   //   return acc;

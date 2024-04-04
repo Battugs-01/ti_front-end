@@ -28,11 +28,7 @@ export const ClauseForm: React.FC = () => {
       <SectionField
         label="Description"
         children={
-          <TextEditorForm
-            value={""}
-            language="mn"
-            setValue={() => console.log("Jj")}
-          />
+          <TextEditorForm value={""} language="mn" setValue={() => {}} />
         }
       />
     </div>

@@ -231,7 +231,6 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
             <Row gutter={[16, 16]} key={key}>
               {val?.map((el, index) => (
                 <Col span={12}>
-                  {console.log(el?.initialValue, "initialValue")}
                   <UploadButton
                     required={false}
                     initialValue={el?.initialValue}

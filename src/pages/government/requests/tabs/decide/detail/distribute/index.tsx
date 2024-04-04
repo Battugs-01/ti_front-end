@@ -7,7 +7,6 @@ import { UploadDraggerButton } from "components/index";
 
 export const Distribute: React.FC = () => {
   const orphanList = useRequest(() => orphanUser?.getList({}));
-  console.log(orphanList?.data, "hello data");
   return (
     <div>
       <ProFormRadio.Group name="radio">

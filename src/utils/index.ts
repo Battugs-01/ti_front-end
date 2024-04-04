@@ -340,7 +340,6 @@ export const getDeadlineByRangeDate = (fullDate?: string[]) => {
     dayjs(fullDate[0]).toDate(),
     "days"
   );
-  console.log(gapDays, "GAP DAYS");
 
   if (gapDays <= 1) return FilterDeadline.FullHours;
   if (gapDays <= 7) return FilterDeadline.Week;

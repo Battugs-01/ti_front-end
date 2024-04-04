@@ -4,7 +4,6 @@ import readXlsxFile from "read-excel-file";
 
 export async function excelToJson<T>(file: RcFile, schema: any) {
   const { rows, errors } = await readXlsxFile(file, { schema });
-  console.log(errors);
   try {
     if (errors.length > 0) {
       throw Error(

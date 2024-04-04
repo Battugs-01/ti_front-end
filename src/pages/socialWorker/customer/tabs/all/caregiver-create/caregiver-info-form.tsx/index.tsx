@@ -250,8 +250,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             //   };
             // })}
             onChange={(val) => {
-              console.log(val, "lll");
-
               form?.setFieldValue(["address", "district_id"], undefined);
               form?.setFieldValue(["address", "khoroo_id"], undefined);
               district.run(val);
@@ -278,7 +276,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
               khoroo.run(value);
             }}
             options={district.data?.map((item: any) => {
-              console.log(item, "this is item");
               return {
                 label: item?.name,
                 value: item?.id,

@@ -103,7 +103,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const healthData = await filesHealth.runAsync({
             files: Object.values(val.laboratory_tests || {}),
           });
-          console.log(healthData, "health");
           const requestData = await filesRequest.runAsync({
             files: Object.values(val.request || {}),
           });
@@ -290,7 +289,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             </div>
           }
           onFinish={async (values: any) => {
-            console.log(values, "values");
             if (isSave) {
               const profile = await uploadProfile.runAsync({
                 file: info?.profile?.[0]?.originFileObj,
