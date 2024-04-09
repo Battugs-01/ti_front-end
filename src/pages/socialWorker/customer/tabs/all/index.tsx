@@ -2,7 +2,6 @@ import { Card } from "antd";
 import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
 import InitTableHeader from "components/table-header";
-import moment from "moment";
 import { useState } from "react";
 import { ListElderly } from "service/social-worker/customer/type";
 import { exportFromTable } from "utils/export";
