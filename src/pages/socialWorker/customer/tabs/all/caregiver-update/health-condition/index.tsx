@@ -115,10 +115,7 @@ export const HealthForm: React.FC<HealthType> = ({ data }) => {
               <ProFormSelect
                 // initialValue=
                 initialValue={data?.disability_types?.map((el) => {
-                  return {
-                    label: el.name,
-                    value: el.id,
-                  };
+                  return el.id;
                 })}
                 // initialValue={}
                 // initialValue={data?.disability_type_ids}

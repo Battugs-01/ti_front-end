@@ -229,7 +229,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "city_id"]}
-            placeholder="Борлууд"
+            placeholder="Аймаг/Нийслэл сонгоно уу"
             label={"Аймаг/Нийслэл"}
             initialValue={data?.address?.city_id}
             // options={city.data?.map((item: any) => {
@@ -258,7 +258,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "district_id"]}
-            placeholder="Буянтогтох"
+            placeholder="Cум / Дүүрэг сонгоно уу"
             label={"Сум/Дүүрэг"}
             onChange={(value) => {
               khoroo.run(value);
@@ -277,7 +277,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
         <Col span={8}>
           <ProFormSelect
             name={["address", "khoroo_id"]}
-            placeholder="Даваацэрэн"
+            placeholder="Баг / Хороо сонгоно уу"
             label={"Баг/Хороо"}
             initialValue={data?.address?.khoroo_id}
             options={khoroo?.data?.map((item: any) => {

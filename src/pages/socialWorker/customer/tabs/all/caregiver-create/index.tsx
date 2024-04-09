@@ -109,10 +109,11 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           const docs = arrToObj(data, val?.documents);
           const request = arrToObj(requestData, val?.request);
           // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
+          const sortedLabTests = labTests?.data?.sort((a, b) => a.id - b.id);
           const health = labFormat(
             healthData,
             val?.laboratory_tests,
-            labTests?.data
+            sortedLabTests
           );
           const elderlyData = await elderly.runAsync({
             ...val,

@@ -57,7 +57,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       name: "Онош, ХЧА-ын хувь",
-      value: data?.disability_desc,
+      value: data?.disability_percent,
     },
   ];
   const addressInfo = [
