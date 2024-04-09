@@ -274,6 +274,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                 documents: docs,
                 birth_date: moment(info?.birth_date).toDate(),
               });
+              setTimeout(() => {
+                refreshList?.();
+              }, 500);
             } else {
               setDocuments(values);
             }
@@ -317,6 +320,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                 documents: docs,
                 birth_date: moment(info?.birth_date).toDate(),
               });
+              setTimeout(() => {
+                refreshList?.();
+              }, 500);
             }
 
             return true;
