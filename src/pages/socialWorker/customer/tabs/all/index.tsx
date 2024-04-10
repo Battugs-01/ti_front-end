@@ -2,7 +2,7 @@ import { Card } from "antd";
 import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
 import InitTableHeader from "components/table-header";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ListElderly } from "service/social-worker/customer/type";
 import { exportFromTable } from "utils/export";
 import List from "../../components/list";
@@ -10,6 +10,7 @@ import SearchIcon from "assets/government/icons/search.svg";
 import { CreateForm } from "./create";
 import { CareGiverCreate } from "./caregiver-create";
 import CustomPagination from "components/pagination";
+import { FormInstance } from "antd/lib";
 
 type AllProps = {
   data?: ListElderly[];
@@ -30,7 +31,7 @@ export const All: React.FC<AllProps> = ({
 }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
-
+  const formRef = useRef<FormInstance>(null);
   const cancelModal = () => {
     setOpenModal(false);
   };
@@ -89,6 +90,8 @@ export const All: React.FC<AllProps> = ({
 
         <IModalForm
           open={isOpenModal}
+          formRef={formRef}
+          onOpenChange={() => formRef.current?.resetFields()}
           width={724}
           title="Үйлчлүүлэгч нэмэх"
           modalProps={{ onCancel: cancelModal, onOk: nextModal }}

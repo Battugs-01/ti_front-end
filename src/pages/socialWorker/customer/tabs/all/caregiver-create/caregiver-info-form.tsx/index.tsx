@@ -103,7 +103,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         <Col span={8}>
           <ProFormText
             name="first_name"
-            placeholder="Нэрээ оруулна уу"
+            placeholder="Нэр оруулна уу"
             label={"Нэр"}
             rules={FORM_ITEM_RULE()}
           />
