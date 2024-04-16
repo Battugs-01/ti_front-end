@@ -11,7 +11,7 @@ type DetailProps = {
   status?: number;
 };
 
-export const Detail: React.FC<DetailProps> = ({
+const Detail: React.FC<DetailProps> = ({
   visibleDetail,
   cancelDetail,
   id,
@@ -47,3 +47,5 @@ export const Detail: React.FC<DetailProps> = ({
     </div>
   );
 };
+
+export default Detail;

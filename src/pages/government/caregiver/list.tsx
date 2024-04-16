@@ -5,7 +5,7 @@ import CareGiverBadge from "components/badge/caregiver";
 import moment from "moment";
 import { CustomButton } from "../components/button";
 import EyeIcon from "assets/government/icons/eye.svg";
-import { Detail } from "./detail";
+import Detail from "./detail";
 import file from "service/file";
 
 const color = "#144E5A";
