@@ -55,7 +55,7 @@ export const Documents: React.FC<DocumentsType> = ({ data }) => {
       </div>
       <IfCondition
         condition={tab === FilterDocumentline.contract}
-        whenTrue={<Contract data={data?.situational} />}
+        whenTrue={<Contract data={data} />}
       />
       <IfCondition
         condition={tab === FilterDocumentline.client_doc}

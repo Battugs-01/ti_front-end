@@ -7,14 +7,11 @@ import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import file from "service/file";
-import {
-  DefinitionGovernor,
-  Documents,
-} from "service/social-worker/customer/type";
-import { formatKB, formatMB } from "utils/index";
+import { ElderlyInterface } from "service/social-worker/customer/type";
+import { formatKB } from "utils/index";
 
 type DocumentsType = {
-  data?: DefinitionGovernor[];
+  data?: ElderlyInterface;
 };
 
 interface DocumentList {
@@ -30,15 +27,15 @@ export const Contract: React.FC<DocumentsType> = ({ data }) => {
   const documentList = [
     {
       name: "Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас",
-      size: data?.[0]?.file_size,
-      path: data?.[0]?.physical_path,
-      isHave: data?.length ?? 0 > 0,
+      size: data?.situational[0]?.file_size,
+      path: data?.situational[0]?.physical_path,
+      isHave: data?.situational?.length ?? 0 > 0,
     },
     {
       name: "Сум, хорооны Засаг даргын тодорхойлолт",
-      size: data?.[0]?.file_size,
-      path: data?.[0]?.physical_path,
-      isHave: data?.length ?? 0 > 0,
+      size: data?.definition_governor[0]?.file_size,
+      path: data?.definition_governor[0]?.physical_path,
+      isHave: data?.definition_governor?.length ?? 0 > 0,
     },
   ];
 

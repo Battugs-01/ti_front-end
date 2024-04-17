@@ -7,11 +7,8 @@ import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import file from "service/file";
-import {
-  DefinitionGovernor,
-  Documents,
-} from "service/social-worker/customer/type";
-import { formatKB, formatMB } from "utils/index";
+import { DefinitionGovernor } from "service/social-worker/customer/type";
+import { formatKB } from "utils/index";
 
 type DocumentsType = {
   situationalData?: DefinitionGovernor[];
