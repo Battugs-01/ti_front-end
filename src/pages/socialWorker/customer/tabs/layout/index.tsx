@@ -27,7 +27,7 @@ export const Layout: React.FC<LayoutProps> = ({
   setPagination,
   current,
   refreshList,
-  totalItems
+  totalItems,
 }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
@@ -74,10 +74,7 @@ export const Layout: React.FC<LayoutProps> = ({
         </div>
         <div className="w-full">
           {data?.map((card, key) => (
-            <List
-            data={card}
-              key={key}
-            />
+            <List data={card} key={key} />
           ))}
           <div
             className="flex justify-end mb-4 px-6"

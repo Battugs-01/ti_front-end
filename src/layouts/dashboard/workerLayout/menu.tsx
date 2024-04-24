@@ -29,7 +29,7 @@ const Menu: React.FC = () => {
     <div className="w-full bg-[#144E5A] text-white h-[72px]">
       <div className="px-6 h-full flex justify-between items-center">
         <div className="flex items-center gap-6 w-1/4">
-          <div className="flex items-center gap-2">
+          <div className="xl:flex items-center gap-2 hidden">
             <img src={Logo} alt="logo" />
             <div className="text-sm w-52">
               Хөдөлмөр, халамжийн үйлчилгээний ерөнхий газар

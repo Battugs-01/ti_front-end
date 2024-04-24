@@ -162,7 +162,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         submitter={{
           render: ({ step, onSubmit, onPre }) => {
             return (
-              <div className="flex justify-between items-center w-full">
+              <div className="flex justify-between items-center w-full flex-wrap xl:flex-nowrap">
                 <div>
                   {step !== 0 && (
                     <DefaultButton

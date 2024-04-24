@@ -144,8 +144,8 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
   ];
 
   return (
-    <div className="w-full flex gap-4 p-4 bg-[#F5F8F8] box-border">
-      <div className="w-[35%] box-border">
+    <div className="w-full flex gap-4 p-4 bg-[#F5F8F8] box-border xl:flex-row flex-col">
+      <div className="box-border xl:w-[35%] w-full flex flex-col">
         <LeftDetail
           url={data?.profile?.physical_path || ""}
           items={leftitems}
@@ -153,7 +153,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
           first_name={data?.first_name}
         />
       </div>
-      <div className="w-[65%]">
+      <div className="xl:w-[65%] w-full">
         <RightDetail items={rightDetail} />
       </div>
     </div>

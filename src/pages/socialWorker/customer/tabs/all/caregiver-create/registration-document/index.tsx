@@ -88,9 +88,9 @@ export const RegistrationForm: React.FC = () => {
         <div className="text-lg font-medium mb-4">Тэтгэврийн мэдээлэл</div>
         <div>
           {pensionDocument?.map((val, key) => (
-            <Row gutter={[16, 16]} key={key}>
+            <Row gutter={[24, 24]} key={key}>
               {val?.map((el, index) => (
-                <Col span={12}>
+                <Col sm={12} xs={21}>
                   <UploadButton
                     required={false}
                     name={["documents", el?.name]}
@@ -109,7 +109,7 @@ export const RegistrationForm: React.FC = () => {
           {uploadDocument?.map((val, key) => (
             <Row gutter={[16, 16]} key={key}>
               {val?.map((el, index) => (
-                <Col span={12}>
+                <Col sm={12} xs={21}>
                   <UploadButton
                     required={false}
                     name={["documents", el?.name]}
@@ -128,7 +128,7 @@ export const RegistrationForm: React.FC = () => {
           {uploadFile?.map((val, key) => (
             <Row gutter={[16, 16]} key={key}>
               {val?.map((el, index) => (
-                <Col span={12}>
+                <Col sm={12} xs={21}>
                   <UploadButton
                     // fileList={}
                     required={false}

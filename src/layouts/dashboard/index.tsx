@@ -72,7 +72,7 @@ const DashboardLayout: FC<Props> = ({}) => {
           layout="side"
           colorWeak={false}
           logo={
-            <div className="flex items-center gap-2">
+            <div className="items-center gap-2 flex">
               <img
                 src={Logo}
                 alt="logo"

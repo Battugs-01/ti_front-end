@@ -83,8 +83,8 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
           /> */}
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
-        <Col span={8}>
+      <Row gutter={[24, 24]} className="w-full">
+        <Col sm={8} xs={21}>
           <ProFormText
             name="family_name"
             placeholder="Ургийн овгоо оруулна уу"
@@ -92,7 +92,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormText
             name="last_name"
             placeholder="Овгоо оруулна уу"
@@ -100,7 +100,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormText
             name="first_name"
             placeholder="Нэр оруулна уу"
@@ -110,7 +110,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormText
             name="rd"
             placeholder="Регистрийн дугаараа оруулна уу"
@@ -130,7 +130,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             }
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormDatePicker
             name="birth_date"
             placeholder="Төрсөн огноо оруулна уу"
@@ -138,9 +138,9 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={24}>
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col sm={12} xs={21}>
               <ProFormDigit
                 name="age"
                 placeholder="Насаа оруулна уу"
@@ -148,7 +148,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 rules={FORM_ITEM_RULE()}
               />
             </Col>
-            <Col span={12}>
+            <Col sm={12} xs={21}>
               <ProFormSelect
                 name="gender"
                 placeholder="Хүйс сонгох"
@@ -161,7 +161,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormSelect
             name="education"
             placeholder="Сонгох"
@@ -170,7 +170,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormSelect
             name="marriage"
             placeholder="Сонгох"
@@ -179,9 +179,9 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={24}>
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col sm={12} xs={21}>
               <ProFormDigit
                 name="family_count"
                 placeholder="Ам бүлийн тоо"
@@ -189,7 +189,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 rules={FORM_ITEM_RULE()}
               />
             </Col>
-            <Col span={12}>
+            <Col sm={12} xs={21}>
               <ProFormDigit
                 name="children_count"
                 placeholder="Хүүхдийн тоо"
@@ -201,7 +201,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        <Col span={24}>
+        <Col sm={24} xs={21}>
           <ProFormTextArea
             name="reason"
             placeholder={"Асруулах болсон шалтгааныг дэлгэрэнгүй бичнэ үү."}
@@ -241,7 +241,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         Үндсэн захиргаа хаяг
       </div>
       <Row gutter={[16, 16]}>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormSelect
             name={["address", "city_id"]}
             placeholder="Сонгох"
@@ -269,7 +269,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormSelect
             name={["address", "district_id"]}
             placeholder="Сонгох"
@@ -287,7 +287,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormSelect
             name={["address", "khoroo_id"]}
             placeholder="Сонгох"
@@ -303,7 +303,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        <Col span={16}>
+        <Col sm={16} xs={21}>
           <ProFormText
             name={["address", "street"]}
             placeholder="Гудамж / Хороолол оруулна уу"
@@ -311,7 +311,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={21}>
           <ProFormText
             name={["address", "description"]}
             placeholder="Хашаа / Хаалгын дугаар оруулна уу"

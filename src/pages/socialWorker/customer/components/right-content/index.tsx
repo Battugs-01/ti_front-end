@@ -39,8 +39,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ElderlySave: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Мэдээлэл шинэчилсэн:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
@@ -67,8 +67,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ElderlyRequestSendToDistrict: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
@@ -93,9 +93,9 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.WaitDistrict: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
-              <div>Илгээсэн огноо:</div>
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div className="mt-4">Илгээсэн огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
             <CustomButton
@@ -119,8 +119,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ElderlyRequestSendSendToCareCenter: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
@@ -144,8 +144,8 @@ const RightContent: React.FC<RightContentType> = ({
     }
     case 5: {
       return (
-        <div className="w-full flex items-center gap-8">
-          <div className="flex items-center gap-2 text-sm text-[#475467]">
+        <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+          <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
             <div className="flex items-center gap-1">
               <div>Шалтгаан:</div>
               <div className="font-bold">
@@ -164,8 +164,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ElderlyWaiting: {
       return (
         <Fragment>
-          <div className="flex items-center gap-8 text-sm text-[#475467]">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="flex items-center gap-8 text-sm text-[#475467] flex-wrap   xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Хүлээлэгт оруулсан огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
@@ -191,8 +191,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ElderlyTakingCare: {
       return (
         <Fragment>
-          <div className="flex items-center gap-8 text-sm text-[#475467]">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-8 text-sm text-[#475467] flex-wrap   xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div className="flex items-center gap-1 text-sm text-[#475467]">
                 <Avatar
                   size={18}
@@ -200,9 +200,9 @@ const RightContent: React.FC<RightContentType> = ({
                 />
                 <div className="font-bold">{careCenter?.organization_name}</div>
               </div>
-              <div className="flex items-center gap-1 text-sm text-[#475467]">
-                <div>Хүлээж авсан огноо:</div>
-                <div className="font-bold">{updatedDate}</div>
+              <div className="flex items-center gap-1 text-sm text-[#475467] ">
+                <div className="">Хүлээж авсан огноо:</div>
+                <div className="font-bold ">{updatedDate}</div>
               </div>
             </div>
             <CustomButton
@@ -227,8 +227,8 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ReturnSum: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
@@ -254,8 +254,8 @@ const RightContent: React.FC<RightContentType> = ({
     default: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap   xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Мэдээлэл шинэчилсэн:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>

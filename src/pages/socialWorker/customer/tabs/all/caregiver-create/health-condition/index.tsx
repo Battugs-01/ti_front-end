@@ -73,7 +73,7 @@ export const HealthForm: React.FC = () => {
   return (
     <div className="px-8 custom-multi-selector">
       <Row gutter={[16, 16]}>
-        <Col span={6}>
+        <Col sm={6} xs={21}>
           <ProFormRadio.Group
             name="is_disability"
             radioType="button"
@@ -90,7 +90,7 @@ export const HealthForm: React.FC = () => {
         </Col>
         {isDisability && (
           <>
-            <Col span={11}>
+            <Col sm={11} xs={21}>
               <ProFormSelect
                 name="disability_type_ids"
                 fieldProps={{
@@ -111,7 +111,7 @@ export const HealthForm: React.FC = () => {
                 options={disabilityType?.map((el) => ({ ...el }))}
               />
             </Col>
-            <Col span={7}>
+            <Col sm={7} xs={21}>
               <ProFormDigit
                 name="disability_percent"
                 placeholder="Жишээ нь: 10%"
@@ -139,7 +139,7 @@ export const HealthForm: React.FC = () => {
       {uploadDocument?.map((val, key) => (
         <Row gutter={[16, 16]} key={key}>
           {val?.map((el, index) => (
-            <Col span={12} key={index}>
+            <Col sm={12} key={index} xs={21}>
               <UploadButton
                 name={["laboratory_tests", el?.name]}
                 required={false}
