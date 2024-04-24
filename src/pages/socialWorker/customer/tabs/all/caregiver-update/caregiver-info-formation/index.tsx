@@ -286,7 +286,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
                 value: item?.id,
               };
             })}
-            rules={FORM_ITEM_RULE()}
+            // rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
