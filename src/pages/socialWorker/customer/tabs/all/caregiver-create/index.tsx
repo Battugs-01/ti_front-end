@@ -39,7 +39,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const [info, setInfo] = useState<any>({});
   const [documents, setDocuments] = useState<any>({});
   const [isSave, setSave] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  // const [submitting, setSubmitting] = useState(false);
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
     onSuccess() {
@@ -57,7 +57,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       });
       setSave(false);
       cancelStepModal?.();
-      setSubmitting(false);
+      // setSubmitting(false);
     },
     onError: (err) => {
       notification.error({
@@ -175,24 +175,22 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  {step !== 0 && (
+                  {/* {step !== 0 && (
                     <DefaultButton
-                      loading={submitting}
+                      loading={elderly.loading}
                       onClick={() => {
                         onSubmit && onSubmit();
-                        setSubmitting(true);
                         setSave(true);
                       }}
                       icon={<img src={SaveIcon} />}
                       title="Түр хадгалах"
                     />
-                  )}
+                  )} */}
                   {step === 3 ? (
                     <CustomButton
-                      loading={submitting}
+                      loading={elderly.loading}
                       onClick={() => {
                         onSubmit && onSubmit();
-                        setSubmitting(true);
                         setSendRequest(true);
                       }}
                       extraIcon={<img src={ArrowRight} />}
@@ -330,6 +328,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             }
 
             return true;
+          }}
+          initialValues={{
+            is_disability: false
           }}
         >
           <HealthForm />
