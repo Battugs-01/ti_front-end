@@ -200,19 +200,6 @@ export const UpdateForm: React.FC<OrphanFormType> = ({ form, data }) => {
             ]}
           />
         </Col>
-        <Col span={12}>
-          <ProFormText.Password
-            placeholder="*************"
-            name="password"
-            label="Нууц үг"
-            rules={[
-              {
-                message: "Нууц үгээ оруулна уу!",
-                required: true,
-              },
-            ]}
-          />
-        </Col>
       </Row>
     </div>
   );
