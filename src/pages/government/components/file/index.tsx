@@ -15,7 +15,7 @@ export const File: React.FC<FileType> = ({ file_name, size, path }) => {
       {path ? (
         <Link
           target="blank"
-          to={`http://103.41.112.73:9000/${path}`}
+          to={`https://adb-view.qpartners.tech/${path}`}
           className="flex bg-[#F5F8F8] px-4 py-2 rounded-lg gap-3 text-[#344054]"
         >
           <img src={FileIcon} alt="file" />

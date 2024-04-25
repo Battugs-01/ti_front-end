@@ -20,7 +20,7 @@ export const SendForm: React.FC<SendFormType> = ({ data }) => {
               id: `${val?.id}`,
               name: val?.original_name,
               status: "done",
-              url: `http://103.41.112.73:9000/${val?.physical_path}`,
+              url: `https://adb-view.qpartners.tech/${val?.physical_path}`,
               size: val?.file_size,
             }))}
           />
@@ -35,7 +35,7 @@ export const SendForm: React.FC<SendFormType> = ({ data }) => {
               id: `${val?.id}`,
               name: val?.original_name,
               status: "done",
-              url: `http://103.41.112.73:9000/${val?.physical_path}`,
+              url: `https://adb-view.qpartners.tech/${val?.physical_path}`,
               size: val?.file_size,
             }))}
           />

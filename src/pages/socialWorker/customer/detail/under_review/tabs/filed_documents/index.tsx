@@ -91,7 +91,7 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
                 <img src={EyeIcon} alt="see" />
               </div>
               <a
-                href={`http://103.41.112.73:9000/${value?.path}`}
+                href={`https://adb-view.qpartners.tech/${value?.path}`}
                 className="p-4 cursor-pointer text-gray-600"
                 target="blank"
                 download
@@ -130,7 +130,7 @@ export const FiledDocuments: React.FC<DocumentsType> = ({ data }) => {
           <div className="bg-[#F0F2F5] pt-5">
             <iframe
               style={{ border: "none" }}
-              src={`http://103.41.112.73:9000/${isFileOpen?.path}`}
+              src={`https://adb-view.qpartners.tech/${isFileOpen?.path}`}
               width={1050}
               height={850}
               className="mx-12"

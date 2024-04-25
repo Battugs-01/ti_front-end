@@ -21,7 +21,7 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
             size={36}
             style={{ background: color }}
             shape="circle"
-            src={`http://103.41.112.73:9000/${data?.elderly?.profile?.physical_path}`}
+            src={`https://adb-view.qpartners.tech/${data?.elderly?.profile?.physical_path}`}
           />
           <div className="font-bold uppercase">{data?.elderly?.first_name}</div>
           <div>{data?.elderly?.last_name}</div>

@@ -24,7 +24,7 @@ export const Distribute: React.FC = () => {
               label: (
                 <div className="flex items-center gap-3" key={key}>
                   <Avatar
-                    src={`http://103.41.112.73:9000/${val?.logo?.physical_path}`}
+                    src={`https://adb-view.qpartners.tech/${val?.logo?.physical_path}`}
                     shape="circle"
                     style={{ backgroundColor: "#146135" }}
                     size={40}
