@@ -36,8 +36,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     case ElderlyStatus.ElderlySave: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div>Мэдээлэл шинэчилсэн:</div>
               <div className="font-bold">
                 {moment(data?.created_at).format("l")}
@@ -65,8 +65,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     case ElderlyStatus.ElderlyRequestSendToDistrict: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-2 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-2 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div className="font-bold">
                 {`${data?.created_user?.last_name.substring(0, 1)}.${
                   data?.created_user?.first_name
@@ -85,7 +85,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
             </div>
             <CustomButton
               icon={<img src={CheckIcon} />}
-              title={<div>Шийдвэрлэх</div>}
+              title="Шийдвэрлэх"
               onClick={() => setIsDetail(true)}
             />
           </div>
@@ -104,8 +104,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     case ElderlyStatus.WaitDistrict: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
                 {moment(data?.created_at).format("l")}
@@ -131,8 +131,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     case ElderlyStatus.ElderlyRequestSendSendToCareCenter: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div>Огноо:</div>
               <div className="font-bold">
                 {moment(data?.created_at).format("l")}
@@ -157,8 +157,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     }
     case ElderlyStatus.ElderlyAllocated: {
       return (
-        <div className="w-full flex items-center gap-8">
-          <div className="flex items-center gap-2 text-sm text-[#475467]">
+        <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+          <div className="flex items-center gap-2 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
             <div className="flex items-center gap-1">
               <div>Шалтгаан:</div>
               <div className="font-bold">
@@ -179,8 +179,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     case ElderlyStatus.ReturnSum: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-2 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-2 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div className="font-bold">
                 {`${data?.created_user?.last_name.substring(0, 1)}.${
                   data?.created_user?.first_name
@@ -217,8 +217,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
     default: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-1 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div>Мэдээлэл шинэчилсэн:</div>
               <div className="font-bold">
                 {moment(data?.created_at).format("l")}

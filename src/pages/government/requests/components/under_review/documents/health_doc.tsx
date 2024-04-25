@@ -85,11 +85,18 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
           return (
             <div className="flex gap-2 items-center">
               <div className="p-4 cursor-pointer">
-                <AiOutlineEye
-                  size={20}
-                  className={" text-gray-700"}
-                  onClick={() => setFileOpen(record)}
-                />
+                <Link
+                  to={file.fileToUrl(record?.path as string)}
+                  className="p-4 cursor-pointer  text-gray-700"
+                  target="blank"
+                  download
+                >
+                  <AiOutlineEye
+                    size={20}
+                    className={" text-gray-700"}
+                    // onClick={() => setFileOpen(record)}
+                  />
+                </Link>
               </div>
               <Link
                 to={file.fileToUrl(record?.path as string)}

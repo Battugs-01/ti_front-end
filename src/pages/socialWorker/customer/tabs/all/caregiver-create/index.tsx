@@ -236,11 +236,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       >
         <StepsForm.StepForm
           name="giver-info"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Үйлчлүүлэгчийн хувийн мэдээлэл
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Үйлчлүүлэгчийн хувийн мэдээлэл
+          //   </div>
+          // }
+          title="Үйлчлүүлэгчийн хувийн мэдээлэл"
           onFinish={async (val) => {
             setInfo(val);
             return true;
@@ -250,11 +251,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Бүрдүүлэх бичиг баримт
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Бүрдүүлэх бичиг баримт
+          //   </div>
+          // }
+          title="Бүрдүүлэх бичиг баримт"
           onFinish={async (values: any) => {
             if (isSave) {
               const profile = await uploadProfile.runAsync({
@@ -287,11 +289,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="health"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Эрүүл мэндийн байдал
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Эрүүл мэндийн байдал
+          //   </div>
+          // }
+          title="Эрүүл мэндийн байдал"
           onFinish={async (values: any) => {
             if (isSave) {
               const profile = await uploadProfile.runAsync({
@@ -332,11 +335,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="request"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Хүсэлт илгээх
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Хүсэлт илгээх
+          //   </div>
+          // }
+          title="Хүсэлт илгээх"
           onFinish={async (values) => {
             return true;
           }}

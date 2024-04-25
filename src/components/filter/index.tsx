@@ -181,7 +181,7 @@ export const PopoverFilter = ({ children }: { children: any }) => {
         className={`flex items-center  gap-2 font-semibold text-sm `}
         icon={<RiFilter3Fill className="text-lg text-primary" />}
       >
-        Filters
+        Шүүлтүүр
       </Button>
     </Popover>
   );

@@ -159,8 +159,7 @@ export const isDisablity = Object.freeze([
   },
 ]);
 
-
-export enum Disability{
+export enum Disability {
   A21 = 0,
   C36 = 1,
 }
@@ -176,23 +175,18 @@ export const disabilityType = Object.freeze([
 ]);
 
 export enum RoleType {
-  agentlag = 1,
   aimag = 2,
   sum = 3,
 }
 
-export const selectRole = Object.freeze([
-  {
-    label: "Агентлаг",
-    value: RoleType.agentlag,
-  },
+export const roleSelect = Object.freeze([
   {
     label: "Аймаг / Хот",
     value: RoleType.aimag,
   },
   {
     label: "Сум / Дүүрэг",
-    value: RoleType.aimag,
+    value: RoleType.sum,
   },
 ]);
 

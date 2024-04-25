@@ -1,5 +1,5 @@
 import { useAuthContext } from "context/auth";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import WorkerLayout from "./workerLayout";
 import { PageHeader } from "components/page_header";
@@ -15,6 +15,8 @@ type Props = {
 const DashboardLayout: FC<Props> = ({}) => {
   const [{ authorized, user }] = useAuthContext();
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+
   if (!authorized) return <Navigate to={"/auth/login"} />;
   return (
     <div id="pro-layout">
@@ -45,6 +47,7 @@ const DashboardLayout: FC<Props> = ({}) => {
           menu={{
             defaultOpenAll: true,
             autoClose: false,
+            type: "group",
           }}
           subMenuItemRender={(item) => {
             return (
@@ -53,6 +56,10 @@ const DashboardLayout: FC<Props> = ({}) => {
                 <div>{item.name}</div>
               </div>
             );
+          }}
+          inlineCollapsed={collapsed}
+          onCollapse={(collapsed) => {
+            setCollapsed(collapsed);
           }}
           // menuHeaderRender={(_: any, titleDom: any) => {
           //   return <Link to="/dashboard/dashboard" className=" hidden md:flex h-20  min-[1000px]:h-24">
@@ -78,9 +85,11 @@ const DashboardLayout: FC<Props> = ({}) => {
                 alt="logo"
                 onClick={() => navigate("/dashboard/government/requests")}
               />
-              <div className="text-white text-sm">
-                Хөдөлмөр, халамжийн үйлчилгээний ерөнхий газар
-              </div>
+              {!collapsed && (
+                <div className="text-white text-sm">
+                  Хөдөлмөр, халамжийн үйлчилгээний ерөнхий газар
+                </div>
+              )}
             </div>
           }
           logoStyle={{

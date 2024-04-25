@@ -164,11 +164,18 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
             return (
               <div className="flex gap-2 items-center">
                 <div className="p-4 cursor-pointer">
-                  <AiOutlineEye
-                    size={20}
-                    className={" text-gray-700"}
-                    onClick={() => setFileOpen(record)}
-                  />
+                  <Link
+                    to={file.fileToUrl(record?.path as string)}
+                    className="p-4 cursor-pointer  text-gray-700"
+                    target="blank"
+                    download
+                  >
+                    <AiOutlineEye
+                      size={20}
+                      className={" text-gray-700"}
+                      // onClick={() => setFileOpen(record)}
+                    />
+                  </Link>
                 </div>
                 <Link
                   to={file.fileToUrl(record?.path as string)}
@@ -229,14 +236,14 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
             }
           >
             <div className="bg-[#F0F2F5] pt-5">
-              <iframe
+              {/* <iframe
                 style={{ border: "none" }}
                 src={file.fileToUrl(isFileOpen?.path)}
                 width={1050}
                 height={850}
                 className="mx-12"
-              ></iframe>
-            </div>
+              ></iframe> */}
+            </div>{" "}
           </Modal>
         )}
       </div>

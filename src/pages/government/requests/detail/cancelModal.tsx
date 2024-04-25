@@ -112,15 +112,15 @@ export const CancelModal = ({
         <ProFormTextArea
           name="description"
           placeholder="Шалтгаан дэлгэрэнгүй"
+          extra={
+            descCount <= 275
+              ? `${275 - descCount} тэмдэгт үлдсэн`
+              : "Тэмдэгтийн тоо хэтэрсэн байна."
+          }
           fieldProps={{
             onChange: (e) => setDescCount(e.target.value.length),
           }}
         />
-        <div>
-          {descCount <= 275
-            ? `${275 - descCount} тэмдэгт үлдсэн`
-            : "Тэмдэгтийн тоо хэтэрсэн байна."}
-        </div>
       </div>
     </ModalForm>
   );

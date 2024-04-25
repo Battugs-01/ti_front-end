@@ -529,11 +529,12 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             family_name: data?.family_name,
           }}
           name="giver-info"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Үйлчлүүлэгчийн хувийн мэдээлэл
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Үйлчлүүлэгчийн хувийн мэдээлэл
+          //   </div>
+          // }
+          title="Үйлчлүүлэгчийн хувийн мэдээлэл"
           onFinish={async (val) => {
             setInfo(val);
             return true;
@@ -550,11 +551,12 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="documents"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Бүрдүүлэх бичиг баримт
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-1">
+          //     Бүрдүүлэх бичиг баримт
+          //   </div>
+          // }
+          title="Бүрдүүлэх бичиг баримт"
           onFinish={documentsFinish}
         >
           {!data ? (
@@ -565,22 +567,14 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="health"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Эрүүл мэндийн байдал
-            </div>
-          }
+          title="Эрүүл мэндийн байдал"
           onFinish={healthFinish}
         >
           <HealthForm data={data as ElderlyInterface} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="request"
-          title={
-            <div className="text-[#344054] font-semibold mt-1">
-              Хүсэлт илгээх
-            </div>
-          }
+          title="Хүсэлт илгээх"
           onFinish={async (values) => {
             return true;
           }}

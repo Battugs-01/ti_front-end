@@ -1,4 +1,4 @@
-import { useRequest } from "ahooks";
+import { useDebounceFn, useRequest } from "ahooks";
 import { Card } from "antd";
 import { ExportButton, FilterForm } from "components/index";
 import CustomPagination from "components/pagination";
@@ -14,9 +14,11 @@ const RequestPage: React.FC = () => {
   // const [isOpenModal, setOpenModal] = useState<boolean>(false);
   // const [isStepModal, setStepModal] = useState<boolean>(false);
   const [filter, setFilter] = useState(initFilter);
+  const [search, setSearch] = useState<string>("");
   const list = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
+  const searchRun = useDebounceFn(list.run, { wait: 1000 });
 
   useEffect(() => {
     list.run({
@@ -58,6 +60,18 @@ const RequestPage: React.FC = () => {
       <Card loading={list?.loading}>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
+            search={search}
+            setSearch={(e) => {
+              setSearch(e);
+              searchRun.run({
+                ...filter,
+                status: [
+                  ElderlyStatus.ReturnSum,
+                  ElderlyStatus.ElderlyRequestSendToDistrict,
+                ],
+                query: e,
+              });
+            }}
             refresh={refreshList}
             customHeaderTitle={`Шийдвэрлэх хүсэлтүүд`}
             hideCreate

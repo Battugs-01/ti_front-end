@@ -15,8 +15,8 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
         borderBottom: "1px solid #EAECF0",
       }}
     >
-      <div className="flex items-center p-4 justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center p-4 justify-between flex-wrap xl:flex-nowrap">
+        <div className="flex items-center gap-2 flex-wrap xl:flex-nowrap">
           <Avatar
             size={36}
             style={{ background: color }}

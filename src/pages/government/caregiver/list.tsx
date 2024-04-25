@@ -17,13 +17,14 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
   };
   return (
     <div
+      id="list"
       className="bg-white"
       style={{
         borderBottom: "1px solid #EAECF0",
       }}
     >
-      <div className="flex items-center p-4 justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center p-4 justify-between flex-wrap 2xl:flex-nowrap">
+        <div className="flex items-center gap-2 flex-wrap 2xl:flex-nowrap">
           <Avatar
             size={36}
             style={{ background: color }}
@@ -37,8 +38,8 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
           <CareGiverBadge status={data?.status} />
         </div>
         <div>
-          <div className="w-full flex items-center gap-8">
-            <div className="flex items-center gap-2 text-sm text-[#475467]">
+          <div className="w-full flex items-center gap-8 flex-wrap 2xl:flex-nowrap">
+            <div className="flex items-center gap-2 text-sm text-[#475467] flex-wrap 2xl:flex-nowrap">
               <Avatar
                 src={file.fileToUrl(
                   data?.care_center?.logo?.physical_path || ""

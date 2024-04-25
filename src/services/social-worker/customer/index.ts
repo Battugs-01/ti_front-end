@@ -1,5 +1,5 @@
 import http from "service/index";
-import { DataType, ElderlyInterface } from "./type";
+import { CardInterface, DataType, ElderlyInterface } from "./type";
 import { DisabilityTypeInterface } from "service/base/type";
 import { tabCounts } from "service/gov-requests";
 
@@ -41,6 +41,10 @@ namespace orphanElderly {
     );
   export const elderly_counts = () =>
     http.get<tabCounts[]>(`socialworker/elderly/counts`, {
+      hasAuth: true,
+    });
+  export const getCarecenters = () =>
+    http.get<CardInterface[]>(`socialworker/elderly/active/care_centers`, {
       hasAuth: true,
     });
 }

@@ -48,10 +48,7 @@ export const IModalForm = ({
       }),
   });
 
-
-
   return (
-
     <ModalForm
       {...rest}
       onFinishFailed={(err) => {
@@ -62,7 +59,7 @@ export const IModalForm = ({
         block: "center",
         inline: "center",
       }}
-      children={<div className="p-8">{rest.children}</div>}
+      children={<div className="p-4">{rest.children}</div>}
       title={
         <div className="flex items-center justify-between px-6 py-4">
           <div className="text-base text-gray-800 font-semibold">{title}</div>
@@ -114,7 +111,11 @@ export const IModalForm = ({
                   {okText && (
                     <Button
                       type="primary"
-                      onClick={() => { rest?.modalProps?.onOk && rest.modalProps?.onOk(null as any); onSubmit() }}
+                      onClick={() => {
+                        rest?.modalProps?.onOk &&
+                          rest.modalProps?.onOk(null as any);
+                        onSubmit();
+                      }}
                       loading={submit.loading}
                     >
                       {okText}
@@ -169,7 +170,7 @@ export const RemoveModal = ({
       onSuccess: () => {
         onDone && onDone();
         notification.success({
-          message: "Success",
+          message: "Амжилттай",
         });
       },
       onError: (err) =>
@@ -199,7 +200,7 @@ export const RemoveModal = ({
                 className="w-1/2 text-sm"
                 onClick={() => onCancel && onCancel()}
               >
-                Cancel
+                Болих
               </Button>
               <Button
                 size="large"
@@ -207,7 +208,7 @@ export const RemoveModal = ({
                 type="primary"
                 onClick={submit}
               >
-                {remove ? "Remove" : "Deactivate"}
+                {remove ? "Устгах" : "Deactivate"}
               </Button>
             </div>
           );
@@ -220,13 +221,9 @@ export const RemoveModal = ({
         return false;
       }}
     >
-      <img src="/burtgel/icons/delete.png" width={48} height={48} className="mb-4" />
       <div className=" text-lg font-semibold text-gray-900  mb-2">
         {display}
       </div>
-      <Typography.Text className="text-gray-500">
-        You are going to {title ? title.toLowerCase() : "Remove"} {display}.
-      </Typography.Text>
     </ModalForm>
   );
 };

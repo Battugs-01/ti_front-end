@@ -27,6 +27,38 @@ export enum RequestType {
   takingCare = "takingCare",
 }
 
+export interface CardInterface {
+  id: number;
+  name: string;
+  logo: Logo;
+  description: string;
+  total_employees: number;
+  total_elderly: number;
+  capacity_elderly: number;
+  start_date: Date;
+  address: Adresses;
+  phone_number: string;
+  email: string;
+}
+
+export interface Adresses {
+  city: CareCenterAddress;
+  district: CareCenterAddress;
+  khoroo: CareCenterAddress;
+  street: string;
+  building: string;
+  door_number: string;
+}
+
+export interface CareCenterAddress {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  code: string;
+  name: string;
+  is_active: boolean;
+}
+
 export interface ListElderly {
   id: number;
   created_at: Date;

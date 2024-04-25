@@ -2,9 +2,9 @@ import { MenuDataItem } from "@ant-design/pro-layout";
 import RequestIcon from "assets/icons/requests.svg";
 import CaregiverIcon from "assets/icons/caregiver.svg";
 import OrphanIcon from "assets/icons/orphan.svg";
-import FeedbackIcon from "assets/government/icons/request.svg";
+// import FeedbackIcon from "assets/government/icons/request.svg";
 import EmployeesIcon from "assets/government/icons/users.svg";
-import LockIcon from "assets/government/icons/lock.svg";
+// import LockIcon from "assets/government/icons/lock.svg";
 export interface GovernmentMenuProps {
   icon: any;
   path: string;
@@ -37,16 +37,16 @@ export const GovernmentMenu: GovernmentMenuProps[] = [
     path: "/dashboard/government/employees",
     children: [],
   },
-  {
-    icon: <img src={FeedbackIcon} />,
-    name: "Санал, хүсэлт",
-    path: "/dashboard/government/feedback",
-    children: [],
-  },
-  {
-    icon: <img src={LockIcon} />,
-    name: "Эрхийн тохиргоо",
-    path: "/dashboard/government/settings",
-    children: [],
-  },
+  // {
+  //   icon: <img src={FeedbackIcon} />,
+  //   name: "Санал, хүсэлт",
+  //   path: "/dashboard/government/feedback",
+  //   children: [],
+  // },
+  // {
+  //   icon: <img src={LockIcon} />,
+  //   name: "Эрхийн тохиргоо",
+  //   path: "/dashboard/government/settings",
+  //   children: [],
+  // },
 ];

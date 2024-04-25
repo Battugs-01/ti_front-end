@@ -1,4 +1,4 @@
-import { useRequest } from "ahooks";
+import { useDebounceFn, useRequest } from "ahooks";
 import { Card, Tabs } from "antd";
 import { FilterForm } from "components/filter";
 import { ExportButton } from "components/index";
@@ -17,6 +17,8 @@ import Badge from "components/badge";
 const RequestPage: React.FC = () => {
   const [tab, setTab] = useState<String>(CaregiverType.all);
   const [filter, setFilter] = useState(initFilter);
+  const [search, setSearch] = useState<string>("");
+
   const elderlyList = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
@@ -24,6 +26,8 @@ const RequestPage: React.FC = () => {
   useEffect(() => {
     elderlyList.run({ ...filter, status: caregiverFilterDistrict(tab) });
   }, [filter, tab]);
+  const searchRun = useDebounceFn(elderlyList.run, { wait: 1000 });
+
   const items = [
     {
       key: CaregiverType.all,
@@ -116,6 +120,15 @@ const RequestPage: React.FC = () => {
         title={
           <div className="mt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
             <InitTableHeader
+              search={search}
+              setSearch={(e) => {
+                setSearch(e);
+                searchRun.run({
+                  ...filter,
+                  status: caregiverFilterDistrict(tab),
+                  query: e,
+                });
+              }}
               refresh={refreshList}
               customHeaderTitle="Шийдвэрлэсэн хүсэлтүүд"
               selectedToggle={""}
@@ -126,9 +139,7 @@ const RequestPage: React.FC = () => {
                     onClick={() => {
                       exportFromTable(
                         ["Асрамжийн газрын жагсаалт"],
-                        window.document.getElementById(
-                          "main-table"
-                        ) as HTMLElement,
+                        window.document.getElementById("list") as HTMLElement,
                         window
                       );
                     }}

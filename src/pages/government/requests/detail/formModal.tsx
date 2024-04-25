@@ -211,11 +211,12 @@ export const Detail: React.FC<DetailProps> = ({
       >
         <StepsForm.StepForm
           name="registered"
-          title={
-            <div className="text-[#344054] font-semibold mt-2 ml-8">
-              Бүртгэсэн
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-2 ml-8">
+          //     Бүртгэсэн
+          //   </div>
+          // }
+          title="Бүртгэсэн"
           onFinish={async () => {
             return true;
           }}
@@ -224,11 +225,12 @@ export const Detail: React.FC<DetailProps> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="under_review"
-          title={
-            <div className="text-[#344054] font-semibold mt-2 ml-5">
-              Хянаж байгаа
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-2 ml-5">
+          //     Хянаж байгаа
+          //   </div>
+          // }
+          title="Хянаж байгаа"
           onFinish={async () => {
             if (isWaiting) {
               distributeOrphan.run(
@@ -245,11 +247,12 @@ export const Detail: React.FC<DetailProps> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="distribute"
-          title={
-            <div className="text-[#344054] font-semibold mt-2 ml-6">
-              Хуваарилах
-            </div>
-          }
+          // title={
+          //   <div className="text-[#344054] font-semibold mt-2 ml-6">
+          //     Хуваарилах
+          //   </div>
+          // }
+          title="Хуваарилах"
           onFinish={async (values: any) => {
             return true;
           }}

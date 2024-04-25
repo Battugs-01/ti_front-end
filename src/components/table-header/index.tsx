@@ -7,6 +7,8 @@ import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
 import { RiFilter3Fill } from "react-icons/ri";
 import { CreateButton } from "..";
 import refreshIcon from "assets/government/icons/refresh.svg";
+import { useDebounceFn } from "ahooks";
+import { atom, useAtom } from "jotai";
 interface TableHeaderProps {
   customHeaderTitle?: string;
   hideToggle?: boolean;
@@ -17,13 +19,17 @@ interface TableHeaderProps {
   hideSearch?: boolean;
   hideCreate?: boolean;
   refresh?: () => void;
-  toolbarItems: React.ReactNode;
+  toolbarItems?: React.ReactNode;
   hideCreateButton?: boolean;
   setCreate?: (value: boolean) => void;
+  setSearch?: (value: string) => void;
   hideTitle?: boolean;
   leftContent?: any;
   loading?: boolean;
+  search?: string;
+  store?: any;
 }
+const init = atom<any>({});
 
 const InitTableHeader: React.FC<TableHeaderProps> = ({
   customHeaderTitle,
@@ -34,23 +40,33 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   handleToggle,
   hideSearch,
   hideCreate,
+  search,
   refresh,
   toolbarItems,
   hideCreateButton,
   hideTitle = false,
   leftContent,
   setCreate,
+  setSearch,
   loading,
+  store,
 }) => {
-  const form = useRef<ProFormInstance>();
+  const [stre, setStore] = useAtom<any>(store || init);
 
+  const form = useRef<ProFormInstance>();
   const checkIfChanged = () => {
     const { deadline, full_date, ...rest } =
       form.current?.getFieldsValue() || {};
     const arr = Object.values(rest || {});
     return arr.some((el: any) => (el?.length || 0) > 0 && el);
   };
-
+  const searchDebounce = useDebounceFn(
+    (value) => {
+      store && setStore?.({ ...(stre || {}), query: value });
+      setSearch?.(value);
+    },
+    { wait: 500 }
+  );
   return (
     <div className="flex justify-between pt-2 pr-6 pl-6 items-start  pb-4 px-4  custom-ant-item-margin-remove flex-wrap">
       <>
@@ -109,7 +125,11 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           fieldProps={{
             size: "large",
             className: "text-sm flex",
-            prefix: <BiSearch color="#66708066" size={20} />, // Add the icon as a prefix here
+            prefix: <BiSearch color="#66708066" size={20} />,
+            onChange: (e) => {
+              console.log(e, "jj");
+              searchDebounce.run(e.target.value);
+            }, // Add the icon as a prefix here
           }}
         />
         <div>

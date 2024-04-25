@@ -58,7 +58,7 @@ export const Detail: React.FC<DetailProps> = ({
                         setEdit(elderlyDetail?.data);
                       }}
                       icon={<img src={EditIcon} alt="edit" />}
-                      title={<div className="text-base">Мэдээлэл засах</div>}
+                      title="Мэдээлэл засах"
                     />
                   )}
                 </div>
