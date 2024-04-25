@@ -215,6 +215,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         stepsFormRender={(dom, submitter) => {
           return (
             <Modal
+              maskClosable={false}
               width={1064}
               title={
                 <div className="p-6">
