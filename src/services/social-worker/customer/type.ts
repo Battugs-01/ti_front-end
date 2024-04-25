@@ -1,4 +1,4 @@
-import { DisabilityTypeInterface, Logo } from "service/base/type";
+import { DisabilityTypeInterface, Logo } from 'service/base/type';
 
 export interface DataType {
   items: ListElderly[];
@@ -19,12 +19,12 @@ export enum ElderlyStatus {
 }
 
 export enum RequestType {
-  all = "all",
-  saved = "saved",
-  putOnHold = "putOnHold",
-  returned = "returned",
-  requestSend = "requestSend",
-  takingCare = "takingCare",
+  all = 'all',
+  saved = 'saved',
+  putOnHold = 'putOnHold',
+  returned = 'returned',
+  requestSend = 'requestSend',
+  takingCare = 'takingCare',
 }
 
 export interface CardInterface {
@@ -76,6 +76,7 @@ export interface ListElderly {
   welfare_documents: null;
   care_center_id: number;
   care_center: CareCenter;
+  description: string;
 }
 export interface CareCenter {
   id: number;
@@ -231,13 +232,13 @@ export interface DefinitionGovernor {
 }
 
 export enum Extention {
-  Empty = "",
-  PDF = "pdf",
+  Empty = '',
+  PDF = 'pdf',
 }
 
 export enum OriginalName {
-  Empty = "",
-  Sample1PDF = "sample (1).pdf",
+  Empty = '',
+  Sample1PDF = 'sample (1).pdf',
 }
 
 export interface Documents {

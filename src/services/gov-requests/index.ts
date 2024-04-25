@@ -1,26 +1,26 @@
-import { CareCenter, ListElderly } from "service/social-worker/customer/type";
+import { CareCenter, ListElderly } from 'service/social-worker/customer/type';
 
 export enum RequestType {
-  decide = "decide",
-  saved = "saved",
-  putOnHold = "putOnHold",
-  migration = "migration",
-  decided = "decided",
+  decide = 'decide',
+  saved = 'saved',
+  putOnHold = 'putOnHold',
+  migration = 'migration',
+  decided = 'decided',
 }
 export enum DetailType {
-  history = "historyOfMigration",
-  case = "personalCase",
-  plan = "developmentPlan",
-  pension = "Pension information",
-  food = "Food card",
-  diagnostic = "Diagnostic card",
+  history = 'historyOfMigration',
+  case = 'personalCase',
+  plan = 'developmentPlan',
+  pension = 'Pension information',
+  food = 'Food card',
+  diagnostic = 'Diagnostic card',
 }
 export enum CaregiverType {
-  all = "all",
-  distribute = "distribute",
-  putOnHold = "putOnHold",
-  takingCare = "takingCare",
-  canceled = "canceled",
+  all = 'all',
+  distribute = 'distribute',
+  putOnHold = 'putOnHold',
+  takingCare = 'takingCare',
+  canceled = 'canceled',
 }
 
 export type ListProps = {
@@ -47,6 +47,7 @@ export type RightContentType = {
   updatedDate?: any;
   careCenter?: CareCenter;
   rd?: string;
+  description?: string;
 };
 
 export interface CardData {

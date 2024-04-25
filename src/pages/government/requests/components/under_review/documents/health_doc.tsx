@@ -1,14 +1,14 @@
 import { CloudDownloadOutlined } from "@ant-design/icons";
-import { Button, Modal } from "antd";
+import { Button, Flex, Modal } from "antd";
+import None from "assets/government/icons/none.svg";
 import { ITable } from "components/table";
 import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import file from "service/file";
 import { LaboratoryTests } from "service/social-worker/customer/type";
-import { formatKB, formatMB } from "utils/index";
+import { formatKB } from "utils/index";
 
 type DocumentsType = {
   data?: LaboratoryTests[];
@@ -48,9 +48,8 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
             render: (value, record) => (
               <div className="flex flex-col justify-center">
                 <span
-                  className={`text-base font-bold flex text-center ${
-                    record.isHave ? "text-[#344054]" : "text-[#DD695C]"
-                  }`}
+                  className={`text-base font-bold flex text-center ${record.isHave ? "text-[#344054]" : "text-[#DD695C]"
+                    }`}
                 >
                   {value || "-"}
                 </span>
@@ -67,22 +66,20 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
           {
             dataIndex: ["isHave"],
             title: "Байгаа эсэх",
-            align: "start",
+            align: "center",
             render: (value) => (
-              <div className="flex flex-col justify-center">
-                <span className="text-base text-[#344054] font-bold flex text-center">
-                  {value ? (
-                    <FaCheck size={14} color="green" className="ml-1" />
-                  ) : (
-                    <IoAddCircleOutline size={20} color="gray" />
-                  )}
-                </span>
-              </div>
+              <Flex justify="center" align="center">
+                {value ? (
+                  <FaCheck size={14} color="green" className="ml-1" />
+                ) : (
+                  <img src={None} />
+                )}
+              </Flex>
             ),
           },
         ]}
         customActions={(record) => {
-          return (
+          return record.isHave ? (
             <div className="flex gap-2 items-center">
               <div className="p-4 cursor-pointer">
                 <Link
@@ -94,7 +91,7 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
                   <AiOutlineEye
                     size={20}
                     className={" text-gray-700"}
-                    // onClick={() => setFileOpen(record)}
+                  // onClick={() => setFileOpen(record)}
                   />
                 </Link>
               </div>
@@ -112,7 +109,7 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
                 />
               </Link>
             </div>
-          );
+          ) : null
         }}
       />
       {isFileOpen && (

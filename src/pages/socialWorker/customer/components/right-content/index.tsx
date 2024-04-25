@@ -22,6 +22,7 @@ const RightContent: React.FC<RightContentType> = ({
   careCenter,
   refreshList,
   rd,
+  description
 }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
@@ -149,7 +150,7 @@ const RightContent: React.FC<RightContentType> = ({
             <div className="flex items-center gap-1">
               <div>Шалтгаан:</div>
               <div className="font-bold">
-                {"Эрүүл мэндийн үзлэг зөрчилтэй байна"}
+                {description}
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -227,16 +228,38 @@ const RightContent: React.FC<RightContentType> = ({
     case ElderlyStatus.ReturnSum: {
       return (
         <Fragment>
-          <div className="w-full flex items-center gap-8 flex-wrap  xl:flex-nowrap">
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
             <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">{updatedDate}</div>
+            </div>
+            <div className="flex items-center gap-1">
+              <div>Буцаасан шалтгаан:</div>
+              <div className="font-bold">
+                {description}
+              </div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"
               icon={<img src={EyeIcon} />}
               onClick={() => setIsDetail(true)}
             />
+            <CustomButton
+              title="Мэдээлэл засах"
+              icon={<img src={EditIcon} />}
+              onClick={async () => {
+                const data = await elderly?.runAsync();
+                setEdit(data);
+              }}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={id}
+              />
+            )}
           </div>
           {isDetail && (
             <Detail

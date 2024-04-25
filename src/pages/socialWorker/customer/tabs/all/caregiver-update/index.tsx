@@ -47,41 +47,39 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   const [isSave, setSave] = useState(false);
   const [info, setInfo] = useState<any>({});
   const [documents, setDocuments] = useState<any>({});
-  const [loading, setLoading] = useState(false);
+
   const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
-    onSuccess() {
-      setLoading(false);
+    onSuccess: () => {
       notification.success({
         message: "Амжилттай",
       });
       cancelStepModal?.();
       isSave && refreshList?.();
     },
-    onError() {
-      setLoading(false);
-      notification.error({ message: "Амжилтгүй" });
-      cancelStepModal?.();
-      isSave && refreshList?.();
+    onError: (err) => {
+      notification.error({ message: err.message });
     },
   });
+
   const labTests = useRequest(laboratory.get, {
     manual: true,
   });
+
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
-    onSuccess() {
+    onSuccess: () => {
       notification.success({
         message: "Амжилттай хүсэлт илгээгдлээ.",
       });
       setSendRequest(false);
       refreshList?.();
     },
-    onError() {
-      setLoading(false);
-      notification.error({ message: "Амжилтгүй" });
-      setSendRequest(false);
-      refreshList?.();
+    onError: (err) => {
+      // setLoading(false);
+      notification.error({ message: err.message });
+      // setSendRequest(false);
+      // refreshList?.();
     },
   });
   const uploadMulti = useRequest(file.uploadsMulti, {
@@ -96,12 +94,12 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     const oldFileIDs: number[] = [];
     if (!files) return [];
     files.map((file) => {
-      if (!file?.uid.includes("rc-upload")) {
+      if (!file?.uid?.includes("rc-upload")) {
         oldFileIDs.push(parseInt(file.uid));
       }
     });
 
-    const newFiles = files.filter((file) => file?.uid.includes("rc-upload"));
+    const newFiles = files.filter((file) => file?.uid?.includes("rc-upload"));
 
     if (newFiles.length === 0) return oldFileIDs;
 
@@ -120,6 +118,8 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   }, []);
   const formRef = useRef<ProFormInstance>();
   const handleFinish = async (val: any) => {
+    console.log(val)
+
     // const reqData: any = {};
     val.profile = await newFileUploads(val?.profile);
     val.documents.elderly_document_care_requet = await newFileUploads(
@@ -178,9 +178,14 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       val?.request?.definition_governor_file_ids
     );
 
-    val.laboratory_tests.health_check_sheet = await newFileUploads(
+
+    const file = await newFileUploads(
       val?.laboratory_tests?.health_check_sheet
     );
+
+    console.log('files', file)
+    val.laboratory_tests.health_check_sheet = file
+
     val.laboratory_tests.blood_test = await newFileUploads(
       val?.laboratory_tests?.blood_test
     );
@@ -301,113 +306,114 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     return true;
   };
   const healthFinish = async (val: any) => {
-    if (isSave) {
-      info.profile = await newFileUploads(info?.profile);
-      documents.documents.elderly_document_care_requet = await newFileUploads(
-        documents?.documents?.elderly_document_care_requet
-      );
-      documents.documents.elderly_document_insurance_notebook =
-        await newFileUploads(
-          documents?.documents?.elderly_document_insurance_notebook
-        );
-      documents.documents.elderly_document_is_pension_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_pension_inquiry
-        );
-      documents.documents["elderly_document_pension_loan;"] =
-        await newFileUploads(
-          documents?.documents["elderly_document_pension_loan;"]
-        );
-      documents.documents.elderly_document_is_disability_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_disability_inquiry
-        );
-      documents.documents.elderly_document_other_welfare_services_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_other_welfare_services_inquiry
-        );
-      documents.documents.elderly_document_insurance_discounts_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_insurance_discounts_inquiry
-        );
-      documents.documents.elderly_document_care_center_discount_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_care_center_discount_inquiry
-        );
-
-      documents.documents.elderly_document_identity_card = await newFileUploads(
-        documents?.documents?.elderly_document_identity_card
-      );
-      documents.documents.elderly_document_property_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_property_inquiry
-        );
-      documents.documents.elderly_document_is_have_children_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_have_children_inquiry
-        );
-      documents.documents.elderly_document_is_have_sibling_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_have_sibling_inquiry
-        );
-      documents.documents.elderly_document_is_married_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_married_inquiry
-        );
-      documents.documents.elderly_document_is_divorce_inquiry =
-        await newFileUploads(
-          documents?.documents?.elderly_document_is_divorce_inquiry
-        );
-      val.laboratory_tests.health_check_sheet = await newFileUploads(
-        val?.laboratory_tests?.health_check_sheet
-      );
-      val.laboratory_tests.blood_test = await newFileUploads(
-        val?.laboratory_tests?.blood_test
-      );
-      val.laboratory_tests.analysis_urine = await newFileUploads(
-        val?.laboratory_tests?.analysis_urine
-      );
-      val.laboratory_tests.biochemical = await newFileUploads(
-        val?.laboratory_tests?.biochemical
-      );
-      val.laboratory_tests.sputum = await newFileUploads(
-        val?.laboratory_tests?.sputum
-      );
-      val.laboratory_tests.syphilis = await newFileUploads(
-        val?.laboratory_tests?.syphilis
-      );
-      val.laboratory_tests.abdominal = await newFileUploads(
-        val?.laboratory_tests?.abdominal
-      );
-      val.laboratory_tests.heart_recording = await newFileUploads(
-        val?.laboratory_tests?.heart_recording
-      );
-      val.laboratory_tests.lungs = await newFileUploads(
-        val?.laboratory_tests?.lungs
-      );
-      val.laboratory_tests.mental_health = await newFileUploads(
-        val?.laboratory_tests?.mental_health
-      );
-      const healthData = labFormatUpdate(val?.laboratory_tests, labTests?.data);
-      await elderlyEdit.runAsync(
-        {
-          ...val,
-          ...info,
-          // profile_id: profile[0]?.id,
-          profile_id: info?.profile[0],
-          address: {
-            ...info?.address,
-          },
-          documents: documents?.documents,
-          laboratory_tests: healthData,
-
-          // lab test oruulj ireh
-          birth_date: moment(info?.birth_date)?.toDate(),
-        },
-        id
-      );
-    }
     return true;
+    // if (isSave) {
+    //   info.profile = await newFileUploads(info?.profile);
+    //   documents.documents.elderly_document_care_requet = await newFileUploads(
+    //     documents?.documents?.elderly_document_care_requet
+    //   );
+    //   documents.documents.elderly_document_insurance_notebook =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_insurance_notebook
+    //     );
+    //   documents.documents.elderly_document_is_pension_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_pension_inquiry
+    //     );
+    //   documents.documents["elderly_document_pension_loan;"] =
+    //     await newFileUploads(
+    //       documents?.documents["elderly_document_pension_loan;"]
+    //     );
+    //   documents.documents.elderly_document_is_disability_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_disability_inquiry
+    //     );
+    //   documents.documents.elderly_document_other_welfare_services_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_other_welfare_services_inquiry
+    //     );
+    //   documents.documents.elderly_document_insurance_discounts_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_insurance_discounts_inquiry
+    //     );
+    //   documents.documents.elderly_document_care_center_discount_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_care_center_discount_inquiry
+    //     );
+
+    //   documents.documents.elderly_document_identity_card = await newFileUploads(
+    //     documents?.documents?.elderly_document_identity_card
+    //   );
+    //   documents.documents.elderly_document_property_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_property_inquiry
+    //     );
+    //   documents.documents.elderly_document_is_have_children_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_have_children_inquiry
+    //     );
+    //   documents.documents.elderly_document_is_have_sibling_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_have_sibling_inquiry
+    //     );
+    //   documents.documents.elderly_document_is_married_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_married_inquiry
+    //     );
+    //   documents.documents.elderly_document_is_divorce_inquiry =
+    //     await newFileUploads(
+    //       documents?.documents?.elderly_document_is_divorce_inquiry
+    //     );
+    //   val.laboratory_tests.health_check_sheet = await newFileUploads(
+    //     val?.laboratory_tests?.health_check_sheet
+    //   );
+    //   val.laboratory_tests.blood_test = await newFileUploads(
+    //     val?.laboratory_tests?.blood_test
+    //   );
+    //   val.laboratory_tests.analysis_urine = await newFileUploads(
+    //     val?.laboratory_tests?.analysis_urine
+    //   );
+    //   val.laboratory_tests.biochemical = await newFileUploads(
+    //     val?.laboratory_tests?.biochemical
+    //   );
+    //   val.laboratory_tests.sputum = await newFileUploads(
+    //     val?.laboratory_tests?.sputum
+    //   );
+    //   val.laboratory_tests.syphilis = await newFileUploads(
+    //     val?.laboratory_tests?.syphilis
+    //   );
+    //   val.laboratory_tests.abdominal = await newFileUploads(
+    //     val?.laboratory_tests?.abdominal
+    //   );
+    //   val.laboratory_tests.heart_recording = await newFileUploads(
+    //     val?.laboratory_tests?.heart_recording
+    //   );
+    //   val.laboratory_tests.lungs = await newFileUploads(
+    //     val?.laboratory_tests?.lungs
+    //   );
+    //   val.laboratory_tests.mental_health = await newFileUploads(
+    //     val?.laboratory_tests?.mental_health
+    //   );
+    //   const healthData = labFormatUpdate(val?.laboratory_tests, labTests?.data);
+    //   await elderlyEdit.runAsync(
+    //     {
+    //       ...val,
+    //       ...info,
+    //       // profile_id: profile[0]?.id,
+    //       profile_id: info?.profile[0],
+    //       address: {
+    //         ...info?.address,
+    //       },
+    //       documents: documents?.documents,
+    //       laboratory_tests: healthData,
+
+    //       // lab test oruulj ireh
+    //       birth_date: moment(info?.birth_date)?.toDate(),
+    //     },
+    //     id
+    //   );
+    // }
+    // return true;
   };
   return (
     <div>
@@ -458,7 +464,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  {step !== 0 && (
+                  {/* {step !== 0 && (
                     <DefaultButton
                       onClick={() => {
                         onSubmit && onSubmit();
@@ -469,15 +475,14 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                       icon={<img src={SaveIcon} />}
                       title="Түр хадгалах"
                     />
-                  )}
+                  )} */}
                   {step === 3 ? (
                     <CustomButton
                       onClick={() => {
                         onSubmit && onSubmit();
-                        setLoading(true);
                         setSendRequest(true);
                       }}
-                      loading={loading}
+                      loading={elderlyEdit.loading && toDistrict.loading}
                       extraIcon={<img src={ArrowRight} />}
                       title={
                         status === ElderlyStatus.ReturnSum
@@ -518,6 +523,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
               }
               onCancel={cancelStepModal}
               open={!!data}
+              maskClosable={false}
             >
               {dom}
             </Modal>

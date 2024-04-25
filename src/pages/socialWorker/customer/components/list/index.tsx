@@ -40,6 +40,7 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
             id={data?.elderly_id}
             careCenter={data?.care_center as CareCenter}
             rd={data?.elderly?.rd}
+            description={data?.description}
           />
         </div>
       </div>
