@@ -87,6 +87,7 @@ export const IModalForm = ({
         span: 12,
       }}
       modalProps={{
+        maskClosable: false,
         ...rest.modalProps,
         closable: false,
         className: `${rest.className} custom-ant-modal-footer-remove `,
