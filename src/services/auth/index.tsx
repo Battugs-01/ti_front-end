@@ -1,8 +1,7 @@
 import { decryptWithAES, encryptWithAES } from "utils/parse";
 import http from "..";
-import { LoginData, LoginResponse, Admin } from "./type";
-import { authService } from "service/firebase";
-const tokenKey = "app.token";
+import { Admin, LoginData, LoginResponse } from "./type";
+const tokenKey = "burtgel.token";
 const userKey = "app.user";
 namespace auth {
   export const login = (body?: any) =>
