@@ -51,7 +51,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   });
   const elderly = useRequest(orphanElderly.create, {
     manual: true,
-    onSuccess() {
+    onSuccess: () => {
       notification.success({
         message: "Амжилттай",
       });
@@ -59,13 +59,13 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       cancelStepModal?.();
       setSubmitting(false);
     },
-    onError() {
+    onError: (err) => {
       notification.error({
-        message: "Алдаа гарлаа",
+        message: err?.message,
       });
-      setSubmitting(false);
-      setSave(false);
-      cancelStepModal?.();
+      // setSubmitting(false);
+      // setSave(false);
+      // cancelStepModal?.();
     },
   });
 
