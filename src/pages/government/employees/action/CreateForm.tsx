@@ -122,12 +122,6 @@ export const CreateForm: React.FC<OrphanFormType> = ({ form }) => {
                     value: item?.id,
                   };
                 })}
-                rules={[
-                  {
-                    required: true,
-                    message: "Энэ талбарийг оруулах шаардлагатай!",
-                  },
-                ]}
               />
             </Col>
           </>
