@@ -102,7 +102,7 @@ export const Contract: React.FC<DocumentsType> = ({
                     <AiOutlineEye
                       size={20}
                       className={" text-gray-700"}
-                      onClick={() => setFileOpen(record)}
+                      // onClick={() => setFileOpen(record)}
                     />
                   </Link>
                 </div>

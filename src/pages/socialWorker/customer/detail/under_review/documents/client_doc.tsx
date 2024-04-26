@@ -170,7 +170,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
                     <AiOutlineEye
                       size={20}
                       className={" text-gray-700"}
-                      onClick={() => setFileOpen(record)}
+                      // onClick={() => setFileOpen(record)}
                     />
                   </Link>
                 </div>
