@@ -69,17 +69,9 @@ export const PageHeader = ({ title, subTitle }: Props) => {
           })}
         </div>
       </div>
-      <Tooltip title="Гарын авлага татах">
-        <Button
-          type="text"
-          ghost
-          size="large"
-          className=" "
-          href={Handbook}
-          target="_blank"
-          icon={<FilePdfOutlined rev={undefined} className="text-2xl" />}
-        />
-      </Tooltip>
+      <Button type="primary" className=" " href={Handbook} target="_blank">
+        Гарын авлага татах
+      </Button>
     </div>
   );
 };
