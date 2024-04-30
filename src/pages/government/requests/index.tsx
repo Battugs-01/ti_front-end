@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { Card } from "antd";
+import { Card, Empty } from "antd";
 import { ExportButton, FilterForm } from "components/index";
 import CustomPagination from "components/pagination";
 import InitTableHeader from "components/table-header";
@@ -92,21 +92,28 @@ const RequestPage: React.FC = () => {
             }
           />
         </div>
-        <div className="w-full">
-          {list?.data?.items?.map((card, key) => (
-            <List key={key} data={card} refreshList={refreshList} />
-          ))}
-          <div
-            className="flex justify-end mb-4 px-6"
-            style={{ borderTop: "1px solid #EAECF0" }}
-          >
-            <CustomPagination
-              current={filter.current}
-              total={list?.data?.total}
-              setPagination={setPagination}
-            />
+        {list?.data?.total === 0 ? (
+          <Empty
+            className="h-full items-center flex flex-col justify-center"
+            description="Дата байхгүй байна"
+          />
+        ) : (
+          <div className="w-full">
+            {list?.data?.items?.map((card, key) => (
+              <List key={key} data={card} refreshList={refreshList} />
+            ))}
+            <div
+              className="flex justify-end mb-4 px-6"
+              style={{ borderTop: "1px solid #EAECF0" }}
+            >
+              <CustomPagination
+                current={filter.current}
+                total={list?.data?.total}
+                setPagination={setPagination}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </Card>
     </div>
   );

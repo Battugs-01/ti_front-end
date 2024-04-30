@@ -58,9 +58,17 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       name: "Онош, ХЧА-ын хувь",
-      value: data?.disability_desc,
+      value: data?.disability_percent,
     },
   ];
+
+  {
+    data?.is_disability &&
+      detailPromt.push({
+        name: "Хөгжлийн бэрхшээл",
+        value: data?.disability_types.map((item) => item.name).join(", "),
+      });
+  }
   const rightDetail = [
     {
       key: "1",

@@ -65,11 +65,11 @@ export enum GenderType {
 
 export const workersGenderArray = Object.freeze([
   {
-    label: "Эр",
+    label: "Эрэгтэй",
     value: GenderType.male,
   },
   {
-    label: "Эм",
+    label: "Эмэгтэй",
     value: GenderType.female,
   },
 ]);

@@ -76,12 +76,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       refreshList?.();
     },
     onError: (err) => {
-      // setLoading(false);
       notification.error({ message: err.message });
-      // setSendRequest(false);
-      // refreshList?.();
     },
   });
+
   const uploadMulti = useRequest(file.uploadsMulti, {
     manual: true,
     onError: (err) =>
@@ -116,11 +114,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   useEffect(() => {
     labTests?.run();
   }, []);
-  const formRef = useRef<ProFormInstance>();
-  const handleFinish = async (val: any) => {
-    console.log(val)
 
-    // const reqData: any = {};
+  const formRef = useRef<ProFormInstance>();
+
+  const handleFinish = async (val: any) => {
+    console.log(val);
     val.profile = await newFileUploads(val?.profile);
     val.documents.elderly_document_care_requet = await newFileUploads(
       val?.documents?.elderly_document_care_requet
@@ -137,6 +135,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     val.documents.elderly_document_is_disability_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_disability_inquiry
     );
+
     val.documents.elderly_document_other_welfare_services_inquiry =
       await newFileUploads(
         val?.documents?.elderly_document_other_welfare_services_inquiry
@@ -160,13 +159,16 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       await newFileUploads(
         val?.documents?.elderly_document_is_have_children_inquiry
       );
+
     val.documents.elderly_document_is_have_sibling_inquiry =
       await newFileUploads(
         val?.documents?.elderly_document_is_have_sibling_inquiry
       );
+
     val.documents.elderly_document_is_married_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_married_inquiry
     );
+
     val.documents.elderly_document_is_divorce_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_divorce_inquiry
     );
@@ -174,21 +176,21 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     val.request.situational_file_ids = await newFileUploads(
       val?.request?.situational_file_ids
     );
+
     val.request.definition_governor_file_ids = await newFileUploads(
       val?.request?.definition_governor_file_ids
     );
 
-
-    const file = await newFileUploads(
+    val.laboratory_tests.health_check_sheet = await newFileUploads(
       val?.laboratory_tests?.health_check_sheet
     );
 
-    console.log('files', file)
-    val.laboratory_tests.health_check_sheet = file
+    // val.laboratory_tests.health_check_sheet = file
 
     val.laboratory_tests.blood_test = await newFileUploads(
       val?.laboratory_tests?.blood_test
     );
+
     val.laboratory_tests.analysis_urine = await newFileUploads(
       val?.laboratory_tests?.analysis_urine
     );
@@ -214,6 +216,8 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       val?.laboratory_tests?.mental_health
     );
     const healthData = labFormatUpdate(val?.laboratory_tests, labTests?.data);
+
+    console.log(healthData, "dataaa");
     const elderlyData = await elderlyEdit.runAsync(
       {
         ...val,
@@ -229,11 +233,13 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       },
       id
     );
+
     sendRequest && toDistrict.run(elderlyData?.id);
     setTimeout(() => {
       refreshList?.();
     }, 500);
   };
+
   const documentsFinish = async (val: any) => {
     if (isSave) {
       info.profile = await newFileUploads(info?.profile);
@@ -305,6 +311,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     }
     return true;
   };
+
   const healthFinish = async (val: any) => {
     return true;
     // if (isSave) {
@@ -420,6 +427,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       <StepsForm
         formRef={formRef}
         onFinish={handleFinish}
+        formProps={{
+          loading: elderlyEdit.loading,
+        }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {
             switch (status) {

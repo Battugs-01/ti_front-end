@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import { Empty, Radio, notification } from "antd";
 import IBadge from "components/badge";
 import { Fragment, useEffect, useState } from "react";
 import {
@@ -8,23 +8,41 @@ import {
 import { All } from "./tabs/all";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
-import { initPagination } from "utils/index";
+import { initPagination, tableCellFixed } from "utils/index";
 import { caregiverFilterSum } from "utils/caregiver-filter";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
   const [page, setPage] = useState(initPagination);
+  const [elderlyCountBoolean, setElderlyCount] = useState(false);
+
   const list = useRequest(orphanElderly.elderlyList, {
     manual: true,
+    onSuccess() {
+      setElderlyCount(!elderlyCountBoolean);
+    },
   });
-  const elderlyCount = useRequest(async () => orphanElderly.elderly_counts());
+
+  const elderlyCount = useRequest(orphanElderly.elderly_counts, {
+    manual: true,
+    onError(err) {
+      notification.error(err);
+    },
+  });
+
   useEffect(() => {
     list.run({ ...page, status: caregiverFilterSum(tab) });
   }, [tab]);
+
+  useEffect(() => {
+    elderlyCount.run();
+  }, [elderlyCountBoolean]);
+
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });
     list?.run({ current: page, pageSize, status: caregiverFilterSum(tab) });
   };
+
   const refreshList = () => {
     list?.run({ ...page, status: caregiverFilterSum(tab) });
   };
@@ -124,14 +142,21 @@ const CustomerPage: React.FC = () => {
           </div>
         </Radio.Button>
       </Radio.Group>
-      <All
-        totalItems={list?.data?.total}
-        refreshList={refreshList}
-        current={page.current}
-        data={list?.data?.items}
-        list={list}
-        setPagination={setPagination}
-      />
+      {list?.data?.total === 0 ? (
+        <Empty
+          className="h-full items-center flex flex-col justify-center"
+          description="Дата байхгүй байна"
+        />
+      ) : (
+        <All
+          totalItems={list?.data?.total}
+          refreshList={refreshList}
+          current={page.current}
+          data={list?.data?.items}
+          list={list}
+          setPagination={setPagination}
+        />
+      )}
     </Fragment>
   );
 };
