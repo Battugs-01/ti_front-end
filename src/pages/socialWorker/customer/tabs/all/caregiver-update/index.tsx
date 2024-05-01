@@ -217,7 +217,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     );
     const healthData = labFormatUpdate(val?.laboratory_tests, labTests?.data);
 
-    console.log(healthData, "dataaa");
     const elderlyData = await elderlyEdit.runAsync(
       {
         ...val,
@@ -424,57 +423,60 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   };
   return (
     <div>
-      <StepsForm
-        formRef={formRef}
-        onFinish={handleFinish}
-        formProps={{
-          loading: elderlyEdit.loading,
-        }}
-        stepsProps={{
-          progressDot: (icon, { index, status }) => {
-            switch (status) {
-              case "finish":
-                return (
-                  <div className="bg-[#F5F8F8] rounded-full w-6 h-6 p-1">
-                    <img src={checkSvg} alt="check" />
-                  </div>
-                );
-              case "wait":
-                return (
-                  <div className="bg-[#F9FAFB] rounded-full p-1 w-6 h-6">
-                    <div className="bg-[#F9FAFB] rounded-full w-full h-full">
-                      <img src={waitCircle} alt="finishCircle" />
+      {uploadMulti.loading ? (
+        <PageLoading />
+      ) : (
+        <StepsForm
+          formRef={formRef}
+          onFinish={handleFinish}
+          formProps={{
+            loading: elderlyEdit.loading,
+          }}
+          stepsProps={{
+            progressDot: (icon, { index, status }) => {
+              switch (status) {
+                case "finish":
+                  return (
+                    <div className="bg-[#F5F8F8] rounded-full w-6 h-6 p-1">
+                      <img src={checkSvg} alt="check" />
                     </div>
-                  </div>
-                );
-              case "process":
-                return (
-                  <div className="bg-[#F5F8F8] rounded-full p-1 w-6 h-6">
-                    <div className="bg-[#F5F8F8] rounded-full w-full h-full">
-                      <img src={finishCircle} alt="finishCircle" />
+                  );
+                case "wait":
+                  return (
+                    <div className="bg-[#F9FAFB] rounded-full p-1 w-6 h-6">
+                      <div className="bg-[#F9FAFB] rounded-full w-full h-full">
+                        <img src={waitCircle} alt="finishCircle" />
+                      </div>
                     </div>
+                  );
+                case "process":
+                  return (
+                    <div className="bg-[#F5F8F8] rounded-full p-1 w-6 h-6">
+                      <div className="bg-[#F5F8F8] rounded-full w-full h-full">
+                        <img src={finishCircle} alt="finishCircle" />
+                      </div>
+                    </div>
+                  );
+              }
+            },
+          }}
+          submitter={{
+            render: ({ step, onSubmit, onPre, form }) => {
+              return (
+                <div className="flex justify-between items-center w-full">
+                  <div>
+                    {step !== 0 && (
+                      <DefaultButton
+                        icon={<img src={LeftIcon} />}
+                        title={"Буцах"}
+                        onClick={() => {
+                          onPre();
+                        }}
+                      />
+                    )}
                   </div>
-                );
-            }
-          },
-        }}
-        submitter={{
-          render: ({ step, onSubmit, onPre, form }) => {
-            return (
-              <div className="flex justify-between items-center w-full">
-                <div>
-                  {step !== 0 && (
-                    <DefaultButton
-                      icon={<img src={LeftIcon} />}
-                      title={"Буцах"}
-                      onClick={() => {
-                        onPre();
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  {/* {step !== 0 && (
+                  <div className="flex items-center gap-2">
+                    {/* {step !== 0 && (
                     <DefaultButton
                       onClick={() => {
                         onSubmit && onSubmit();
@@ -486,118 +488,122 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                       title="Түр хадгалах"
                     />
                   )} */}
-                  {step === 3 ? (
-                    <CustomButton
-                      onClick={() => {
-                        onSubmit && onSubmit();
-                        setSendRequest(true);
-                      }}
-                      loading={elderlyEdit.loading && toDistrict.loading}
-                      extraIcon={<img src={ArrowRight} />}
-                      title={
-                        status === ElderlyStatus.ReturnSum
-                          ? "Дахин хүсэлт илгээх"
-                          : "Хүсэлт илгээх"
-                      }
-                    />
-                  ) : (
-                    <CustomButton
-                      onClick={() => {
-                        onSubmit && onSubmit();
-                      }}
-                      extraIcon={<img src={ArrowRight} />}
-                      title="Дараагийнх"
-                    />
-                  )}
-                </div>
-              </div>
-            );
-          },
-        }}
-        stepsFormRender={(dom, submitter) => {
-          return (
-            <Modal
-              width={1064}
-              title={
-                <div className="p-6">
-                  <div className="font-semibold flex items-center gap-3">
-                    <div>Үйлчлүүлэгч засах ({data?.rd})</div>
-                    <CareGiverBadge status={status} />
+                    {step === 3 ? (
+                      <CustomButton
+                        onClick={() => {
+                          onSubmit && onSubmit();
+                          setSendRequest(true);
+                        }}
+                        loading={elderlyEdit.loading && toDistrict.loading}
+                        extraIcon={<img src={ArrowRight} />}
+                        title={
+                          status === ElderlyStatus.ReturnSum
+                            ? "Дахин хүсэлт илгээх"
+                            : "Хүсэлт илгээх"
+                        }
+                      />
+                    ) : (
+                      <CustomButton
+                        onClick={() => {
+                          onSubmit && onSubmit();
+                        }}
+                        extraIcon={<img src={ArrowRight} />}
+                        title="Дараагийнх"
+                      />
+                    )}
                   </div>
                 </div>
-              }
-              footer={
-                <div className="p-6" style={{ borderTop: "1px solid #D0D5DD" }}>
-                  {submitter}
-                </div>
-              }
-              onCancel={cancelStepModal}
-              open={!!data}
-              maskClosable={false}
-            >
-              {dom}
-            </Modal>
-          );
-        }}
-      >
-        <StepsForm.StepForm
-          initialValues={{
-            family_name: data?.family_name,
+              );
+            },
           }}
-          name="giver-info"
-          // title={
-          //   <div className="text-[#344054] font-semibold mt-1">
-          //     Үйлчлүүлэгчийн хувийн мэдээлэл
-          //   </div>
-          // }
-          title="Үйлчлүүлэгчийн хувийн мэдээлэл"
-          onFinish={async (val) => {
-            setInfo(val);
-            return true;
-          }}
-        >
-          {!data ? (
-            <PageLoading />
-          ) : (
-            <CaregiverInfoForm
-              data={data as ElderlyInterface}
-              form={formRef.current}
-            />
-          )}
-        </StepsForm.StepForm>
-        <StepsForm.StepForm
-          name="documents"
-          // title={
-          //   <div className="text-[#344054] font-semibold mt-1">
-          //     Бүрдүүлэх бичиг баримт
-          //   </div>
-          // }
-          title="Бүрдүүлэх бичиг баримт"
-          onFinish={documentsFinish}
-        >
-          {!data ? (
-            <PageLoading />
-          ) : (
-            <RegistrationForm data={data?.documents} />
-          )}
-        </StepsForm.StepForm>
-        <StepsForm.StepForm
-          name="health"
-          title="Эрүүл мэндийн байдал"
-          onFinish={healthFinish}
-        >
-          <HealthForm data={data as ElderlyInterface} />
-        </StepsForm.StepForm>
-        <StepsForm.StepForm
-          name="request"
-          title="Хүсэлт илгээх"
-          onFinish={async (values) => {
-            return true;
+          stepsFormRender={(dom, submitter) => {
+            return (
+              <Modal
+                width={1064}
+                title={
+                  <div className="p-6">
+                    <div className="font-semibold flex items-center gap-3">
+                      <div>Үйлчлүүлэгч засах ({data?.rd})</div>
+                      <CareGiverBadge status={status} />
+                    </div>
+                  </div>
+                }
+                footer={
+                  <div
+                    className="p-6"
+                    style={{ borderTop: "1px solid #D0D5DD" }}
+                  >
+                    {submitter}
+                  </div>
+                }
+                onCancel={cancelStepModal}
+                open={!!data}
+                maskClosable={false}
+              >
+                {dom}
+              </Modal>
+            );
           }}
         >
-          <SendForm data={data} />
-        </StepsForm.StepForm>
-      </StepsForm>
+          <StepsForm.StepForm
+            initialValues={{
+              family_name: data?.family_name,
+            }}
+            name="giver-info"
+            // title={
+            //   <div className="text-[#344054] font-semibold mt-1">
+            //     Үйлчлүүлэгчийн хувийн мэдээлэл
+            //   </div>
+            // }
+            title="Үйлчлүүлэгчийн хувийн мэдээлэл"
+            onFinish={async (val) => {
+              setInfo(val);
+              return true;
+            }}
+          >
+            {!data ? (
+              <PageLoading />
+            ) : (
+              <CaregiverInfoForm
+                data={data as ElderlyInterface}
+                form={formRef.current}
+              />
+            )}
+          </StepsForm.StepForm>
+          <StepsForm.StepForm
+            name="documents"
+            // title={
+            //   <div className="text-[#344054] font-semibold mt-1">
+            //     Бүрдүүлэх бичиг баримт
+            //   </div>
+            // }
+            title="Бүрдүүлэх бичиг баримт"
+            onFinish={documentsFinish}
+          >
+            {!data ? (
+              <PageLoading />
+            ) : (
+              <RegistrationForm data={data?.documents} />
+            )}
+          </StepsForm.StepForm>
+          <StepsForm.StepForm
+            name="health"
+            title="Эрүүл мэндийн байдал"
+            onFinish={healthFinish}
+          >
+            <HealthForm data={data as ElderlyInterface} />
+          </StepsForm.StepForm>
+          <StepsForm.StepForm
+            name="request"
+            title="Хүсэлт илгээх"
+            onFinish={async (values) => {
+              return true;
+            }}
+          >
+            <SendForm data={data} />
+          </StepsForm.StepForm>
+        </StepsForm>
+      )}
     </div>
   );
 };
