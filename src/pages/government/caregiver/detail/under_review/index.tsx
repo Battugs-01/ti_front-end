@@ -60,6 +60,15 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
       value: data?.disability_percent + "%",
     },
   ];
+
+  {
+    data?.is_disability &&
+      detailPromt.push({
+        name: "Хөгжлийн бэрхшээл",
+        value: data?.disability_types.map((item) => item.name).join(", "),
+      });
+  }
+
   const addressInfo = [
     {
       name: "Аймаг / Нийслэл",

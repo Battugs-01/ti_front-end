@@ -61,6 +61,7 @@ export const Detail: React.FC<DetailProps> = ({
       cancelDetail?.();
     },
   });
+
   const ordinancesFile = useRequest(file.upload, {
     manual: true,
     onError: () => {
@@ -69,6 +70,7 @@ export const Detail: React.FC<DetailProps> = ({
       });
     },
   });
+
   const welfareFile = useRequest(file.upload, {
     manual: true,
     onError: () => {
@@ -97,6 +99,12 @@ export const Detail: React.FC<DetailProps> = ({
             },
             id
           );
+        }}
+        formProps={{
+          loading:
+            ordinancesFile.loading ||
+            welfareFile.loading ||
+            distributeOrphan.loading,
         }}
         stepsProps={{
           progressDot: (icon, { index, status }) => {

@@ -67,24 +67,30 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   });
 
   const [sendRequest, setSendRequest] = useState(false);
+
   const labTests = useRequest(laboratory.get, {
     manual: true,
   });
+
   const filesDoc = useRequest(file.uploads, {
     manual: true,
   });
+
   const filesHealth = useRequest(file.uploads, {
     manual: true,
   });
+
   const filesRequest = useRequest(file.uploads, {
     manual: true,
   });
+
   const uploadProfile = useRequest(file.upload, {
     manual: true,
   });
   useEffect(() => {
     labTests?.run();
   }, []);
+
   const formRef = useRef<ProFormInstance>();
 
   return (
@@ -133,7 +139,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             }, 500);
           }}
           formProps={{
-            loading: elderly.loading,
+            loading:
+              elderly.loading ||
+              uploadProfile.loading ||
+              filesRequest.loading ||
+              filesDoc.loading ||
+              filesHealth.loading,
           }}
           stepsProps={{
             progressDot: (icon, { index, status }) => {

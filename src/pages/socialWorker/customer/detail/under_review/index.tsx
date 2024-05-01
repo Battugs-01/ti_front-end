@@ -100,7 +100,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       key: "2",
-      label: "  Бичиг баримт",
+      label: "Бичиг баримт",
       children: <Documents data={data} />,
     },
   ];
