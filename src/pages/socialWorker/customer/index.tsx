@@ -142,21 +142,15 @@ const CustomerPage: React.FC = () => {
           </div>
         </Radio.Button>
       </Radio.Group>
-      {list?.data?.total === 0 ? (
-        <Empty
-          className="h-full items-center flex flex-col justify-center"
-          description="Дата байхгүй байна"
-        />
-      ) : (
-        <All
-          totalItems={list?.data?.total}
-          refreshList={refreshList}
-          current={page.current}
-          data={list?.data?.items}
-          list={list}
-          setPagination={setPagination}
-        />
-      )}
+
+      <All
+        totalItems={list?.data?.total}
+        refreshList={refreshList}
+        current={page.current}
+        data={list?.data?.items}
+        list={list}
+        setPagination={setPagination}
+      />
     </Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Empty } from "antd";
 import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
 import InitTableHeader from "components/table-header";
@@ -11,6 +11,7 @@ import { CreateForm } from "./create";
 import { CareGiverCreate } from "./caregiver-create";
 import CustomPagination from "components/pagination";
 import { FormInstance } from "antd/lib";
+import { PageLoading } from "@ant-design/pro-layout";
 
 type AllProps = {
   data?: ListElderly[];
@@ -70,21 +71,28 @@ export const All: React.FC<AllProps> = ({
             }
           />
         </div>
-        <div className="w-full">
-          {data?.map((card, key) => (
-            <List data={card} refreshList={refreshList} key={key} />
-          ))}
-          <div
-            className="flex justify-end mb-4 px-6"
-            style={{ borderTop: "1px solid #EAECF0" }}
-          >
-            <CustomPagination
-              total={list?.data?.total}
-              setPagination={setPagination}
-              current={current}
-            />
+        {totalItems === 0 ? (
+          <Empty
+            className="h-full items-center flex flex-col justify-center"
+            description="Дата байхгүй байна"
+          />
+        ) : (
+          <div className="w-full">
+            {data?.map((card, key) => (
+              <List data={card} refreshList={refreshList} key={key} />
+            ))}
+            <div
+              className="flex justify-end mb-4 px-6"
+              style={{ borderTop: "1px solid #EAECF0" }}
+            >
+              <CustomPagination
+                total={list?.data?.total}
+                setPagination={setPagination}
+                current={current}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <IModalForm
           open={isOpenModal}
