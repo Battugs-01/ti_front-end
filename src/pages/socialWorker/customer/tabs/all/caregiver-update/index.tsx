@@ -27,6 +27,8 @@ import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
 import { SendForm } from "./request-send/index.js";
 import CareGiverBadge from "components/badge/caregiver.js";
+import dayjs from "dayjs";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -76,10 +78,12 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       refreshList?.();
     },
     onError: (err) => {
+      // setLoading(false);
       notification.error({ message: err.message });
+      // setSendRequest(false);
+      // refreshList?.();
     },
   });
-
   const uploadMulti = useRequest(file.uploadsMulti, {
     manual: true,
     onError: (err) =>
@@ -116,9 +120,8 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   }, []);
 
   const formRef = useRef<ProFormInstance>();
-
   const handleFinish = async (val: any) => {
-    console.log(val);
+    console.log("val", val);
     val.profile = await newFileUploads(val?.profile);
     val.documents.elderly_document_care_requet = await newFileUploads(
       val?.documents?.elderly_document_care_requet
@@ -135,7 +138,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     val.documents.elderly_document_is_disability_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_disability_inquiry
     );
-
     val.documents.elderly_document_other_welfare_services_inquiry =
       await newFileUploads(
         val?.documents?.elderly_document_other_welfare_services_inquiry
@@ -159,16 +161,13 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       await newFileUploads(
         val?.documents?.elderly_document_is_have_children_inquiry
       );
-
     val.documents.elderly_document_is_have_sibling_inquiry =
       await newFileUploads(
         val?.documents?.elderly_document_is_have_sibling_inquiry
       );
-
     val.documents.elderly_document_is_married_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_married_inquiry
     );
-
     val.documents.elderly_document_is_divorce_inquiry = await newFileUploads(
       val?.documents?.elderly_document_is_divorce_inquiry
     );
@@ -176,45 +175,44 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     val.request.situational_file_ids = await newFileUploads(
       val?.request?.situational_file_ids
     );
-
     val.request.definition_governor_file_ids = await newFileUploads(
       val?.request?.definition_governor_file_ids
     );
 
-    val.laboratory_tests.health_check_sheet = await newFileUploads(
-      val?.laboratory_tests?.health_check_sheet
-    );
+    if (val.laboratory_tests) {
+      val.laboratory_tests.health_check_sheet = await newFileUploads(
+        val?.laboratory_tests?.health_check_sheet || []
+      );
 
-    // val.laboratory_tests.health_check_sheet = file
+      val.laboratory_tests.blood_test = await newFileUploads(
+        val?.laboratory_tests?.blood_test
+      );
+      val.laboratory_tests.analysis_urine = await newFileUploads(
+        val?.laboratory_tests?.analysis_urine
+      );
+      val.laboratory_tests.biochemical = await newFileUploads(
+        val?.laboratory_tests?.biochemical
+      );
+      val.laboratory_tests.sputum = await newFileUploads(
+        val?.laboratory_tests?.sputum
+      );
+      val.laboratory_tests.syphilis = await newFileUploads(
+        val?.laboratory_tests?.syphilis
+      );
+      val.laboratory_tests.abdominal = await newFileUploads(
+        val?.laboratory_tests?.abdominal
+      );
+      val.laboratory_tests.heart_recording = await newFileUploads(
+        val?.laboratory_tests?.heart_recording
+      );
+      val.laboratory_tests.lungs = await newFileUploads(
+        val?.laboratory_tests?.lungs
+      );
+      val.laboratory_tests.mental_health = await newFileUploads(
+        val?.laboratory_tests?.mental_health
+      );
+    }
 
-    val.laboratory_tests.blood_test = await newFileUploads(
-      val?.laboratory_tests?.blood_test
-    );
-
-    val.laboratory_tests.analysis_urine = await newFileUploads(
-      val?.laboratory_tests?.analysis_urine
-    );
-    val.laboratory_tests.biochemical = await newFileUploads(
-      val?.laboratory_tests?.biochemical
-    );
-    val.laboratory_tests.sputum = await newFileUploads(
-      val?.laboratory_tests?.sputum
-    );
-    val.laboratory_tests.syphilis = await newFileUploads(
-      val?.laboratory_tests?.syphilis
-    );
-    val.laboratory_tests.abdominal = await newFileUploads(
-      val?.laboratory_tests?.abdominal
-    );
-    val.laboratory_tests.heart_recording = await newFileUploads(
-      val?.laboratory_tests?.heart_recording
-    );
-    val.laboratory_tests.lungs = await newFileUploads(
-      val?.laboratory_tests?.lungs
-    );
-    val.laboratory_tests.mental_health = await newFileUploads(
-      val?.laboratory_tests?.mental_health
-    );
     const healthData = labFormatUpdate(val?.laboratory_tests, labTests?.data);
 
     const elderlyData = await elderlyEdit.runAsync(
@@ -228,17 +226,15 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
         laboratory_tests: healthData,
         documents: val?.documents,
         request: val?.request,
-        birth_date: moment(val?.birth_date)?.toDate(),
+        birth_date: dayjs(val?.birth_date).toDate(),
       },
       id
     );
-
     sendRequest && toDistrict.run(elderlyData?.id);
     setTimeout(() => {
       refreshList?.();
     }, 500);
   };
-
   const documentsFinish = async (val: any) => {
     if (isSave) {
       info.profile = await newFileUploads(info?.profile);
@@ -310,7 +306,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     }
     return true;
   };
-
   const healthFinish = async (val: any) => {
     return true;
     // if (isSave) {
@@ -423,15 +418,12 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   };
   return (
     <div>
-      {uploadMulti.loading ? (
+      {uploadMulti?.loading || toDistrict.loading ? (
         <PageLoading />
       ) : (
         <StepsForm
           formRef={formRef}
           onFinish={handleFinish}
-          formProps={{
-            loading: elderlyEdit.loading,
-          }}
           stepsProps={{
             progressDot: (icon, { index, status }) => {
               switch (status) {

@@ -1,15 +1,15 @@
+import { useRequest } from "ahooks";
 import { Empty, Radio, notification } from "antd";
 import IBadge from "components/badge";
 import { Fragment, useEffect, useState } from "react";
+import orphanElderly from "service/social-worker/customer";
 import {
   ElderlyStatus,
   RequestType,
 } from "service/social-worker/customer/type";
-import { All } from "./tabs/all";
-import { useRequest } from "ahooks";
-import orphanElderly from "service/social-worker/customer";
-import { initPagination, tableCellFixed } from "utils/index";
 import { caregiverFilterSum } from "utils/caregiver-filter";
+import { initPagination } from "utils/index";
+import { All } from "./tabs/all";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
@@ -36,7 +36,7 @@ const CustomerPage: React.FC = () => {
 
   useEffect(() => {
     elderlyCount.run();
-  }, [elderlyCountBoolean]);
+  }, []);
 
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });

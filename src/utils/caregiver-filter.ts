@@ -39,7 +39,7 @@ export const caregiverFilterSum = (tab: String) => {
     case RequestType.putOnHold:
       return [ElderlyStatus.WaitDistrict, ElderlyStatus.ElderlyWaiting];
     case RequestType.returned:
-      return [ElderlyStatus.ReturnSum];
+      return [ElderlyStatus.ReturnSum, ElderlyStatus.ElderlyCareCenterReturned];
     case RequestType.requestSend:
       return [ElderlyStatus.ElderlyRequestSendToDistrict];
     case RequestType.takingCare:

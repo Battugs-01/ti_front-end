@@ -49,12 +49,12 @@ export const labFormat = (data: any, value: any, labTest: any) => {
 };
 
 export const labFormatUpdate = (data: any, labTests: any) => {
-  const values = Object.values(data);
+  const values = Object.values(data || {});
   const result = values?.reduce((acc: any, obj: any, index: number) => {
     // if
     acc.push({
       file_ids: obj?.map((val: any) => val),
-      laboratory_test_id: labTests[index]?.id,
+      laboratory_test_id: labTests?.[index]?.id,
     });
     return acc;
   }, []);

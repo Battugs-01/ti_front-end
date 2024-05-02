@@ -44,9 +44,7 @@ export const All: React.FC<AllProps> = ({
     setOpenModal(false);
     setStepModal(true);
   };
-  // const refreshList = () => {
-  //   list?.run();
-  // };
+
   return (
     <div className="custom-ant-card-padding-border-remove mt-6">
       <Card loading={list?.loading}>

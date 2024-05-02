@@ -1,4 +1,4 @@
-import { DisabilityTypeInterface, Logo } from 'service/base/type';
+import { DisabilityTypeInterface, Logo } from "service/base/type";
 
 export interface DataType {
   items: ListElderly[];
@@ -7,24 +7,25 @@ export interface DataType {
 
 export enum ElderlyStatus {
   ElderlySave = 1,
+  ElderlySavee = 0,
   ElderlyRequestSendToDistrict = 2,
   ElderlyRequestSendSendToCareCenter = 3,
   ElderlyWaiting = 4,
   ElderlyAllocated = 5,
   ElderlyTakingCare = 6,
   ElderlyCareCenterReturned = 7,
-  ElderlyDied = 8,
+  ElderlyDied = 14, /// xalit 14 bolgow darhaa axaas asuuna
   ReturnSum = 9,
   WaitDistrict = 10,
 }
 
 export enum RequestType {
-  all = 'all',
-  saved = 'saved',
-  putOnHold = 'putOnHold',
-  returned = 'returned',
-  requestSend = 'requestSend',
-  takingCare = 'takingCare',
+  all = "all",
+  saved = "saved",
+  putOnHold = "putOnHold",
+  returned = "returned",
+  requestSend = "requestSend",
+  takingCare = "takingCare",
 }
 
 export interface CardInterface {
@@ -232,13 +233,13 @@ export interface DefinitionGovernor {
 }
 
 export enum Extention {
-  Empty = '',
-  PDF = 'pdf',
+  Empty = "",
+  PDF = "pdf",
 }
 
 export enum OriginalName {
-  Empty = '',
-  Sample1PDF = 'sample (1).pdf',
+  Empty = "",
+  Sample1PDF = "sample (1).pdf",
 }
 
 export interface Documents {

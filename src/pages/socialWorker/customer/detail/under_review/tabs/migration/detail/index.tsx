@@ -1,50 +1,54 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { ElderlyStatus } from "service/social-worker/customer/type";
+import UserCreate from "./parts/user-create";
+import UserSent from "./parts/user-sent";
+import UserReturn from "./parts/user-return";
+import UserWaitingCarecenter from "./parts/user-waiting-carecenter";
+import UserWaitingCareCenter from "./parts/user-waiting-carecenter";
+import UserServicingCareCenter from "./parts/user-servicing-carecenter";
+import UserDied from "./parts/user-deid";
 
 interface Props {
   status?: 1 | 2 | 3 | 4 | Number;
-  desc?: String;
+  data: any;
 }
 
-const CareGiverBadge: FC<Props> = ({ status, desc }) => {
+const CareGiverComponentStatus: FC<Props> = ({ data, status }) => {
   let text = "Хадгалагдсан";
   let colorClass = "bg-gray-100 text-gray-700";
+  let component = <UserCreate data={data} />;
   switch (status) {
     case ElderlyStatus.ElderlySave:
-      text = "Хадгалагдсан";
-      colorClass = "bg-gray-100 text-gray-700";
+      component = <UserCreate data={data} />;
       break;
     case ElderlyStatus.ElderlyRequestSendToDistrict:
-      text = "Хүсэлт илгээсэн";
-      colorClass = "bg-[#FFFAEB] text-[#B54708]";
+      component = <UserSent data={data} />;
       break;
     case ElderlyStatus.ElderlyRequestSendSendToCareCenter:
       text = "Хуваарилсан";
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
     case ElderlyStatus.ElderlyWaiting:
-      text = "Хүлээлэгт оруулсан";
-      colorClass = "bg-blue-50 text-blue-700";
+      component = <UserWaitingCareCenter data={data} />;
       break;
     case ElderlyStatus.ElderlyAllocated:
       text = "Хүлээлэгт оруулсан";
       colorClass = "bg-blue-50 text-blue-700";
       break;
     case ElderlyStatus.ElderlyTakingCare:
-      text = "Үйлчлүүлж байгаа";
-      colorClass = "bg-green-50 text-green-700";
+      component = <UserServicingCareCenter data={data} />;
       break;
     case ElderlyStatus.ElderlyCareCenterReturned:
       text = "Асрамжийн газраас буцаагдсан";
       colorClass = "bg-red-50 text-red-700";
       break;
     case ElderlyStatus.ElderlyDied:
+      component = <UserDied data={data} />;
       text = "Нас барсан";
       colorClass = "bg-red-50 text-red-700";
       break;
     case ElderlyStatus.ReturnSum:
-      text = "Буцаагдсан";
-      colorClass = "bg-[#FEF3F2] text-[#F04438]";
+      component = <UserReturn data={data} />;
       break;
     case ElderlyStatus.WaitDistrict:
       text = "Хүлээлэгт орсон";
@@ -56,13 +60,7 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
       break;
   }
 
-  return (
-    <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium truncate ${colorClass}`}
-    >
-      {desc || text}
-    </span>
-  );
+  return component;
 };
 
-export default CareGiverBadge;
+export default CareGiverComponentStatus;

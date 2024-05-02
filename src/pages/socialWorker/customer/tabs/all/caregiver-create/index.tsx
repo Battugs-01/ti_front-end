@@ -24,6 +24,7 @@ import { CaregiverInfoForm } from "./caregiver-info-form.tsx";
 import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
 import { SendForm } from "./request-send/index.js";
+import dayjs from "dayjs";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -95,7 +96,11 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
 
   return (
     <div>
-      {elderly.loading ? (
+      {elderly.loading ||
+      uploadProfile.loading ||
+      filesRequest.loading ||
+      filesDoc.loading ||
+      filesHealth.loading ? (
         <PageLoading />
       ) : (
         <StepsForm
@@ -131,7 +136,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               laboratory_tests: health,
               documents: docs,
               request: request,
-              birth_date: moment(val?.birth_date).toDate(),
+              birth_date: dayjs(val?.birth_date).toDate(),
             });
             sendRequest && toDistrict.run(elderlyData?.id);
             setTimeout(() => {
@@ -291,7 +296,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     ...info?.address,
                   },
                   documents: docs,
-                  birth_date: moment(info?.birth_date).toDate(),
+                  birth_date: dayjs(info?.birth_date).toDate(),
                 });
                 setTimeout(() => {
                   refreshList?.();
@@ -338,13 +343,12 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                   },
                   laboratory_tests: health,
                   documents: docs,
-                  birth_date: moment(info?.birth_date).toDate(),
+                  birth_date: dayjs(info?.birth_date).toDate(),
                 });
                 setTimeout(() => {
                   refreshList?.();
                 }, 500);
               }
-
               return true;
             }}
             initialValues={{
