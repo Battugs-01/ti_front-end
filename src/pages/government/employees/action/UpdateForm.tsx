@@ -167,11 +167,20 @@ export const UpdateForm: React.FC<OrphanFormType> = ({ form, data }) => {
             label="Утас"
             fieldProps={{
               addonBefore: "+976",
+              maxLength: 8,
+              minLength: 8
             }}
             placeholder="Утас"
             initialValue={data?.phone}
-            name="phone_number"
-            rules={FORM_ITEM_RULE()}
+            name="phone"
+            rules={[
+              {
+                max: 8,
+                min: 8,
+                message: "Утсны дугаар оруулна уу!",
+                required: true,
+              },
+            ]}
           />
         </Col>
       </Row>

@@ -27,7 +27,7 @@ export const CreateForm: React.FC<OrphanFormType> = ({ form }) => {
 
   return (
     <div >
-        <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]}>
         <Col>
           <ProFormUploadButton
             title={
@@ -66,7 +66,7 @@ export const CreateForm: React.FC<OrphanFormType> = ({ form }) => {
               },
             }}
           />
-         
+
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
@@ -159,10 +159,19 @@ export const CreateForm: React.FC<OrphanFormType> = ({ form }) => {
             label="Утас"
             fieldProps={{
               addonBefore: "+976",
+              maxLength: 8,
+              minLength: 8
             }}
             placeholder="Утас"
-            name="phone_number"
-            rules={FORM_ITEM_RULE()}
+            name="phone"
+            rules={[
+              {
+                max: 8,
+                min: 8,
+                message: "Утсны дугаар оруулна уу!",
+                required: true,
+              },
+            ]}
           />
         </Col>
       </Row>
@@ -193,6 +202,10 @@ export const CreateForm: React.FC<OrphanFormType> = ({ form }) => {
               {
                 message: "Нууц үгээ оруулна уу!",
                 required: true,
+              },
+              {
+                message: "Том, жижиг үсэг, тоо болон тусгай тэмдэгт (#?!@$%^&*-) орсон байх ёстой",
+                pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
               },
             ]}
           />

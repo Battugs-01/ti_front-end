@@ -90,7 +90,8 @@ const Login: FC = () => {
             fieldProps={{ size: "large" }}
             rules={[
               {
-                message: "Password is required!",
+                required: true,
+                message: "Нууц үг оруулна уу!"
               },
             ]}
             extra={
