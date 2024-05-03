@@ -66,23 +66,6 @@ export const Detail: React.FC<DetailProps> = ({
             );
           },
         }}
-        // onFinish={async (values) => {
-        //   const ordinances = await ordinancesFile.runAsync({
-        //     file: values?.ordinances_file_ids[0].originFileObj,
-        //   });
-        //   const welfare = await welfareFile.runAsync({
-        //     file: values?.welfare_document_file_ids[0].originFileObj,
-        //   });
-        //   distributeOrphan.run(
-        //     {
-        //       care_center_id: values?.care_center_id,
-        //       status: 3,
-        //       ordinances_file_ids: [ordinances[0]?.id],
-        //       welfare_document_file_ids: [welfare[0]?.id],
-        //     },
-        //     id
-        //   );
-        // }}
       >
         <UnderReview data={elderlyDetail?.data} />
       </ModalForm>

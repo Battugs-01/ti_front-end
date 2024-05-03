@@ -57,9 +57,18 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       name: "Онош, ХЧА-ын хувь",
-      value: data?.disability_desc,
+      value: data?.disability_percent + "%",
     },
   ];
+
+  {
+    data?.is_disability &&
+      detailPromt.push({
+        name: "Хөгжлийн бэрхшээл",
+        value: data?.disability_types.map((item) => item.name).join(", "),
+      });
+  }
+
   const addressInfo = [
     {
       name: "Аймаг / Нийслэл",
@@ -82,6 +91,7 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
       value: data?.address?.description,
     },
   ];
+
   const rightDetail = [
     {
       key: "1",
@@ -90,10 +100,11 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     },
     {
       key: "2",
-      label: "  Бичиг баримт",
+      label: "Бичиг баримт",
       children: <Documents data={data} />,
     },
   ];
+
   const leftitems = [
     {
       key: "1",

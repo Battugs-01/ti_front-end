@@ -202,6 +202,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
       },
     ],
   ];
+
   return (
     <div className="px-8">
       <div>

@@ -1,11 +1,9 @@
-import { IModalForm } from "components/modal";
-import { OrphanForm } from "./orphanForm/index";
-import orphanUser from "service/gov-orphan/requests";
 import { useRequest } from "ahooks";
-import uploadFile from "service/uploadFile";
-import { CardInterface } from "service/gov-orphan";
 import { notification } from "antd";
+import { IModalForm } from "components/modal";
 import file from "service/file";
+import orphanUser from "service/gov-orphan/requests";
+import { OrphanForm } from "./orphanForm/index";
 
 type CreateOrphanType = {
   openModal?: boolean;

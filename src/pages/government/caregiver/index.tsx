@@ -22,10 +22,13 @@ const RequestPage: React.FC = () => {
   const elderlyList = useRequest(orphanElderly.elderlyList, {
     manual: true,
   });
+
   const elderlyCount = useRequest(async () => orphanElderly.elderly_counts());
+
   useEffect(() => {
     elderlyList.run({ ...filter, status: caregiverFilterDistrict(tab) });
   }, [filter, tab]);
+
   const searchRun = useDebounceFn(elderlyList.run, { wait: 1000 });
 
   const items = [
@@ -67,7 +70,7 @@ const RequestPage: React.FC = () => {
     },
     {
       key: CaregiverType.canceled,
-      label: "Цуцлагдсан",
+      label: "Асрамжийн газраас буцаагдсан",
       title: elderlyCount?.data?.find(
         (val) => val.status === ElderlyStatus.ElderlyCareCenterReturned
       )?.count,
@@ -76,12 +79,6 @@ const RequestPage: React.FC = () => {
 
   const setPagination = (pageNumber: number, pageSize: number) => {
     setFilter({ ...filter, current: pageNumber, pageSize });
-    // elderlyList?.run({
-    //   ...filter,
-    //   current: pageNumber,
-    //   pageSize,
-    //   status: caregiverFilterDistrict(tab),
-    // });
   };
   const refreshList = () => {
     elderlyList?.run({

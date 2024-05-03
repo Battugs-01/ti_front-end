@@ -24,9 +24,11 @@ export const HealthForm: React.FC<HealthType> = ({ data }) => {
   const [isDisability, setDisability] = useState<boolean>(
     data?.is_disability || false
   );
+
   const disabilityList = useRequest(orphanElderly.disability_type, {
     manual: true,
   });
+
   const uploadDocument = [
     [
       {
@@ -90,6 +92,7 @@ export const HealthForm: React.FC<HealthType> = ({ data }) => {
       },
     ],
   ];
+
   return (
     <div className="px-8 custom-multi-selector">
       <Row gutter={[16, 16]}>

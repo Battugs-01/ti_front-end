@@ -1,7 +1,8 @@
-import { BsChevronRight } from "react-icons/bs";
+import { FilePdfOutlined } from "@ant-design/icons";
+import { Button, Tooltip } from "antd";
+import Handbook from "assets/doc/handbook.pdf";
 import { RiHome6Line } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
-
 export type Props = {
   title?: String;
   subTitle?: String;
@@ -45,8 +46,8 @@ export const PageHeader = ({ title, subTitle }: Props) => {
   };
 
   return (
-    <div>
-      <div className="flex items-center gap-4 mb-4">
+    <div className=" flex items-center justify-between mb-4">
+      <div className="flex items-center gap-4 ">
         <RiHome6Line
           size={20}
           color="#667085"
@@ -68,6 +69,9 @@ export const PageHeader = ({ title, subTitle }: Props) => {
           })}
         </div>
       </div>
+      <Button type="primary" className=" " href={Handbook} target="_blank">
+        Гарын авлага татах
+      </Button>
     </div>
   );
 };

@@ -47,6 +47,10 @@ namespace orphanElderly {
     http.get<CardInterface[]>(`socialworker/elderly/active/care_centers`, {
       hasAuth: true,
     });
+  export const getElderlyEvents = (id: any) =>
+    http.get<any>(`socialworker/elderly/activity/${id}`, {
+      hasAuth: true,
+    });
 }
 
 export default orphanElderly;
