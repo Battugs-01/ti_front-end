@@ -52,15 +52,27 @@ const UserDied: FC<Props> = ({ data }) => {
                 />
                 <CustomCard
                   title="Нас барсан огноо"
-                  children={moment(data?.movement?.death_date).format(
-                    "YYYY/MM/DD"
-                  )}
+                  children={
+                    <div className="text-xs font-bold flex gap-2 ">
+                      <span className="mt-1">
+                        {moment(data?.movement?.death_date).format(
+                          "YYYY/MM/DD"
+                        )}
+                      </span>
+                    </div>
+                  }
                 />
                 <CustomCard
                   title="Нас барсан цаг"
-                  children={moment(data?.movement?.death_date).format(
-                    "HH : mm"
-                  )}
+                  children={
+                    <div className="text-xs font-bold flex gap-2 ">
+                      <span className="mt-1">
+                        {moment(data?.movement?.death_date).format(
+                          "YYYY/MM/DD"
+                        )}
+                      </span>
+                    </div>
+                  }
                 />
                 <CustomCard
                   title="Нас барсны гэрчилгээ"
@@ -93,9 +105,15 @@ const UserDied: FC<Props> = ({ data }) => {
                 />
                 <CustomCard
                   title="Бүртгэсэн огноо"
-                  children={moment(
-                    data?.movement?.charity_work?.created_at
-                  ).format("YYYY/MM/DD")}
+                  children={
+                    <div className="text-xs font-bold flex gap-2 ">
+                      <span className="mt-1">
+                        {moment(
+                          data?.movement?.charity_work?.created_at
+                        ).format("YYYY/MM/DD")}
+                      </span>
+                    </div>
+                  }
                 />
               </div>
             </div>

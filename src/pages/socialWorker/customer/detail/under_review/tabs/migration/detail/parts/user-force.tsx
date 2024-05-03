@@ -53,7 +53,7 @@ const UserForce: FC<Props> = ({ data }) => {
                 <CustomCard
                   title="Дугаар"
                   children={
-                    <div className="text-xs text-[#475467] font-bold flex gap-2 ">
+                    <div className="text-xs  font-bold flex gap-2 ">
                       <span className="mt-1">
                         {data?.movement?.unique_number}
                       </span>
@@ -83,7 +83,7 @@ const UserForce: FC<Props> = ({ data }) => {
                 <CustomCard
                   title="Асрамжийн газар"
                   children={
-                    <div className="text-xs text-[#475467] font-bold flex gap-2 ">
+                    <div className="text-xs  font-bold flex gap-2 ">
                       <span className="mt-1">
                         {data?.care_center?.organization_name}
                       </span>
@@ -147,9 +147,15 @@ const UserForce: FC<Props> = ({ data }) => {
                 />
                 <CustomCard
                   title="Хүлээлгэж өгсөн огноо"
-                  children={moment(data?.movement?.updated_at).format(
-                    "YYYY/MM/DD"
-                  )}
+                  children={
+                    <div className="text-xs font-bold flex gap-2 ">
+                      <span className="mt-1">
+                        {moment(data?.movement?.updated_at).format(
+                          "YYYY/MM/DD"
+                        )}
+                      </span>
+                    </div>
+                  }
                 />
               </div>
             </div>
@@ -163,7 +169,7 @@ const UserForce: FC<Props> = ({ data }) => {
                 <CustomCard
                   title="Нэр"
                   children={
-                    <div className="text-xs text-[#475467] font-bold flex gap-2 ">
+                    <div className="text-xs  font-bold flex gap-2 ">
                       <span className="mt-1">
                         {data?.movement?.received_place?.first_name}
                       </span>
@@ -173,7 +179,7 @@ const UserForce: FC<Props> = ({ data }) => {
                 <CustomCard
                   title="Холбоо барих дугаар"
                   children={
-                    <div className="text-xs text-[#475467] font-bold flex gap-2 ">
+                    <div className="text-xs  font-bold flex gap-2 ">
                       <span className="mt-1">
                         {data?.movement?.received_place?.phone_number}
                       </span>
@@ -183,7 +189,7 @@ const UserForce: FC<Props> = ({ data }) => {
                 <CustomCard
                   title="Албан тушаал"
                   children={
-                    <div className="text-xs text-[#475467] font-bold flex gap-2 ">
+                    <div className="text-xs  font-bold flex gap-2 ">
                       <span className="mt-1">
                         {data?.movement?.received_place?.position}
                       </span>
@@ -192,9 +198,15 @@ const UserForce: FC<Props> = ({ data }) => {
                 />
                 <CustomCard
                   title="Хүлээж авсан огноо"
-                  children={moment(data?.movement?.updated_at).format(
-                    "YYYY/MM/DD"
-                  )}
+                  children={
+                    <div className="text-xs font-bold flex gap-2 ">
+                      <span className="mt-1">
+                        {moment(data?.movement?.updated_at).format(
+                          "YYYY/MM/DD"
+                        )}
+                      </span>
+                    </div>
+                  }
                 />
               </div>
             </div>
