@@ -12,10 +12,10 @@ const CustomCard: React.FC<CustomCardProps> = ({ title, children }) => {
   return (
     <Row gutter={[24, 24]}>
       <Col xs={24} sm={14}>
-        <div className="text-sm font-normal text-gray-600">{title}</div>
+        <div className="text-xs font-normal text-gray-600">{title}</div>
       </Col>
       <Col xs={24} sm={10}>
-        <div className="text-sm font-bold text-gray-900">{children}</div>
+        <div className="text-xs font-bold text-gray-900">{children}</div>
       </Col>
     </Row>
   );

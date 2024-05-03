@@ -35,21 +35,11 @@ const RequestPage: React.FC = () => {
     {
       key: CaregiverType.all,
       label: "Бүгд",
-      title: elderlyCount?.data?.reduce((a, b) => {
-        if (
-          b.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter ||
-          b.status === ElderlyStatus.ElderlyTakingCare ||
-          b.status === ElderlyStatus.ElderlyWaiting ||
-          b.status === ElderlyStatus.ElderlyCareCenterReturned
-        ) {
-          return a + b.count;
-        }
-        return a;
-      }, 0),
+      title: elderlyList?.data?.total,
     },
     {
       key: CaregiverType.distribute,
-      label: "Хуваарилсан",
+      label: "Асрамжийн газарт хуваарилсан",
       title: elderlyCount?.data?.find(
         (val) => val.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter
       )?.count,

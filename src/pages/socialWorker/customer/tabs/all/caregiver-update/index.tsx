@@ -1,7 +1,7 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Modal, notification } from "antd";
+import { Modal, Spin, notification } from "antd";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -419,7 +419,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   return (
     <div>
       {uploadMulti?.loading || toDistrict.loading ? (
-        <PageLoading />
+        <Spin className="flex justify-center items-center" />
       ) : (
         <StepsForm
           formRef={formRef}

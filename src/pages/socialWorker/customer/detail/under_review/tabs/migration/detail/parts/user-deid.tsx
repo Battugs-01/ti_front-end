@@ -12,7 +12,6 @@ interface Props {
 }
 
 const UserDied: FC<Props> = ({ data }) => {
-  console.log(data, "sdaa");
   return (
     <>
       <div className="flex-col flex items-start">

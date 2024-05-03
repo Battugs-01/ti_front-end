@@ -4,6 +4,7 @@ import moment from "moment";
 import { ElderlyInterface } from "service/social-worker/customer/type";
 import { Migration } from "./tabs/migration";
 import { Documents } from "./documents";
+import { PageLoading } from "@ant-design/pro-layout";
 
 type UnderReviewProps = {
   data?: ElderlyInterface;
@@ -157,12 +158,16 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
   return (
     <div className="w-full flex gap-4 p-4 bg-[#F5F8F8] box-border xl:flex-row flex-col">
       <div className="box-border xl:w-[35%] w-full flex flex-col">
-        <LeftDetail
-          url={data?.profile?.physical_path || ""}
-          items={leftitems}
-          last_name={data?.last_name}
-          first_name={data?.first_name}
-        />
+        {data ? (
+          <LeftDetail
+            url={data?.profile?.physical_path || ""}
+            items={leftitems}
+            last_name={data?.last_name}
+            first_name={data?.first_name}
+          />
+        ) : (
+          <PageLoading />
+        )}
       </div>
       <div className="xl:w-[65%] w-full">
         <RightDetail items={rightDetail} />

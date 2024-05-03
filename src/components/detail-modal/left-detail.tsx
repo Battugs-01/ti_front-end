@@ -2,6 +2,7 @@ import { Avatar, Card } from "antd";
 import React from "react";
 import { Collapse } from "antd";
 import file from "service/file";
+import { PageLoading } from "@ant-design/pro-layout";
 
 interface LeftDetailProps {
   items: any;

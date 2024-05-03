@@ -19,7 +19,7 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
     case ElderlyStatus.ElderlyRequestSendSendToCareCenter:
-      text = "Хуваарилсан";
+      text = "Асрамжийн газарт хуваарилсан";
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
     case ElderlyStatus.ElderlyWaiting:
@@ -42,6 +42,10 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
       text = "Нас барсан";
       colorClass = "bg-red-50 text-red-700";
       break;
+    case ElderlyStatus.MovingCarecenter:
+      text = "Асрамжийн газар хооронд шилжсэн";
+      colorClass = "bg-gray-50 text-gray-700";
+      break;
     case ElderlyStatus.ReturnSum:
       text = "Буцаагдсан";
       colorClass = "bg-[#FEF3F2] text-[#F04438]";
@@ -49,6 +53,14 @@ const CareGiverBadge: FC<Props> = ({ status, desc }) => {
     case ElderlyStatus.WaitDistrict:
       text = "Хүлээлэгт орсон";
       colorClass = "bg-blue-50 text-blue-700";
+      break;
+    case ElderlyStatus.OwnRequestCarecenter:
+      text = "Өөрийн хүсэлтээр гарсан";
+      colorClass = "bg-gray-50 text-gray-700";
+      break;
+    case ElderlyStatus.UserForce:
+      text = "Албадан гаргасан";
+      colorClass = "bg-gray-50 text-gray-700";
       break;
     default:
       text = "Хадгалагдсан";

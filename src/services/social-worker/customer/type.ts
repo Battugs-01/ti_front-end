@@ -14,9 +14,12 @@ export enum ElderlyStatus {
   ElderlyAllocated = 5,
   ElderlyTakingCare = 6,
   ElderlyCareCenterReturned = 7,
-  ElderlyDied = 14, /// xalit 14 bolgow darhaa axaas asuuna
+  ElderlyDied = 14, /// xalit 14 bolgow darhaa axaas asuuna ug n 8 bsan
   ReturnSum = 9,
+  MovingCarecenter = 11,
+  OwnRequestCarecenter = 12,
   WaitDistrict = 10,
+  UserForce = 13,
 }
 
 export enum RequestType {
