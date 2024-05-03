@@ -52,7 +52,7 @@ export const IModalForm = ({
     <ModalForm
       {...rest}
       onFinishFailed={(err) => {
-        notification.info({ message: "Please, fill the require fields." });
+        notification.info({ message: "Талбарын утга дутуу эсвэл буруу байна." });
       }}
       scrollToFirstError={{
         behavior: "smooth",

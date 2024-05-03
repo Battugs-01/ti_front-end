@@ -105,7 +105,7 @@ const EmployeePage: React.FC = () => {
           formRef={formRef}
           onOpenChange={() => formRef.current?.resetFields()}
           width={724}
-          title="Үйлчлүүлэгч нэмэх"
+          title="Ажилтан нэмэх"
           modalProps={{ onCancel: cancelModal }}
           okText="Нэмэх"
           onRequest={async (values) => {
