@@ -6,6 +6,7 @@ import CareGiverBadge from "components/badge/caregiver";
 import moment from "moment";
 import { CareCenter } from "service/social-worker/customer/type";
 import file from "service/file";
+import dayjs from "dayjs";
 
 const color = "#144E5A";
 
@@ -34,8 +35,8 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
         <div>
           <RightContent
             refreshList={refreshList}
-            updatedDate={moment(data?.updated_at).format("l")}
-            date={moment(data?.created_at).format("l")}
+            updatedDate={dayjs(data?.updated_at).format("YYYY/MM/DD HH:MM")}
+            date={dayjs(data?.created_at).format("YYYY/MM/DD HH:MM")}
             state={data?.status || 0}
             id={data?.elderly_id}
             careCenter={data?.care_center as CareCenter}
