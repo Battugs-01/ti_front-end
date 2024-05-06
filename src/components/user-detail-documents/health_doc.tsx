@@ -30,6 +30,8 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
       size: value?.files[0]?.file_size,
       path: value?.files[0]?.physical_path,
       isHave: value.files.length > 0,
+      files: value?.files,
+      id: value?.id,
     };
   });
 
@@ -48,17 +50,11 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
             render: (value, record) => (
               <div className="flex flex-col justify-center">
                 <span
-                  className={`text-base font-bold flex text-center ${record.isHave ? "text-[#344054]" : "text-[#DD695C]"
-                    }`}
+                  className={`text-base font-bold flex text-center ${
+                    record.isHave ? "text-[#344054]" : "text-[#DD695C]"
+                  }`}
                 >
                   {value || "-"}
-                </span>
-
-                <span className="font-normal text-sm text-gray-600">
-                  Хэмжээ :{" "}
-                  <span className="font-bold">
-                    {formatKB(record?.size || 0, 2)}
-                  </span>
                 </span>
               </div>
             ),
@@ -78,38 +74,69 @@ export const HealthDoc: React.FC<DocumentsType> = ({ data }) => {
             ),
           },
         ]}
-        customActions={(record) => {
-          return record.isHave ? (
-            <div className="flex gap-2 items-center">
-              <div className="p-4 cursor-pointer">
-                <Link
-                  to={file.fileToUrl(record?.path as string)}
-                  className="p-4 cursor-pointer  text-gray-700"
-                  target="blank"
-                  download
-                >
-                  <AiOutlineEye
-                    size={20}
-                    className={" text-gray-700"}
-                  // onClick={() => setFileOpen(record)}
-                  />
-                </Link>
-              </div>
-              <Link
-                to={file.fileToUrl(record?.path as string)}
-                className="p-4 cursor-pointer  text-gray-700"
-                target="blank"
-                download
-              >
-                <CloudDownloadOutlined
-                  style={{
-                    fontSize: 20,
-                  }}
-                  rev={undefined}
-                />
-              </Link>
+        expandable={{
+          rowExpandable: (record: any) => record?.files?.length > 0,
+          expandedRowRender: (record: any) => (
+            <div className="">
+              <ITable
+                dataSource={record?.files || []}
+                className="p-0 m-0 remove-padding-table custom-ant-card-padding-border-remove"
+                id="main-table"
+                columns={[
+                  {
+                    dataIndex: "original_name",
+                    render: (_, record) => (
+                      <div className="flex flex-col justify-center">
+                        <span className="text-base font-bold flex text-center">
+                          {record?.original_name || "-"}
+                        </span>
+                        <span className="font-normal text-sm text-gray-600">
+                          Хэмжээ :
+                          <span className="font-bold">
+                            {formatKB(record?.file_size || 0, 1)}
+                          </span>
+                        </span>
+                      </div>
+                    ),
+                  },
+                ]}
+                hidePagination
+                customActions={(record: any) => {
+                  return (
+                    <div className="flex gap-2 items-center">
+                      <div className="p-4 cursor-pointer">
+                        <Link
+                          to={file.fileToUrl(record?.physical_path as string)}
+                          className="p-4 cursor-pointer  text-gray-700"
+                          target="blank"
+                          download
+                        >
+                          <AiOutlineEye
+                            size={20}
+                            className={" text-gray-700"}
+                            // onClick={() => setFileOpen(record)}
+                          />
+                        </Link>
+                      </div>
+                      <Link
+                        to={file.fileToUrl(record?.physical_path as string)}
+                        className="p-4 cursor-pointer  text-gray-700"
+                        target="blank"
+                        download
+                      >
+                        <CloudDownloadOutlined
+                          style={{
+                            fontSize: 20,
+                          }}
+                          rev={undefined}
+                        />
+                      </Link>
+                    </div>
+                  );
+                }}
+              />
             </div>
-          ) : null
+          ),
         }}
       />
       {isFileOpen && (

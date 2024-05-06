@@ -297,7 +297,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
             ...info?.address,
           },
           documents: val?.documents,
-          birth_date: moment(info?.birth_date)?.toDate(),
+          birth_date: dayjs(info?.birth_date)?.toDate(),
         },
         id
       );
@@ -418,7 +418,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   };
   return (
     <div>
-      {uploadMulti?.loading || toDistrict.loading ? (
+      {uploadMulti.loading || toDistrict.loading ? (
         <Spin className="flex justify-center items-center" />
       ) : (
         <StepsForm

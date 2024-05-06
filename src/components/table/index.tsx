@@ -41,6 +41,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   scroll?: any;
   actionWidth?: number;
   hidePagination?: boolean;
+  expandable?: any;
   // customListType? : (records) => void
 };
 
@@ -70,6 +71,7 @@ export const ITable = <T extends {}>({
   limit,
   actionWidth,
   hidePagination,
+  expandable,
   ...rest
 }: Props<T>) => {
   // const [pageData, setPageData] = useState<{ page: number; limit: number }>({
@@ -91,9 +93,6 @@ export const ITable = <T extends {}>({
         {...rest}
         actionRef={actionRef}
         options={{
-          // reload: () => {
-          //   refresh?.();
-          // },
           reload: false,
           setting: false,
           density: false,
@@ -102,6 +101,7 @@ export const ITable = <T extends {}>({
         scroll={scroll}
         size="small"
         search={false}
+        expandable={expandable}
         pagination={
           !hidePagination && {
             className: "px-6 font-semibold text-gray-500",

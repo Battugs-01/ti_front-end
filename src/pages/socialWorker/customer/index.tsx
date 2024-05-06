@@ -36,7 +36,7 @@ const CustomerPage: React.FC = () => {
 
   useEffect(() => {
     elderlyCount.run();
-  }, []);
+  }, [elderlyCountBoolean]);
 
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });

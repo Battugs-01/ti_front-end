@@ -1,13 +1,11 @@
 import { ProFormRadio } from "@ant-design/pro-form";
 import { IfCondition } from "components/condition";
 import { useState } from "react";
-
 import { ElderlyInterface } from "service/social-worker/customer/type";
-
-import { ClientDoc } from "./client_doc";
-import { HealthDoc } from "./health_doc";
 import { FilterDocumentButton, FilterDocumentline } from "service/gov-requests";
-import { Contract } from "./contract";
+import { Contract } from "components/user-detail-documents/contract";
+import { ClientDoc } from "components/user-detail-documents/client_doc";
+import { HealthDoc } from "components/user-detail-documents/health_doc";
 
 type DocumentsType = {
   data?: ElderlyInterface;

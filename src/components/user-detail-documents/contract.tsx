@@ -1,10 +1,10 @@
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { Button, Flex, Modal } from "antd";
+import None from "assets/government/icons/none.svg";
 import { ITable } from "components/table";
 import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import None from "assets/government/icons/none.svg";
 import { Link } from "react-router-dom";
 import file from "service/file";
 import { ElderlyInterface } from "service/social-worker/customer/type";
@@ -27,15 +27,15 @@ export const Contract: React.FC<DocumentsType> = ({ data }) => {
   const documentList = [
     {
       name: "Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас",
-      size: data?.situational[0]?.file_size,
-      path: data?.situational[0]?.physical_path,
+      id: 1,
       isHave: data?.situational?.length ?? 0 > 0,
+      files: data?.situational,
     },
     {
+      id: 2,
       name: "Сум, хорооны Засаг даргын тодорхойлолт",
-      size: data?.definition_governor[0]?.file_size,
-      path: data?.definition_governor[0]?.physical_path,
       isHave: data?.definition_governor?.length ?? 0 > 0,
+      files: data?.definition_governor,
     },
   ];
 
@@ -56,16 +56,11 @@ export const Contract: React.FC<DocumentsType> = ({ data }) => {
               render: (value, record) => (
                 <div className="flex flex-col justify-center">
                   <span
-                    className={`text-base font-bold flex text-center ${record.isHave ? "text-[#344054]" : "text-[#DD695C]"
-                      }`}
+                    className={`text-base font-bold flex text-center ${
+                      record.isHave ? "text-[#344054]" : "text-[#DD695C]"
+                    }`}
                   >
                     {value || "-"}
-                  </span>
-                  <span className="font-normal text-sm text-gray-600">
-                    Хэмжээ :{" "}
-                    <span className="font-bold">
-                      {formatKB(record?.size || 0, 2)}
-                    </span>
                   </span>
                 </div>
               ),
@@ -85,44 +80,69 @@ export const Contract: React.FC<DocumentsType> = ({ data }) => {
               ),
             },
           ]}
-          customActions={(record) => {
-            return record.isHave ? (
-              <>
-                {record.isHave ? (
-                  <div className="flex gap-2 items-center">
-                    <div className="p-4 cursor-pointer">
-                      <Link
-                        to={file.fileToUrl(record?.path as string)}
-                        className="p-4 cursor-pointer  text-gray-700"
-                        target="blank"
-                        download
-                      >
-                        <AiOutlineEye
-                          size={20}
-                          className={" text-gray-700"}
-                        // onClick={() => setFileOpen(record)}
-                        />
-                      </Link>
-                    </div>
-                    <Link
-                      to={file.fileToUrl(record?.path as string)}
-                      className="p-4 cursor-pointer  text-gray-700"
-                      target="blank"
-                      download
-                    >
-                      <CloudDownloadOutlined
-                        style={{
-                          fontSize: 20,
-                        }}
-                        rev={undefined}
-                      />
-                    </Link>
-                  </div>
-                ) : (
-                  <div>Файл байхгүй байна</div>
-                )}
-              </>
-            ) : null
+          expandable={{
+            rowExpandable: (record: any) => record?.files?.length > 0,
+            expandedRowRender: (record: any) => (
+              <div className="mb-2">
+                <ITable
+                  dataSource={record?.files || []}
+                  className="p-0 m-0 remove-padding-table custom-ant-card-padding-border-remove"
+                  id="main-table"
+                  columns={[
+                    {
+                      dataIndex: "original_name",
+                      render: (_, record) => (
+                        <div className="flex flex-col justify-center">
+                          <span className="text-base font-bold flex text-center">
+                            {record?.original_name || "-"}
+                          </span>
+                          <span className="font-normal text-sm text-gray-600">
+                            Хэмжээ :
+                            <span className="font-bold">
+                              {formatKB(record?.file_size || 0, 1)}
+                            </span>
+                          </span>
+                        </div>
+                      ),
+                    },
+                  ]}
+                  hidePagination
+                  customActions={(record: any) => {
+                    return (
+                      <div className="flex gap-2 items-center">
+                        <div className="p-4 cursor-pointer">
+                          <Link
+                            to={file.fileToUrl(record?.physical_path as string)}
+                            className="p-4 cursor-pointer  text-gray-700"
+                            target="blank"
+                            download
+                          >
+                            <AiOutlineEye
+                              size={20}
+                              className={" text-gray-700"}
+                              // onClick={() => setFileOpen(record)}
+                            />
+                          </Link>
+                        </div>
+                        <Link
+                          to={file.fileToUrl(record?.physical_path as string)}
+                          className="p-4 cursor-pointer  text-gray-700"
+                          target="blank"
+                          download
+                        >
+                          <CloudDownloadOutlined
+                            style={{
+                              fontSize: 20,
+                            }}
+                            rev={undefined}
+                          />
+                        </Link>
+                      </div>
+                    );
+                  }}
+                />
+              </div>
+            ),
           }}
         />
         {isFileOpen && (

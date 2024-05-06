@@ -61,6 +61,10 @@ export const UploadDraggerButton = ({
                     message: FieldRequireMessage,
                     required: true,
                   },
+                  {
+                    pattern: /.+\.(pdf|png|jpe?g)$/i,
+                    message: "Зөвхөн pdf, png, jpg файл байх ёстой",
+                  },
                 ]
             : undefined
         }
@@ -84,8 +88,8 @@ export const UploadButton = ({
         title={title}
         label={label}
         extra="PNG, JPG, PDF (Хэмжээ :800*400px)"
-        // max={1}
         width={400}
+        accept=".jpg,.jpeg,.png,.pdf"
         fieldProps={{
           beforeUpload: (_) => false,
           multiple: true,
@@ -114,6 +118,10 @@ export const UploadButton = ({
                 {
                   message: FieldRequireMessage,
                   required: true,
+                },
+                {
+                  pattern: /.+\.(pdf|png|jpe?g)$/i,
+                  message: "Зөвхөн pdf, png, jpg файл байх ёстой",
                 },
               ]
             : undefined

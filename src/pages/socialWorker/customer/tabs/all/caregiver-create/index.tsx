@@ -106,6 +106,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         <StepsForm
           formRef={formRef}
           onFinish={async (val) => {
+            console.log(val, "valll");
             const profile = await uploadProfile.runAsync({
               file: val?.profile?.[0]?.originFileObj,
             });
@@ -195,17 +196,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* {step !== 0 && (
-                    <DefaultButton
-                      loading={elderly.loading}
-                      onClick={() => {
-                        onSubmit && onSubmit();
-                        setSave(true);
-                      }}
-                      icon={<img src={SaveIcon} />}
-                      title="Түр хадгалах"
-                    />
-                  )} */}
                     {step === 3 ? (
                       <CustomButton
                         loading={elderly.loading}
@@ -258,11 +248,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         >
           <StepsForm.StepForm
             name="giver-info"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Үйлчлүүлэгчийн хувийн мэдээлэл
-            //   </div>
-            // }
             title="Үйлчлүүлэгчийн хувийн мэдээлэл"
             onFinish={async (val) => {
               setInfo(val);
@@ -273,11 +258,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="documents"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Бүрдүүлэх бичиг баримт
-            //   </div>
-            // }
             title="Бүрдүүлэх бичиг баримт"
             onFinish={async (values: any) => {
               if (isSave) {
@@ -311,11 +291,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="health"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Эрүүл мэндийн байдал
-            //   </div>
-            // }
             title="Эрүүл мэндийн байдал"
             onFinish={async (values: any) => {
               if (isSave) {
@@ -359,11 +334,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="request"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Хүсэлт илгээх
-            //   </div>
-            // }
             title="Хүсэлт илгээх"
             onFinish={async (values) => {
               return true;

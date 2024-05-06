@@ -16,6 +16,7 @@ import {
   MaritalStatus,
   workersGenderArray,
 } from "config";
+import { debounce } from "lodash";
 import { useState } from "react";
 import address from "service/address";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
@@ -26,12 +27,15 @@ type FormType = {
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
   const [isDisability, setDisability] = useState<boolean>(false);
+
   const city = useRequest(address.city, {
     manual: true,
   });
+
   const district = useRequest(address.district, {
     manual: true,
   });
+
   const khoroo = useRequest(address.khoroo, {
     manual: true,
   });
@@ -77,10 +81,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
               },
             }}
           />
-          {/* <UploadDraggerButton
-            name="profile_id"
-            label={"Цээж зураг (3x4 хэмжээтэй)"}
-          /> */}
         </Col>
       </Row>
       <Row gutter={[24, 24]} className="w-full">
@@ -210,30 +210,6 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
           />
         </Col>
       </Row>
-      {/* <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <ProFormSwitch
-            name="is_disability"
-            label="Хөгжлийн бэрхшээлтэй эсэх"
-            fieldProps={{
-              onChange: (checked) => {
-                setDisability(checked);
-              },
-            }}
-          />
-        </Col>
-      </Row>
-      {isDisability && (
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <ProFormTextArea
-              name="disability_desc"
-              placeholder={"Тийм бол онош, ХЧА-ын хувь"}
-              rules={FORM_ITEM_RULE()}
-            />
-          </Col>
-        </Row>
-      )} */}
       <div
         className="pt-5 text-lg font-medium"
         style={{ borderTop: "1px solid #EAECF0" }}
@@ -246,16 +222,15 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name={["address", "city_id"]}
             placeholder="Сонгох"
             label={"Аймаг/Нийслэл"}
-            // options={city.data?.map((item: any) => {
-            //   return {
-            //     label: item.name,
-            //     value: item.id,
-            //   };
-            // })}
             onChange={(val) => {
               form?.setFieldValue(["address", "district_id"], undefined);
               form?.setFieldValue(["address", "khoroo_id"], undefined);
               district.run(val);
+            }}
+            fieldProps={{
+              showSearch: true,
+              loading: city?.loading,
+              filterOption: false,
             }}
             request={async () => {
               const data = await city.runAsync();
