@@ -16,6 +16,7 @@ import {
   MaritalStatus,
   workersGenderArray,
 } from "config";
+import dayjs from "dayjs";
 import { debounce } from "lodash";
 import { useState } from "react";
 import address from "service/address";
@@ -135,6 +136,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="birth_date"
             placeholder="Төрсөн огноо оруулна уу"
             label={"Төрсөн огноо"}
+            initialValue={dayjs().toDate()}
             rules={FORM_ITEM_RULE()}
           />
         </Col>

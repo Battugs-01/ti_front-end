@@ -37,6 +37,7 @@ export const UploadDraggerButton = ({
             <div className="">SVG,PNG,JPG or GIF (Хэмжээ :800*400px)</div>
           </div>
         }
+        // accept=""
         icon={false}
         description={false}
         fieldProps={{
@@ -61,10 +62,10 @@ export const UploadDraggerButton = ({
                     message: FieldRequireMessage,
                     required: true,
                   },
-                  {
-                    pattern: /.+\.(pdf|png|jpe?g)$/i,
-                    message: "Зөвхөн pdf, png, jpg файл байх ёстой",
-                  },
+                  // {
+                  //   message: "Зөвхөн pdf, png, jpg файл байх ёстой",
+                  //   pattern: /.+\.(pdf|png|jpe?g)$/i,
+                  // },
                 ]
             : undefined
         }
