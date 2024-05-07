@@ -120,10 +120,10 @@ export const UploadButton = ({
                   message: FieldRequireMessage,
                   required: true,
                 },
-                {
-                  pattern: /.+\.(pdf|png|jpe?g)$/i,
-                  message: "Зөвхөн pdf, png, jpg файл байх ёстой",
-                },
+                // {
+                //   pattern: /.+\.(pdf|png|jpe?g)$/i,
+                //   message: "Зөвхөн pdf, png, jpg файл байх ёстой",
+                // },
               ]
             : undefined
         }
