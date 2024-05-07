@@ -41,7 +41,11 @@ const RequestPage: React.FC = () => {
           b.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter ||
           b.status === ElderlyStatus.ElderlyTakingCare ||
           b.status === ElderlyStatus.ElderlyWaiting ||
-          b.status === ElderlyStatus.ElderlyCareCenterReturned
+          b.status === ElderlyStatus.ElderlyCareCenterReturned ||
+          b.status === ElderlyStatus.ElderlyDied ||
+          b.status === ElderlyStatus.MovingCarecenter ||
+          b.status === ElderlyStatus.OwnRequestCarecenter ||
+          b.status === ElderlyStatus.UserForce
         ) {
           return a + b.count;
         }
