@@ -13,6 +13,7 @@ import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { Avatar } from "antd";
 import file from "service/file";
+import { RiEBikeLine } from "react-icons/ri";
 
 const RightContent: React.FC<RightContentType> = ({
   state,
@@ -20,6 +21,7 @@ const RightContent: React.FC<RightContentType> = ({
   id,
   updatedDate,
   careCenter,
+  elderly_id,
   refreshList,
   rd,
   description,
@@ -50,7 +52,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
           </div>
@@ -59,7 +61,7 @@ const RightContent: React.FC<RightContentType> = ({
               refreshList={refreshList}
               data={isEdit}
               cancelStepModal={cancelModal}
-              id={id}
+              id={elderly_id}
             />
           )}
         </Fragment>
@@ -85,6 +87,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -111,6 +114,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -137,6 +141,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -176,6 +181,7 @@ const RightContent: React.FC<RightContentType> = ({
           </div>
           {isDetail && (
             <Detail
+              elderly_id={elderly_id}
               refreshList={refreshList}
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
@@ -217,6 +223,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -245,7 +252,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
             {isEdit && (
@@ -253,7 +260,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -264,6 +271,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -288,7 +296,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -299,6 +307,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -323,7 +332,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -334,6 +343,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -362,7 +372,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
             {isEdit && (
@@ -370,7 +380,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -381,6 +391,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -405,7 +416,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -415,6 +426,7 @@ const RightContent: React.FC<RightContentType> = ({
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={state || 0}
+              elderly_id={elderly_id}
               id={id}
               rd={rd}
             />
@@ -440,7 +452,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -451,6 +463,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -470,7 +483,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={() => {
                 elderly?.run();
-                setEdit(elderly?.data);
+                setEdit(elderly?.data?.elderly);
               }}
             />
           </div>

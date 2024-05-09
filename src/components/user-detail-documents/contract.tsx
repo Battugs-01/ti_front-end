@@ -7,11 +7,14 @@ import { AiOutlineEye } from "react-icons/ai";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import file from "service/file";
-import { ElderlyInterface } from "service/social-worker/customer/type";
+import {
+  ElderlyInterface,
+  GetElderlyInterface,
+} from "service/social-worker/customer/type";
 import { formatKB } from "utils/index";
 
 type DocumentsType = {
-  data?: ElderlyInterface;
+  data?: GetElderlyInterface;
 };
 
 interface DocumentList {
@@ -24,18 +27,31 @@ interface DocumentList {
 export const Contract: React.FC<DocumentsType> = ({ data }) => {
   const [isFileOpen, setFileOpen] = useState<any | undefined>(undefined);
 
+  console.log(data, "sda");
   const documentList = [
     {
       name: "Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас",
       id: 1,
-      isHave: data?.situational?.length ?? 0 > 0,
-      files: data?.situational,
+      isHave: data?.elderly?.situational?.length ?? 0 > 0,
+      files: data?.elderly?.situational,
     },
     {
       id: 2,
       name: "Сум, хорооны Засаг даргын тодорхойлолт",
-      isHave: data?.definition_governor?.length ?? 0 > 0,
-      files: data?.definition_governor,
+      isHave: data?.elderly?.definition_governor?.length ?? 0 > 0,
+      files: data?.elderly?.definition_governor,
+    },
+    {
+      id: 3,
+      name: "Аймаг, дүүргийн засаг даргын захирамж",
+      isHave: data?.ordinances?.length ?? 0 > 0,
+      files: data?.ordinances,
+    },
+    {
+      id: 4,
+      name: "Хөдөлмөр, халамжийн үйлчилгээний газар, хэлтсийн албан тоот",
+      isHave: data?.welfare_documents?.length ?? 0 > 0,
+      files: data?.welfare_documents,
     },
   ];
 

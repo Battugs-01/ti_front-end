@@ -26,6 +26,7 @@ type DetailProps = {
   visibleDetail?: boolean;
   cancelDetail?: () => void;
   id?: number;
+  elderly_id?: number;
   status?: number;
   refreshList?: () => void;
 };
@@ -35,6 +36,7 @@ export const Detail: React.FC<DetailProps> = ({
   cancelDetail,
   id,
   status,
+  elderly_id,
   refreshList,
 }) => {
   const [current, setCurrent] = useState(1);
@@ -97,7 +99,7 @@ export const Detail: React.FC<DetailProps> = ({
               ordinances_file_ids: [ordinances[0]?.id],
               welfare_document_file_ids: [welfare[0]?.id],
             },
-            id
+            elderly_id
           );
         }}
         formProps={{
@@ -165,7 +167,7 @@ export const Detail: React.FC<DetailProps> = ({
                       title="Буцаах"
                       isDelete
                       onClick={() => {
-                        setIsReturn(elderlyDetail?.data);
+                        setIsReturn(elderlyDetail?.data?.elderly);
                         // cancelDetail?.();
                         onSubmit && onSubmit();
                       }}
@@ -251,15 +253,10 @@ export const Detail: React.FC<DetailProps> = ({
             return true;
           }}
         >
-          <UnderReview data={elderlyDetail?.data} />
+          <UnderReview data={elderlyDetail?.data?.elderly} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="distribute"
-          // title={
-          //   <div className="text-[#344054] font-semibold mt-2 ml-6">
-          //     Хуваарилах
-          //   </div>
-          // }
           title="Хуваарилах"
           onFinish={async (values: any) => {
             return true;

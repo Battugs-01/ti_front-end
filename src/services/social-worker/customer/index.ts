@@ -1,5 +1,10 @@
 import http from "service/index";
-import { CardInterface, DataType, ElderlyInterface } from "./type";
+import {
+  CardInterface,
+  DataType,
+  ElderlyInterface,
+  GetElderlyInterface,
+} from "./type";
 import { DisabilityTypeInterface } from "service/base/type";
 import { tabCounts } from "service/gov-requests";
 
@@ -20,7 +25,7 @@ namespace orphanElderly {
       body,
     });
   export const getElderly = (id: any) =>
-    http.get<ElderlyInterface>(`socialworker/elderly/${id}`, {
+    http.get<GetElderlyInterface>(`socialworker/elderly/${id}`, {
       hasAuth: true,
     });
   export const sendToDistrict = (id: any) =>

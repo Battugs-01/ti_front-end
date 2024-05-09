@@ -30,7 +30,11 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
           <CareGiverBadge status={data?.status} />
         </div>
         <div>
-          <RightContent data={data} refreshList={refreshList} />
+          <RightContent
+            data={data}
+            refreshList={refreshList}
+            elderly_id={data?.elderly_id}
+          />
         </div>
       </div>
     </div>

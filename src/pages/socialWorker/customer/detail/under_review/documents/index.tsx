@@ -2,15 +2,15 @@ import { ProFormRadio } from "@ant-design/pro-form";
 import { IfCondition } from "components/condition";
 import { useState } from "react";
 
-import { ElderlyInterface } from "service/social-worker/customer/type";
+import { GetElderlyInterface } from "service/social-worker/customer/type";
 
-import { FilterDocumentButton, FilterDocumentline } from "service/gov-requests";
-import { Contract } from "components/user-detail-documents/contract";
 import { ClientDoc } from "components/user-detail-documents/client_doc";
+import { Contract } from "components/user-detail-documents/contract";
 import { HealthDoc } from "components/user-detail-documents/health_doc";
+import { FilterDocumentButton, FilterDocumentline } from "service/gov-requests";
 
 type DocumentsType = {
-  data?: ElderlyInterface;
+  data?: GetElderlyInterface;
 };
 
 export const Documents: React.FC<DocumentsType> = ({ data }) => {
@@ -59,11 +59,11 @@ export const Documents: React.FC<DocumentsType> = ({ data }) => {
       />
       <IfCondition
         condition={tab === FilterDocumentline.client_doc}
-        whenTrue={<ClientDoc data={data?.documents} />}
+        whenTrue={<ClientDoc data={data?.elderly?.documents} />}
       />
       <IfCondition
         condition={tab === FilterDocumentline.health_doc}
-        whenTrue={<HealthDoc data={data?.laboratory_tests} />}
+        whenTrue={<HealthDoc data={data?.elderly?.laboratory_tests} />}
       />
     </>
   );

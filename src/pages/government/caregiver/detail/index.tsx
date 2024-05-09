@@ -42,7 +42,7 @@ const Detail: React.FC<DetailProps> = ({
           },
         }}
       >
-        <UnderReview data={elderlyDetail?.data} />
+        <UnderReview data={elderlyDetail?.data?.elderly} />
       </ModalForm>
     </div>
   );

@@ -66,7 +66,7 @@ const List: React.FC<ElderlyListProps> = ({ data, refreshList }) => {
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
-              id={data?.elderly_id}
+              id={data?.id}
             />
           )}
         </div>
