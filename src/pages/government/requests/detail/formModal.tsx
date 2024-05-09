@@ -253,7 +253,7 @@ export const Detail: React.FC<DetailProps> = ({
             return true;
           }}
         >
-          <UnderReview data={elderlyDetail?.data?.elderly} />
+          <UnderReview data={elderlyDetail?.data} />
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="distribute"
