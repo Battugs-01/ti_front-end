@@ -35,7 +35,7 @@ const UserSent: FC<Props> = ({ data }) => {
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <File
             size={data?.elderly?.definition_governor[0]?.file_size}
             file_name={data?.elderly?.definition_governor[0]?.original_name}
@@ -46,7 +46,7 @@ const UserSent: FC<Props> = ({ data }) => {
             size={data?.elderly?.situational[0]?.file_size}
             file_name={data?.elderly?.situational[0]?.original_name}
           />
-        </div>
+        </div> */}
 
         {/* <div className="bg-[#F5F8F8] rounded-full px-3 py-2 ">
           <span className="text-sm font-medium">

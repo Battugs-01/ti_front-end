@@ -27,7 +27,6 @@ interface DocumentList {
 export const Contract: React.FC<DocumentsType> = ({ data }) => {
   const [isFileOpen, setFileOpen] = useState<any | undefined>(undefined);
 
-  console.log(data, "sda");
   const documentList = [
     {
       name: "Нийгмийн ажилтны нөхцөл байдлын үнэлгээний хуудас",
