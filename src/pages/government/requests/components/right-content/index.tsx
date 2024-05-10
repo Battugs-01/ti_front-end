@@ -1,20 +1,20 @@
+import { useRequest } from "ahooks";
+import { Badge } from "antd";
+import EyeIcon from "assets/government/icons/eye.svg";
+import CheckIcon from "assets/government/icons/white-check.svg";
+import EditIcon from "assets/icons/edit.svg";
+import IBadge from "components/badge";
+import moment from "moment";
+import { CustomButton } from "pages/government/components/button";
 import React, { Fragment, useState } from "react";
 import { RightContentType } from "service/gov-requests";
-import { CustomButton } from "pages/government/components/button";
-import EditIcon from "assets/icons/edit.svg";
-import EyeIcon from "assets/government/icons/eye.svg";
+import orphanElderly from "service/social-worker/customer";
 import {
   ElderlyInterface,
   ElderlyStatus,
 } from "service/social-worker/customer/type";
-import { useRequest } from "ahooks";
-import orphanElderly from "service/social-worker/customer";
 import { Detail } from "../../detail/formModal";
-import moment from "moment";
-import { Badge } from "antd";
 import { WaitDetail } from "../../wait-detail";
-import CheckIcon from "assets/government/icons/white-check.svg";
-import IBadge from "components/badge";
 
 const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
@@ -76,7 +76,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               <Badge status="default" />
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
-                {moment(data?.updated_at).format("l")}
+                {moment(data?.updated_at).format("YYYY/MM/DD HH:mm")}
               </div>
               <Badge status="default" />
               <div className="font-bold">
@@ -108,7 +108,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
             <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap xl:flex-nowrap">
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
-                {moment(data?.created_at).format("l")}
+                {moment(data?.updated_at).format("YYYY/MM/DD HH:mm")}
               </div>
             </div>
             <CustomButton
@@ -190,7 +190,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               <Badge status="default" />
               <div>Илгээсэн огноо:</div>
               <div className="font-bold">
-                {moment(data?.updated_at).format("l")}
+                {moment(data?.updated_at).format("YYYY/MM/DD HH:mm")}
               </div>
               <Badge status="default" />
               <div className="font-bold">

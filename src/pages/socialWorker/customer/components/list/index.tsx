@@ -1,12 +1,11 @@
 import { Avatar, Badge } from "antd";
-import React from "react";
-import { ListProps } from "service/gov-requests";
-import RightContent from "../right-content";
 import CareGiverBadge from "components/badge/caregiver";
-import moment from "moment";
-import { CareCenter } from "service/social-worker/customer/type";
-import file from "service/file";
 import dayjs from "dayjs";
+import React from "react";
+import file from "service/file";
+import { ListProps } from "service/gov-requests";
+import { CareCenter } from "service/social-worker/customer/type";
+import RightContent from "../right-content";
 
 const color = "#144E5A";
 
