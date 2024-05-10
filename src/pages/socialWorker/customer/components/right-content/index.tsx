@@ -13,6 +13,7 @@ import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
 import { Avatar } from "antd";
 import file from "service/file";
+import { RiEBikeLine } from "react-icons/ri";
 
 const RightContent: React.FC<RightContentType> = ({
   state,
@@ -20,9 +21,10 @@ const RightContent: React.FC<RightContentType> = ({
   id,
   updatedDate,
   careCenter,
+  elderly_id,
   refreshList,
   rd,
-  description
+  description,
 }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
@@ -50,7 +52,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
           </div>
@@ -59,7 +61,7 @@ const RightContent: React.FC<RightContentType> = ({
               refreshList={refreshList}
               data={isEdit}
               cancelStepModal={cancelModal}
-              id={id}
+              id={elderly_id}
             />
           )}
         </Fragment>
@@ -85,6 +87,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -111,6 +114,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -122,14 +126,14 @@ const RightContent: React.FC<RightContentType> = ({
         <Fragment>
           <div className="w-full flex items-center gap-8 flex-wrap xl:flex-nowrap">
             <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
-              <div>Огноо:</div>
+              <div>Хүсэлт илгээсэн огноо:</div>
               <div className="font-bold">{updatedDate}</div>
             </div>
-            {/* <CustomButton
+            <CustomButton
               title="Дэлгэрэнгүй харах"
               icon={<img src={EyeIcon} />}
-              // onClick={() => setIsDetail(true)}
-            /> */}
+              onClick={() => setIsDetail(true)}
+            />
           </div>
           {isDetail && (
             <Detail
@@ -137,6 +141,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -149,9 +154,7 @@ const RightContent: React.FC<RightContentType> = ({
           <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
             <div className="flex items-center gap-1">
               <div>Шалтгаан:</div>
-              <div className="font-bold">
-                {description}
-              </div>
+              <div className="font-bold">{description}</div>
             </div>
             <div className="flex items-center gap-1">
               <div>Ирсэн огноо:</div>
@@ -178,6 +181,7 @@ const RightContent: React.FC<RightContentType> = ({
           </div>
           {isDetail && (
             <Detail
+              elderly_id={elderly_id}
               refreshList={refreshList}
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
@@ -219,6 +223,7 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -235,9 +240,7 @@ const RightContent: React.FC<RightContentType> = ({
             </div>
             <div className="flex items-center gap-1">
               <div>Буцаасан шалтгаан:</div>
-              <div className="font-bold">
-                {description}
-              </div>
+              <div className="font-bold">{description}</div>
             </div>
             <CustomButton
               title="Дэлгэрэнгүй харах"
@@ -249,7 +252,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
             {isEdit && (
@@ -257,7 +260,7 @@ const RightContent: React.FC<RightContentType> = ({
                 refreshList={refreshList}
                 data={isEdit}
                 cancelStepModal={cancelModal}
-                id={id}
+                id={elderly_id}
               />
             )}
           </div>
@@ -268,6 +271,199 @@ const RightContent: React.FC<RightContentType> = ({
               cancelDetail={cancelDetail}
               status={state || 0}
               id={id}
+              elderly_id={elderly_id}
+              rd={rd}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.ElderlyDied: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div>Нас барсан огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={elderly_id}
+              />
+            )}
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+              elderly_id={elderly_id}
+              rd={rd}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.MovingCarecenter: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div>Шилжсэн огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={elderly_id}
+              />
+            )}
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+              elderly_id={elderly_id}
+              rd={rd}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.ElderlyCareCenterReturned: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div>Илгээсэн огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <div className="flex items-center gap-1">
+              <div>Буцаасан шалтгаан:</div>
+              <div className="font-bold">{description}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+            <CustomButton
+              title="Мэдээлэл засах"
+              icon={<img src={EditIcon} />}
+              onClick={async () => {
+                const data = await elderly?.runAsync();
+                setEdit(data?.elderly);
+              }}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={elderly_id}
+              />
+            )}
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+              elderly_id={elderly_id}
+              rd={rd}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.UserForce: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div>Гаргасан огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={elderly_id}
+              />
+            )}
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              elderly_id={elderly_id}
+              id={id}
+              rd={rd}
+            />
+          )}
+        </Fragment>
+      );
+    }
+    case ElderlyStatus.OwnRequestCarecenter: {
+      return (
+        <Fragment>
+          <div className="w-full flex items-center gap-3 flex-wrap  xl:flex-nowrap">
+            <div className="flex items-center gap-1 text-sm text-[#475467] flex-wrap   xl:flex-nowrap xl:mt-0 mt-4">
+              <div>Гарсан огноо:</div>
+              <div className="font-bold">{updatedDate}</div>
+            </div>
+            <CustomButton
+              title="Дэлгэрэнгүй харах"
+              icon={<img src={EyeIcon} />}
+              onClick={() => setIsDetail(true)}
+            />
+            {isEdit && (
+              <CareGiverUpdate
+                refreshList={refreshList}
+                data={isEdit}
+                cancelStepModal={cancelModal}
+                id={elderly_id}
+              />
+            )}
+          </div>
+          {isDetail && (
+            <Detail
+              refreshList={refreshList}
+              visibleDetail={isDetail}
+              cancelDetail={cancelDetail}
+              status={state || 0}
+              id={id}
+              elderly_id={elderly_id}
               rd={rd}
             />
           )}
@@ -287,7 +483,7 @@ const RightContent: React.FC<RightContentType> = ({
               icon={<img src={EditIcon} />}
               onClick={() => {
                 elderly?.run();
-                setEdit(elderly?.data);
+                setEdit(elderly?.data?.elderly);
               }}
             />
           </div>

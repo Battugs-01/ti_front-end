@@ -1,10 +1,10 @@
-import { ProFormCheckbox, ProFormRadio } from "@ant-design/pro-form";
+import { ProFormRadio } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Avatar, Card, Col, Row } from "antd";
-import orphanUser from "service/gov-orphan/requests";
+import { Avatar, Col, Row } from "antd";
 import BedIcon from "assets/government/icons/bed.svg";
 import { UploadDraggerButton } from "components/index";
 import { CardInterface } from "service/gov-orphan";
+import orphanUser from "service/gov-orphan/requests";
 
 type OrphanOptions = {
   label: JSX.Element;

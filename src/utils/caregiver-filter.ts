@@ -13,6 +13,10 @@ export const caregiverFilterDistrict = (tab: String) => {
         ElderlyStatus.ElderlyCareCenterReturned,
         ElderlyStatus.ElderlyTakingCare,
         ElderlyStatus?.ElderlyRequestSendSendToCareCenter,
+        ElderlyStatus?.OwnRequestCarecenter,
+        ElderlyStatus?.MovingCarecenter,
+        ElderlyStatus?.UserForce,
+        ElderlyStatus?.ElderlyDied,
       ];
     case CaregiverType.distribute:
       return [

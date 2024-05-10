@@ -2,10 +2,10 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Timeline, notification } from "antd";
 import CareGiverIconStatus from "components/badge/icon_status";
+import CareGiverComponentStatus from "components/migration-events";
 import { useEffect } from "react";
 import orphanElderly from "service/social-worker/customer";
 import { ElderlyInterface } from "service/social-worker/customer/type";
-import CareGiverComponentStatus from "./detail";
 
 type MigrationType = {
   data?: ElderlyInterface;

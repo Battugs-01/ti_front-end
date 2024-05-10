@@ -37,7 +37,8 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
             updatedDate={dayjs(data?.updated_at).format("YYYY/MM/DD HH:MM")}
             date={dayjs(data?.created_at).format("YYYY/MM/DD HH:MM")}
             state={data?.status || 0}
-            id={data?.elderly_id}
+            elderly_id={data?.elderly_id}
+            id={data?.id}
             careCenter={data?.care_center as CareCenter}
             rd={data?.elderly?.rd}
             description={data?.description}

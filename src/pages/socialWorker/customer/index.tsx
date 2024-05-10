@@ -36,7 +36,7 @@ const CustomerPage: React.FC = () => {
 
   useEffect(() => {
     elderlyCount.run();
-  }, []);
+  }, [elderlyCountBoolean]);
 
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });
@@ -59,18 +59,19 @@ const CustomerPage: React.FC = () => {
           <div className="flex items-center gap-2 h-full">
             <div>Бүгд</div>{" "}
             <IBadge
-              title={elderlyCount?.data?.reduce((a, b) => {
-                if (
-                  b.status === ElderlyStatus?.ElderlySave ||
-                  b.status === ElderlyStatus?.ElderlyWaiting ||
-                  b.status === ElderlyStatus?.ReturnSum ||
-                  b.status === ElderlyStatus?.ElderlyRequestSendToDistrict ||
-                  b.status === ElderlyStatus?.ElderlyTakingCare
-                ) {
-                  return a + b.count;
-                }
-                return a;
-              }, 0)}
+              // title={elderlyCount?.data?.reduce((a, b) => {
+              //   if (
+              //     b.status === ElderlyStatus?.ElderlySave ||
+              //     b.status === ElderlyStatus?.ElderlyWaiting ||
+              //     b.status === ElderlyStatus?.ReturnSum ||
+              //     b.status === ElderlyStatus?.ElderlyRequestSendToDistrict ||
+              //     b.status === ElderlyStatus?.ElderlyTakingCare
+              //   ) {
+              //     return a + b.count;
+              //   }
+              //   return a;
+              // }, 0)}
+              title={list?.data?.total}
               color="gray"
             />
           </div>
@@ -105,11 +106,15 @@ const CustomerPage: React.FC = () => {
           <div className="flex items-center gap-2 h-full">
             <div>Буцаагдсан</div>{" "}
             <IBadge
-              title={
-                elderlyCount?.data?.find(
-                  (val) => val.status === ElderlyStatus.ReturnSum
-                )?.count
-              }
+              title={elderlyCount?.data?.reduce((a, b) => {
+                if (
+                  b.status === ElderlyStatus?.ReturnSum ||
+                  b.status === ElderlyStatus?.ElderlyCareCenterReturned
+                ) {
+                  return a + b.count;
+                }
+                return a;
+              }, 0)}
               color="gray"
             />
           </div>

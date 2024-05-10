@@ -1,101 +1,103 @@
 import LeftDetail from "components/detail-modal/left-detail";
 import RightDetail from "components/detail-modal/right-detail";
 import moment from "moment";
-import { ElderlyInterface } from "service/social-worker/customer/type";
-import { Migration } from "./tabs/migration";
+import { GetElderlyInterface } from "service/social-worker/customer/type";
 import { Documents } from "./documents";
+import { Migration } from "./tabs/migration";
 
 type UnderReviewProps = {
-  data?: ElderlyInterface;
+  data?: GetElderlyInterface;
 };
 
 export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
   const detailPromt = [
     {
       name: "Ургийн овог:",
-      value: data?.family_name,
+      value: data?.elderly?.family_name,
     },
     {
       name: "Регистрийн дугаар:",
-      value: data?.rd,
+      value: data?.elderly?.rd,
     },
     {
       name: "Төрсөн огноо:",
-      value: moment(data?.birth_date).format("l"),
+      value: moment(data?.elderly?.birth_date).format("l"),
     },
     {
       name: "Нас:",
-      value: data?.age,
+      value: data?.elderly?.age,
     },
     {
       name: "Хүйс",
-      value: data?.gender === 0 ? "Эрэгтэй" : "Эмэгтэй",
+      value: data?.elderly?.gender === 0 ? "Эрэгтэй" : "Эмэгтэй",
     },
     {
       name: "Боловсрол",
-      value: data?.education,
+      value: data?.elderly?.education,
     },
     {
       name: "Гэрлэлтийн байдал",
-      value: data?.marriage,
+      value: data?.elderly?.marriage,
     },
     {
       name: "Ам бүл",
-      value: data?.family_count,
+      value: data?.elderly?.family_count,
     },
     {
       name: "Хүүхдийн тоо",
-      value: data?.children_count,
+      value: data?.elderly?.children_count,
     },
     {
       name: "Асруулж байгаа шалтгаан",
-      value: data?.reason,
+      value: data?.elderly?.reason,
     },
     {
       name: "Хөгжлийн бэрхшээлтэй эсэх",
-      value: data?.is_disability ? "Тийм" : "Үгүй",
+      value: data?.elderly?.is_disability ? "Тийм" : "Үгүй",
     },
     {
       name: "Онош, ХЧА-ын хувь",
-      value: data?.disability_percent + "%",
+      value: data?.elderly?.disability_percent + "%",
     },
   ];
-
   {
-    data?.is_disability &&
+    data?.elderly?.is_disability &&
       detailPromt.push({
         name: "Хөгжлийн бэрхшээл",
-        value: data?.disability_types.map((item) => item.name).join(", "),
+        value: data?.elderly?.disability_types
+          .map((item) => item.name)
+          .join(", "),
       });
   }
 
   const addressInfo = [
     {
       name: "Аймаг / Нийслэл",
-      value: data?.address?.city?.name,
+      value: data?.elderly?.address?.city?.name,
     },
     {
       name: "Сум /Дүүрэг",
-      value: data?.address?.district?.name,
+      value: data?.elderly?.address?.district?.name,
     },
     {
       name: "Баг / Хороо",
-      value: data?.address?.khoroo?.name,
+      value: data?.elderly?.address?.khoroo?.name,
     },
     {
       name: "Гудамж / Хороолол",
-      value: data?.address?.street,
+      value: data?.elderly?.address?.street,
     },
     {
       name: "Хашаа / Хаалганы дугаар",
-      value: data?.address?.description,
+      value: data?.elderly?.address?.description,
     },
   ];
+
   const rightDetail = [
     {
       key: "1",
       label: "Үйл явдал",
-      children: <Migration data={data} />,
+      children: <Migration data={data?.elderly} />,
     },
     {
       key: "2",
@@ -156,10 +158,10 @@ export const UnderReview: React.FC<UnderReviewProps> = ({ data }) => {
     <div className="w-full flex gap-4 p-4 bg-[#F5F8F8] box-border xl:flex-row flex-col">
       <div className="xl:w-[35%] w-full box-border">
         <LeftDetail
+          url={data?.elderly?.profile?.physical_path || ""}
           items={leftitems}
-          last_name={data?.last_name}
-          first_name={data?.first_name}
-          url={data?.profile?.physical_path || ""}
+          last_name={data?.elderly?.last_name}
+          first_name={data?.elderly?.first_name}
         />
       </div>
       <div className="xl:w-[65%] w-full">

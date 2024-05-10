@@ -14,9 +14,12 @@ export enum ElderlyStatus {
   ElderlyAllocated = 5,
   ElderlyTakingCare = 6,
   ElderlyCareCenterReturned = 7,
-  ElderlyDied = 14, /// xalit 14 bolgow darhaa axaas asuuna
+  ElderlyDied = 14, /// xalit 14 bolgow darhaa axaas asuuna ug n 8 bsan
   ReturnSum = 9,
+  MovingCarecenter = 11,
+  OwnRequestCarecenter = 12,
   WaitDistrict = 10,
+  UserForce = 13,
 }
 
 export enum RequestType {
@@ -61,13 +64,13 @@ export interface CareCenterAddress {
 }
 
 export interface ListElderly {
-  id: number;
+  elderly_id: number;
   created_at: Date;
   updated_at: Date;
   created_user_id: number;
   created_user: CreatedUser;
   modified_user_id: number;
-  elderly_id: number;
+  id: number;
   elderly: Elderly;
   status: number;
   city_id: number;
@@ -164,6 +167,22 @@ export interface Elderly {
   profile: File;
 }
 
+export interface GetElderlyInterface {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_user_id: number;
+  modified_user_id: number;
+  elderly_id: number;
+  elderly: ElderlyInterface;
+  status: number;
+  description: string;
+  city_id: number;
+  district_id: number;
+  ordinances: any[];
+  welfare_documents: any[];
+}
+
 export interface ElderlyInterface {
   id: number;
   created_at: Date;
@@ -186,6 +205,8 @@ export interface ElderlyInterface {
   laboratory_tests: LaboratoryTests[];
   address: Address;
   documents: Documents;
+  ordinances: any;
+  welfare_documents: any;
   situational: DefinitionGovernor[];
   definition_governor: DefinitionGovernor[];
   created_user_id: number;
@@ -195,7 +216,6 @@ export interface ElderlyInterface {
 }
 
 export interface Address {
-  id: number;
   created_at: Date;
   updated_at: Date;
   elderly_id: number;
@@ -243,10 +263,10 @@ export enum OriginalName {
 }
 
 export interface Documents {
-  id: number;
+  elderly_id: number;
   created_at: Date;
   updated_at: Date;
-  elderly_id: number;
+  id: number;
   is_pension_loan: boolean;
   care_request: DefinitionGovernor[];
   insurance_notebook: DefinitionGovernor[];
@@ -265,10 +285,10 @@ export interface Documents {
 }
 
 export interface LaboratoryTests {
-  id: number;
+  elderly_id: number;
   created_at: Date;
   updated_at: Date;
-  elderly_id: number;
+  id: number;
   laboratory_test_id: number;
   laboratory_test: LaboratoryTest;
   files: File[];

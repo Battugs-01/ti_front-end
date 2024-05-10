@@ -19,12 +19,9 @@ import { WaitDetail } from "../../wait-detail";
 const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
   const [isEdit, setEdit] = useState<ElderlyInterface>();
   const [isDetail, setIsDetail] = useState<boolean>(false);
-  const elderly = useRequest(
-    async () => orphanElderly.getElderly(data?.elderly_id),
-    {
-      manual: true,
-    }
-  );
+  const elderly = useRequest(async () => orphanElderly.getElderly(data?.id), {
+    manual: true,
+  });
 
   const cancelModal = () => {
     setEdit(undefined);
@@ -32,6 +29,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
   const cancelDetail = () => {
     setIsDetail(false);
   };
+
   switch (data?.status) {
     case ElderlyStatus.ElderlySave: {
       return (
@@ -48,7 +46,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               icon={<img src={EditIcon} />}
               onClick={async () => {
                 const data = await elderly?.runAsync();
-                setEdit(data);
+                setEdit(data?.elderly);
               }}
             />
           </div>
@@ -95,7 +93,8 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
-              id={data?.elderly_id}
+              id={data?.id}
+              elderly_id={data?.elderly_id}
             />
           )}
         </Fragment>
@@ -122,7 +121,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
-              id={data?.elderly_id}
+              id={data?.id}
             />
           )}
         </Fragment>
@@ -149,7 +148,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
-              id={data?.elderly_id}
+              id={data?.id}
             />
           )}
         </Fragment>
@@ -208,7 +207,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               visibleDetail={isDetail}
               cancelDetail={cancelDetail}
               status={data?.status || 0}
-              id={data?.elderly_id}
+              id={data?.id}
             />
           )}
         </Fragment>
@@ -229,7 +228,7 @@ const RightContent: React.FC<RightContentType> = ({ data, refreshList }) => {
               icon={<img src={EditIcon} />}
               onClick={() => {
                 elderly?.run();
-                setEdit(elderly?.data);
+                setEdit(elderly?.data?.elderly);
               }}
             />
           </div>

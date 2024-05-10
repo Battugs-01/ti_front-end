@@ -7,6 +7,11 @@ import UserWaitingCarecenter from "./parts/user-waiting-carecenter";
 import UserWaitingCareCenter from "./parts/user-waiting-carecenter";
 import UserServicingCareCenter from "./parts/user-servicing-carecenter";
 import UserDied from "./parts/user-deid";
+import UserSentCareCenter from "./parts/user-sent-carecenter";
+import UserReturnCareCenter from "./parts/user-return-carecenter";
+import UserMoving from "./parts/user-moving-carecenter";
+import UserForce from "./parts/user-force";
+import UserOwnRequest from "./parts/user-ownrequest";
 
 interface Props {
   status?: 1 | 2 | 3 | 4 | Number;
@@ -25,8 +30,7 @@ const CareGiverComponentStatus: FC<Props> = ({ data, status }) => {
       component = <UserSent data={data} />;
       break;
     case ElderlyStatus.ElderlyRequestSendSendToCareCenter:
-      text = "Хуваарилсан";
-      colorClass = "bg-[#FFFAEB] text-[#B54708]";
+      component = <UserSentCareCenter data={data} />;
       break;
     case ElderlyStatus.ElderlyWaiting:
       component = <UserWaitingCareCenter data={data} />;
@@ -39,8 +43,7 @@ const CareGiverComponentStatus: FC<Props> = ({ data, status }) => {
       component = <UserServicingCareCenter data={data} />;
       break;
     case ElderlyStatus.ElderlyCareCenterReturned:
-      text = "Асрамжийн газраас буцаагдсан";
-      colorClass = "bg-red-50 text-red-700";
+      component = <UserReturnCareCenter data={data} />;
       break;
     case ElderlyStatus.ElderlyDied:
       component = <UserDied data={data} />;
@@ -49,6 +52,15 @@ const CareGiverComponentStatus: FC<Props> = ({ data, status }) => {
       break;
     case ElderlyStatus.ReturnSum:
       component = <UserReturn data={data} />;
+      break;
+    case ElderlyStatus.MovingCarecenter:
+      component = <UserMoving data={data} />;
+      break;
+    case ElderlyStatus.UserForce:
+      component = <UserForce data={data} />;
+      break;
+    case ElderlyStatus.OwnRequestCarecenter:
+      component = <UserOwnRequest data={data} />;
       break;
     case ElderlyStatus.WaitDistrict:
       text = "Хүлээлэгт орсон";

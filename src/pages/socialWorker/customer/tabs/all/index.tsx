@@ -1,17 +1,16 @@
 import { Card, Empty } from "antd";
+import { FormInstance } from "antd/lib";
+import SearchIcon from "assets/government/icons/search.svg";
 import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
+import CustomPagination from "components/pagination";
 import InitTableHeader from "components/table-header";
 import { useRef, useState } from "react";
 import { ListElderly } from "service/social-worker/customer/type";
 import { exportFromTable } from "utils/export";
 import List from "../../components/list";
-import SearchIcon from "assets/government/icons/search.svg";
-import { CreateForm } from "./create";
 import { CareGiverCreate } from "./caregiver-create";
-import CustomPagination from "components/pagination";
-import { FormInstance } from "antd/lib";
-import { PageLoading } from "@ant-design/pro-layout";
+import { CreateForm } from "./create";
 
 type AllProps = {
   data?: ListElderly[];

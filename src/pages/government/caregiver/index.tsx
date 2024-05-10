@@ -35,12 +35,17 @@ const RequestPage: React.FC = () => {
     {
       key: CaregiverType.all,
       label: "Бүгд",
+      // title: elderlyCount?.data?.total,
       title: elderlyCount?.data?.reduce((a, b) => {
         if (
           b.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter ||
           b.status === ElderlyStatus.ElderlyTakingCare ||
           b.status === ElderlyStatus.ElderlyWaiting ||
-          b.status === ElderlyStatus.ElderlyCareCenterReturned
+          b.status === ElderlyStatus.ElderlyCareCenterReturned ||
+          b.status === ElderlyStatus.ElderlyDied ||
+          b.status === ElderlyStatus.MovingCarecenter ||
+          b.status === ElderlyStatus.OwnRequestCarecenter ||
+          b.status === ElderlyStatus.UserForce
         ) {
           return a + b.count;
         }
@@ -49,7 +54,7 @@ const RequestPage: React.FC = () => {
     },
     {
       key: CaregiverType.distribute,
-      label: "Хуваарилсан",
+      label: "Асрамжийн газарт хуваарилсан",
       title: elderlyCount?.data?.find(
         (val) => val.status === ElderlyStatus.ElderlyRequestSendSendToCareCenter
       )?.count,

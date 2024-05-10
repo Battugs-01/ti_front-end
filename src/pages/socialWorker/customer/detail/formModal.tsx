@@ -16,6 +16,7 @@ type DetailProps = {
   id?: number;
   status?: Number;
   rd?: string;
+  elderly_id: number;
 };
 
 export const Detail: React.FC<DetailProps> = ({
@@ -55,7 +56,7 @@ export const Detail: React.FC<DetailProps> = ({
                     <CustomButton
                       onClick={() => {
                         onsubmit && onsubmit();
-                        setEdit(elderlyDetail?.data);
+                        setEdit(elderlyDetail?.data?.elderly);
                       }}
                       icon={<img src={EditIcon} alt="edit" />}
                       title="Мэдээлэл засах"
@@ -75,7 +76,7 @@ export const Detail: React.FC<DetailProps> = ({
           refreshList={refreshList}
           cancelStepModal={cancelModal}
           data={edit}
-          id={elderlyDetail?.data?.id || 0}
+          id={elderlyDetail?.data?.elderly?.id || 0}
         />
       )}
     </div>
