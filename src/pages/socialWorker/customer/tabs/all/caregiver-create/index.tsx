@@ -121,6 +121,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             });
             const docs = arrToObj(data, val?.documents);
             const request = arrToObj(requestData, val?.request);
+
             // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
             const sortedLabTests = labTests?.data?.sort((a, b) => a.id - b.id);
             const health = labFormat(
@@ -143,14 +144,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             setTimeout(() => {
               refreshList?.();
             }, 500);
-          }}
-          formProps={{
-            loading:
-              elderly.loading ||
-              uploadProfile.loading ||
-              filesRequest.loading ||
-              filesDoc.loading ||
-              filesHealth.loading,
           }}
           stepsProps={{
             progressDot: (icon, { index, status }) => {

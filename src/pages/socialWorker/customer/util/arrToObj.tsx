@@ -21,7 +21,6 @@ export const labFormat = (data: any, value: any, labTest: any) => {
     return;
   }
   let count = 0;
-
   const struct = Object?.values(value)?.reduce(
     (acc: any, el: any, key: number) => {
       acc.push({
@@ -36,15 +35,6 @@ export const labFormat = (data: any, value: any, labTest: any) => {
     },
     []
   );
-  // const arrId = data?.reduce((acc: any, obj: any) => {
-  //   acc.push(obj.id);
-  //   return acc;
-  // }, []);
-  // const lab = [
-  //   {
-  //     file_ids: arrId,
-  //   },
-  // ];
   return struct;
 };
 

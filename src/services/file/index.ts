@@ -40,6 +40,7 @@ namespace file {
       hasAuth: true,
     });
   };
+
   export const uploadsMulti = async ({
     files,
     names,
