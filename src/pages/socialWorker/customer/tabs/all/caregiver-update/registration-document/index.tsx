@@ -165,7 +165,7 @@ export const RegistrationForm: React.FC<RegistrationType> = ({ data }) => {
       {
         name: "elderly_document_is_have_sibling_inquiry",
         label: "Ах дүүтэй эсэх лавлагаа",
-        initialValue: data?.is_have_children_inquiry?.map((val, index) => ({
+        initialValue: data?.is_have_sibling_inquiry?.map((val, index) => ({
           uid: `${val?.id}`,
           id: `${val?.id}`,
           name: val?.original_name || "",

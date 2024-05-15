@@ -11,6 +11,7 @@ type OrphanOptions = {
   label: JSX.Element;
   value: any;
   style: React.CSSProperties;
+  disabled?: boolean;
 };
 
 type DistributeProps = {
@@ -67,6 +68,7 @@ export const Distribute: React.FC<DistributeProps> = ({ data }) => {
                   padding: "16px",
                   boxSizing: "border-box",
                 },
+                disabled: val?.reserved >= val?.capacity ? true : false,
               };
             }
           )}

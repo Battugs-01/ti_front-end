@@ -29,9 +29,7 @@ type FormType = {
 };
 
 export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
-  const city = useRequest(address.city, {
-    manual: true,
-  });
+  const city = useRequest(address.city, {});
   const district = useRequest(address.district, {
     manual: true,
   });
@@ -39,12 +37,14 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
     manual: true,
   });
   const cityId = form?.getFieldValue(["address", "city_id"]);
+
   useEffect(() => {
     if (cityId) {
       district.run(cityId);
       khoroo.run(form?.getFieldValue(["address", "district_id"]));
     }
   }, [cityId]);
+
   return (
     <div className="px-8">
       <Row gutter={[16, 16]}>
@@ -232,25 +232,23 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
             placeholder="Аймаг/Нийслэл сонгоно уу"
             label={"Аймаг/Нийслэл"}
             initialValue={data?.address?.city_id}
-            // options={city.data?.map((item: any) => {
-            //   return {
-            //     label: item.name,
-            //     value: item.id,
-            //   };
-            // })}
+            // initialValue={
+            //   city?.data?.find((el) => el.id === data?.address?.city_id)?.id
+            // }
+            options={city.data?.map((item: any) => {
+              return {
+                label: item.name,
+                value: item.id,
+              };
+            })}
+            fieldProps={{
+              showSearch: true,
+              loading: city?.loading,
+            }}
             onChange={(val) => {
               form?.setFieldValue(["address", "district_id"], undefined);
               form?.setFieldValue(["address", "khoroo_id"], undefined);
               district.run(val);
-            }}
-            request={async () => {
-              const data = await city.runAsync();
-              return data?.map((item: any) => {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              });
             }}
             rules={FORM_ITEM_RULE()}
           />
@@ -270,6 +268,10 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ data, form }) => {
                 value: item?.id,
               };
             })}
+            fieldProps={{
+              showSearch: true,
+              loading: district?.loading,
+            }}
             initialValue={data?.address?.district_id}
             rules={FORM_ITEM_RULE()}
           />

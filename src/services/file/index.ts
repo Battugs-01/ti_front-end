@@ -23,6 +23,22 @@ namespace file {
     });
   };
 
+  export const uploadTest = async ({ files }: MultiFileUpload) => {
+    const body = new FormData();
+
+    if (files.length === 0) {
+      return [];
+    }
+    files.forEach((file, ind) => {
+      body.append("files", file?.originFileObj);
+    });
+
+    return http.post<FileRecord[]>("upload/files", {
+      body,
+      hasAuth: true,
+    });
+  };
+
   export const uploads = async ({ files }: MultiFileUpload) => {
     const body = new FormData();
 

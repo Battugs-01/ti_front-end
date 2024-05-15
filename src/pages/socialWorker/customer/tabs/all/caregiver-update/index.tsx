@@ -6,9 +6,9 @@ import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
-import SaveIcon from "assets/government/icons/save.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import moment from "moment";
+import CareGiverBadge from "components/badge/caregiver.js";
+import dayjs from "dayjs";
 import {
   CustomButton,
   DefaultButton,
@@ -22,17 +22,16 @@ import {
   ElderlyInterface,
   ElderlyStatus,
 } from "service/social-worker/customer/type.js";
+import SaveIcon from "assets/government/icons/save.svg";
 import { CaregiverInfoForm } from "./caregiver-info-formation/index.js";
 import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
 import { SendForm } from "./request-send/index.js";
-import CareGiverBadge from "components/badge/caregiver.js";
-import dayjs from "dayjs";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
   data?: ElderlyInterface;
+  // setLoading?: any;
   id: number;
   refreshList?: () => void;
   status?: Number;
@@ -44,6 +43,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   id,
   status,
   refreshList,
+  // setLoading,
 }) => {
   const [sendRequest, setSendRequest] = useState(false);
   const [isSave, setSave] = useState(false);
@@ -121,7 +121,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
 
   const formRef = useRef<ProFormInstance>();
   const handleFinish = async (val: any) => {
-    console.log("val", val);
     val.profile = await newFileUploads(val?.profile);
     val.documents.elderly_document_care_requet = await newFileUploads(
       val?.documents?.elderly_document_care_requet
@@ -218,7 +217,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     const elderlyData = await elderlyEdit.runAsync(
       {
         ...val,
-        // profile_id: profile[0]?.id,
         profile_id: val?.profile[0],
         address: {
           ...val?.address,
@@ -416,6 +414,10 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     // }
     // return true;
   };
+
+  // if (uploadMulti.loading || toDistrict.loading || elderlyEdit?.loading) {
+  //   setLoading(true);
+  // }
   return (
     <div>
       {uploadMulti.loading || toDistrict.loading ? (
@@ -468,18 +470,17 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* {step !== 0 && (
-                    <DefaultButton
-                      onClick={() => {
-                        onSubmit && onSubmit();
-                        setLoading(true);
-                        setSave(true);
-                      }}
-                      loading={loading}
-                      icon={<img src={SaveIcon} />}
-                      title="Түр хадгалах"
-                    />
-                  )} */}
+                    {step === 3 && (
+                      <DefaultButton
+                        onClick={() => {
+                          onSubmit && onSubmit();
+                          setSave(true);
+                        }}
+                        loading={elderlyEdit.loading}
+                        icon={<img src={SaveIcon} />}
+                        title="Түр хадгалах"
+                      />
+                    )}
                     {step === 3 ? (
                       <CustomButton
                         onClick={() => {
@@ -540,13 +541,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           <StepsForm.StepForm
             initialValues={{
               family_name: data?.family_name,
+              city_id: data?.address?.city_id,
+              district_id: data?.address?.district_id,
+              khoroo_id: data?.address?.khoroo_id,
             }}
             name="giver-info"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Үйлчлүүлэгчийн хувийн мэдээлэл
-            //   </div>
-            // }
             title="Үйлчлүүлэгчийн хувийн мэдээлэл"
             onFinish={async (val) => {
               setInfo(val);
@@ -564,11 +563,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="documents"
-            // title={
-            //   <div className="text-[#344054] font-semibold mt-1">
-            //     Бүрдүүлэх бичиг баримт
-            //   </div>
-            // }
             title="Бүрдүүлэх бичиг баримт"
             onFinish={documentsFinish}
           >

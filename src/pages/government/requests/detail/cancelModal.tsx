@@ -7,6 +7,7 @@ import {
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { SectionContainer } from "components/index";
+import { FORM_ITEM_RULE } from "config";
 import { useRef, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -112,6 +113,7 @@ export const CancelModal = ({
         <ProFormTextArea
           name="description"
           placeholder="Шалтгаан дэлгэрэнгүй"
+          rules={FORM_ITEM_RULE()}
           extra={
             descCount <= 275
               ? `${275 - descCount} тэмдэгт үлдсэн`

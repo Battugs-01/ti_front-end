@@ -40,11 +40,10 @@ export const Detail: React.FC<DetailProps> = ({
   refreshList,
 }) => {
   const [current, setCurrent] = useState(1);
-  const orphanList = useRequest(() => orphanUser?.getList({}));
-
-  // ? TODO
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [isReturn, setIsReturn] = useState<ElderlyInterface>();
+
+  const orphanList = useRequest(() => orphanUser?.getList({}));
   const elderlyDetail = useRequest(() => orphanElderly.getElderly(id));
   const distributeOrphan = useRequest(orphanElderly.distribute, {
     manual: true,
@@ -81,6 +80,7 @@ export const Detail: React.FC<DetailProps> = ({
       });
     },
   });
+
   return (
     <div>
       <StepsForm
@@ -154,7 +154,6 @@ export const Detail: React.FC<DetailProps> = ({
                       disabled={orphanList?.data?.length === 0}
                       onClick={() => {
                         onSubmit && onSubmit();
-                        // setCurrent(2);
                       }}
                       extraIcon={<img src={ArrowRight} />}
                       title="Хуваарилах"
@@ -221,11 +220,6 @@ export const Detail: React.FC<DetailProps> = ({
       >
         <StepsForm.StepForm
           name="registered"
-          // title={
-          //   <div className="text-[#344054] font-semibold mt-2 ml-8">
-          //     Бүртгэсэн
-          //   </div>
-          // }
           title="Бүртгэсэн"
           onFinish={async () => {
             return true;
@@ -235,11 +229,6 @@ export const Detail: React.FC<DetailProps> = ({
         </StepsForm.StepForm>
         <StepsForm.StepForm
           name="under_review"
-          // title={
-          //   <div className="text-[#344054] font-semibold mt-2 ml-5">
-          //     Хянаж байгаа
-          //   </div>
-          // }
           title="Хянаж байгаа"
           onFinish={async () => {
             if (isWaiting) {
@@ -274,8 +263,6 @@ export const Detail: React.FC<DetailProps> = ({
           setIsReturn(undefined);
         }}
       />
-      {/* {isReturn && (
-        <CancelModal}  */}
     </div>
   );
 };

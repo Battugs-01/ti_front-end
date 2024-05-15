@@ -29,9 +29,7 @@ type FormType = {
 export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
   const [isDisability, setDisability] = useState<boolean>(false);
 
-  const city = useRequest(address.city, {
-    manual: true,
-  });
+  const city = useRequest(address.city, {});
 
   const district = useRequest(address.district, {
     manual: true,
@@ -232,17 +230,17 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             fieldProps={{
               showSearch: true,
               loading: city?.loading,
-              filterOption: false,
             }}
-            request={async () => {
-              const data = await city.runAsync();
-              return data?.map((item: any) => {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              });
-            }}
+            options={city.data?.map((el) => ({ value: el.id, label: el.name }))}
+            // request={async () => {
+            //   const data = await city.runAsync();
+            //   return data?.map((item: any) => {
+            //     return {
+            //       label: item.name,
+            //       value: item.id,
+            //     };
+            //   });
+            // }}
             rules={FORM_ITEM_RULE()}
           />
         </Col>
@@ -254,6 +252,10 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             onChange={(value) => {
               form?.setFieldValue(["address", "khoroo_id"], undefined);
               khoroo.run(value);
+            }}
+            fieldProps={{
+              showSearch: true,
+              loading: district?.loading,
             }}
             options={district.data?.map((item: any) => {
               return {

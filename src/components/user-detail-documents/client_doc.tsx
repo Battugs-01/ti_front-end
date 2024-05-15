@@ -63,7 +63,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.insurance_notebook[0]?.physical_path,
       isHave: data?.insurance_notebook?.length ?? 0 > 0,
       files: data?.insurance_notebook,
-      id: 4,
+      id: 5,
     },
     {
       name: "Хөгжлийн бэрхшээлтэй эсэх лавлагаа",
@@ -71,7 +71,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_disability_inquiry[0]?.physical_path,
       isHave: data?.is_disability_inquiry?.length ?? 0 > 0,
       files: data?.is_disability_inquiry,
-      id: 5,
+      id: 6,
     },
     {
       name: "Гэрлэлт цуцалсан эсэх лавлагаа",
@@ -79,7 +79,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_divorce_inquiry[0]?.physical_path,
       isHave: data?.is_divorce_inquiry?.length ?? 0 > 0,
       files: data?.is_divorce_inquiry,
-      id: 6,
+      id: 7,
     },
     {
       name: "Үр хүүхэдтэй эсэх лавлагаа",
@@ -87,7 +87,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_have_children_inquiry[0]?.physical_path,
       isHave: data?.is_have_children_inquiry?.length ?? 0 > 0,
       files: data?.is_have_children_inquiry,
-      id: 7,
+      id: 8,
     },
     {
       name: "Ах дүүтэй эсэх лавлагаа",
@@ -95,7 +95,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_have_sibling_inquiry[0]?.physical_path,
       isHave: data?.is_have_sibling_inquiry?.length ?? 0 > 0,
       files: data?.is_have_sibling_inquiry,
-      id: 8,
+      id: 9,
     },
     {
       name: "Гэрлэсэн эсэх лавлагаа",
@@ -103,7 +103,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_married_inquiry[0]?.physical_path,
       isHave: data?.is_married_inquiry?.length ?? 0 > 0,
       files: data?.is_married_inquiry,
-      id: 9,
+      id: 10,
     },
     {
       name: "Тэтгэвэр авдаг эсэх лавлагаа",
@@ -111,7 +111,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.is_pension_inquiry[0]?.physical_path,
       isHave: data?.is_pension_inquiry?.length ?? 0 > 0,
       files: data?.is_pension_inquiry,
-      id: 10,
+      id: 11,
     },
     {
       name: "Тэтгэвэрийн зээлтэй эсэх лавлагаа",
@@ -119,7 +119,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.pension_loan[0]?.physical_path,
       isHave: data?.pension_loan?.length ?? 0 > 0,
       files: data?.pension_loan,
-      id: 11,
+      id: 12,
     },
     {
       name: "Бусад халамжийн үйлчилгээ авдаг эсэх лавлагаа",
@@ -127,7 +127,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.other_welfare_services_inquiry[0]?.physical_path,
       isHave: data?.other_welfare_services_inquiry?.length ?? 0 > 0,
       files: data?.other_welfare_services_inquiry,
-      id: 12,
+      id: 13,
     },
     {
       name: "Эд хөрөнгийн лавлагаа",
@@ -135,7 +135,7 @@ export const ClientDoc: React.FC<DocumentsType> = ({ data }) => {
       path: data?.property_inquiry[0]?.physical_path,
       isHave: data?.property_inquiry?.length ?? 0 > 0,
       files: data?.property_inquiry,
-      id: 13,
+      id: 14,
     },
   ];
 

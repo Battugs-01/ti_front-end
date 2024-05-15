@@ -1,5 +1,4 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
-import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Modal, Spin, notification } from "antd";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
@@ -7,7 +6,7 @@ import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   CustomButton,
   DefaultButton,
@@ -15,8 +14,10 @@ import {
 import {
   arrToObj,
   labFormat,
+  labFormatUpdate,
 } from "pages/socialWorker/customer/util/arrToObj.js";
 import { useEffect, useRef, useState } from "react";
+import SaveIcon from "assets/government/icons/save.svg";
 import file from "service/file/index.js";
 import laboratory from "service/laboratory_tests/index.js";
 import orphanElderly from "service/social-worker/customer/index.js";
@@ -24,7 +25,6 @@ import { CaregiverInfoForm } from "./caregiver-info-form.tsx";
 import { HealthForm } from "./health-condition/index.js";
 import { RegistrationForm } from "./registration-document/index.js";
 import { SendForm } from "./request-send/index.js";
-import dayjs from "dayjs";
 
 type CaregiverType = {
   cancelStepModal?: () => void;
@@ -40,7 +40,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const [info, setInfo] = useState<any>({});
   const [documents, setDocuments] = useState<any>({});
   const [isSave, setSave] = useState(false);
-  // const [submitting, setSubmitting] = useState(false);
+
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
     onSuccess() {
@@ -88,6 +88,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   const uploadProfile = useRequest(file.upload, {
     manual: true,
   });
+
   useEffect(() => {
     labTests?.run();
   }, []);
@@ -106,7 +107,11 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         <StepsForm
           formRef={formRef}
           onFinish={async (val) => {
-            console.log(val, "valll");
+            // console.log(val, "valll");
+
+            // const filteredDocs = val?.laboratory_tests?.filter((doc: any) => {
+            //   return doc;
+            // });
             const profile = await uploadProfile.runAsync({
               file: val?.profile?.[0]?.originFileObj,
             });
@@ -123,12 +128,13 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             const request = arrToObj(requestData, val?.request);
 
             // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
-            const sortedLabTests = labTests?.data?.sort((a, b) => a.id - b.id);
+
             const health = labFormat(
               healthData,
               val?.laboratory_tests,
-              sortedLabTests
+              labTests?.data
             );
+
             const elderlyData = await elderly.runAsync({
               ...val,
               profile_id: profile[0]?.id,
@@ -189,6 +195,17 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2">
+                    {step === 3 && (
+                      <DefaultButton
+                        loading={elderly.loading}
+                        onClick={() => {
+                          onSubmit && onSubmit();
+                          setSave(true);
+                        }}
+                        icon={<img src={SaveIcon} />}
+                        title="Түр хадгалах"
+                      />
+                    )}
                     {step === 3 ? (
                       <CustomButton
                         loading={elderly.loading}
@@ -254,6 +271,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             title="Бүрдүүлэх бичиг баримт"
             onFinish={async (values: any) => {
               if (isSave) {
+                console.log("isSaveeee");
                 const profile = await uploadProfile.runAsync({
                   file: info?.profile?.[0]?.originFileObj,
                 });

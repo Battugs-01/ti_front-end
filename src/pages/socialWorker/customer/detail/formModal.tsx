@@ -8,6 +8,8 @@ import { CareGiverUpdate } from "../tabs/all/caregiver-update";
 import { useState } from "react";
 import { ElderlyInterface } from "service/social-worker/customer/type";
 import CareGiverBadge from "components/badge/caregiver";
+import { Spin } from "antd";
+import { PageLoading } from "@ant-design/pro-layout";
 
 type DetailProps = {
   refreshList?: () => void;
@@ -29,6 +31,7 @@ export const Detail: React.FC<DetailProps> = ({
 }) => {
   // ? TODO
   const [edit, setEdit] = useState<ElderlyInterface>();
+  const [loading, setLoading] = useState<boolean>(false);
   const elderlyDetail = useRequest(() => orphanElderly.getElderly(id));
   const cancelModal = () => {
     setEdit(undefined);
@@ -39,6 +42,7 @@ export const Detail: React.FC<DetailProps> = ({
         width={1330}
         open={visibleDetail}
         modalProps={{ onCancel: cancelDetail }}
+        loading={loading}
         title={
           <div className="p-6">
             <div className="font-semibold flex items-center gap-3">
@@ -55,6 +59,7 @@ export const Detail: React.FC<DetailProps> = ({
                   {status === 9 && (
                     <CustomButton
                       onClick={() => {
+                        cancelDetail;
                         onsubmit && onsubmit();
                         setEdit(elderlyDetail?.data?.elderly);
                       }}
@@ -70,8 +75,10 @@ export const Detail: React.FC<DetailProps> = ({
       >
         <UnderReview data={elderlyDetail?.data} />
       </ModalForm>
+
       {edit && (
         <CareGiverUpdate
+          // setLoading={setLoading}
           status={status || 0}
           refreshList={refreshList}
           cancelStepModal={cancelModal}

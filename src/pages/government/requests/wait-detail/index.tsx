@@ -43,7 +43,7 @@ export const WaitDetail: React.FC<DetailProps> = ({
           },
         }}
       >
-        <UnderReview data={elderlyDetail?.data?.elderly} />
+        <UnderReview data={elderlyDetail?.data} />
       </ModalForm>
     </div>
   );
