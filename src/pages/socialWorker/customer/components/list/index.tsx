@@ -34,8 +34,8 @@ const List: React.FC<ListProps> = ({ data, refreshList }) => {
         <div>
           <RightContent
             refreshList={refreshList}
-            updatedDate={dayjs(data?.updated_at).format("YYYY/MM/DD HH:MM")}
-            date={dayjs(data?.created_at).format("YYYY/MM/DD HH:MM")}
+            updatedDate={dayjs(data?.updated_at).format("YYYY/MM/DD HH:mm")}
+            date={dayjs(data?.created_at).format("YYYY/MM/DD HH:mm")}
             state={data?.status || 0}
             elderly_id={data?.elderly_id}
             id={data?.id}

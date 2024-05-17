@@ -44,7 +44,7 @@ export type RightContentType = {
   id?: any;
   time?: string;
   data?: ListElderly;
-  updatedDate?: any;
+  updatedDate?: string;
   elderly_id: any;
   careCenter?: CareCenter;
   rd?: string;

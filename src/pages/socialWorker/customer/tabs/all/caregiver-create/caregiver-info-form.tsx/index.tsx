@@ -3,13 +3,12 @@ import {
   ProFormDigit,
   ProFormInstance,
   ProFormSelect,
-  ProFormSwitch,
   ProFormText,
   ProFormTextArea,
-  ProFormUploadButton,
+  ProFormUploadButton
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Col, Row, Upload, notification } from "antd";
+import { Col, Row } from "antd";
 import {
   EducationType,
   FORM_ITEM_RULE,
@@ -17,7 +16,6 @@ import {
   workersGenderArray,
 } from "config";
 import dayjs from "dayjs";
-import { debounce } from "lodash";
 import { useState } from "react";
 import address from "service/address";
 // import PlusIcon from "assets/government/icons/plus-gray.svg";
@@ -116,16 +114,16 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             label={"Регистрийн дугаар"}
             rules={
               (FORM_ITEM_RULE(),
-              [
-                {
-                  required: true,
-                  message: "Энэ талбарыг оруулах шаардлагатай!",
-                },
-                {
-                  pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
-                  message: "Энэ талбар РД байх ёстой",
-                },
-              ])
+                [
+                  {
+                    required: true,
+                    message: "Энэ талбарыг оруулах шаардлагатай!",
+                  },
+                  {
+                    pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
+                    message: "Энэ талбар РД байх ёстой",
+                  },
+                ])
             }
           />
         </Col>
@@ -134,8 +132,11 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="birth_date"
             placeholder="Төрсөн огноо оруулна уу"
             label={"Төрсөн огноо"}
-            initialValue={dayjs().toDate()}
+            // initialValue={dayjs().toDate()}
             rules={FORM_ITEM_RULE()}
+            fieldProps={{
+              disabledDate: current => current && current > dayjs().endOf('day')
+            }}
           />
         </Col>
         <Col sm={8} xs={24}>
@@ -277,7 +278,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
                 value: item?.id,
               };
             })}
-            // rules={FORM_ITEM_RULE()}
+          // rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>

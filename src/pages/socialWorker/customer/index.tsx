@@ -10,6 +10,7 @@ import {
 import { caregiverFilterSum } from "utils/caregiver-filter";
 import { initPagination } from "utils/index";
 import { All } from "./tabs/all";
+import { tabCounts } from "service/gov-requests";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
@@ -59,19 +60,12 @@ const CustomerPage: React.FC = () => {
           <div className="flex items-center gap-2 h-full">
             <div>Бүгд</div>{" "}
             <IBadge
-              // title={elderlyCount?.data?.reduce((a, b) => {
-              //   if (
-              //     b.status === ElderlyStatus?.ElderlySave ||
-              //     b.status === ElderlyStatus?.ElderlyWaiting ||
-              //     b.status === ElderlyStatus?.ReturnSum ||
-              //     b.status === ElderlyStatus?.ElderlyRequestSendToDistrict ||
-              //     b.status === ElderlyStatus?.ElderlyTakingCare
-              //   ) {
-              //     return a + b.count;
-              //   }
-              //   return a;
-              // }, 0)}
-              title={list?.data?.total}
+              // title={list?.data?.total}
+              title={
+                elderlyCount?.data?.reduce((a: number, b: tabCounts) => {
+                  return a + b.count
+                }, 0)
+              }
               color="gray"
             />
           </div>
