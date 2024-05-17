@@ -76,10 +76,12 @@ const Login: FC = () => {
             placeholder="И-мэйл"
             label="Нэвтрэх и-мэйл"
             fieldProps={{ size: "large" }}
+            required
             rules={[
               {
-                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                 message: "Энэ талбар и-мэйл хаяг байх ёстой",
+                type: "email",
+                required: true
               },
             ]}
           />

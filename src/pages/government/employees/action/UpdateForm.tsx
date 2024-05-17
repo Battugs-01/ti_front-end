@@ -194,7 +194,8 @@ export const UpdateForm: React.FC<OrphanFormType> = ({ form, data }) => {
             rules={[
               {
                 message: "Энэ талбар и-мэйл хаяг байх ёстой",
-                pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                type: "email"
+                // pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               },
               {
                 message: "И-мэйл хаягаа оруулна уу?",

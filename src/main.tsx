@@ -6,14 +6,23 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "routes";
 import "./styles/global.less";
 import "./styles/tailwind.css";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 const domNode = document.getElementById("root") as any;
 const root = createRoot(domNode);
 
 notification.config({
   placement: "topRight",
-  className: "custom-ant-notification-message p-4",
+  // className: "custom-ant-notification-message p-4",
 });
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
+dayjs.tz.setDefault("Asia/Ulaanbaatar")
+
 root.render(
   <ConfigProvider
     theme={{
