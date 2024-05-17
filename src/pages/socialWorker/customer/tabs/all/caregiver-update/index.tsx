@@ -13,7 +13,10 @@ import {
   CustomButton,
   DefaultButton,
 } from "pages/government/components/button/index.js";
-import { labFormatUpdate } from "pages/socialWorker/customer/util/arrToObj.js";
+import {
+  labFormat,
+  labFormatUpdate,
+} from "pages/socialWorker/customer/util/arrToObj.js";
 import { useEffect, useRef, useState } from "react";
 import file from "service/file/index.js";
 import laboratory from "service/laboratory_tests/index.js";

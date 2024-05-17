@@ -46,7 +46,7 @@ namespace file {
       return [];
     }
     files.forEach((file, ind) => {
-      file.map((item: any) => {
+      file?.map((item: any) => {
         body.append("files", item.originFileObj);
       });
     });

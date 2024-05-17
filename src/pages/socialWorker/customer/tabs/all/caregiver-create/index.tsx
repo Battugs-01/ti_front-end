@@ -107,11 +107,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         <StepsForm
           formRef={formRef}
           onFinish={async (val) => {
-            // console.log(val, "valll");
-
-            // const filteredDocs = val?.laboratory_tests?.filter((doc: any) => {
-            //   return doc;
-            // });
             const profile = await uploadProfile.runAsync({
               file: val?.profile?.[0]?.originFileObj,
             });
@@ -127,9 +122,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             const docs = arrToObj(data, val?.documents);
             const request = arrToObj(requestData, val?.request);
 
-            // health yvahguu bgaa uchraas laboratory_tests bolgovol boloh yostoi
-
-            const health = labFormat(
+            const health: any = labFormat(
               healthData,
               val?.laboratory_tests,
               labTests?.data
@@ -141,7 +134,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               address: {
                 ...val?.address,
               },
-              laboratory_tests: health,
+              laboratory_tests: health.slice(1),
               documents: docs,
               request: request,
               birth_date: dayjs(val?.birth_date).toDate(),
@@ -270,31 +263,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             name="documents"
             title="Бүрдүүлэх бичиг баримт"
             onFinish={async (values: any) => {
-              if (isSave) {
-                console.log("isSaveeee");
-                const profile = await uploadProfile.runAsync({
-                  file: info?.profile?.[0]?.originFileObj,
-                });
-                const data = await filesDoc.runAsync({
-                  files: Object.values(values.documents || {}),
-                });
-                const docs = arrToObj(data, values?.documents);
-                elderly.runAsync({
-                  ...info,
-                  ...values,
-                  profile_id: profile[0]?.id,
-                  address: {
-                    ...info?.address,
-                  },
-                  documents: docs,
-                  birth_date: dayjs(info?.birth_date).toDate(),
-                });
-                setTimeout(() => {
-                  refreshList?.();
-                }, 500);
-              } else {
-                setDocuments(values);
-              }
               return true;
             }}
           >
@@ -304,37 +272,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             name="health"
             title="Эрүүл мэндийн байдал"
             onFinish={async (values: any) => {
-              if (isSave) {
-                const profile = await uploadProfile.runAsync({
-                  file: info?.profile?.[0]?.originFileObj,
-                });
-                const data = await filesDoc.runAsync({
-                  files: Object.values(documents.documents || {}),
-                });
-                const healthData = await filesHealth.runAsync({
-                  files: Object.values(values.laboratory_tests || {}),
-                });
-                const health = labFormat(
-                  healthData,
-                  values?.laboratory_tests,
-                  labTests?.data
-                );
-                const docs = arrToObj(data, documents?.documents);
-                elderly.runAsync({
-                  ...info,
-                  ...values,
-                  profile_id: profile[0]?.id,
-                  address: {
-                    ...info?.address,
-                  },
-                  laboratory_tests: health,
-                  documents: docs,
-                  birth_date: dayjs(info?.birth_date).toDate(),
-                });
-                setTimeout(() => {
-                  refreshList?.();
-                }, 500);
-              }
               return true;
             }}
             initialValues={{

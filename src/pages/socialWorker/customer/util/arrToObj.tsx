@@ -1,3 +1,4 @@
+import { forEach } from "lodash";
 import { LaboratoryTests } from "service/social-worker/customer/type";
 
 export const arrToObj = (data: any, value: any) => {
@@ -19,22 +20,20 @@ export const labFormat = (data: any, value: any, labTests: any) => {
   if (!data || !value) {
     return;
   }
+
   let count = 0;
-  const sortedLabTests = labTests.sort((a: any, b: any) => a.id - b.id);
-  const struct = Object?.values(value)?.reduce(
-    (acc: any, el: any, index: number) => {
-      acc.push({
-        file_ids: el?.reduce((acc: any, obj: any) => {
-          acc.push(data[count]?.id);
-          count++;
-          return acc;
-        }, []),
-        laboratory_test_id: sortedLabTests?.[index]?.id,
-      });
-      return acc;
-    },
-    []
-  );
+  const struct = Object.values(value).reduce((acc: any, el: any, index) => {
+    let file_ids = [];
+    for (let i = 0; i < el?.length; i++) {
+      file_ids.push(value[index] ? data[count]?.id : []);
+      count++;
+    }
+    acc.push({
+      file_ids: file_ids,
+      laboratory_test_id: index ? index : null,
+    });
+    return acc;
+  }, []);
   return struct;
 };
 

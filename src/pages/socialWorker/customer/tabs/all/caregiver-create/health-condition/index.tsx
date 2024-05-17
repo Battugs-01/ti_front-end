@@ -9,7 +9,8 @@ import {
 import { disabilityType, FORM_ITEM_RULE, isDisablity } from "config";
 import { useRequest } from "ahooks";
 import orphanElderly from "service/social-worker/customer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import laboratory from "service/laboratory_tests";
 
 const uploadDocument = [
   [
@@ -70,6 +71,15 @@ export const HealthForm: React.FC = () => {
   const disabilityList = useRequest(orphanElderly.disability_type, {
     manual: true,
   });
+
+  const labTests = useRequest(laboratory.get, {
+    manual: true,
+  });
+
+  useEffect(() => {
+    labTests?.run();
+  }, []);
+  const sortedLabTests = labTests?.data?.sort((a: any, b: any) => a.id - b.id);
   return (
     <div className="px-8 custom-multi-selector">
       <Row gutter={[16, 16]}>
@@ -136,7 +146,7 @@ export const HealthForm: React.FC = () => {
           </div>
         }
       />
-      {uploadDocument?.map((val, key) => (
+      {/* {uploadDocument?.map((val, key) => (
         <Row gutter={[16, 16]} key={key}>
           {val?.map((el, index) => (
             <Col sm={12} key={index} xs={21}>
@@ -149,7 +159,19 @@ export const HealthForm: React.FC = () => {
             </Col>
           ))}
         </Row>
-      ))}
+      ))} */}
+      <Row gutter={[16, 16]}>
+        {sortedLabTests?.map((val, key) => (
+          <Col sm={12} xs={21} key={key}>
+            <UploadButton
+              name={["laboratory_tests", val?.id]}
+              required={false}
+              label={val?.name}
+              key={key}
+            />
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

@@ -166,6 +166,9 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="education"
             placeholder="Сонгох"
             label={"Боловсрол"}
+            fieldProps={{
+              showSearch: true,
+            }}
             options={EducationType.map((el) => ({ ...el }))}
             rules={FORM_ITEM_RULE()}
           />
@@ -175,6 +178,9 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name="marriage"
             placeholder="Сонгох"
             label={"Гэрлэлтийн байдал"}
+            fieldProps={{
+              showSearch: true,
+            }}
             options={MaritalStatus.map((el) => ({ ...el }))}
             rules={FORM_ITEM_RULE()}
           />
@@ -271,6 +277,10 @@ export const CaregiverInfoForm: React.FC<FormType> = ({ form }) => {
             name={["address", "khoroo_id"]}
             placeholder="Сонгох"
             label={"Баг/Хороо"}
+            fieldProps={{
+              showSearch: true,
+              loading: khoroo?.loading,
+            }}
             options={khoroo?.data?.map((item: any) => {
               return {
                 label: item?.name,
