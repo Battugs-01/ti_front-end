@@ -231,7 +231,14 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       },
       id
     );
-    sendRequest && toDistrict.run(elderlyData?.id);
+
+    sendRequest &&
+      (healthData as any[])?.length === 10 &&
+      Object.entries(val?.documents || {}).length === 14 &&
+      Object.entries(val?.request || {}).length === 2 &&
+      toDistrict.run(elderlyData?.id);
+
+    // sendRequest && toDistrict.run(elderlyData?.id);
     setTimeout(() => {
       refreshList?.();
     }, 500);

@@ -34,7 +34,7 @@ export const UploadDraggerButton = ({
                 Файл хавсаргах
               </span>
             </div>
-            <div className="">SVG,PNG,JPG or GIF (Хэмжээ :800*400px)</div>
+            <div className="">PNG,JPG,PDF(Дээд хэмжээ :800x400px)</div>
           </div>
         }
         // accept=""
@@ -88,7 +88,7 @@ export const UploadButton = ({
         {...rest}
         title={title}
         label={label}
-        extra="PNG, JPG, PDF (Хэмжээ :800*400px)"
+        extra="PNG,JPG,PDF(Дээд хэмжээ :800x400px)"
         width={400}
         accept=".jpg,.jpeg,.png,.pdf"
         fieldProps={{

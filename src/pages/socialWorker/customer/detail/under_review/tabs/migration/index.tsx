@@ -1,6 +1,6 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Timeline, notification } from "antd";
+import { Empty, Timeline, notification } from "antd";
 import CareGiverIconStatus from "components/badge/icon_status";
 import CareGiverComponentStatus from "components/migration-events";
 import { useEffect } from "react";
@@ -34,21 +34,28 @@ export const Migration: React.FC<MigrationType> = ({ data }) => {
         <PageLoading />
       ) : (
         <div className="ml-2 h-[900px] overflow-y-auto w-full">
-          <Timeline
-            className="mt-5 ml-3"
-            items={
-              list?.data?.map((item: any) => ({
-                children: (
-                  <CareGiverComponentStatus
-                    data={item}
-                    status={item?.status_code}
-                  />
-                ),
-                position: "right",
-                dot: <CareGiverIconStatus status={item?.status_code} />,
-              })) || []
-            }
-          />
+          {list?.data && list?.data?.length === 0 ? (
+            <Empty
+              className="h-full items-center flex flex-col justify-center"
+              description="Мэдээлэл байхгүй байна"
+            />
+          ) : (
+            <Timeline
+              className="mt-5 ml-3"
+              items={
+                list?.data?.map((item: any) => ({
+                  children: (
+                    <CareGiverComponentStatus
+                      data={item}
+                      status={item?.status_code}
+                    />
+                  ),
+                  position: "right",
+                  dot: <CareGiverIconStatus status={item?.status_code} />,
+                })) || []
+              }
+            />
+          )}
         </div>
       )}
     </>

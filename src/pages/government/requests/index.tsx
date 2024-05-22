@@ -95,7 +95,7 @@ const RequestPage: React.FC = () => {
         {list?.data?.total === 0 ? (
           <Empty
             className="h-full items-center flex flex-col justify-center"
-            description="Дата байхгүй байна"
+            description="Мэдээлэл байхгүй байна"
           />
         ) : (
           <div className="w-full">

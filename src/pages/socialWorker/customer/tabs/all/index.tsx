@@ -1,3 +1,4 @@
+import { PageLoading } from "@ant-design/pro-layout";
 import { Card, Empty } from "antd";
 import { FormInstance } from "antd/lib";
 import SearchIcon from "assets/government/icons/search.svg";
@@ -7,6 +8,7 @@ import CustomPagination from "components/pagination";
 import InitTableHeader from "components/table-header";
 import { useRef, useState } from "react";
 import { ListElderly } from "service/social-worker/customer/type";
+import { caregiverFilterSum } from "utils/caregiver-filter";
 import { exportFromTable } from "utils/export";
 import List from "../../components/list";
 import { CareGiverCreate } from "./caregiver-create";
@@ -17,20 +19,30 @@ type AllProps = {
   list?: any;
   setPagination: (page: number, pageSize: number) => void;
   current?: number;
+  page?: any;
+  tab?: any;
+  setSearch?: any;
+  searchRun?: any;
   refreshList: () => void;
   totalItems?: number;
 };
 
 export const All: React.FC<AllProps> = ({
   data,
-  list,
   setPagination,
+  list,
+  setSearch,
+  searchRun,
+  page,
+  tab,
   current,
   refreshList,
   totalItems,
 }) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isStepModal, setStepModal] = useState<boolean>(false);
+  const [registerNumber, setRegister] = useState<boolean>(false);
+
   const formRef = useRef<FormInstance>(null);
   const cancelModal = () => {
     setOpenModal(false);
@@ -47,12 +59,20 @@ export const All: React.FC<AllProps> = ({
 
   return (
     <div className="custom-ant-card-padding-border-remove mt-6">
-      <Card loading={list?.loading}>
+      <Card>
         <div className="pt-5" style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             refresh={refreshList}
             customHeaderTitle={`Үйлчлүүлэгчдийн жагсаалт`}
             setCreate={() => setOpenModal(true)}
+            setSearch={(e) => {
+              setSearch(e || "");
+              searchRun.run({
+                query: e,
+                ...page,
+                status: caregiverFilterSum(tab),
+              });
+            }}
             toolbarItems={
               <div className="flex">
                 <ExportButton
@@ -70,10 +90,12 @@ export const All: React.FC<AllProps> = ({
             }
           />
         </div>
-        {totalItems === 0 ? (
+        {list?.loading ? (
+          <PageLoading />
+        ) : totalItems === 0 ? (
           <Empty
             className="h-full items-center flex flex-col justify-center"
-            description="Дата байхгүй байна"
+            description="Мэдээлэл байхгүй байна"
           />
         ) : (
           <div className="w-full">
@@ -105,6 +127,9 @@ export const All: React.FC<AllProps> = ({
               <img src={SearchIcon} /> <div>Хайх</div>
             </div>
           }
+          onRequest={async (values) => {
+            setRegister(values);
+          }}
         >
           <CreateForm />
         </IModalForm>
@@ -112,6 +137,7 @@ export const All: React.FC<AllProps> = ({
         <CareGiverForm /> */}
         {isStepModal && (
           <CareGiverCreate
+            registerNumber={registerNumber}
             refreshList={refreshList}
             cancelStepModal={cancelStepModal}
             isStepModal={isStepModal}

@@ -24,6 +24,7 @@ interface TableHeaderProps {
   setCreate?: (value: boolean) => void;
   setSearch?: (value: string) => void;
   hideTitle?: boolean;
+  searchPlaceHolder?: any;
   leftContent?: any;
   loading?: boolean;
   search?: string;
@@ -43,6 +44,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   search,
   refresh,
   toolbarItems,
+  searchPlaceHolder,
   hideCreateButton,
   hideTitle = false,
   leftContent,
@@ -120,7 +122,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
         </Button>
         <ProFormText
           name={"text"}
-          placeholder={"Хайх"}
+          placeholder={searchPlaceHolder || "Хайх"}
           hidden={hideSearch}
           fieldProps={{
             size: "large",

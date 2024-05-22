@@ -34,7 +34,7 @@ export const labFormat = (data: any, value: any, labTests: any) => {
     });
     return acc;
   }, []);
-  return struct;
+  return struct ? struct : [];
 };
 
 export const labFormatUpdate = (data: any, labTests: any) => {

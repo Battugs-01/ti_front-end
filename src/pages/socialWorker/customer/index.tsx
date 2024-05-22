@@ -1,7 +1,8 @@
-import { useRequest } from "ahooks";
+import { useDebounceFn, useRequest } from "ahooks";
 import { Radio, notification } from "antd";
 import IBadge from "components/badge";
 import { Fragment, useEffect, useState } from "react";
+import { tabCounts } from "service/gov-requests";
 import orphanElderly from "service/social-worker/customer";
 import {
   ElderlyStatus,
@@ -10,13 +11,12 @@ import {
 import { caregiverFilterSum } from "utils/caregiver-filter";
 import { initPagination } from "utils/index";
 import { All } from "./tabs/all";
-import { tabCounts } from "service/gov-requests";
 
 const CustomerPage: React.FC = () => {
   const [tab, setTab] = useState<String>(RequestType.all);
   const [page, setPage] = useState(initPagination);
   const [elderlyCountBoolean, setElderlyCount] = useState(false);
-
+  const [search, setSearch] = useState<string>("");
   const list = useRequest(orphanElderly.elderlyList, {
     manual: true,
     onSuccess() {
@@ -32,7 +32,7 @@ const CustomerPage: React.FC = () => {
   });
 
   useEffect(() => {
-    list.run({ ...page, status: caregiverFilterSum(tab) });
+    list.run({ ...page, status: caregiverFilterSum(tab), query: search });
   }, [tab]);
 
   useEffect(() => {
@@ -41,12 +41,19 @@ const CustomerPage: React.FC = () => {
 
   const setPagination = (page: number, pageSize: number) => {
     setPage({ current: page, pageSize });
-    list?.run({ current: page, pageSize, status: caregiverFilterSum(tab) });
+    list?.run({
+      current: page,
+      pageSize,
+      status: caregiverFilterSum(tab),
+      query: search,
+    });
   };
 
   const refreshList = () => {
-    list?.run({ ...page, status: caregiverFilterSum(tab) });
+    list?.run({ ...page, status: caregiverFilterSum(tab), query: search });
   };
+
+  const searchRun = useDebounceFn(list.run, { wait: 1000 });
   return (
     <Fragment>
       <Radio.Group
@@ -60,12 +67,9 @@ const CustomerPage: React.FC = () => {
           <div className="flex items-center gap-2 h-full">
             <div>Бүгд</div>{" "}
             <IBadge
-              // title={list?.data?.total}
-              title={
-                elderlyCount?.data?.reduce((a: number, b: tabCounts) => {
-                  return a + b.count
-                }, 0)
-              }
+              title={elderlyCount?.data?.reduce((a: number, b: tabCounts) => {
+                return a + b.count;
+              }, 0)}
               color="gray"
             />
           </div>
@@ -77,7 +81,7 @@ const CustomerPage: React.FC = () => {
               title={
                 elderlyCount?.data?.find(
                   (val) => val.status === ElderlyStatus.ElderlySave
-                )?.count
+                )?.count || 0
               }
               color="gray"
             />
@@ -90,7 +94,7 @@ const CustomerPage: React.FC = () => {
               title={
                 elderlyCount?.data?.find(
                   (val) => val.status === ElderlyStatus.ElderlyWaiting
-                )?.count
+                )?.count || 0
               }
               color="gray"
             />
@@ -121,7 +125,7 @@ const CustomerPage: React.FC = () => {
                 elderlyCount?.data?.find(
                   (val) =>
                     val.status === ElderlyStatus.ElderlyRequestSendToDistrict
-                )?.count
+                )?.count || 0
               }
               color="gray"
             />
@@ -134,7 +138,7 @@ const CustomerPage: React.FC = () => {
               title={
                 elderlyCount?.data?.find(
                   (val) => val.status === ElderlyStatus.ElderlyTakingCare
-                )?.count
+                )?.count || 0
               }
               color="gray"
             />
@@ -148,6 +152,10 @@ const CustomerPage: React.FC = () => {
         current={page.current}
         data={list?.data?.items}
         list={list}
+        tab={tab}
+        page={page}
+        setSearch={setSearch}
+        searchRun={searchRun}
         setPagination={setPagination}
       />
     </Fragment>

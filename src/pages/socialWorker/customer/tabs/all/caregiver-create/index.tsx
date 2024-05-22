@@ -5,6 +5,7 @@ import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
 import LeftIcon from "assets/government/icons/left-icon.svg";
+import SaveIcon from "assets/government/icons/save.svg";
 import waitCircle from "assets/government/icons/wait-circle.svg";
 import dayjs from "dayjs";
 import {
@@ -14,10 +15,8 @@ import {
 import {
   arrToObj,
   labFormat,
-  labFormatUpdate,
 } from "pages/socialWorker/customer/util/arrToObj.js";
 import { useEffect, useRef, useState } from "react";
-import SaveIcon from "assets/government/icons/save.svg";
 import file from "service/file/index.js";
 import laboratory from "service/laboratory_tests/index.js";
 import orphanElderly from "service/social-worker/customer/index.js";
@@ -29,16 +28,17 @@ import { SendForm } from "./request-send/index.js";
 type CaregiverType = {
   cancelStepModal?: () => void;
   isStepModal?: boolean;
+  registerNumber?: any;
   refreshList?: () => void;
 };
 
 export const CareGiverCreate: React.FC<CaregiverType> = ({
   cancelStepModal,
   isStepModal,
+  registerNumber,
   refreshList,
 }) => {
   const [info, setInfo] = useState<any>({});
-  const [documents, setDocuments] = useState<any>({});
   const [isSave, setSave] = useState(false);
 
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
@@ -134,12 +134,17 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               address: {
                 ...val?.address,
               },
-              laboratory_tests: health.slice(1),
-              documents: docs,
+              laboratory_tests: health ? health.slice(1) : [],
+              documents: docs || {}, // Add default empty object
               request: request,
               birth_date: dayjs(val?.birth_date).toDate(),
             });
+
+            // health?.length === 10 &&
+            // Object.entries(docs || {}).length === 14 &&
+            // Object.entries(request || {}).length === 2 &&
             sendRequest && toDistrict.run(elderlyData?.id);
+
             setTimeout(() => {
               refreshList?.();
             }, 500);
@@ -206,6 +211,11 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                           onSubmit && onSubmit();
                           setSendRequest(true);
                         }}
+                        // disabled = {
+                        // health?.length === 10 &&
+                        //  Object.entries(docs || {}).length === 14 &&
+                        //  Object.entries(request || {}).length === 2 &&
+                        // }
                         extraIcon={<img src={ArrowRight} />}
                         title="Хүсэлт илгээх"
                       />
@@ -257,7 +267,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               return true;
             }}
           >
-            <CaregiverInfoForm form={formRef.current} />
+            <CaregiverInfoForm
+              form={formRef.current}
+              registerNumber={registerNumber}
+            />
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="documents"
