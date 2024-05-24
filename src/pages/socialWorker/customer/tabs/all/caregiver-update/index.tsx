@@ -239,6 +239,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       toDistrict.run(elderlyData?.id);
 
     // sendRequest && toDistrict.run(elderlyData?.id);
+
     setTimeout(() => {
       refreshList?.();
     }, 500);
@@ -314,6 +315,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     }
     return true;
   };
+
   const healthFinish = async (val: any) => {
     return true;
     // if (isSave) {

@@ -3,6 +3,7 @@ import { Button, ButtonProps, Tooltip } from "antd";
 interface CustomButtonProps extends ButtonProps {
   isDelete?: boolean;
   extraIcon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export const CustomButton = ({ ...rest }: CustomButtonProps) => {
@@ -10,6 +11,7 @@ export const CustomButton = ({ ...rest }: CustomButtonProps) => {
     <Tooltip title={rest.title}>
       <Button
         {...rest}
+        disabled={rest.disabled}
         type="primary"
         className={`${
           rest?.isDelete && "bg-[#DD695C]"

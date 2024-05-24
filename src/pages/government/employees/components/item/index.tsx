@@ -13,6 +13,7 @@ import { useRequest } from "ahooks";
 import employee from "service/gov-employees";
 import { FormInstance } from "antd/lib";
 import file from "service/file";
+import { useAuthContext } from "context/auth";
 
 const color = "#144E5A";
 
@@ -63,6 +64,9 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
     });
     return file[0].id;
   };
+
+  const [{ user }] = useAuthContext();
+
   return (
     <div
       className="bg-white w-full text-base"
@@ -70,8 +74,8 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
         borderBottom: "1px solid #EAECF0",
       }}
     >
-      <div className="w-full flex items-center p-4 justify-between">
-        <div className="flex items-center gap-2">
+      <div className="w-full p-4 flex items-center justify-between flex-wrap 3xl:flex-nowrap gap-3">
+        <div className="flex items-center gap-2 flex-wrap 2xl:flex-nowrap">
           <Avatar
             size={36}
             src={file.fileToUrl(data?.profile?.physical_path || "")}
@@ -94,13 +98,17 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
             <div className="text-sm font-normal">{data?.email}</div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 lg:flex-nowrap">
           <CustomButton
             icon={<EditOutlined rev={undefined} />}
             title="Засах"
             onClick={() => setUpdate(data)}
           />
-          <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
+          {user?.id !== data?.id ? (
+            <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
       {update && (
@@ -109,7 +117,7 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           width={724}
           title="Ажилтан засах"
           modalProps={{ onCancel: cancelModal }}
-          okText="Засах"
+          okText="Хадгалах"
           onRequest={async (values) => {
             values.profile = await newFileUpload(values?.profile);
 

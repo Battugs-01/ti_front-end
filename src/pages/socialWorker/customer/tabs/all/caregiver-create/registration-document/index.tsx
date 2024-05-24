@@ -1,3 +1,4 @@
+import ProForm, { ProFormInstance } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { UploadButton } from "components/index";
 
@@ -42,6 +43,7 @@ export const uploadDocument = [
     },
   ],
 ];
+
 export const uploadFile = [
   [
     {

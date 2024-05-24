@@ -48,6 +48,7 @@ const EmployeePage: React.FC = () => {
     setFilter({ ...filter, current: pageNumber, pageSize });
     employeeList?.run({ ...filter, current: pageNumber, pageSize });
   };
+
   return (
     <div>
       <div className="custom-ant-card-padding-remove mt-4">

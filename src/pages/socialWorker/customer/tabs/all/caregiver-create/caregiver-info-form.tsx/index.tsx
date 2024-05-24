@@ -143,6 +143,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({
                     name="birth_date"
                     placeholder="Төрсөн огноо оруулна уу"
                     label={"Төрсөн огноо"}
+                    initialValue={dayjs().toDate()}
                     rules={FORM_ITEM_RULE()}
                     fieldProps={{
                       onChange: (val: any) => {
@@ -163,6 +164,7 @@ export const CaregiverInfoForm: React.FC<FormType> = ({
                         placeholder="Насаа оруулна уу"
                         label={"Нас"}
                         disabled
+                        initialValue={0}
                         // convertValue={form.getFieldValue("birth_date")}
                         rules={FORM_ITEM_RULE()}
                       />

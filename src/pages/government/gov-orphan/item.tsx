@@ -1,11 +1,10 @@
 import { Avatar, Badge } from "antd";
+import UserIcon from "assets/government/icons/employees.svg";
 import MailIcon from "assets/government/icons/mail.svg";
 import PhoneIcon from "assets/government/icons/phone.svg";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import file from "service/file";
-import UserIcon from "assets/government/icons/employees.svg";
 import { IoLocationSharp } from "react-icons/io5";
+import file from "service/file";
 import { CardInterface } from "service/social-worker/customer/type";
 
 type ItemType = {
@@ -15,8 +14,8 @@ type ItemType = {
 export const Item: React.FC<ItemType> = ({ data }) => {
   return (
     <div className="p-4 w-full text-gray-700">
-      <div className="flex items-center justify-between flex-wrap xl:flex-nowrap gap-3">
-        <div className="flex items-center gap-4 flex-wrap xl:flex-nowrap">
+      <div className="flex items-center justify-between flex-wrap 3xl:flex-nowrap gap-3">
+        <div className="flex items-center gap-4 flex-wrap 2xl:flex-nowrap">
           <Avatar
             src={file.fileToUrl(data?.logo?.physical_path || "")}
             size={40}
@@ -35,7 +34,7 @@ export const Item: React.FC<ItemType> = ({ data }) => {
               <div className="flex items-center gap-1">
                 <img src={UserIcon} />
                 <div>Үйлчлүүлэгч:</div>
-                <div className="font-bold">
+                <div className="font-bold flex">
                   {data?.total_elderly} / {data?.capacity_elderly}
                 </div>
               </div>

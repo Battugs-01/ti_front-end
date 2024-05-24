@@ -13,6 +13,8 @@ import { exportFromTable } from "utils/export";
 import List from "../../components/list";
 import { CareGiverCreate } from "./caregiver-create";
 import { CreateForm } from "./create";
+import { ProFormText } from "@ant-design/pro-form";
+import { FORM_ITEM_RULE } from "config";
 
 type AllProps = {
   data?: ListElderly[];
@@ -53,8 +55,14 @@ export const All: React.FC<AllProps> = ({
   };
 
   const nextModal = () => {
-    setOpenModal(false);
-    setStepModal(true);
+    if (formRef.current) {
+      const rdValue = formRef.current.getFieldValue("rd");
+      const pattern = /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/;
+      if (pattern.test(rdValue)) {
+        setOpenModal(false);
+        setStepModal(true);
+      }
+    }
   };
 
   return (
@@ -130,6 +138,7 @@ export const All: React.FC<AllProps> = ({
           onRequest={async (values) => {
             setRegister(values);
           }}
+          isValid={formRef.current?.getFieldValue("rd")?.length === 10}
         >
           <CreateForm />
         </IModalForm>

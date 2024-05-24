@@ -3,11 +3,9 @@ import {
   ModalForm,
   ModalFormProps,
   ProFormInstance,
-  DrawerForm,
-  StepsForm,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Typography, notification } from "antd";
+import { Button, notification } from "antd";
 import { useRef } from "react";
 
 type Props = ModalFormProps & {
@@ -20,6 +18,7 @@ type Props = ModalFormProps & {
   okText?: React.ReactNode;
   successData?: () => void;
   isCustomFooter?: boolean;
+  isValid?: boolean;
 };
 
 export const IModalForm = ({
@@ -31,6 +30,7 @@ export const IModalForm = ({
   okText,
   successData,
   isCustomFooter,
+  isValid,
   ...rest
 }: Props) => {
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
@@ -52,7 +52,9 @@ export const IModalForm = ({
     <ModalForm
       {...rest}
       onFinishFailed={(err) => {
-        notification.info({ message: "Талбарын утга дутуу эсвэл буруу байна." });
+        notification.info({
+          message: "Талбарын утга дутуу эсвэл буруу байна.",
+        });
       }}
       scrollToFirstError={{
         behavior: "smooth",
