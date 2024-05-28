@@ -1,6 +1,6 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Modal, Spin, notification } from "antd";
+import { Form, Modal, Spin, notification } from "antd";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -38,11 +38,10 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
   registerNumber,
   refreshList,
 }) => {
-  const [info, setInfo] = useState<any>({});
-  const [isSave, setSave] = useState(false);
-  const [isValidDoc, setValidDoc] = useState(false);
-  const [isValidTest, setValidLabTest] = useState(false);
-  console.log(isValidDoc, "sda2");
+  const [form] = Form.useForm();
+
+  const docs = Form.useWatch([], form);
+
   const toDistrict = useRequest(orphanElderly.sendToDistrict, {
     manual: true,
     onSuccess() {
@@ -59,7 +58,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
       notification.success({
         message: "Амжилттай",
       });
-      setSave(false);
       cancelStepModal?.();
     },
     onError: (err) => {
@@ -97,19 +95,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
 
   const formRef = useRef<ProFormInstance>();
 
-  console.log(
-    formRef.current?.getFieldValue(["request", "definition_governor_file_ids"]),
-    "vall"
-  );
-
-  // const isFormValid =
-  //   formRef.current?.getFieldValue(["request", "situational_file_ids"]) &&
-  //   formRef.current?.getFieldValue(["request", "definition_governor_file_ids"]);
-
-  console.log(
-    formRef.current?.getFieldValue("documents"),
-    "formRef.current?.getFieldsValue()"
-  );
   return (
     <div>
       {elderly.loading ||
@@ -122,17 +107,18 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         <StepsForm
           formRef={formRef}
           onFinish={async (val) => {
+            console.log(val, "sda");
             const profile = await uploadProfile.runAsync({
               file: val?.profile?.[0]?.originFileObj,
             });
             const data = await filesDoc.runAsync({
-              files: Object.values(val.documents || {}),
+              files: Object.values(val?.documents || {}),
             });
             const healthData = await filesHealth.runAsync({
-              files: Object.values(val.laboratory_tests || {}),
+              files: Object.values(val?.laboratory_tests || {}),
             });
             const requestData = await filesRequest.runAsync({
-              files: Object.values(val.request || {}),
+              files: Object.values(val?.request || {}),
             });
             const docs = arrToObj(data, val?.documents);
             const request = arrToObj(requestData, val?.request);
@@ -190,103 +176,43 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             },
           }}
           submitter={{
-            render: ({ step, onSubmit, onPre, form }) => {
+            render: ({ step, onSubmit, onPre }) => {
               const isValidDocument =
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_pension_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_pension_loan;",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_disability_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_other_welfare_services_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_insurance_discounts_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_care_center_discount_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_insurance_notebook",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_care_requet",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_identity_card",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_property_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_have_children_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_have_sibling_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_married_inquiry",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "documents",
-                  "elderly_document_is_divorce_inquiry",
-                ])?.length > 0;
+                docs?.documents?.elderly_document_is_pension_inquiry?.length >
+                  0 &&
+                docs?.documents?.["elderly_document_pension_loan;"]?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_disability_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_other_welfare_services_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_insurance_discounts_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_care_center_discount_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_insurance_notebook?.length >
+                  0 &&
+                docs?.documents?.elderly_document_care_requet?.length > 0 &&
+                docs?.documents?.elderly_document_identity_card?.length > 0 &&
+                docs?.documents?.elderly_document_property_inquiry?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_have_children_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_is_have_sibling_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_is_married_inquiry?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_divorce_inquiry?.length >
+                  0;
 
-              const isValidlabTest =
-                formRef.current?.getFieldValue(["laboratory_tests", 1])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 2])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 3])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 4])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 5])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 6])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 7])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 8])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 9])
-                  ?.length > 0 &&
-                formRef.current?.getFieldValue(["laboratory_tests", 10])
-                  ?.length > 0;
+              const isValidLabTest = docs?.laboratory_tests
+                ?.slice(1)
+                ?.every((el: any) => el !== undefined && el.length > 0);
 
               const isValidRequest =
-                formRef.current?.getFieldValue([
-                  "request",
-                  "situational_file_ids",
-                ])?.length > 0 &&
-                formRef.current?.getFieldValue([
-                  "request",
-                  "definition_governor_file_ids",
-                ])?.length > 0;
+                docs?.request?.definition_governor_file_ids?.length > 0 &&
+                docs?.request?.situational_file_ids?.length > 0;
 
-              console.log(form?.getFieldValue([]), "sda");
-
-              // const DocumentsNumber = Object?.keys(
-              //   form?.getFieldValue("documents")
-              // )?.length; // 14
-              // console.log(DocumentsNumber, "sda2");
               return (
                 <div className="flex justify-between items-center w-full flex-wrap xl:flex-nowrap">
                   <div>
@@ -306,7 +232,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                         loading={elderly.loading}
                         onClick={() => {
                           onSubmit && onSubmit();
-                          setSave(true);
                         }}
                         icon={<img src={SaveIcon} />}
                         title="Түр хадгалах"
@@ -320,8 +245,9 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                           setSendRequest(true);
                         }}
                         disabled={
-                          isValidTest === false && isValidDoc === false
-                          // isValidRequest === false
+                          isValidLabTest === false ||
+                          isValidDocument === false ||
+                          isValidRequest === false
                         }
                         extraIcon={<img src={ArrowRight} />}
                         title="Хүсэлт илгээх"
@@ -330,8 +256,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
                       <CustomButton
                         onClick={() => {
                           onSubmit && onSubmit();
-                          setValidDoc(isValidDocument);
-                          setValidLabTest(isValidlabTest);
                         }}
                         extraIcon={<img src={ArrowRight} />}
                         title="Дараагийнх"
@@ -367,12 +291,14 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
               </Modal>
             );
           }}
+          formProps={{
+            form,
+          }}
         >
           <StepsForm.StepForm
             name="giver-info"
             title="Үйлчлүүлэгчийн хувийн мэдээлэл"
             onFinish={async (val) => {
-              setInfo(val);
               return true;
             }}
           >
@@ -387,12 +313,14 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
             onFinish={async (values: any) => {
               return true;
             }}
+            // formRef={documentFormRef}
           >
             <RegistrationForm />
           </StepsForm.StepForm>
           <StepsForm.StepForm
             name="health"
             title="Эрүүл мэндийн байдал"
+            // formRef={labFormRef}
             onFinish={async (values: any) => {
               return true;
             }}
@@ -405,6 +333,7 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
           <StepsForm.StepForm
             name="request"
             title="Хүсэлт илгээх"
+            // formRef={requestFormRef}
             onFinish={async (values) => {
               return true;
             }}

@@ -1,7 +1,7 @@
 import { ProFormInstance, StepsForm } from "@ant-design/pro-form";
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Modal, Spin, notification } from "antd";
+import { Form, Modal, Spin, notification } from "antd";
 import ArrowRight from "assets/government/icons/arrow-right.svg";
 import checkSvg from "assets/government/icons/check.svg";
 import finishCircle from "assets/government/icons/finish-circle.svg";
@@ -53,6 +53,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
   const [info, setInfo] = useState<any>({});
   const [documents, setDocuments] = useState<any>({});
 
+  const [form] = Form.useForm();
+  const docs = Form.useWatch([], form);
+
   const elderlyEdit = useRequest(orphanElderly.elderlyEdit, {
     manual: true,
     onSuccess: () => {
@@ -87,6 +90,7 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
       // refreshList?.();
     },
   });
+
   const uploadMulti = useRequest(file.uploadsMulti, {
     manual: true,
     onError: (err) =>
@@ -427,9 +431,6 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
     // return true;
   };
 
-  // if (uploadMulti.loading || toDistrict.loading || elderlyEdit?.loading) {
-  //   setLoading(true);
-  // }
   return (
     <div>
       {uploadMulti.loading || toDistrict.loading ? (
@@ -468,6 +469,49 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
           }}
           submitter={{
             render: ({ step, onSubmit, onPre, form }) => {
+              const isValidDocument =
+                docs?.documents?.elderly_document_is_pension_inquiry?.length >
+                  0 &&
+                docs?.documents?.["elderly_document_pension_loan;"]?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_disability_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_other_welfare_services_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_insurance_discounts_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_care_center_discount_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_insurance_notebook?.length >
+                  0 &&
+                docs?.documents?.elderly_document_care_requet?.length > 0 &&
+                docs?.documents?.elderly_document_identity_card?.length > 0 &&
+                docs?.documents?.elderly_document_property_inquiry?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_have_children_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_is_have_sibling_inquiry
+                  ?.length > 0 &&
+                docs?.documents?.elderly_document_is_married_inquiry?.length >
+                  0 &&
+                docs?.documents?.elderly_document_is_divorce_inquiry?.length >
+                  0;
+
+              const isValidLabTest =
+                docs?.laboratory_tests?.abdominal?.length > 0 &&
+                docs?.laboratory_tests?.analysis_urine?.length > 0 &&
+                docs?.laboratory_tests?.biochemical?.length > 0 &&
+                docs?.laboratory_tests?.blood_test?.length > 0 &&
+                docs?.laboratory_tests?.health_check_sheet?.length > 0 &&
+                docs?.laboratory_tests?.heart_recording?.length > 0 &&
+                docs?.laboratory_tests?.lungs?.length > 0 &&
+                docs?.laboratory_tests?.mental_health?.length > 0 &&
+                docs?.laboratory_tests?.sputum?.length > 0 &&
+                docs?.laboratory_tests?.syphilis?.length > 0;
+
+              const isValidRequest =
+                docs?.request?.definition_governor_file_ids?.length > 0 &&
+                docs?.request?.situational_file_ids?.length > 0;
               return (
                 <div className="flex justify-between items-center w-full">
                   <div>
@@ -499,6 +543,11 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                           onSubmit && onSubmit();
                           setSendRequest(true);
                         }}
+                        disabled={
+                          isValidLabTest === false ||
+                          isValidDocument === false ||
+                          isValidRequest === false
+                        }
                         loading={elderlyEdit.loading && toDistrict.loading}
                         extraIcon={<img src={ArrowRight} />}
                         title={
@@ -548,6 +597,9 @@ export const CareGiverUpdate: React.FC<CaregiverType> = ({
                 {dom}
               </Modal>
             );
+          }}
+          formProps={{
+            form,
           }}
         >
           <StepsForm.StepForm
