@@ -107,7 +107,6 @@ export const CareGiverCreate: React.FC<CaregiverType> = ({
         <StepsForm
           formRef={formRef}
           onFinish={async (val) => {
-            console.log(val, "sda");
             const profile = await uploadProfile.runAsync({
               file: val?.profile?.[0]?.originFileObj,
             });
