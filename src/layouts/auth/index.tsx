@@ -7,7 +7,7 @@ const AuthLayout: FC = () => {
       <div
         className="hidden sm:block col-span-7 h-screen "
         style={{
-          backgroundImage: "url('/burtgel/background/login.svg')",
+          backgroundImage: "url('/background/login.svg')",
           backgroundSize: "cover",
           backgroundColor: "",
         }}

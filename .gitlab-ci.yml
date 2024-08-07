@@ -3,7 +3,7 @@ stages:
 
 dev:
   only:
-    - dev
+    - main
   stage: dev
   script:
     - cp $ENV "$(pwd)/.env"

@@ -7635,6 +7635,11 @@ untitled-ui@^0.1.0:
   dependencies:
     prop-types "^15.7.2"
 
+untitledui-js-base@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/untitledui-js-base/-/untitledui-js-base-1.1.1.tgz#c0bcb7045fc43a2d2ad5f7a7527728786cc838f8"
+  integrity sha512-nSg82G1g2obasswD1xloBkR7H1as6egoi9fKnfUWbxCGBCpxgwU+tN+5OztrdRyOazBsRxMoDkgA19AtGpmdVA==
+
 unzipper@^0.10.11:
   version "0.10.14"
   resolved "https://registry.yarnpkg.com/unzipper/-/unzipper-0.10.14.tgz#d2b33c977714da0fbc0f82774ad35470a7c962b1"

@@ -55,6 +55,7 @@
     "read-excel-file": "^5.7.1",
     "sass": "1.69.6",
     "untitled-ui": "^0.1.0",
+    "untitledui-js-base": "^1.1.1",
     "vite-plugin-node": "^3.1.0",
     "vite-plugin-node-polyfills": "^0.19.0",
     "vite-plugin-svgr": "^4.2.0",

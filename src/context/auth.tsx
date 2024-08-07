@@ -22,13 +22,13 @@ const reducer: AuthReducerType = (state, action) => {
 };
 
 export const AuthContext = createContext<AuthContextType>([
-  { authorized: false, init: false, user: undefined },
+  { authorized: true, init: false, user: undefined },
   () => {},
 ]);
 
 export const AuthProvider = ({ children }: Props) => {
   const [state, setState] = useReducer(reducer, {
-    authorized: false,
+    authorized: true,
     init: false,
   });
   const _info = useRequest(auth.info, {
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }: Props) => {
       setState([Action.INIT, true]);
     },
     onError: () => {
-      auth.removeToken();
-      setState([Action.SIGN_OUT]);
+      // auth.removeToken();
+      // setState([Action.SIGN_OUT]);
       setState([Action.INIT, true]);
     },
   });

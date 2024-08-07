@@ -52,7 +52,7 @@ export const PageHeader = ({ title, subTitle }: Props) => {
           size={20}
           color="#667085"
           className="cursor-pointer"
-          onClick={() => navigate("dashboard/government/requests")}
+          onClick={() => navigate("dashboard/screening-list")}
         />
 
         <div className="text-lg text-gray-300">/</div>

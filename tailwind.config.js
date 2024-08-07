@@ -39,7 +39,7 @@ module.exports = {
           50: "#F9F5FF",
           100: "#F4EDFF",
           200: "#E9D4FE",
-          300: "#D6BBFB",
+          300: "#A0B6BA",
           400: "#B692F6",
           500: "#9E77ED",
           600: "#7F56D9",
@@ -86,6 +86,7 @@ module.exports = {
           800: "#05603A",
           900: "#054F31",
         },
+
         blue: colors.sky,
         red: colors.rose,
         indigo: colors.indigo,
