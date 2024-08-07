@@ -18,10 +18,10 @@ notification.config({
   // className: "custom-ant-notification-message p-4",
 });
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-dayjs.tz.setDefault("Asia/Ulaanbaatar")
+dayjs.tz.setDefault("Asia/Ulaanbaatar");
 
 root.render(
   <ConfigProvider
@@ -30,6 +30,11 @@ root.render(
         colorPrimary: "#144E5A",
         fontFamily: "Inter",
         colorBorder: "#D0D5DD",
+      },
+      components: {
+        Radio: {
+          buttonCheckedBg: "#CFDADC",
+        },
       },
     }}
     locale={enUSIntl}

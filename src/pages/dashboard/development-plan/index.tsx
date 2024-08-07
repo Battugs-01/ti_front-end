@@ -1,8 +1,13 @@
+import { Radio } from "antd";
+
 const DevelopmentPlan: React.FC = () => {
   return (
-    <div>
-      <h1>Development plan</h1>
-    </div>
+    <>
+      <Radio.Group defaultValue="a" size="large">
+        <Radio.Button value="a">Statistical</Radio.Button>
+        <Radio.Button value="b">By Care Foci List</Radio.Button>
+      </Radio.Group>
+    </>
   );
 };
 
