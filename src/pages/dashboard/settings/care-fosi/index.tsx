@@ -1,8 +1,7 @@
 import { Flex } from "antd";
 import { PageCard } from "components/card";
-import { ExportButton, ITable } from "components/index";
+import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { exportFromTable } from "utils/export";
 
 const CareFosi: React.FC = () => {
   return (
