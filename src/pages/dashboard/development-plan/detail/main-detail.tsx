@@ -19,7 +19,7 @@ const MainDetail: React.FC = () => {
   );
   return (
     <PageCard>
-      <div className="flex items-center justify-between mb-11">
+      <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between mb-11">
         <Radio.Group
           defaultValue={DevelopmentPlanDetailTab.general}
           size="large"
