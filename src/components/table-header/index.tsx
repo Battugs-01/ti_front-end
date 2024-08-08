@@ -129,7 +129,6 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             className: "text-sm flex",
             prefix: <BiSearch color="#66708066" size={20} />,
             onChange: (e) => {
-              console.log(e, "jj");
               searchDebounce.run(e.target.value);
             }, // Add the icon as a prefix here
           }}

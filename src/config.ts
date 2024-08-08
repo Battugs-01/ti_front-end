@@ -500,28 +500,6 @@ export const MONTHS = [
   "December",
 ];
 
-export const MERCHANT_ROLES = Object.freeze([
-  {
-    value: MerchantRole.owner,
-    label: "Owner",
-  },
-  {
-    label: "Manager",
-    value: MerchantRole.manager,
-  },
-]);
-
-export const NOTIFICATION_TYPES = Object.freeze([
-  {
-    value: NotificationType.customer,
-    label: "Customer",
-  },
-  {
-    value: NotificationType.merchant,
-    label: "Merchant",
-  },
-]);
-
 export const LANGUAGES = Object.freeze([
   {
     label: "Mongolia",
@@ -631,20 +609,14 @@ export const BankList = Object.freeze([
     label: "Мобифинанс",
     value: "mobifinance",
   },
-  // {
-  //   image: Wallet,
-  //   label: "ҮЦаас төвлөрсөн хадгаламж төв",
-  //   value: "mobifinance",
-  // },
-  // {
-  //   image: Wallet,
-  //   label: "Мобифинанс",
-  //   value: "mobifinance",
-  // },
 ]);
 
-// value: "mobifinance",
-// value: "hi_pay",
-// value: "msc_center",
-// value: "ard_credit",
-// value: "state_fund",
+export enum SettingsTab {
+  permission = "permission",
+  careFoci = "careFoci",
+}
+
+export enum StatisticalTab {
+  statistical = "statistical",
+  careFoci = "careFoci",
+}
