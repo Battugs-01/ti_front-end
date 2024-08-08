@@ -1,6 +1,4 @@
 import { Button } from "antd";
-import React from "react";
-import { AiOutlineCloudUpload } from "react-icons/ai";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { IoCreateOutline } from "react-icons/io5";
 

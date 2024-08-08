@@ -1,5 +1,4 @@
-import { FilePdfOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
+import { Button } from "antd";
 import Handbook from "assets/doc/handbook.pdf";
 import { RiHome6Line } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";

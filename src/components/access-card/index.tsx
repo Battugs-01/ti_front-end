@@ -1,6 +1,4 @@
-import { Card, Progress, Space, Tag, Tooltip } from "antd";
-import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
-import { formatNumber, moneyFormat } from "utils/index";
+import { Card, Progress, Tooltip } from "antd";
 export type CardProps = {
   label: string;
   description: string;
@@ -13,10 +11,7 @@ export type CardProps = {
 const DashboardAccessCard = ({
   label,
   amount,
-  percent,
-  isMoney = false,
   loading = false,
-  customItem,
   description,
 }: CardProps) => {
   return (

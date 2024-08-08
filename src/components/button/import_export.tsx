@@ -50,12 +50,6 @@ export const ExportButton = ({ loading, ...rest }: PropsExport) => {
           }}
           rev={undefined}
         />
-        // <AiOutlineCloudUpload
-        //   style={{
-        //     transform: "rotate(-180deg)",
-        //   }}
-        //   size={20}
-        // />
       }
     >
       <span className="ml-2">{rest.title ?? "Татах"}</span>

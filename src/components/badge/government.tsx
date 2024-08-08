@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 interface Props {
   status?: 0 | 1 | 2 | 3 | 4 | Number;

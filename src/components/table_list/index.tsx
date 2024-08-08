@@ -1,11 +1,11 @@
-import { Card, Empty, Pagination, Skeleton, Spin } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Card, Empty, Pagination } from "antd";
 import { RemoveModal } from "components/modal";
 import { useEffect, useState } from "react";
 import { ActionComponentProps, RemoveModelConfig } from "types";
 import { DeleteButton, EditButton, IfCondition } from "..";
-import { ITableSource } from "./source";
-import { EditOutlined } from "@ant-design/icons";
 import { ITableListLoader } from "./loading";
+import { ITableSource } from "./source";
 
 type Props<T> = {
   total?: number;

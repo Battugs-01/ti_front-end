@@ -1,13 +1,12 @@
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, ButtonProps, Tooltip } from "antd";
+import EditIcon from "assets/icons/edit-05.svg";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiCheckCircle } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
-import { IoAddCircleOutline, IoAddOutline } from "react-icons/io5";
+import { IoAddOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { TbEdit } from "react-icons/tb";
-import EditIcon from "assets/icons/edit-05.svg";
 
 // type PropsCreate = ButtonProps;
 interface PropsCreate extends ButtonProps {

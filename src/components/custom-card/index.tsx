@@ -4,11 +4,9 @@ import React from "react";
 interface CustomCardProps {
   title: string;
   children: any;
-  // Define the props for your component here
 }
 
 const CustomCard: React.FC<CustomCardProps> = ({ title, children }) => {
-  // Implement your component logic here
   return (
     <Row gutter={[24, 24]}>
       <Col xs={24} sm={14}>
