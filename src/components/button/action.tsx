@@ -80,7 +80,6 @@ export const EditButton = ({ ...rest }: ButtonProps) => {
         type="link"
       >
         <img src={EditIcon} />
-        {rest?.title}
       </Button>
     </Tooltip>
   );
@@ -168,6 +167,32 @@ export const PermissionButton = ({ ...rest }) => {
         type="link"
       >
         <RiUserSettingsLine size={20} />
+      </Button>
+    </Tooltip>
+  );
+};
+
+interface CustomButtonProps extends ButtonProps {
+  isDelete?: boolean;
+  extraIcon?: React.ReactNode;
+  disabled?: boolean;
+}
+
+export const CustomButton = ({ ...rest }: CustomButtonProps) => {
+  return (
+    <Tooltip title={rest.title}>
+      <Button
+        {...rest}
+        disabled={rest.disabled}
+        type="primary"
+        className={`${
+          rest?.isDelete && "bg-[#DD695C]"
+        } flex items-center font-medium p-4`}
+      >
+        <div className="flex items-center gap-1">
+          {rest?.title}
+          {rest?.extraIcon}
+        </div>
       </Button>
     </Tooltip>
   );
