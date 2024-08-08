@@ -14,7 +14,7 @@ import { Item } from "./components/item";
 
 const PermissionControl: React.FC = () => {
   const [isCreate, setIsCreate] = useState(false);
-  const [fakeData, setFakeData] = useState([]);
+  const [fakeData, setFakeData] = useState<any>([]);
   const [filter, setFilter] = useState(initPagination);
 
   const employeeList = useRequest(permission.get, {
@@ -91,7 +91,7 @@ const PermissionControl: React.FC = () => {
           />
         </div>
         <div>
-          {fakeData?.products?.map((item, index) => {
+          {fakeData?.products?.map((item: any, index: number) => {
             return (
               <Item
                 data={item}
