@@ -1,12 +1,4 @@
 import { Rule } from "antd/lib/form";
-import { MerchantRole } from "service/merchant/type";
-import {
-  ServiceOperationType,
-  ServiceCategory,
-  ServiceStatusType,
-} from "service/merchantService/type";
-import { NotificationType } from "service/notifications/types";
-import { ProductCategoryType } from "service/product/type";
 import { Week } from "types";
 import Khan from "assets/government/img/khan.png";
 import Khas from "assets/government/img/khas.png";
