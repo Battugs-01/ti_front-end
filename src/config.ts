@@ -201,3 +201,14 @@ export enum StatisticalTab {
   statistical = "statistical",
   careFoci = "careFoci",
 }
+
+export enum DevelopmentPlanDetailTab {
+  general = "general_info",
+  development = "development_plan",
+}
+
+export enum DevelopmentPlanGraphTab {
+  mini_cog = "mini_cog",
+  gds = "gds",
+  barthel = "barthel_index",
+}

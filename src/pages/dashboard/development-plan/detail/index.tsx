@@ -1,4 +1,5 @@
 import Info from "./info";
+import MainDetail from "./main-detail";
 
 const DevelopmentPlanDetail: React.FC = () => {
   return (
@@ -6,7 +7,9 @@ const DevelopmentPlanDetail: React.FC = () => {
       <div className="col-span-1">
         <Info />
       </div>
-      <div className="col-span-4 bg-slate-500">434</div>
+      <div className="col-span-4">
+        <MainDetail />
+      </div>
     </div>
   );
 };

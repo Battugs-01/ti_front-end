@@ -27,7 +27,7 @@ export const CustomCard = ({
 }: CustomCardProps) => {
   return (
     <div
-      className={`p-4 rounded-xl bg-[#F5F8F8] border border-[#D0D5DD] space-y-4 ${
+      className={`p-4 rounded-xl bg-[#FFF] border border-[#D0D5DD] space-y-4 ${
         small ? "p-4" : "p-8"
       } ${className} `}
       style={{

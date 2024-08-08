@@ -1,5 +1,4 @@
 import { RadioChangeEvent } from "antd";
-import { Merchant } from "service/merchant/type";
 
 export interface FilterFormButton {
   value: FilterDeadline;
@@ -65,23 +64,6 @@ export interface AnyInterface {
 
 export type Optional<T> = T | undefined | null;
 
-export interface Base {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  created_user_id: number;
-  updated_user_id: number;
-  created_user?: Merchant;
-  updated_user?: Merchant;
-}
-
-export interface BaseModifier {
-  modifier_id: number;
-  modifier?: Merchant;
-  creator_id: number;
-  creator?: Merchant;
-}
-
 export interface DeleteConfirm {
   confirm: string;
 }
@@ -116,8 +98,6 @@ export interface BaseModifierFilter {
   creator_id?: number;
   modifier_id?: number;
 }
-
-export interface BaseRecord extends Base, BaseModifier {}
 
 export type SuccessResponse = { success: boolean };
 
