@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }: Props) => {
   });
 
   useEffect(() => {
+    localStorage.setItem("web.locale", "en");
     _info.run();
   }, []);
 

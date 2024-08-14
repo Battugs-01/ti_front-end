@@ -19,6 +19,10 @@ const MainDetail: React.FC = () => {
     DevelopmentPlanDetailTab.general
   );
   const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
+  const cancelModal = () => {
+    setCreateModalVisible(false);
+  };
+
   return (
     <PageCard>
       <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between mb-11">
@@ -42,7 +46,7 @@ const MainDetail: React.FC = () => {
             </div>
           </Radio.Button>
         </Radio.Group>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Button type="default" size="large" icon={<RefreshCW02 />} />
           <Button
             size="large"
@@ -81,7 +85,12 @@ const MainDetail: React.FC = () => {
         condition={DevelopmentPlanDetailTab.development === tab}
         whenTrue={<DevelopmentPlanTab data={[{}]} />}
       />
-      {createModalVisible && <CreateDevelopmentPlan />}
+      {createModalVisible && (
+        <CreateDevelopmentPlan
+          cancelModal={cancelModal}
+          visible={createModalVisible}
+        />
+      )}
     </PageCard>
   );
 };

@@ -29,7 +29,7 @@ const GeneralInfo: React.FC = () => {
     line: {
       style: {
         stroke: "#144E5A",
-        strokeWidth: 4,
+        strokeWidth: 2,
       },
     },
   };

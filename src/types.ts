@@ -6,6 +6,8 @@ export interface FilterFormButton {
   onChange?: (e: RadioChangeEvent) => void;
 }
 
+export type Locale = "mn" | "en";
+
 export interface ActionComponentProps<T> {
   setCloseModal?: any;
   setWaitModal?: any;

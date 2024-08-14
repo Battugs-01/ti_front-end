@@ -2,8 +2,11 @@ import { Radio } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
+import { EditScreenList } from "./edit";
+import { useIntl } from "react-intl";
 
 const ScreeningList: React.FC = () => {
+  const intl = useIntl();
   return (
     <PageCard xR>
       <InitTableHeader
@@ -19,10 +22,27 @@ const ScreeningList: React.FC = () => {
         }
       />
       <ITable
+        dataSource={[
+          {
+            name: "John Doe",
+            register: "2021-09-01",
+            phone: "0123456789",
+            age: 30,
+            gender: "male",
+            risk_level: "High",
+            cfs_score: 10,
+            agency: "Agency",
+            total_assessment: 2,
+            list_assessment_date: "2021-09-01",
+            caregiver: "Caregiver",
+            person_in_charge: "Person in charge",
+            development_plan: "Development Plan",
+          },
+        ]}
         className="p-0 remove-padding-table"
         columns={[
           {
-            title: "Name",
+            title: intl.formatMessage({ id: "name" }),
             dataIndex: "name",
           },
           {
@@ -74,6 +94,7 @@ const ScreeningList: React.FC = () => {
             dataIndex: "development_plan",
           },
         ]}
+        UpdateComponent={EditScreenList}
       />
     </PageCard>
   );
