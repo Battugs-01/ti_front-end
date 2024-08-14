@@ -1,14 +1,12 @@
 import { useRequest } from "ahooks";
 import { Card } from "antd";
 import { FormInstance } from "antd/lib";
-import { ExportButton } from "components/index";
 import { IModalForm } from "components/modal";
 import CustomPagination from "components/pagination";
 import InitTableHeader from "components/table-header";
 import { useEffect, useRef, useState } from "react";
 import file from "service/file";
 import permission from "service/settings/permission";
-import { exportFromTable } from "utils/export";
 import { initPagination } from "utils/index";
 import { Item } from "./components/item";
 
@@ -73,21 +71,6 @@ const PermissionControl: React.FC = () => {
             setCreate={() => setIsCreate(true)}
             refresh={refreshList}
             customHeaderTitle="Эрхийн тохиргоо"
-            toolbarItems={
-              <div className="flex">
-                <ExportButton
-                  onClick={() => {
-                    exportFromTable(
-                      ["Эрхийн тохиргоо"],
-                      window.document.getElementById(
-                        "main-table"
-                      ) as HTMLElement,
-                      window
-                    );
-                  }}
-                />
-              </div>
-            }
           />
         </div>
         <div>

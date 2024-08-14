@@ -1,7 +1,9 @@
-import { Radio } from "antd";
+import { Area } from "@ant-design/plots";
+import { Divider, Radio } from "antd";
 import { DevelopmentPlanGraphTab } from "config";
 import { useState } from "react";
-import { Area } from "@ant-design/plots";
+import { Info } from "../../components/collapsed-info";
+import { ITable } from "components/index";
 
 const GeneralInfo: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanGraphTab>(
@@ -51,6 +53,120 @@ const GeneralInfo: React.FC = () => {
         </Radio.Button>
       </Radio.Group>
       <Area {...config} />
+      <Divider />
+      <Info title={"Screening Assessment"} className="mb-4">
+        <div className="font-semibold mb-4 text-lg text-gray-700">
+          Screening Assessment Detail
+        </div>
+        <ITable
+          className="p-0 remove-padding-table"
+          columns={[
+            {
+              title: "Name",
+              dataIndex: "name",
+            },
+            {
+              title: "Answer",
+              dataIndex: "answer",
+            },
+          ]}
+        />
+      </Info>
+      <Info title={"Comprehensive Needs Assessment"}>
+        <div className="font-semibold mb-4 text-lg text-gray-800">
+          Comprehensive Needs Assessment Detail
+        </div>
+        <div className="flex flex-col gap-3">
+          <div>
+            <div className="text-lg font-semibold text-gray-800 mb-4">
+              Functional
+            </div>
+            <ITable
+              className="p-0 remove-padding-table"
+              columns={[
+                {
+                  title: "Name",
+                  dataIndex: "name",
+                },
+                {
+                  title: "Normal value",
+                  dataIndex: "normal_value",
+                },
+                {
+                  title: "Assessment value",
+                  dataIndex: "assessment_value",
+                },
+              ]}
+            />
+          </div>
+          <div>
+            <div className="text-lg font-semibold text-gray-800 mb-4">
+              Psycho-emotional
+            </div>
+            <ITable
+              className="p-0 remove-padding-table"
+              columns={[
+                {
+                  title: "Name",
+                  dataIndex: "name",
+                },
+                {
+                  title: "Normal value",
+                  dataIndex: "normal_value",
+                },
+                {
+                  title: "Assessment value",
+                  dataIndex: "assessment_value",
+                },
+              ]}
+            />
+          </div>
+          <div>
+            <div className="text-lg font-semibold text-gray-800 mb-4">
+              Socio-economic
+            </div>
+            <ITable
+              className="p-0 remove-padding-table"
+              columns={[
+                {
+                  title: "Name",
+                  dataIndex: "name",
+                },
+                {
+                  title: "Normal value",
+                  dataIndex: "normal_value",
+                },
+                {
+                  title: "Assessment value",
+                  dataIndex: "assessment_value",
+                },
+              ]}
+            />
+          </div>
+          <div>
+            <div className="text-lg font-semibold text-gray-800 mb-4">
+              Clinical
+            </div>
+            <ITable
+              className="p-0 remove-padding-table"
+              columns={[
+                {
+                  title: "Name",
+                  dataIndex: "name",
+                },
+                {
+                  title: "Normal value",
+                  dataIndex: "normal_value",
+                },
+                {
+                  title: "Assessment value",
+                  dataIndex: "assessment_value",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </Info>
     </div>
   );
 };

@@ -13,19 +13,6 @@ const Statistical: React.FC = () => {
           customHeaderTitle="Active aging programs"
           hideCreate
           hideSearch
-          toolbarItems={
-            <div className="flex">
-              <ExportButton
-                onClick={() => {
-                  exportFromTable(
-                    ["Хөгжлийн төлөвлөгөө"],
-                    window.document.getElementById("main-table") as HTMLElement,
-                    window
-                  );
-                }}
-              />
-            </div>
-          }
         />
         <ITable
           className="p-0 remove-padding-table"
@@ -66,19 +53,6 @@ const Statistical: React.FC = () => {
           customHeaderTitle="Case management"
           hideCreate
           hideSearch
-          toolbarItems={
-            <div className="flex">
-              <ExportButton
-                onClick={() => {
-                  exportFromTable(
-                    ["Хөгжлийн төлөвлөгөө"],
-                    window.document.getElementById("main-table") as HTMLElement,
-                    window
-                  );
-                }}
-              />
-            </div>
-          }
         />
         <ITable
           className="p-0 remove-padding-table"

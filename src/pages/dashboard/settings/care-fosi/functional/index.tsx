@@ -1,11 +1,10 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
-import { ExportButton, ITable } from "components/index";
+import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { FC, useEffect, useState } from "react";
 import functional from "service/settings/care-foci/functional";
-import { exportFromTable } from "utils/export";
 
 const Functional: FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -44,21 +43,6 @@ const Functional: FC = () => {
             }}
             hideCreate
             refresh={() => list.run({ query: search })}
-            toolbarItems={
-              <div className="flex">
-                <ExportButton
-                  onClick={() => {
-                    exportFromTable(
-                      ["Functional"],
-                      window.document.getElementById(
-                        "main-table"
-                      ) as HTMLElement,
-                      window
-                    );
-                  }}
-                />
-              </div>
-            }
           />
         </div>
 

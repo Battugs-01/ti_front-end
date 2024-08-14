@@ -35,6 +35,11 @@ root.render(
         Radio: {
           buttonCheckedBg: "#CFDADC",
         },
+        Collapse: {
+          colorBgContainer: "#fff",
+          headerBg: "#fff",
+          colorBorder: "#fff",
+        },
       },
     }}
     locale={enUSIntl}

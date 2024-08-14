@@ -1,9 +1,7 @@
 import { Radio } from "antd";
 import { PageCard } from "components/card";
-import { ExportButton } from "components/index";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
-import { exportFromTable } from "utils/export";
 
 const ScreeningList: React.FC = () => {
   return (
@@ -18,19 +16,6 @@ const ScreeningList: React.FC = () => {
             <Radio.Button value="c">Level 2</Radio.Button>
             <Radio.Button value="d">Level 3</Radio.Button>
           </Radio.Group>
-        }
-        toolbarItems={
-          <div className="flex">
-            <ExportButton
-              onClick={() => {
-                exportFromTable(
-                  ["Хөгжлийн төлөвлөгөө"],
-                  window.document.getElementById("main-table") as HTMLElement,
-                  window
-                );
-              }}
-            />
-          </div>
         }
       />
       <ITable

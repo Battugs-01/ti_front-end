@@ -1,67 +1,73 @@
-import React, { useRef } from "react";
-import { Button, ButtonProps } from "antd"; // Import your component library
-import { BiSearch } from "react-icons/bi";
-import { CiGrid41 } from "react-icons/ci";
-import { FaListUl } from "react-icons/fa6";
+import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ProFormInstance, ProFormText } from "@ant-design/pro-form";
-import { RiFilter3Fill } from "react-icons/ri";
-import { CreateButton } from "..";
-import refreshIcon from "assets/government/icons/refresh.svg";
 import { useDebounceFn } from "ahooks";
+import { Button } from "antd"; // Import your component library
 import { atom, useAtom } from "jotai";
+import React, { useRef, useState } from "react";
+import { BiSearch } from "react-icons/bi";
+import { ActionComponentProps } from "types";
+import { exportFromTable } from "utils/export";
+import { CreateButton, ExportButton } from "..";
+
 interface TableHeaderProps {
   customHeaderTitle?: string;
   hideToggle?: boolean;
   hideFilter?: boolean;
   selectedToggle?: string;
   addButtonName?: string;
+  searchPlaceHolder?: string;
   handleToggle?: Function;
   hideSearch?: boolean;
   hideCreate?: boolean;
+  hideFormFilter?: boolean;
   refresh?: () => void;
   toolbarItems?: React.ReactNode;
-  hideCreateButton?: boolean;
   setCreate?: (value: boolean) => void;
-  setSearch?: (value: string) => void;
-  hideTitle?: boolean;
-  searchPlaceHolder?: any;
-  leftContent?: any;
-  loading?: boolean;
   search?: string;
+  setSearch?: (value: string) => void;
+  actions?: React.ReactNode;
+  fileName?: string;
+  tableID?: string;
+  CreateComponent?: React.FC<ActionComponentProps<any>>;
   store?: any;
+  hideTitle?: boolean;
+  leftContent?: React.ReactNode;
 }
+
 const init = atom<any>({});
 
 const InitTableHeader: React.FC<TableHeaderProps> = ({
   customHeaderTitle,
-  hideToggle,
-  hideFilter,
-  selectedToggle,
   addButtonName,
-  handleToggle,
+  searchPlaceHolder,
   hideSearch,
+  hideFormFilter: hideFormFilter = false,
   hideCreate,
-  search,
   refresh,
   toolbarItems,
-  searchPlaceHolder,
-  hideCreateButton,
-  hideTitle = false,
-  leftContent,
   setCreate,
+  search,
   setSearch,
-  loading,
+  actions,
+  fileName = undefined,
+  tableID = "main-table",
+  CreateComponent,
   store,
+  hideTitle,
+  leftContent,
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
+  const [createShow, setCreateShow] = useState(false);
 
   const form = useRef<ProFormInstance>();
+
   const checkIfChanged = () => {
     const { deadline, full_date, ...rest } =
       form.current?.getFieldsValue() || {};
     const arr = Object.values(rest || {});
     return arr.some((el: any) => (el?.length || 0) > 0 && el);
   };
+
   const searchDebounce = useDebounceFn(
     (value) => {
       store && setStore?.({ ...(stre || {}), query: value });
@@ -69,93 +75,90 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
     },
     { wait: 500 }
   );
+
   return (
-    <div className="flex justify-between pt-2 pr-6 pl-6 items-start  pb-4 px-4  custom-ant-item-margin-remove flex-wrap">
-      <>
-        <div className="flex space-x-2 py-1.5 w-2/5">
-          {hideTitle ? (
-            leftContent
-          ) : (
-            <span className="text-gray-900 text-lg font-medium ">
-              {customHeaderTitle}
-            </span>
-          )}
-        </div>
-      </>
-      <div className="flex gap-2 flex-wrap">
-        {hideToggle ? (
-          <div className="flex">
-            <Button
-              size="large"
-              className={`flex items-center  text-sm gap-2 font-semibold  relative ${
-                hideFilter && "hidden"
-              }`}
-              type={selectedToggle === "list" ? "primary" : "text"}
-              onClick={() => handleToggle?.("list")}
-              icon={
-                <FaListUl className="text-lg text-primary items-center flex ml-2.5" />
-              }
-            ></Button>
-            <Button
-              size="large"
-              className={`flex items-center  text-sm gap-2 font-semibold  relative `}
-              type={selectedToggle === "grid" ? "primary" : "text"}
-              onClick={() => handleToggle?.("grid")}
-              icon={
-                <CiGrid41 className="text-lg text-primary items-center flex ml-2.5" />
-              }
-            ></Button>
+    <>
+      <div className="flex justify-between pt-2 pb-4 flex-wrap px-4 gap-4  items-center ">
+        <>
+          <div className="flex space-x-2 py-1.5 md:w-2/5">
+            {hideTitle ? (
+              leftContent
+            ) : (
+              <span className="text-gray-900 md:text-lg text-base font-medium ">
+                {customHeaderTitle}
+              </span>
+            )}
           </div>
-        ) : (
-          ""
-        )}
-        <Button
-          size="large"
-          className={`flex items-center  text-sm gap-2 font-semibold  relative`}
-          icon={
-            <RiFilter3Fill className="text-lg text-primary items-center flex ml-2.5" />
-          }
-        >
-          {checkIfChanged() && (
-            <div className="absolute -top-1 -right-1 w-2 z-[10] h-2 bg-red-500 rounded-full"></div>
-          )}
-        </Button>
-        <ProFormText
-          name={"text"}
-          placeholder={searchPlaceHolder || "Хайх"}
-          hidden={hideSearch}
-          fieldProps={{
-            size: "large",
-            className: "text-sm flex",
-            prefix: <BiSearch color="#66708066" size={20} />,
-            onChange: (e) => {
-              searchDebounce.run(e.target.value);
-            }, // Add the icon as a prefix here
-          }}
-        />
-        <div>
-          <Button
+        </>
+        {/* <div className="text-scale-700 text-base font-medium ">
+          {customHeaderTitle}
+        </div> */}
+        <div className="flex gap-2 flex-wrap ant-form-item-margin-remove">
+          {/* <Button
             size="large"
-            className={`flex items-center justify-center font-semibold`}
-            type="default"
-            icon={<img src={refreshIcon} alt="refresh" />}
-            onClick={() => refresh?.()}
-          ></Button>
-          {/* <img src={refreshIcon} alt="refresh" onClick={() => refresh?.()} /> */}
-        </div>
-        {toolbarItems}
-        {!hideCreate ? (
+            className={hideFormFilter ? "hidden" : ""}
+            hidden={hideFormFilter}
+            icon={<FilterOutlined rev />}
+          >
+            {checkIfChanged() && (
+              <div className="absolute -top-1 -right-1 w-2 z-[10] h-2 bg-red-500 rounded-full"></div>
+            )}
+          </Button> */}
+          <ProFormText
+            name={"text"}
+            placeholder={searchPlaceHolder || "Хайх"}
+            hidden={hideSearch}
+            fieldProps={{
+              size: "large",
+              prefix: <BiSearch color="#66708066" size={20} />,
+              onChange: (e) => {
+                searchDebounce.run(e.target.value);
+              },
+            }}
+          />
+          <Button
+            icon={<ReloadOutlined rev />}
+            onClick={refresh}
+            size="large"
+          />
+
+          <ExportButton
+            hidden={!fileName}
+            onClick={() => {
+              exportFromTable(
+                [`${fileName}`],
+                window.document.getElementById(`${tableID}`) as HTMLElement,
+                window
+              );
+            }}
+          />
+
+          {toolbarItems}
           <CreateButton
             size="large"
-            className={`${hideCreateButton && "hidden"}`}
-            onClick={() => setCreate?.(true)}
+            className={`${hideCreate && "hidden"}`}
+            onClick={() =>
+              setCreate ? setCreate?.(true) : setCreateShow(true)
+            }
             addButtonName={addButtonName}
           />
-        ) : (
-          ""
-        )}
+          {actions}
+        </div>
       </div>
-    </div>
+
+      {CreateComponent && (
+        <CreateComponent
+          open={createShow}
+          onCancel={() => {
+            setCreateShow(false);
+          }}
+          onFinish={() => {
+            setCreateShow(false);
+            refresh?.();
+          }}
+        />
+      )}
+    </>
   );
 };
 

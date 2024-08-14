@@ -1,9 +1,6 @@
-import { Radio, Space } from "antd";
 import { PageCard } from "components/card";
-import { ExportButton } from "components/index";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
-import { exportFromTable } from "utils/export";
 
 const DevelopmentPlan: React.FC = () => {
   return (
@@ -12,19 +9,6 @@ const DevelopmentPlan: React.FC = () => {
         <InitTableHeader
           customHeaderTitle="Seniors with no development plan"
           hideCreate
-          toolbarItems={
-            <div className="flex">
-              <ExportButton
-                onClick={() => {
-                  exportFromTable(
-                    ["Development Plan"],
-                    window.document.getElementById("main-table") as HTMLElement,
-                    window
-                  );
-                }}
-              />
-            </div>
-          }
         />
         <ITable
           className="p-0 remove-padding-table"
@@ -85,24 +69,7 @@ const DevelopmentPlan: React.FC = () => {
         />
       </PageCard>
       <PageCard xR>
-        <InitTableHeader
-          customHeaderTitle="Development Plan"
-          hideCreate
-          toolbarItems={
-            <div className="flex">
-              <ExportButton
-                onClick={() => {
-                  exportFromTable(
-                    ["Development Plan"],
-                    window.document.getElementById("main-table") as HTMLElement,
-                    window
-                  );
-                }}
-              />
-            </div>
-          }
-          // hideFormFilter={true}
-        />
+        <InitTableHeader customHeaderTitle="Development Plan" hideCreate />
         <ITable
           className="p-0 remove-padding-table"
           columns={[

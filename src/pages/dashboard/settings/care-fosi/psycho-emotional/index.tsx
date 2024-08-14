@@ -1,12 +1,10 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
-import { ExportButton, ITable } from "components/index";
+import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { FC, useEffect, useState } from "react";
 import psychoEmotional from "service/settings/care-foci/psycho-emotional";
-
-import { exportFromTable } from "utils/export";
 
 const PsychoEmotional: FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -45,21 +43,6 @@ const PsychoEmotional: FC = () => {
             }}
             hideCreate
             refresh={() => list.run({ query: search })}
-            toolbarItems={
-              <div className="flex">
-                <ExportButton
-                  onClick={() => {
-                    exportFromTable(
-                      ["Functional"],
-                      window.document.getElementById(
-                        "main-table"
-                      ) as HTMLElement,
-                      window
-                    );
-                  }}
-                />
-              </div>
-            }
           />
         </div>
 

@@ -12,11 +12,13 @@ import {
 } from "untitledui-js-base";
 import GeneralInfo from "./tab/general-info";
 import DevelopmentPlanTab from "./tab/development-plan";
+import { CreateDevelopmentPlan } from "./create";
 
 const MainDetail: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanDetailTab>(
     DevelopmentPlanDetailTab.general
   );
+  const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
   return (
     <PageCard>
       <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between mb-11">
@@ -63,6 +65,9 @@ const MainDetail: React.FC = () => {
             type="primary"
             icon={<ChartBreakoutSquare />}
             className="flex items-center gap-2"
+            onClick={() => {
+              setCreateModalVisible(true);
+            }}
           >
             Create Development Plan
           </Button>
@@ -76,6 +81,7 @@ const MainDetail: React.FC = () => {
         condition={DevelopmentPlanDetailTab.development === tab}
         whenTrue={<DevelopmentPlanTab data={[{}]} />}
       />
+      {createModalVisible && <CreateDevelopmentPlan />}
     </PageCard>
   );
 };

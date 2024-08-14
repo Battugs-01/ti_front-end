@@ -7,6 +7,10 @@ export interface FilterFormButton {
 }
 
 export interface ActionComponentProps<T> {
+  setCloseModal?: any;
+  setWaitModal?: any;
+  setApproveModal?: any;
+  setTransictionModal?: any;
   open: boolean;
   onCancel: () => void;
   onFinish?: () => void;

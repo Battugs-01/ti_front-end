@@ -6,13 +6,8 @@ import ProTable, {
 import { RemoveModal } from "components/modal";
 import React, { useRef, useState } from "react";
 import { ActionComponentProps, RemoveModelConfig } from "types";
-import {
-  DeleteButton,
-  DetailButton,
-  EditButton,
-  InActiveButton,
-  StopPagination,
-} from "..";
+import { DeleteButton, DetailButton, EditButton, StopPagination } from "..";
+
 type Props<T> = ProTableProps<T, any, any> & {
   CreateComponent?: React.FC<ActionComponentProps<T>>;
   DetailComponent?: React.FC<ActionComponentProps<T>>;
@@ -26,7 +21,6 @@ type Props<T> = ProTableProps<T, any, any> & {
   create?: boolean;
   customActions?: (value: T) => React.ReactNode;
   RemoveModelConfig?: RemoveModelConfig<T>;
-  DeActivateModelConfig?: RemoveModelConfig<T>;
   onPaginationChange?: (page: number, pageSize: number) => void;
   hideEditButton?: (record: any) => boolean;
   hideInActiveButton?: (record: any) => boolean;
@@ -39,10 +33,12 @@ type Props<T> = ProTableProps<T, any, any> & {
   limit?: number;
   setCreate?: Function;
   scroll?: any;
-  actionWidth?: number;
+  setCloseModal?: (record: T) => void;
+  setWaitModal?: (record: T) => void;
+  setApproveModal?: (record: T) => void;
+  setTransictionModal?: (record: T) => void;
+  actionWidth?: number | string;
   hidePagination?: boolean;
-  expandable?: any;
-  // customListType? : (records) => void
 };
 
 export const ITable = <T extends {}>({
@@ -50,6 +46,7 @@ export const ITable = <T extends {}>({
   UpdateComponent,
   DetailComponent,
   RemoveComponent,
+  hidePagination,
   create,
   setCreate,
   columns,
@@ -62,32 +59,31 @@ export const ITable = <T extends {}>({
   scroll,
   form,
   RemoveModelConfig,
-  DeActivateModelConfig,
   onPaginationChange,
   hideEditButton,
   showDetailButton,
   noShadow = false,
   page,
   limit,
+  setCloseModal,
+  setWaitModal,
+  setApproveModal,
+  setTransictionModal,
   actionWidth,
-  hidePagination,
-  expandable,
   ...rest
 }: Props<T>) => {
-  // const [pageData, setPageData] = useState<{ page: number; limit: number }>({
-  //   page: 1,
-  //   limit: limit ?? 20,
-  // });
+  const [pageData, setPageData] = useState<{ page: number; pageSize: number }>({
+    page: 1,
+    pageSize: limit ?? 20,
+  });
   const actionRef = useRef<ActionType>();
   const [update, setUpdate] = useState<T>();
   const [detail, setDetail] = useState<T>();
   const [remove, setRemove] = useState<T>();
-  const [deactivate, setDeactivate] = useState<T>();
 
   return (
     <>
       <ProTable
-        // className="remove-padding-table"
         className="p-0 m-0 remove-padding-table "
         id="main-table"
         {...rest}
@@ -98,10 +94,10 @@ export const ITable = <T extends {}>({
           density: false,
         }}
         rowKey={`id`}
-        scroll={scroll}
+        scroll={scroll ?? { x: "max-content" }}
         size="small"
         search={false}
-        expandable={expandable}
+        style={{ borderRadius: 0 }}
         pagination={
           !hidePagination && {
             className: "px-6 font-semibold text-gray-500",
@@ -109,11 +105,20 @@ export const ITable = <T extends {}>({
             pageSizeOptions: [20, 50, 100, 200, 500],
             showSizeChanger: true,
             onChange: (page, size) => {
-              setForm({
+              setForm?.({
                 ...form,
                 current: page,
                 pageSize: size,
               });
+
+              setPageData({ page, pageSize: size });
+
+              !form &&
+                refresh?.({
+                  ...form,
+                  current: form ? (form.current ? form.current : 0) : page,
+                  pageSize: form?.pageSize || size,
+                });
             },
             showTotal: (total, range) => {
               return (
@@ -124,8 +129,15 @@ export const ITable = <T extends {}>({
             },
             total,
             showLessItems: true,
-            onShowSizeChange: (page, size) => {
-              setForm({ current: page, pageSize: size });
+            onShowSizeChange: (page, pageSize) => {
+              setForm?.({ current: page, pageSize: pageSize });
+              setPageData({ page, pageSize });
+              !form &&
+                refresh?.({
+                  ...form,
+                  current: form ? (form.current ? form.current : 0) : page,
+                  pageSize: form?.pageSize || pageSize,
+                });
             },
             responsive: true,
           }
@@ -151,12 +163,11 @@ export const ITable = <T extends {}>({
             fixed: "right",
             dataIndex: "action",
             align: "right",
-            width: actionWidth || 200,
+            width: "auto",
             render: (_, record) => {
               return (
                 <StopPagination>
-                  <div className="gap-2 flex items-center justify-center">
-                    {customActions && customActions(record)}
+                  <div className="gap-3 flex items-center justify-end mr-2">
                     {DetailComponent && (
                       <DetailButton
                         style={{
@@ -191,22 +202,7 @@ export const ITable = <T extends {}>({
                         }}
                       />
                     )}
-
-                    {DeActivateModelConfig && (
-                      <InActiveButton
-                        style={{
-                          opacity: hideEditButton?.(record) ? 0.5 : 1,
-                          cursor: hideEditButton?.(record)
-                            ? "not-allowed"
-                            : "pointer",
-                        }}
-                        onClick={() => {
-                          hideEditButton?.(record)
-                            ? null
-                            : setDeactivate(record);
-                        }}
-                      />
-                    )}
+                    {customActions && customActions(record)}
                   </div>
                 </StopPagination>
               );
@@ -221,11 +217,11 @@ export const ITable = <T extends {}>({
           onCancel={() => setCreate?.(false)}
           onFinish={() => {
             setCreate?.(false);
-            refresh &&
-              refresh({
-                ...form,
-                page: form.current ? form.current - 1 : 0,
-              });
+            refresh?.({
+              ...form,
+              current: form ? (form.current ? form.current : 0) : pageData.page,
+              pageSize: form?.pageSize || pageData.pageSize,
+            });
           }}
           details={details}
         />
@@ -237,17 +233,21 @@ export const ITable = <T extends {}>({
           detail={update}
           onFinish={() => {
             setUpdate(undefined);
-            refresh &&
-              refresh({
-                ...form,
-                page: form?.current ? form?.current - 1 : 0,
-              });
+            refresh?.({
+              ...form,
+              current: form ? (form.current ? form.current : 0) : pageData.page,
+              pageSize: form?.pageSize || pageData.pageSize,
+            });
           }}
           details={details}
         />
       )}
       {DetailComponent && (
         <DetailComponent
+          setCloseModal={setCloseModal}
+          setWaitModal={setWaitModal}
+          setApproveModal={setApproveModal}
+          setTransictionModal={setTransictionModal}
           open={!!detail}
           detail={detail}
           onCancel={() => setDetail(undefined)}
@@ -261,11 +261,11 @@ export const ITable = <T extends {}>({
           detail={remove}
           onFinish={() => {
             setRemove(undefined);
-            refresh &&
-              refresh({
-                ...form,
-                page: form.current ? form.current - 1 : 0,
-              });
+            refresh?.({
+              ...form,
+              current: form ? (form.current ? form.current : 0) : pageData.page,
+              pageSize: form?.pageSize || pageData.pageSize,
+            });
           }}
           details={details}
         />
@@ -275,33 +275,16 @@ export const ITable = <T extends {}>({
           {...RemoveModelConfig.config(remove as any)}
           open={!!remove}
           onDone={() => {
-            refresh &&
-              refresh({
-                ...form,
-                page: form.current ? form.current - 1 : 0,
-              });
+            refresh?.({
+              ...form,
+              current: form ? (form.current ? form.current : 0) : pageData.page,
+              pageSize: form?.pageSize || pageData.pageSize,
+            });
             setRemove(undefined);
           }}
           onCancel={() => setRemove(undefined)}
           onRequest={RemoveModelConfig.action}
           remove={true}
-        />
-      )}
-      {DeActivateModelConfig && (
-        <RemoveModal
-          {...DeActivateModelConfig.config(deactivate as any)}
-          open={!!deactivate}
-          onDone={() => {
-            refresh &&
-              refresh({
-                ...form,
-                page: form.current ? form.current - 1 : 0,
-              });
-            setDeactivate(undefined);
-          }}
-          onRequest={DeActivateModelConfig.action}
-          onCancel={() => setDeactivate(undefined)}
-          remove={false}
         />
       )}
     </>
