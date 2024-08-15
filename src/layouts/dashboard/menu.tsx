@@ -23,6 +23,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
       <Drawer open={mobile} placement="left" onClose={onClose}>
         <div className="flex items-start flex-col">
           <Link
+            onClick={onClose}
             to="/dashboard/screening-list"
             className="flex items-center gap-2 px-5 py-1"
           >
@@ -31,6 +32,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
           {menuItems.map((item, index) => (
             <div key={index} className="flex items-center relative p-5">
               <Link
+                onClick={onClose}
                 to={item.path}
                 className="flex items-center gap-2 text-[#144E5A] no-underline"
               >

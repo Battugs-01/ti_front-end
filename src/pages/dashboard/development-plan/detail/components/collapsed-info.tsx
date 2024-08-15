@@ -1,7 +1,7 @@
 import { Badge, Button, Card, Collapse, Divider } from "antd";
 import { CustomCard } from "components/card";
 import dayjs from "dayjs";
-import { ChevronDown, ChevronUp } from "untitledui-js-base";
+import { ChevronDown, ChevronUp, DotsVertical } from "untitledui-js-base";
 
 interface InfoProps {
   title: string;
@@ -51,7 +51,7 @@ export const Info: React.FC<InfoProps> = ({ title, children, className }) => {
                         Blood Preasure
                       </div>
                     }
-                    extra={<div>:</div>}
+                    extra={<DotsVertical />}
                     className="bg-[#E7EDEE] lg:w-[23%] md:w-2/5 w-full"
                   >
                     <div className="text-2xl font-semibold">123</div>
