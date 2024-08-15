@@ -89,6 +89,7 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
           creatorButtonProps={{
             className: "hidden",
           }}
+          alwaysShowItemLabel
           className="block"
         >
           {(fields, index) => (
@@ -96,7 +97,11 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
               <div className="flex justify-end">
                 <Button
                   ghost
-                  onClick={() => ref.current?.remove(index)}
+                  onClick={(e) => {
+                    console.log(e, "e");
+                    console.log(index, "index");
+                    ref.current?.remove(index);
+                  }}
                   className="text-[#F04438] flex items-center border-none"
                   icon={<Trash04 />}
                 >
@@ -107,7 +112,7 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
                 <Col span={24}>
                   <ProFormText
                     name={[index, "intervention"]}
-                    label="Intervention"
+                    label={"Intervention"}
                   />
                 </Col>
               </Row>

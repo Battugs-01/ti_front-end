@@ -99,11 +99,11 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           </div>
         </div>
         <div className="gap-3 flex items-center justify-end mr-10">
-          <DetailButton
+          {/* <DetailButton
             title="Засах"
             onClick={() => setDetail(data)}
             style={{ opacity: 1, cursor: "pointer" }}
-          />
+          /> */}
           <EditButton
             title="Засах"
             onClick={() => setUpdate(data)}

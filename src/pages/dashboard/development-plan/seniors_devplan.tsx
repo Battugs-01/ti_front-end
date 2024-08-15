@@ -1,79 +1,49 @@
-import { Radio } from "antd";
-import { PageCard } from "components/card";
-import { ITable } from "components/table";
-import InitTableHeader from "components/table-header";
-import { EditScreenList } from "./edit";
-import screenList from "service/screening_list";
-import { FormattedMessage, useIntl } from "react-intl";
 import { useRequest } from "ahooks";
+import { notification } from "antd";
+import { PageCard } from "components/card";
+import { ITable } from "components/index";
+import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import developmentPlan from "service/development_plan";
 import { initFilter } from "utils/index";
 
-const ScreeningList: React.FC = () => {
+export const SeniorsDevPlan: React.FC = () => {
+  const intl = useIntl();
   const [filter, setFilter] = useState(initFilter);
 
-  const screen = useRequest(screenList.list, {
+  const seniorNoPlanList = useRequest(developmentPlan.list, {
     manual: true,
     onSuccess: () => {
-      console.log("Success");
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
     },
     onError: (err) => {
-      console.log("Error");
+      notification.error({
+        message: err,
+      });
     },
   });
-
   useEffect(() => {
-    screen.run({
+    seniorNoPlanList.run({
       ...filter,
     });
   }, [filter]);
   const refreshList = () => {
-    screen?.run({
+    seniorNoPlanList?.run({
       ...filter,
     });
   };
-  const intl = useIntl();
+
   return (
     <PageCard xR>
       <InitTableHeader
-        hideTitle
-        refresh={refreshList}
+        customHeaderTitle={intl.formatMessage({ id: "seniors_dev_plan" })}
         hideCreate
-        leftContent={
-          <Radio.Group defaultValue="a" size="large">
-            <Radio.Button value="a">
-              <FormattedMessage id="all" />
-            </Radio.Button>
-            <Radio.Button value="b">
-              <FormattedMessage id="level" values={{ number: 1 }} />
-            </Radio.Button>
-            <Radio.Button value="c">
-              <FormattedMessage id="level" values={{ number: 2 }} />
-            </Radio.Button>
-            <Radio.Button value="d">
-              <FormattedMessage id="level" values={{ number: 3 }} />
-            </Radio.Button>
-          </Radio.Group>
-        }
+        refresh={refreshList}
       />
       <ITable
-        dataSource={[
-          {
-            name: "John Doe",
-            register: "2021-09-01",
-            phone: "0123456789",
-            age: 30,
-            gender: "male",
-            risk_level: "High",
-            cfs_score: 10,
-            agency: "Agency",
-            total_assessment: 2,
-            list_assessment_date: "2021-09-01",
-            caregiver: "Caregiver",
-            person_in_charge: "Person in charge",
-            development_plan: "Development Plan",
-          },
-        ]}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -128,11 +98,12 @@ const ScreeningList: React.FC = () => {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
           },
+          {
+            title: intl.formatMessage({ id: "address" }),
+            dataIndex: "address",
+          },
         ]}
-        UpdateComponent={EditScreenList}
       />
     </PageCard>
   );
 };
-
-export default ScreeningList;

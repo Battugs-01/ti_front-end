@@ -38,7 +38,6 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         ...detail,
       }}
-      className="custom-ant-drawer-body"
       onFinish={async (values) => {
         await editScreen.runAsync(values);
         console.log(values, "Form Values:");
@@ -68,6 +67,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
       drawerProps={{
         onClose: onCancel,
         width: 500,
+        styles: { body: { backgroundColor: "#F5F8F8" } },
       }}
     >
       <div>
