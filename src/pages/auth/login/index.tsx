@@ -23,7 +23,7 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
-      navigate("dashboard/socialWorker/customer");
+      navigate("dashboard/screening-list");
       notification.success({
         message: "Амжилттай нэвтэрлээ.",
       });
@@ -81,7 +81,7 @@ const Login: FC = () => {
               {
                 message: "Энэ талбар и-мэйл хаяг байх ёстой",
                 type: "email",
-                required: true
+                required: true,
               },
             ]}
           />
@@ -93,7 +93,7 @@ const Login: FC = () => {
             rules={[
               {
                 required: true,
-                message: "Нууц үг оруулна уу!"
+                message: "Нууц үг оруулна уу!",
               },
             ]}
             extra={

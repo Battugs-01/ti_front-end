@@ -6,7 +6,10 @@ import {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
+import { useRequest } from "ahooks";
 import { Button, Col, Divider, Row } from "antd";
+import { FormattedMessage, useIntl } from "react-intl";
+import screenList from "service/screening_list";
 import { ActionComponentProps } from "types";
 import { Save02 } from "untitledui-js-base";
 
@@ -20,20 +23,34 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
   open,
   detail,
 }) => {
+  const editScreen = useRequest(screenList.edit, {
+    manual: true,
+    onSuccess: () => {
+      onFinish?.();
+    },
+    onError: () => {
+      onCancel();
+    },
+  });
+  const intl = useIntl();
   return (
     <DrawerForm
+      initialValues={{
+        ...detail,
+      }}
       className="custom-ant-drawer-body"
       onFinish={async (values) => {
+        await editScreen.runAsync(values);
         console.log(values, "Form Values:");
       }}
-      title="Edit Entry"
+      title={intl.formatMessage({ id: "edit_entry" })}
       open={open}
       submitter={{
         render: (props) => {
           return (
             <div className="flex items-center gap-4">
               <Button onClick={onCancel} size="large" type="default">
-                Cancel
+                <FormattedMessage id="cancel" />
               </Button>
               <Button
                 onClick={props.submit}
@@ -42,7 +59,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
                 icon={<Save02 />}
                 className="flex items-center"
               >
-                Save
+                <FormattedMessage id="save" />
               </Button>
             </div>
           );
@@ -53,56 +70,84 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
         width: 500,
       }}
     >
-      <div>Comprehensive Needs Assessment for At Risk Seniors</div>
+      <div>
+        <FormattedMessage id="comprehensive_assessment_title" />
+      </div>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <ProFormText name="name" label="Name" />
+          <ProFormText name="name" label={intl.formatMessage({ id: "name" })} />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <ProFormDatePicker name="date_of_birth" label="Date of Birth" />
+          <ProFormDatePicker
+            name="date_of_birth"
+            label={intl.formatMessage({ id: "date_of_birth" })}
+          />
         </Col>
         <Col span={12}>
-          <ProFormSelect name="gender" label="Gender" />
+          <ProFormSelect
+            name="gender"
+            label={intl.formatMessage({ id: "gender" })}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <ProFormDatePicker name="register_no" label="Register No." />
+          <ProFormDatePicker
+            name="register_no"
+            label={intl.formatMessage({ id: "register_no" })}
+          />
         </Col>
         <Col span={12}>
-          <ProFormText name="phone" label="Phone" />
+          <ProFormText
+            name="phone"
+            label={intl.formatMessage({ id: "phone" })}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <ProFormText name="resident_address" label="Resident Address" />
+          <ProFormText
+            name="resident_address"
+            label={intl.formatMessage({ id: "resident_address" })}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <ProFormSelect name="person_in_charge" label="Person in Charge" />
+          <ProFormSelect
+            name="person_in_charge"
+            label={intl.formatMessage({ id: "person_in_charge" })}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <ProFormSelect name="agency" label="Agency" />
+          <ProFormSelect
+            name="agency"
+            label={intl.formatMessage({ id: "agency" })}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <ProFormDatePicker name="assessment_date" label="Assessment Date" />
+          <ProFormDatePicker
+            name="assessment_date"
+            label={intl.formatMessage({ id: "assessment_date" })}
+          />
         </Col>
       </Row>
       <Divider />
-      <div>Caregiver Information</div>
+      <div>
+        <FormattedMessage id="caregiver_info_title" />
+      </div>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormRadio.Group
             name="senior_living"
             layout="vertical"
-            label="Is the senior living with someone else?"
+            label={intl.formatMessage({ id: "senior_living_question" })}
             options={[
               {
                 label: "Yes",
@@ -121,7 +166,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
           <ProFormRadio.Group
             name="caregiver_living"
             layout="vertical"
-            label="If the senior is living with someone else, is there someone committed to caregiving?"
+            label={intl.formatMessage({ id: "caregiver_living_question" })}
             options={[
               {
                 label: "Yes",
@@ -137,10 +182,16 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <ProFormDatePicker name="relationship" label="Relationship" />
+          <ProFormDatePicker
+            name="relationship"
+            label={intl.formatMessage({ id: "relationship" })}
+          />
         </Col>
         <Col span={12}>
-          <ProFormText name="phone" label="Phone" />
+          <ProFormText
+            name="caregiver_phone"
+            label={intl.formatMessage({ id: "phone" })}
+          />
         </Col>
       </Row>
     </DrawerForm>

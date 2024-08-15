@@ -5,7 +5,7 @@ const tokenKey = "burtgel.token";
 const userKey = "app.user";
 namespace auth {
   export const login = (body?: any) =>
-    http.post<LoginResponse>("socialworker/auth/login", {
+    http.post<LoginResponse>("auth/login", {
       body,
     });
   // export const singOut = () => auth.signOut();

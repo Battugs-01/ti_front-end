@@ -3,9 +3,12 @@ import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { EditScreenList } from "./edit";
-import { useIntl } from "react-intl";
+import screenList from "service/screening_list";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useRequest } from "ahooks";
 
 const ScreeningList: React.FC = () => {
+  const screen = useRequest(screenList.list);
   const intl = useIntl();
   return (
     <PageCard xR>
@@ -14,10 +17,18 @@ const ScreeningList: React.FC = () => {
         hideCreate
         leftContent={
           <Radio.Group defaultValue="a" size="large">
-            <Radio.Button value="a">All</Radio.Button>
-            <Radio.Button value="b">Level 1</Radio.Button>
-            <Radio.Button value="c">Level 2</Radio.Button>
-            <Radio.Button value="d">Level 3</Radio.Button>
+            <Radio.Button value="a">
+              <FormattedMessage id="all" />
+            </Radio.Button>
+            <Radio.Button value="b">
+              <FormattedMessage id="level" values={{ number: 1 }} />
+            </Radio.Button>
+            <Radio.Button value="c">
+              <FormattedMessage id="level" values={{ number: 2 }} />
+            </Radio.Button>
+            <Radio.Button value="d">
+              <FormattedMessage id="level" values={{ number: 3 }} />
+            </Radio.Button>
           </Radio.Group>
         }
       />
@@ -46,51 +57,51 @@ const ScreeningList: React.FC = () => {
             dataIndex: "name",
           },
           {
-            title: "Register",
+            title: intl.formatMessage({ id: "register" }),
             dataIndex: "register",
           },
           {
-            title: "Phone",
+            title: intl.formatMessage({ id: "phone" }),
             dataIndex: "phone",
           },
           {
-            title: "Age",
+            title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
           },
           {
-            title: "Gender",
+            title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
           },
           {
-            title: "Risk level",
+            title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
           },
           {
-            title: "CFS Score",
+            title: intl.formatMessage({ id: "cfs_score" }),
             dataIndex: "cfs_score",
           },
           {
-            title: "Agency",
+            title: intl.formatMessage({ id: "agency" }),
             dataIndex: "agency",
           },
           {
-            title: "Total Assessment",
+            title: intl.formatMessage({ id: "total_assessment" }),
             dataIndex: "total_assessment",
           },
           {
-            title: "List Assessment Date",
+            title: intl.formatMessage({ id: "list_assessment_date" }),
             dataIndex: "list_assessment_date",
           },
           {
-            title: "Caregiver",
+            title: intl.formatMessage({ id: "caregiver" }),
             dataIndex: "caregiver",
           },
           {
-            title: "Person in charge",
+            title: intl.formatMessage({ id: "person_in_charge" }),
             dataIndex: "person_in_charge",
           },
           {
-            title: "Development Plan",
+            title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
           },
         ]}

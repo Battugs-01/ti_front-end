@@ -20,5 +20,10 @@ export type Actions =
 export type Refreshs = {
   info: () => void;
 };
-export type AuthContextType = [DataType, (action: Actions) => void];
+export type AuthContextType = [
+  DataType,
+  (action: Actions) => void,
+  string,
+  (lang: string) => void
+];
 export type AuthReducerType = (state: DataType, action: Actions) => DataType;

@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { Menu } from "./menu";
 import { Menu01, XClose } from "untitledui-js-base";
+import LanguageSelector from "components/language-selector";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -46,6 +47,9 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
+            <div className="flex items-center">
+              <LanguageSelector />
+            </div>
             <Avatar>BA</Avatar>
             <div className="flex flex-col justify-center items-start">
               <div className="text-sm">{user?.user?.first_name || "user"}</div>

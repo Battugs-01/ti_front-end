@@ -3,6 +3,7 @@ import { IfCondition } from "components/condition";
 import { StatisticalTab } from "config";
 import { useState } from "react";
 import Statistical from "./statistical";
+import CareFosiList from "./care-fosi";
 
 const StasticalReport = () => {
   const [tab, setTab] = useState<StatisticalTab>(StatisticalTab.statistical);
@@ -26,6 +27,10 @@ const StasticalReport = () => {
       <IfCondition
         condition={StatisticalTab.statistical === tab}
         whenTrue={<Statistical />}
+      />
+      <IfCondition
+        condition={StatisticalTab.careFoci === tab}
+        whenTrue={<CareFosiList />}
       />
     </>
   );

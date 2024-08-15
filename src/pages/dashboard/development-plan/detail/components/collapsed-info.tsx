@@ -18,7 +18,7 @@ export const Info: React.FC<InfoProps> = ({ title, children, className }) => {
           label: <div className="text-lg text-gray-800">{title}</div>,
           children: (
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <div>
                   Agency: <span className="font-bold">Ner</span>
                 </div>
@@ -42,7 +42,7 @@ export const Info: React.FC<InfoProps> = ({ title, children, className }) => {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 ">
+              <div className="flex items-center gap-4 flex-wrap">
                 {Array.from({ length: 4 }).map((_, index) => (
                   <Card
                     key={index}
@@ -52,7 +52,7 @@ export const Info: React.FC<InfoProps> = ({ title, children, className }) => {
                       </div>
                     }
                     extra={<div>:</div>}
-                    className="bg-[#E7EDEE] w-1/4"
+                    className="bg-[#E7EDEE] lg:w-[23%] md:w-2/5 w-full"
                   >
                     <div className="text-2xl font-semibold">123</div>
                   </Card>

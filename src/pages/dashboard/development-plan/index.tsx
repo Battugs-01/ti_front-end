@@ -1,132 +1,141 @@
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
+import { useIntl } from "react-intl";
 
 const DevelopmentPlan: React.FC = () => {
+  const intl = useIntl();
   return (
     <div className="flex flex-col gap-6">
       <PageCard xR>
         <InitTableHeader
-          customHeaderTitle="Seniors with no development plan"
+          customHeaderTitle={intl.formatMessage({ id: "seniors_dev_plan" })}
           hideCreate
         />
         <ITable
           className="p-0 remove-padding-table"
           columns={[
             {
-              title: "Name",
+              title: intl.formatMessage({ id: "name" }),
               dataIndex: "name",
             },
             {
-              title: "Register",
+              title: intl.formatMessage({ id: "register" }),
               dataIndex: "register",
             },
             {
-              title: "Phone",
+              title: intl.formatMessage({ id: "phone" }),
               dataIndex: "phone",
             },
             {
-              title: "Age",
+              title: intl.formatMessage({ id: "age" }),
               dataIndex: "age",
             },
             {
-              title: "Gender",
+              title: intl.formatMessage({ id: "gender" }),
               dataIndex: "gender",
             },
             {
-              title: "Risk level",
+              title: intl.formatMessage({ id: "risk_level" }),
               dataIndex: "risk_level",
             },
             {
-              title: "CFS Score",
+              title: intl.formatMessage({ id: "cfs_score" }),
               dataIndex: "cfs_score",
             },
             {
-              title: "Agency",
+              title: intl.formatMessage({ id: "agency" }),
               dataIndex: "agency",
             },
             {
-              title: "Total Assessment",
+              title: intl.formatMessage({ id: "total_assessment" }),
               dataIndex: "total_assessment",
             },
             {
-              title: "List Assessment Date",
+              title: intl.formatMessage({ id: "list_assessment_date" }),
               dataIndex: "list_assessment_date",
             },
             {
-              title: "Caregiver",
+              title: intl.formatMessage({ id: "caregiver" }),
               dataIndex: "caregiver",
             },
             {
-              title: "Person in charge",
+              title: intl.formatMessage({ id: "person_in_charge" }),
               dataIndex: "person_in_charge",
             },
             {
-              title: "Address",
+              title: intl.formatMessage({ id: "development_plan" }),
+              dataIndex: "development_plan",
+            },
+            {
+              title: intl.formatMessage({ id: "address" }),
               dataIndex: "address",
             },
           ]}
         />
       </PageCard>
       <PageCard xR>
-        <InitTableHeader customHeaderTitle="Development Plan" hideCreate />
+        <InitTableHeader
+          customHeaderTitle={intl.formatMessage({ id: "development_plan" })}
+          hideCreate
+        />
         <ITable
           className="p-0 remove-padding-table"
           columns={[
             {
-              title: "Name",
+              title: intl.formatMessage({ id: "name" }),
               dataIndex: "name",
             },
             {
-              title: "Register",
+              title: intl.formatMessage({ id: "register" }),
               dataIndex: "register",
             },
             {
-              title: "Phone",
+              title: intl.formatMessage({ id: "phone" }),
               dataIndex: "phone",
             },
             {
-              title: "Age",
+              title: intl.formatMessage({ id: "age" }),
               dataIndex: "age",
             },
             {
-              title: "Gender",
+              title: intl.formatMessage({ id: "gender" }),
               dataIndex: "gender",
             },
             {
-              title: "Risk level",
+              title: intl.formatMessage({ id: "risk_level" }),
               dataIndex: "risk_level",
             },
             {
-              title: "CFS Score",
+              title: intl.formatMessage({ id: "cfs_score" }),
               dataIndex: "cfs_score",
             },
             {
-              title: "Agency",
+              title: intl.formatMessage({ id: "agency" }),
               dataIndex: "agency",
             },
             {
-              title: "Total Assessment",
+              title: intl.formatMessage({ id: "total_assessment" }),
               dataIndex: "total_assessment",
             },
             {
-              title: "List Assessment Date",
+              title: intl.formatMessage({ id: "list_assessment_date" }),
               dataIndex: "list_assessment_date",
             },
             {
-              title: "Caregiver",
+              title: intl.formatMessage({ id: "caregiver" }),
               dataIndex: "caregiver",
             },
             {
-              title: "Person in charge",
+              title: intl.formatMessage({ id: "person_in_charge" }),
               dataIndex: "person_in_charge",
             },
             {
-              title: "Development Plan",
+              title: intl.formatMessage({ id: "development_plan" }),
               dataIndex: "development_plan",
             },
             {
-              title: "Address",
+              title: intl.formatMessage({ id: "address" }),
               dataIndex: "address",
             },
           ]}

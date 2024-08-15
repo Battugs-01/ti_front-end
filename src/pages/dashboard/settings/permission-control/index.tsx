@@ -9,6 +9,7 @@ import file from "service/file";
 import permission from "service/settings/permission";
 import { initPagination } from "utils/index";
 import { Item } from "./components/item";
+import { CreatePermission } from "./create";
 
 const PermissionControl: React.FC = () => {
   const [isCreate, setIsCreate] = useState(false);
@@ -25,7 +26,6 @@ const PermissionControl: React.FC = () => {
       .then((data) => setFakeData(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-  console.log(fakeData, "sda");
 
   const employeeCreate = useRequest(permission.get, {
     manual: true,
@@ -68,9 +68,10 @@ const PermissionControl: React.FC = () => {
         <div style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
             addButtonName="Нэмэх"
-            setCreate={() => setIsCreate(true)}
+            // setCreate={() => setIsCreate(true)}
             refresh={refreshList}
             customHeaderTitle="Эрхийн тохиргоо"
+            CreateComponent={CreatePermission}
           />
         </div>
         <div>
@@ -96,30 +97,6 @@ const PermissionControl: React.FC = () => {
           />
         </div>
       </Card>
-      {isCreate && (
-        <IModalForm
-          open={isCreate}
-          formRef={formRef}
-          onOpenChange={() => formRef.current?.resetFields()}
-          width={724}
-          title="Add member"
-          modalProps={{ onCancel: cancelModal }}
-          okText="Save"
-          cancelText="Cancel"
-          onRequest={async (values) => {
-            const profile = await uploadProfile.runAsync({
-              file: values?.profile?.[0]?.originFileObj,
-            });
-            return employeeCreate.runAsync({
-              ...values,
-              profile_id: profile[0]?.id,
-            });
-          }}
-        >
-          <div>sda create</div>
-          {/* <CreateForm form={formRef?.current} /> */}
-        </IModalForm>
-      )}
     </div>
   );
 };

@@ -1,6 +1,12 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import auth from "service/auth";
 import { Action, AuthContextType, AuthReducerType } from "./type";
 
@@ -24,6 +30,8 @@ const reducer: AuthReducerType = (state, action) => {
 export const AuthContext = createContext<AuthContextType>([
   { authorized: true, init: false, user: undefined },
   () => {},
+  "en",
+  () => {},
 ]);
 
 export const AuthProvider = ({ children }: Props) => {
@@ -31,6 +39,7 @@ export const AuthProvider = ({ children }: Props) => {
     authorized: true,
     init: false,
   });
+  const [lang, setLang] = useState<string>("en");
   const _info = useRequest(auth.info, {
     manual: true,
     onSuccess: (data) => {
@@ -45,12 +54,12 @@ export const AuthProvider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    localStorage.setItem("web.locale", "en");
+    setLang(localStorage.getItem("web.locale") || "en");
     _info.run();
   }, []);
 
   return (
-    <AuthContext.Provider value={[state, setState]}>
+    <AuthContext.Provider value={[state, setState, lang, setLang]}>
       {!state.init ? <PageLoading /> : children}
     </AuthContext.Provider>
   );
