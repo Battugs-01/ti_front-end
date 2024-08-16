@@ -47,5 +47,9 @@
   "print": "Хэвлэх",
   "create_development_plan": "Хөгжлийн төлөвлөгөө үүсгэх",
   "cm_charge": "Хариуцсан ажилтан",
-  "date_next_review": "Дараагийн хянан үзэх огноо"
+  "date_next_review": "Дараагийн хянан үзэх огноо",
+  "create": "Нэмэх",
+  "permission_control": "Эрхийн тохиргоо",
+  "care_fosi_list": "Care Fosi List",
+  "member_drawer_title_update": "Засах"
 }

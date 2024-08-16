@@ -28,7 +28,7 @@ const reducer: AuthReducerType = (state, action) => {
 };
 
 export const AuthContext = createContext<AuthContextType>([
-  { authorized: true, init: false, user: undefined },
+  { authorized: false, init: false, user: undefined },
   () => {},
   "en",
   () => {},
@@ -36,7 +36,7 @@ export const AuthContext = createContext<AuthContextType>([
 
 export const AuthProvider = ({ children }: Props) => {
   const [state, setState] = useReducer(reducer, {
-    authorized: true,
+    authorized: false,
     init: false,
   });
   const [lang, setLang] = useState<string>("en");
@@ -47,15 +47,15 @@ export const AuthProvider = ({ children }: Props) => {
       setState([Action.INIT, true]);
     },
     onError: () => {
-      // auth.removeToken();
-      // setState([Action.SIGN_OUT]);
+      auth.removeToken();
+      setState([Action.SIGN_OUT]);
       setState([Action.INIT, true]);
     },
   });
 
   useEffect(() => {
-    setLang(localStorage.getItem("web.locale") || "en");
     _info.run();
+    setLang(localStorage.getItem("web.locale") || "en");
   }, []);
 
   return (

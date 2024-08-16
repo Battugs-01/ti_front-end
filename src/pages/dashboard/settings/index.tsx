@@ -4,6 +4,7 @@ import { SettingsTab } from "config";
 import { useState } from "react";
 import PermissionControl from "./permission-control";
 import CareFosi from "./care-fosi";
+import { FormattedMessage } from "react-intl";
 
 const Settings: React.FC = () => {
   const [tab, setTab] = useState<SettingsTab>(SettingsTab.permission);
@@ -17,7 +18,7 @@ const Settings: React.FC = () => {
         }}
       >
         <Radio.Button value={SettingsTab.permission}>
-          Permission control
+          <FormattedMessage id="permission_control" />
         </Radio.Button>
         <Radio.Button value={SettingsTab.careFoci}>Care Foci List</Radio.Button>
       </Radio.Group>

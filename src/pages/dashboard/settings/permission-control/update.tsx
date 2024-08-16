@@ -9,6 +9,7 @@ import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { agencyArray, FORM_ITEM_RULE, workersGenderArray } from "config";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
 import file from "service/file";
@@ -17,13 +18,13 @@ import { CreatePermissionType } from "service/type";
 import { ActionComponentProps } from "types";
 import { Save02 } from "untitledui-js-base";
 
-export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
+export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
   detail,
 }) => {
-  const createPermission = useRequest(permission.create, {
+  const update = useRequest(permission.edit, {
     manual: true,
     onSuccess: () => {
       notification.success({
@@ -37,7 +38,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
       });
     },
   });
-  const city = useRequest(address.city);
+  const city = useRequest(address.city, {});
 
   const district = useRequest(address.district, {
     manual: true,
@@ -49,6 +50,13 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
   const uploadProfile = useRequest(file.upload, {
     manual: true,
   });
+
+  useEffect(() => {
+    if (detail) {
+      district.run(detail?.address?.city_id);
+      khoroo.run(detail?.address?.district_id);
+    }
+  }, [detail]);
   const intl = useIntl();
   return (
     <DrawerForm<CreatePermissionType>
@@ -57,7 +65,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
         const file = await uploadProfile.runAsync({
           file: values?.profile[0]?.originFileObj,
         });
-        await createPermission.runAsync({
+        await update.runAsync(detail.id, {
           ...values,
           address: {
             ...values.address,
@@ -69,7 +77,33 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
 
         onFinish?.();
       }}
-      title={intl.formatMessage({ id: "member_drawer_title" })}
+      initialValues={{
+        first_name: detail?.first_name,
+        last_name: detail?.last_name,
+        agency_id: detail?.agency_id,
+        birth_date: detail?.birth_date
+          ? dayjs(detail?.birth_date).format("YYYY-MM-DD")
+          : undefined,
+        address: {
+          city_id: detail?.address?.city_id,
+          district_id: detail?.address?.district_id,
+          khoroo_id: detail?.address?.khoroo_id,
+          desc: detail?.address?.desc,
+        },
+        gender: detail?.gender,
+        phone: detail?.phone,
+        email: detail?.email,
+        permission: detail?.permission,
+        profile: [
+          {
+            uid: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: file.fileToUrl(detail?.profile?.physical_path || ""),
+          },
+        ],
+      }}
+      title={intl.formatMessage({ id: "member_drawer_title_update" })}
       open={open}
       submitter={{
         render: (props) => {

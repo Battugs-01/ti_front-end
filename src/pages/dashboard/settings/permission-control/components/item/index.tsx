@@ -4,18 +4,19 @@ import { FormInstance } from "antd/lib";
 import MailIcon from "assets/government/icons/mail.svg";
 import PhoneIcon from "assets/government/icons/phone.svg";
 import IBadge from "components/badge";
-import { DetailButton, EditButton } from "components/button/action";
+import { EditButton } from "components/button/action";
 import { DeleteButton } from "components/index";
-import { IModalForm, RemoveModal } from "components/modal";
-import { useAuthContext } from "context/auth";
+import { RemoveModal } from "components/modal";
 import { useState } from "react";
 import file from "service/file";
 import permission from "service/settings/permission";
+import { PermissionList } from "service/settings/permission/type";
+import { UpdatePermission } from "../../update";
 
 const color = "#144E5A";
 
 type ItemType = {
-  data?: any;
+  data?: PermissionList;
   form?: FormInstance;
   refreshList?: () => void;
 };
@@ -24,7 +25,7 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
   const [update, setUpdate] = useState<any>();
   const [isDelete, setDelete] = useState<any>();
 
-  const updateEmployee = useRequest(permission?.get, {
+  const updateEmployee = useRequest(permission?.list, {
     manual: true,
     onSuccess: () => {
       setUpdate(undefined);
@@ -32,7 +33,7 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
     },
   });
 
-  const deleteEmployee = useRequest(permission?.get, {
+  const deleteEmployee = useRequest(permission?.deletePermission, {
     manual: true,
     onSuccess: () => {
       setDelete(undefined);
@@ -65,8 +66,6 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
     return file[0].id;
   };
 
-  const [{ user }] = useAuthContext();
-
   return (
     <div
       className="bg-white w-full text-base"
@@ -86,7 +85,7 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           </Avatar>
           <div className="font-bold uppercase">{data?.first_name}</div>
           <div>{data?.last_name}</div>
-          <IBadge color="gray" title={data?.position} />
+          <IBadge color="gray" title={data?.agency?.name} />
           <Badge status="default" />
           <div className="flex items-center gap-1">
             <img src={PhoneIcon} />
@@ -109,32 +108,15 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
             onClick={() => setUpdate(data)}
             style={{ opacity: 1, cursor: "pointer" }}
           />
-          {user?.id !== data?.id ? (
-            <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
-          ) : (
-            ""
-          )}
+          <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
         </div>
       </div>
       {update && (
-        <IModalForm
-          open={!!update}
-          width={724}
-          title="Edit member"
-          modalProps={{ onCancel: cancelModal }}
-          okText="Save"
-          onRequest={async (values) => {
-            values.profile = await newFileUpload(values?.profile);
-
-            return updateEmployee.runAsync({
-              ...values,
-              profile_id: values?.profile,
-            });
-          }}
-        >
-          <div>sda</div>
-          {/* <UpdateForm data={update} form={form} /> */}
-        </IModalForm>
+        <UpdatePermission
+          open={update}
+          onCancel={cancelModal}
+          detail={update}
+        />
       )}
       {isDelete && (
         <RemoveModal

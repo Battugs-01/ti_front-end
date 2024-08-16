@@ -18,6 +18,7 @@ const Navbar: React.FC = () => {
   const onClose = () => {
     setNav(false);
   };
+  console.log(user, "user");
   return (
     <div className="w-full bg-[#144E5A] text-white h-[72px]">
       <div className="px-6 h-full flex justify-between items-center">
@@ -52,9 +53,9 @@ const Navbar: React.FC = () => {
             </div>
             <Avatar>BA</Avatar>
             <div className="flex flex-col justify-center items-start">
-              <div className="text-sm">{user?.user?.first_name || "user"}</div>
+              <div className="text-sm">{user?.user?.email || "user"}</div>
               <div className="text-sm text-[#A0B6BA]">
-                {user?.user?.position || "position"}
+                {user?.user?.phone || "position"}
               </div>
             </div>
             <div

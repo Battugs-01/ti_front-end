@@ -1,7 +1,6 @@
 import { useRequest } from "ahooks";
 import { Card } from "antd";
 import { FormInstance } from "antd/lib";
-import { IModalForm } from "components/modal";
 import CustomPagination from "components/pagination";
 import InitTableHeader from "components/table-header";
 import { useEffect, useRef, useState } from "react";
@@ -10,42 +9,21 @@ import permission from "service/settings/permission";
 import { initPagination } from "utils/index";
 import { Item } from "./components/item";
 import { CreatePermission } from "./create";
+import { useIntl } from "react-intl";
+import { PermissionList } from "service/settings/permission/type";
 
 const PermissionControl: React.FC = () => {
-  const [isCreate, setIsCreate] = useState(false);
-  const [fakeData, setFakeData] = useState<any>([]);
   const [filter, setFilter] = useState(initPagination);
+  const intl = useIntl();
 
-  const employeeList = useRequest(permission.get, {
+  const employeeList = useRequest(permission.list, {
     manual: true,
-  });
-
-  useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => setFakeData(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
-  const employeeCreate = useRequest(permission.get, {
-    manual: true,
-    onSuccess: () => {
-      setIsCreate(false);
-      employeeList.run({ ...filter });
-    },
-    onError: () => {
-      setIsCreate(false);
-    },
   });
 
   const uploadProfile = useRequest(file.upload, {
     manual: true,
   });
   const formRef = useRef<FormInstance>(null);
-
-  const cancelModal = () => {
-    setIsCreate(false);
-  };
 
   useEffect(() => {
     employeeList.run({
@@ -67,24 +45,25 @@ const PermissionControl: React.FC = () => {
       <Card loading={employeeList?.loading}>
         <div style={{ borderBottom: "1px solid #EAECF0" }}>
           <InitTableHeader
-            addButtonName="Нэмэх"
-            // setCreate={() => setIsCreate(true)}
+            addButtonName={intl.formatMessage({ id: "create" })}
             refresh={refreshList}
-            customHeaderTitle="Эрхийн тохиргоо"
+            customHeaderTitle={intl.formatMessage({ id: "permission_control" })}
             CreateComponent={CreatePermission}
           />
         </div>
         <div>
-          {fakeData?.products?.map((item: any, index: number) => {
-            return (
-              <Item
-                data={item}
-                key={index}
-                form={formRef?.current as FormInstance}
-                refreshList={refreshList}
-              />
-            );
-          })}
+          {employeeList?.data?.items.map(
+            (item: PermissionList, index: number) => {
+              return (
+                <Item
+                  data={item}
+                  key={index}
+                  form={formRef?.current as FormInstance}
+                  refreshList={refreshList}
+                />
+              );
+            }
+          )}
         </div>
         <div
           className="flex justify-end mb-4 px-6"

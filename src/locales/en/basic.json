@@ -47,5 +47,9 @@
   "print": "Print",
   "create_development_plan": "Create Development Plan",
   "cm_charge": "CM in Charge",
-  "date_next_review": "Date of Next Review"
+  "date_next_review": "Date of Next Review",
+  "create": "Create",
+  "permission_control": "Permission Control",
+  "care_fosi_list": "Care Fosi List",
+  "member_drawer_title_update": "Update member"
 }
