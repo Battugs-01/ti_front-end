@@ -6,8 +6,11 @@ import {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
-import { Button, Card, Col, Row } from "antd";
+import { useRequest } from "ahooks";
+import { Button, Card, Col, notification, Row } from "antd";
 import { useRef } from "react";
+import { useIntl } from "react-intl";
+import developmentPlan from "service/development_plan";
 import { Plus, Trash04 } from "untitledui-js-base";
 
 interface DevelopmentProps {
@@ -19,12 +22,27 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
   cancelModal,
   visible,
 }) => {
+  const intl = useIntl();
+  const createDevPlan = useRequest(developmentPlan.create, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
+      cancelModal();
+    },
+    onError: (error) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
   const ref = useRef<FormListActionType>();
 
   return (
     <DrawerForm
       onFinish={async (values) => {
-        console.log(values, "Form Values:");
+        await createDevPlan.runAsync(values);
       }}
       title="Create Development Plan"
       open={visible}

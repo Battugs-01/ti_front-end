@@ -7,6 +7,7 @@ import {
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { useRef } from "react";
+import { useIntl } from "react-intl";
 
 type Props = ModalFormProps & {
   onRequest?: (body?: any) => Promise<any>;
@@ -33,13 +34,14 @@ export const IModalForm = ({
   isValid,
   ...rest
 }: Props) => {
+  const intl = useIntl();
   const submit = useRequest(async (values) => onRequest && onRequest(values), {
     manual: true,
     onSuccess: () => {
       onDone && onDone();
       successData && successData();
       notification.success({
-        message: "Амжилттай",
+        message: intl.formatMessage({ id: "success" }),
       });
     },
     onError: (err) =>
@@ -165,6 +167,7 @@ export const RemoveModal = ({
   customTitle,
   ...rest
 }: PropsRemove) => {
+  const intl = useIntl();
   const formRef = useRef<ProFormInstance>();
   const submit = useRequest(
     async () => onRequest && onRequest(uniqueKey ?? 0, body),
@@ -173,7 +176,7 @@ export const RemoveModal = ({
       onSuccess: () => {
         onDone && onDone();
         notification.success({
-          message: "Амжилттай",
+          message: intl.formatMessage({ id: "success" }),
         });
       },
       onError: (err) =>

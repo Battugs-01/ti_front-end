@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import { notification, Radio } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
@@ -15,10 +15,14 @@ const ScreeningList: React.FC = () => {
   const screen = useRequest(screenList.list, {
     manual: true,
     onSuccess: () => {
-      console.log("Success");
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
     },
     onError: (err) => {
-      console.log("Error");
+      notification.error({
+        message: err.message,
+      });
     },
   });
 

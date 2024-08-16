@@ -40,5 +40,12 @@
   "agency_extra": "If you belong to multiple agencies, please include them all.",
   "permission": "Permission",
   "email": "Email",
-  "member_drawer_title": "Add member"
+  "member_drawer_title": "Add member",
+  "success": "Success",
+  "general_info": "General Info",
+  "download": "Download",
+  "print": "Print",
+  "create_development_plan": "Create Development Plan",
+  "cm_charge": "CM in Charge",
+  "date_next_review": "Date of Next Review"
 }

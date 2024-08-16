@@ -3,6 +3,7 @@ import NotFound from "./not-found";
 import { Badge } from "antd";
 import dayjs from "dayjs";
 import { ITable } from "components/index";
+import { FormattedMessage } from "react-intl";
 
 interface DevelopmentPlanTabType {
   data: {}[];
@@ -16,22 +17,24 @@ const DevelopmentPlanTab: React.FC<DevelopmentPlanTabType> = ({ data }) => {
     <CustomCard title="Development Plan">
       <div className="flex gap-2 mb-4">
         <div>
-          Agency <span className="font-bold">“Говь гурван сайхан” ХХК</span>
+          <FormattedMessage id="agency" />{" "}
+          <span className="font-bold">“Говь гурван сайхан” ХХК</span>
         </div>
         <Badge status="default" />
         <div>
-          CM in charge <span className="font-bold">Гантулга</span>
+          <FormattedMessage id="cm_charge" />{" "}
+          <span className="font-bold">Гантулга</span>
         </div>
         <Badge status="default" />
         <div>
-          Assessment Date{" "}
+          <FormattedMessage id="assessment_date" />{" "}
           <span className="font-bold">
             {dayjs(new Date()).format("DD/MM/YYYY")}
           </span>
         </div>
         <Badge status="default" />
         <div>
-          Date of Next Review{" "}
+          <FormattedMessage id="date_next_review" />{" "}
           <span className="font-bold">
             {dayjs(new Date()).format("DD/MM/YYYY")}
           </span>

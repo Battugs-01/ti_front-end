@@ -13,6 +13,7 @@ import {
 import GeneralInfo from "./tab/general-info";
 import DevelopmentPlanTab from "./tab/development-plan";
 import { CreateDevelopmentPlan } from "./create";
+import { FormattedMessage } from "react-intl";
 
 const MainDetail: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanDetailTab>(
@@ -36,13 +37,17 @@ const MainDetail: React.FC = () => {
           <Radio.Button value={DevelopmentPlanDetailTab.general}>
             <div className="flex items-center gap-2">
               <InfoCircle />
-              <div>General Info</div>
+              <div>
+                <FormattedMessage id="general_info" />
+              </div>
             </div>
           </Radio.Button>
           <Radio.Button value={DevelopmentPlanDetailTab.development}>
             <div className="flex items-center gap-2">
               <ChartBreakoutSquare />
-              <div>Development Plan</div>
+              <div>
+                <FormattedMessage id="development_plan" />
+              </div>
             </div>
           </Radio.Button>
         </Radio.Group>
@@ -54,7 +59,7 @@ const MainDetail: React.FC = () => {
             icon={<DownloadCloud02 />}
             className="flex items-center gap-2"
           >
-            Download
+            <FormattedMessage id="download" />
           </Button>
           <Button
             size="large"
@@ -62,7 +67,7 @@ const MainDetail: React.FC = () => {
             icon={<Printer />}
             className="flex items-center gap-2"
           >
-            Print
+            <FormattedMessage id="print" />
           </Button>
           <Button
             size="large"
@@ -73,7 +78,7 @@ const MainDetail: React.FC = () => {
               setCreateModalVisible(true);
             }}
           >
-            Create Development Plan
+            <FormattedMessage id="create_development_plan" />
           </Button>
         </div>
       </div>

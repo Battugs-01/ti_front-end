@@ -1,4 +1,4 @@
-import { Address } from "service/social-worker/customer/type";
+// import { Address } from "service/social-worker/customer/type";
 
 export interface LoginData {
   email: string;
@@ -23,6 +23,6 @@ export interface Admin {
   position: string;
   user_type: number;
   city_id: number;
-  city: Address;
+  // city: Address;
   district_id: number;
 }

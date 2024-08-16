@@ -21,7 +21,7 @@ export const DevPlan: React.FC = () => {
     },
     onError: (err) => {
       notification.error({
-        message: err,
+        message: err.message,
       });
     },
   });

@@ -40,5 +40,12 @@
   "agency_extra": "Хэрэв та олон агентлагт харьяалагддаг бол бүгдийг нь оруулна уу.",
   "permission": "Зөвшөөрөл",
   "email": "Имэйл",
-  "member_drawer_title": "Нэмэх"
+  "member_drawer_title": "Нэмэх",
+  "success": "Амжилттай",
+  "general_info": "Ерөнхий мэдээлэл",
+  "download": "Татах",
+  "print": "Хэвлэх",
+  "create_development_plan": "Хөгжлийн төлөвлөгөө үүсгэх",
+  "cm_charge": "Хариуцсан ажилтан",
+  "date_next_review": "Дараагийн хянан үзэх огноо"
 }
