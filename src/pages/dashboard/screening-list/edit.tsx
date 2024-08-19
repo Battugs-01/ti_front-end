@@ -7,7 +7,8 @@ import {
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, notification, Row } from "antd";
+import { agencyArray, workersGenderArray } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 import screenList from "service/screening_list";
 import { ActionComponentProps } from "types";
@@ -26,9 +27,15 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
   const editScreen = useRequest(screenList.edit, {
     manual: true,
     onSuccess: () => {
+      notification.success({
+        message: "Success",
+      });
       onFinish?.();
     },
-    onError: () => {
+    onError: (e) => {
+      notification.error({
+        message: e.message,
+      });
       onCancel();
     },
   });
@@ -81,7 +88,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <ProFormDatePicker
-            name="date_of_birth"
+            name="birth_date"
             label={intl.formatMessage({ id: "date_of_birth" })}
           />
         </Col>
@@ -89,6 +96,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
           <ProFormSelect
             name="gender"
             label={intl.formatMessage({ id: "gender" })}
+            options={workersGenderArray.map((el) => ({ ...el }))}
           />
         </Col>
       </Row>
@@ -125,8 +133,9 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormSelect
-            name="agency"
+            name="agency_id"
             label={intl.formatMessage({ id: "agency" })}
+            options={agencyArray.map((el) => ({ ...el }))}
           />
         </Col>
       </Row>
@@ -150,11 +159,11 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
             label={intl.formatMessage({ id: "senior_living_question" })}
             options={[
               {
-                label: "Yes",
+                label: intl.formatMessage({ id: "yes" }),
                 value: "yes",
               },
               {
-                label: "No",
+                label: intl.formatMessage({ id: "no" }),
                 value: "no",
               },
             ]}
@@ -169,11 +178,11 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
             label={intl.formatMessage({ id: "caregiver_living_question" })}
             options={[
               {
-                label: "Yes",
+                label: intl.formatMessage({ id: "yes" }),
                 value: "yes",
               },
               {
-                label: "No",
+                label: intl.formatMessage({ id: "no" }),
                 value: "no",
               },
             ]}

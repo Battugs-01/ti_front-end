@@ -6,7 +6,7 @@ import { atom, useAtom } from "jotai";
 import React, { useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { ActionComponentProps } from "types";
-import { exportFromTable } from "utils/export";
+import { exportFromList, exportFromTable } from "utils/export";
 import { CreateButton, ExportButton } from "..";
 
 interface TableHeaderProps {
@@ -32,6 +32,7 @@ interface TableHeaderProps {
   store?: any;
   hideTitle?: boolean;
   leftContent?: React.ReactNode;
+  downloadList?: {}[];
 }
 
 const init = atom<any>({});
@@ -55,6 +56,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   store,
   hideTitle,
   leftContent,
+  downloadList = undefined,
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
@@ -80,7 +82,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
     <>
       <div className="flex justify-between pt-2 pb-4 flex-wrap px-4 gap-4  items-center ">
         <>
-          <div className="flex space-x-2 py-1.5 md:w-2/5">
+          <div className="flex items-center space-x-2 py-1.5 md:w-2/5">
             {hideTitle ? (
               leftContent
             ) : (
@@ -121,18 +123,25 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             onClick={refresh}
             size="large"
           />
-
-          <ExportButton
-            hidden={!fileName}
-            onClick={() => {
-              exportFromTable(
-                [`${fileName}`],
-                window.document.getElementById(`${tableID}`) as HTMLElement,
-                window
-              );
-            }}
-          />
-
+          {downloadList ? (
+            <ExportButton
+              hidden={!fileName}
+              onClick={() => {
+                exportFromList([`${fileName}`], downloadList);
+              }}
+            />
+          ) : (
+            <ExportButton
+              hidden={!fileName}
+              onClick={() => {
+                exportFromTable(
+                  [`${fileName}`],
+                  window.document.getElementById(`${tableID}`) as HTMLElement,
+                  window
+                );
+              }}
+            />
+          )}
           {toolbarItems}
           <CreateButton
             size="large"

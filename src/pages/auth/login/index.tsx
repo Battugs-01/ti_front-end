@@ -8,12 +8,14 @@ import { Button, notification } from "antd";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import { FC, useRef } from "react";
+import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { LoginData } from "service/auth/type";
 
 const Login: FC = () => {
   // const [loading, setLoading] = useState(false);
+  const intl = useIntl();
   const formRef = useRef<ProFormInstance<LoginData>>();
   const [, setAuth] = useAuthContext();
   const userData = auth.getRememberUser();
@@ -22,10 +24,10 @@ const Login: FC = () => {
     manual: true,
     onSuccess: (data) => {
       auth.saveToken(data.token);
-      setAuth([Action.SIGN_IN, data.user]);
+      setAuth([Action.SIGN_IN, data.employee]);
       navigate("dashboard/screening-list");
       notification.success({
-        message: "Амжилттай нэвтэрлээ.",
+        message: intl.formatMessage({ id: "login_success" }),
       });
     },
     onError: (err) => {

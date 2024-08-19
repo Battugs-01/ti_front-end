@@ -51,5 +51,17 @@
   "create": "Create",
   "permission_control": "Permission Control",
   "care_fosi_list": "Care Fosi List",
-  "member_drawer_title_update": "Update member"
+  "member_drawer_title_update": "Update member",
+  "upload_picture": "Profile picture",
+  "yes": "Yes",
+  "no": "No",
+  "back": "Back",
+  "score_list": "Score List",
+  "screening_assessment": "Screening Assessment",
+  "create_plan": "Create Plan",
+  "add_plan": "Add more plan",
+  "mini_cog": "Mini-Cog",
+  "gds": "GDS",
+  "barthel_index": "Barthel Index",
+  "login_success": "Login success"
 }

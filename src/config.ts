@@ -235,3 +235,10 @@ export enum DevelopmentPlanGraphTab {
   gds = "gds",
   barthel = "barthel_index",
 }
+
+export enum ScreeningTab {
+  all = "all",
+  level_1 = "level_1",
+  level_2 = "level_2",
+  level_3 = "level_3",
+}

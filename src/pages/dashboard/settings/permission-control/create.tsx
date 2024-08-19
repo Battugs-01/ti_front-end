@@ -203,7 +203,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
-                <Col sm={8} xs={21}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
                     placeholder="Сонгох"
@@ -227,7 +227,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col sm={8} xs={21}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "district_id"]}
                     placeholder="Сонгох"
@@ -249,7 +249,9 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col sm={8} xs={21}>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "khoroo_id"]}
                     placeholder="Сонгох"
@@ -267,9 +269,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     // rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
+                <Col sm={12} xs={21}>
                   <ProFormText
                     name={["address", "desc"]}
                     label={intl.formatMessage({ id: "address" })}

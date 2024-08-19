@@ -44,6 +44,10 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
   const cancelModal = () => {
     setUpdate(undefined);
   };
+  const finishModal = () => {
+    setUpdate(undefined);
+    refreshList && refreshList();
+  };
   const cancelDeleteModal = () => {
     setDelete(undefined);
   };
@@ -116,6 +120,7 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           open={update}
           onCancel={cancelModal}
           detail={update}
+          onFinish={finishModal}
         />
       )}
       {isDelete && (

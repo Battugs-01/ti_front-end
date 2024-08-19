@@ -14,7 +14,7 @@ const Info: React.FC = () => {
             icon={<ChevronLeft />}
             className="flex items-center"
           >
-            Back
+            <FormattedMessage id="back" />
           </Button>
         </Link>
         <div className="flex items-center gap-3">

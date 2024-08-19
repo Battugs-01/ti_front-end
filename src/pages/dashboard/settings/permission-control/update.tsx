@@ -30,12 +30,13 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
       notification.success({
         message: intl.formatMessage({ id: "success" }),
       });
-      onCancel();
+      onFinish?.();
     },
     onError: (error: any) => {
       notification.error({
         message: error.message,
       });
+      onCancel();
     },
   });
   const city = useRequest(address.city, {});
@@ -51,6 +52,18 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
     manual: true,
   });
 
+  const newFileUpload = async (files: any[]) => {
+    console.log(files, "Files");
+    if (!files[0]?.uid.includes("rc-upload")) {
+      console.log("hey");
+      return files[0]?.id;
+    }
+    const file = await uploadProfile.runAsync({
+      file: files[0].originFileObj,
+    });
+    return file[0].id;
+  };
+
   useEffect(() => {
     if (detail) {
       district.run(detail?.address?.city_id);
@@ -58,24 +71,20 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
     }
   }, [detail]);
   const intl = useIntl();
+  console.log(detail, "Detail");
   return (
     <DrawerForm<CreatePermissionType>
       className="custom-ant-drawer-body"
       onFinish={async (values) => {
-        const file = await uploadProfile.runAsync({
-          file: values?.profile[0]?.originFileObj,
-        });
+        const id = await newFileUpload(values?.profile);
         await update.runAsync(detail.id, {
           ...values,
           address: {
             ...values.address,
           },
-
-          profile_id: file[0]?.id,
+          profile_id: id,
           birth_date: dayjs(values?.birth_date).toDate(),
         });
-
-        onFinish?.();
       }}
       initialValues={{
         first_name: detail?.first_name,
@@ -96,10 +105,13 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
         permission: detail?.permission,
         profile: [
           {
-            uid: detail?.profile?.id,
+            uid: `${detail?.profile?.id}`,
+            id: detail?.profile?.id,
             name: detail?.profile?.file_name,
             status: "done",
             url: file.fileToUrl(detail?.profile?.physical_path || ""),
+            originFileObj: detail?.profile?.physical_path,
+            type: "image/jpeg",
           },
         ],
       }}
@@ -237,7 +249,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
-                <Col sm={8} xs={21}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
                     placeholder="Сонгох"
@@ -261,7 +273,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col sm={8} xs={21}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "district_id"]}
                     placeholder="Сонгох"
@@ -283,7 +295,9 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col sm={8} xs={21}>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "khoroo_id"]}
                     placeholder="Сонгох"
@@ -301,9 +315,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     // rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
+                <Col sm={12} xs={21}>
                   <ProFormText
                     name={["address", "desc"]}
                     label={intl.formatMessage({ id: "address" })}

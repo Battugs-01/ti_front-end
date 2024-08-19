@@ -75,49 +75,22 @@ export const exportFromTable = async (
       maindata.push(record);
     }
 
+    console.log(maindata, "this is main data");
+
     await exportXLSX(maindata, filename);
     resolve(true);
   });
 };
 
-// export const exportFromList = async (
-//   filename: string[],
-//   tableWrapper?: HTMLElement,
-//   window?: Window
-// ): Promise<boolean> => {
-//   return new Promise(async (resolve, reject) => {
-//     if (!tableWrapper) {
-//       resolve(false);
-//       return;
-//     }
-//     let list = tableWrapper.querySelectorAll("div");
-//     console.log(list, "this is table");
-//     let keys: string[] = [];
-//     let rowArray = Array.from(list || []);
-//     // Array.from(rowArray[0]?.cells).forEach((cell) => {
-//     //   keys.push(cell.innerText);
-//     // });
-//     console.log(rowArray, "this is row array");
-
-//     let maindata: any[] = [];
-//     let i = 0;
-//     for (i; i < rowArray.length; i++) {
-//       let record: any = {};
-//       let row = rowArray[i];
-//       console.log("this is rows", row.innerHTML);
-//       let cells = Array.from(row.cells);
-//       let j: number = 0;
-//       for (j; j < cells.length; j++) {
-//         let cell = cells[j];
-//         record[keys[j]] = cell.innerText;
-//       }
-//       maindata.push(record);
-//     }
-
-//     await exportXLSX(maindata, filename);
-//     resolve(true);
-//   });
-// };
+export const exportFromList = async (
+  filename: string[],
+  data: any[]
+): Promise<boolean> => {
+  return new Promise(async (resolve, reject) => {
+    await exportXLSX(data, filename);
+    resolve(true);
+  });
+};
 
 type ExportType<T> = (
   dataSource?: T[],

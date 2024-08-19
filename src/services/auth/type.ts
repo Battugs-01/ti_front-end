@@ -8,7 +8,7 @@ export interface LoginData {
 
 export interface LoginResponse {
   token: string;
-  user: Admin;
+  employee: Admin;
 }
 
 export interface Admin {

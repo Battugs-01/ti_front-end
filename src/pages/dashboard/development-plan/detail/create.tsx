@@ -8,8 +8,9 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Card, Col, notification, Row } from "antd";
+import dayjs from "dayjs";
 import { useRef } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { Plus, Trash04 } from "untitledui-js-base";
 
@@ -42,16 +43,19 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
   return (
     <DrawerForm
       onFinish={async (values) => {
-        await createDevPlan.runAsync(values);
+        await createDevPlan.runAsync({
+          ...values,
+          estimated_completion: dayjs(values.estimated_completion).toDate(),
+        });
       }}
-      title="Create Development Plan"
+      title={intl.formatMessage({ id: "create_development_plan" })}
       open={visible}
       submitter={{
         render: (props) => {
           return (
             <div className="flex items-center gap-4">
               <Button onClick={cancelModal} size="large" type="default">
-                Cancel
+                <FormattedMessage id="cancel" />
               </Button>
               <Button
                 onClick={props.submit}
@@ -60,7 +64,7 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
                 icon={<Plus />}
                 className="flex items-center"
               >
-                Create Plan
+                <FormattedMessage id="create_plan" />
               </Button>
             </div>
           );
@@ -174,7 +178,7 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
         className="my-3 font-medium text-[#144E5A] flex items-center"
         onClick={() => ref.current?.add({})}
       >
-        Add more plan
+        <FormattedMessage id="add_plan" />
       </Button>
     </DrawerForm>
   );

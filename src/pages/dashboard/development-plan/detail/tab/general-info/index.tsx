@@ -4,6 +4,7 @@ import { DevelopmentPlanGraphTab } from "config";
 import { useState } from "react";
 import { Info } from "../../components/collapsed-info";
 import { ITable } from "components/index";
+import { FormattedMessage } from "react-intl";
 
 const GeneralInfo: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanGraphTab>(
@@ -35,7 +36,9 @@ const GeneralInfo: React.FC = () => {
   };
   return (
     <div>
-      <h2>Score list</h2>
+      <h2>
+        <FormattedMessage id="score_list" />
+      </h2>
       <Radio.Group
         defaultValue={DevelopmentPlanGraphTab.mini_cog}
         size="large"
@@ -45,16 +48,21 @@ const GeneralInfo: React.FC = () => {
         className="mb-6"
       >
         <Radio.Button value={DevelopmentPlanGraphTab.mini_cog}>
-          Mini-cog
+          <FormattedMessage id="mini_cog" />
         </Radio.Button>
-        <Radio.Button value={DevelopmentPlanGraphTab.gds}>GDS</Radio.Button>
+        <Radio.Button value={DevelopmentPlanGraphTab.gds}>
+          <FormattedMessage id="gds" />
+        </Radio.Button>
         <Radio.Button value={DevelopmentPlanGraphTab.barthel}>
-          Barthel Index
+          <FormattedMessage id="barthel_index" />
         </Radio.Button>
       </Radio.Group>
       <Area {...config} />
       <Divider />
-      <Info title={"Screening Assessment"} className="mb-4">
+      <Info
+        title={<FormattedMessage id="screening_assessment" />}
+        className="mb-4"
+      >
         <div className="font-semibold mb-4 text-lg text-gray-700">
           Screening Assessment Detail
         </div>

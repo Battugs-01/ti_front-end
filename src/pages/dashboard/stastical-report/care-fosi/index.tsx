@@ -10,7 +10,11 @@ const CareFosiList: React.FC = () => {
   return (
     <Flex vertical gap="large">
       <PageCard xR>
-        <InitTableHeader hideCreate customHeaderTitle="Functional" />
+        <InitTableHeader
+          hideCreate
+          customHeaderTitle="Functional"
+          fileName="functional"
+        />
         <ITable
           dataSource={[
             {

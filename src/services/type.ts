@@ -54,3 +54,8 @@ export interface CreatePermissionType {
   profile_id: number;
   profile?: any;
 }
+
+export interface ListType<T> {
+  total: number;
+  items: T;
+}

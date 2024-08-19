@@ -1,15 +1,16 @@
+import { ListType } from "service/type";
 import http from "..";
-import { ResponseType } from "./type";
+import { ScreeningListType } from "./type";
 
 namespace screenList {
   export const list = (body: any) =>
-    http.post<ResponseType[]>("screenlist/list", {
+    http.post<ListType<ScreeningListType[]>>("assessment/list", {
       hasAuth: true,
       body,
     });
 
   export const edit = (body?: any) =>
-    http.put<ResponseType>("screenlist/edit", {
+    http.put<ScreeningListType>("screenlist/edit", {
       hasAuth: true,
       body,
     });

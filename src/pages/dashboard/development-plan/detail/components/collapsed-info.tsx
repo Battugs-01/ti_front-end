@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { ChevronDown, ChevronUp, DotsVertical } from "untitledui-js-base";
 
 interface InfoProps {
-  title: string;
+  title: React.ReactNode | string;
   children?: React.ReactNode;
   className?: string;
 }
@@ -12,9 +12,14 @@ interface InfoProps {
 export const Info: React.FC<InfoProps> = ({ title, children, className }) => {
   return (
     <Collapse
+      onChange={(value) => {
+        if (value.length > 0) {
+          console.log("call api");
+        }
+      }}
       items={[
         {
-          key: title,
+          key: "key",
           label: <div className="text-lg text-gray-800">{title}</div>,
           children: (
             <div className="flex flex-col gap-4">
