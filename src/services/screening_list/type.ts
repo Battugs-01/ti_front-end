@@ -15,7 +15,7 @@ export interface ScreeningListType {
   respiratory_rate: number;
   body_temp: number;
   cfs_point: number;
-  Level: string;
+  level: string;
 }
 
 export interface Customer {

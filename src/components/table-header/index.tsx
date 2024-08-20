@@ -33,6 +33,7 @@ interface TableHeaderProps {
   hideTitle?: boolean;
   leftContent?: React.ReactNode;
   downloadList?: {}[];
+  filter?: React.ReactNode;
 }
 
 const init = atom<any>({});
@@ -57,6 +58,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   hideTitle,
   leftContent,
   downloadList = undefined,
+  filter,
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
@@ -96,6 +98,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           {customHeaderTitle}
         </div> */}
         <div className="flex gap-2 flex-wrap ant-form-item-margin-remove">
+          {filter}
           {/* <Button
             size="large"
             className={hideFormFilter ? "hidden" : ""}

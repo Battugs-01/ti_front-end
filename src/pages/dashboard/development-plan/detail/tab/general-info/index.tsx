@@ -5,8 +5,19 @@ import { useState } from "react";
 import { Info } from "../../components/collapsed-info";
 import { ITable } from "components/index";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router-dom";
+import { useRequest } from "ahooks";
+import screenList from "service/screening_list";
 
 const GeneralInfo: React.FC = () => {
+  const location = useLocation();
+  const assessmentId = location.search.split("=")[1];
+
+  const assessment = useRequest(() =>
+    screenList.assessmentDetail(assessmentId)
+  );
+
+  console.log(assessment, "assessment");
   const [tab, setTab] = useState<DevelopmentPlanGraphTab>(
     DevelopmentPlanGraphTab.mini_cog
   );

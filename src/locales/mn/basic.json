@@ -63,5 +63,8 @@
   "mini_cog": "Mini-Cog",
   "gds": "GDS",
   "barthel_index": "Barthel Index",
-  "login_success": "Амжилттай нэвтэрлээ."
+  "login_success": "Амжилттай нэвтэрлээ.",
+  "reset": "Дахин тохируулах",
+  "filter": "Шүүлтүүр",
+  "level_filter": "Эрсдлийн түвшин"
 }

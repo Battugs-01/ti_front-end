@@ -63,5 +63,8 @@
   "mini_cog": "Mini-Cog",
   "gds": "GDS",
   "barthel_index": "Barthel Index",
-  "login_success": "Login success"
+  "login_success": "Login success",
+  "reset": "Reset",
+  "filter": "Filter",
+  "level_filter": "Level"
 }

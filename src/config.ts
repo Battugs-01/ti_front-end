@@ -59,6 +59,28 @@ export const agencyArray = Object.freeze([
   },
 ]);
 
+export enum ScreeningTab {
+  all = "all",
+  level_1 = "level_1",
+  level_2 = "level_2",
+  level_3 = "level_3",
+}
+
+export const levelOptions = Object.freeze([
+  {
+    label: "Level 1",
+    value: ScreeningTab.level_1,
+  },
+  {
+    label: "Level 2",
+    value: ScreeningTab.level_2,
+  },
+  {
+    label: "Level 3",
+    value: ScreeningTab.level_3,
+  },
+]);
+
 export const isDisablity = Object.freeze([
   {
     label: "Тийм",
@@ -234,11 +256,4 @@ export enum DevelopmentPlanGraphTab {
   mini_cog = "mini_cog",
   gds = "gds",
   barthel = "barthel_index",
-}
-
-export enum ScreeningTab {
-  all = "all",
-  level_1 = "level_1",
-  level_2 = "level_2",
-  level_3 = "level_3",
 }

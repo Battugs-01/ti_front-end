@@ -15,7 +15,9 @@ import DevelopmentPlanTab from "./tab/development-plan";
 import { CreateDevelopmentPlan } from "./create";
 import { FormattedMessage } from "react-intl";
 
-const MainDetail: React.FC = () => {
+interface MainDetailProps {}
+
+const MainDetail: React.FC<MainDetailProps> = () => {
   const [tab, setTab] = useState<DevelopmentPlanDetailTab>(
     DevelopmentPlanDetailTab.general
   );

@@ -1,22 +1,27 @@
 import { useRequest } from "ahooks";
-import { notification, Radio } from "antd";
+import { Avatar, notification, Radio } from "antd";
+import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
+import { PopoverFilter } from "components/filter";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { ScreeningTab } from "config";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
+import { FileSearch03 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
-import { EditScreenList } from "./edit";
 import { screeningListFilter } from "utils/screening_list_filter";
+import { EditScreenList } from "./edit";
+import { ScreeningListFilter } from "./filter";
 
 const ScreeningList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
-
+  const intl = useIntl();
   const screen = useRequest(screenList.list, {
     manual: true,
     onSuccess: () => {
@@ -34,18 +39,23 @@ const ScreeningList: React.FC = () => {
   useEffect(() => {
     screen.run({
       ...filter,
-      // levels: screeningListFilter(tab),
+      levels: screeningListFilter(tab),
     });
   }, [filter, tab]);
   const refreshList = () => {
     screen?.run({
       ...filter,
+      levels: screeningListFilter(tab),
     });
   };
-  const intl = useIntl();
   return (
     <PageCard xR>
       <InitTableHeader
+        filter={
+          <PopoverFilter>
+            <ScreeningListFilter />
+          </PopoverFilter>
+        }
         hideTitle
         refresh={refreshList}
         hideCreate
@@ -74,6 +84,7 @@ const ScreeningList: React.FC = () => {
       />
       <ITable<ScreeningListType>
         dataSource={screen.data?.items}
+        loading={screen.loading}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -104,7 +115,7 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
-            render: (_, record) => <div>{record?.Level}</div>,
+            render: (_, record) => <LevelBadge status={record?.level} />,
           },
           {
             title: intl.formatMessage({ id: "cfs_score" }),
@@ -129,6 +140,7 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "total_assessment" }),
             dataIndex: "total_assessment",
+            render: (_, record) => <div>{record?.cfs_point}</div>,
           },
           {
             title: intl.formatMessage({ id: "list_assessment_date" }),
@@ -140,11 +152,30 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "caregiver" }),
             dataIndex: "caregiver",
-            render: (_, record) => <div>{record?.employee?.first_name}</div>,
+            render: (_, record) => (
+              <div>
+                {record?.customer.is_have_care_giver ? (
+                  <FormattedMessage id="yes" />
+                ) : (
+                  <FormattedMessage id="no" />
+                )}
+              </div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "person_in_charge" }),
             dataIndex: "person_in_charge",
+            render: (_, record) => (
+              <div className="flex items-center gap-2">
+                <Avatar>BA</Avatar>
+                <div>{record?.employee?.first_name}</div>
+              </div>
+            ),
+          },
+          {
+            title: intl.formatMessage({ id: "address" }),
+            dataIndex: "address",
+            render: (_, record) => <div>{record?.customer.address?.desc}</div>,
           },
           {
             title: intl.formatMessage({ id: "development_plan" }),
@@ -152,6 +183,16 @@ const ScreeningList: React.FC = () => {
           },
         ]}
         UpdateComponent={EditScreenList}
+        customActions={(record) => {
+          return (
+            <Link
+              to={`/dashboard/development-plan/234?assessment_id=${record.customer_id}`}
+              className="flex items-center"
+            >
+              <FileSearch03 className="text-gray-600" />
+            </Link>
+          );
+        }}
       />
     </PageCard>
   );
