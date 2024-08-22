@@ -1,9 +1,10 @@
+import { ListType } from "service/type";
 import http from "..";
 import { ResponseType } from "./type";
 
 namespace developmentPlan {
   export const list = (body: any) =>
-    http.post<ResponseType[]>("development_plan/list", {
+    http.post<ListType<[]>>("development_plan/list", {
       hasAuth: true,
       body,
     });

@@ -66,5 +66,17 @@
   "login_success": "Амжилттай нэвтэрлээ.",
   "reset": "Дахин тохируулах",
   "filter": "Шүүлтүүр",
-  "level_filter": "Эрсдлийн түвшин"
+  "level_filter": "Эрсдлийн түвшин",
+  "blood_pressure": "Цусны даралт",
+  "heart_rate": "Зүрхний хэмнэл",
+  "rr": "RR",
+  "t": "T",
+  "answer": "Хариулт",
+  "care_foci_list": "Care Foci List",
+  "statistical": "Statistical",
+  "by_care_foci": "By Care Foci List",
+  "cm_in_charge": "Хариуцсан ажилтан",
+  "date_of_assessment": "Үнэлгээний огноо",
+  "show_details": "Дэлгэрэнгүй мэдээлэл харах",
+  "hide_details": "Дэлгэрэнгүй мэдээлэл нуух"
 }

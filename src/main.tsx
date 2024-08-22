@@ -40,6 +40,10 @@ root.render(
           headerBg: "#fff",
           colorBorder: "#fff",
         },
+        Segmented: {
+          colorBgLayout: "#CFDADC",
+          colorText: "#1D2939",
+        },
       },
     }}
     locale={enUSIntl}

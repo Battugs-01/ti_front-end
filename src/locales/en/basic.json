@@ -66,5 +66,18 @@
   "login_success": "Login success",
   "reset": "Reset",
   "filter": "Filter",
-  "level_filter": "Level"
+  "level_filter": "Level",
+  "blood_pressure": "Blood pressure",
+  "heart_rate": "Heart rate",
+  "rr": "RR",
+  "t": "T",
+  "answer": "Answer",
+  "care_foci_list": "Care Foci List",
+  "statistical": "Statistical",
+  "by_care_foci": "By Care Foci List",
+  "cm_in_charge": "CM in Charge",
+  "date_of_assessment": "Date of Assessment",
+  "date_of_next_review": "Date of Next Review",
+  "show_details": "Show Details",
+  "hide_details": "Hide Details"
 }

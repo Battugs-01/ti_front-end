@@ -139,6 +139,7 @@ type PageCardProps = {
   extra?: ReactNode;
   bodyClassName?: string;
   titleClassName?: string;
+  loading?: boolean;
 };
 export const PageCard = ({
   children,
@@ -149,9 +150,11 @@ export const PageCard = ({
   extra,
   bodyClassName,
   titleClassName,
+  loading,
 }: PageCardProps) => {
   return (
     <Card
+      loading={loading}
       bodyStyle={{ padding: 0 }}
       headStyle={{ display: "none" }}
       className={`p-4 ${xR && "px-0"} ${yR && "py-0"} ${className} `}

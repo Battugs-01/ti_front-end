@@ -1,59 +1,31 @@
-import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { FC, useEffect, useState } from "react";
-import functional from "service/settings/care-foci/functional";
+import { FC } from "react";
+import { CareFoci, Item } from "service/settings/care-foci/type";
 
-const Functional: FC = () => {
-  const [search, setSearch] = useState<string>("");
+interface FunctionalProps {
+  data?: CareFoci;
+}
 
-  const list = useRequest(functional.get, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
-
-  const run = () => {
-    list.run({
-      query: search,
-    });
-  };
-
-  useEffect(() => {
-    run();
-  }, []);
-
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
-
+const Functional: FC<FunctionalProps> = ({ data }) => {
   return (
     <div className="flex flex-col gap-4 mt-3">
       <PageCard xR>
         <div className="px-2 pb-0">
           <InitTableHeader
-            customHeaderTitle="Functional"
+            customHeaderTitle={data?.name}
             searchPlaceHolder="Search ..."
-            search={search}
-            setSearch={(e) => {
-              setSearch(e);
-              searchRun.run({ query: e });
-            }}
             hideCreate
-            refresh={() => list.run({ query: search })}
           />
         </div>
 
         <ITable<any>
           total={12}
-          loading={list.loading}
-          dataSource={[]}
-          refresh={(values) => list.run({ ...values })}
+          dataSource={data?.items}
           columns={[
             {
-              dataIndex: "rd",
+              dataIndex: "name",
               title: "Name",
               render: (value) => (
                 <span className="text-sm text-[#475467] font-normal flex text-center">
@@ -62,7 +34,7 @@ const Functional: FC = () => {
               ),
             },
             {
-              dataIndex: "email",
+              dataIndex: "min",
               title: "Min. value",
               align: "left",
               width: "10%",
@@ -73,7 +45,7 @@ const Functional: FC = () => {
               ),
             },
             {
-              dataIndex: "email",
+              dataIndex: "max",
               title: "Max. value",
               align: "left",
               width: "10%",
@@ -84,14 +56,6 @@ const Functional: FC = () => {
               ),
             },
           ]}
-          RemoveModelConfig={{
-            action: functional.deletecare,
-            config: (record) => ({
-              uniqueKey: record?.id,
-              display: record?.first_name,
-              title: "Remove",
-            }),
-          }}
         />
       </PageCard>
     </div>

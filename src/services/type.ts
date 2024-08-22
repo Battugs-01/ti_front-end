@@ -16,6 +16,13 @@ export interface Address {
   desc: string;
 }
 
+export interface Agency {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+}
+
 export interface AddressResponse {
   id: number;
   created_at: Date;

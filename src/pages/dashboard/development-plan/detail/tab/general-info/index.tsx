@@ -1,23 +1,22 @@
 import { Area } from "@ant-design/plots";
-import { Divider, Radio } from "antd";
+import { Divider, Radio, Table } from "antd";
 import { DevelopmentPlanGraphTab } from "config";
 import { useState } from "react";
 import { Info } from "../../components/collapsed-info";
-import { ITable } from "components/index";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 import { useRequest } from "ahooks";
 import screenList from "service/screening_list";
+import IBadge from "components/badge";
 
 const GeneralInfo: React.FC = () => {
   const location = useLocation();
   const assessmentId = location.search.split("=")[1];
-
+  const intl = useIntl();
   const assessment = useRequest(() =>
     screenList.assessmentDetail(assessmentId)
   );
 
-  console.log(assessment, "assessment");
   const [tab, setTab] = useState<DevelopmentPlanGraphTab>(
     DevelopmentPlanGraphTab.mini_cog
   );
@@ -70,7 +69,62 @@ const GeneralInfo: React.FC = () => {
       </Radio.Group>
       <Area {...config} />
       <Divider />
-      <Info
+      {assessment.data?.map((val, index) => {
+        return (
+          <Info
+            key={index}
+            title={<FormattedMessage id="screening_assessment" />}
+            className="mb-4"
+            data={val}
+          >
+            <div className="font-semibold mb-4 text-lg text-gray-700">
+              Screening Assessment Detail
+            </div>
+            <Table
+              pagination={false}
+              dataSource={val?.questions}
+              className="p-0 remove-padding-table"
+              columns={[
+                {
+                  title: "№",
+                  align: "center",
+                  width: 60,
+                  render: (_, __, index) => <div>{index + 1}</div>,
+                },
+                {
+                  title: intl.formatMessage({ id: "name" }),
+                  dataIndex: "name",
+                  align: "left",
+                  render: (_, record) => (
+                    <span className="text-sm text-[#475467] font-normal flex">
+                      {record?.question?.title || "-"}
+                    </span>
+                  ),
+                },
+                {
+                  title: intl.formatMessage({ id: "answer" }),
+                  width: 100,
+                  align: "center",
+                  dataIndex: "answer",
+                  render: (value) => (
+                    <span className="text-sm text-[#475467] font-normal  text-center">
+                      {value ? (
+                        <IBadge
+                          title={<FormattedMessage id="yes" />}
+                          color="red"
+                        />
+                      ) : (
+                        <IBadge title={<FormattedMessage id="no" />} />
+                      )}
+                    </span>
+                  ),
+                },
+              ]}
+            />
+          </Info>
+        );
+      })}
+      {/* <Info
         title={<FormattedMessage id="screening_assessment" />}
         className="mb-4"
       >
@@ -185,7 +239,7 @@ const GeneralInfo: React.FC = () => {
             />
           </div>
         </div>
-      </Info>
+      </Info> */}
     </div>
   );
 };

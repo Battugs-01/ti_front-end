@@ -7,28 +7,6 @@ import { FC, useEffect, useState } from "react";
 import sociaEconomic from "service/settings/care-foci/socia-economic";
 
 const SociaEconomic: FC = () => {
-  const [search, setSearch] = useState<string>("");
-
-  const list = useRequest(sociaEconomic.get, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
-
-  const run = () => {
-    list.run({
-      query: search,
-    });
-  };
-
-  useEffect(() => {
-    run();
-  }, []);
-
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
-
   return (
     <div className="flex flex-col gap-4 mt-3">
       <PageCard xR>
@@ -36,21 +14,13 @@ const SociaEconomic: FC = () => {
           <InitTableHeader
             customHeaderTitle="Socia economic"
             searchPlaceHolder="Search ..."
-            search={search}
-            setSearch={(e) => {
-              setSearch(e);
-              searchRun.run({ query: e });
-            }}
             hideCreate
-            refresh={() => list.run({ query: search })}
           />
         </div>
 
         <ITable<any>
           total={12}
-          loading={list.loading}
           dataSource={[]}
-          refresh={(values) => list.run({ ...values })}
           columns={[
             {
               dataIndex: "rd",
@@ -84,14 +54,6 @@ const SociaEconomic: FC = () => {
               ),
             },
           ]}
-          RemoveModelConfig={{
-            action: sociaEconomic.deletecare,
-            config: (record) => ({
-              uniqueKey: record?.id,
-              display: record?.first_name,
-              title: "Remove",
-            }),
-          }}
         />
       </PageCard>
     </div>

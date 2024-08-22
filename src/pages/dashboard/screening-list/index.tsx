@@ -17,6 +17,8 @@ import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { EditScreenList } from "./edit";
 import { ScreeningListFilter } from "./filter";
+import file from "service/file";
+import IBadge from "components/badge";
 
 const ScreeningList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -48,12 +50,19 @@ const ScreeningList: React.FC = () => {
       levels: screeningListFilter(tab),
     });
   };
+
+  const onFinishFilter = async (values: any) => {
+    screen.runAsync({
+      ...filter,
+      ...values,
+    });
+  };
   return (
     <PageCard xR>
       <InitTableHeader
         filter={
           <PopoverFilter>
-            <ScreeningListFilter />
+            <ScreeningListFilter onFinish={onFinishFilter} />
           </PopoverFilter>
         }
         hideTitle
@@ -89,33 +98,33 @@ const ScreeningList: React.FC = () => {
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),
-            dataIndex: "name",
-            render: (_, record) => <div>{record?.customer.first_name}</div>,
+            dataIndex: "first_name",
           },
           {
             title: intl.formatMessage({ id: "register" }),
-            dataIndex: "register",
-            render: (_, record) => <div>{record?.customer.rd}</div>,
+            dataIndex: "rd",
           },
           {
             title: intl.formatMessage({ id: "phone" }),
             dataIndex: "phone",
-            render: (_, record) => <div>{record?.customer.phone}</div>,
           },
           {
             title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
-            render: (_, record) => <div>{record?.customer.age}</div>,
           },
           {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
-            render: (_, record) => <div>{record?.customer.age}</div>,
+            render: (value: any) => {
+              return <FormattedMessage id={value} />;
+            },
           },
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
-            render: (_, record) => <LevelBadge status={record?.level} />,
+            render: (_, record) => (
+              <LevelBadge status={record?.assessment?.level} />
+            ),
           },
           {
             title: intl.formatMessage({ id: "cfs_score" }),
@@ -124,10 +133,12 @@ const ScreeningList: React.FC = () => {
               <div className="text-gray-400">
                 <span
                   className={`${
-                    record?.cfs_point > 6 ? "text-red-400" : "text-black"
+                    record?.assessment?.cfs_point > 6
+                      ? "text-red-400"
+                      : "text-black"
                   }`}
                 >
-                  {record?.cfs_point}
+                  {record?.assessment.cfs_point}
                 </span>{" "}
                 / 9
               </div>
@@ -140,13 +151,13 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "total_assessment" }),
             dataIndex: "total_assessment",
-            render: (_, record) => <div>{record?.cfs_point}</div>,
+            render: (_, record) => <div>{record?.assessment?.total}</div>,
           },
           {
             title: intl.formatMessage({ id: "list_assessment_date" }),
             dataIndex: "list_assessment_date",
             render: (_, record) => (
-              <div>{dayjs(record?.date).format("YYYY-MM-DD")}</div>
+              <div>{dayjs(record?.assessment?.date).format("YYYY-MM-DD")}</div>
             ),
           },
           {
@@ -154,10 +165,10 @@ const ScreeningList: React.FC = () => {
             dataIndex: "caregiver",
             render: (_, record) => (
               <div>
-                {record?.customer.is_have_care_giver ? (
-                  <FormattedMessage id="yes" />
+                {record?.is_have_care_giver ? (
+                  <IBadge title={<FormattedMessage id="yes" />} color="green" />
                 ) : (
-                  <FormattedMessage id="no" />
+                  <IBadge title={<FormattedMessage id="no" />} />
                 )}
               </div>
             ),
@@ -167,15 +178,22 @@ const ScreeningList: React.FC = () => {
             dataIndex: "person_in_charge",
             render: (_, record) => (
               <div className="flex items-center gap-2">
-                <Avatar>BA</Avatar>
-                <div>{record?.employee?.first_name}</div>
+                <Avatar
+                  src={file.fileToUrl(
+                    record?.person_in_charge?.profile?.physical_path
+                  )}
+                  className="uppercase"
+                >
+                  {record?.person_in_charge?.first_name.substring(0, 2)}
+                </Avatar>
+                <div>{record?.person_in_charge?.first_name}</div>
               </div>
             ),
           },
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
-            render: (_, record) => <div>{record?.customer.address?.desc}</div>,
+            render: (_, record) => <div>{record?.address?.desc}</div>,
           },
           {
             title: intl.formatMessage({ id: "development_plan" }),
@@ -186,7 +204,7 @@ const ScreeningList: React.FC = () => {
         customActions={(record) => {
           return (
             <Link
-              to={`/dashboard/development-plan/234?assessment_id=${record.customer_id}`}
+              to={`/dashboard/development-plan/234?customer_id=${record.id}`}
               className="flex items-center"
             >
               <FileSearch03 className="text-gray-600" />

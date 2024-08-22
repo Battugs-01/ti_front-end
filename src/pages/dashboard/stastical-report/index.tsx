@@ -1,28 +1,31 @@
-import { Radio } from "antd";
+import { Radio, Segmented } from "antd";
 import { IfCondition } from "components/condition";
 import { StatisticalTab } from "config";
 import { useState } from "react";
 import Statistical from "./statistical";
 import CareFosiList from "./care-fosi";
+import { FormattedMessage } from "react-intl";
 
 const StasticalReport = () => {
   const [tab, setTab] = useState<StatisticalTab>(StatisticalTab.statistical);
   return (
     <>
-      <Radio.Group
-        defaultValue={StatisticalTab.statistical}
+      <Segmented
+        options={[
+          {
+            value: StatisticalTab.statistical,
+            label: <FormattedMessage id="statistical" />,
+          },
+          {
+            value: StatisticalTab.careFoci,
+            label: <FormattedMessage id="by_care_foci" />,
+          },
+        ]}
         size="large"
-        onChange={(e) => {
-          setTab(e.target.value);
+        onChange={(e: any) => {
+          setTab(e);
         }}
-      >
-        <Radio.Button value={StatisticalTab.statistical}>
-          Statistical
-        </Radio.Button>
-        <Radio.Button value={StatisticalTab.careFoci}>
-          By Care Foci List
-        </Radio.Button>
-      </Radio.Group>
+      />
       <div className="mt-7"></div>
       <IfCondition
         condition={StatisticalTab.statistical === tab}

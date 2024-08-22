@@ -1,59 +1,31 @@
-import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { FC, useEffect, useState } from "react";
-import psychoEmotional from "service/settings/care-foci/psycho-emotional";
+import { FC } from "react";
+import { CareFoci } from "service/settings/care-foci/type";
 
-const PsychoEmotional: FC = () => {
-  const [search, setSearch] = useState<string>("");
+interface PsychoEmotionalProps {
+  data: CareFoci;
+}
 
-  const list = useRequest(psychoEmotional.get, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
-
-  const run = () => {
-    list.run({
-      query: search,
-    });
-  };
-
-  useEffect(() => {
-    run();
-  }, []);
-
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
-
+const PsychoEmotional: FC<PsychoEmotionalProps> = ({ data }) => {
   return (
     <div className="flex flex-col gap-4 mt-3">
       <PageCard xR>
         <div className="px-2 pb-0">
           <InitTableHeader
-            customHeaderTitle="Psycho-еmotional"
+            customHeaderTitle={data?.name}
             searchPlaceHolder="Search ..."
-            search={search}
-            setSearch={(e) => {
-              setSearch(e);
-              searchRun.run({ query: e });
-            }}
             hideCreate
-            refresh={() => list.run({ query: search })}
           />
         </div>
 
         <ITable<any>
           total={12}
-          loading={list.loading}
           dataSource={[]}
-          refresh={(values) => list.run({ ...values })}
           columns={[
             {
-              dataIndex: "rd",
+              dataIndex: "name",
               title: "Name",
               render: (value) => (
                 <span className="text-sm text-[#475467] font-normal flex text-center">
@@ -62,7 +34,7 @@ const PsychoEmotional: FC = () => {
               ),
             },
             {
-              dataIndex: "email",
+              dataIndex: "min",
               title: "Min. value",
               align: "left",
               width: "10%",
@@ -73,7 +45,7 @@ const PsychoEmotional: FC = () => {
               ),
             },
             {
-              dataIndex: "email",
+              dataIndex: "max",
               title: "Max. value",
               align: "left",
               width: "10%",
@@ -84,14 +56,6 @@ const PsychoEmotional: FC = () => {
               ),
             },
           ]}
-          RemoveModelConfig={{
-            action: psychoEmotional.deletecare,
-            config: (record) => ({
-              uniqueKey: record?.id,
-              display: record?.first_name,
-              title: "Remove",
-            }),
-          }}
         />
       </PageCard>
     </div>

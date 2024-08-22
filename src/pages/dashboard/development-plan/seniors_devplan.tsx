@@ -14,11 +14,6 @@ export const SeniorsDevPlan: React.FC = () => {
 
   const seniorNoPlanList = useRequest(developmentPlan.list, {
     manual: true,
-    onSuccess: () => {
-      notification.success({
-        message: intl.formatMessage({ id: "success" }),
-      });
-    },
     onError: (err) => {
       notification.error({
         message: err.message,

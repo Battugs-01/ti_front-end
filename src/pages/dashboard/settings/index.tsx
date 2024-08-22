@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import { Radio, Segmented } from "antd";
 import { IfCondition } from "components/condition";
 import { SettingsTab } from "config";
 import { useState } from "react";
@@ -10,18 +10,23 @@ const Settings: React.FC = () => {
   const [tab, setTab] = useState<SettingsTab>(SettingsTab.permission);
   return (
     <>
-      <Radio.Group
-        defaultValue={SettingsTab.permission}
+      <Segmented
+        options={[
+          {
+            value: SettingsTab.permission,
+            label: <FormattedMessage id="permission_control" />,
+          },
+          {
+            value: SettingsTab.careFoci,
+            label: <FormattedMessage id="care_foci_list" />,
+          },
+        ]}
         size="large"
-        onChange={(e) => {
-          setTab(e.target.value);
+        onChange={(e: any) => {
+          setTab(e);
         }}
-      >
-        <Radio.Button value={SettingsTab.permission}>
-          <FormattedMessage id="permission_control" />
-        </Radio.Button>
-        <Radio.Button value={SettingsTab.careFoci}>Care Foci List</Radio.Button>
-      </Radio.Group>
+      />
+
       <div className="mt-7"></div>
       <IfCondition
         condition={SettingsTab.permission === tab}

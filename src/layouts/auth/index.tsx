@@ -7,12 +7,12 @@ const AuthLayout: FC = () => {
       <div
         className="hidden sm:block col-span-7 h-screen "
         style={{
-          backgroundImage: "url('/background/login.svg')",
+          // backgroundImage: "url('/background/login.svg')",
           backgroundSize: "cover",
-          backgroundColor: "",
+          backgroundColor: "#5da7f0",
         }}
       >
-        <div className="bg-[#144E5A] hidden sm:block col-span-2 h-screen opacity-70 relative">
+        {/* <div className="bg-[#144E5A] hidden sm:block col-span-2 h-screen opacity-70 relative">
           <div className="flex items-start flex-col justify-end h-full absolute bottom-24 left-32 gap-6">
             <div className="text-white text-5xl">
               Халамж, нийгмийн ажилтны удирдлагын систем
@@ -21,7 +21,7 @@ const AuthLayout: FC = () => {
               Төрөлжсөн ахмадын асрамжийн газрын систем
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className="col-span-3 w-full h-screen flex justify-center items-center xs:w-full"

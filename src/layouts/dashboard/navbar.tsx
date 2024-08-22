@@ -18,7 +18,6 @@ const Navbar: React.FC = () => {
   const onClose = () => {
     setNav(false);
   };
-  console.log(user, "user");
   return (
     <div className="w-full bg-[#144E5A] text-white h-[72px]">
       <div className="px-6 h-full flex justify-between items-center">

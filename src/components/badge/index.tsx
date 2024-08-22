@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface Props {
-  title?: String | number;
+  title?: React.ReactNode | String | number;
   color?:
     | "gray"
     | "green"
@@ -24,7 +24,7 @@ const IBadge: FC<Props> = ({ title, color }) => {
       colorClass = "bg-green-100 text-green-700";
       break;
     case "red":
-      colorClass = "bg-[#DD695C] text-white";
+      colorClass = "bg-[#FEF3F2] text-[#B42318]";
       break;
     case "yellow":
       colorClass = "bg-yellow-100 text-yellow-700";

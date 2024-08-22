@@ -6,19 +6,14 @@ import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
-import { initFilter } from "utils/index";
+import { initFilter, initPagination } from "utils/index";
 
 export const DevPlan: React.FC = () => {
   const intl = useIntl();
-  const [filter, setFilter] = useState(initFilter);
+  const [filter, setFilter] = useState(initPagination);
 
   const planList = useRequest(developmentPlan.list, {
     manual: true,
-    onSuccess: () => {
-      notification.success({
-        message: intl.formatMessage({ id: "success" }),
-      });
-    },
     onError: (err) => {
       notification.error({
         message: err.message,
@@ -45,6 +40,7 @@ export const DevPlan: React.FC = () => {
       />
       <ITable
         className="p-0 remove-padding-table"
+        dataSource={planList.data?.items || []}
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),

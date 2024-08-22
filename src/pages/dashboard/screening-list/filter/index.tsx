@@ -1,15 +1,19 @@
 import ProForm, { ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { Button, Divider } from "antd";
-import { levelOptions } from "config";
+import { agencyArray, levelOptions } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const ScreeningListFilter = () => {
+interface ScreeningListFilterType {
+  onFinish?: (formData: Record<string, any>) => Promise<boolean | void>;
+}
+
+export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
+  onFinish,
+}) => {
   const intl = useIntl();
   return (
     <ProForm
-      onFinish={async (values) => {
-        console.log(values, "sss");
-      }}
+      onFinish={onFinish}
       submitter={{
         render: ({ reset, submit }) => {
           return (
@@ -47,10 +51,21 @@ export const ScreeningListFilter = () => {
       <ProFormSelect
         name="agency_id"
         placeholder={intl.formatMessage({ id: "agency" })}
+        options={agencyArray.map((el) => ({ ...el }))}
       />
       <ProFormSelect
         name="is_have_care_giver"
         placeholder={intl.formatMessage({ id: "caregiver" })}
+        options={[
+          {
+            label: intl.formatMessage({ id: "yes" }),
+            value: true,
+          },
+          {
+            label: intl.formatMessage({ id: "no" }),
+            value: false,
+          },
+        ]}
       />
       <ProFormSelect
         name="person_in_charge_ids"
