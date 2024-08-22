@@ -1,18 +1,16 @@
-# stages:
-#   - dev
+stages:
+  - run
 
-# dev:
-#   only:
-#     - main
-#   stage: dev
-#   script:
-#     - cp $ENV "$(pwd)/.env"
-#     - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
-#     - docker build -t registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA .
-#     - docker push registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA
-#     - docker ps --quiet --filter="name=burtgel" | xargs --no-run-if-empty docker rm -f
-#     - docker run -dt -p 3002:80 --restart always --name burtgel registry.fibo.cloud/adb/burtgel:$CI_COMMIT_SHORT_SHA
-#     - docker image prune -f
-#     - docker builder prune -f
-#   tags:
-#     - adb-deploy
+main:
+  only:
+    - main
+  stage: run
+  script:
+    - cp $ENV "$(pwd)/.env"
+    - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
+    - docker build -t registry.fibo.cloud/adb/case-manager/dashboard .
+    - docker push registry.fibo.cloud/adb/case-manager/dashboard
+    - docker ps --quiet --filter="name=dashboard" | xargs --no-run-if-empty docker rm -f
+    - docker run -dt -p 3000:80 --restart always --name dashboard registry.fibo.cloud/adb/case-manager/dashboard
+  tags:
+    - cloudmn-casemanager
