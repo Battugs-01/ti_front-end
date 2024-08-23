@@ -1,5 +1,5 @@
 import { Area } from "@ant-design/plots";
-import { Divider, Radio, Table } from "antd";
+import { Divider, Radio, Segmented, Table } from "antd";
 import { DevelopmentPlanGraphTab } from "config";
 import { useState } from "react";
 import { Info } from "../../components/collapsed-info";
@@ -49,7 +49,28 @@ const GeneralInfo: React.FC = () => {
       <h2>
         <FormattedMessage id="score_list" />
       </h2>
-      <Radio.Group
+      <Segmented
+        options={[
+          {
+            label: <FormattedMessage id="mini_cog" />,
+            value: DevelopmentPlanGraphTab.mini_cog,
+          },
+          {
+            label: <FormattedMessage id="gds" />,
+            value: DevelopmentPlanGraphTab.gds,
+          },
+          {
+            label: <FormattedMessage id="barthel_index" />,
+            value: DevelopmentPlanGraphTab.barthel,
+          },
+        ]}
+        className="mb-6"
+        size="large"
+        onChange={(value) => {
+          setTab(value as DevelopmentPlanGraphTab);
+        }}
+      />
+      {/* <Radio.Group
         defaultValue={DevelopmentPlanGraphTab.mini_cog}
         size="large"
         onChange={(e) => {
@@ -66,7 +87,7 @@ const GeneralInfo: React.FC = () => {
         <Radio.Button value={DevelopmentPlanGraphTab.barthel}>
           <FormattedMessage id="barthel_index" />
         </Radio.Button>
-      </Radio.Group>
+      </Radio.Group> */}
       <Area {...config} />
       <Divider />
       {assessment.data?.map((val, index) => {

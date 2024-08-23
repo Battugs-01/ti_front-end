@@ -78,5 +78,9 @@
   "cm_in_charge": "Хариуцсан ажилтан",
   "date_of_assessment": "Үнэлгээний огноо",
   "show_details": "Дэлгэрэнгүй мэдээлэл харах",
-  "hide_details": "Дэлгэрэнгүй мэдээлэл нуух"
+  "hide_details": "Дэлгэрэнгүй мэдээлэл нуух",
+  "min_value": "Хамгийн бага утга",
+  "max_value": "Хамгийн их утга",
+  "total_number_seniors": "Нийт ахмадуудын тоо",
+  "seniors_need_assessment": "Үнэлгээ хийх шаардлагатай ахмадууд"
 }

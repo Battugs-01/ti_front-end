@@ -1,4 +1,4 @@
-import { Button, Divider, Radio } from "antd";
+import { Button, Divider, Radio, Segmented } from "antd";
 import { PageCard } from "components/card";
 import { IfCondition } from "components/condition";
 import { DevelopmentPlanDetailTab } from "config";
@@ -29,21 +29,45 @@ const MainDetail: React.FC<MainDetailProps> = () => {
   return (
     <PageCard>
       <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between mb-11">
-        <Radio.Group
+        <Segmented
+          size="large"
+          className="w-max"
+          options={[
+            {
+              label: (
+                <div className="flex items-center gap-2">
+                  <InfoCircle />
+                  <div>
+                    <FormattedMessage id="general_info" />
+                  </div>
+                </div>
+              ),
+              value: DevelopmentPlanDetailTab.general,
+            },
+            {
+              label: (
+                <div className="flex items-center gap-2">
+                  <ChartBreakoutSquare />
+                  <div>
+                    <FormattedMessage id="development_plan" />
+                  </div>
+                </div>
+              ),
+              value: DevelopmentPlanDetailTab.development,
+            },
+          ]}
+          onChange={(value) => {
+            setTab(value as DevelopmentPlanDetailTab);
+          }}
+        />
+        {/* <Radio.Group
           defaultValue={DevelopmentPlanDetailTab.general}
           size="large"
           onChange={(e) => {
             setTab(e.target.value);
           }}
         >
-          <Radio.Button value={DevelopmentPlanDetailTab.general}>
-            <div className="flex items-center gap-2">
-              <InfoCircle />
-              <div>
-                <FormattedMessage id="general_info" />
-              </div>
-            </div>
-          </Radio.Button>
+          <Radio.Button value={DevelopmentPlanDetailTab.general}></Radio.Button>
           <Radio.Button value={DevelopmentPlanDetailTab.development}>
             <div className="flex items-center gap-2">
               <ChartBreakoutSquare />
@@ -52,7 +76,7 @@ const MainDetail: React.FC<MainDetailProps> = () => {
               </div>
             </div>
           </Radio.Button>
-        </Radio.Group>
+        </Radio.Group> */}
         <div className="flex flex-wrap items-center gap-3">
           <Button type="default" size="large" icon={<RefreshCW02 />} />
           <Button

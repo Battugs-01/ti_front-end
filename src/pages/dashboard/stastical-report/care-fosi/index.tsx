@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Flex } from "antd";
+import { Flex, Table } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -32,7 +32,7 @@ const CareFosiList: React.FC = () => {
             columns={[
               {
                 dataIndex: "name",
-                title: "Name",
+                title: intl.formatMessage({ id: "name" }),
                 render: (value) => (
                   <span className="text-sm text-[#475467] font-normal flex text-center">
                     {value || "-"}
@@ -41,7 +41,7 @@ const CareFosiList: React.FC = () => {
               },
               {
                 dataIndex: "min",
-                title: "Min. value",
+                title: intl.formatMessage({ id: "min_value" }),
                 align: "left",
                 width: "10%",
                 render: (value) => (
@@ -52,7 +52,7 @@ const CareFosiList: React.FC = () => {
               },
               {
                 dataIndex: "max",
-                title: "Max. value",
+                title: intl.formatMessage({ id: "max_value" }),
                 align: "left",
                 width: "10%",
                 render: (value) => (
@@ -62,11 +62,11 @@ const CareFosiList: React.FC = () => {
                 ),
               },
               {
-                title: "Total number of seniors",
+                title: intl.formatMessage({ id: "total_number_seniors" }),
                 dataIndex: "total_number_of_seniors",
               },
               {
-                title: "Seniors need assessment",
+                title: intl.formatMessage({ id: "seniors_need_assessment" }),
                 dataIndex: "seniors_need_assessment",
               },
             ]}
@@ -86,10 +86,33 @@ const CareFosiList: React.FC = () => {
                   />
                 );
               },
+              expandedRowClassName: () => "bg-[#F5F8F8]",
               expandedRowRender: (record) => {
                 return (
-                  <ITable
+                  <Table
+                    bordered={false}
+                    rowClassName={() => "bg-[#F5F8F8]"}
+                    dataSource={[
+                      {
+                        name: "Болор",
+                        register: "УД99443423",
+                        phone: "99123456",
+                        age: 23,
+                        normal_value: 56,
+                        assessment_value: 78,
+                        assessment_date: "2021-09-23",
+                        agency: "Хүрээ",
+                        gender: "Эр",
+                      },
+                    ]}
+                    size="large"
+                    pagination={false}
                     columns={[
+                      {
+                        title: "№",
+
+                        render: (_, __, index) => <div>{index + 1}</div>,
+                      },
                       {
                         title: intl.formatMessage({ id: "name" }),
                         dataIndex: "name",

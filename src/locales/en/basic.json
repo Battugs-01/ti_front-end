@@ -79,5 +79,9 @@
   "date_of_assessment": "Date of Assessment",
   "date_of_next_review": "Date of Next Review",
   "show_details": "Show Details",
-  "hide_details": "Hide Details"
+  "hide_details": "Hide Details",
+  "min_value": "Min. value",
+  "max_value": "Max. value",
+  "total_number_seniors": "Total number of seniors",
+  "seniors_need_assessment": "Seniors need assessment"
 }

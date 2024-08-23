@@ -1,5 +1,6 @@
 import { useRequest } from "ahooks";
-import { Avatar, notification, Radio } from "antd";
+import { Avatar, notification, Segmented } from "antd";
+import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { PopoverFilter } from "components/filter";
@@ -10,6 +11,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
+import file from "service/file";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 import { FileSearch03 } from "untitledui-js-base";
@@ -17,8 +19,6 @@ import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { EditScreenList } from "./edit";
 import { ScreeningListFilter } from "./filter";
-import file from "service/file";
-import IBadge from "components/badge";
 
 const ScreeningList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -69,26 +69,50 @@ const ScreeningList: React.FC = () => {
         refresh={refreshList}
         hideCreate
         leftContent={
-          <Radio.Group
-            defaultValue={ScreeningTab.all}
-            size="large"
-            onChange={(e) => {
-              setTab(e.target.value);
+          <Segmented
+            onChange={(value: any) => {
+              setTab(value);
             }}
-          >
-            <Radio.Button value={ScreeningTab.all}>
-              <FormattedMessage id="all" />
-            </Radio.Button>
-            <Radio.Button value={ScreeningTab.level_1}>
-              <FormattedMessage id="level" values={{ number: 1 }} />
-            </Radio.Button>
-            <Radio.Button value={ScreeningTab.level_2}>
-              <FormattedMessage id="level" values={{ number: 2 }} />
-            </Radio.Button>
-            <Radio.Button value={ScreeningTab.level_3}>
-              <FormattedMessage id="level" values={{ number: 3 }} />
-            </Radio.Button>
-          </Radio.Group>
+            options={[
+              {
+                label: <FormattedMessage id="all" />,
+                value: ScreeningTab.all,
+              },
+              {
+                label: <FormattedMessage id="level" values={{ number: 1 }} />,
+                value: ScreeningTab.level_1,
+              },
+              {
+                label: <FormattedMessage id="level" values={{ number: 2 }} />,
+                value: ScreeningTab.level_2,
+              },
+              {
+                label: <FormattedMessage id="level" values={{ number: 3 }} />,
+                value: ScreeningTab.level_3,
+              },
+            ]}
+            size="large"
+          />
+          // <Radio.Group
+          //   defaultValue={ScreeningTab.all}
+          //   size="large"
+          //   onChange={(e) => {
+          //     setTab(e.target.value);
+          //   }}
+          // >
+          //   <Radio.Button value={ScreeningTab.all}>
+          //     <FormattedMessage id="all" />
+          //   </Radio.Button>
+          //   <Radio.Button value={ScreeningTab.level_1}>
+          //     <FormattedMessage id="level" values={{ number: 1 }} />
+          //   </Radio.Button>
+          //   <Radio.Button value={ScreeningTab.level_2}>
+          //     <FormattedMessage id="level" values={{ number: 2 }} />
+          //   </Radio.Button>
+          //   <Radio.Button value={ScreeningTab.level_3}>
+          //     <FormattedMessage id="level" values={{ number: 3 }} />
+          //   </Radio.Button>
+          // </Radio.Group>
         }
       />
       <ITable<ScreeningListType>

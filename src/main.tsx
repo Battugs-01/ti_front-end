@@ -44,6 +44,11 @@ root.render(
           colorBgLayout: "#CFDADC",
           colorText: "#1D2939",
         },
+        Table: {
+          rowHoverBg: "#F5F8F8",
+          rowSelectedHoverBg: "#E7EDEE",
+          rowExpandedBg: "#F5F8F8",
+        },
       },
     }}
     locale={enUSIntl}
