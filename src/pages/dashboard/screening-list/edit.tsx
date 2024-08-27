@@ -2,6 +2,7 @@ import ProForm, {
   DrawerForm,
   ProFormCheckbox,
   ProFormDatePicker,
+  ProFormInstance,
   ProFormRadio,
   ProFormSelect,
   ProFormText,
@@ -9,7 +10,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, Divider, notification, Row } from "antd";
 import { agencyArray, FORM_ITEM_RULE, workersGenderArray } from "config";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
 import screenList from "service/screening_list";
@@ -22,6 +23,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
   open,
   detail,
 }) => {
+  const formRef = useRef<ProFormInstance>();
   const editScreen = useRequest(screenList.edit, {
     manual: true,
     onSuccess: () => {
@@ -56,6 +58,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
   console.log(detail, "sda");
   return (
     <DrawerForm
+      formRef={formRef}
       initialValues={{
         ...detail,
         address: {
@@ -75,7 +78,14 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
         render: (props) => {
           return (
             <div className="flex items-center gap-4">
-              <Button onClick={onCancel} size="large" type="default">
+              <Button
+                onClick={() => {
+                  onCancel?.();
+                  formRef?.current?.resetFields();
+                }}
+                size="large"
+                type="default"
+              >
                 <FormattedMessage id="cancel" />
               </Button>
               <Button
@@ -92,7 +102,10 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
         },
       }}
       drawerProps={{
-        onClose: onCancel,
+        onClose: () => {
+          onCancel?.();
+          formRef.current?.resetFields();
+        },
         width: 500,
         styles: { body: { backgroundColor: "#F5F8F8" } },
       }}
