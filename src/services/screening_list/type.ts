@@ -16,9 +16,35 @@ export interface ScreeningListType {
   address: Address;
   person_in_charge_id: number;
   person_in_charge: PersonInCharge;
-  assessments: null;
-  development_plans: null;
+  assessments: Assessments[];
+  development_plans: DevelopmentPlan[];
   assessment: Assessment;
+  gender: string;
+}
+
+export interface DevelopmentPlan {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  customer_id: number;
+  created_employee_id: number;
+  updated_employee_id: null;
+  items: null;
+}
+
+export interface Assessments {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  customer_id: number;
+  employee_id: number;
+  date: Date;
+  blood_presure: number;
+  heart_rate: number;
+  respiratory_rate: number;
+  body_temp: number;
+  cfs_point: number;
+  level: string;
 }
 
 export interface Assessment {

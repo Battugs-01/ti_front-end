@@ -13,6 +13,11 @@ namespace screenList {
       body,
     });
 
+  export const customerDetail = (id: string) =>
+    http.get<ScreeningListType>(`customer/get/${id}`, {
+      hasAuth: true,
+    });
+
   export const assessmentDetail = (id: string) =>
     http.get<AssessmentListType[]>(`customer/assessments/${id}`, {
       hasAuth: true,

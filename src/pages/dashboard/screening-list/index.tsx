@@ -171,6 +171,9 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "agency" }),
             dataIndex: "agency",
+            render: (_, record) => (
+              <div>{record?.person_in_charge?.agency?.name}</div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "total_assessment" }),
