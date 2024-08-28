@@ -23,8 +23,8 @@ namespace screenList {
       hasAuth: true,
     });
 
-  export const edit = (body?: any) =>
-    http.put<ScreeningListType>("screenlist/edit", {
+  export const edit = (id: number, body?: any) =>
+    http.put<ScreeningListType>(`customer/update/${id}`, {
       hasAuth: true,
       body,
     });

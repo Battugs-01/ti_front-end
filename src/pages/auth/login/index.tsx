@@ -37,9 +37,9 @@ const Login: FC = () => {
     },
   });
   return (
-    <div className="bg-white rounded-xl w-full px-16">
+    <div className="bg-white rounded-xl w-full">
       <div className="align-left flex justify-start">
-        {/* <img src="/images/logo1.png" alt="logo" width={300} className="mb-7" /> */}
+        <img src="/images/logo1.png" alt="logo" width={140} className="mb-7" />
       </div>
       <ProForm<LoginData>
         formRef={formRef}
@@ -122,6 +122,7 @@ const Login: FC = () => {
           </div>
         </div>
       </ProForm>
+      {/* <div>Нууц үгээ мартсан уу?</div> */}
     </div>
   );
 };

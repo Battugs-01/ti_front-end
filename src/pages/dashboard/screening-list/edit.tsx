@@ -1,23 +1,24 @@
 import ProForm, {
   DrawerForm,
-  ProFormCheckbox,
   ProFormDatePicker,
   ProFormInstance,
   ProFormRadio,
   ProFormSelect,
-  ProFormText,
+  ProFormText
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, Divider, notification, Row } from "antd";
 import { agencyArray, FORM_ITEM_RULE, workersGenderArray } from "config";
+import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
 import screenList from "service/screening_list";
+import { ScreeningListType } from "service/screening_list/type";
 import { ActionComponentProps } from "types";
 import { Save02 } from "untitledui-js-base";
 
-export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
+export const EditScreenList: React.FC<ActionComponentProps<ScreeningListType>> = ({
   onCancel,
   onFinish,
   open,
@@ -50,12 +51,11 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
     manual: true,
   });
   useEffect(() => {
-    if (detail) {
+    if(detail){
       district.run(detail?.address?.city_id);
       khoroo.run(detail?.address?.district_id);
     }
   }, [detail]);
-  console.log(detail, "sda");
   return (
     <DrawerForm
       formRef={formRef}
@@ -67,13 +67,17 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
           khoroo_id: detail?.address?.khoroo_id,
           desc: detail?.address?.desc,
         },
+        assessment_date:dayjs(detail?.assessment?.date).toDate()
       }}
       onFinish={async (values) => {
-        await editScreen.runAsync(values);
+        await editScreen.runAsync(detail?.id || 0,values);
         console.log(values, "Form Values:");
       }}
       title={intl.formatMessage({ id: "edit_entry" })}
       open={open}
+      onOpenChange={()=>{
+        formRef?.current?.resetFields()
+      }}
       submitter={{
         render: (props) => {
           return (
@@ -110,9 +114,9 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
         styles: { body: { backgroundColor: "#F5F8F8" } },
       }}
     >
-      {/* <ProForm.Item noStyle shouldUpdate> */}
-      {/* {(form) => { */}
-      {/* return ( */}
+      <ProForm.Item noStyle shouldUpdate>
+       {(form) => { 
+       return ( 
       <>
         <div>
           <FormattedMessage id="comprehensive_assessment_title" />
@@ -161,11 +165,11 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
               placeholder="Сонгох"
               label={"Аймаг/Нийслэл"}
               onChange={(val) => {
-                // form?.setFieldValue(
-                //   ["address", "district_id"],
-                //   undefined
-                // );
-                // form?.setFieldValue(["address", "khoroo_id"], undefined);
+                form?.setFieldValue(
+                  ["address", "district_id"],
+                  undefined
+                );
+                form?.setFieldValue(["address", "khoroo_id"], undefined);
                 district.run(val);
               }}
               fieldProps={{
@@ -185,7 +189,7 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
               placeholder="Сонгох"
               label={"Сум/Дүүрэг"}
               onChange={(value) => {
-                // form?.setFieldValue(["address", "khoroo_id"], undefined);
+                form?.setFieldValue(["address", "khoroo_id"], undefined);
                 khoroo.run(value);
               }}
               fieldProps={{
@@ -312,9 +316,9 @@ export const EditScreenList: React.FC<ActionComponentProps<any>> = ({
           </Col>
         </Row>
       </>
-      {/* );
+      );
         }}
-      </ProForm.Item> */}
+      </ProForm.Item>
     </DrawerForm>
   );
 };
