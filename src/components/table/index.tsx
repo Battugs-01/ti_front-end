@@ -100,7 +100,7 @@ export const ITable = <T extends {}>({
         style={{ borderRadius: 0 }}
         pagination={
           !hidePagination && {
-            className: "px-6 font-semibold text-gray-500",
+            className: "px-6 font-semibold text-gray-500 flex items-center",
             pageSize: form?.pageSize,
             pageSizeOptions: [20, 50, 100, 200, 500],
             showSizeChanger: true,

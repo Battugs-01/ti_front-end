@@ -1,8 +1,15 @@
-import { Button, Empty, Typography } from "antd";
+import { Button, Empty } from "antd";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { ChartBreakoutSquare, ChevronLeft } from "untitledui-js-base";
+import { CreateDevelopmentPlan } from "../../create";
 
 const NotFound: React.FC = () => {
+  const [createModalVisible,setCreateModalVisible]=useState<boolean>();
+  const cancelModal=()=>{
+    setCreateModalVisible(false)
+  }
   return (
     <Empty
       image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
@@ -11,7 +18,7 @@ const NotFound: React.FC = () => {
         <div>
           <div className="font-bold text-base">No plan found</div>
           <div className="text-gray-600">
-            No active development plan was found. Please try again later
+            No active development plan was found.Please try again later
           </div>
         </div>
       }
@@ -25,7 +32,7 @@ const NotFound: React.FC = () => {
             icon={<ChevronLeft />}
             className="flex items-center"
           >
-            Back
+            <FormattedMessage id="back"/>
           </Button>
         </Link>
         <Button
@@ -33,9 +40,16 @@ const NotFound: React.FC = () => {
           type="primary"
           icon={<ChartBreakoutSquare />}
           className="flex items-center gap-2"
+          onClick={()=>setCreateModalVisible(true)}
         >
-          Create Development Plan
+            <FormattedMessage id="create_development_plan"/>
         </Button>
+        {createModalVisible && (
+        <CreateDevelopmentPlan
+          cancelModal={cancelModal}
+          visible={createModalVisible}
+        />
+      )}
       </div>
     </Empty>
   );
