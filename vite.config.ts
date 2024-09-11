@@ -47,4 +47,15 @@ export default defineConfig({
     //   },
     // }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@ant-design/pro-form')) {
+            return 'pro-form';
+          }
+        }
+      }
+    }
+  }
 });
