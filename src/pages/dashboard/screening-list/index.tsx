@@ -26,11 +26,6 @@ const ScreeningList: React.FC = () => {
   const intl = useIntl();
   const screen = useRequest(screenList.list, {
     manual: true,
-    onSuccess: () => {
-      // notification.success({
-      //   message: intl.formatMessage({ id: "success" }),
-      // });
-    },
     onError: (err) => {
       notification.error({
         message: err.message,
@@ -93,26 +88,6 @@ const ScreeningList: React.FC = () => {
             ]}
             size="large"
           />
-          // <Radio.Group
-          //   defaultValue={ScreeningTab.all}
-          //   size="large"
-          //   onChange={(e) => {
-          //     setTab(e.target.value);
-          //   }}
-          // >
-          //   <Radio.Button value={ScreeningTab.all}>
-          //     <FormattedMessage id="all" />
-          //   </Radio.Button>
-          //   <Radio.Button value={ScreeningTab.level_1}>
-          //     <FormattedMessage id="level" values={{ number: 1 }} />
-          //   </Radio.Button>
-          //   <Radio.Button value={ScreeningTab.level_2}>
-          //     <FormattedMessage id="level" values={{ number: 2 }} />
-          //   </Radio.Button>
-          //   <Radio.Button value={ScreeningTab.level_3}>
-          //     <FormattedMessage id="level" values={{ number: 3 }} />
-          //   </Radio.Button>
-          // </Radio.Group>
         }
       />
       <ITable<ScreeningListType>
@@ -123,6 +98,9 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "first_name",
+            render:(value)=>{
+              return <p className="text-primary-700 font-bold">{value}</p>
+            }
           },
           {
             title: intl.formatMessage({ id: "register" }),
