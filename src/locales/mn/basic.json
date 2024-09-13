@@ -82,5 +82,7 @@
   "min_value": "Хамгийн бага утга",
   "max_value": "Хамгийн их утга",
   "total_number_seniors": "Нийт ахмадуудын тоо",
-  "seniors_need_assessment": "Үнэлгээ хийх шаардлагатай ахмадууд"
+  "seniors_need_assessment": "Үнэлгээ хийх шаардлагатай ахмадууд",
+  "password":"Нууц үг",
+  "detail_title": "Дэлгэрэнгүй мэдээлэл"
 }

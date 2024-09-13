@@ -83,5 +83,7 @@
   "min_value": "Min. value",
   "max_value": "Max. value",
   "total_number_seniors": "Total number of seniors",
-  "seniors_need_assessment": "Seniors need assessment"
+  "seniors_need_assessment": "Seniors need assessment",
+  "password":"Password",
+  "detail_title":"Detail"
 }

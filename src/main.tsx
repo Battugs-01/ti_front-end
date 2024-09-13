@@ -49,6 +49,21 @@ root.render(
           rowSelectedHoverBg: "#E7EDEE",
           rowExpandedBg: "#F5F8F8",
         },
+        Input:{
+          colorBgContainer:"#F5F8F8"
+        },
+        InputNumber:{
+          colorBgContainer:"#F5F8F8"
+        },
+        Select:{
+          colorBgContainer:"#F5F8F8"
+        },
+        DatePicker:{
+          colorBgContainer:"#F5F8F8"
+        },
+        Descriptions:{
+          colorBgContainer:"#F5F8F8"
+        }
       },
     }}
     locale={enUSIntl}

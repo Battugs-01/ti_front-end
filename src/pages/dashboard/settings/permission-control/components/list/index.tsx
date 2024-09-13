@@ -4,7 +4,7 @@ import { FormInstance } from "antd/lib";
 import MailIcon from "assets/government/icons/mail.svg";
 import PhoneIcon from "assets/government/icons/phone.svg";
 import IBadge from "components/badge";
-import { EditButton } from "components/button/action";
+import { DetailButton, EditButton } from "components/button/action";
 import { DeleteButton } from "components/index";
 import { RemoveModal } from "components/modal";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import file from "service/file";
 import permission from "service/settings/permission";
 import { PermissionList } from "service/settings/permission/type";
 import { UpdatePermission } from "../../update";
+import { Detail } from "../../detail";
 
 const color = "#144E5A";
 
@@ -23,6 +24,7 @@ type ItemType = {
 
 export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
   const [update, setUpdate] = useState<any>();
+  const [detail, setDetail] = useState<PermissionList>();
   const [isDelete, setDelete] = useState<any>();
 
   const updateEmployee = useRequest(permission?.list, {
@@ -102,11 +104,11 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           </div>
         </div>
         <div className="gap-3 flex items-center justify-end mr-10">
-          {/* <DetailButton
+          <DetailButton
             title="Засах"
             onClick={() => setDetail(data)}
             style={{ opacity: 1, cursor: "pointer" }}
-          /> */}
+          />
           <EditButton
             title="Засах"
             onClick={() => setUpdate(data)}
@@ -115,6 +117,14 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
           <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
         </div>
       </div>
+      {
+        detail && (
+            <Detail
+              detail={detail}
+              open={!!detail}
+              onCancel={() => setDetail(undefined)}
+            />
+       )}
       {update && (
         <UpdatePermission
           open={update}

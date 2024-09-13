@@ -1,5 +1,6 @@
 import ProForm, {
   DrawerForm,
+  ModalForm,
   ProFormDatePicker,
   ProFormSelect,
   ProFormText,
@@ -51,59 +52,67 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
   });
   const intl = useIntl();
   return (
-    <DrawerForm<CreatePermissionType>
-      className="custom-ant-drawer-body"
-      onFinish={async (values) => {
-        const file = await uploadProfile.runAsync({
-          file: values?.profile[0]?.originFileObj,
-        });
-        await createPermission.runAsync({
-          ...values,
-          address: {
-            ...values.address,
-          },
-
-          profile_id: file[0]?.id,
-          birth_date: dayjs(values?.birth_date).toDate(),
-        });
-
-        onFinish?.();
-      }}
-      title={intl.formatMessage({ id: "member_drawer_title" })}
-      open={open}
-      submitter={{
-        render: (props) => {
-          return (
-            <div className="flex items-center gap-4">
-              <Button onClick={onCancel} size="large" type="default">
-                <FormattedMessage id="cancel" />
-              </Button>
-              <Button
-                onClick={props.submit}
-                size="large"
-                type="primary"
-                icon={<Save02 />}
-                className="flex items-center"
-              >
-                <FormattedMessage id="save" />
-              </Button>
-            </div>
-          );
+    <ModalForm<CreatePermissionType>
+    onFinish={async (values) => {
+      const file = await uploadProfile.runAsync({
+        file: values?.profile[0]?.originFileObj,
+      });
+      await createPermission.runAsync({
+        ...values,
+        address: {
+          ...values.address,
         },
-      }}
-      drawerProps={{
-        onClose: onCancel,
-        width: 500,
-        styles: { body: { background: "#F5F8F8" } },
-      }}
+
+        profile_id: file[0]?.id,
+        birth_date: dayjs(values?.birth_date).toDate(),
+      });
+      onFinish?.();
+    }}
+    title={intl.formatMessage({ id: "member_drawer_title" })}
+    open={open}
+    modalProps={{
+      width: "650px",
+      onCancel,
+      styles:{
+        header:{
+          padding:"1.2rem",
+          borderBottom:"1px solid #EAECF0",
+        },
+        content:{
+          padding:"0"
+        },
+        body:{
+          padding:"1.2rem 1.2rem 0 1.2rem",
+        },
+        footer:{
+          padding:"0 1.2rem 1.2rem 1.2rem",
+        }        
+      }
+    }}
+    submitter={{
+      render: (props) => {
+        return (
+          <div className="flex items-center gap-4">
+            <Button onClick={onCancel} size="large" type="default">
+              <FormattedMessage id="cancel" />
+            </Button>
+            <Button
+              onClick={props.submit}
+              size="large"
+              type="primary"
+            >
+              <FormattedMessage id="save" />
+            </Button>
+          </div>
+        );
+      },
+    }}
+
     >
-      <ProForm.Item noStyle shouldUpdate>
+            <ProForm.Item noStyle shouldUpdate>
         {(form) => {
           return (
             <>
-              <div className="text-base font-semibold">
-                <FormattedMessage id="create_member_title" />
-              </div>
               <Row gutter={[16, 16]}>
                 <Col span={16}>
                   <Row gutter={[16, 16]}>
@@ -130,6 +139,10 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                         <div className="text-xs ">Click to upload</div>
                       </div>
                     }
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
                     label={intl.formatMessage({ id: "upload_picture" })}
                     max={1}
                     rules={[
@@ -189,18 +202,13 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
-                <Col span={12}>
+                <Col span={24}>
                   <ProFormText
                     name="phone"
                     label={intl.formatMessage({ id: "phone" })}
                   />
                 </Col>
-                <Col span={12}>
-                  <ProFormText
-                    name="email"
-                    label={intl.formatMessage({ id: "email" })}
-                  />
-                </Col>
+                
               </Row>
               <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
@@ -276,11 +284,26 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
+
               <Row gutter={[16, 16]}>
-                <Col span={24}>
+              <Col span={24}>
                   <ProFormSelect
                     name="permission"
                     label={intl.formatMessage({ id: "permission" })}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+              <Col span={12}>
+                  <ProFormText
+                    name="email"
+                    label={intl.formatMessage({ id: "email" })}
+                  />
+                </Col>
+                <Col span={12}>
+                  <ProFormText.Password
+                    name="password"
+                    label={intl.formatMessage({ id: "password" })}
                   />
                 </Col>
               </Row>
@@ -288,6 +311,6 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
           );
         }}
       </ProForm.Item>
-    </DrawerForm>
+    </ModalForm>    
   );
 };

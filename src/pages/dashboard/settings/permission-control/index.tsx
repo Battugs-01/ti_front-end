@@ -10,7 +10,7 @@ import file from "service/file";
 import permission from "service/settings/permission";
 import { PermissionList } from "service/settings/permission/type";
 import { initPagination } from "utils/index";
-import { Item } from "./components/item";
+import { Item } from "./components/list";
 import { CreatePermission } from "./create";
 
 const PermissionControl: React.FC = () => {
