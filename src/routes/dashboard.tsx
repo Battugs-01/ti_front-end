@@ -16,6 +16,8 @@ const DevelopmentPlanDetail = lazy(
   () => import("pages/dashboard/development-plan/detail")
 );
 
+const DashboardPage= lazy(()=>import("pages/dashboard/dashboard/index"))
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "screening-list",
@@ -42,6 +44,11 @@ const dashboardRoutes: IRoute[] = [
     path: "development-plan/:id",
     component: <DevelopmentPlanDetail />,
   },
+  {
+    key:"dashboard",
+    path:"dashboard",
+    component:<DashboardPage/>
+  }
 ];
 
 export default [...dashboardRoutes];

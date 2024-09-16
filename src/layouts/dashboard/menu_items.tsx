@@ -4,9 +4,15 @@ import {
   ChartBreakoutSquare,
   File03,
   Settings01,
+  PieChart02,
 } from "untitledui-js-base";
 
 export const menuItems = [
+  {
+    icon:<PieChart02/>,
+    name : <FormattedMessage id="dashboard" />,
+    path: "/dashboard/dashboard",
+  },
   {
     icon: <File04 />,
     name: <FormattedMessage id="screening_list" />,

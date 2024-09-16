@@ -1,5 +1,9 @@
 import http from "..";
-import { ResponseType } from "./type";
+import {
+  ManagementReportType,
+  ResponseType,
+  StatisticalReportType,
+} from "./type";
 
 namespace statisticalReport {
   export const activeAgingList = (body: any) =>
@@ -15,6 +19,36 @@ namespace statisticalReport {
 
   export const edit = (body?: any) =>
     http.put<ResponseType>("statistical_report/edit", {
+      hasAuth: true,
+      body,
+    });
+
+  export const managementReportList = (body?: any) =>
+    http.post<ManagementReportType[]>("statistics/management/report", {
+      hasAuth: true,
+      body,
+    });
+
+  export const closedReportList = (body?: any) =>
+    http.post<ResponseType[]>("statistics/closed/report", {
+      hasAuth: true,
+      body,
+    });
+
+  export const casemanagerReportList = (body?: any) =>
+    http.post<ResponseType[]>("statistics/case_manager/report", {
+      hasAuth: true,
+      body,
+    });
+
+  export const reportLogList = (body?: any) =>
+    http.post<ResponseType[]>("statistical_report/report_log/list", {
+      hasAuth: true,
+      body,
+    });
+
+  export const statisticalReportList = (body?: any) =>
+    http.post<StatisticalReportType[]>("statistics/statistical/report", {
       hasAuth: true,
       body,
     });

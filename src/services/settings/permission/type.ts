@@ -16,6 +16,7 @@ export interface PermissionList {
   phone: string;
   is_active: boolean;
   address: Address;
+  role?: string;
 }
 
 export interface Agency {

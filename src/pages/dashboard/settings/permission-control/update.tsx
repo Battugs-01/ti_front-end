@@ -8,7 +8,12 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { agencyArray, FORM_ITEM_RULE, workersGenderArray } from "config";
+import {
+  agencyArray,
+  FORM_ITEM_RULE,
+  permissionArray,
+  workersGenderArray,
+} from "config";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -74,88 +79,84 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
   const intl = useIntl();
   return (
     <ModalForm<CreatePermissionType>
-    onFinish={async (values:any) => {
-      const id = await newFileUpload(values?.profile);
-      await update.runAsync(detail.id, {
-        ...values,
+      onFinish={async (values: any) => {
+        const id = await newFileUpload(values?.profile);
+        await update.runAsync(detail.id, {
+          ...values,
+          address: {
+            ...values.address,
+          },
+          profile_id: id,
+          birth_date: dayjs(values?.birth_date).toDate(),
+        });
+      }}
+      initialValues={{
+        first_name: detail?.first_name,
+        last_name: detail?.last_name,
+        agency_id: detail?.agency_id,
+        birth_date: detail?.birth_date
+          ? dayjs(detail?.birth_date).format("YYYY-MM-DD")
+          : undefined,
         address: {
-          ...values.address,
+          city_id: detail?.address?.city_id,
+          district_id: detail?.address?.district_id,
+          khoroo_id: detail?.address?.khoroo_id,
+          desc: detail?.address?.desc,
         },
-        profile_id: id,
-        birth_date: dayjs(values?.birth_date).toDate(),
-      });
-    }}
-    initialValues={{
-      first_name: detail?.first_name,
-      last_name: detail?.last_name,
-      agency_id: detail?.agency_id,
-      birth_date: detail?.birth_date
-        ? dayjs(detail?.birth_date).format("YYYY-MM-DD")
-        : undefined,
-      address: {
-        city_id: detail?.address?.city_id,
-        district_id: detail?.address?.district_id,
-        khoroo_id: detail?.address?.khoroo_id,
-        desc: detail?.address?.desc,
-      },
-      gender: detail?.gender,
-      phone: detail?.phone,
-      email: detail?.email,
-      permission: detail?.permission,
-      profile: [
-        {
-          uid: `${detail?.profile?.id}`,
-          id: detail?.profile?.id,
-          name: detail?.profile?.file_name,
-          status: "done",
-          url: file.fileToUrl(detail?.profile?.physical_path || ""),
-          originFileObj: detail?.profile?.physical_path,
-          type: "image/jpeg",
+        gender: detail?.gender,
+        phone: detail?.phone,
+        email: detail?.email,
+        permission: detail?.permission,
+        role: detail?.role,
+        profile: [
+          {
+            uid: `${detail?.profile?.id}`,
+            id: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: file.fileToUrl(detail?.profile?.physical_path || ""),
+            originFileObj: detail?.profile?.physical_path,
+            type: "image/jpeg",
+          },
+        ],
+      }}
+      title={intl.formatMessage({ id: "member_drawer_title" })}
+      open={open}
+      modalProps={{
+        width: "650px",
+        onCancel,
+        styles: {
+          header: {
+            padding: "1.2rem",
+            borderBottom: "1px solid #EAECF0",
+          },
+          content: {
+            padding: "0",
+          },
+          body: {
+            padding: "1.2rem 1.2rem 0 1.2rem",
+          },
+          footer: {
+            padding: "0 1.2rem 1.2rem 1.2rem",
+          },
         },
-      ],
-    }}
-    title={intl.formatMessage({ id: "member_drawer_title" })}
-    open={open}
-    modalProps={{
-      width: "650px",
-      onCancel,
-      styles:{
-        header:{
-          padding:"1.2rem",
-          borderBottom:"1px solid #EAECF0",
+      }}
+      submitter={{
+        render: (props) => {
+          return (
+            <div className="flex items-center gap-4">
+              <Button onClick={onCancel} size="large" type="default">
+                <FormattedMessage id="cancel" />
+              </Button>
+              <Button onClick={props.submit} size="large" type="primary">
+                <FormattedMessage id="save" />
+              </Button>
+            </div>
+          );
         },
-        content:{
-          padding:"0"
-        },
-        body:{
-          padding:"1.2rem 1.2rem 0 1.2rem",
-        },
-        footer:{
-          padding:"0 1.2rem 1.2rem 1.2rem",
-        }        
-      }
-    }}
-    submitter={{
-      render: (props) => {
-        return (
-          <div className="flex items-center gap-4">
-            <Button onClick={onCancel} size="large" type="default">
-              <FormattedMessage id="cancel" />
-            </Button>
-            <Button
-              onClick={props.submit}
-              size="large"
-              type="primary"
-            >
-              <FormattedMessage id="save" />
-            </Button>
-          </div>
-        );
-      },
-    }}
-
+      }}
     >
-   <ProForm.Item noStyle shouldUpdate>
+      <ProForm.Item noStyle shouldUpdate>
         {(form) => {
           return (
             <>
@@ -180,15 +181,20 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                 </Col>
                 <Col span={8}>
                   <ProFormUploadButton
+                    className="w-max h-max"
                     title={
                       <div className="flex items-center flex-col justify-center gap-2 text-[#00000073]">
-                        <div className="text-xs ">Click to upload</div>
+                        <div className="text-sm">
+                          {" "}
+                          <div className="text-primary-700 font-semibold">
+                            <FormattedMessage id="upload" />{" "}
+                          </div>
+                          <div>
+                            <FormattedMessage id="image_types" />
+                          </div>
+                        </div>
                       </div>
                     }
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                    }}
                     label={intl.formatMessage({ id: "upload_picture" })}
                     max={1}
                     rules={[
@@ -252,9 +258,16 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                   <ProFormText
                     name="phone"
                     label={intl.formatMessage({ id: "phone" })}
+                    rules={[
+                      {
+                        pattern: /^[\d]{8}$/,
+                        message: intl.formatMessage({
+                          id: "phone_number_error",
+                        }),
+                      },
+                    ]}
                   />
                 </Col>
-                
               </Row>
               <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
@@ -331,24 +344,28 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
-              <Col span={24}>
+                <Col span={24}>
                   <ProFormSelect
-                    name="permission"
+                    name="role"
+                    options={permissionArray.map((el) => ({
+                      label: <FormattedMessage id={el} />,
+                      value: el,
+                    }))}
                     label={intl.formatMessage({ id: "permission" })}
                   />
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
-              <Col span={12}>
+                <Col span={24}>
                   <ProFormText
                     name="email"
                     label={intl.formatMessage({ id: "email" })}
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormText.Password
-                    name="password"
-                    label={intl.formatMessage({ id: "password" })}
+                    rules={[
+                      {
+                        type: "email",
+                        message: intl.formatMessage({ id: "email_error" }),
+                      },
+                    ]}
                   />
                 </Col>
               </Row>
@@ -356,6 +373,6 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
           );
         }}
       </ProForm.Item>
-      </ModalForm>
+    </ModalForm>
   );
 };

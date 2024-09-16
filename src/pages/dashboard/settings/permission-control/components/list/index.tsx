@@ -13,6 +13,7 @@ import permission from "service/settings/permission";
 import { PermissionList } from "service/settings/permission/type";
 import { UpdatePermission } from "../../update";
 import { Detail } from "../../detail";
+import { FormattedMessage } from "react-intl";
 
 const color = "#144E5A";
 
@@ -103,28 +104,33 @@ export const Item: React.FC<ItemType> = ({ data, form, refreshList }) => {
             <div className="text-sm font-normal">{data?.email}</div>
           </div>
         </div>
-        <div className="gap-3 flex items-center justify-end mr-10">
-          <DetailButton
-            title="Засах"
-            onClick={() => setDetail(data)}
-            style={{ opacity: 1, cursor: "pointer" }}
+        <div className="flex items-center gap-5">
+          <IBadge
+            color="gray"
+            title={<FormattedMessage id={data?.role || "admin"} />}
           />
-          <EditButton
-            title="Засах"
-            onClick={() => setUpdate(data)}
-            style={{ opacity: 1, cursor: "pointer" }}
-          />
-          <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
+          <div className="gap-2 flex items-center justify-end mr-10">
+            <DetailButton
+              title="Засах"
+              onClick={() => setDetail(data)}
+              style={{ opacity: 1, cursor: "pointer" }}
+            />
+            <EditButton
+              title="Засах"
+              onClick={() => setUpdate(data)}
+              style={{ opacity: 1, cursor: "pointer" }}
+            />
+            <DeleteButton title={"Устгах"} onClick={() => setDelete(data)} />
+          </div>
         </div>
       </div>
-      {
-        detail && (
-            <Detail
-              detail={detail}
-              open={!!detail}
-              onCancel={() => setDetail(undefined)}
-            />
-       )}
+      {detail && (
+        <Detail
+          detail={detail}
+          open={!!detail}
+          onCancel={() => setDetail(undefined)}
+        />
+      )}
       {update && (
         <UpdatePermission
           open={update}

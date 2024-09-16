@@ -59,6 +59,14 @@ export const agencyArray = Object.freeze([
   },
 ]);
 
+export const permissionArray = Object.freeze([
+  "case_manager",
+  "senior_case_manager",
+  "operation_manager",
+  "doctor",
+  "admin",
+]);
+
 export enum ScreeningTab {
   all = "all",
   level_1 = "level_1",
@@ -243,8 +251,13 @@ export enum SettingsTab {
 }
 
 export enum StatisticalTab {
-  statistical = "statistical",
-  careFoci = "careFoci",
+  management_report = "management_report",
+  closed_case_report = "closed_case_report",
+  case_manager_report = "case_manager_report",
+  report_log = "report_log",
+  statistical_report = "statistical_report",
+  care_foci = "care_foci",
+  statistic_report = "statistic_report",
 }
 
 export enum DevelopmentPlanDetailTab {
