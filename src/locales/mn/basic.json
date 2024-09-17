@@ -13,6 +13,7 @@
   "gender": "Хүйс",
   "risk_level": "Чухлын зэрэг",
   "cfs_score": "ДЭШ оноо",
+  "cfs":"ДЭШ",
   "agency": "Агентлаг",
   "total_assessment": "Нийт үнэлгээ",
   "list_assessment_date": "Сүүлийн үнэлгээний огноо",
@@ -110,5 +111,12 @@
   "email_error":"Зөв эмэйл хаяг оруулна уу",
   "upload":"Зураг оруулах",
   "image_types":"SVG, PNG, JPG эсвэл GIF",
-  "levels":"Түвшин"
+  "levels":"Түвшин",
+  "reason":"Шалтгаан",
+  "closed_employee":"Хаасан ажилтан",
+  "closed_date":"Хаагдсан огноо",
+  "darkhan": "Дархан",
+  "mandal": "Мандал",
+  "achlalt": "Ачлалт хүүхдүүд",
+  "group": "Бүлэг"
 }

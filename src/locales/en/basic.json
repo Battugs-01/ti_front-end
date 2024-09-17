@@ -106,10 +106,18 @@
   "senior_case_manager":"Senior Case Manager",
   "operation_manager":"Operation manager",
   "doctor":"Doctor",
+  "cfs":"CFS",
   "admin":"Admin",
   "phone_number_error": "Must be a valid phone number",
   "email_error": "Must be a valid email",
   "upload":"Upload Picture",
   "image_types":"SVG, PNG, JPG or GIF",
-  "levels":"Levels"
+  "levels":"Levels",
+  "reason":"Reason",
+  "closed_employee":"Closed Employee",
+  "closed_date":"Closed Date",
+  "darkhan": "Darkhan",
+  "mandal": "Mandal",
+  "achlalt": "Achlalt",
+  "group": "Group"
 }

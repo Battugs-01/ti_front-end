@@ -1,5 +1,6 @@
 import { useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
+import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -7,6 +8,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
+import { ClosedReportType } from "service/statistical_report/type";
 import { reportFilter } from "utils/index";
 
 export const ClosedCaseReport: React.FC = () => {
@@ -42,8 +44,8 @@ export const ClosedCaseReport: React.FC = () => {
             onChange={(values) => {
               setFilter({
                 ...filter,
-                start_date: dayjs(values?.[0]?.toDate()),
-                end_date: dayjs(values?.[1]?.toDate()),
+                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
               });
             }}
             defaultValue={[
@@ -57,8 +59,9 @@ export const ClosedCaseReport: React.FC = () => {
         hideCreate
         refresh={refreshList}
       />
-      <ITable
+      <ITable<ClosedReportType>
         className="p-0 remove-padding-table"
+        dataSource={list?.data?.items}
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),
@@ -89,6 +92,14 @@ export const ClosedCaseReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "cfs_score" }),
             dataIndex: "cfs_score",
+            render: (_, record) => {
+              return (
+                <div>
+                  {record.assessment.cfs_point}{" "}
+                  <span className="text-gray-400">/9</span>
+                </div>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "cfs" }),
@@ -97,34 +108,64 @@ export const ClosedCaseReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
+            render: (_, record) => {
+              return <LevelBadge status={record?.assessment?.level} />;
+            },
           },
           {
             title: intl.formatMessage({ id: "cfs_date" }),
             dataIndex: "cfs_date",
+            render: (_, record) => {
+              return (
+                <div>
+                  {dayjs(record?.assessment?.date).format("DD/MM/YYYY")}
+                </div>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
           },
           {
-            title: intl.formatMessage({ id: "agency" }),
-            dataIndex: "agency",
+            title: intl.formatMessage({ id: "ht_date" }),
+            dataIndex: "ht_date",
           },
           {
-            title: intl.formatMessage({ id: "total_assessment" }),
-            dataIndex: "total_assessment",
+            title: intl.formatMessage({ id: "risk_level" }),
+            dataIndex: "risk_level",
           },
           {
-            title: intl.formatMessage({ id: "list_assessment_date" }),
-            dataIndex: "list_assessment_date",
+            title: intl.formatMessage({ id: "ht_time" }),
+            dataIndex: "ht_time",
           },
           {
-            title: intl.formatMessage({ id: "caregiver" }),
-            dataIndex: "caregiver",
+            title: intl.formatMessage({ id: "end_date" }),
+            dataIndex: "end_date",
+            render: (_, record) => {
+              return (
+                <div>
+                  {dayjs(record?.development_plans?.[0]?.created_at).format(
+                    "DD/MM/YYYY"
+                  )}
+                </div>
+              );
+            },
           },
           {
-            title: intl.formatMessage({ id: "person_in_charge" }),
-            dataIndex: "person_in_charge",
+            title: intl.formatMessage({ id: "closed_date" }),
+            dataIndex: "closed_date",
+          },
+          {
+            title: intl.formatMessage({ id: "closed_employee" }),
+            dataIndex: "closed_employee",
+          },
+          {
+            title: intl.formatMessage({ id: "reason" }),
+            dataIndex: "reason",
+            render: (_, record) => {
+              return <p>{record?.close?.reason}</p>;
+            },
           },
         ]}
       />

@@ -74,6 +74,13 @@ export enum ScreeningTab {
   level_3 = "level_3",
 }
 
+export enum DashboardTab {
+  all = "all",
+  darkhan = "darkhan",
+  mandal = "mandal",
+  achlalt = "achlalt",
+}
+
 export const levelOptions = Object.freeze([
   {
     label: "Level 1",

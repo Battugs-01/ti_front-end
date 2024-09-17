@@ -1,16 +1,19 @@
-import { Radio, Segmented } from "antd";
+import { Radio } from "antd";
 import { IfCondition } from "components/condition";
 import { StatisticalTab } from "config";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { ManagementReport } from "./management_report";
-import { ClosedCaseReport } from "./closed_case_report";
+import { CareFoci } from "./care_foci";
 import { CaseManagerReport } from "./case_manager_report";
+import { ClosedCaseReport } from "./closed_case_report";
+import { ManagementReport } from "./management_report";
 import { ReportLog } from "./report_log";
 import { Statistical } from "./statistical_report";
 
 const StasticalReport = () => {
-  const [tab, setTab] = useState<StatisticalTab>(StatisticalTab.management_report);
+  const [tab, setTab] = useState<StatisticalTab>(
+    StatisticalTab.management_report
+  );
   return (
     <>
       <Radio.Group
@@ -18,31 +21,59 @@ const StasticalReport = () => {
         options={[
           {
             value: StatisticalTab.management_report,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="management_report"/></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="management_report" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.closed_case_report,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="closed_case_report" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="closed_case_report" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.case_manager_report,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="case_manager_report" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="case_manager_report" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.report_log,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="report_log" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="report_log" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.statistical_report,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="statistical_report" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="statistical_report" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.care_foci,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="care_foci" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="care_foci" />
+              </div>
+            ),
           },
           {
             value: StatisticalTab.statistic_report,
-            label: <div className="font-semibold text-primary-700"><FormattedMessage id="statistic_report" /></div>,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="statistic_report" />
+              </div>
+            ),
           },
         ]}
         value={tab}
@@ -72,7 +103,7 @@ const StasticalReport = () => {
       />
       <IfCondition
         condition={StatisticalTab.care_foci === tab}
-        whenTrue={<div>Care Foci</div>}
+        whenTrue={<CareFoci />}
       />
       <IfCondition
         condition={StatisticalTab.statistic_report === tab}
