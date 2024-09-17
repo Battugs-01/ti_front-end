@@ -82,21 +82,16 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
 
   return (
     <>
-      <div className="flex justify-between pt-2 pb-4 flex-wrap px-4 gap-4  items-center ">
-        <>
-          <div className="flex items-center space-x-2 py-1.5 md:w-2/5">
-            {hideTitle ? (
-              leftContent
-            ) : (
-              <span className="text-gray-900 md:text-lg text-base font-medium ">
-                {customHeaderTitle}
-              </span>
-            )}
-          </div>
-        </>
-        {/* <div className="text-scale-700 text-base font-medium ">
-          {customHeaderTitle}
-        </div> */}
+      <div className="flex justify-between pt-2 pb-4 flex-wrap px-4 gap-4 items-center">
+        <div className="space-x-2 md:w-2/5 p-0 m-0 h-16">
+          {hideTitle ? (
+            leftContent
+          ) : (
+            <span className="text-gray-900 md:text-lg text-base font-medium ">
+              {customHeaderTitle}
+            </span>
+          )}
+        </div>
         <div className="flex gap-2 flex-wrap ant-form-item-margin-remove">
           {filter}
           {/* <Button
