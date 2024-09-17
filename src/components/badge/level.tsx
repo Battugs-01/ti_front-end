@@ -2,10 +2,11 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 
 interface Props {
-  status?: string;
+  status: string;
+  OneNone?: boolean;
 }
 
-const LevelBadge: FC<Props> = ({ status }) => {
+const LevelBadge: FC<Props> = ({ status, OneNone }) => {
   const intl = useIntl();
   let text = "None";
   let colorClass = "bg-[#F2F4F7] text-[#344054]";
@@ -28,7 +29,9 @@ const LevelBadge: FC<Props> = ({ status }) => {
   }
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium truncate ${colorClass}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium truncate ${
+        OneNone ? "bg-[#F2F4F7] text-[#344054]" : colorClass
+      }`}
     >
       {text}
     </span>

@@ -51,11 +51,17 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('@ant-design/pro-form')) {
-            return 'pro-form';
+          if (id.includes("@ant-design/pro-form")) {
+            return "pro-form";
           }
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
+function VitePWA(arg0: {
+  registerType: string;
+  devOptions: { enabled: boolean };
+}): import("vite").PluginOption {
+  throw new Error("Function not implemented.");
+}

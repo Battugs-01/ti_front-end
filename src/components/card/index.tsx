@@ -140,6 +140,7 @@ type PageCardProps = {
   bodyClassName?: string;
   titleClassName?: string;
   loading?: boolean;
+  paddingRemove?: boolean;
 };
 export const PageCard = ({
   children,
@@ -151,13 +152,16 @@ export const PageCard = ({
   bodyClassName,
   titleClassName,
   loading,
+  paddingRemove,
 }: PageCardProps) => {
   return (
     <Card
       loading={loading}
       bodyStyle={{ padding: 0 }}
       headStyle={{ display: "none" }}
-      className={`p-4 ${xR && "px-0"} ${yR && "py-0"} ${className} `}
+      className={`${paddingRemove ? "p-0" : "p-4"} ${xR && "px-0"} ${
+        yR && "py-0"
+      } ${className} `}
       bordered={false}
     >
       <div className={` ${bodyClassName} `}>

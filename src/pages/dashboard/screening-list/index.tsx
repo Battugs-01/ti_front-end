@@ -102,17 +102,17 @@ const ScreeningList: React.FC = () => {
             dataIndex: "first_name",
             render: (value, record) => {
               return (
-                <Typography.Text
-                  className="text-primary-700 font-bold"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    window.open(
-                      `https://www.google.com/search?q=${record?.id}`
-                    );
-                  }}
+                <Link
+                  to={`/dashboard/screening-list/detail?customer_id=${record.id}`}
+                  className="flex items-center"
                 >
-                  {value}
-                </Typography.Text>
+                  <Typography.Text
+                    className="text-primary-700 font-bold"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {value}
+                  </Typography.Text>
+                </Link>
               );
             },
           },

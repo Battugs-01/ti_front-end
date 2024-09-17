@@ -1,19 +1,19 @@
-import { Button, Divider, Radio, Segmented } from "antd";
+import { Button, Segmented } from "antd";
 import { PageCard } from "components/card";
 import { IfCondition } from "components/condition";
 import { DevelopmentPlanDetailTab } from "config";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 import {
   ChartBreakoutSquare,
-  InfoCircle,
   DownloadCloud02,
+  InfoCircle,
   Printer,
   RefreshCW02,
 } from "untitledui-js-base";
-import GeneralInfo from "./tab/general-info";
-import DevelopmentPlanTab from "./tab/development-plan";
 import { CreateDevelopmentPlan } from "./create";
-import { FormattedMessage } from "react-intl";
+import DevelopmentPlanTab from "./tab/development-plan";
+import GeneralInfo from "./tab/general-info";
 
 interface MainDetailProps {}
 
@@ -60,23 +60,6 @@ const MainDetail: React.FC<MainDetailProps> = () => {
             setTab(value as DevelopmentPlanDetailTab);
           }}
         />
-        {/* <Radio.Group
-          defaultValue={DevelopmentPlanDetailTab.general}
-          size="large"
-          onChange={(e) => {
-            setTab(e.target.value);
-          }}
-        >
-          <Radio.Button value={DevelopmentPlanDetailTab.general}></Radio.Button>
-          <Radio.Button value={DevelopmentPlanDetailTab.development}>
-            <div className="flex items-center gap-2">
-              <ChartBreakoutSquare />
-              <div>
-                <FormattedMessage id="development_plan" />
-              </div>
-            </div>
-          </Radio.Button>
-        </Radio.Group> */}
         <div className="flex flex-wrap items-center gap-3">
           <Button type="default" size="large" icon={<RefreshCW02 />} />
           <Button

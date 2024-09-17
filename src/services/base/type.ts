@@ -1,4 +1,3 @@
-import { Disability } from "./../../config";
 export interface Address {
   id: number;
   created_at: Date;
