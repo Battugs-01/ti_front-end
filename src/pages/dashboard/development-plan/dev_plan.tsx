@@ -8,11 +8,10 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import developmentPlan from "service/development_plan";
 import file from "service/file";
 import screenList from "services/screening_list";
 import { FileSearch03 } from "untitledui-js-base";
-import { initFilter, initPagination } from "utils/index";
+import { initPagination } from "utils/index";
 
 export const DevPlan: React.FC = () => {
   const intl = useIntl();
@@ -20,31 +19,20 @@ export const DevPlan: React.FC = () => {
 
   const planList = useRequest(screenList.list, {
     manual: true,
-    onSuccess: () => {
-      // notification.success({
-      //   message: intl.formatMessage({ id: "success" }),
-      // });
-    },
+    onSuccess: () => {},
     onError: (err) => {
       notification.error({
         message: err.message,
       });
     },
   });
-  // const planList = useRequest(developmentPlan.list, {
-  //   manual: true,
-  //   onError: (err) => {
-  //     notification.error({
-  //       message: err.message,
-  //     });
-  //   },
-  // });
 
   useEffect(() => {
     planList.run({
       ...filter,
     });
   }, [filter]);
+
   const refreshList = () => {
     planList?.run({
       ...filter,

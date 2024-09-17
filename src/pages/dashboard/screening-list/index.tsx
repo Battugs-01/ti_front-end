@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Avatar, notification, Segmented } from "antd";
+import { Avatar, notification, Segmented, Typography } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
@@ -52,6 +52,7 @@ const ScreeningList: React.FC = () => {
       ...values,
     });
   };
+
   return (
     <PageCard xR>
       <InitTableHeader
@@ -68,6 +69,7 @@ const ScreeningList: React.FC = () => {
             onChange={(value: any) => {
               setTab(value);
             }}
+            className="mt-0"
             options={[
               {
                 label: <FormattedMessage id="all" />,
@@ -98,9 +100,21 @@ const ScreeningList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "first_name",
-            render:(value)=>{
-              return <p className="text-primary-700 font-bold">{value}</p>
-            }
+            render: (value, record) => {
+              return (
+                <Link
+                  to={`/dashboard/screening-list/detail?customer_id=${record.id}`}
+                  className="flex items-center"
+                >
+                  <Typography.Text
+                    className="text-primary-700 font-bold"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {value}
+                  </Typography.Text>
+                </Link>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "register" }),

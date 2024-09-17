@@ -110,9 +110,7 @@ export const ITable = <T extends {}>({
                 current: page,
                 pageSize: size,
               });
-
               setPageData({ page, pageSize: size });
-
               !form &&
                 refresh?.({
                   ...form,
