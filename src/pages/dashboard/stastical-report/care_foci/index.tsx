@@ -1,8 +1,6 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
-import LevelBadge from "components/badge/level";
+import { DatePicker, notification, Table } from "antd";
 import { PageCard } from "components/card";
-import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
@@ -10,11 +8,11 @@ import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { reportFilterYear } from "utils/index";
 
-export const Statistical: React.FC = () => {
+export const CareFoci: React.FC = () => {
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilterYear);
 
-  const list = useRequest(statisticalReport.statisticalReportList, {
+  const list = useRequest(statisticalReport.careFociReportList, {
     manual: true,
     onError: (err) => {
       notification.error({
@@ -22,25 +20,6 @@ export const Statistical: React.FC = () => {
       });
     },
   });
-
-  const statisticalData = useMemo(() => {
-    const levels = 3;
-    let result = [];
-
-    for (let i = 1; i <= levels; i++) {
-      let levelData: { [key: string]: any } = {};
-
-      levelData = {
-        level: `level_${i}`,
-      };
-      list?.data?.forEach((item: any) => {
-        levelData[`month_${item.month}`] = item[`level_${i}`];
-      });
-
-      result.push(levelData);
-    }
-    return result;
-  }, [list.data]);
 
   useEffect(() => {
     list.run({
@@ -52,6 +31,41 @@ export const Statistical: React.FC = () => {
       ...filter,
     });
   };
+
+  const filteredData = useMemo(() => {
+    let result: any[] = [];
+    let count = 0;
+    list?.data?.map((item) => {
+      count = item.items.length;
+      item.items.map((i, key) => {
+        result.push({
+          group_name: item.name,
+          name: i.name,
+          count: count,
+          key: key + 1,
+          month_1: i.months[0],
+          month_2: i.months[1],
+          month_3: i.months[2],
+          month_4: i.months[3],
+          month_5: i.months[4],
+          month_6: i.months[5],
+          month_7: i.months[6],
+          month_8: i.months[7],
+          month_9: i.months[8],
+          month_10: i.months[9],
+          month_11: i.months[10],
+          month_12: i.months[11],
+        });
+      });
+      count = 0;
+    });
+    return result;
+  }, [list.data]);
+
+  console.log(filteredData, "ssss");
+
+  console.log(dayjs(filter.year).year(), "year");
+
   return (
     <PageCard xR>
       <InitTableHeader
@@ -72,15 +86,33 @@ export const Statistical: React.FC = () => {
         hideCreate
         refresh={refreshList}
       />
-      <ITable
+      <Table
+        pagination={false}
+        loading={list.loading}
         className="p-0 remove-padding-table"
-        dataSource={statisticalData}
+        dataSource={filteredData}
         columns={[
           {
-            title: intl.formatMessage({ id: "levels" }),
-            dataIndex: "level",
-            render: (value: any) => {
-              return <LevelBadge status={value} />;
+            title: (
+              <div className="pl-3"> {intl.formatMessage({ id: "group" })}</div>
+            ),
+            dataIndex: "group_name",
+            width: 220,
+            render: (value) => {
+              return <p className="px-3">{value}</p>;
+            },
+            onCell: (record) => {
+              return {
+                rowSpan: record.key % record.count === 1 ? record.count : 0,
+              };
+            },
+          },
+          {
+            title: intl.formatMessage({ id: "name" }),
+            width: 350,
+            dataIndex: "name",
+            render: (value) => {
+              return <p className="px-1">{value}</p>;
             },
           },
           {

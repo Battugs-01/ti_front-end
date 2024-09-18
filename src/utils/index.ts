@@ -400,6 +400,12 @@ export const initPagination = {
 export const reportFilter = {
   current: 1,
   pageSize: 20,
-  start_date: dayjs().subtract(3, "month"),
-  end_date: dayjs(),
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
+};
+
+export const reportFilterYear = {
+  current: 1,
+  pageSize: 20,
+  year: dayjs().year(),
 };

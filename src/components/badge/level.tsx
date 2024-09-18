@@ -17,7 +17,7 @@ const LevelBadge: FC<Props> = ({ status, OneNone }) => {
       break;
     case "level_2":
       text = intl.formatMessage({ id: "level" }, { number: 2 });
-      colorClass = "bg-[#B54708] text-[#FFFAEB]";
+      colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
     case "level_3":
       text = intl.formatMessage({ id: "level" }, { number: 3 });
