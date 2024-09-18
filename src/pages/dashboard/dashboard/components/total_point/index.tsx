@@ -1,5 +1,6 @@
 import { Area } from "@ant-design/plots";
 import { PageCard } from "components/card";
+import { FormattedMessage } from "react-intl";
 
 export const TotalPoint: React.FC = () => {
   const config = {
@@ -27,8 +28,10 @@ export const TotalPoint: React.FC = () => {
     },
   };
   return (
-    <PageCard xR>
-      <h1>Нийт оноо</h1>
+    <PageCard xR yR>
+      <p className="px-5 text-xl font-semibold">
+        <FormattedMessage id="total_point" />
+      </p>
       <Area {...config} />
     </PageCard>
   );

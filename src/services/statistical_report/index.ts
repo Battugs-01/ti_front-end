@@ -61,6 +61,12 @@ namespace statisticalReport {
       hasAuth: true,
       body,
     });
+
+  export const statisticalReportAge = (body?: any) =>
+    http.post<ResponseType[]>("statistics/statistical-age/report", {
+      hasAuth: true,
+      body,
+    });
 }
 
 export default statisticalReport;

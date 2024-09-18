@@ -119,5 +119,12 @@
   "darkhan": "Дархан",
   "mandal": "Мандал",
   "achlalt": "Ачлалт хүүхдүүд",
-  "group": "Бүлэг"
+  "group": "Бүлэг",
+  "total_point":"Нийт оноо",
+  "total_case_agency":"Нийт кейс - Агентлагаар",
+  "total_case":"Нийт кейс",
+  "last_screening_list":"Сүүлд оруулсан асуулгын жагсаалт",
+  "end_date":"Хаагдсан огноо",
+  "total_level_percent":"Нийт түвшиний эзлэх %",
+  "total_percent":"Нийт эзлэх %"
 }

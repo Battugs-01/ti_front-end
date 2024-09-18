@@ -81,6 +81,12 @@ export enum DashboardTab {
   achlalt = "achlalt",
 }
 
+export enum TotalCaseTab {
+  level = "level",
+  age = "age",
+  gender = "gender",
+}
+
 export const levelOptions = Object.freeze([
   {
     label: "Level 1",

@@ -183,7 +183,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                   <ProFormUploadButton
                     className="w-max h-max"
                     title={
-                      <div className="flex items-center flex-col justify-center gap-2 text-[#00000073]">
+                      <div className="flex items-center flex-col justify-center gap-2 p-2 text-[#00000073]">
                         <div className="text-sm">
                           {" "}
                           <div className="text-primary-700 font-semibold">

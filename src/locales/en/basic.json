@@ -120,5 +120,12 @@
   "darkhan": "Darkhan",
   "mandal": "Mandal",
   "achlalt": "Achlalt",
-  "group": "Group"
+  "group": "Group",
+  "total_point":"Total Point",
+  "total_case_agency":"Total Case Agency",
+  "total_case":"Total Case",
+  "last_screening_list":"List of recent queries",
+  "end_date":"End Date",
+  "total_level_percent":"Total level %",
+  "total_percent":"Total %"
 }
