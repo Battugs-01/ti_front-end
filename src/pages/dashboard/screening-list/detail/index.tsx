@@ -1,17 +1,12 @@
 // import Info from "./info";
 // import MainDetail from "./main-detail";
 
-import { useLocation } from "react-router-dom";
 import { useRequest } from "ahooks";
-import screenList from "service/screening_list";
 import Info from "components/custom-detail/info";
-import {
-  AssessmentListType,
-  ScreeningListType,
-} from "service/screening_list/type";
 import MainDetail from "components/custom-detail/main-detail";
-import { PageCard } from "components/card";
-import QuistionHistory from "components/custom-detail/quistion-history";
+import { useLocation } from "react-router-dom";
+import screenList from "service/screening_list";
+import { ScreeningListType } from "service/screening_list/type";
 
 const ScreeningListDetail: React.FC = () => {
   const location = useLocation();
