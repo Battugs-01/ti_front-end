@@ -44,8 +44,8 @@ export const ManagementReport: React.FC = () => {
             onChange={(values) => {
               setFilter({
                 ...filter,
-                start_date: dayjs(values?.[0]?.toDate()),
-                end_date: dayjs(values?.[1]?.toDate()),
+                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
               });
             }}
             defaultValue={[

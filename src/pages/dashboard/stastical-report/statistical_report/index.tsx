@@ -75,6 +75,7 @@ export const Statistical: React.FC = () => {
       <ITable
         className="p-0 remove-padding-table"
         dataSource={statisticalData}
+        hidePagination
         columns={[
           {
             title: intl.formatMessage({ id: "levels" }),

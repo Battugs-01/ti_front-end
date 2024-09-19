@@ -10,7 +10,7 @@ import { exportFromList, exportFromTable } from "utils/export";
 import { CreateButton, ExportButton } from "..";
 
 interface TableHeaderProps {
-  customHeaderTitle?: string;
+  customHeaderTitle?: string | React.ReactNode;
   hideToggle?: boolean;
   hideFilter?: boolean;
   selectedToggle?: string;

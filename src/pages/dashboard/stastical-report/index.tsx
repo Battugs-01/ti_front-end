@@ -9,6 +9,7 @@ import { ClosedCaseReport } from "./closed_case_report";
 import { ManagementReport } from "./management_report";
 import { ReportLog } from "./report_log";
 import { Statistical } from "./statistical_report";
+import { StatisticalReportAge } from "./statistical_report_withage";
 
 const StasticalReport = () => {
   const [tab, setTab] = useState<StatisticalTab>(
@@ -107,7 +108,7 @@ const StasticalReport = () => {
       />
       <IfCondition
         condition={StatisticalTab.statistic_report === tab}
-        whenTrue={<div>Statistic Report</div>}
+        whenTrue={<StatisticalReportAge />}
       />
     </>
   );

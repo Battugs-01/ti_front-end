@@ -127,18 +127,18 @@ export const ClosedCaseReport: React.FC = () => {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
           },
-          {
-            title: intl.formatMessage({ id: "ht_date" }),
-            dataIndex: "ht_date",
-          },
+          // {
+          //   title: intl.formatMessage({ id: "ht_date" }),
+          //   dataIndex: "ht_date",
+          // },
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
           },
-          {
-            title: intl.formatMessage({ id: "ht_time" }),
-            dataIndex: "ht_time",
-          },
+          // {
+          //   title: intl.formatMessage({ id: "ht_time" }),
+          //   dataIndex: "ht_time",
+          // },
           {
             title: intl.formatMessage({ id: "end_date" }),
             dataIndex: "end_date",

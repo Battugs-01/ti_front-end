@@ -53,7 +53,7 @@ export const QuestionList: React.FC = () => {
             <ScreeningListFilter onFinish={onFinishFilter} />
           </PopoverFilter>
         }
-        hideTitle
+        customHeaderTitle={<FormattedMessage id="last_screening_list" />}
         refresh={refreshList}
         hideCreate
       />
