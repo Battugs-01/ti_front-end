@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 
 interface Props {
-  status?: boolean;
+  status?: any | React.ReactNode;
 }
 
 const BooleanBadge: FC<Props> = ({ status }) => {

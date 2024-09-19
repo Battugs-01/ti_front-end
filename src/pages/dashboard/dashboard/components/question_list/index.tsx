@@ -7,13 +7,12 @@ import { PopoverFilter } from "components/filter";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
-import { ScreeningListFilter } from "pages/dashboard/screening-list/filter";
+import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { FileSearch03 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
 
 export const QuestionList: React.FC = () => {

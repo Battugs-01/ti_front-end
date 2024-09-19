@@ -1,3 +1,4 @@
+import { PageLoading } from "@ant-design/pro-layout";
 import { Button, Divider } from "antd";
 import ButtonSvg from "assets/img/Button.svg";
 import LevelBadge from "components/badge/level";
@@ -11,6 +12,9 @@ interface InfoProps {
   data: ScreeningListType;
 }
 const Info: React.FC<InfoProps> = ({ data }) => {
+  if (!data) {
+    return <PageLoading />;
+  }
   return (
     <PageCard>
       <div className="flex items-center justify-between">

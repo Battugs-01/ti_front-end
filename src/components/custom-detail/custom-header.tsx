@@ -1,4 +1,5 @@
 import { ProFormRadio } from "@ant-design/pro-form";
+import { PageLoading } from "@ant-design/pro-layout";
 import { Button } from "antd";
 import RefreshIcon from "assets/img/refresh.svg";
 import LevelBadge from "components/badge/level";
@@ -7,48 +8,51 @@ import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { AssessmentListType } from "service/screening_list/type";
 import { DownloadCloud02, Printer } from "untitledui-js-base";
-import QuistionHistory from "./quistion-history";
+import { useLevelContext } from "./selected-level";
 
-interface MainDetailProps {
+interface CustomHeaderProps {
   data: AssessmentListType[];
 }
 
-const MainDetail: React.FC<MainDetailProps> = ({ data }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
+  const { selectedLevel, setSelectedLevel } = useLevelContext();
+
   const segmentedData = data?.map((item) => ({
     label: (
       <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A]">
-        {dayjs(item.date).format("YYYY-MM-DD")}
+        {dayjs(item?.date).format("YYYY-MM-DD")}
         <LevelBadge status={item.level} OneNone={true} />
-        {/* <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium truncate bg-[#F2F4F7] text-[#344054] `}
-        >
-          {item.level}
-        </span> */}
       </div>
     ),
-    value: item.id,
+    value: item?.id,
   }));
 
   const [tab, setTab] = useState(data[0]?.id || null);
 
   useEffect(() => {
-    if (data) {
-      setTab(data[0]?.id);
+    setTab(data[0]?.id);
+    const level = data?.find((entry) => entry?.id === tab);
+    if (level) {
+      setSelectedLevel(level);
     }
-  }, [data]);
+  }, [tab, data, setSelectedLevel]);
+
+  if (!selectedLevel) {
+    return <PageLoading />;
+  }
 
   return (
     <>
       <div>
         <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between">
-          <div className="w-[75%]">
+          <div className="lg:w-[75%] w-full">
             <ProFormRadio.Group
               className="flex items-center gap-2"
               radioType="button"
               options={segmentedData || []}
               fieldProps={{
                 size: "large",
-                value: tab,
+                value: selectedLevel.id,
                 onChange: (e) => {
                   setTab(e.target.value);
                 },
@@ -79,9 +83,8 @@ const MainDetail: React.FC<MainDetailProps> = ({ data }) => {
           </div>
         </div>
       </div>
-      <QuistionHistory data={data ?? []} tab={tab ?? 0} />
     </>
   );
 };
 
-export default MainDetail;
+export default CustomHeader;

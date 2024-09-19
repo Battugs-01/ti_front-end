@@ -23,6 +23,7 @@ export interface Admin {
   position: string;
   user_type: number;
   city_id: number;
+  role: string;
   // city: Address;
   district_id: number;
 }

@@ -1,6 +1,9 @@
-import { Card, Skeleton } from "antd";
+import { Card, Progress, Skeleton } from "antd";
 import { ReactNode } from "react";
 import { FaArrowRight } from "react-icons/fa6";
+import { FormattedMessage } from "react-intl";
+import { DotsVertical } from "untitledui-js-base";
+import BackIcon from "assets/img/icon-back.svg";
 
 interface CustomCardProps {
   title: ReactNode | string;
@@ -170,6 +173,81 @@ export const PageCard = ({
           {extra}
         </div>
         <div>{children}</div>
+      </div>
+    </Card>
+  );
+};
+
+interface StatCardProps {
+  title: string;
+  value: number;
+}
+
+export const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
+  <Card
+    title={
+      <div className="text-sm text-[#475467]">
+        <FormattedMessage id={title} />
+      </div>
+    }
+    className="bg-[#E7EDEE] w-full h-[120px]"
+  >
+    <div className="text-2xl font-semibold">{value}</div>
+  </Card>
+);
+
+interface ProgressCardProps {
+  title: string;
+  value: number;
+  number?: number;
+}
+
+export const ProgressCard: React.FC<ProgressCardProps> = ({
+  title,
+  value,
+  number,
+}) => {
+  let textColor = "#144E5A";
+  let percentPoint = 5;
+  switch (number) {
+    case 1:
+      textColor = "#144E5A";
+      percentPoint = 5;
+      break;
+    case 2:
+      textColor = "#F79009";
+      percentPoint = 20;
+      break;
+    case 3:
+      textColor = "#F04438";
+      percentPoint = 5;
+      break;
+    default:
+      percentPoint = 5;
+      textColor = "#144E5A";
+  }
+
+  return (
+    <Card
+      title={<div className="text-xl text-gray-800">{title}</div>}
+      extra={<img src={BackIcon} alt="back" />}
+      className="w-full card-header-remove h-[144px]"
+      bordered
+    >
+      <div className="flex flex-col ">
+        <div className="flex gap-2 items-center m-0 p-0">
+          <p className="text-sm font-normal text-gray-500 m-0 p-0">
+            <FormattedMessage id="point" />
+          </p>
+          <p className="text-base font-medium text-gray-800 m-0 p-0">{`${value}/${percentPoint}`}</p>
+        </div>
+        <Progress
+          showInfo={false}
+          percent={(value * 100) / percentPoint}
+          size={["100%", 10]}
+          strokeColor={textColor}
+          className="m-0"
+        />
       </div>
     </Card>
   );

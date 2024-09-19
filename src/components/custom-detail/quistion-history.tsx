@@ -7,14 +7,11 @@ import { Pie } from "@ant-design/plots";
 import LevelBadge from "components/badge/level";
 
 interface QuistionHistoryProps {
-  data: AssessmentListType[];
-  tab?: number;
+  selectedLevel: AssessmentListType;
 }
 
-const QuistionHistory: React.FC<QuistionHistoryProps> = ({ data, tab }) => {
+const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
   const intl = useIntl();
-
-  const selectedLevel = data?.find((entry) => entry.id === tab);
 
   const pieConfigData = [
     {
@@ -26,8 +23,6 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ data, tab }) => {
       value: selectedLevel?.cfs_point,
     },
   ];
-
-  console.log(selectedLevel?.cfs_point, "sda");
 
   const config = {
     height: 120,
@@ -60,7 +55,7 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ data, tab }) => {
   };
 
   return (
-    <PageCard xR paddingRemove className="p-0 mt-0">
+    <PageCard xR paddingRemove className="mt-0 pb-3">
       <div className="p-0 flex mt-0">
         <div className="w-[9%]">
           <Pie

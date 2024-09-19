@@ -2,6 +2,7 @@ import { ListType } from "service/type";
 import http from "..";
 import {
   AssessmentListType,
+  CompensiveType,
   CustomerDevelopmentPlan,
   ScreeningListType,
 } from "./type";
@@ -21,6 +22,16 @@ namespace screenList {
   export const assessmentDetail = (id: string) =>
     http.get<AssessmentListType[]>(`customer/assessments/${id}`, {
       hasAuth: true,
+    });
+  export const assessmentComprehensive = (id: number) =>
+    http.get<CompensiveType>(`assessment/comprehensive/${id}`, {
+      hasAuth: true,
+    });
+
+  export const emergencyGet = (body: any) =>
+    http.post<CompensiveType>(`emergency/get`, {
+      hasAuth: true,
+      body,
     });
 
   export const edit = (id: number, body?: any) =>

@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import MainRoutes from "routes";
 import english from "./locales/en";
 import mongolia from "./locales/mn";
+import { LevelProvider } from "components/custom-detail/selected-level";
 
 const locales = {
   mn: mongolia,
@@ -15,9 +16,11 @@ const App: React.FC = () => {
   const locale = locales[auth as keyof typeof locales];
   return (
     <IntlProvider messages={locale} locale={auth?.substring(0, 2)}>
-      <BrowserRouter>
-        <MainRoutes />
-      </BrowserRouter>
+      <LevelProvider>
+        <BrowserRouter>
+          <MainRoutes />
+        </BrowserRouter>
+      </LevelProvider>
     </IntlProvider>
   );
 };
