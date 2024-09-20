@@ -3,7 +3,7 @@ import Assesment from "./assessment";
 import QuistionHistory from "../quistion-history";
 import { useLevelContext } from "../selected-level";
 
-const MainDetail: React.FC = () => {
+const MainDetailOtherRoles: React.FC = () => {
   const { selectedLevel } = useLevelContext();
   if (!selectedLevel) {
     return <PageLoading />;
@@ -18,4 +18,4 @@ const MainDetail: React.FC = () => {
   );
 };
 
-export default MainDetail;
+export default MainDetailOtherRoles;

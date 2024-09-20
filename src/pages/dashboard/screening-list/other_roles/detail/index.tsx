@@ -1,14 +1,15 @@
+import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
+import { notification } from "antd";
+import CustomHeader from "components/custom-detail/custom-header";
+import Emergency from "components/custom-detail/emergency";
 import Info from "components/custom-detail/info";
+import DevPlanEdit from "components/custom-detail/other_roles/dev_plan_edit";
+import MainDetailOtherRoles from "components/custom-detail/other_roles/main-detail";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { notification } from "antd";
-import { useEffect } from "react";
-import { PageLoading } from "@ant-design/pro-layout";
-import Emergency from "components/custom-detail/emergency";
-import CustomHeader from "components/custom-detail/custom-header";
-import MainDetail from "components/custom-detail/other_roles/main-detail";
 
 const ScreeningListDetailOtherRoles: React.FC = () => {
   const location = useLocation();
@@ -54,7 +55,8 @@ const ScreeningListDetailOtherRoles: React.FC = () => {
         </div>
         <div className="xl:col-span-4">
           <CustomHeader data={assessmentData?.data || []} />
-          <MainDetail />
+          <MainDetailOtherRoles />
+          <DevPlanEdit />
         </div>
       </div>
     </>

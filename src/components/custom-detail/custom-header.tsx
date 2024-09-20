@@ -39,8 +39,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
     }
   }, [data, tab]);
 
-  console.log(data, tab, selectedLevel);
-
   if (!selectedLevel) {
     return <PageLoading />;
   }

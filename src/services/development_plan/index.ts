@@ -1,6 +1,6 @@
 import { ListType } from "service/type";
 import http from "..";
-import { ResponseType } from "./type";
+import { GetDevPlanType, ResponseType } from "./type";
 
 namespace developmentPlan {
   export const list = (body: any) =>
@@ -18,6 +18,11 @@ namespace developmentPlan {
     http.post<ResponseType>("development_plan", {
       hasAuth: true,
       body,
+    });
+
+  export const getDetail = (id: number) =>
+    http.get<GetDevPlanType>(`development_plan/get/${id}`, {
+      hasAuth: true,
     });
 }
 

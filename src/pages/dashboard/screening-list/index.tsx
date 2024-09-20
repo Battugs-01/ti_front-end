@@ -6,7 +6,6 @@ import { UserRoleType } from "config";
 
 const ScreeningList: React.FC = () => {
   const [user] = useContext(AuthContext);
-  console.log(user.user?.role, "role");
   return (
     <div>
       {user.user?.role === UserRoleType.case_manager ? (

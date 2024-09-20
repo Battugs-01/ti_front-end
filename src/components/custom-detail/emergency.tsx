@@ -37,24 +37,43 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId }) => {
     return <PageLoading />;
   }
 
-  console.log(data?.data, "hello");
   return (
     <Card className="mb-4">
       <div className="text-xl font-semibold mb-6">
         <FormattedMessage id="emergency" />
       </div>
-      <div className="text-base font-semibold mb-6">
+      <div className="text-base font-semibold mb-2">
         <FormattedMessage id="checklist_emergency" />
       </div>
-      <Row gutter={16} className="flex flex-col mt-2">
-        {data?.data?.emergency_care_service?.map((item, index) => (
-          <Col key={index} className="flex gap-4 items-center">
-            <div className="text-sm text-gray-600 font-medium">
+      <Row gutter={16} className="flex flex-col mb-2">
+        <ul className="pl-6">
+          {data?.data?.emergency_care_service?.map((item, index) => (
+            <li
+              className={`text-sm text-gray-600 font-medium ${
+                index === 0 ? "" : "mt-3"
+              }`}
+            >
               {item?.name}
-            </div>
-          </Col>
-        ))}
+            </li>
+          ))}
+        </ul>
       </Row>
+      <div className="text-base font-semibold mb-5">
+        <FormattedMessage id="early_screening_is_required" />
+        <Row gutter={16} className="flex flex-col mt-2">
+          <ul className="pl-6">
+            {data?.data?.emergency_early_examinations?.map((item, index) => (
+              <li
+                className={`text-sm text-gray-600 font-medium ${
+                  index === 0 ? "" : "mt-3"
+                }`}
+              >
+                {item?.name}
+              </li>
+            ))}
+          </ul>
+        </Row>
+      </div>
     </Card>
   );
 };

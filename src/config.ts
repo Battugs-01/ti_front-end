@@ -95,6 +95,20 @@ export enum TotalCaseTab {
   gender = "gender",
 }
 
+export enum DevPlanQuistions {
+  TreatInteract = "TreatInteract",
+  LifePride = "LifePride",
+  LifeValue = "LifeValue",
+  PriorityService = "PriorityService",
+}
+
+export enum CareFociEnum {
+  physicalCondition = 1,
+  psychologyChange = 2,
+  Econemy = 3,
+  HealthRisk = 4,
+}
+
 export const levelOptions = Object.freeze([
   {
     label: "Level 1",

@@ -40,11 +40,6 @@ namespace screenList {
       hasAuth: true,
       body,
     });
-
-  export const developmentPlansList = (id: number) =>
-    http.get<CustomerDevelopmentPlan[]>(`customer/development_plans/${id}`, {
-      hasAuth: true,
-    });
 }
 
 export default screenList;

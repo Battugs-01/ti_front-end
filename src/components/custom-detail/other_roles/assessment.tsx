@@ -117,31 +117,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
           </Col>
         </Row>
         <DeseaseHistory data={data?.diseases} />
-        {/* <General data={data?.comp_ass?.valuation} />
-      <CareFoci data={data?.care_foci[0]?.items} name={"physical_condition"} />
-      <CareFoci data={data?.care_foci[1]?.items} name={"psychology_change"} />
-      <CareFoci data={data?.care_foci[2]?.items} name={"economy_diff"} />
-      <CareFoci data={data?.care_foci[3]?.items} name={"health_risk"} />  */}
       </Card>
-      <Card
-        title={
-          <div className="text-xl font-semibold flex gap-4">
-            <LineChartUp05 className="text-primary-700" />
-            <FormattedMessage id="development_plan" />
-          </div>
-        }
-        extra={
-          <div className="flex items-center gap-4">
-            <Button>
-              <FormattedMessage id="download" />
-            </Button>
-            <Button>
-              <FormattedMessage id="print" />
-            </Button>
-          </div>
-        }
-        className="card-header-remove"
-      ></Card>
     </div>
   );
 };

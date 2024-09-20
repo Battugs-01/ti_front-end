@@ -98,9 +98,9 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
                 {`${data.value}%`}
               </div>
             </div>
-            {/* {index !== 3 && (
+            {index !== 3 && (
               <div className="h-[1px] w-full bg-[#E8E8E8] ml-3 p-0 mx-0" />
-            )} */}
+            )}
           </>
         ))}
       </div>

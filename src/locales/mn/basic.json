@@ -1,7 +1,17 @@
 {
   "name": "Нэр",
   "question": "Асуулт",
+  "severity_syndrome": "Хам шинжийн хүндрэлийн зэрэг",
+  "summary_plan": "Дүгнэлт, төлөвлөгөө",
+  "time": "Хугацаа",
+  "responsible": "Хариуцах",
+  "result": "Үр дүн",
+  "is_resolved": "Шийдэгдсэн эсэх",
+  "generel": "Шийдэгдсэн эсэх",
+  "depression": "Сэтгэл гутрал",
+  "environmental_risk": "Амьдарч буй орчны эрсдэл",
   "first_name": "Нэр",
+  "evaluation": "Үнэлгээ",
   "last_name": "Овог",
   "general": "Ерөнхий хэсэг",
   "lose_activity": "Үйл ажиллагааны чадвар алдагдал",
@@ -142,6 +152,6 @@
   "end_date": "Хаагдсан огноо",
   "total_level_percent": "Нийт түвшиний эзлэх %",
   "total_percent": "Нийт эзлэх %",
-  "female":"Эмэгтэй",
-  "male":"Эрэгтэй"
+  "female": "Эмэгтэй",
+  "male": "Эрэгтэй"
 }
