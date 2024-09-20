@@ -53,7 +53,11 @@ export const QuestionList: React.FC = () => {
             <ScreeningListFilter onFinish={onFinishFilter} />
           </PopoverFilter>
         }
-        customHeaderTitle={<FormattedMessage id="last_screening_list" />}
+        customHeaderTitle={
+          <div className="font-semibold text-[#344054] text-lg">
+            <FormattedMessage id="last_screening_list" />
+          </div>
+        }
         refresh={refreshList}
         hideCreate
       />

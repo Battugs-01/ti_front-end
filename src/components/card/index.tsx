@@ -164,7 +164,52 @@ export const PageCard = ({
       headStyle={{ display: "none" }}
       className={`${paddingRemove ? "p-0" : "p-4"} ${xR && "px-0"} ${
         yR && "py-0"
-      } ${className} `}
+      } ${className}`}
+      bordered={false}
+    >
+      <div className={` ${bodyClassName} `}>
+        <div className={`flex items-center justify-between ${titleClassName}`}>
+          <div className="font-bold text-base text-scale-700">{title}</div>
+          {extra}
+        </div>
+        <div>{children}</div>
+      </div>
+    </Card>
+  );
+};
+
+type ICardProps = {
+  children: ReactNode;
+  className?: string;
+  xR?: boolean;
+  yR?: boolean;
+  title?: string;
+  extra?: ReactNode;
+  bodyClassName?: string;
+  titleClassName?: string;
+  loading?: boolean;
+  paddingRemove?: boolean;
+};
+export const ICard = ({
+  children,
+  className,
+  xR,
+  yR,
+  title,
+  extra,
+  bodyClassName,
+  titleClassName,
+  loading,
+  paddingRemove,
+}: ICardProps) => {
+  return (
+    <Card
+      loading={loading}
+      bodyStyle={{ padding: 0 }}
+      headStyle={{ display: "none" }}
+      className={`${paddingRemove ? "p-0" : "p-4"} ${xR && "px-0"} ${
+        yR && "py-0"
+      } ${className} h-full`}
       bordered={false}
     >
       <div className={` ${bodyClassName} `}>

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import screenList from "service/screening_list";
 import { useLevelContext } from "./selected-level";
-import { FaDotCircle } from "react-icons/fa";
 
 interface EmergencyProps {
   customerId: string;
@@ -38,19 +37,18 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId }) => {
     return <PageLoading />;
   }
 
-  console.log(data?.data?.emergency_care_service, "sda");
+  console.log(data?.data, "hello");
   return (
     <Card className="mb-4">
-      <div className="text-xl font-semibold flex flex-row gap-4">
+      <div className="text-xl font-semibold mb-6">
         <FormattedMessage id="emergency" />
       </div>
-      <div className="text-xl font-semibold flex flex-row gap-4">
+      <div className="text-base font-semibold mb-6">
         <FormattedMessage id="checklist_emergency" />
       </div>
       <Row gutter={16} className="flex flex-col mt-2">
         {data?.data?.emergency_care_service?.map((item, index) => (
           <Col key={index} className="flex gap-4 items-center">
-            <FaDotCircle size={7} />
             <div className="text-sm text-gray-600 font-medium">
               {item?.name}
             </div>

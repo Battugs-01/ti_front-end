@@ -15,14 +15,15 @@ const DeseaseHistory: React.FC<DeseaseHistoryProps> = ({ data }) => {
         <FormattedMessage id="desease_history" />
       </div>
       <Row gutter={16} className="flex flex-col mt-2">
-        {data?.map((item, index) => (
-          <Col key={index} className="flex gap-4 items-center">
-            <FaDotCircle size={7} />
-            <div className="text-sm text-gray-600 font-medium">
-              {item?.name}
-            </div>
-          </Col>
-        ))}
+        <ul className="pl-6">
+          {data?.map((item, index) => (
+            <Col key={index} className="flex gap-4 items-center">
+              <li className="text-sm text-gray-600 font-medium pb-1">
+                {item?.name}
+              </li>
+            </Col>
+          ))}
+        </ul>
       </Row>
     </Card>
   );

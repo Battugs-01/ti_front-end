@@ -132,5 +132,7 @@
   "last_screening_list": "List of recent queries",
   "end_date": "End Date",
   "total_level_percent": "Total level %",
-  "total_percent": "Total %"
+  "total_percent": "Total %",
+  "female":"Female",
+  "male":"Male"
 }

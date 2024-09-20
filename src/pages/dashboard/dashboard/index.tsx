@@ -4,6 +4,7 @@ import { DashboardTab, ScreeningTab } from "config";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { All } from "./all";
+import { Darkhan } from "./darkhan";
 
 const Dashboard: React.FC = () => {
   const [tab, setTab] = useState<DashboardTab>(DashboardTab.all);
@@ -35,6 +36,10 @@ const Dashboard: React.FC = () => {
       />
       <div className="mt-6">
         <IfCondition condition={tab === DashboardTab.all} whenTrue={<All />} />
+        <IfCondition
+          condition={tab === DashboardTab.darkhan}
+          whenTrue={<Darkhan />}
+        />
       </div>
     </div>
   );

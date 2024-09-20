@@ -141,5 +141,7 @@
   "last_screening_list": "Сүүлд оруулсан асуулгын жагсаалт",
   "end_date": "Хаагдсан огноо",
   "total_level_percent": "Нийт түвшиний эзлэх %",
-  "total_percent": "Нийт эзлэх %"
+  "total_percent": "Нийт эзлэх %",
+  "female":"Эмэгтэй",
+  "male":"Эрэгтэй"
 }

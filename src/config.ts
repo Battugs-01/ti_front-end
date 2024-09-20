@@ -59,12 +59,20 @@ export const agencyArray = Object.freeze([
   },
 ]);
 
+export enum UserRoleType {
+  case_manager = "case_manager",
+  senior_case_manager = "senior_case_manager",
+  operation_manager = "operation_manager",
+  doctor = "doctor",
+  admin = "admin",
+}
+
 export const permissionArray = Object.freeze([
-  "case_manager",
-  "senior_case_manager",
-  "operation_manager",
-  "doctor",
-  "admin",
+  UserRoleType.case_manager,
+  UserRoleType.senior_case_manager,
+  UserRoleType.operation_manager,
+  UserRoleType.doctor,
+  UserRoleType.admin,
 ]);
 
 export enum ScreeningTab {

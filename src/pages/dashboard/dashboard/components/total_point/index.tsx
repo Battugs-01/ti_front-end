@@ -1,10 +1,10 @@
 import { Area } from "@ant-design/plots";
-import { PageCard } from "components/card";
+import { ICard } from "components/card";
 import { FormattedMessage } from "react-intl";
 
 export const TotalPoint: React.FC = () => {
   const config = {
-    height: 300,
+    height: 400,
     data: {
       type: "fetch",
       value: "https://assets.antv.antgroup.com/g2/stocks.json",
@@ -28,11 +28,11 @@ export const TotalPoint: React.FC = () => {
     },
   };
   return (
-    <PageCard xR yR>
+    <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
         <FormattedMessage id="total_point" />
       </p>
       <Area {...config} />
-    </PageCard>
+    </ICard>
   );
 };

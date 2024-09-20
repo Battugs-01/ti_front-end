@@ -1,7 +1,7 @@
 import { Pie } from "@ant-design/plots";
-import { Segmented } from "antd";
-import { PageCard } from "components/card";
-import { DashboardTab, TotalCaseTab } from "config";
+import { Segmented, Table } from "antd";
+import { ICard } from "components/card";
+import { TotalCaseTab } from "config";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -26,7 +26,7 @@ export const TotalCase: React.FC = () => {
     legend: null,
   };
   return (
-    <PageCard xR yR h-full>
+    <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
         <FormattedMessage id="total_case" />
       </p>
@@ -53,6 +53,26 @@ export const TotalCase: React.FC = () => {
         />
       </div>
       <Pie {...config} height={180} width={350} />
-    </PageCard>
+      <Table
+        className="p-4"
+        columns={[
+          {
+            title: <FormattedMessage id="levels" />,
+            dataIndex: "level",
+            key: "level",
+          },
+          {
+            title: <FormattedMessage id="male" />,
+            dataIndex: "male",
+            key: "male",
+          },
+          {
+            title: <FormattedMessage id="female" />,
+            dataIndex: "female",
+            key: "female",
+          },
+        ]}
+      />
+    </ICard>
   );
 };

@@ -5,9 +5,9 @@ import { FormattedMessage } from "react-intl";
 import AssesmentSvg from "assets/img/assesment.svg";
 import screenList from "service/screening_list";
 import { PageLoading } from "@ant-design/pro-layout";
-import CareFociPercent from "./tables/care-foci-percent";
+import CareFociPercent from "../care-foci-percent";
 import { ProgressCard, StatCard } from "components/card";
-import DeseaseHistory from "./tables/desease-history";
+import DeseaseHistory from "../desease-history";
 import CareFoci from "./tables/care-foci";
 import General from "./tables/general";
 

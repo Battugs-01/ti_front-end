@@ -81,16 +81,19 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
       <div className="flex flex-col gap-2 mb-2">
         {statusData.list?.map((data, index) => (
           <>
-            <div className="flex flex-row justify-between items-center ml-4 ">
-              <Badge
-                key={index}
-                color={data.color}
-                text={
-                  <span className="text-xs font-normal text-[#4E5969] ">
-                    {data.type}
-                  </span>
-                }
-              />
+            <div className="flex justify-between items-center ml-4">
+              <div key={index} className="flex items-center gap-1">
+                <div
+                  style={{
+                    height: "12px",
+                    background: data?.color,
+                    width: "3px",
+                  }}
+                ></div>
+                <span className="text-xs font-normal text-[#4E5969] ">
+                  {data.type}
+                </span>
+              </div>
               <div className="text-xs font-medium text-[#1D2129]">
                 {`${data.value}%`}
               </div>
