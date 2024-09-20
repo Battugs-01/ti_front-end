@@ -4,6 +4,7 @@ import {
   AssessmentListType,
   CompensiveType,
   CustomerDevelopmentPlan,
+  EmergencyChecklistType,
   ScreeningListType,
 } from "./type";
 
@@ -29,7 +30,7 @@ namespace screenList {
     });
 
   export const emergencyGet = (body: any) =>
-    http.post<CompensiveType>(`emergency/get`, {
+    http.post<EmergencyChecklistType>(`emergency/get`, {
       hasAuth: true,
       body,
     });

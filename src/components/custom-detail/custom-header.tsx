@@ -19,7 +19,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
 
   const segmentedData = data?.map((item) => ({
     label: (
-      <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A]">
+      <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A] font-semibold">
         {dayjs(item?.date).format("YYYY-MM-DD")}
         <LevelBadge status={item.level} OneNone={true} />
       </div>
@@ -30,12 +30,16 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
   const [tab, setTab] = useState(data[0]?.id || null);
 
   useEffect(() => {
-    setTab(data[0]?.id);
+    if (tab === null) {
+      setTab(data[0]?.id || null);
+    }
     const level = data?.find((entry) => entry?.id === tab);
     if (level) {
       setSelectedLevel(level);
     }
-  }, [tab, data, setSelectedLevel]);
+  }, [data, tab]);
+
+  console.log(data, tab, selectedLevel);
 
   if (!selectedLevel) {
     return <PageLoading />;
@@ -52,9 +56,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
               options={segmentedData || []}
               fieldProps={{
                 size: "large",
-                value: selectedLevel.id,
+                value: tab,
                 onChange: (e) => {
                   setTab(e.target.value);
+                  const level = data?.find((entry) => entry?.id === tab);
+                  if (level) {
+                    setSelectedLevel(level);
+                  }
                 },
               }}
             />

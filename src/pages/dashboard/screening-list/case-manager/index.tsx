@@ -13,9 +13,12 @@ import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { getScreeningTableColumns } from "../components/table-column";
 import TableHeader from "../components/table-header";
+import { useLevelContext } from "components/custom-detail/selected-level";
 
 const ScreeningListCaseManager: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
+  const { setSelectedLevel } = useLevelContext();
+
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
   const intl = useIntl();
   const screen = useRequest(screenList.list, {
@@ -66,6 +69,7 @@ const ScreeningListCaseManager: React.FC = () => {
               return (
                 <Link
                   to={`/dashboard/screening-list/case-manager/detail?customer_id=${record.id}`}
+                  onClick={() => setSelectedLevel(null)}
                 >
                   <Typography.Text
                     className="text-primary-700 font-bold"

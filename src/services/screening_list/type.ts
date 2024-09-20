@@ -489,3 +489,25 @@ export interface Health {
   respiratory_rate: number;
   body_temp: number;
 }
+
+export interface EmergencyChecklistType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  customer_id: number;
+  employee_id: number;
+  assessment_id: number;
+  date: Date;
+  emergency_care_service: Emergency[];
+  other_care_services: string;
+  emergency_early_examinations: Emergency[];
+  other_early_examinations: string;
+}
+
+export interface Emergency {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+  description: string;
+}

@@ -2,10 +2,10 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Card, Col, notification, Row } from "antd";
 import { useEffect } from "react";
-import { FaDotCircle } from "react-icons/fa";
 import { FormattedMessage } from "react-intl";
 import screenList from "service/screening_list";
 import { useLevelContext } from "./selected-level";
+import { FaDotCircle } from "react-icons/fa";
 
 interface EmergencyProps {
   customerId: string;
@@ -34,24 +34,28 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId }) => {
     }
   }, [customerId, selectedLevel]);
 
-  if (!data && !selectedLevel && !customerId) {
+  if (!data.data && !selectedLevel && !customerId) {
     return <PageLoading />;
   }
+
+  console.log(data?.data?.emergency_care_service, "sda");
   return (
     <Card className="mb-4">
       <div className="text-xl font-semibold flex flex-row gap-4">
         <FormattedMessage id="emergency" />
       </div>
+      <div className="text-xl font-semibold flex flex-row gap-4">
+        <FormattedMessage id="checklist_emergency" />
+      </div>
       <Row gutter={16} className="flex flex-col mt-2">
-        {/* {data?.map((item, index) => (
+        {data?.data?.emergency_care_service?.map((item, index) => (
           <Col key={index} className="flex gap-4 items-center">
             <FaDotCircle size={7} />
             <div className="text-sm text-gray-600 font-medium">
               {item?.name}
             </div>
           </Col>
-        ))} */}
-        sda
+        ))}
       </Row>
     </Card>
   );

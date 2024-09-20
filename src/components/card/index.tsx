@@ -184,15 +184,15 @@ interface StatCardProps {
 }
 
 export const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
-  <Card
-    title={
+  <Card className="bg-[#E7EDEE] w-full h-[120px]">
+    <div className="flex flex-col gap-1">
       <div className="text-sm text-[#475467]">
         <FormattedMessage id={title} />
       </div>
-    }
-    className="bg-[#E7EDEE] w-full h-[120px]"
-  >
-    <div className="text-2xl font-semibold">{value}</div>
+      <div>
+        <div className="text-[36px] font-semibold">{value}</div>
+      </div>
+    </div>
   </Card>
 );
 
@@ -228,26 +228,27 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
   }
 
   return (
-    <Card
-      title={<div className="text-xl text-gray-800">{title}</div>}
-      extra={<img src={BackIcon} alt="back" />}
-      className="w-full card-header-remove h-[144px]"
-      bordered
-    >
-      <div className="flex flex-col ">
-        <div className="flex gap-2 items-center m-0 p-0">
-          <p className="text-sm font-normal text-gray-500 m-0 p-0">
-            <FormattedMessage id="point" />
-          </p>
-          <p className="text-base font-medium text-gray-800 m-0 p-0">{`${value}/${percentPoint}`}</p>
+    <Card className="w-full card-header-remove h-[144px]" bordered>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between">
+          <div className="text-xl text-gray-800">{title}</div>
+          <img src={BackIcon} alt="back" />
         </div>
-        <Progress
-          showInfo={false}
-          percent={(value * 100) / percentPoint}
-          size={["100%", 10]}
-          strokeColor={textColor}
-          className="m-0"
-        />
+        <div className="flex flex-col ">
+          <div className="flex gap-2 items-center m-0 p-0">
+            <p className="text-sm font-normal text-gray-500 m-0 p-0">
+              <FormattedMessage id="point" />
+            </p>
+            <p className="text-base font-medium text-gray-800 m-0 p-0">{`${value}/${percentPoint}`}</p>
+          </div>
+          <Progress
+            showInfo={false}
+            percent={(value * 100) / percentPoint}
+            size={["100%", 10]}
+            strokeColor={textColor}
+            className="m-0"
+          />
+        </div>
       </div>
     </Card>
   );

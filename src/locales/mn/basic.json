@@ -10,6 +10,8 @@
   "health_risk": "Эрүүл мэндийн эрсдлүүд",
   "physical_condition": "Биеийн байдал",
   "description": "Тайлбар",
+  "checklist_emergency": "Эмнэлгийн яаралтай тусламж үйлчилгээ авах шаардлагатай эсэхийг үнэлэх хяналтын хуудас",
+  "checklist_screening": "Өвчтөнд эрт үзлэг хийх шаардлагатай эсэхийг үнэлэх хяналтын хуудас",
   "desease_history": "Өвчний түүх",
   "emergency": "Эмнэлгийн яаралтай тусламж",
   "early_screening_is_required": "Өвчтөнд эрт үзлэг хийх шаардлагатай эсэхийг үнэлэх хяналтын хуудас  ",
@@ -133,11 +135,11 @@
   "mandal": "Мандал",
   "achlalt": "Ачлалт хүүхдүүд",
   "group": "Бүлэг",
-  "total_point":"Нийт оноо",
-  "total_case_agency":"Нийт кейс - Агентлагаар",
-  "total_case":"Нийт кейс",
-  "last_screening_list":"Сүүлд оруулсан асуулгын жагсаалт",
-  "end_date":"Хаагдсан огноо",
-  "total_level_percent":"Нийт түвшиний эзлэх %",
-  "total_percent":"Нийт эзлэх %"
+  "total_point": "Нийт оноо",
+  "total_case_agency": "Нийт кейс - Агентлагаар",
+  "total_case": "Нийт кейс",
+  "last_screening_list": "Сүүлд оруулсан асуулгын жагсаалт",
+  "end_date": "Хаагдсан огноо",
+  "total_level_percent": "Нийт түвшиний эзлэх %",
+  "total_percent": "Нийт эзлэх %"
 }

@@ -12,11 +12,11 @@ const BooleanBadge: FC<Props> = ({ status }) => {
   switch (status) {
     case true:
       text = intl.formatMessage({ id: "yes" }, { number: 1 });
-      colorClass = "bg-[#ECFDF3] text-[#027A48]";
+      colorClass = "bg-[#FEF3F2] text-[#B42318]";
       break;
     case false:
       text = intl.formatMessage({ id: "no" }, { number: 3 });
-      colorClass = "bg-[#FEF3F2] text-[#B42318]";
+      colorClass = "bg-[#ECFDF3] text-[#027A48]";
       break;
     default:
       colorClass = "bg-[#F2F4F7] text-[#344054]";

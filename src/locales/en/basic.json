@@ -11,6 +11,8 @@
   "all": "All",
   "register": "Register",
   "phone": "Phone",
+  "checklist_emergency": "Checklist for assessing the need for emergency medical care",
+  "checklist_screening": "A checklist for assessing the need for early patient screening",
   "age": "Age",
   "gender": "Gender",
   "risk_level": "Risk Level",
@@ -124,11 +126,11 @@
   "mandal": "Mandal",
   "achlalt": "Achlalt",
   "group": "Group",
-  "total_point":"Total Point",
-  "total_case_agency":"Total Case Agency",
-  "total_case":"Total Case",
-  "last_screening_list":"List of recent queries",
-  "end_date":"End Date",
-  "total_level_percent":"Total level %",
-  "total_percent":"Total %"
+  "total_point": "Total Point",
+  "total_case_agency": "Total Case Agency",
+  "total_case": "Total Case",
+  "last_screening_list": "List of recent queries",
+  "end_date": "End Date",
+  "total_level_percent": "Total level %",
+  "total_percent": "Total %"
 }
