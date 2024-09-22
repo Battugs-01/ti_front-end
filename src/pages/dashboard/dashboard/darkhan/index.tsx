@@ -1,6 +1,5 @@
 import { QuestionList } from "../components/question_list";
 import { TotalCase } from "../components/total_case";
-import { TotalCaseAgency } from "../components/total_case_agency";
 import { TotalPoint } from "../components/total_point";
 
 export const Darkhan: React.FC = () => {
