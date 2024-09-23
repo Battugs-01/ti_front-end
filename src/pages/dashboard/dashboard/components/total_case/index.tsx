@@ -9,12 +9,6 @@ import { Age } from "./tab/age";
 import { Gender } from "./tab/gender";
 import { Level } from "./tab/level";
 
-const data = [
-  { type: "33%", value: 30 },
-  { type: "32%", value: 30 },
-  { type: "31%", value: 30 },
-];
-
 interface TotalCaseProps {
   data?: TotalCaseInterface;
 }
