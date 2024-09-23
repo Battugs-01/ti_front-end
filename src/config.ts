@@ -305,3 +305,9 @@ export enum DevelopmentPlanGraphTab {
   gds = "gds",
   barthel = "barthel_index",
 }
+
+export enum DashboardLevelEnum {
+  level1 = "level_1",
+  level2 = "level_2",
+  level3 = "level_3",
+}

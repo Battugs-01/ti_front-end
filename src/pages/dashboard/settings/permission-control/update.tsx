@@ -235,6 +235,9 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     name="agency_id"
                     options={agencyArray.map((el) => ({ ...el }))}
                     label={intl.formatMessage({ id: "agency" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
               </Row>
@@ -250,6 +253,9 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     name="gender"
                     options={workersGenderArray.map((el) => ({ ...el }))}
                     label={intl.formatMessage({ id: "gender" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
               </Row>
@@ -286,6 +292,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       showSearch: true,
                       loading: city?.loading,
+                      size: "large",
                     }}
                     options={city.data?.map((el) => ({
                       value: el.id,
@@ -306,6 +313,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       showSearch: true,
                       loading: district?.loading,
+                      size: "large",
                     }}
                     options={district.data?.map((item: any) => {
                       return {
@@ -326,6 +334,7 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       showSearch: true,
                       loading: khoroo?.loading,
+                      size: "large",
                     }}
                     options={khoroo?.data?.map((item: any) => {
                       return {
@@ -352,6 +361,9 @@ export const UpdatePermission: React.FC<ActionComponentProps<any>> = ({
                       value: el,
                     }))}
                     label={intl.formatMessage({ id: "permission" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
               </Row>

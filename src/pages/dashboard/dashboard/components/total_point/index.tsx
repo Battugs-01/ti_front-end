@@ -10,58 +10,22 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { TotalPointInterface } from "service/dashboard/type";
 
-export const TotalPoint: React.FC = () => {
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+interface TotalPointProps {
+  data?: TotalPointInterface[];
+}
+
+export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
+  // if (!data) {
+  //   return <PageLoading />;
+  // }
   return (
     <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
         <FormattedMessage id="total_point" />
       </p>
-      <div className="w-full h-[400px]">
+      <div className="w-full h-[450px]">
         <ResponsiveContainer>
           <AreaChart
             data={data}
@@ -77,22 +41,29 @@ export const TotalPoint: React.FC = () => {
                 <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="name" />
+            <XAxis />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Legend verticalAlign="top" height={36} />
             <Tooltip />
             <Area
               type="monotone"
-              dataKey="uv"
-              stroke="#8884d8"
+              dataKey="barthel_index"
+              stroke="#0FCA7A"
               fillOpacity={1}
               fill="url(#colorUv)"
             />
             <Area
               type="monotone"
-              dataKey="pv"
-              stroke="#82ca9d"
+              dataKey="mini_cog"
+              stroke="#03BAE2"
+              fillOpacity={1}
+              fill="url(#colorPv)"
+            />
+            <Area
+              type="monotone"
+              dataKey="gds"
+              stroke="#FBC62F"
               fillOpacity={1}
               fill="url(#colorPv)"
             />
