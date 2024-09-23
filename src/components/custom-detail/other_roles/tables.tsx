@@ -21,7 +21,6 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   data,
   isEvaluated,
 }) => {
-  console.log(data, "sda");
   const intl = useIntl();
   const [isSwitched, setIsSwitched] = useState(true);
 

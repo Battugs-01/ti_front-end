@@ -1,27 +1,20 @@
 import { Pie } from "@ant-design/plots";
-import { Badge, Table } from "antd";
+import { Table } from "antd";
 import { DashboardLevel } from "components/badge/dashboard_level";
 import { GenderBadge } from "components/badge/gender";
-import LevelBadge from "components/badge/level";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Levels } from "service/dashboard/type";
-
-// const data = [
-//   { type: "33%", value: 30 },
-//   { type: "32%", value: 30 },
-//   { type: "31%", value: 30 },
-// ];
 
 interface LevelProps {
   data: Levels[];
 }
 
 export const Level: React.FC<LevelProps> = ({ data }) => {
-  console.log(data, "data");
+  const intl = useIntl();
   const config = {
     data: data.map((item) => {
       return {
-        type: item.name,
+        type: intl.formatMessage({ id: item.name }),
         value: item.percent,
       };
     }),

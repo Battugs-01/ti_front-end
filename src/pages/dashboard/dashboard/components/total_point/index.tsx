@@ -4,6 +4,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Label,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -17,9 +18,6 @@ interface TotalPointProps {
 }
 
 export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
-  // if (!data) {
-  //   return <PageLoading />;
-  // }
   return (
     <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
@@ -42,13 +40,25 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
               </linearGradient>
             </defs>
             <XAxis />
-            <YAxis />
+            <YAxis>
+              <Label value="Score" angle={-90} position="insideLeft" />
+            </YAxis>
             <CartesianGrid strokeDasharray="3 3" />
-            <Legend verticalAlign="top" height={36} />
+            <Legend
+              formatter={(value) => {
+                if (value === "barthel_index") return "Barthel Index";
+                if (value === "mini_cog") return "Mini Cog";
+                if (value === "gds") return "GDS";
+                return value;
+              }}
+              verticalAlign="top"
+              height={36}
+            />
             <Tooltip />
             <Area
               type="monotone"
               dataKey="barthel_index"
+              name="Barthel Index"
               stroke="#0FCA7A"
               fillOpacity={1}
               fill="url(#colorUv)"
@@ -56,6 +66,7 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
             <Area
               type="monotone"
               dataKey="mini_cog"
+              name="Mini Cog"
               stroke="#03BAE2"
               fillOpacity={1}
               fill="url(#colorPv)"
@@ -63,6 +74,7 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
             <Area
               type="monotone"
               dataKey="gds"
+              name="GDS"
               stroke="#FBC62F"
               fillOpacity={1}
               fill="url(#colorPv)"

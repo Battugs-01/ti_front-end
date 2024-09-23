@@ -14,7 +14,6 @@ interface AgeProps {
 }
 
 export const Age: React.FC<AgeProps> = ({ data }) => {
-  console.log(data, "data");
   const graphData = Object.keys(data).map((key) => {
     return {
       type: key,
@@ -36,7 +35,9 @@ export const Age: React.FC<AgeProps> = ({ data }) => {
         position: "bottom",
         rowPadding: 10,
         itemSpacing: 10,
-        wrap: true,
+      },
+      shape: {
+        type: "circle",
       },
     },
   };
