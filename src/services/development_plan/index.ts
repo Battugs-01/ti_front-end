@@ -1,6 +1,6 @@
 import { ListType } from "service/type";
 import http from "..";
-import { GetDevPlanType, ResponseType } from "./type";
+import { CareFociItemElement, GetDevPlanType, ResponseType } from "./type";
 
 namespace developmentPlan {
   export const list = (body: any) =>
@@ -23,6 +23,12 @@ namespace developmentPlan {
   export const getDetail = (id: number) =>
     http.get<GetDevPlanType>(`development_plan/get/${id}`, {
       hasAuth: true,
+    });
+
+  export const updateDevPlan = (body: any) =>
+    http.put<CareFociItemElement[]>("development_plan/update", {
+      hasAuth: true,
+      body,
     });
 }
 
