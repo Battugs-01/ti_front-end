@@ -57,9 +57,9 @@ const PermissionControl: React.FC = () => {
   );
 
   return (
-    <div className="custom-ant-card-padding-remove">
-      <Card loading={employeeList?.loading}>
-        <div style={{ borderBottom: "1px solid #EAECF0" }}>
+    <div className="overflow-x-hidden">
+      <Card loading={employeeList?.loading} bodyStyle={{ padding: 0 }}>
+        <div className="mt-6">
           <InitTableHeader
             search={search}
             setSearch={(e) => {

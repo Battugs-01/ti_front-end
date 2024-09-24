@@ -188,6 +188,9 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                         <FormattedMessage id="agency_extra" />
                       </div>
                     }
+                    fieldProps={{
+                      size: "large",
+                    }}
                     name="agency_id"
                     options={agencyArray.map((el) => ({ ...el }))}
                     label={intl.formatMessage({ id: "agency" })}
@@ -199,6 +202,9 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                   <ProFormDatePicker
                     name="birth_date"
                     label={intl.formatMessage({ id: "date_of_birth" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
                 <Col span={12}>
@@ -206,6 +212,9 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     name="gender"
                     options={workersGenderArray.map((el) => ({ ...el }))}
                     label={intl.formatMessage({ id: "gender" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
               </Row>
@@ -242,6 +251,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       showSearch: true,
                       loading: city?.loading,
+                      size: "large",
                     }}
                     options={city.data?.map((el) => ({
                       value: el.id,
@@ -262,6 +272,7 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       showSearch: true,
                       loading: district?.loading,
+                      size: "large",
                     }}
                     options={district.data?.map((item: any) => {
                       return {
@@ -309,6 +320,9 @@ export const CreatePermission: React.FC<ActionComponentProps<any>> = ({
                       value: el,
                     }))}
                     label={intl.formatMessage({ id: "permission" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                   />
                 </Col>
               </Row>

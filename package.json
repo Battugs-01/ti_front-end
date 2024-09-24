@@ -34,6 +34,8 @@
     "axios": "1.6.3",
     "braft-editor": "^2.3.9",
     "crypto-js": "^4.2.0",
+    "d3-geo": "^3.1.1",
+    "datamaps": "^0.5.9",
     "dayjs": "1.11.10",
     "file-saver": "^2.0.5",
     "firebase": "^10.7.1",
@@ -55,6 +57,7 @@
     "react-router-dom": "6.21.1",
     "react-transition-group": "4.4.5",
     "read-excel-file": "^5.7.1",
+    "recharts": "^2.12.7",
     "sass": "1.69.6",
     "untitled-ui": "^0.1.0",
     "untitledui-js-base": "^1.1.1",
@@ -64,6 +67,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/d3-geo": "^3.1.0",
     "@types/draft-js": "0.11.17",
     "@types/nprogress": "0.2.3",
     "@types/react": "17.0.2",
