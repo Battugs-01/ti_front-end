@@ -1,17 +1,19 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Button, Card, notification } from "antd";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
 import { useLevelContext } from "../selected-level";
 import DevPlanTables from "./tables";
 import { CareFoci } from "pages/dashboard/stastical-report/care_foci";
-import { CareFociEnum } from "config";
+import { CareFociEnum, UserRoleType } from "config";
+import { AuthContext } from "context/auth";
 
 const DevPlanEdit: React.FC = () => {
   const { selectedLevel } = useLevelContext();
+  const [user] = useContext(AuthContext);
 
   const devPlanData = useRequest(developmentPlan.getDetail, {
     manual: true,
@@ -87,6 +89,15 @@ const DevPlanEdit: React.FC = () => {
             >
               <FormattedMessage id="print" />
             </Button>
+            {user && user.user?.role === UserRoleType.doctor && (
+              <Button
+                size="large"
+                className="flex items-center gap-2"
+                type="primary"
+              >
+                <FormattedMessage id="development_plan_end" />
+              </Button>
+            )}
           </div>
         }
         className="card-header-remove mt-6"

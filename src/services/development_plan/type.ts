@@ -56,7 +56,7 @@ export interface CareFociItemElement {
   summary_plan: string;
   duration: number;
   result: string;
-  is_resolved: boolean;
+  is_resolved: boolean | string;
   person_in_charge_id: null;
   key?: string;
   desc?: string;

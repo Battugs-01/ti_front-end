@@ -1,7 +1,6 @@
 import { DevPlanQuistions } from "config";
 
 export const DevPlanQuistion = (value: string) => {
-  console.log((value = DevPlanQuistions.TreatInteract), "value");
   switch (value) {
     case DevPlanQuistions.TreatInteract:
       return "Танд бусад хүмүүс хэрхэн хандаж, харилцаасай гэж хүсдэг вэ?";
