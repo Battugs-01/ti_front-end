@@ -188,5 +188,6 @@
   "date_establishment":"Байгуулагдсан огноо",
   "stack_holder":"Stakeholder",
   "required": "Энэ талбарыг оруулах шаардлагатай!",
-  "add_user":"Хэрэглэгч нэмэх"
+  "add_user":"Хэрэглэгч нэмэх",
+  "update_user":"Хэрэглэгч засах"
 }

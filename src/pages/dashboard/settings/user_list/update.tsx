@@ -65,7 +65,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
         );
         onFinish?.();
       }}
-      title={intl.formatMessage({ id: "update_stakeholder" })}
+      title={intl.formatMessage({ id: "update_user" })}
       open={open}
       initialValues={{
         ...detail,
