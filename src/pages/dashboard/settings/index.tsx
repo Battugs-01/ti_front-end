@@ -5,20 +5,27 @@ import { useState } from "react";
 import PermissionControl from "./permission-control";
 import CareFosi from "./care-fosi";
 import { FormattedMessage } from "react-intl";
+import { AgencyList } from "./agency_list";
+import { StackholderList } from "./stackholder_list";
+import { Userlist } from "./user_list";
 
 const Settings: React.FC = () => {
-  const [tab, setTab] = useState<SettingsTab>(SettingsTab.permission);
+  const [tab, setTab] = useState<SettingsTab>(SettingsTab.agency_list);
   return (
     <>
       <Segmented
         options={[
           {
-            value: SettingsTab.permission,
-            label: <FormattedMessage id="permission_control" />,
+            value: SettingsTab.agency_list,
+            label: <FormattedMessage id="agency_list" />,
           },
           {
-            value: SettingsTab.careFoci,
-            label: <FormattedMessage id="care_foci_list" />,
+            value: SettingsTab.stakeholder_list,
+            label: <FormattedMessage id="stakeholder_list" />,
+          },
+          {
+            value: SettingsTab.user_list,
+            label: <FormattedMessage id="user_list" />,
           },
         ]}
         size="large"
@@ -28,14 +35,27 @@ const Settings: React.FC = () => {
       />
 
       <div className="mt-7"></div>
-      <IfCondition
-        condition={SettingsTab.permission === tab}
+
+      {/* <IfCondition
+        condition={SettingsTab.agency_list === tab}
         whenTrue={<PermissionControl />}
+      /> */}
+      <IfCondition
+        condition={SettingsTab.agency_list === tab}
+        whenTrue={<AgencyList />}
       />
       <IfCondition
-        condition={SettingsTab.careFoci === tab}
-        whenTrue={<CareFosi />}
+        condition={SettingsTab.stakeholder_list === tab}
+        whenTrue={<StackholderList />}
       />
+      <IfCondition
+        condition={SettingsTab.user_list === tab}
+        whenTrue={<Userlist />}
+      />
+      {/* <IfCondition
+        condition={SettingsTab.stakeholder_list === tab}
+        whenTrue={<CareFosi />}
+      /> */}
     </>
   );
 };

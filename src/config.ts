@@ -281,8 +281,9 @@ export const LANGUAGES = Object.freeze([
 ]);
 
 export enum SettingsTab {
-  permission = "permission",
-  careFoci = "careFoci",
+  agency_list = "agency_list",
+  stakeholder_list = "stakeholder_list",
+  user_list = "user_list",
 }
 
 export enum StatisticalTab {

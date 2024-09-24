@@ -1,4 +1,4 @@
-import { Pie } from "@ant-design/plots";
+import { Pie } from "@ant-design/charts";
 import { useIntl } from "react-intl";
 import { Sex } from "service/dashboard/type";
 

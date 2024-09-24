@@ -1,4 +1,4 @@
-import { Pie } from "@ant-design/plots";
+import { Pie, PieConfig } from "@ant-design/plots";
 
 // const data = [
 //   { type: "54- доош", value: 10 },
@@ -20,7 +20,7 @@ export const Age: React.FC<AgeProps> = ({ data }) => {
       value: data[key],
     };
   });
-  const config = {
+  const config: PieConfig = {
     data: graphData,
     angleField: "value",
     colorField: "type",
@@ -35,9 +35,6 @@ export const Age: React.FC<AgeProps> = ({ data }) => {
         position: "bottom",
         rowPadding: 10,
         itemSpacing: 10,
-      },
-      shape: {
-        type: "circle",
       },
     },
   };
