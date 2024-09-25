@@ -7,7 +7,7 @@ import { PopoverFilter } from "components/filter";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
-import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
+// import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
@@ -48,11 +48,11 @@ export const QuestionList: React.FC = () => {
   return (
     <PageCard xR>
       <InitTableHeader
-        filter={
-          <PopoverFilter>
-            <ScreeningListFilter onFinish={onFinishFilter} />
-          </PopoverFilter>
-        }
+        // filter={
+        //   <PopoverFilter>
+        //     <ScreeningListFilter onFinish={onFinishFilter} />
+        //   </PopoverFilter>
+        // }
         customHeaderTitle={
           <div className="font-semibold text-[#344054] text-lg">
             <FormattedMessage id="last_screening_list" />

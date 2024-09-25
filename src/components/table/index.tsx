@@ -166,7 +166,6 @@ export const ITable = <T extends {}>({
               return (
                 <StopPagination>
                   <div className="gap-2 flex items-center justify-end mr-3">
-                    {customActions && customActions(record)}
                     {DetailComponent && (
                       <DetailButton
                         style={{
@@ -201,6 +200,7 @@ export const ITable = <T extends {}>({
                         }}
                       />
                     )}
+                    {customActions && customActions(record)}
                   </div>
                 </StopPagination>
               );

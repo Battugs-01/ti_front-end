@@ -33,6 +33,7 @@ export const Userlist: React.FC = () => {
       ...filter,
     });
   }, [filter]);
+
   const refreshList = () => {
     user?.run({
       ...filter,

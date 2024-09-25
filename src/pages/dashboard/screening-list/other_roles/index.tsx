@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { FileSearch03 } from "untitledui-js-base";
+import { FileSearch03, MinusCircle } from "untitledui-js-base";
 import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { getScreeningTableColumns } from "../components/table-column";
@@ -34,6 +34,7 @@ const ScreeningListOtherRoles: React.FC = () => {
       levels: screeningListFilter(tab),
     });
   }, [filter, tab]);
+
   const refreshList = () => {
     screen?.run({
       ...filter,
@@ -41,20 +42,9 @@ const ScreeningListOtherRoles: React.FC = () => {
     });
   };
 
-  const onFinishFilter = async (values: any) => {
-    screen.runAsync({
-      ...filter,
-      ...values,
-    });
-  };
-
   return (
     <PageCard xR>
-      <TableHeader
-        onFinishFilter={onFinishFilter}
-        setTab={setTab}
-        refreshList={refreshList}
-      />
+      <TableHeader setTab={setTab} refreshList={refreshList} />
       <ITable<ScreeningListType>
         dataSource={screen.data?.items}
         loading={screen.loading}
@@ -63,6 +53,7 @@ const ScreeningListOtherRoles: React.FC = () => {
           {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "first_name",
+            width: 150,
             render: (value, record) => {
               return (
                 <Link
@@ -87,7 +78,7 @@ const ScreeningListOtherRoles: React.FC = () => {
               to={`/dashboard/development-plan/234?customer_id=${record.id}`}
               className="flex items-center"
             >
-              <FileSearch03 className="text-gray-600" />
+              <MinusCircle className="text-red-600" size="20" />
             </Link>
           );
         }}

@@ -16,6 +16,6 @@ export { ITag } from "./render/tag";
 export { Star } from "./render/star";
 export { UploadDraggerButton, UploadButton } from "./button/upload";
 export { StopPagination } from "./stop_pagination";
-export { SectionContainer, SectionField } from "./modal/section";
+export { SectionContainer } from "./modal/section";
 export { IProgress } from "./render/progress";
 export { ImageList } from "./render/images";

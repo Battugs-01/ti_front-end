@@ -80,7 +80,7 @@ export const EditButton = ({ ...rest }: ButtonProps) => {
         className=" flex gap-1 items-center font-medium px-3 py-1 text-[#475467]"
         type="link"
       >
-        <Edit04 />
+        <Edit04 size="20" />
       </Button>
     </Tooltip>
   );

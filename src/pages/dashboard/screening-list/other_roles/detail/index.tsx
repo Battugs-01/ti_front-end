@@ -55,7 +55,7 @@ const ScreeningListDetailOtherRoles: React.FC = () => {
         </div>
         <div className="xl:col-span-4">
           <CustomHeader data={assessmentData?.data || []} />
-          <MainDetailOtherRoles />
+          {/* <MainDetailOtherRoles /> */}
           <DevPlanEdit />
         </div>
       </div>

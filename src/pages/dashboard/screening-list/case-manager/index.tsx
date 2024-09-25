@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import { notification, Typography } from "antd";
 import { PageCard } from "components/card";
+import { useLevelContext } from "components/custom-detail/selected-level";
 import { ITable } from "components/table";
 import { ScreeningTab } from "config";
 import { useEffect, useState } from "react";
@@ -13,7 +14,6 @@ import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { getScreeningTableColumns } from "../components/table-column";
 import TableHeader from "../components/table-header";
-import { useLevelContext } from "components/custom-detail/selected-level";
 
 const ScreeningListCaseManager: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -52,11 +52,7 @@ const ScreeningListCaseManager: React.FC = () => {
 
   return (
     <PageCard xR>
-      <TableHeader
-        onFinishFilter={onFinishFilter}
-        setTab={setTab}
-        refreshList={refreshList}
-      />
+      <TableHeader setTab={setTab} refreshList={refreshList} />
       <ITable<ScreeningListType>
         dataSource={screen.data?.items}
         loading={screen.loading}

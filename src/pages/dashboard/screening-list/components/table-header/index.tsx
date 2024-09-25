@@ -3,26 +3,15 @@ import { FormattedMessage } from "react-intl";
 import { PopoverFilter } from "components/filter";
 import { ScreeningTab } from "config";
 import InitTableHeader from "components/table-header";
-import { ScreeningListFilter } from "../filter";
 
 interface TableHeaderProps {
-  onFinishFilter: (values: any) => any;
   setTab: (tab: ScreeningTab) => void;
   refreshList: () => void;
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({
-  onFinishFilter,
-  setTab,
-  refreshList,
-}) => {
+const TableHeader: React.FC<TableHeaderProps> = ({ setTab, refreshList }) => {
   return (
     <InitTableHeader
-      filter={
-        <PopoverFilter>
-          <ScreeningListFilter onFinish={onFinishFilter} />
-        </PopoverFilter>
-      }
       hideTitle
       refresh={refreshList}
       hideCreate

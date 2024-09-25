@@ -4,17 +4,11 @@ import { IRoute } from "./types";
 const ScreeningListPage = lazy(
   () => import("pages/dashboard/screening-list/index")
 );
-const DevelopmentPlanPage = lazy(
-  () => import("pages/dashboard/development-plan/index")
-);
+
 const StasticalReportPage = lazy(
   () => import("pages/dashboard/stastical-report/index")
 );
 const SettingsPage = lazy(() => import("pages/dashboard/settings/index"));
-
-const DevelopmentPlanDetail = lazy(
-  () => import("pages/dashboard/development-plan/detail")
-);
 
 const ScreeningListDetail = lazy(
   () => import("pages/dashboard/screening-list/case-manager/detail")
@@ -33,11 +27,6 @@ const dashboardRoutes: IRoute[] = [
     component: <ScreeningListPage />,
   },
   {
-    key: "development-plan",
-    path: "development-plan",
-    component: <DevelopmentPlanPage />,
-  },
-  {
     key: "stastical-report",
     path: "stastical-report",
     component: <StasticalReportPage />,
@@ -46,11 +35,6 @@ const dashboardRoutes: IRoute[] = [
     key: "settings",
     path: "settings",
     component: <SettingsPage />,
-  },
-  {
-    key: "development-plan-detail",
-    path: "development-plan/:id",
-    component: <DevelopmentPlanDetail />,
   },
   {
     key: "screening-list-case-manager-detail",

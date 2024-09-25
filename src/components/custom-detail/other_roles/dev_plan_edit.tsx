@@ -1,20 +1,20 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Button, Card, notification } from "antd";
-import { useContext, useEffect } from "react";
+import { CareFociEnum, UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
 import { useLevelContext } from "../selected-level";
 import DevPlanTables from "./tables";
-import { CareFoci } from "pages/dashboard/stastical-report/care_foci";
-import { CareFociEnum, UserRoleType } from "config";
-import { AuthContext } from "context/auth";
+import { DevPlanEndModal } from "./dev_plan_end";
 
 const DevPlanEdit: React.FC = () => {
   const { selectedLevel } = useLevelContext();
   const [user] = useContext(AuthContext);
-
+  const [modal, setModal] = useState<boolean>(false);
   const devPlanData = useRequest(developmentPlan.getDetail, {
     manual: true,
     onError: (err) =>
@@ -94,6 +94,7 @@ const DevPlanEdit: React.FC = () => {
                 size="large"
                 className="flex items-center gap-2"
                 type="primary"
+                onClick={() => setModal(true)}
               >
                 <FormattedMessage id="development_plan_end" />
               </Button>
@@ -102,30 +103,46 @@ const DevPlanEdit: React.FC = () => {
         }
         className="card-header-remove mt-6"
       >
-        <DevPlanTables name="general" data={generalData} isEvaluated={false} />
-        <DevPlanTables
-          name="physical_condition"
-          data={physicalConditionData}
-          isEvaluated={true}
-        />
-        <DevPlanTables
-          name="psychology_change"
-          data={psychologyChangeData}
-          isEvaluated={true}
-        />
-        <DevPlanTables
-          name="economy_diff"
-          data={EconemyData}
-          isEvaluated={true}
-        />
-        <DevPlanTables
-          name="health_risk"
-          data={HealthRiskData}
-          isEvaluated={true}
-        />
+        <div className="flex flex-col gap-6">
+          <DevPlanTables
+            name="general"
+            data={generalData}
+            isEvaluated={false}
+          />
+          <DevPlanTables
+            name="physical_condition"
+            data={physicalConditionData}
+            isEvaluated={true}
+          />
+          <DevPlanTables
+            name="psychology_change"
+            data={psychologyChangeData}
+            isEvaluated={true}
+          />
+          <DevPlanTables
+            name="economy_diff"
+            data={EconemyData}
+            isEvaluated={true}
+          />
+          <DevPlanTables
+            name="health_risk"
+            data={HealthRiskData}
+            isEvaluated={true}
+          />
+        </div>
+
         {/* <DevPlanTables name="general" data={generalData} /> */}
         {/* <DevPlanTables name="general" data={generalData} /> */}
       </Card>
+
+      <DevPlanEndModal
+        visible={modal}
+        onCancel={() => setModal(false)}
+        onFinish={async () => {
+          run();
+          setModal(false);
+        }}
+      />
     </>
   );
 };

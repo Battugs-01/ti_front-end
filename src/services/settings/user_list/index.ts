@@ -15,6 +15,11 @@ namespace userList {
       body,
     });
 
+  export const get = (id: any) =>
+    http.put<UserType>(`/employee/get/${id}`, {
+      hasAuth: true,
+    });
+
   export const list = (body: any) =>
     http.post<PaginationResponse<UserType>>("/employee/list", {
       hasAuth: true,

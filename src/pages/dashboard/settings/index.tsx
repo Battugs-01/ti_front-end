@@ -1,9 +1,7 @@
-import { Radio, Segmented } from "antd";
+import { Segmented } from "antd";
 import { IfCondition } from "components/condition";
 import { SettingsTab } from "config";
 import { useState } from "react";
-import PermissionControl from "./permission-control";
-import CareFosi from "./care-fosi";
 import { FormattedMessage } from "react-intl";
 import { AgencyList } from "./agency_list";
 import { StackholderList } from "./stackholder_list";
@@ -36,10 +34,6 @@ const Settings: React.FC = () => {
 
       <div className="mt-7"></div>
 
-      {/* <IfCondition
-        condition={SettingsTab.agency_list === tab}
-        whenTrue={<PermissionControl />}
-      /> */}
       <IfCondition
         condition={SettingsTab.agency_list === tab}
         whenTrue={<AgencyList />}
@@ -52,10 +46,6 @@ const Settings: React.FC = () => {
         condition={SettingsTab.user_list === tab}
         whenTrue={<Userlist />}
       />
-      {/* <IfCondition
-        condition={SettingsTab.stakeholder_list === tab}
-        whenTrue={<CareFosi />}
-      /> */}
     </>
   );
 };
