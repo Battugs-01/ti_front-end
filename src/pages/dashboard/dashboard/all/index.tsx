@@ -23,7 +23,7 @@ export const All: React.FC = () => {
   });
   return (
     <div className="grid lg:grid-cols-3 grid-cols-2 3xl:grid-cols-5 gap-6">
-      <div className="lg:col-span-3 3xl:col-span-4 col-span-2">
+      <div className="lg:col-span-2 3xl:col-span-4 col-span-2">
         <TotalPoint data={totalPoint.data} />
       </div>
       <div className="3xl:col-span-1 col-span-1 h-full">

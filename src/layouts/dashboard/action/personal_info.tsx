@@ -6,6 +6,8 @@ import {
 } from "@ant-design/pro-form";
 import { Button, Col, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArray } from "config";
+import { AuthContext } from "context/auth";
+import { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PersonalInfoProps {
@@ -18,6 +20,8 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
   visible,
   onClose,
 }) => {
+  const [user] = useContext(AuthContext);
+  console.log(user, "Jjjj");
   const intl = useIntl();
   return (
     <ModalForm
@@ -43,6 +47,10 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
           },
         },
       }}
+      initialValues={{
+        first_name: user.user?.first_name,
+        role: user.user?.role,
+      }}
       submitter={{
         render: (props) => {
           return (
@@ -64,6 +72,12 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
             <Col span={24}>
               <ProFormText
                 name="first_name"
+                placeholder={intl.formatMessage({
+                  id: "placeholder_text",
+                })}
+                fieldProps={{
+                  size: "large",
+                }}
                 label={intl.formatMessage({ id: "first_name" })}
               />
             </Col>
@@ -72,6 +86,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
             <Col span={24}>
               <ProFormSelect
                 name="role"
+                placeholder={intl.formatMessage({ id: "placeholder_select" })}
                 options={permissionArray.map((el) => ({
                   label: <FormattedMessage id={el} />,
                   value: el,
@@ -84,9 +99,8 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
             </Col>
           </Row>
         </Col>
-        <Col span={8}>
+        <Col span={8} className="custom_upload">
           <ProFormUploadButton
-            className="w-max h-max"
             title={
               <div className="flex items-center flex-col justify-center gap-2 text-[#00000073] p-2">
                 <div className="text-sm">
