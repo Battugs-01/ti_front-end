@@ -47,7 +47,7 @@
   "caregiver": "Асран хамгаалагч",
   "person_in_charge": "Удирдаж буй хүн",
   "address": "Хаяг",
-  "cancel": "Цуцлах",
+  "cancel": "Болих",
   "save": "Хадгалах",
   "date_of_birth": "Төрсөн огноо",
   "register_no": "Регистрийн дугаар",
@@ -66,7 +66,7 @@
   "create_member_title": "TA9928 Нийгэм дэх эмзэг бүлгийн ахмадуудад зориулсан эрсдэлийг шалгагч",
   "agency_extra": "Хэрэв та олон агентлагт харьяалагддаг бол бүгдийг нь оруулна уу.",
   "permission": "Зөвшөөрөл",
-  "email": "Имэйл",
+  "email": "Э-мэйл",
   "member_drawer_title": "Нэмэх",
   "success": "Амжилттай",
   "general_info": "Ерөнхий мэдээлэл",
@@ -172,6 +172,7 @@
   "user_list":"Хэрэглэгчдийн жагсаалт",
   "agency_name":"Агентлагийн нэр",
   "add_agency":"Агентлаг нэмэх",
+  "update_agency":"Агентлаг засах",
   "link":"Линк",
   "date_established":"Байгуулагдсан огноо",
   "director_name":"Захиралын нэр",
@@ -190,5 +191,7 @@
   "stack_holder":"Stakeholder",
   "required": "Энэ талбарыг оруулах шаардлагатай!",
   "add_user":"Хэрэглэгч нэмэх",
-  "update_user":"Хэрэглэгч засах"
+  "update_user":"Хэрэглэгч засах",
+  "placeholder_text":"Утга оруулна уу?",
+  "placeholder_select":"Утга сонгоно уу?"
 }

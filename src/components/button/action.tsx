@@ -7,10 +7,11 @@ import { FiTrash2 } from "react-icons/fi";
 import { IoAddOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
+import { Edit04 } from "untitledui-js-base";
 
 // type PropsCreate = ButtonProps;
 interface PropsCreate extends ButtonProps {
-  addButtonName?: string;
+  addButtonName?: string | React.ReactNode;
 }
 
 export const CreateButton = ({ addButtonName, ...rest }: PropsCreate) => {
@@ -76,10 +77,10 @@ export const EditButton = ({ ...rest }: ButtonProps) => {
       <Button
         {...rest}
         // type="primary"
-        className=" flex gap-1 items-center font-medium px-3 py-1"
+        className=" flex gap-1 items-center font-medium px-3 py-1 text-[#475467]"
         type="link"
       >
-        <img src={EditIcon} />
+        <Edit04 />
       </Button>
     </Tooltip>
   );

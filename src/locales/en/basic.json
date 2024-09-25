@@ -172,6 +172,7 @@
   "another_phone":"Another phone",
   "fax":"Fax",
   "company_email":"Company Email",
+  "update_agency":"Update Agency",
   "company_phone":"Company Phone",
   "stackholder_add":"Add Stakeholder",
   "link_extra":"Website, facebook link etc.",
@@ -181,5 +182,7 @@
   "stackholder":"Stakeholder",
   "required": "Required",
   "add_user":"Add User",
-  "update_user":"Update User"
+  "update_user":"Update User",
+  "placeholder_text":"Please enter a value?",
+  "placeholder_select":"Please select a value?"
 }

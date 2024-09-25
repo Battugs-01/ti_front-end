@@ -1,23 +1,18 @@
-import ProForm, {
-  ModalForm,
-  ProFormSelect,
-  ProFormText,
-} from "@ant-design/pro-form";
-import ProFormDatePickerYear from "@ant-design/pro-form/es/components/DatePicker/YearPicker";
+import { ModalForm } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE } from "config";
+import { Button, notification } from "antd";
 import dayjs from "dayjs";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
 import agencyList from "service/settings/agency_list";
 import { ActionComponentProps } from "types";
+import { Form } from "./form";
+import file from "service/file";
 
 export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
-  detail,
 }) => {
   const createPermission = useRequest(agencyList.create, {
     manual: true,
@@ -25,12 +20,13 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
       notification.success({
         message: intl.formatMessage({ id: "success" }),
       });
-      onCancel();
+      onFinish?.();
     },
     onError: (error: any) => {
       notification.error({
         message: error.message,
       });
+      onFinish?.();
     },
   });
   const intl = useIntl();
@@ -44,12 +40,18 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
   const khoroo = useRequest(address.khoroo, {
     manual: true,
   });
+  const uploadProfile = useRequest(file.upload, {
+    manual: true,
+  });
   return (
     <ModalForm
       onFinish={async (values) => {
-        console.log(values?.establishment_year, "kk");
+        const file = await uploadProfile.runAsync({
+          file: values?.profile[0]?.originFileObj,
+        });
         await createPermission.runAsync({
           ...values,
+          profile_id: file[0]?.id,
           establishment_year: dayjs(values?.establishment_year).year(),
         });
         onFinish?.();
@@ -57,6 +59,7 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
       title={intl.formatMessage({ id: "add_agency" })}
       open={open}
       modalProps={{
+        destroyOnClose: true,
         width: "650px",
         onCancel,
         styles: {
@@ -78,7 +81,7 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
       submitter={{
         render: (props) => {
           return (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Button onClick={onCancel} size="large" type="default">
                 <FormattedMessage id="cancel" />
               </Button>
@@ -90,208 +93,7 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
         },
       }}
     >
-      <ProForm.Item noStyle shouldUpdate>
-        {(form) => {
-          return (
-            <>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormText
-                    name="name"
-                    rules={[
-                      {
-                        required: true,
-                        message: intl.formatMessage({ id: "required" }),
-                      },
-                    ]}
-                    label={intl.formatMessage({ id: "agency_name" })}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormText
-                    name="director_name"
-                    rules={[
-                      {
-                        required: true,
-                        message: intl.formatMessage({ id: "required" }),
-                      },
-                    ]}
-                    label={intl.formatMessage({ id: "director_name" })}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col sm={12} xs={21}>
-                  <ProFormSelect
-                    name={["address", "city_id"]}
-                    placeholder="Сонгох"
-                    label={"Аймаг/Нийслэл"}
-                    onChange={(val) => {
-                      form?.setFieldValue(
-                        ["address", "district_id"],
-                        undefined
-                      );
-                      form?.setFieldValue(["address", "khoroo_id"], undefined);
-                      district.run(val);
-                    }}
-                    fieldProps={{
-                      showSearch: true,
-                      loading: city?.loading,
-                      size: "large",
-                    }}
-                    options={city.data?.map((el) => ({
-                      value: el.id,
-                      label: el.name,
-                    }))}
-                    rules={FORM_ITEM_RULE()}
-                  />
-                </Col>
-                <Col sm={12} xs={21}>
-                  <ProFormSelect
-                    name={["address", "district_id"]}
-                    placeholder="Сонгох"
-                    label={"Сум/Дүүрэг"}
-                    onChange={(value) => {
-                      form?.setFieldValue(["address", "khoroo_id"], undefined);
-                      khoroo.run(value);
-                    }}
-                    fieldProps={{
-                      showSearch: true,
-                      loading: district?.loading,
-                      size: "large",
-                    }}
-                    options={district.data?.map((item: any) => {
-                      return {
-                        label: item?.name,
-                        value: item?.id,
-                      };
-                    })}
-                    rules={FORM_ITEM_RULE()}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col sm={12} xs={21}>
-                  <ProFormSelect
-                    name={["address", "khoroo_id"]}
-                    placeholder="Сонгох"
-                    label={"Баг/Хороо"}
-                    fieldProps={{
-                      showSearch: true,
-                      loading: khoroo?.loading,
-                      size: "large",
-                    }}
-                    options={khoroo?.data?.map((item: any) => {
-                      return {
-                        label: item?.name,
-                        value: item?.id,
-                      };
-                    })}
-                    // rules={FORM_ITEM_RULE()}
-                  />
-                </Col>
-                <Col sm={12} xs={21}>
-                  <ProFormText
-                    name={["address", "desc"]}
-                    label={intl.formatMessage({ id: "address" })}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormText
-                    name="email"
-                    label={intl.formatMessage({ id: "email" })}
-                    rules={[
-                      {
-                        type: "email",
-                        message: intl.formatMessage({ id: "email_error" }),
-                      },
-                    ]}
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormText
-                    name="phone_no"
-                    label={intl.formatMessage({ id: "phone" })}
-                    rules={[
-                      {
-                        pattern: /^[\d]{8}$/,
-                        message: intl.formatMessage({
-                          id: "phone_number_error",
-                        }),
-                      },
-                    ]}
-                  />
-                </Col>
-              </Row>
-
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormText
-                    name="link"
-                    rules={[
-                      {
-                        required: true,
-                        message: intl.formatMessage({ id: "required" }),
-                      },
-                    ]}
-                    label={intl.formatMessage({ id: "link" })}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormDatePickerYear
-                    name="establishment_year"
-                    rules={[
-                      {
-                        required: true,
-                        message: intl.formatMessage({ id: "required" }),
-                      },
-                    ]}
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    label={intl.formatMessage({ id: "date_establishment" })}
-                  />
-                </Col>
-              </Row>
-              <div className="text-base font-semibold mb-4">
-                <FormattedMessage id="permission_control" />
-              </div>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormText
-                    name={["user", "email"]}
-                    label={intl.formatMessage({ id: "email" })}
-                    rules={[
-                      {
-                        type: "email",
-                        message: intl.formatMessage({ id: "email_error" }),
-                      },
-                    ]}
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormText.Password
-                    name={["user", "password"]}
-                    rules={[
-                      {
-                        required: true,
-                        message: intl.formatMessage({ id: "required" }),
-                      },
-                    ]}
-                    label={intl.formatMessage({ id: "password" })}
-                  />
-                </Col>
-              </Row>
-            </>
-          );
-        }}
-      </ProForm.Item>
+      <Form city={city} district={district} khoroo={khoroo} />
     </ModalForm>
   );
 };

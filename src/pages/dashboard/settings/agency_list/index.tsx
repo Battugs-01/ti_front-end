@@ -1,19 +1,20 @@
-import { useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { useDebounceFn, useRequest } from "ahooks";
+import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import agencyList from "service/settings/agency_list";
 import { AgencyListType } from "service/settings/agency_list/type";
-import { settingsFilter } from "utils/index";
+import { initPagination } from "utils/index";
 import { CreateAgency } from "./create";
 import { UpdateAgency } from "./update";
 
 export const AgencyList: React.FC = () => {
-  const [filter, setFilter] = useState(settingsFilter);
+  const [filter, setFilter] = useState(initPagination);
+  const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState(false);
   const intl = useIntl();
 
@@ -36,31 +37,21 @@ export const AgencyList: React.FC = () => {
       ...filter,
     });
   };
+  const searchRun = useDebounceFn(agency.run, { wait: 1000 });
+
   return (
     <PageCard xR>
       <InitTableHeader
         hideTitle
         setCreate={setCreate}
-        leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-              });
-            }}
-            defaultValue={[
-              filter.start_date
-                ? dayjs(filter.start_date)
-                : dayjs().subtract(3, "month"),
-              filter.end_date ? dayjs(filter.end_date) : dayjs(),
-            ]}
-          />
-        }
         refresh={refreshList}
-        addButtonName="Нэмэх"
+        search={search}
+        setSearch={(e) => {
+          setSearch(e);
+          searchRun.run({ ...filter, query: e });
+        }}
+        addButtonName={<FormattedMessage id="create" />}
+        fileName={<FormattedMessage id="agency_list" />}
       />
       <ITable<AgencyListType>
         dataSource={agency.data?.items}
@@ -101,11 +92,11 @@ export const AgencyList: React.FC = () => {
           },
           {
             title: intl.formatMessage({ id: "phone" }),
-            dataIndex: "phone",
+            dataIndex: "phone_no",
           },
           {
             title: intl.formatMessage({ id: "date_established" }),
-            dataIndex: "date_establishment",
+            dataIndex: "establishment_year",
           },
           {
             title: intl.formatMessage({ id: "link" }),
@@ -119,7 +110,7 @@ export const AgencyList: React.FC = () => {
             title: intl.formatMessage({ id: "created_at" }),
             dataIndex: "created_at",
             render: (_, record) => (
-              <div>{dayjs(record.created_at).format("DD/MM/YYYY")}</div>
+              <div>{dayjs(record.created_at).format("YYYY/MM/DD HH:mm")}</div>
             ),
           },
         ]}

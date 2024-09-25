@@ -14,7 +14,7 @@ interface TableHeaderProps {
   hideToggle?: boolean;
   hideFilter?: boolean;
   selectedToggle?: string;
-  addButtonName?: string;
+  addButtonName?: string | React.ReactNode;
   searchPlaceHolder?: string;
   handleToggle?: Function;
   hideSearch?: boolean;
@@ -26,7 +26,7 @@ interface TableHeaderProps {
   search?: string;
   setSearch?: (value: string) => void;
   actions?: React.ReactNode;
-  fileName?: string;
+  fileName?: string | React.ReactNode;
   tableID?: string;
   CreateComponent?: React.FC<ActionComponentProps<any>>;
   store?: any;
