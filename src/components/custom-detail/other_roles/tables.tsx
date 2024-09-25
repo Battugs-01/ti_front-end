@@ -218,13 +218,13 @@ const DevPlanTables: React.FC<CareFociProps> = ({
       {isSwitched ? (
         <EditableProTable<CareFociItemElement>
           rowKey="id"
-          className="mt-4 custom-antd-table-cell"
+          className="mt-4 custom-antd-table-cell remove-padding-table"
           value={dataSource}
           bordered
           onChange={(value) => setDataSource([...value])}
           columns={columns}
           pagination={false}
-          scroll={{ x: 1000 }}
+          scroll={{ x: 1500 }}
           recordCreatorProps={false}
           editable={{
             type: "multiple",
