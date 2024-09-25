@@ -1,4 +1,4 @@
-import { PermissionList } from "service/settings/permission/type";
+// import { PermissionList } from "service/settings/permission/type";
 import { Address, Agency, Profile } from "service/type";
 
 export interface ScreeningListType {
@@ -86,7 +86,7 @@ export interface AssessmentListType {
   customer_id: number;
   customer: Customer;
   employee_id: number;
-  employee: PermissionList;
+  employee: any;
   date: Date;
   blood_presure: number;
   heart_rate: number;

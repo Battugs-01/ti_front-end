@@ -15,8 +15,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 import developmentPlan from "service/development_plan";
 import file from "service/file";
-import carefoci from "service/settings/care-foci";
-import permission from "service/settings/permission";
+// import carefoci from "service/settings/care-foci";
+// import permission from "service/settings/permission";
 import { Plus, Trash04 } from "untitledui-js-base";
 
 interface DevelopmentProps {
@@ -45,12 +45,12 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
       });
     },
   });
-  const careFoci = useRequest(carefoci.get, {
-    manual: true,
-  });
-  const personinChargeList = useRequest(permission.list, {
-    manual: true,
-  });
+  // const careFoci = useRequest(carefoci.get, {
+  //   manual: true,
+  // });
+  // const personinChargeList = useRequest(perso.list, {
+  //   manual: true,
+  // });
   const ref = useRef<FormListActionType>();
 
   return (
@@ -145,19 +145,19 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
                   <ProFormSelect
                     name={"care_foci_item_id"}
                     label="Care Foci"
-                    request={async () => {
-                      const list = await careFoci.runAsync();
-                      return list?.map((el: any) => ({
-                        key: el.id,
-                        label: el.name,
-                        title: el.name,
-                        options: el.items.map((item: any) => ({
-                          key: item.id,
-                          label: item.name,
-                          value: item.id,
-                        })),
-                      }));
-                    }}
+                    // request={async () => {
+                    //   const list = await careFoci.runAsync();
+                    //   return list?.map((el: any) => ({
+                    //     key: el.id,
+                    //     label: el.name,
+                    //     title: el.name,
+                    //     options: el.items.map((item: any) => ({
+                    //       key: item.id,
+                    //       label: item.name,
+                    //       value: item.id,
+                    //     })),
+                    //   }));
+                    // }}
                   />
                 </Col>
               </Row>
@@ -197,25 +197,25 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
                   <ProFormSelect
                     name={"person_in_charge_id"}
                     label="Person in Charge"
-                    request={async () => {
-                      const list = await personinChargeList.runAsync({});
-                      return list?.items.map((el) => ({
-                        key: el.id,
-                        label: (
-                          <div className="flex items-center gap-3">
-                            <Avatar
-                              src={file.fileToUrl(
-                                el.profile?.physical_path || ""
-                              )}
-                            >
-                              {el?.first_name.substring(0, 2)}
-                            </Avatar>{" "}
-                            <div>{el?.first_name}</div>
-                          </div>
-                        ),
-                        value: el.id,
-                      }));
-                    }}
+                    // request={async () => {
+                    //   const list = await personinChargeList.runAsync({});
+                    //   return list?.items.map((el) => ({
+                    //     key: el.id,
+                    //     label: (
+                    //       <div className="flex items-center gap-3">
+                    //         <Avatar
+                    //           src={file.fileToUrl(
+                    //             el.profile?.physical_path || ""
+                    //           )}
+                    //         >
+                    //           {el?.first_name.substring(0, 2)}
+                    //         </Avatar>{" "}
+                    //         <div>{el?.first_name}</div>
+                    //       </div>
+                    //     ),
+                    //     value: el.id,
+                    //   }));
+                    // }}
                   />
                 </Col>
                 <Col span={12}>
