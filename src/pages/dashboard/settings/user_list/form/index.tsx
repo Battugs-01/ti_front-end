@@ -235,6 +235,12 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       required: true,
                       message: intl.formatMessage({ id: "required" }),
                     },
+                    {
+                      pattern: /^[\d]{8}$/,
+                      message: intl.formatMessage({
+                        id: "phone_number_error",
+                      }),
+                    },
                   ]}
                   label={intl.formatMessage({ id: "phone" })}
                 />

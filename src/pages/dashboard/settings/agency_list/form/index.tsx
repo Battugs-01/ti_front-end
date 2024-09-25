@@ -199,7 +199,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     size: "large",
                   }}
                   placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "email" })}
+                  label={intl.formatMessage({ id: "company_email" })}
                   rules={[
                     {
                       type: "email",
@@ -215,7 +215,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     size: "large",
                   }}
                   placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "phone" })}
+                  label={intl.formatMessage({ id: "company_phone" })}
                   rules={[
                     {
                       pattern: /^[\d]{8}$/,

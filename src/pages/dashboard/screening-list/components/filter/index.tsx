@@ -4,7 +4,8 @@ import { Avatar, Button, Divider } from "antd";
 import { agencyArray, levelOptions } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
-import permission from "service/settings/permission";
+import userList from "service/settings/user_list";
+// import permission from "service/settings/permission";
 
 interface ScreeningListFilterType {
   onFinish?: (formData: Record<string, any>) => Promise<boolean | void>;
@@ -14,7 +15,7 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
   onFinish,
 }) => {
   const intl = useIntl();
-  const personChargeList = useRequest(permission.list, {
+  const personChargeList = useRequest(userList.list, {
     manual: true,
   });
 
