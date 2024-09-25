@@ -1,3 +1,5 @@
+import { Address } from "service/type";
+
 export interface AgencyListType {
   id: number;
   created_at: Date;
@@ -5,7 +7,7 @@ export interface AgencyListType {
   is_active: boolean;
   name: string;
   director_name: string;
-  address: string;
+  address: Address;
   email: string;
   phone_no: string;
   link: string;
