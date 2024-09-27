@@ -245,12 +245,14 @@ interface ProgressCardProps {
   title: string;
   value: number;
   number?: number;
+  onClick?: () => void;
 }
 
 export const ProgressCard: React.FC<ProgressCardProps> = ({
   title,
   value,
   number,
+  onClick,
 }) => {
   let textColor = "#144E5A";
   let percentPoint = 5;
@@ -277,7 +279,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <div className="text-xl text-gray-800">{title}</div>
-          <img src={BackIcon} alt="back" />
+          <img src={BackIcon} alt="back" onClick={onClick} />
         </div>
         <div className="flex flex-col ">
           <div className="flex gap-2 items-center m-0 p-0">

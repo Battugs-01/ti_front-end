@@ -177,7 +177,7 @@ const DevPlanColumns = ({
                 },
                 value: record.person_in_charge_id,
               }}
-              placeholder="Сонгох"
+              placeholder={intl.formatMessage({ id: "select" })}
               options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
                 acc.push({
                   label: (
@@ -201,7 +201,23 @@ const DevPlanColumns = ({
             />
           </div>
         ) : (
-          <div>sda</div>
+          <div>
+            {
+              <div className="flex gap-2 items-center">
+                <Avatar
+                  shape="circle"
+                  size={"small"}
+                  src={file.fileToUrl(
+                    record?.person_in_charge?.profile?.physical_path || "AS"
+                  )}
+                />
+                <span>{`${record?.person_in_charge?.last_name?.substring(
+                  0,
+                  1
+                )}. ${record?.person_in_charge?.first_name}`}</span>
+              </div>
+            }
+          </div>
         ),
     },
     {

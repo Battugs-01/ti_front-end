@@ -159,7 +159,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
-                    placeholder="Сонгох"
+                    placeholder={intl.formatMessage({ id: "select" })}
                     label={"Аймаг/Нийслэл"}
                     onChange={(val) => {
                       form?.setFieldValue(
@@ -183,7 +183,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "district_id"]}
-                    placeholder="Сонгох"
+                    placeholder={intl.formatMessage({ id: "select" })}
                     label={"Сум/Дүүрэг"}
                     onChange={(value) => {
                       form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -207,7 +207,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "khoroo_id"]}
-                    placeholder="Сонгох"
+                    placeholder={intl.formatMessage({ id: "select" })}
                     label={"Баг/Хороо"}
                     fieldProps={{
                       showSearch: true,
