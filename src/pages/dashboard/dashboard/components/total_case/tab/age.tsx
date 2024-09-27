@@ -34,7 +34,7 @@ export const Age: React.FC<AgeProps> = ({ data }) => {
       color: {
         position: "bottom",
         rowPadding: 10,
-        itemSpacing: 10,
+        // itemSpacing: 10,
       },
     },
   };
