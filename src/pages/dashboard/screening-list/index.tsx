@@ -1,17 +1,18 @@
+import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import ScreeningListCaseManager from "./case-manager";
-import ScreeningListOtherRoles from "./other_roles";
-import { UserRoleType } from "config";
+import ScreeningListDoctor from "./doctor_roles";
 
 const ScreeningList: React.FC = () => {
   const [user] = useContext(AuthContext);
+
   return (
     <div>
-      {user.user?.role === UserRoleType.case_manager ? (
-        <ScreeningListCaseManager />
+      {user.user?.role === UserRoleType.doctor ? (
+        <ScreeningListDoctor />
       ) : (
-        <ScreeningListOtherRoles />
+        <ScreeningListCaseManager />
       )}
     </div>
   );

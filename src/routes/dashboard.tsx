@@ -14,8 +14,8 @@ const ScreeningListDetail = lazy(
   () => import("pages/dashboard/screening-list/case-manager/detail")
 );
 
-const ScreeningListDetailOtherRoles = lazy(
-  () => import("pages/dashboard/screening-list/other_roles/detail")
+const ScreeningListDetailDoctorRoles = lazy(
+  () => import("pages/dashboard/screening-list/doctor_roles/detail")
 );
 
 const DashboardPage = lazy(() => import("pages/dashboard/dashboard/index"));
@@ -42,9 +42,9 @@ const dashboardRoutes: IRoute[] = [
     component: <ScreeningListDetail />,
   },
   {
-    key: "screening-list-other-roles-detail",
-    path: "screening-list/other-roles/detail",
-    component: <ScreeningListDetailOtherRoles />,
+    key: "screening-list-doctor-roles-detail",
+    path: "screening-list/doctor-roles/detail",
+    component: <ScreeningListDetailDoctorRoles />,
   },
   {
     key: "dashboard",
