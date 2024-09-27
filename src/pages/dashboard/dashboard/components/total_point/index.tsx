@@ -18,6 +18,12 @@ interface TotalPointProps {
 }
 
 export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
+  const customizedData = data?.map((item, index) => {
+    return {
+      name: index + 1,
+      ...item,
+    };
+  });
   return (
     <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
@@ -26,7 +32,7 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
       <div className="w-full h-[450px]">
         <ResponsiveContainer>
           <AreaChart
-            data={data}
+            data={customizedData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <defs>
@@ -43,12 +49,13 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
                 <stop offset="100%" stopColor="#FBC62F" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis />
-            <YAxis domain={[1, 12]}>
-              <Label value="Score" angle={-90} position="insideLeft" />
+            <XAxis dataKey="name" />
+            <YAxis>
+              <Label angle={-90} position="insideLeft" />
             </YAxis>
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <Legend
+              iconType="circle"
               formatter={(value) => {
                 if (value === "barthel_index") return "Barthel Index";
                 if (value === "mini_cog") return "Mini Cog";

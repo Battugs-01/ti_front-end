@@ -63,7 +63,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   </Col>
                 </Row>
               </Col>
-              {/* <Col span={8} className="custom_upload">
+              <Col span={8} className="custom_upload">
                 <ProFormUploadButton
                   className="w-max h-max"
                   title={
@@ -109,7 +109,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     },
                   }}
                 />
-              </Col> */}
+              </Col>
             </Row>
 
             <Row gutter={[16, 16]}>

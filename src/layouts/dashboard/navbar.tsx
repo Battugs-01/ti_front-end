@@ -19,6 +19,7 @@ import { Menu } from "./menu";
 import { PersonalInfo } from "./action/personal_info";
 import { ChangePassword } from "./action/change_password";
 import file from "service/file";
+import { useRequest } from "ahooks";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -26,6 +27,18 @@ const Navbar: React.FC = () => {
   const [changePassword, setChangePassword] = useState<boolean>(false);
   const [_, setAuth] = useAuthContext();
   const [user] = useContext(AuthContext);
+  const info = useRequest(auth.info, {
+    manual: true,
+    onSuccess: (data) => {
+      setAuth([Action.SIGN_IN, data]);
+      setAuth([Action.INIT, true]);
+    },
+    onError: () => {
+      auth.removeToken();
+      setAuth([Action.SIGN_OUT]);
+      setAuth([Action.INIT, true]);
+    },
+  });
   const navigate = useNavigate();
   const onClose = () => {
     setNav(false);
@@ -130,6 +143,7 @@ const Navbar: React.FC = () => {
                     setPersonalInfo(false);
                   }}
                   onFinish={() => {
+                    info?.run();
                     setPersonalInfo(false);
                   }}
                 />

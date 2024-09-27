@@ -48,9 +48,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   });
 
   const newFileUpload = async (files: any[]) => {
-    console.log(files, "Files");
     if (!files[0]?.uid.includes("rc-upload")) {
-      console.log("hey");
       return files[0]?.id;
     }
     const file = await uploadProfile.runAsync({
@@ -86,6 +84,17 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
       open={open}
       initialValues={{
         ...detail,
+        profile: [
+          {
+            uid: `${detail?.profile?.id}`,
+            id: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: file.fileToUrl(detail?.profile?.physical_path || ""),
+            size: detail?.profile?.file_size,
+            type: "image/jpeg",
+          },
+        ],
       }}
       modalProps={{
         destroyOnClose: true,

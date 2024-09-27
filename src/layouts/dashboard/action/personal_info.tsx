@@ -6,7 +6,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,6 +22,7 @@ interface PersonalInfoProps {
 export const PersonalInfo: React.FC<PersonalInfoProps> = ({
   visible,
   onClose,
+  onFinish,
 }) => {
   const [user] = useContext(AuthContext);
   const updateProfile = useRequest(profile.info, {
@@ -30,7 +31,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
       notification.success({
         message: intl.formatMessage({ id: "success" }),
       });
-      onClose?.();
+      onFinish?.();
     },
     onError: (error: any) => {
       notification.error({
