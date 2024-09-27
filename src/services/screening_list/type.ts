@@ -175,7 +175,6 @@ export interface Item {
   person_in_charge: CreatedEmployee;
   estimated_date: Date;
 }
-
 export interface CareFociItem {
   id: number;
   created_at: Date;
@@ -187,30 +186,69 @@ export interface CareFociItem {
   description: string;
 }
 
-export interface CompensiveType {
+export interface AdvanceCarePlanning {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  comprehensive_assessment_id: number;
+  is_have_self_care_lost_someone: boolean;
+  have_self_care_lost_someone: string;
+  decisions_maker: string;
+}
+
+export interface ComprehensiveType {
   care_foci_percent: CareFociPercent[];
-  mini_cog_point: number;
-  barthel_index_point: number;
-  gds_point: number;
+  mini_cog: Minicog;
+  barthel_index: BodyBarthelIndex;
+  gds: Gds;
   health: Health;
   comp_ass: CompAss;
   care_foci: CareFocus[];
-  diseases: Disease[];
+  diseases: any[];
+}
+
+export interface BodyBarthelIndex {
+  items: BarthelIndexElement[];
+  point: number;
+}
+
+export interface BarthelIndexElement {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  physical_condition_id: number;
+  barthel_index_id: number;
+  barthel_index: ItemBarthelIndex;
+  answer_id: number;
+  answer: Answer;
+}
+
+export interface Answer {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  ref_barthel_index_id: number;
+  answer: string;
+  point: number;
+}
+
+export interface ItemBarthelIndex {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+  description: string;
 }
 
 export interface CareFocus {
   name: string;
-  items: ItemCareFocus[];
+  items: CareFocusItem[];
 }
 
-export interface ItemCareFocus {
+export interface CareFocusItem {
   name: string;
   is_have: boolean;
-  desc: Desc;
-}
-
-export enum Desc {
-  Sda = "sda",
+  desc: string;
 }
 
 export interface CareFociPercent {
@@ -289,14 +327,27 @@ export interface Gds {
   is_feel_weak: boolean;
   is_rather_stay_home: boolean;
   is_feel_useless: boolean;
+  point?: number;
 }
 
 export interface Minicog {
   words: string;
   word_point: number;
   clock_id: number;
+  clock: Clock;
   clock_point: number;
   total_point: number;
+}
+
+export interface Clock {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  file_name: string;
+  original_name: string;
+  physical_path: string;
+  extention: string;
+  file_size: number;
 }
 
 export interface DrugTreatment {
@@ -390,7 +441,6 @@ export interface PhysicalCondition {
   updated_at: Date;
   comprehensive_assessment_id: number;
   ability_to_move_id: number;
-  ability_to_move: AbilityToMove;
   other_ability_to_move: string;
   visual_ability: boolean;
   is_listen_right_ear: boolean;
@@ -399,17 +449,8 @@ export interface PhysicalCondition {
   is_problem_self: boolean;
   bdl: null;
   iadl: null;
-  barthel_indexs: null;
+  barthel_indexs: BarthelIndexElement[];
   barthel_index_point: number;
-}
-
-export interface AbilityToMove {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  key: string;
-  is_need_description: boolean;
 }
 
 export interface PreventiveHealth {
@@ -437,6 +478,7 @@ export interface PsychologicalResources {
   is_caregiver_depressed: boolean;
   caregiver_depressed: string;
   is_elderly_abuse: boolean;
+  elderly_abuse: string;
   is_any_trade_off_finance: boolean;
   any_trade_off_finance: string;
   other_note: string;
@@ -466,7 +508,7 @@ export interface Valuation {
   life_pride: string;
   life_value: string;
   priority_service: string;
-  valution_diseases: Disease[];
+  valution_diseases: any[];
   regular_treatment: string;
   doctor_appointment: string;
   blood_presure: number;
@@ -475,19 +517,19 @@ export interface Valuation {
   body_temp: number;
 }
 
-export interface Disease {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  description: string;
-}
-
 export interface Health {
   blood_presure: number;
   heart_rate: number;
   respiratory_rate: number;
   body_temp: number;
+}
+
+export interface Emergency {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+  description: string;
 }
 
 export interface EmergencyChecklistType {
@@ -502,12 +544,4 @@ export interface EmergencyChecklistType {
   other_care_services: string;
   emergency_early_examinations: Emergency[];
   other_early_examinations: string;
-}
-
-export interface Emergency {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  description: string;
 }

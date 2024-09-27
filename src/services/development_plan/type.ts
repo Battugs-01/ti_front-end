@@ -1,3 +1,5 @@
+import { UserType } from "service/settings/user_list/type";
+
 export interface ResponseType {
   id: number;
   created_at: Date;
@@ -57,7 +59,8 @@ export interface CareFociItemElement {
   duration: number;
   result: string;
   is_resolved: boolean | string;
-  person_in_charge_id: null;
+  person_in_charge_id: number | null;
+  person_in_charge: UserType;
   key?: string;
   desc?: string;
 }

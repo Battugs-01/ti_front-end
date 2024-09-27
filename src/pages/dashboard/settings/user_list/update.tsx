@@ -7,9 +7,8 @@ import address from "service/address";
 import userList from "service/settings/user_list";
 import { UserType } from "service/settings/user_list/type";
 import { ActionComponentProps } from "types";
-import { Form } from "./form";
 import file from "service/file";
-
+import { Form } from "./form";
 export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   onCancel,
   onFinish,
@@ -49,14 +48,14 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
 
   const newFileUpload = async (files: any[]) => {
     console.log(files, "Files");
-    if (!files[0]?.uid.includes("rc-upload")) {
+    if (!files?.[0]?.uid.includes("rc-upload")) {
       console.log("hey");
       return files[0]?.id;
     }
     const file = await uploadProfile.runAsync({
-      file: files[0].originFileObj,
+      file: files?.[0]?.originFileObj,
     });
-    return file[0].id;
+    return file[0]?.id;
   };
 
   useEffect(() => {
@@ -72,6 +71,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
     <ModalForm
       formRef={formRef}
       onFinish={async (values) => {
+        console.log(values, "sda");
         const id = await newFileUpload(values?.profile);
         await userUpdate.runAsync(
           {
@@ -86,6 +86,14 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
       open={open}
       initialValues={{
         ...detail,
+        profile: [
+          {
+            uid: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: detail?.profile?.physical_path,
+          },
+        ],
       }}
       modalProps={{
         destroyOnClose: true,

@@ -1,7 +1,7 @@
 import { PageLoading } from "@ant-design/pro-layout";
-import Assesment from "./assessment";
 import QuistionHistory from "../quistion-history";
 import { useLevelContext } from "../selected-level";
+import Assesment from "../assessment";
 
 const MainDetail: React.FC = () => {
   const { selectedLevel } = useLevelContext();

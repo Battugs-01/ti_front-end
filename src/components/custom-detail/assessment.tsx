@@ -6,8 +6,11 @@ import { ProgressCard, StatCard } from "components/card";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import screenList from "service/screening_list";
-import CareFociPercent from "../care-foci-percent";
-import DeseaseHistory from "../desease-history";
+import CareFociPercent from "./care-foci-percent";
+import DeseaseHistory from "./desease-history";
+import { MiniCogModal } from "./assesment-modal/mini-cog";
+import { BartherIndexModal } from "./assesment-modal/barthel-index";
+import { GDSModal } from "./assesment-modal/gds";
 
 interface AssesmentProps {
   selectedLevel: { id: number } | null;
@@ -22,6 +25,9 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
       }),
   });
 
+  const [openModal, setOpenModal] = React.useState<string>("");
+
+  console.log(openModal, "openModal");
   const run = () => {
     comprehensiveData.run(selectedLevel?.id || 0);
   };
@@ -91,22 +97,25 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
               <Col lg={8} md={24} sm={24} xs={24}>
                 <ProgressCard
                   title="Mini-Cog"
-                  value={data?.mini_cog_point || 0}
+                  value={data?.mini_cog?.total_point || 0}
                   number={1}
+                  onClick={() => setOpenModal("mini-cog")}
                 />
               </Col>
               <Col lg={8} md={24} sm={24} xs={24}>
                 <ProgressCard
                   title="Barthel Index"
-                  value={data?.barthel_index_point || 0}
+                  value={data?.barthel_index?.point || 0}
                   number={2}
+                  onClick={() => setOpenModal("barthel")}
                 />
               </Col>
               <Col lg={8} md={24} sm={24} xs={24}>
                 <ProgressCard
                   title="GDS"
-                  value={data?.gds_point || 0}
+                  value={data?.gds?.point || 0}
                   number={3}
+                  onClick={() => setOpenModal("gds")}
                 />
               </Col>
             </Row>
@@ -114,6 +123,18 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
         </Row>
         <DeseaseHistory data={data?.diseases} />
       </Card>
+      {openModal === "mini-cog" && (
+        <MiniCogModal data={data?.mini_cog} onCancel={() => setOpenModal("")} />
+      )}
+      {openModal === "barthel" && (
+        <BartherIndexModal
+          data={data?.barthel_index?.items}
+          onCancel={() => setOpenModal("")}
+        />
+      )}
+      {openModal === "gds" && (
+        <GDSModal data={data?.gds} onCancel={() => setOpenModal("")} />
+      )}
     </div>
   );
 };

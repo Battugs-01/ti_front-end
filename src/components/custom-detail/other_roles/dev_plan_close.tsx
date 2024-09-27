@@ -10,13 +10,14 @@ import {
 import { useRequest } from "ahooks";
 import { Avatar, Button, notification } from "antd";
 import { SectionContainer } from "components/index";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { useLevelContext } from "../selected-level";
 import userList from "service/settings/user_list";
 import { debounce } from "lodash";
 import file from "service/file";
+import dayjs from "dayjs";
 
 type PropsCancel = ModalFormProps & {
   onCancel: () => void;
@@ -33,6 +34,7 @@ export const DevPlanEndModal = ({
   const formRef = useRef<ProFormInstance>();
   const intl = useIntl();
   const { selectedLevel } = useLevelContext();
+  const [isDoNext, setIsDoNext] = useState<boolean>(true);
   const closeRequest = useRequest(developmentPlan.closeRequest, {
     manual: true,
     onSuccess: () => {
@@ -120,6 +122,11 @@ export const DevPlanEndModal = ({
             <ProFormRadio.Group
               name="is_do_next"
               radioType="button"
+              fieldProps={{
+                onChange: (e) => {
+                  setIsDoNext(e.target.value);
+                },
+              }}
               options={[
                 {
                   label: intl.formatMessage({ id: "yes" }),
@@ -130,18 +137,27 @@ export const DevPlanEndModal = ({
                   value: false,
                 },
               ]}
+              initialValue={true}
             />
           }
         />
 
-        <ProFormDatePicker
-          name="date"
-          label={
-            <div className="text-base font-medium">
-              {intl.formatMessage({ id: "implement_date" })}
-            </div>
-          }
-        />
+        {isDoNext && (
+          <ProFormDatePicker
+            name="date"
+            initialValue={dayjs().endOf("day")}
+            fieldProps={{
+              disabledDate: (current) => {
+                return current && current < dayjs().endOf("day");
+              },
+            }}
+            label={
+              <div className="text-base font-medium">
+                {intl.formatMessage({ id: "implement_date" })}
+              </div>
+            }
+          />
+        )}
 
         <div className="text-lg font-medium m-0 p-0">
           <FormattedMessage id="risk_level" />
@@ -150,6 +166,7 @@ export const DevPlanEndModal = ({
           name="priority"
           className="flex gap-2 mt-0 pt-0"
           layout="vertical"
+          initialValue="high"
           options={[
             {
               label: (
@@ -202,6 +219,11 @@ export const DevPlanEndModal = ({
           }
         />
         <ProFormSelect
+          label={
+            <div className="text-base font-medium">
+              <FormattedMessage id="responsible" />
+            </div>
+          }
           name={"person_in_charge_id"}
           shouldUpdate
           className="flex items-center justify-center custom-input"
@@ -211,7 +233,7 @@ export const DevPlanEndModal = ({
             filterOption: false,
             onSearch: debouncedSearch,
           }}
-          placeholder="Сонгох"
+          placeholder={intl.formatMessage({ id: "select" })}
           options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
             acc.push({
               label: (

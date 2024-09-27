@@ -62,8 +62,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
     return <PageLoading />;
   }
 
-  console.log(segmentedData?.length, "segmentedData");
-
   return (
     <>
       <div>
@@ -91,7 +89,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
                 style={{ width: 210 }}
                 size="large"
                 className="custom-select rounded-r-lg custom-selected-level"
-                placeholder="Select more levels"
+                placeholder={<FormattedMessage id="select" />}
                 options={extraOptions}
                 onChange={(value) => {
                   setTab(value);

@@ -5,6 +5,9 @@ import { PageCard } from "components/card";
 import { FormattedMessage, useIntl } from "react-intl";
 import { AssessmentListType, Questions } from "service/screening_list/type";
 import { ITable } from "..";
+import dayjs from "dayjs";
+import { Avatar } from "antd";
+import file from "service/file";
 
 interface QuistionHistoryProps {
   selectedLevel: AssessmentListType;
@@ -91,6 +94,33 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
         hidePagination
         scroll={1000}
       />
+      <div className="flex flex-row items-start justify-start gap-4 ml-8 font-normal text-gray-600 text-base">
+        <div className="flex gap-2 items-center">
+          <FormattedMessage id="agency" />
+          <span className="text-gray-700 font-bold">
+            {selectedLevel.employee?.agency?.name}
+          </span>
+        </div>
+        <div className="flex gap-2 items-center">
+          <FormattedMessage id="cm_charge" />
+          <span className="text-gray-700 font-bold flex gap-1">
+            <Avatar
+              shape="circle"
+              size={"small"}
+              src={file.fileToUrl(
+                selectedLevel?.employee.profile?.physical_path || "AS"
+              )}
+            />
+            {selectedLevel.employee?.first_name}
+          </span>
+        </div>
+        <div className="flex gap-2 items-center">
+          <FormattedMessage id="assessment_date" />
+          <span className="text-gray-700 font-bold">
+            {dayjs(selectedLevel.employee?.updated_at).format("DD/MM/YYYY")}
+          </span>
+        </div>
+      </div>
     </PageCard>
   );
 };
