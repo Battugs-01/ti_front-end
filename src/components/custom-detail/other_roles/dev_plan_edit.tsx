@@ -9,7 +9,7 @@ import developmentPlan from "service/development_plan";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
 import { useLevelContext } from "../selected-level";
 import DevPlanTables from "./tables";
-import { DevPlanEndModal } from "./dev_plan_end";
+import { DevPlanEndModal } from "./dev_plan_close";
 
 const DevPlanEdit: React.FC = () => {
   const { selectedLevel } = useLevelContext();
@@ -130,9 +130,6 @@ const DevPlanEdit: React.FC = () => {
             isEvaluated={true}
           />
         </div>
-
-        {/* <DevPlanTables name="general" data={generalData} /> */}
-        {/* <DevPlanTables name="general" data={generalData} /> */}
       </Card>
 
       <DevPlanEndModal

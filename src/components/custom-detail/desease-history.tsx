@@ -1,6 +1,5 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { Card, Col, Row } from "antd";
-import { FaDotCircle } from "react-icons/fa";
 import { FormattedMessage } from "react-intl";
 import { Disease } from "service/screening_list/type";
 interface DeseaseHistoryProps {

@@ -1,8 +1,6 @@
 import { Pie } from "@ant-design/plots";
 import { PageLoading } from "@ant-design/pro-layout";
-import { Badge, Card } from "antd";
 import { useMemo } from "react";
-import { FormattedMessage } from "react-intl";
 import { CareFociPercent as CareFociPercentType } from "service/screening_list/type";
 
 interface CareFociPercentProps {

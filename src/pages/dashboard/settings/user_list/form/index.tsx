@@ -63,13 +63,12 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   </Col>
                 </Row>
               </Col>
-              <Col span={8} className="custom_upload">
+              {/* <Col span={8} className="custom_upload">
                 <ProFormUploadButton
                   className="w-max h-max"
                   title={
                     <div className="flex items-center flex-col justify-center gap-2 text-[#00000073] p-2">
                       <div className="text-sm">
-                        {" "}
                         <div className="text-primary-700 font-semibold">
                           <FormattedMessage id="upload" />{" "}
                         </div>
@@ -84,10 +83,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   rules={[
                     {
                       validator: (_, file) => {
-                        if (file && file.length > 0) {
+                        if (file && file?.length > 0) {
                           if (
-                            file[0].type === "image/jpeg" ||
-                            file[0].type === "image/png"
+                            file[0]?.type === "image/jpeg" ||
+                            file[0]?.type === "image/png"
                           ) {
                             return Promise.resolve();
                           }
@@ -110,14 +109,14 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     },
                   }}
                 />
-              </Col>
+              </Col> */}
             </Row>
 
             <Row gutter={[16, 16]}>
               <Col span={24}>
                 <ProFormSelect
                   name="role"
-                  options={permissionArray.map((el) => ({
+                  options={permissionArray?.map((el) => ({
                     label: <FormattedMessage id={el} />,
                     value: el,
                   }))}

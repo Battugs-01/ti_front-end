@@ -1,22 +1,22 @@
-import ProForm, {
+import {
   ModalForm,
   ModalFormProps,
   ProFormDatePicker,
   ProFormInstance,
   ProFormRadio,
   ProFormSelect,
-  ProFormSwitch,
-  ProFormText,
   ProFormTextArea,
-  ProFormUploadButton,
 } from "@ant-design/pro-form";
-import ProFormDatePickerYear from "@ant-design/pro-form/es/components/DatePicker/YearPicker";
-import { Button, Col, Row } from "antd";
+import { useRequest } from "ahooks";
+import { Avatar, Button, notification } from "antd";
 import { SectionContainer } from "components/index";
-import { IModalForm } from "components/modal";
-import { FORM_ITEM_RULE } from "config";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import developmentPlan from "service/development_plan";
+import { useLevelContext } from "../selected-level";
+import userList from "service/settings/user_list";
+import { debounce } from "lodash";
+import file from "service/file";
 
 type PropsCancel = ModalFormProps & {
   onCancel: () => void;
@@ -32,23 +32,44 @@ export const DevPlanEndModal = ({
 }: PropsCancel) => {
   const formRef = useRef<ProFormInstance>();
   const intl = useIntl();
+  const { selectedLevel } = useLevelContext();
+  const closeRequest = useRequest(developmentPlan.closeRequest, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: "Амжилттай",
+      });
+      onFinish && onFinish();
+    },
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
+  });
 
-  //   const cancelRequest = useRequest(requested.cancelRequest, {
-  //     manual: true,
-  //     onSuccess: () => {
-  //       notification.success({
-  //         message: "Амжилттай",
-  //       }),
-  //         onFinish && onFinish();
-  //     },
+  const debouncedSearch = debounce((value) => {
+    emplyoee.run({
+      current: 1,
+      pageSize: 20,
+      query: value,
+    });
+  }, 1000);
 
-  //     onError: (err) => {
-  //       notification.error({
-  //         message: err.message,
-  //       }),
-  //         onFinish && onFinish();
-  //     },
-  //   });
+  useEffect(() => {
+    if (visible === true) {
+      emplyoee.run({});
+    }
+  }, [visible]);
+
+  const emplyoee = useRequest(userList.list, {
+    manual: true,
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
+  });
 
   return (
     <ModalForm
@@ -80,31 +101,33 @@ export const DevPlanEndModal = ({
           );
         },
       }}
-      //   onFinish={async (values) => {
-      //     if (
-      //       !!data &&
-      //       (await cancelRequest.runAsync(data.id, { ...values, status: 7 }))
-      //     ) {
-      //       return true;
-      //     }
-      //     return false;
-      //   }}
+      onFinish={async (values) => {
+        if (
+          !!visible &&
+          (await closeRequest.runAsync(selectedLevel?.id, {
+            ...values,
+          }))
+        ) {
+          return true;
+        }
+        return false;
+      }}
     >
       <div className="">
         <SectionContainer
           label={intl.formatMessage({ id: "next_assessment" })}
           children={
             <ProFormRadio.Group
-              name="delivered_type"
+              name="is_do_next"
               radioType="button"
               options={[
                 {
                   label: intl.formatMessage({ id: "yes" }),
-                  value: 1,
+                  value: true,
                 },
                 {
                   label: intl.formatMessage({ id: "no" }),
-                  value: 2,
+                  value: false,
                 },
               ]}
             />
@@ -112,7 +135,7 @@ export const DevPlanEndModal = ({
         />
 
         <ProFormDatePicker
-          name="birth_date"
+          name="date"
           label={
             <div className="text-base font-medium">
               {intl.formatMessage({ id: "implement_date" })}
@@ -124,7 +147,7 @@ export const DevPlanEndModal = ({
           <FormattedMessage id="risk_level" />
         </div>
         <ProFormRadio.Group
-          name="permission_level"
+          name="priority"
           className="flex gap-2 mt-0 pt-0"
           layout="vertical"
           options={[
@@ -132,47 +155,81 @@ export const DevPlanEndModal = ({
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
                   <span className="m-0 p-0 text-base font-medium text-gray-700">
-                    Өндөр
+                    <FormattedMessage id="high" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
-                    Яаралтай хэрэгжүүлж эхлэх шаардлагатай
+                    <FormattedMessage id="start_immediately" />
                   </span>
                 </div>
               ),
-              value: 1,
+              value: "high",
             },
             {
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
                   <span className="m-0 p-0 text-base font-medium text-gray-700">
-                    Дунд
+                    <FormattedMessage id="medium" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
-                    Дараагийн хэдэн 7 хоног дотор эхлэх хэрэгтэй
+                    <FormattedMessage id="next_7_days" />
                   </span>
                 </div>
               ),
-              value: 2,
+              value: "medium",
             },
             {
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
                   <span className="m-0 p-0 text-base font-medium text-gray-700">
-                    Бага
+                    <FormattedMessage id="low" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
-                    Дараагийн хэдэн сар дотор эхлэх хэрэгтэй
+                    <FormattedMessage id="next_few_month" />
                   </span>
                 </div>
               ),
-              value: 3,
+              value: "low",
             },
           ]}
         />
         <ProFormTextArea
-          name="description"
+          name="note"
           placeholder="Дэлгэрэнгүй оруулна уу..."
-          label={<div className="text-base font-medium">Тэмдэглэл</div>}
+          label={
+            <div className="text-base font-medium">
+              <FormattedMessage id="notes" />
+            </div>
+          }
+        />
+        <ProFormSelect
+          name={"person_in_charge_id"}
+          shouldUpdate
+          className="flex items-center justify-center custom-input"
+          fieldProps={{
+            showSearch: true,
+            loading: emplyoee.loading,
+            filterOption: false,
+            onSearch: debouncedSearch,
+          }}
+          placeholder="Сонгох"
+          options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
+            acc.push({
+              label: (
+                <div className="flex gap-2 items-center">
+                  <Avatar
+                    shape="circle"
+                    size={"small"}
+                    src={file.fileToUrl(record.profile?.physical_path || "AS")}
+                  />
+                  <span>{`${record?.last_name?.substring(0, 1)}. ${
+                    record?.first_name
+                  }`}</span>
+                </div>
+              ),
+              value: record?.id,
+            });
+            return acc;
+          }, [])}
         />
       </div>
     </ModalForm>

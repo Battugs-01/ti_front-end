@@ -17,6 +17,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   detail,
 }) => {
   const formRef = useRef<ProFormInstance>();
+
   const userUpdate = useRequest(userList.edit, {
     manual: true,
     onSuccess: () => {
@@ -45,6 +46,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   const khoroo = useRequest(address.khoroo, {
     manual: true,
   });
+
   const newFileUpload = async (files: any[]) => {
     console.log(files, "Files");
     if (!files[0]?.uid.includes("rc-upload")) {
@@ -63,7 +65,9 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
       khoroo.run(detail?.address?.district_id);
     }
   }, [detail]);
+
   const intl = useIntl();
+
   return (
     <ModalForm
       formRef={formRef}

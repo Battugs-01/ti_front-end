@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import { notification, Typography } from "antd";
 import { PageCard } from "components/card";
+import { useLevelContext } from "components/custom-detail/selected-level";
 import { ITable } from "components/table";
 import { ScreeningTab } from "config";
 import { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { FileSearch03, MinusCircle } from "untitledui-js-base";
+import { MinusCircle } from "untitledui-js-base";
 import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { getScreeningTableColumns } from "../components/table-column";
@@ -18,6 +19,7 @@ import { EditScreenList } from "./edit";
 const ScreeningListOtherRoles: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
+  const { setSelectedLevel } = useLevelContext();
   const intl = useIntl();
   const screen = useRequest(screenList.list, {
     manual: true,
@@ -58,6 +60,7 @@ const ScreeningListOtherRoles: React.FC = () => {
               return (
                 <Link
                   to={`/dashboard/screening-list/other-roles/detail?customer_id=${record.id}`}
+                  onClick={() => setSelectedLevel(null)}
                 >
                   <Typography.Text
                     className="text-primary-700 font-bold"

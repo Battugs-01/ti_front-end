@@ -47,7 +47,12 @@ const DevPlanColumns = ({
   }, 1000);
 
   useEffect(() => {
-    emplyoee.run({});
+    if (isEditing === true) {
+      emplyoee.run({
+        current: 1,
+        pageSize: 20,
+      });
+    }
   }, [isEditing]);
 
   const columns: ProColumns<CareFociItemElement>[] = [
