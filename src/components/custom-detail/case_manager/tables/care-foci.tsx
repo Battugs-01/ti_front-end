@@ -2,10 +2,10 @@ import { PageLoading } from "@ant-design/pro-layout";
 import BooleanBadge from "components/badge/boolean";
 import { ITable } from "components/index";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ItemCareFocus } from "service/screening_list/type";
+import { CareFocusItem } from "service/screening_list/type";
 
 interface CareFociProps {
-  data: ItemCareFocus[] | undefined;
+  data: CareFocusItem[] | undefined;
   name: any;
 }
 

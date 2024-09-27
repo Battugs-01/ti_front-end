@@ -5,13 +5,15 @@ import { Button, Collapse, notification } from "antd";
 import DownButton from "assets/img/down_button.svg";
 import EditSvg from "assets/img/edit.svg";
 import UpButton from "assets/img/up_button.svg";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { CareFociItemElement } from "service/development_plan/type";
 import { Save02 } from "untitledui-js-base";
 import { useLevelContext } from "../selected-level";
 import DevPlanColumns from "./column";
+import { AuthContext } from "context/auth";
+import { UserRoleType } from "config";
 
 interface CareFociProps {
   data: CareFociItemElement[];
@@ -24,6 +26,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   data,
   isEvaluated,
 }) => {
+  const [user] = useContext(AuthContext);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
     onError: (err) =>
@@ -93,7 +96,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 <div className="text-[18px] font-semibold flex flex-row gap-4 items-center">
                   <FormattedMessage id={name} />
                 </div>
-                {isSwitched && (
+                {isSwitched && user.user?.role === UserRoleType.doctor && (
                   <Button
                     style={{ opacity: 1, cursor: "pointer" }}
                     className="flex items-center gap-2"

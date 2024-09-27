@@ -16,7 +16,7 @@ import { getScreeningTableColumns } from "../components/table-column";
 import TableHeader from "../components/table-header";
 import { EditScreenList } from "./edit";
 
-const ScreeningListOtherRoles: React.FC = () => {
+const ScreeningListDoctor: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
   const { setSelectedLevel } = useLevelContext();
@@ -59,7 +59,7 @@ const ScreeningListOtherRoles: React.FC = () => {
             render: (value, record) => {
               return (
                 <Link
-                  to={`/dashboard/screening-list/other-roles/detail?customer_id=${record.id}`}
+                  to={`/dashboard/screening-list/doctor-roles/detail?customer_id=${record.id}`}
                   onClick={() => setSelectedLevel(null)}
                 >
                   <Typography.Text
@@ -90,4 +90,4 @@ const ScreeningListOtherRoles: React.FC = () => {
   );
 };
 
-export default ScreeningListOtherRoles;
+export default ScreeningListDoctor;
