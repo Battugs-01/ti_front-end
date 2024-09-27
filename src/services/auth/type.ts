@@ -1,5 +1,7 @@
 // import { Address } from "service/social-worker/customer/type";
 
+import { Profile } from "service/type";
+
 export interface LoginData {
   email: string;
   password: string;
@@ -25,5 +27,7 @@ export interface Admin {
   city_id: number;
   role: string;
   // city: Address;
+  profile: Profile;
+  profile_id: number;
   district_id: number;
 }

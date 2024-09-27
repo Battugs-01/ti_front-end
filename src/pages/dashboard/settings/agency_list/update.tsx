@@ -55,7 +55,6 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
   });
   const newFileUpload = async (files: any[]) => {
     if (!files[0]?.uid.includes("rc-upload")) {
-      console.log("hey");
       return files[0]?.id;
     }
     const file = await uploadProfile.runAsync({
@@ -83,6 +82,14 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
       initialValues={{
         ...detail,
         establishment_year: dayjs(detail?.date_establishment),
+        profile: [
+          {
+            uid: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: detail?.profile?.physical_path,
+          },
+        ],
       }}
       modalProps={{
         destroyOnClose: true,

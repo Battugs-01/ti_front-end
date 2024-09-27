@@ -18,6 +18,7 @@ import {
 import { Menu } from "./menu";
 import { PersonalInfo } from "./action/personal_info";
 import { ChangePassword } from "./action/change_password";
+import file from "service/file";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -109,7 +110,11 @@ const Navbar: React.FC = () => {
               }
             >
               <div className="flex items-center gap-3">
-                <Avatar>BA</Avatar>
+                <Avatar
+                  src={file.fileToUrl(user.user?.profile?.physical_path || "")}
+                >
+                  BA
+                </Avatar>
                 <div className="flex flex-col justify-center items-start">
                   <div className="text-sm">{user?.user?.email || "user"}</div>
                   <div className="text-sm text-[#A0B6BA]">

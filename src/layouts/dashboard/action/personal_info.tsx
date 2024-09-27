@@ -4,11 +4,14 @@ import {
   ProFormText,
   ProFormUploadButton,
 } from "@ant-design/pro-form";
-import { Button, Col, Row } from "antd";
+import { useRequest } from "ahooks";
+import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArray } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import file from "service/file";
+import profile from "service/profile";
 
 interface PersonalInfoProps {
   visible: boolean;
@@ -21,14 +24,49 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
   onClose,
 }) => {
   const [user] = useContext(AuthContext);
-  console.log(user, "Jjjj");
+  const updateProfile = useRequest(profile.info, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
+      onClose?.();
+    },
+    onError: (error: any) => {
+      notification.error({
+        message: error.message,
+      });
+      onClose?.();
+    },
+  });
+  const uploadProfile = useRequest(file.upload, {
+    manual: true,
+  });
+
+  const newFileUpload = async (files: any[]) => {
+    if (!files[0]?.uid.includes("rc-upload")) {
+      return files[0]?.id;
+    }
+    const file = await uploadProfile.runAsync({
+      file: files[0].originFileObj,
+    });
+    return file[0].id;
+  };
   const intl = useIntl();
   return (
     <ModalForm
       title={intl.formatMessage({ id: "personal_info" })}
       width={650}
       open={visible}
-      onFinish={async (values) => {}}
+      onFinish={async (values) => {
+        console.log(values, "LLL");
+        const id = await newFileUpload(values?.profile);
+
+        await updateProfile.runAsync({
+          ...values,
+          profile_id: id,
+        });
+      }}
       modalProps={{
         onCancel: onClose,
         styles: {
@@ -49,7 +87,18 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
       }}
       initialValues={{
         first_name: user.user?.first_name,
-        role: user.user?.role,
+        last_name: user.user?.last_name,
+        profile: [
+          {
+            uid: `${user.user?.profile?.id}`,
+            id: user.user?.profile?.id,
+            name: user.user?.profile?.file_name,
+            status: "done",
+            url: file.fileToUrl(user.user?.profile?.physical_path || ""),
+            size: user.user?.profile?.file_size,
+            type: "image/jpeg",
+          },
+        ],
       }}
       submitter={{
         render: (props) => {
@@ -78,23 +127,37 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
                 fieldProps={{
                   size: "large",
                 }}
+                rules={[
+                  {
+                    required: true,
+                    message: intl.formatMessage({
+                      id: "required",
+                    }),
+                  },
+                ]}
                 label={intl.formatMessage({ id: "first_name" })}
               />
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
             <Col span={24}>
-              <ProFormSelect
-                name="role"
-                placeholder={intl.formatMessage({ id: "placeholder_select" })}
-                options={permissionArray.map((el) => ({
-                  label: <FormattedMessage id={el} />,
-                  value: el,
-                }))}
-                label={intl.formatMessage({ id: "position" })}
+              <ProFormText
+                name="last_name"
+                placeholder={intl.formatMessage({
+                  id: "placeholder_text",
+                })}
+                rules={[
+                  {
+                    required: true,
+                    message: intl.formatMessage({
+                      id: "required",
+                    }),
+                  },
+                ]}
                 fieldProps={{
                   size: "large",
                 }}
+                label={intl.formatMessage({ id: "last_name" })}
               />
             </Col>
           </Row>

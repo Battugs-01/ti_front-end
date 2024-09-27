@@ -1,4 +1,4 @@
-import { Address } from "service/type";
+import { Address, Profile } from "service/type";
 
 export interface AgencyListType {
   id: number;
@@ -12,4 +12,6 @@ export interface AgencyListType {
   phone_no: string;
   link: string;
   date_establishment: number;
+  profile: Profile;
+  profile_id: number;
 }
