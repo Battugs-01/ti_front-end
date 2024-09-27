@@ -1,14 +1,22 @@
 import { ProFormRadio } from "@ant-design/pro-form";
 import { PageLoading } from "@ant-design/pro-layout";
-import { Button } from "antd";
+import { Button, Pagination, Select, Tabs } from "antd";
 import RefreshIcon from "assets/img/refresh.svg";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { AssessmentListType } from "service/screening_list/type";
-import { DownloadCloud02, Printer } from "untitledui-js-base";
+import {
+  ArrowNarrowLeft,
+  ArrowNarrowRight,
+  DownloadCloud02,
+  Printer,
+} from "untitledui-js-base";
 import { useLevelContext } from "./selected-level";
+import { LeftCircleOutlined } from "@ant-design/icons";
+import { BiRightArrow } from "react-icons/bi";
+import { set } from "lodash";
 
 interface CustomHeaderProps {
   data: AssessmentListType[];
@@ -16,8 +24,11 @@ interface CustomHeaderProps {
 
 const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
   const { selectedLevel, setSelectedLevel } = useLevelContext();
+  const [tab, setTab] = useState(data[0]?.id || null);
 
-  const segmentedData = data?.map((item) => ({
+  const initialData = data.slice(0, 3);
+  const extraItems = data.slice(3);
+  const segmentedData = initialData?.map((item) => ({
     label: (
       <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A] font-semibold">
         {dayjs(item?.date).format("YYYY-MM-DD")}
@@ -27,7 +38,15 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
     value: item?.id,
   }));
 
-  const [tab, setTab] = useState(data[0]?.id || null);
+  const extraOptions = extraItems?.map((item) => ({
+    value: item.id,
+    label: (
+      <div className="flex items-center gap-2 text-[16px] justify-center text-[#144E5A] font-semibold">
+        {dayjs(item?.date).format("YYYY-MM-DD")}
+        <LevelBadge status={item.level} OneNone={true} />
+      </div>
+    ),
+  }));
 
   useEffect(() => {
     if (tab === null) {
@@ -43,11 +62,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
     return <PageLoading />;
   }
 
+  console.log(segmentedData?.length, "segmentedData");
+
   return (
     <>
       <div>
         <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between">
-          <div className="lg:w-[75%] w-full">
+          <div className="lg:w-[75%] w-full flex">
             <ProFormRadio.Group
               className="flex items-center gap-2"
               radioType="button"
@@ -55,6 +76,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
               fieldProps={{
                 size: "large",
                 value: tab,
+                className: "custom-select",
                 onChange: (e) => {
                   setTab(e.target.value);
                   const level = data?.find((entry) => entry?.id === tab);
@@ -64,6 +86,22 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
                 },
               }}
             />
+            {extraItems.length > 0 && (
+              <Select
+                style={{ width: 210 }}
+                size="large"
+                className="custom-select rounded-r-lg custom-selected-level"
+                placeholder="Select more levels"
+                options={extraOptions}
+                onChange={(value) => {
+                  setTab(value);
+                  const level = data?.find((entry) => entry?.id === value);
+                  if (level) {
+                    setSelectedLevel(level);
+                  }
+                }}
+              />
+            )}
           </div>
           <div className="flex flex-wrap gap-4 mb-6">
             <Button

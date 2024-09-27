@@ -30,6 +30,11 @@ namespace developmentPlan {
       hasAuth: true,
       body,
     });
+  export const closeRequest = (id: any, body: any) =>
+    http.put(`development_plan/close/${id}`, {
+      hasAuth: true,
+      body,
+    });
 }
 
 export default developmentPlan;

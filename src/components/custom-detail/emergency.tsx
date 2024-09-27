@@ -1,6 +1,6 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Card, Col, notification, Row } from "antd";
+import { Card, notification, Row } from "antd";
 import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import screenList from "service/screening_list";

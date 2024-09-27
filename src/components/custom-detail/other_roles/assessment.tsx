@@ -1,17 +1,13 @@
-import React, { useEffect } from "react";
-import { Card, Row, Col, notification, Button } from "antd";
-import { useRequest } from "ahooks";
-import { FormattedMessage } from "react-intl";
-import AssesmentSvg from "assets/img/assesment.svg";
-import screenList from "service/screening_list";
 import { PageLoading } from "@ant-design/pro-layout";
+import { useRequest } from "ahooks";
+import { Card, Col, notification, Row } from "antd";
+import AssesmentSvg from "assets/img/assesment.svg";
 import { ProgressCard, StatCard } from "components/card";
+import React, { useEffect } from "react";
+import { FormattedMessage } from "react-intl";
+import screenList from "service/screening_list";
 import CareFociPercent from "../care-foci-percent";
 import DeseaseHistory from "../desease-history";
-import { LineChartUp05 } from "untitledui-js-base";
-// import DeseaseHistory from "./tables/desease-history";
-// import CareFoci from "./tables/care-foci";
-// import General from "./tables/general";
 
 interface AssesmentProps {
   selectedLevel: { id: number } | null;
