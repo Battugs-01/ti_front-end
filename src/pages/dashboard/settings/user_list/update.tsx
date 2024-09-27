@@ -88,20 +88,10 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
         ...detail,
         profile: [
           {
-<<<<<<< HEAD
             uid: detail?.profile?.id,
             name: detail?.profile?.file_name,
             status: "done",
             url: detail?.profile?.physical_path,
-=======
-            uid: `${detail?.profile?.id}`,
-            id: detail?.profile?.id,
-            name: detail?.profile?.file_name,
-            status: "done",
-            url: file.fileToUrl(detail?.profile?.physical_path || ""),
-            size: detail?.profile?.file_size,
-            type: "image/jpeg",
->>>>>>> 97331726ce6459eac510e191fc0aa85989c1f77c
           },
         ],
       }}
