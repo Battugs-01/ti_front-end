@@ -85,6 +85,13 @@ export const AgencyList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
+            render: (_, record) => (
+              <div>{`${record.address.city?.name || ""} ${
+                record.address?.district?.name || ""
+              } ${record?.address?.khoroo?.name || ""} ${
+                record?.address?.desc || ""
+              }`}</div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "email" }),

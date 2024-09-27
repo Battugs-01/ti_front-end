@@ -1,12 +1,8 @@
-import {
-  ModalForm,
-  ProFormSelect,
-  ProFormText,
-  ProFormUploadButton,
-} from "@ant-design/pro-form";
-import { Button, Col, Row } from "antd";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { ModalForm, ProFormText } from "@ant-design/pro-form";
+import { useRequest } from "ahooks";
+import { Button, Col, notification, Row } from "antd";
 import { FormattedMessage, useIntl } from "react-intl";
+import profile from "service/profile";
 
 interface ChangePasswordProps {
   visible: boolean;
@@ -17,14 +13,42 @@ interface ChangePasswordProps {
 export const ChangePassword: React.FC<ChangePasswordProps> = ({
   visible,
   onClose,
+  onFinish,
 }) => {
+  const updatePassword = useRequest(profile.editPassword, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
+      onFinish?.();
+    },
+    onError: (error: any) => {
+      notification.error({
+        message: error.message,
+      });
+      onClose?.();
+    },
+  });
   const intl = useIntl();
   return (
     <ModalForm
       title={intl.formatMessage({ id: "change_password" })}
       width={650}
       open={visible}
-      onFinish={async (values) => {}}
+      onFinish={async (values) => {
+        if (values?.new_password !== values?.new_password_repeat) {
+          notification.error({
+            message: intl.formatMessage({ id: "password_not_match" }),
+          });
+          return;
+        }
+        await updatePassword.runAsync({
+          old_password: values?.old_password,
+          password: values?.new_password,
+        });
+        onFinish?.();
+      }}
       modalProps={{
         onCancel: onClose,
         styles: {
@@ -63,6 +87,16 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
           <ProFormText.Password
             name="old_password"
             label={intl.formatMessage({ id: "old_password" })}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: "required" }),
+              },
+            ]}
+            fieldProps={{
+              size: "large",
+            }}
+            placeholder={intl.formatMessage({ id: "placeholder_text" })}
           />
         </Col>
       </Row>
@@ -71,6 +105,16 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
           <ProFormText.Password
             name="new_password"
             label={intl.formatMessage({ id: "new_password" })}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: "required" }),
+              },
+            ]}
+            fieldProps={{
+              size: "large",
+            }}
+            placeholder={intl.formatMessage({ id: "placeholder_text" })}
           />
         </Col>
       </Row>
@@ -78,7 +122,17 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
         <Col span={24}>
           <ProFormText.Password
             name="new_password_repeat"
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: "required" }),
+              },
+            ]}
+            fieldProps={{
+              size: "large",
+            }}
             label={intl.formatMessage({ id: "new_password_repeat" })}
+            placeholder={intl.formatMessage({ id: "placeholder_text" })}
           />
         </Col>
       </Row>

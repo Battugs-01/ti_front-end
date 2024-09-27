@@ -84,10 +84,13 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
         establishment_year: dayjs(detail?.date_establishment),
         profile: [
           {
-            uid: detail?.profile?.id,
+            uid: `${detail?.profile?.id}`,
+            id: detail?.profile?.id,
             name: detail?.profile?.file_name,
             status: "done",
-            url: detail?.profile?.physical_path,
+            url: file.fileToUrl(detail?.profile?.physical_path || ""),
+            size: detail?.profile?.file_size,
+            type: "image/jpeg",
           },
         ],
       }}

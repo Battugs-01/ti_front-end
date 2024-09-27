@@ -9,7 +9,7 @@ namespace profile {
     });
 
   export const editPassword = (body: any) =>
-    http.put<SuccessResponse>(`/update/password`, {
+    http.put<SuccessResponse>(`/profile/update/password`, {
       hasAuth: true,
       body,
     });

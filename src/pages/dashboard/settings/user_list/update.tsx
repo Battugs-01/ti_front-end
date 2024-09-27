@@ -47,9 +47,13 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   });
 
   const newFileUpload = async (files: any[]) => {
+<<<<<<< HEAD
     console.log(files, "Files");
     if (!files?.[0]?.uid.includes("rc-upload")) {
       console.log("hey");
+=======
+    if (!files[0]?.uid.includes("rc-upload")) {
+>>>>>>> 97331726ce6459eac510e191fc0aa85989c1f77c
       return files[0]?.id;
     }
     const file = await uploadProfile.runAsync({
@@ -88,10 +92,20 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
         ...detail,
         profile: [
           {
+<<<<<<< HEAD
             uid: detail?.profile?.id,
             name: detail?.profile?.file_name,
             status: "done",
             url: detail?.profile?.physical_path,
+=======
+            uid: `${detail?.profile?.id}`,
+            id: detail?.profile?.id,
+            name: detail?.profile?.file_name,
+            status: "done",
+            url: file.fileToUrl(detail?.profile?.physical_path || ""),
+            size: detail?.profile?.file_size,
+            type: "image/jpeg",
+>>>>>>> 97331726ce6459eac510e191fc0aa85989c1f77c
           },
         ],
       }}
