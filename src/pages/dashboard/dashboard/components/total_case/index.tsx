@@ -20,7 +20,7 @@ export const TotalCase: React.FC<TotalCaseProps> = ({ data }) => {
   // }
   return (
     <ICard xR yR>
-      <p className="px-5 text-xl font-semibold">
+      <p className="pl-8 text-xl font-semibold">
         <FormattedMessage id="total_case" />
       </p>
       <div className="text-center mb-3">

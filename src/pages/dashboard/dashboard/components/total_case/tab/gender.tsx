@@ -1,5 +1,5 @@
-import { Pie } from "@ant-design/charts";
 import { useIntl } from "react-intl";
+import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
 import { Sex } from "service/dashboard/type";
 
 interface GenderProps {
@@ -9,30 +9,44 @@ interface GenderProps {
 export const Gender: React.FC<GenderProps> = ({ data }) => {
   const intl = useIntl();
   const graphData = [
-    { type: intl.formatMessage({ id: "male" }), value: data?.male },
-    { type: intl.formatMessage({ id: "female" }), value: data?.female },
+    {
+      type: intl.formatMessage({ id: "male" }),
+      value: data?.male,
+      color: "#2ED3B7",
+    },
+    {
+      type: intl.formatMessage({ id: "female" }),
+      value: data?.female,
+      color: "#FD6F8E",
+    },
   ];
-  const config = {
-    data: graphData,
-    angleField: "value",
-    colorField: "type",
-    innerRadius: 0.8,
-    radius: 1,
-    label: {
-      text: (d: any) => `${d.type}`,
-      position: "spider",
-    },
-    legend: {
-      color: {
-        position: "bottom",
-        rowPadding: 10,
-        itemSpacing: 10,
-      },
-    },
-  };
   return (
     <div>
-      <Pie {...config} height={180} width={350} />
+      <PieChart width={300} height={350}>
+        <Pie
+          data={graphData}
+          cx={175}
+          cy={140}
+          innerRadius={60}
+          outerRadius={75}
+          dataKey="value"
+          label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+        >
+          {graphData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry?.color} />
+          ))}
+        </Pie>
+        <Legend
+          iconSize={10}
+          iconType="circle"
+          layout="vertical"
+          payload={graphData.map((item) => ({
+            value: `${item.type}`,
+            color: item.color,
+          }))}
+        />
+        <Tooltip />
+      </PieChart>
     </div>
   );
 };
