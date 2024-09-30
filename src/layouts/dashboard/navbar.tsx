@@ -20,11 +20,13 @@ import { PersonalInfo } from "./action/personal_info";
 import { ChangePassword } from "./action/change_password";
 import file from "service/file";
 import { useRequest } from "ahooks";
+import { Logout } from "./action/logout";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
   const [personalInfo, setPersonalInfo] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);
+  const [logout, setLogout] = useState<boolean>(false);
   const [_, setAuth] = useAuthContext();
   const [user] = useContext(AuthContext);
   const info = useRequest(auth.info, {
@@ -107,9 +109,10 @@ const Navbar: React.FC = () => {
                   <div style={{ borderTop: "1px solid #EAECF0" }}>
                     <div
                       onClick={() => {
-                        auth.removeToken();
-                        setAuth([Action.SIGN_OUT]);
-                        navigate("/auth/login");
+                        setLogout(true);
+                        // auth.removeToken();
+                        // setAuth([Action.SIGN_OUT]);
+                        // navigate("/auth/login");
                       }}
                       className="flex items-center gap-3 p-2 m-2 bg-[#FEF3F2] text-[#F04438] rounded-md cursor-pointer"
                     >
@@ -136,30 +139,43 @@ const Navbar: React.FC = () => {
                 </div>
                 <ChevronDown size="24" />
               </div>
-              {personalInfo && (
-                <PersonalInfo
-                  visible={personalInfo}
-                  onClose={() => {
-                    setPersonalInfo(false);
-                  }}
-                  onFinish={() => {
-                    info?.run();
-                    setPersonalInfo(false);
-                  }}
-                />
-              )}
-              {changePassword && (
-                <ChangePassword
-                  visible={changePassword}
-                  onClose={() => {
-                    setChangePassword(false);
-                  }}
-                  onFinish={() => {
-                    setChangePassword(false);
-                  }}
-                />
-              )}
             </Popover>
+            {personalInfo && (
+              <PersonalInfo
+                visible={personalInfo}
+                onClose={() => {
+                  setPersonalInfo(false);
+                }}
+                onFinish={() => {
+                  info?.run();
+                  setPersonalInfo(false);
+                }}
+              />
+            )}
+            {changePassword && (
+              <ChangePassword
+                visible={changePassword}
+                onClose={() => {
+                  setChangePassword(false);
+                }}
+                onFinish={() => {
+                  setChangePassword(false);
+                }}
+              />
+            )}
+            {logout && (
+              <Logout
+                visible={logout}
+                onClose={() => {
+                  setLogout(false);
+                }}
+                onFinish={() => {
+                  auth.removeToken();
+                  setAuth([Action.SIGN_OUT]);
+                  navigate("/auth/login");
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

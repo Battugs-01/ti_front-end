@@ -3,6 +3,7 @@ import { Button, ButtonProps, Upload } from "antd";
 import { RcFile } from "antd/lib/upload";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { CloudDownloadOutlined } from "@ant-design/icons";
+import { FormattedMessage } from "react-intl";
 
 type Props = ButtonProps & {
   importFile: (file: RcFile) => void;
@@ -52,7 +53,9 @@ export const ExportButton = ({ loading, ...rest }: PropsExport) => {
         />
       }
     >
-      <span className="ml-2">{rest.title ?? "Татах"}</span>
+      <span className="ml-2">
+        {rest.title ?? <FormattedMessage id="download" />}
+      </span>
     </Button>
   );
 };

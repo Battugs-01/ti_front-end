@@ -26,7 +26,7 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
   });
   return (
     <ICard xR yR>
-      <p className="px-5 text-xl font-semibold">
+      <p className="pl-8 text-xl font-semibold">
         <FormattedMessage id="total_point" />
       </p>
       <div className="w-full h-[450px]">
@@ -68,19 +68,19 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
             <Tooltip />
             <Area
               type="monotone"
-              dataKey="barthel_index"
-              name="Barthel Index"
-              stroke="#0FCA7A"
-              fillOpacity={1}
-              fill="url(#colorUv)"
-            />
-            <Area
-              type="monotone"
               dataKey="mini_cog"
               name="Mini Cog"
               stroke="#03BAE2"
               fillOpacity={1}
               fill="url(#colorPv)"
+            />
+            <Area
+              type="monotone"
+              dataKey="barthel_index"
+              name="Barthel Index"
+              stroke="#0FCA7A"
+              fillOpacity={1}
+              fill="url(#colorUv)"
             />
             <Area
               type="monotone"
