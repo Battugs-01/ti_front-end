@@ -152,7 +152,7 @@ export const DevPlanEndModal = ({
               },
             }}
             label={
-              <div className="text-base font-medium">
+              <div className=" font-medium">
                 {intl.formatMessage({ id: "implement_date" })}
               </div>
             }
@@ -171,7 +171,7 @@ export const DevPlanEndModal = ({
             {
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
-                  <span className="m-0 p-0 text-base font-medium text-gray-700">
+                  <span className="m-0 p-0  font-medium text-gray-700">
                     <FormattedMessage id="high" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
@@ -184,7 +184,7 @@ export const DevPlanEndModal = ({
             {
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
-                  <span className="m-0 p-0 text-base font-medium text-gray-700">
+                  <span className="m-0 p-0  font-medium text-gray-700">
                     <FormattedMessage id="medium" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
@@ -197,7 +197,7 @@ export const DevPlanEndModal = ({
             {
               label: (
                 <div className="flex flex-col m-0 p-0 mt-4">
-                  <span className="m-0 p-0 text-base font-medium text-gray-700">
+                  <span className="m-0 p-0  font-medium text-gray-700">
                     <FormattedMessage id="low" />
                   </span>
                   <span className="m-0 p-0 text-sm font-normal text-gray-600">
@@ -213,14 +213,14 @@ export const DevPlanEndModal = ({
           name="note"
           placeholder="Дэлгэрэнгүй оруулна уу..."
           label={
-            <div className="text-base font-medium">
+            <div className=" font-medium">
               <FormattedMessage id="notes" />
             </div>
           }
         />
         <ProFormSelect
           label={
-            <div className="text-base font-medium">
+            <div className=" font-medium">
               <FormattedMessage id="responsible" />
             </div>
           }

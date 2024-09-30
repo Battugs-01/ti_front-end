@@ -6,16 +6,16 @@ import AssesmentSvg from "assets/img/assesment.svg";
 import screenList from "service/screening_list";
 import { PageLoading } from "@ant-design/pro-layout";
 import { ProgressCard, StatCard } from "components/card";
-import CareFociPercent from "./care-foci-percent";
-import DeseaseHistory from "./desease-history";
-import General from "./case_manager/tables/general";
-import { MiniCogModal } from "./assesment-modal/mini-cog";
-import { BartherIndexModal } from "./assesment-modal/barthel-index";
-import { GDSModal } from "./assesment-modal/gds";
-import CareFoci from "./case_manager/tables/care-foci";
 import { AuthContext } from "context/auth";
 import { ScreeningTab, UserRoleType } from "config";
 import { AssessmentListType } from "service/screening_list/type";
+import CareFociPercent from "./care-foci-percent";
+import DeseaseHistory from "./desease-history";
+import General from "./tables/general";
+import CareFoci from "./tables/care-foci";
+import { MiniCogModal } from "./assesment-modal/mini-cog";
+import { BartherIndexModal } from "./assesment-modal/barthel-index";
+import { GDSModal } from "./assesment-modal/gds";
 
 interface AssesmentProps {
   selectedLevel: AssessmentListType | null;

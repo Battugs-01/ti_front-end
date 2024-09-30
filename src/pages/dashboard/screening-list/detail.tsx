@@ -1,10 +1,10 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { notification } from "antd";
+import MainDetail from "components/custom-detail";
 import CustomHeader from "components/custom-detail/custom-header";
 import Emergency from "components/custom-detail/emergency";
 import Info from "components/custom-detail/info";
-import MainDetail from "components/custom-detail/case_manager/main-detail";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";

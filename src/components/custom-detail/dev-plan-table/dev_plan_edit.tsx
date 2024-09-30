@@ -9,7 +9,7 @@ import developmentPlan from "service/development_plan";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
 import DevPlanTables from "./tables";
 import { useLevelContext } from "../selected-level";
-import { DevPlanEndModal } from "../doctor/dev_plan_close";
+import { DevPlanEndModal } from "./dev_plan_close";
 
 const DevPlanEdit: React.FC = () => {
   const { selectedLevel } = useLevelContext();
@@ -26,7 +26,6 @@ const DevPlanEdit: React.FC = () => {
     },
   });
 
-  console.log(devPlanData, "devPlanData");
   const run = () => {
     devPlanData.run(selectedLevel?.id || 0);
   };
