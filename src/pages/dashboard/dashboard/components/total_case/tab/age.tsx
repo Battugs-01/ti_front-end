@@ -1,12 +1,12 @@
 import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
 
 const colorMapping: { [key: string]: string } = {
-  "-54": "#A6CE39",
-  "55-59": "#005DC7",
-  "60-64": "#00A9FF",
-  "64-69": "#FFCF20",
-  "70-74": "#F39200",
-  "+75": "#FF6FCF",
+  "-54": "#86CB3C",
+  "55-59": "#6E86FF",
+  "60-64": "#36BFFA",
+  "64-69": "#22CCEE",
+  "70-74": "#FDB022",
+  "+75": "#F670C7",
 };
 
 interface AgeProps {

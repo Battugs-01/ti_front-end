@@ -63,7 +63,7 @@
   "caregiver": "Асран хамгаалагч",
   "person_in_charge": "Удирдаж буй хүн",
   "address": "Хаяг",
-  "cancel": "Болих",
+  "cancel": "Үгүй",
   "save": "Хадгалах",
   "register_no": "Регистрийн дугаар",
   "date_of_birth": "Төрсөн огноо",
@@ -212,5 +212,6 @@
   "add_user": "Хэрэглэгч нэмэх",
   "update_user": "Хэрэглэгч засах",
   "placeholder_text": "Утга оруулна уу?",
-  "placeholder_select": "Утга сонгоно уу?"
+  "placeholder_select": "Утга сонгоно уу?",
+  "logout_message":"Системээс гарахдаа итгэлтэй байна уу"
 }

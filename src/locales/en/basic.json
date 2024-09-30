@@ -203,5 +203,7 @@
   "add_user": "Add User",
   "update_user": "Update User",
   "placeholder_text": "Please enter a value?",
-  "placeholder_select": "Please select a value?"
+  "placeholder_select": "Please select a value?",
+  "logout_message":"Are you sure you want to log out?"
+
 }
