@@ -12,11 +12,14 @@ import { initPagination } from "utils/index";
 import { CreateUser } from "./create";
 import { UpdateUser } from "./update";
 import dayjs from "dayjs";
+import { Lock01 } from "untitledui-js-base";
+import { ChangePassword } from "./change_password";
 
 export const Userlist: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState(false);
+  const [changePassword, setChangePassword] = useState<UserType>();
   const intl = useIntl();
 
   const user = useRequest(userList.list, {
@@ -69,6 +72,18 @@ export const Userlist: React.FC = () => {
             title: "Remove",
           }),
         }}
+        customActions={(record) => {
+          return (
+            <div
+              className="flex items-center px-1 py-3"
+              onClick={() => {
+                setChangePassword(record);
+              }}
+            >
+              <Lock01 size="20" />
+            </div>
+          );
+        }}
         create={create}
         setCreate={setCreate}
         className="p-0 remove-padding-table"
@@ -97,7 +112,7 @@ export const Userlist: React.FC = () => {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
             render: (_, record) => {
-              return <div>{record.agency?.address?.city?.name || "-"}</div>;
+              return <div>{record?.address?.city?.name || "-"}</div>;
             },
           },
           {
@@ -112,10 +127,6 @@ export const Userlist: React.FC = () => {
             },
           },
           {
-            title: intl.formatMessage({ id: "login_name" }),
-            dataIndex: "email",
-          },
-          {
             title: intl.formatMessage({ id: "created_at" }),
             dataIndex: "created_at",
             render: (_, record) => (
@@ -124,6 +135,21 @@ export const Userlist: React.FC = () => {
           },
         ]}
       />
+      {changePassword && (
+        <ChangePassword
+          record={changePassword}
+          visible={!!changePassword}
+          onClose={() => {
+            setChangePassword(undefined);
+          }}
+          onFinish={() => {
+            user?.run({
+              ...filter,
+            });
+            setChangePassword(undefined);
+          }}
+        />
+      )}
     </PageCard>
   );
 };

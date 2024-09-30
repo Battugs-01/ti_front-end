@@ -110,10 +110,6 @@ export const AgencyList: React.FC = () => {
             dataIndex: "link",
           },
           {
-            title: intl.formatMessage({ id: "email" }),
-            dataIndex: "email",
-          },
-          {
             title: intl.formatMessage({ id: "created_at" }),
             dataIndex: "created_at",
             render: (_, record) => (

@@ -1,16 +1,49 @@
 import { Segmented } from "antd";
 import { IfCondition } from "components/condition";
-import { SettingsTab } from "config";
-import { useState } from "react";
+import { SettingsTab, UserRoleType } from "config";
+import { useContext, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { AgencyList } from "./agency_list";
 import { StackholderList } from "./stackholder_list";
 import { Userlist } from "./user_list";
+import { AuthContext } from "context/auth";
 
 const Settings: React.FC = () => {
   const [tab, setTab] = useState<SettingsTab>(SettingsTab.agency_list);
+  const [user] = useContext(AuthContext);
   return (
     <>
+      {/* {user?.user?.role === UserRoleType.admin ? (
+        <Segmented
+          options={[
+            {
+              value: SettingsTab.agency_list,
+              label: <FormattedMessage id="agency_list" />,
+            },
+          ]}
+          size="large"
+          onChange={(e: any) => {
+            setTab(e);
+          }}
+        />
+      ) : (
+        <Segmented
+          options={[
+            {
+              value: SettingsTab.stakeholder_list,
+              label: <FormattedMessage id="stakeholder_list" />,
+            },
+            {
+              value: SettingsTab.user_list,
+              label: <FormattedMessage id="user_list" />,
+            },
+          ]}
+          size="large"
+          onChange={(e: any) => {
+            setTab(e);
+          }}
+        />
+      )} */}
       <Segmented
         options={[
           {
@@ -31,7 +64,6 @@ const Settings: React.FC = () => {
           setTab(e);
         }}
       />
-
       <div className="mt-7"></div>
 
       <IfCondition

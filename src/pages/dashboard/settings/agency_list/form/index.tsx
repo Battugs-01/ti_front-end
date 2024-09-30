@@ -1,4 +1,5 @@
 import ProForm, {
+  ProFormDatePicker,
   ProFormSelect,
   ProFormText,
   ProFormUploadButton,

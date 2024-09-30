@@ -65,6 +65,7 @@ export enum UserRoleType {
   operation_manager = "operation_manager",
   doctor = "doctor",
   admin = "admin",
+  super_admin = "super_admin",
 }
 
 export const permissionArray = Object.freeze([
@@ -73,6 +74,15 @@ export const permissionArray = Object.freeze([
   UserRoleType.operation_manager,
   UserRoleType.doctor,
   UserRoleType.admin,
+]);
+
+export const permissionArraySuperAdmin = Object.freeze([
+  UserRoleType.case_manager,
+  UserRoleType.senior_case_manager,
+  UserRoleType.operation_manager,
+  UserRoleType.doctor,
+  UserRoleType.admin,
+  UserRoleType.super_admin,
 ]);
 
 export enum ScreeningTab {

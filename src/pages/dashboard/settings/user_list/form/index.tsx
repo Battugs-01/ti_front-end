@@ -245,7 +245,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 />
               </Col>
             </Row>
-            <div className="text-base font-semibold mb-4">
+            {/* <div className="text-base font-semibold mb-4">
               <FormattedMessage id="permission_control" />
             </div>
             <Row gutter={[16, 16]}>
@@ -281,7 +281,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   label={intl.formatMessage({ id: "password" })}
                 />
               </Col>
-            </Row>
+            </Row> */}
           </>
         );
       }}
