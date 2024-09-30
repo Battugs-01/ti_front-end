@@ -1,20 +1,28 @@
 import { Segmented } from "antd";
-import { FormattedMessage } from "react-intl";
-import { PopoverFilter } from "components/filter";
-import { ScreeningTab } from "config";
 import InitTableHeader from "components/table-header";
+import { ScreeningTab } from "config";
+import { FormattedMessage } from "react-intl";
 
 interface TableHeaderProps {
   setTab: (tab: ScreeningTab) => void;
   refreshList: () => void;
+  setSearch: (value: string) => void;
+  search: string;
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({ setTab, refreshList }) => {
+const TableHeader: React.FC<TableHeaderProps> = ({
+  setTab,
+  refreshList,
+  setSearch,
+  search,
+}) => {
   return (
     <InitTableHeader
       hideTitle
       refresh={refreshList}
       hideCreate
+      search={search}
+      setSearch={setSearch}
       leftContent={
         <Segmented
           onChange={(value: any) => {

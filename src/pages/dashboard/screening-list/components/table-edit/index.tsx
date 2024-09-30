@@ -72,7 +72,7 @@ export const EditScreenList: React.FC<
         await editScreen.runAsync(detail?.id || 0, values);
         console.log(values, "Form Values:");
       }}
-      title={intl.formatMessage({ id: "edit_entry" })}
+      title={intl.formatMessage({ id: "update" })}
       open={open}
       onOpenChange={() => {
         formRef?.current?.resetFields();
@@ -134,6 +134,10 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     name="first_name"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -146,6 +150,9 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormDatePicker
+                    fieldProps={{
+                      size: "large",
+                    }}
                     name="birth_date"
                     initialValue={dayjs().endOf("day")}
                     label={
@@ -157,6 +164,10 @@ export const EditScreenList: React.FC<
                 </Col>
                 <Col span={12}>
                   <ProFormSelect
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     name="gender"
                     initialValue={workersGenderArray[0]}
                     label={
@@ -171,6 +182,10 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     name="rd"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -181,6 +196,10 @@ export const EditScreenList: React.FC<
                 </Col>
                 <Col span={12}>
                   <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     name="phone"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -191,7 +210,7 @@ export const EditScreenList: React.FC<
                 </Col>
               </Row>
 
-              <ProFormTextArea
+              {/* <ProFormTextArea
                 name="address"
                 placeholder="Оршин суугаа хаяг"
                 label={
@@ -199,9 +218,9 @@ export const EditScreenList: React.FC<
                     <FormattedMessage id="address" />
                   </div>
                 }
-              />
+              /> */}
 
-              {/* <Row gutter={[16, 16]}>
+              <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
@@ -218,6 +237,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       showSearch: true,
                       loading: city?.loading,
+                      size: "large",
                     }}
                     options={city.data?.map((el) => ({
                       value: el.id,
@@ -238,6 +258,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       showSearch: true,
                       loading: district?.loading,
+                      size: "large",
                     }}
                     options={district.data?.map((item: any) => {
                       return {
@@ -258,6 +279,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       showSearch: true,
                       loading: khoroo?.loading,
+                      size: "large",
                     }}
                     options={khoroo?.data?.map((item: any) => {
                       return {
@@ -272,43 +294,10 @@ export const EditScreenList: React.FC<
                   <ProFormText
                     name={["address", "desc"]}
                     label={intl.formatMessage({ id: "address" })}
-                  />
-                </Col>
-              </Row> */}
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormSelect
-                    name="person_in_charge"
-                    label={
-                      <div className="text-gray-700 font-medium">
-                        {intl.formatMessage({ id: "person_in_charge" })}
-                      </div>
-                    }
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormSelect
-                    name="agency_id"
-                    label={
-                      <div className="text-gray-700 font-medium">
-                        {intl.formatMessage({ id: "agency" })}
-                      </div>
-                    }
-                    options={agencyArray.map((el) => ({ ...el }))}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
-                  <ProFormDatePicker
-                    name="assessment_date"
-                    label={
-                      <div className="text-gray-700 font-medium">
-                        {intl.formatMessage({ id: "assessment_date" })}
-                      </div>
-                    }
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                   />
                 </Col>
               </Row>
@@ -325,6 +314,10 @@ export const EditScreenList: React.FC<
                         {intl.formatMessage({ id: "senior_living_question" })}
                       </div>
                     }
+                    placeholder={intl.formatMessage({ id: "select" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
@@ -350,6 +343,10 @@ export const EditScreenList: React.FC<
                         })}
                       </div>
                     }
+                    placeholder={intl.formatMessage({ id: "select" })}
+                    fieldProps={{
+                      size: "large",
+                    }}
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
@@ -367,6 +364,10 @@ export const EditScreenList: React.FC<
                 <Col span={12}>
                   <ProFormText
                     name="relationship"
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     label={
                       <div className="text-gray-700 font-medium">
                         {intl.formatMessage({ id: "relationship" })}
@@ -377,6 +378,10 @@ export const EditScreenList: React.FC<
                 <Col span={12}>
                   <ProFormText
                     name="caregiver_phone"
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
                     label={
                       <div className="text-gray-700 font-medium">
                         {intl.formatMessage({ id: "phone" })}

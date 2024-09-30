@@ -126,6 +126,7 @@ export const DevPlanEndModal = ({
                 onChange: (e) => {
                   setIsDoNext(e.target.value);
                 },
+                size: "large",
               }}
               options={[
                 {
@@ -147,6 +148,7 @@ export const DevPlanEndModal = ({
             name="date"
             initialValue={dayjs().endOf("day")}
             fieldProps={{
+              size: "large",
               disabledDate: (current) => {
                 return current && current < dayjs().endOf("day");
               },
@@ -167,6 +169,7 @@ export const DevPlanEndModal = ({
           className="flex gap-2 mt-0 pt-0"
           layout="vertical"
           initialValue="high"
+          fieldProps={{ size: "large" }}
           options={[
             {
               label: (
@@ -212,6 +215,7 @@ export const DevPlanEndModal = ({
         <ProFormTextArea
           name="note"
           placeholder="Дэлгэрэнгүй оруулна уу..."
+          fieldProps={{ size: "large" }}
           label={
             <div className=" font-medium">
               <FormattedMessage id="notes" />
@@ -232,6 +236,7 @@ export const DevPlanEndModal = ({
             loading: emplyoee.loading,
             filterOption: false,
             onSearch: debouncedSearch,
+            size: "large",
           }}
           placeholder={intl.formatMessage({ id: "select" })}
           options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
