@@ -4,10 +4,10 @@ import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { FormattedMessage, useIntl } from "react-intl";
 import { AssessmentListType, Questions } from "service/screening_list/type";
-import { ITable } from "..";
 import dayjs from "dayjs";
 import { Avatar } from "antd";
 import file from "service/file";
+import { ITable } from "components/table";
 
 interface QuistionHistoryProps {
   selectedLevel: AssessmentListType;

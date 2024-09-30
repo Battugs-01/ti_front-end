@@ -11,11 +11,7 @@ const StasticalReportPage = lazy(
 const SettingsPage = lazy(() => import("pages/dashboard/settings/index"));
 
 const ScreeningListDetail = lazy(
-  () => import("pages/dashboard/screening-list/case-manager/detail")
-);
-
-const ScreeningListDetailDoctorRoles = lazy(
-  () => import("pages/dashboard/screening-list/doctor_roles/detail")
+  () => import("pages/dashboard/screening-list/detail")
 );
 
 const DashboardPage = lazy(() => import("pages/dashboard/dashboard/index"));
@@ -37,14 +33,9 @@ const dashboardRoutes: IRoute[] = [
     component: <SettingsPage />,
   },
   {
-    key: "screening-list-case-manager-detail",
-    path: "screening-list/case-manager/detail",
+    key: "screening-list-detail",
+    path: "screening-list/detail",
     component: <ScreeningListDetail />,
-  },
-  {
-    key: "screening-list-doctor-roles-detail",
-    path: "screening-list/doctor-roles/detail",
-    component: <ScreeningListDetailDoctorRoles />,
   },
   {
     key: "dashboard",

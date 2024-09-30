@@ -1,10 +1,12 @@
 import ProForm, {
   DrawerForm,
+  ModalForm,
   ProFormDatePicker,
   ProFormInstance,
   ProFormRadio,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, Divider, notification, Row } from "antd";
@@ -54,7 +56,7 @@ export const EditScreenList: React.FC<
     }
   }, [detail]);
   return (
-    <DrawerForm
+    <ModalForm
       formRef={formRef}
       initialValues={{
         ...detail,
@@ -93,7 +95,6 @@ export const EditScreenList: React.FC<
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                icon={<Save02 />}
                 className="flex items-center"
               >
                 <FormattedMessage id="save" />
@@ -102,27 +103,43 @@ export const EditScreenList: React.FC<
           );
         },
       }}
-      drawerProps={{
-        onClose: () => {
+      modalProps={{
+        destroyOnClose: true,
+        width: "650px",
+        onCancel: () => {
           onCancel?.();
-          formRef.current?.resetFields();
+          formRef?.current?.resetFields();
         },
-        width: 500,
-        styles: { body: { backgroundColor: "#F5F8F8" } },
+        styles: {
+          header: {
+            padding: "1.2rem",
+            borderBottom: "1px solid #EAECF0",
+          },
+          content: {
+            padding: "0",
+          },
+          body: {
+            padding: "1.2rem 1.2rem 0 1.2rem",
+          },
+          footer: {
+            padding: "0 1.2rem 1.2rem 1.2rem",
+          },
+        },
       }}
     >
       <ProForm.Item noStyle shouldUpdate>
         {(form) => {
           return (
             <>
-              <div>
-                <FormattedMessage id="comprehensive_assessment_title" />
-              </div>
               <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <ProFormText
                     name="first_name"
-                    label={intl.formatMessage({ id: "name" })}
+                    label={
+                      <div className="text-gray-700 font-medium ">
+                        {intl.formatMessage({ id: "name" })}
+                      </div>
+                    }
                   />
                 </Col>
               </Row>
@@ -130,13 +147,23 @@ export const EditScreenList: React.FC<
                 <Col span={12}>
                   <ProFormDatePicker
                     name="birth_date"
-                    label={intl.formatMessage({ id: "date_of_birth" })}
+                    initialValue={dayjs().endOf("day")}
+                    label={
+                      <div className="text-gray-700 font-medium ">
+                        {intl.formatMessage({ id: "date_of_birth" })}
+                      </div>
+                    }
                   />
                 </Col>
                 <Col span={12}>
                   <ProFormSelect
                     name="gender"
-                    label={intl.formatMessage({ id: "gender" })}
+                    initialValue={workersGenderArray[0]}
+                    label={
+                      <div className="text-gray-700 font-medium ">
+                        {intl.formatMessage({ id: "gender" })}
+                      </div>
+                    }
                     options={workersGenderArray.map((el) => ({ ...el }))}
                   />
                 </Col>
@@ -145,17 +172,36 @@ export const EditScreenList: React.FC<
                 <Col span={12}>
                   <ProFormText
                     name="rd"
-                    label={intl.formatMessage({ id: "register_no" })}
+                    label={
+                      <div className="text-gray-700 font-medium ">
+                        {intl.formatMessage({ id: "register_no" })}
+                      </div>
+                    }
                   />
                 </Col>
                 <Col span={12}>
                   <ProFormText
                     name="phone"
-                    label={intl.formatMessage({ id: "phone" })}
+                    label={
+                      <div className="text-gray-700 font-medium ">
+                        {intl.formatMessage({ id: "phone" })}
+                      </div>
+                    }
                   />
                 </Col>
               </Row>
-              <Row gutter={[16, 16]}>
+
+              <ProFormTextArea
+                name="address"
+                placeholder="Оршин суугаа хаяг"
+                label={
+                  <div className="text-gray-700 font-medium">
+                    <FormattedMessage id="address" />
+                  </div>
+                }
+              />
+
+              {/* <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
@@ -228,12 +274,16 @@ export const EditScreenList: React.FC<
                     label={intl.formatMessage({ id: "address" })}
                   />
                 </Col>
-              </Row>
+              </Row> */}
               <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <ProFormSelect
                     name="person_in_charge"
-                    label={intl.formatMessage({ id: "person_in_charge" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "person_in_charge" })}
+                      </div>
+                    }
                   />
                 </Col>
               </Row>
@@ -241,7 +291,11 @@ export const EditScreenList: React.FC<
                 <Col span={24}>
                   <ProFormSelect
                     name="agency_id"
-                    label={intl.formatMessage({ id: "agency" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "agency" })}
+                      </div>
+                    }
                     options={agencyArray.map((el) => ({ ...el }))}
                   />
                 </Col>
@@ -250,12 +304,15 @@ export const EditScreenList: React.FC<
                 <Col span={24}>
                   <ProFormDatePicker
                     name="assessment_date"
-                    label={intl.formatMessage({ id: "assessment_date" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "assessment_date" })}
+                      </div>
+                    }
                   />
                 </Col>
               </Row>
-              <Divider />
-              <div>
+              <div className="text-[#000000] text-base font-medium mb-5">
                 <FormattedMessage id="caregiver_info_title" />
               </div>
               <Row gutter={[16, 16]}>
@@ -263,7 +320,11 @@ export const EditScreenList: React.FC<
                   <ProFormRadio.Group
                     name="senior_living"
                     layout="vertical"
-                    label={intl.formatMessage({ id: "senior_living_question" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "senior_living_question" })}
+                      </div>
+                    }
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
@@ -282,9 +343,13 @@ export const EditScreenList: React.FC<
                   <ProFormRadio.Group
                     name="caregiver_living"
                     layout="vertical"
-                    label={intl.formatMessage({
-                      id: "caregiver_living_question",
-                    })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({
+                          id: "caregiver_living_question",
+                        })}
+                      </div>
+                    }
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
@@ -302,13 +367,21 @@ export const EditScreenList: React.FC<
                 <Col span={12}>
                   <ProFormText
                     name="relationship"
-                    label={intl.formatMessage({ id: "relationship" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "relationship" })}
+                      </div>
+                    }
                   />
                 </Col>
                 <Col span={12}>
                   <ProFormText
                     name="caregiver_phone"
-                    label={intl.formatMessage({ id: "phone" })}
+                    label={
+                      <div className="text-gray-700 font-medium">
+                        {intl.formatMessage({ id: "phone" })}
+                      </div>
+                    }
                   />
                 </Col>
               </Row>
@@ -316,6 +389,6 @@ export const EditScreenList: React.FC<
           );
         }}
       </ProForm.Item>
-    </DrawerForm>
+    </ModalForm>
   );
 };
