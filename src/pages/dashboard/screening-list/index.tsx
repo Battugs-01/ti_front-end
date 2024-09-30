@@ -1,4 +1,4 @@
-import { useRequest } from "ahooks";
+import { useDebounceFn, useRequest } from "ahooks";
 import { notification, Typography } from "antd";
 import { PageCard } from "components/card";
 import { useLevelContext } from "components/custom-detail/selected-level";
@@ -20,6 +20,7 @@ const ScreeningList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const { setSelectedLevel } = useLevelContext();
   const [user] = useContext(AuthContext);
+  const [search, setSearch] = useState<string>("");
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
   const intl = useIntl();
   const screen = useRequest(screenList.list, {
@@ -51,9 +52,19 @@ const ScreeningList: React.FC = () => {
     });
   };
 
+  const searchRun = useDebounceFn(screen.run, { wait: 1000 });
+
   return (
     <PageCard xR>
-      <TableHeader setTab={setTab} refreshList={refreshList} />
+      <TableHeader
+        setTab={setTab}
+        refreshList={refreshList}
+        setSearch={(e) => {
+          setSearch(e);
+          searchRun.run({ ...filter, query: e });
+        }}
+        search={search}
+      />
       <ITable<ScreeningListType>
         dataSource={screen.data?.items}
         loading={screen.loading}
@@ -80,6 +91,7 @@ const ScreeningList: React.FC = () => {
           },
           ...getScreeningTableColumns(intl),
         ]}
+        refresh={refreshList}
         UpdateComponent={EditScreenList}
         customActions={(record) => {
           if (user?.user?.role === UserRoleType.senior_case_manager) {
