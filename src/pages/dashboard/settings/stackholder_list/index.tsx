@@ -81,6 +81,11 @@ export const StackholderList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
+            render: (_, record) => {
+              return (
+                <p>{`${record?.address?.city?.name} ${record?.address?.district?.name} ${record?.address?.khoroo?.name} ${record?.address?.desc}`}</p>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "email" }),
