@@ -277,7 +277,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   fieldProps={{
                     size: "large",
                   }}
-                  label={intl.formatMessage({ id: "email" })}
+                  label={intl.formatMessage({ id: "login_name" })}
                   rules={[
                     {
                       type: "email",

@@ -96,6 +96,9 @@ export const Userlist: React.FC = () => {
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
+            render: (_, record) => {
+              return <div>{record.agency?.address?.city?.name || "-"}</div>;
+            },
           },
           {
             title: intl.formatMessage({ id: "email" }),
