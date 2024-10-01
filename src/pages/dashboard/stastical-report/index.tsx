@@ -69,14 +69,14 @@ const StasticalReport = () => {
               </div>
             ),
           },
-          {
-            value: StatisticalTab.statistic_report,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="statistic_report" />
-              </div>
-            ),
-          },
+          // {
+          //   value: StatisticalTab.statistic_report,
+          //   label: (
+          //     <div className="font-semibold text-primary-700">
+          //       <FormattedMessage id="statistic_report" />
+          //     </div>
+          //   ),
+          // },
           {
             value: StatisticalTab.development_plan,
             label: (

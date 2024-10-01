@@ -232,5 +232,8 @@
   "medical_history":"Өвчний түүх",
   "by_hcu_date":"ХЦҮ огноогоор",
   "by_ht_date":"ХТ огноогоор",
-  "case_movement": "Кэйс шилжүүлэх"
+  "case_movement": "Кэйс шилжүүлэх",
+  "by_level":"Түвшингөөр",
+  "age_and_gender":"Нас болон хүйсээр",
+  "percent":"Эзлэх хувь"
 }

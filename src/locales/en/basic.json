@@ -223,5 +223,8 @@
   "by_agency":"By Agency",
   "medical_history":"Medical History",
   "by_hcu_date":"By HCU Date",
-  "by_ht_date":"By HT Date"
+  "by_ht_date":"By HT Date",
+  "by_level":"By Level",
+  "age_and_gender":"Age and gender",
+  "percent":"Percent"
 }

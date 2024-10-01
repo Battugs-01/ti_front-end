@@ -324,6 +324,11 @@ export enum DevelopmentPlanReportTab {
   management_report = "management_report",
 }
 
+export enum StatisticalReportTab {
+  by_level = "by_level",
+  age_and_gender = "age_and_gender",
+}
+
 export enum DevelopmentPlanDetailTab {
   general = "general_info",
   development = "development_plan",
