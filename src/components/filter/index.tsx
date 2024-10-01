@@ -172,13 +172,26 @@ export const FilterForm = ({
 };
 
 export const PopoverFilter = ({ children }: { children: any }) => {
+  const [visible, setVisible] = useState(false);
+
+  const handleChange = (isVisible: boolean) => {
+    setVisible(true);
+  };
+
   return (
     <Popover
       placement="bottomLeft"
       arrow={false}
       content={<div className="p-3 w-80 min-[350]">{children}</div>}
+      trigger="click"
+      open={visible}
+      onOpenChange={handleChange}
     >
-      <Button size="large" icon={<FilterLines />} />
+      <Button
+        size="large"
+        icon={<FilterLines />}
+        onClick={() => setVisible(!visible)}
+      />
     </Popover>
   );
 };

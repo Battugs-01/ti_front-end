@@ -9,15 +9,18 @@
   "responsible": "Take responsibility",
   "result": "Result",
   "is_resolved": "Шийдэгдсэн эсэх",
+  "close_quistion": "Close quistion",
   "screening_list": "Screening List",
   "screening_history": "Screening History",
   "development_plan": "Development Plan",
   "stastical_report": "Stastical Report",
   "update": "Update",
   "select": "Select",
+  "to_whom": "To whom",
   "settings": "Settings",
   "all": "All",
   "register": "Register",
+  "case_movement": "Case transfer",
   "geriatric_depression": "Geriatric Depression Questionnaire (GDS Score)",
   "satisfied_with_your_life": "Are you satisfied with your life?",
   "often_sad": "Are you often sad?",
@@ -205,6 +208,5 @@
   "update_user": "Update User",
   "placeholder_text": "Please enter a value?",
   "placeholder_select": "Please select a value?",
-  "logout_message":"Are you sure you want to log out?"
-
+  "logout_message": "Are you sure you want to log out?"
 }

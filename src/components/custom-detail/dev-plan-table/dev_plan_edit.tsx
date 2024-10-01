@@ -93,16 +93,18 @@ const DevPlanEdit: React.FC = () => {
               >
                 <FormattedMessage id="print" />
               </Button>
-              {user && user.user?.role === UserRoleType.doctor && (
-                <Button
-                  size="large"
-                  className="flex items-center gap-2"
-                  type="primary"
-                  onClick={() => setModal(true)}
-                >
-                  <FormattedMessage id="development_plan_end" />
-                </Button>
-              )}
+              {user &&
+                user.user?.role === UserRoleType.doctor &&
+                devPlanData?.data?.is_close === false && (
+                  <Button
+                    size="large"
+                    className="flex items-center gap-2"
+                    type="primary"
+                    onClick={() => setModal(true)}
+                  >
+                    <FormattedMessage id="development_plan_end" />
+                  </Button>
+                )}
             </div>
           }
           className="card-header-remove"
@@ -112,26 +114,31 @@ const DevPlanEdit: React.FC = () => {
               name="general"
               data={generalData}
               isEvaluated={false}
+              isClose={devPlanData?.data?.is_close}
             />
             <DevPlanTables
               name="physical_condition"
               data={physicalConditionData}
               isEvaluated={true}
+              isClose={devPlanData?.data?.is_close}
             />
             <DevPlanTables
               name="psychology_change"
               data={psychologyChangeData}
               isEvaluated={true}
+              isClose={devPlanData?.data?.is_close}
             />
             <DevPlanTables
               name="economy_diff"
               data={EconemyData}
               isEvaluated={true}
+              isClose={devPlanData?.data?.is_close}
             />
             <DevPlanTables
               name="health_risk"
               data={HealthRiskData}
               isEvaluated={true}
+              isClose={devPlanData?.data?.is_close}
             />
           </div>
         </Card>

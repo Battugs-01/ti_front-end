@@ -19,12 +19,14 @@ interface CareFociProps {
   data: CareFociItemElement[];
   name: string;
   isEvaluated?: boolean;
+  isClose?: boolean;
 }
 
 const DevPlanTables: React.FC<CareFociProps> = ({
   name,
   data,
   isEvaluated,
+  isClose,
 }) => {
   const [user] = useContext(AuthContext);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
@@ -96,22 +98,24 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 <div className="text-[18px] font-semibold flex flex-row gap-4 items-center">
                   <FormattedMessage id={name} />
                 </div>
-                {isSwitched && user.user?.role === UserRoleType.doctor && (
-                  <Button
-                    style={{ opacity: 1, cursor: "pointer" }}
-                    className="flex items-center gap-2"
-                    onClick={() =>
-                      isEditing ? handleSave() : setIsEditing(true)
-                    }
-                  >
-                    {isEditing === true ? <Save02 /> : <img src={EditSvg} />}
-                    <div className="text-sm text-gray-700 font-medium">
-                      <FormattedMessage
-                        id={isEditing ? "save" : "member_drawer_title_update"}
-                      />
-                    </div>
-                  </Button>
-                )}
+                {isSwitched &&
+                  user.user?.role === UserRoleType.doctor &&
+                  isClose === false && (
+                    <Button
+                      style={{ opacity: 1, cursor: "pointer" }}
+                      className="flex items-center gap-2"
+                      onClick={() =>
+                        isEditing ? handleSave() : setIsEditing(true)
+                      }
+                    >
+                      {isEditing === true ? <Save02 /> : <img src={EditSvg} />}
+                      <div className="text-sm text-gray-700 font-medium">
+                        <FormattedMessage
+                          id={isEditing ? "save" : "member_drawer_title_update"}
+                        />
+                      </div>
+                    </Button>
+                  )}
               </div>
             ),
             children: (

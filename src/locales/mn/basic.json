@@ -12,8 +12,10 @@
   "environmental_risk": "Амьдарч буй орчны эрсдэл",
   "first_name": "Нэр",
   "evaluation": "Үнэлгээ",
-  "last_name": "Овог",
   "select": "Сонгох",
+  "last_name": "Овог",
+  "to_whom": "Хэнрүү",
+  "close_quistion": "Асуумж хаах",
   "geriatric_depression": "Настны сэтгэл гутралын асуумж (GDS оноо)",
   "satisfied_with_your_life": "Та амьдралдаа сэтгэл хангалуун байна уу?",
   "often_sad": "Та ихэвчлэн гунигтай байдаг уу?",
@@ -214,5 +216,6 @@
   "update": "Засах",
   "placeholder_text": "Утга оруулна уу?",
   "placeholder_select": "Утга сонгоно уу?",
-  "logout_message":"Системээс гарахдаа итгэлтэй байна уу"
+  "logout_message": "Системээс гарахдаа итгэлтэй байна уу",
+  "case_movement": "Кэйс шилжүүлэх"
 }
