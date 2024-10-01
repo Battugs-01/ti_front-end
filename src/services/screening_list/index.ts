@@ -39,6 +39,17 @@ namespace screenList {
       hasAuth: true,
       body,
     });
+
+  export const switchCustomer = (id: number, body?: any) =>
+    http.put<ScreeningListType>(`assessment/movement/${id}`, {
+      hasAuth: true,
+      body,
+    });
+  export const close = (body?: any) =>
+    http.post<ScreeningListType>("customer/close", {
+      hasAuth: true,
+      body,
+    });
 }
 
 export default screenList;

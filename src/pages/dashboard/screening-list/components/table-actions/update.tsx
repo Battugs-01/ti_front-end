@@ -1,16 +1,14 @@
 import ProForm, {
-  DrawerForm,
   ModalForm,
   ProFormDatePicker,
   ProFormInstance,
   ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Col, Divider, notification, Row } from "antd";
-import { agencyArray, FORM_ITEM_RULE, workersGenderArray } from "config";
+import { Button, Col, notification, Row } from "antd";
+import { FORM_ITEM_RULE, workersGenderArray } from "config";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,7 +16,6 @@ import address from "service/address";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 import { ActionComponentProps } from "types";
-import { Save02 } from "untitledui-js-base";
 
 export const EditScreenList: React.FC<
   ActionComponentProps<ScreeningListType>
@@ -307,7 +304,7 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <ProFormRadio.Group
-                    name="senior_living"
+                    name={["caregiver", "is_cohabitant"]}
                     layout="vertical"
                     label={
                       <div className="text-gray-700 font-medium">
@@ -321,11 +318,11 @@ export const EditScreenList: React.FC<
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
-                        value: "yes",
+                        value: true,
                       },
                       {
                         label: intl.formatMessage({ id: "no" }),
-                        value: "no",
+                        value: false,
                       },
                     ]}
                   />
@@ -334,7 +331,7 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <ProFormRadio.Group
-                    name="caregiver_living"
+                    name={["caregiver", "is_with_someone"]}
                     layout="vertical"
                     label={
                       <div className="text-gray-700 font-medium">
@@ -350,11 +347,11 @@ export const EditScreenList: React.FC<
                     options={[
                       {
                         label: intl.formatMessage({ id: "yes" }),
-                        value: "yes",
+                        value: true,
                       },
                       {
                         label: intl.formatMessage({ id: "no" }),
-                        value: "no",
+                        value: false,
                       },
                     ]}
                   />
@@ -363,7 +360,7 @@ export const EditScreenList: React.FC<
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormText
-                    name="relationship"
+                    name={["caregiver", "who_is"]}
                     fieldProps={{
                       size: "large",
                     }}
@@ -377,7 +374,7 @@ export const EditScreenList: React.FC<
                 </Col>
                 <Col span={12}>
                   <ProFormText
-                    name="caregiver_phone"
+                    name={["caregiver", "phone"]}
                     fieldProps={{
                       size: "large",
                     }}

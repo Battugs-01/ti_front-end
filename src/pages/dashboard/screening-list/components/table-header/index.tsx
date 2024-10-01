@@ -1,13 +1,16 @@
 import { Segmented } from "antd";
+import { PopoverFilter } from "components/filter";
 import InitTableHeader from "components/table-header";
 import { ScreeningTab } from "config";
 import { FormattedMessage } from "react-intl";
+import { ScreeningListFilter } from "../filter";
 
 interface TableHeaderProps {
   setTab: (tab: ScreeningTab) => void;
   refreshList: () => void;
   setSearch: (value: string) => void;
   search: string;
+  onFinishFilter: (values: any) => Promise<void>;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
@@ -15,9 +18,15 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   refreshList,
   setSearch,
   search,
+  onFinishFilter,
 }) => {
   return (
     <InitTableHeader
+      filter={
+        <PopoverFilter>
+          <ScreeningListFilter onFinish={onFinishFilter} />
+        </PopoverFilter>
+      }
       hideTitle
       refresh={refreshList}
       hideCreate

@@ -12,8 +12,10 @@
   "environmental_risk": "Амьдарч буй орчны эрсдэл",
   "first_name": "Нэр",
   "evaluation": "Үнэлгээ",
-  "last_name": "Овог",
   "select": "Сонгох",
+  "last_name": "Овог",
+  "to_whom": "Хэнрүү",
+  "close_quistion": "Асуумж хаах",
   "geriatric_depression": "Настны сэтгэл гутралын асуумж (GDS оноо)",
   "satisfied_with_your_life": "Та амьдралдаа сэтгэл хангалуун байна уу?",
   "often_sad": "Та ихэвчлэн гунигтай байдаг уу?",
@@ -229,5 +231,6 @@
   "by_agency":"Агентлагаар",
   "medical_history":"Өвчний түүх",
   "by_hcu_date":"ХЦҮ огноогоор",
-  "by_ht_date":"ХТ огноогоор"
+  "by_ht_date":"ХТ огноогоор",
+  "case_movement": "Кэйс шилжүүлэх"
 }

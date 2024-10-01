@@ -19,6 +19,7 @@ export interface GetDevPlanType {
   created_employee_id: number;
   updated_employee_id: null;
   is_active: boolean;
+  is_close: boolean;
   items: DevPlanItem[];
 }
 

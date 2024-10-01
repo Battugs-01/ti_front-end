@@ -279,7 +279,12 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <div className="text-xl text-gray-800">{title}</div>
-          <img src={BackIcon} alt="back" onClick={onClick} />
+          <img
+            src={BackIcon}
+            alt="back"
+            onClick={onClick}
+            className="cursor-pointer"
+          />
         </div>
         <div className="flex flex-col ">
           <div className="flex gap-2 items-center m-0 p-0">

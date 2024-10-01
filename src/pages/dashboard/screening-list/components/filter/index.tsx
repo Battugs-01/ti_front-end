@@ -1,7 +1,7 @@
 import ProForm, { ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Avatar, Button, Divider } from "antd";
-import { agencyArray, levelOptions } from "config";
+import { agencyArray, ageOptions, levelOptions } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
 import userList from "service/settings/user_list";
@@ -27,7 +27,7 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
           return (
             <div className="flex items-center gap-3 w-full">
               <Button
-                className="w-1/2"
+                className="w-1/2 flex justify-center items-center gap-2"
                 type="default"
                 size="large"
                 onClick={() => reset?.()}
@@ -47,7 +47,11 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
         },
       }}
     >
-      <ProFormText name="age" placeholder={intl.formatMessage({ id: "age" })} />
+      <ProFormSelect
+        name="age"
+        options={ageOptions.map((el) => ({ ...el }))}
+        placeholder={intl.formatMessage({ id: "age" })}
+      />
       <ProFormSelect
         name="levels"
         options={levelOptions.map((el) => ({ ...el }))}
@@ -55,11 +59,6 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
         fieldProps={{
           mode: "multiple",
         }}
-      />
-      <ProFormSelect
-        name="agency_id"
-        placeholder={intl.formatMessage({ id: "agency" })}
-        options={agencyArray.map((el) => ({ ...el }))}
       />
       <ProFormSelect
         name="is_have_care_giver"

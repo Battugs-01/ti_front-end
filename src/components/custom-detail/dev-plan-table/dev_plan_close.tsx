@@ -108,6 +108,7 @@ export const DevPlanEndModal = ({
           !!visible &&
           (await closeRequest.runAsync(selectedLevel?.id, {
             ...values,
+            date: dayjs(values.date).toDate(),
           }))
         ) {
           return true;

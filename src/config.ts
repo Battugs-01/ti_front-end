@@ -110,16 +110,39 @@ export enum CareFociEnum {
 
 export const levelOptions = Object.freeze([
   {
-    label: "Level 1",
+    label: "Түвшин 1",
     value: ScreeningTab.level_1,
   },
   {
-    label: "Level 2",
+    label: "Түвшин 2",
     value: ScreeningTab.level_2,
   },
   {
-    label: "Level 3",
+    label: "Түвшин 3",
     value: ScreeningTab.level_3,
+  },
+]);
+
+export const ageOptions = Object.freeze([
+  {
+    label: "-54",
+    value: "-54",
+  },
+  {
+    label: "55-59",
+    value: "55-59",
+  },
+  {
+    label: "60-64",
+    value: "60-64",
+  },
+  {
+    label: "70-74",
+    value: "70-74",
+  },
+  {
+    label: "75+",
+    value: "75+",
   },
 ]);
 
