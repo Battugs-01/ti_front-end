@@ -10,6 +10,7 @@ import { ManagementReport } from "./management_report";
 import { ReportLog } from "./report_log";
 import { Statistical } from "./statistical_report";
 import { StatisticalReportAge } from "./statistical_report_withage";
+import { DevelopmentPlanReport } from "./development_plan";
 
 const StasticalReport = () => {
   const [tab, setTab] = useState<StatisticalTab>(
@@ -76,6 +77,14 @@ const StasticalReport = () => {
               </div>
             ),
           },
+          {
+            value: StatisticalTab.development_plan,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="development_plan_report" />
+              </div>
+            ),
+          },
         ]}
         value={tab}
         size="large"
@@ -109,6 +118,10 @@ const StasticalReport = () => {
       <IfCondition
         condition={StatisticalTab.statistic_report === tab}
         whenTrue={<StatisticalReportAge />}
+      />
+      <IfCondition
+        condition={StatisticalTab.development_plan === tab}
+        whenTrue={<DevelopmentPlanReport />}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { Segmented } from "antd";
+import { Radio, Segmented } from "antd";
 import { ICard } from "components/card";
 import { IfCondition } from "components/condition";
 import { TotalCaseTab } from "config";
@@ -24,9 +24,11 @@ export const TotalCase: React.FC<TotalCaseProps> = ({ data }) => {
         <FormattedMessage id="total_case" />
       </p>
       <div className="text-center mb-3">
-        <Segmented
-          onChange={(value: any) => {
-            setTab(value);
+        <Radio.Group
+          value={tab}
+          optionType="button"
+          onChange={(e) => {
+            setTab(e.target.value);
           }}
           options={[
             {

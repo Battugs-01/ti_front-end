@@ -8,17 +8,6 @@ export const FieldRequireMessage = "Энэ талбарыг оруулах ша�
 export const FORM_ITEM_RULE: (value?: any) => Rule[] = (value?: any) => [
   { message: FieldRequireMessage, required: true, ...value },
 ];
-
-export const BUCKET_NAMES = {
-  photos: "photos",
-  banners: "banners",
-  logo: "logo",
-  productBanner: "productbanner",
-  productPhotos: "productphotos",
-  notifications: "notifications",
-  avatars: "avatars",
-  menus: "menus",
-};
 // Service
 export enum GenderType {
   male = "male",
@@ -304,6 +293,12 @@ export enum StatisticalTab {
   statistical_report = "statistical_report",
   care_foci = "care_foci",
   statistic_report = "statistic_report",
+  development_plan = "development_plan",
+}
+
+export enum DevelopmentPlanReportTab {
+  by_agency = "by_agency",
+  management_report = "management_report",
 }
 
 export enum DevelopmentPlanDetailTab {

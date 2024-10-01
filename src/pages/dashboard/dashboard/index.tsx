@@ -1,4 +1,4 @@
-import { Segmented } from "antd";
+import { Radio, Segmented } from "antd";
 import { IfCondition } from "components/condition";
 import { DashboardTab, ScreeningTab } from "config";
 import { useState } from "react";
@@ -10,9 +10,11 @@ const Dashboard: React.FC = () => {
   const [tab, setTab] = useState<DashboardTab>(DashboardTab.all);
   return (
     <div>
-      <Segmented
-        onChange={(value: any) => {
-          setTab(value);
+      <Radio.Group
+        optionType="button"
+        value={tab}
+        onChange={(e) => {
+          setTab(e.target.value);
         }}
         options={[
           {

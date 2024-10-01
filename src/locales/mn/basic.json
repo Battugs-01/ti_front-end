@@ -214,5 +214,20 @@
   "update": "Засах",
   "placeholder_text": "Утга оруулна уу?",
   "placeholder_select": "Утга сонгоно уу?",
-  "logout_message":"Системээс гарахдаа итгэлтэй байна уу"
+  "logout_message":"Системээс гарахдаа итгэлтэй байна уу",
+  "development_plan_report":"Хөгжлийн төлөвлөгөөний тайлан",
+  "general_pirority": "Ерөнхий: Нэн тэргүүний хэрэгцээ",
+  "functional_impairment": "Үйл ажиллагааны чадвар бууралт",
+  "social_psychological_change":"Нийгэм-сэтгэл зүйн өөрчлөлт",
+  "socio_economic_difficulties":"Нийгэм-эдийн засгийн бэрхшээл",
+  "health_risks":"Эрүүл мэндийн эрсдлүүд",
+  "care_foci_percent":"Care Foci %",
+  "date_entered_by_pt":"ХТ оруулсан огноо",
+  "result_plan":"Дүгнэлт төлөвлөгөө",
+  "result_percent":"Үр дүн %",
+  "case":"Кейс",
+  "by_agency":"Агентлагаар",
+  "medical_history":"Өвчний түүх",
+  "by_hcu_date":"ХЦҮ огноогоор",
+  "by_ht_date":"ХТ огноогоор"
 }

@@ -205,6 +205,20 @@
   "update_user": "Update User",
   "placeholder_text": "Please enter a value?",
   "placeholder_select": "Please select a value?",
-  "logout_message":"Are you sure you want to log out?"
-
+  "logout_message":"Are you sure you want to log out?",
+  "development_plan_report":"Development Plan Report",
+  "general_pirority": "General: Priority Needs",
+  "functional_impairment": "Functional Impairment",
+  "social_psychological_change":"Social and Psychological Change",
+  "socio_economic_difficulties":"Socio-Economic Difficulties",
+  "health_risks":"Health Risks",
+  "care_foci_percent":"Care Foci %",
+  "date_entered_by_pt":"Date Entered by PT",
+  "result_plan":"Result Plan",
+  "result_percent":"Result %",
+  "case":"Case",
+  "by_agency":"By Agency",
+  "medical_history":"Medical History",
+  "by_hcu_date":"By HCU Date",
+  "by_ht_date":"By HT Date"
 }
