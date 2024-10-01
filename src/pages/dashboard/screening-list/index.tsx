@@ -69,6 +69,7 @@ const ScreeningList: React.FC = () => {
           setSearch(e);
           searchRun.run({ ...filter, query: e });
         }}
+        tab={tab ? tab : ScreeningTab.all}
         search={search}
         onFinishFilter={onFinishFilter}
       />

@@ -1,4 +1,4 @@
-import { Segmented } from "antd";
+import { Radio, Segmented } from "antd";
 import { PopoverFilter } from "components/filter";
 import InitTableHeader from "components/table-header";
 import { ScreeningTab } from "config";
@@ -11,6 +11,7 @@ interface TableHeaderProps {
   setSearch: (value: string) => void;
   search: string;
   onFinishFilter: (values: any) => Promise<void>;
+  tab: ScreeningTab;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
@@ -19,6 +20,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   setSearch,
   search,
   onFinishFilter,
+  tab,
 }) => {
   return (
     <InitTableHeader
@@ -33,11 +35,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       search={search}
       setSearch={setSearch}
       leftContent={
-        <Segmented
-          onChange={(value: any) => {
-            setTab(value);
+        <Radio.Group
+          onChange={(e) => {
+            setTab(e.target.value);
           }}
+          value={tab}
+          optionType="button"
           className="mt-0"
+          size="large"
           options={[
             {
               label: <FormattedMessage id="all" />,
@@ -56,7 +61,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               value: ScreeningTab.level_3,
             },
           ]}
-          size="large"
         />
       }
     />
