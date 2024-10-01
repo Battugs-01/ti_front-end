@@ -6,7 +6,11 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE } from "config";
+import {
+  FORM_ITEM_RULE,
+  permissionArray,
+  permissionArraySuperAdmin,
+} from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -121,28 +125,6 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <ProFormText
-                name="first_name"
-                placeholder={intl.formatMessage({
-                  id: "placeholder_text",
-                })}
-                fieldProps={{
-                  size: "large",
-                }}
-                rules={[
-                  {
-                    required: true,
-                    message: intl.formatMessage({
-                      id: "required",
-                    }),
-                  },
-                ]}
-                label={intl.formatMessage({ id: "first_name" })}
-              />
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <ProFormText
                 name="last_name"
                 placeholder={intl.formatMessage({
                   id: "placeholder_text",
@@ -159,6 +141,28 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
                   size: "large",
                 }}
                 label={intl.formatMessage({ id: "last_name" })}
+              />
+            </Col>
+          </Row>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <ProFormText
+                name="first_name"
+                placeholder={intl.formatMessage({
+                  id: "placeholder_text",
+                })}
+                fieldProps={{
+                  size: "large",
+                }}
+                rules={[
+                  {
+                    required: true,
+                    message: intl.formatMessage({
+                      id: "required",
+                    }),
+                  },
+                ]}
+                label={intl.formatMessage({ id: "first_name" })}
               />
             </Col>
           </Row>
@@ -207,6 +211,23 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
               beforeUpload: () => {
                 return false;
               },
+            }}
+          />
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <ProFormSelect
+            name="role"
+            options={permissionArraySuperAdmin?.map((el) => ({
+              label: <FormattedMessage id={el} />,
+              value: el,
+            }))}
+            disabled
+            label={intl.formatMessage({ id: "position" })}
+            placeholder={intl.formatMessage({ id: "placeholder_select" })}
+            fieldProps={{
+              size: "large",
             }}
           />
         </Col>

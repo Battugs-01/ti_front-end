@@ -30,6 +30,12 @@ namespace userList {
     http.del<SuccessResponse>(`/employee/${id}`, {
       hasAuth: true,
     });
+
+  export const updatePasswordUser = (body: any, id: number) =>
+    http.put<SuccessResponse>(`/employee/update/password/${id}`, {
+      hasAuth: true,
+      body,
+    });
 }
 
 export default userList;

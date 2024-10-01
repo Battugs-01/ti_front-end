@@ -96,10 +96,6 @@ export const StackholderList: React.FC = () => {
             dataIndex: "link",
           },
           {
-            title: intl.formatMessage({ id: "login_name" }),
-            dataIndex: "email",
-          },
-          {
             title: intl.formatMessage({ id: "phone" }),
             dataIndex: "phone_no",
           },
