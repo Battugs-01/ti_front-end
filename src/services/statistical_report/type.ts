@@ -89,6 +89,11 @@ export interface PurpleAssessment {
   cfs_point: number;
   date: Date;
   total: number;
+  developer_plan: boolean;
+  count_comp_ass: number;
+  date_comp_ass: Date;
+  priority: string;
+  id: number;
 }
 
 export interface PersonInCharge {
@@ -163,4 +168,27 @@ export interface Caregiver {
   is_cohabitant: boolean;
   who_is: string;
   phone: string;
+}
+
+export interface CaseManagerReportType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  first_name: string;
+  last_name: string;
+  rd: string;
+  phone: string;
+  is_active: boolean;
+  gender: string;
+  profile_id: null;
+  age: number;
+  address: Address;
+  person_in_charge_id: number;
+  person_in_charge: PersonInCharge;
+  agency_id: null;
+  assessments: AssessmentElement[];
+  development_plans: any[];
+  caregiver: Caregiver;
+  close: Close;
+  assessment: PurpleAssessment;
 }

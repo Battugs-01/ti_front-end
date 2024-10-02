@@ -41,6 +41,10 @@ export const ManagementReport: React.FC = () => {
         leftContent={
           <DatePicker.RangePicker
             className="w-max"
+            placeholder={[
+              intl.formatMessage({ id: "select_start_date" }),
+              intl.formatMessage({ id: "select_end_date" }),
+            ]}
             onChange={(values) => {
               setFilter({
                 ...filter,
@@ -61,7 +65,7 @@ export const ManagementReport: React.FC = () => {
         refresh={refreshList}
       />
       <ITable<ManagementReportType>
-        className="p-0 remove-padding-table"
+        className="remove-padding-table"
         dataSource={list?.data}
         columns={[
           {
@@ -71,6 +75,13 @@ export const ManagementReport: React.FC = () => {
           {
             title: <FormattedMessage id="position" />,
             dataIndex: "role",
+            render: (value: any) => {
+              return (
+                <div>
+                  <FormattedMessage id={value} />
+                </div>
+              );
+            },
           },
           {
             title: <FormattedMessage id="level" values={{ number: "1" }} />,

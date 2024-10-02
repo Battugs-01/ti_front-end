@@ -223,5 +223,16 @@
   "by_agency":"By Agency",
   "medical_history":"Medical History",
   "by_hcu_date":"By HCU Date",
-  "by_ht_date":"By HT Date"
+  "by_ht_date":"By HT Date",
+  "by_level":"By Level",
+  "age_and_gender":"Age and gender",
+  "percent":"Percent",
+  "select_start_date":"Start date",
+  "select_end_date":"End date",
+  "select_date": "Select date",
+  "entered":"Entered",
+  "not_entered":"Not entered",
+  "count_comp_ass":"CCA",
+  "priority":"Priority",
+  "notifications":"Notifications"
 }

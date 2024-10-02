@@ -1,5 +1,7 @@
 import { useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
+import IBadge from "components/badge";
+import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -7,6 +9,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
+import { CaseManagerReportType } from "service/statistical_report/type";
 import { reportFilter } from "utils/index";
 
 export const CaseManagerReport: React.FC = () => {
@@ -39,6 +42,10 @@ export const CaseManagerReport: React.FC = () => {
         leftContent={
           <DatePicker.RangePicker
             className="w-max"
+            placeholder={[
+              intl.formatMessage({ id: "select_start_date" }),
+              intl.formatMessage({ id: "select_end_date" }),
+            ]}
             onChange={(values) => {
               setFilter({
                 ...filter,
@@ -57,8 +64,10 @@ export const CaseManagerReport: React.FC = () => {
         hideCreate
         refresh={refreshList}
       />
-      <ITable
+      <ITable<CaseManagerReportType>
+        loading={list.loading}
         className="p-0 remove-padding-table"
+        dataSource={list?.data?.items || []}
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),
@@ -76,10 +85,6 @@ export const CaseManagerReport: React.FC = () => {
             dataIndex: "rd",
           },
           {
-            title: intl.formatMessage({ id: "phone" }),
-            dataIndex: "phone",
-          },
-          {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
             render: (value: any) => {
@@ -89,42 +94,102 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "cfs_score" }),
             dataIndex: "cfs_score",
+            render: (_, record) => {
+              return (
+                <p>
+                  <span
+                    className={`${
+                      record?.assessment?.cfs_point > 6
+                        ? "text-[#D92D20]"
+                        : "text-primary-700"
+                    }  font-bold`}
+                  >
+                    {record?.assessment?.cfs_point}
+                  </span>{" "}
+                  /9
+                </p>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "cfs" }),
             dataIndex: "cfs",
+            render: (_, record) => {
+              return <p>{record?.assessment?.total || "-"}</p>;
+            },
           },
           {
-            title: intl.formatMessage({ id: "risk_level" }),
-            dataIndex: "risk_level",
+            title: intl.formatMessage({ id: "level_filter" }),
+            dataIndex: "level",
+            align: "center",
+            render: (_, record) => {
+              return <LevelBadge status={record?.assessment?.level} />;
+            },
           },
           {
             title: intl.formatMessage({ id: "cfs_date" }),
             dataIndex: "cfs_date",
+            render: (_, record) => {
+              return (
+                <p>
+                  {dayjs(record?.assessment?.date).format("YYYY/MM/DD HH:mm")}
+                </p>
+              );
+            },
+          },
+          {
+            title: intl.formatMessage({ id: "count_comp_ass" }),
+            dataIndex: "count_comp_ass",
+            render: (_, record) => {
+              return <div>{record?.assessment?.count_comp_ass || "-"}</div>;
+            },
+          },
+          {
+            title: intl.formatMessage({ id: "hcu_date" }),
+            dataIndex: "hcu_date",
+            render: (_, record) => {
+              if (
+                record?.assessment?.date_comp_ass.toString() ===
+                "0001-01-01T00:00:00Z"
+              ) {
+                return "-";
+              }
+              return (
+                <div>
+                  {dayjs(record?.assessment?.date_comp_ass).format(
+                    "YYYY/MM/DD HH:mm"
+                  ) || "-"}
+                </div>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
+            align: "center",
+            render: (_, record) => {
+              if (record?.assessment?.developer_plan) {
+                return (
+                  <IBadge
+                    color="green"
+                    title={intl.formatMessage({ id: "entered" })}
+                  />
+                );
+              }
+              return (
+                <IBadge
+                  color="gray"
+                  title={intl.formatMessage({ id: "not_entered" })}
+                />
+              );
+            },
           },
           {
-            title: intl.formatMessage({ id: "agency" }),
-            dataIndex: "agency",
-          },
-          {
-            title: intl.formatMessage({ id: "total_assessment" }),
-            dataIndex: "total_assessment",
-          },
-          {
-            title: intl.formatMessage({ id: "list_assessment_date" }),
-            dataIndex: "list_assessment_date",
-          },
-          {
-            title: intl.formatMessage({ id: "caregiver" }),
-            dataIndex: "caregiver",
-          },
-          {
-            title: intl.formatMessage({ id: "person_in_charge" }),
-            dataIndex: "person_in_charge",
+            title: intl.formatMessage({ id: "priority" }),
+            dataIndex: "pirority",
+            render: (_, record) => {
+              return <div>{record?.assessment?.priority}</div>;
+            },
           },
         ]}
       />
