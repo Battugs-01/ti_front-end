@@ -52,6 +52,9 @@ const ScreeningList: React.FC = () => {
   };
 
   const onFinishFilter = async (values: any) => {
+    if (values.ages) {
+      values.ages = JSON.parse(values.ages);
+    }
     screen.runAsync({
       ...filter,
       ...values,

@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import { Card, Row, Col, notification } from "antd";
-import { useRequest } from "ahooks";
-import { FormattedMessage } from "react-intl";
-import AssesmentSvg from "assets/img/assesment.svg";
-import screenList from "service/screening_list";
 import { PageLoading } from "@ant-design/pro-layout";
+import { useRequest } from "ahooks";
+import { Card, Col, Row } from "antd";
+import AssesmentSvg from "assets/img/assesment.svg";
 import { ProgressCard, StatCard } from "components/card";
-import { AuthContext } from "context/auth";
 import { ScreeningTab, UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import React, { useContext, useEffect } from "react";
+import { FormattedMessage } from "react-intl";
+import screenList from "service/screening_list";
 import { AssessmentListType } from "service/screening_list/type";
-import CareFociPercent from "./care-foci-percent";
-import DeseaseHistory from "./desease-history";
-import General from "./tables/general";
-import CareFoci from "./tables/care-foci";
-import { MiniCogModal } from "./assesment-modal/mini-cog";
 import { BartherIndexModal } from "./assesment-modal/barthel-index";
 import { GDSModal } from "./assesment-modal/gds";
+import { MiniCogModal } from "./assesment-modal/mini-cog";
+import CareFociPercent from "./care-foci-percent";
+import DeseaseHistory from "./desease-history";
+import CareFoci from "./tables/care-foci";
+import General from "./tables/general";
 
 interface AssesmentProps {
   selectedLevel: AssessmentListType | null;
@@ -25,10 +25,6 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
   const [user] = useContext(AuthContext);
   const comprehensiveData = useRequest(screenList.assessmentComprehensive, {
     manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
   });
 
   const [openModal, setOpenModal] = React.useState<string>("");

@@ -126,23 +126,23 @@ export const levelOptions = Object.freeze([
 export const ageOptions = Object.freeze([
   {
     label: "-54",
-    value: "-54",
+    value: ["0", "54"],
   },
   {
     label: "55-59",
-    value: "55-59",
+    value: ["55", "59"],
   },
   {
     label: "60-64",
-    value: "60-64",
+    value: ["60", "64"],
   },
   {
     label: "70-74",
-    value: "70-74",
+    value: ["70", "74"],
   },
   {
     label: "75+",
-    value: "75+",
+    value: ["75", "200"],
   },
 ]);
 

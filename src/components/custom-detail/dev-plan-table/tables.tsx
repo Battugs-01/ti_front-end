@@ -5,6 +5,8 @@ import { Button, Collapse, notification } from "antd";
 import DownButton from "assets/img/down_button.svg";
 import EditSvg from "assets/img/edit.svg";
 import UpButton from "assets/img/up_button.svg";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
@@ -12,14 +14,13 @@ import { CareFociItemElement } from "service/development_plan/type";
 import { Save02 } from "untitledui-js-base";
 import { useLevelContext } from "../selected-level";
 import DevPlanColumns from "./column";
-import { AuthContext } from "context/auth";
-import { UserRoleType } from "config";
 
 interface CareFociProps {
   data: CareFociItemElement[];
   name: string;
   isEvaluated?: boolean;
   isClose?: boolean;
+  onFinish?: () => void;
 }
 
 const DevPlanTables: React.FC<CareFociProps> = ({
@@ -27,19 +28,27 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   data,
   isEvaluated,
   isClose,
+  onFinish,
 }) => {
   const [user] = useContext(AuthContext);
+  const [isEditing, setIsEditing] = useState(false);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
-    onError: (err) =>
+    onSuccess: () => {
+      setIsEditing(false);
+      onFinish && onFinish();
+    },
+    onError: (err) => {
       notification.error({
         message: err.message,
       }),
+        setIsEditing(true);
+    },
   });
 
   const { selectedLevel } = useLevelContext();
   const [isSwitched, setIsSwitched] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
+
   const [dataSource, setDataSource] = useState<CareFociItemElement[]>(data);
 
   useEffect(() => {
@@ -48,7 +57,6 @@ const DevPlanTables: React.FC<CareFociProps> = ({
 
   const handleFieldChange = (index: number, key: string, value: any) => {
     const newDataSource = [...dataSource];
-    console.log(newDataSource, index, key, value);
     newDataSource[index] = { ...newDataSource[index], [key]: value };
     setDataSource(newDataSource);
   };
@@ -69,7 +77,6 @@ const DevPlanTables: React.FC<CareFociProps> = ({
         data?.find((item) => item?.customer_care_foci_item?.care_foci_id)
           ?.customer_care_foci_item?.care_foci_id || 0,
     });
-    setIsEditing(false);
   };
 
   const handleEditClick = () => {

@@ -52,6 +52,10 @@ export interface Assessment {
   cfs_point: number;
   date: Date;
   total: number;
+  priority: string;
+  count_comp_ass: number;
+  date_comp_ass: string;
+  developer_plan: boolean;
 }
 
 export interface PersonInCharge {

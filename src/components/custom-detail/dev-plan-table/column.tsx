@@ -162,16 +162,17 @@ const DevPlanColumns = ({
       width: 200,
       render: (value, record, index) =>
         isEditing ? (
-          <div className="flex items-center justify-center mt-6">
+          <div className="flex items-center justify-center w-full mt-6">
             <ProFormSelect
               name={"person_in_charge_id"}
               shouldUpdate
-              className="flex items-center justify-center custom-input"
+              className="flex items-center justify-center custom-input w-full"
               fieldProps={{
                 showSearch: true,
                 loading: emplyoee.loading,
                 filterOption: false,
                 onSearch: debouncedSearch,
+                className: "w-[160px]",
                 onChange: (newValue) => {
                   handleFieldChange(index, "person_in_charge_id", newValue);
                 },
@@ -204,17 +205,24 @@ const DevPlanColumns = ({
           <div>
             {
               <div className="flex gap-2 items-center">
-                <Avatar
-                  shape="circle"
-                  size={"small"}
-                  src={file.fileToUrl(
-                    record?.person_in_charge?.profile?.physical_path || "AS"
-                  )}
-                />
-                <span>{`${record?.person_in_charge?.last_name?.substring(
-                  0,
-                  1
-                )}. ${record?.person_in_charge?.first_name}`}</span>
+                {record?.person_in_charge?.profile?.physical_path && (
+                  <Avatar
+                    shape="circle"
+                    size={"small"}
+                    src={file.fileToUrl(
+                      record?.person_in_charge?.profile?.physical_path || "-"
+                    )}
+                  />
+                )}
+                <span>
+                  {record?.person_in_charge?.last_name &&
+                  record?.person_in_charge?.first_name
+                    ? `${record?.person_in_charge?.last_name?.substring(
+                        0,
+                        1
+                      )}. ${record?.person_in_charge?.first_name}`
+                    : "-"}
+                </span>
               </div>
             }
           </div>

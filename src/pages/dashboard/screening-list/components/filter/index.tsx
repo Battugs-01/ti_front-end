@@ -1,7 +1,7 @@
-import ProForm, { ProFormSelect, ProFormText } from "@ant-design/pro-form";
+import ProForm, { ProFormSelect } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Avatar, Button, Divider } from "antd";
-import { agencyArray, ageOptions, levelOptions } from "config";
+import { ageOptions, levelOptions } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
 import userList from "service/settings/user_list";
@@ -48,8 +48,11 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
       }}
     >
       <ProFormSelect
-        name="age"
-        options={ageOptions.map((el) => ({ ...el }))}
+        name="ages"
+        options={ageOptions.map((el) => ({
+          label: el.label,
+          value: JSON.stringify(el.value),
+        }))}
         placeholder={intl.formatMessage({ id: "age" })}
       />
       <ProFormSelect

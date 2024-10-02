@@ -7,9 +7,9 @@ import { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
-import DevPlanTables from "./tables";
 import { useLevelContext } from "../selected-level";
 import { DevPlanEndModal } from "./dev_plan_close";
+import DevPlanTables from "./tables";
 
 const DevPlanEdit: React.FC = () => {
   const { selectedLevel } = useLevelContext();
@@ -115,30 +115,45 @@ const DevPlanEdit: React.FC = () => {
               data={generalData}
               isEvaluated={false}
               isClose={devPlanData?.data?.is_close}
+              onFinish={async () => {
+                run();
+              }}
             />
             <DevPlanTables
               name="physical_condition"
               data={physicalConditionData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
+              onFinish={async () => {
+                run();
+              }}
             />
             <DevPlanTables
               name="psychology_change"
               data={psychologyChangeData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
+              onFinish={async () => {
+                run();
+              }}
             />
             <DevPlanTables
               name="economy_diff"
               data={EconemyData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
+              onFinish={async () => {
+                run();
+              }}
             />
             <DevPlanTables
               name="health_risk"
               data={HealthRiskData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
+              onFinish={async () => {
+                run();
+              }}
             />
           </div>
         </Card>
