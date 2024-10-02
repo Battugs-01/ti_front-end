@@ -235,5 +235,13 @@
   "case_movement": "Кэйс шилжүүлэх",
   "by_level":"Түвшингөөр",
   "age_and_gender":"Нас болон хүйсээр",
-  "percent":"Эзлэх хувь"
+  "percent":"Эзлэх хувь",
+  "select_start_date":"Эхлэх огноо",
+  "select_end_date":"Дуусах огноо",
+  "select_date": "Огноо сонгоно уу",
+  "entered":"Оруулсан",
+  "not_entered":"Оруулаагүй",
+  "count_comp_ass":"ХЦҮ",
+  "priority":"Чухлын зэрэг",
+  "notifications":"Мэдэгдлүүд"
 }

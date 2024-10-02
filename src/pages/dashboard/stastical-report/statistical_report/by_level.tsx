@@ -59,6 +59,7 @@ export const ByLevel: React.FC = () => {
         leftContent={
           <DatePicker
             className="w-max"
+            placeholder={intl.formatMessage({ id: "select_date" })}
             onChange={(values) => {
               setFilter({
                 ...filter,

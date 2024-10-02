@@ -73,12 +73,14 @@ export const CareFoci: React.FC = () => {
         leftContent={
           <DatePicker
             className="w-max"
+            placeholder={intl.formatMessage({ id: "select_date" })}
             onChange={(values) => {
               setFilter({
                 ...filter,
                 year: dayjs(values?.toDate()).year(),
               });
             }}
+            size="large"
             picker="year"
             defaultValue={filter.year ? dayjs().year(filter.year) : dayjs()}
           />

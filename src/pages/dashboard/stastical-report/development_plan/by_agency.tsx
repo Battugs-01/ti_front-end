@@ -57,6 +57,10 @@ export const ByAgency: React.FC = () => {
 
             <DatePicker.RangePicker
               className="w-max"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
               size="large"
               onChange={(values) => {
                 setFilter({

@@ -1,3 +1,4 @@
+import { useRequest } from "ahooks";
 import { Avatar, Popover } from "antd";
 import Logo from "assets/img/menu_logo.png";
 import LanguageSelector from "components/language-selector";
@@ -7,6 +8,7 @@ import { useContext, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "service/auth";
+import file from "service/file";
 import {
   ChevronDown,
   LockUnlocked04,
@@ -15,12 +17,11 @@ import {
   User03,
   XClose,
 } from "untitledui-js-base";
-import { Menu } from "./menu";
-import { PersonalInfo } from "./action/personal_info";
 import { ChangePassword } from "./action/change_password";
-import file from "service/file";
-import { useRequest } from "ahooks";
 import { Logout } from "./action/logout";
+import { PersonalInfo } from "./action/personal_info";
+import { Menu } from "./menu";
+import { Notification } from "./notification";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -74,9 +75,12 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="flex items-center">
               <LanguageSelector />
+            </div>
+            <div className="flex items-center">
+              <Notification />
             </div>
             <Popover
               placement="bottom"
@@ -134,7 +138,7 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col justify-center items-start">
                   <div className="text-sm">{user?.user?.email || "user"}</div>
                   <div className="text-sm text-[#A0B6BA]">
-                    {user?.user?.phone || "position"}
+                    <FormattedMessage id={user?.user?.role || "position"} />
                   </div>
                 </div>
                 <ChevronDown size="24" />

@@ -41,6 +41,10 @@ export const ClosedCaseReport: React.FC = () => {
         leftContent={
           <DatePicker.RangePicker
             className="w-max"
+            placeholder={[
+              intl.formatMessage({ id: "select_start_date" }),
+              intl.formatMessage({ id: "select_end_date" }),
+            ]}
             onChange={(values) => {
               setFilter({
                 ...filter,

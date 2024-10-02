@@ -2,6 +2,7 @@ import { ListType } from "service/type";
 import http from "..";
 import {
   CareFociReportType,
+  CaseManagerReportType,
   ClosedReportType,
   ManagementReportType,
   ResponseType,
@@ -39,10 +40,13 @@ namespace statisticalReport {
     });
 
   export const casemanagerReportList = (body?: any) =>
-    http.post<ResponseType[]>("statistics/case_manager/report", {
-      hasAuth: true,
-      body,
-    });
+    http.post<ListType<CaseManagerReportType[]>>(
+      "statistics/case_manager/report",
+      {
+        hasAuth: true,
+        body,
+      }
+    );
 
   export const reportLogList = (body?: any) =>
     http.post<ResponseType[]>("statistical_report/report_log/list", {
