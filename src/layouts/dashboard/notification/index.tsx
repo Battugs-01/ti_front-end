@@ -66,7 +66,7 @@ export const Notification = () => {
 
   const notificationMenu = (
     <>
-      <div className="bg-primary-700 h-[54px] text-white px-4 py-6 flex items-center justify-between rounded-t-lg  mt-5">
+      <div className="bg-primary-700 h-[50px] text-white px-4 py-6 flex items-center justify-between rounded-t-lg  mt-5">
         <div className="text-base">
           <FormattedMessage id="notifications" />
         </div>
