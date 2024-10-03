@@ -9,7 +9,7 @@ import {
   AssessmentListType,
   ScreeningListType,
 } from "service/screening_list/type";
-import { DownloadCloud02, Printer } from "untitledui-js-base";
+import { DownloadCloud02 } from "untitledui-js-base";
 import { exportFromTable } from "utils/export";
 import { useLevelContext } from "./selected-level";
 
@@ -116,14 +116,14 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
             >
               <FormattedMessage id="download" />
             </Button>
-            <Button
+            {/* <Button
               size="large"
               type="default"
               icon={<Printer />}
               className="flex items-center gap-2"
             >
               <FormattedMessage id="print" />
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

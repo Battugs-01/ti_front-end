@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { ScreeningListType } from "service/screening_list/type";
-import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
+import { DownloadCloud02, LineChartUp05 } from "untitledui-js-base";
 import { exportFromTableManyData } from "utils/export";
 import { useLevelContext } from "../selected-level";
 import { DevPlanEndModal } from "./dev_plan_close";
@@ -88,7 +88,7 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
                 icon={<DownloadCloud02 />}
                 onClick={() => {
                   exportFromTableManyData(
-                    [`Development Plan Export ${customerMainData?.first_name}`],
+                    [`Хөгжлийн төлөвлөгөө ${customerMainData?.first_name}`],
                     [
                       "edit-table-general", // Table 1
                       "edit-table-physical", // Table 2
@@ -103,14 +103,14 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
               >
                 <FormattedMessage id="download" />
               </Button>
-              <Button
+              {/* <Button
                 size="large"
                 type="default"
                 icon={<Printer />}
                 className="flex items-center gap-2"
               >
                 <FormattedMessage id="print" />
-              </Button>
+              </Button> */}
               {user &&
                 user.user?.role === UserRoleType.doctor &&
                 devPlanData?.data?.is_close === false && (
