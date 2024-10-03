@@ -1,22 +1,14 @@
 import { ProFormRadio } from "@ant-design/pro-form";
 import { PageLoading } from "@ant-design/pro-layout";
-import { Button, Pagination, Select, Tabs } from "antd";
-import RefreshIcon from "assets/img/refresh.svg";
+import { Button, Select } from "antd";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { AssessmentListType } from "service/screening_list/type";
-import {
-  ArrowNarrowLeft,
-  ArrowNarrowRight,
-  DownloadCloud02,
-  Printer,
-} from "untitledui-js-base";
+import { DownloadCloud02, Printer } from "untitledui-js-base";
+import { exportFromTable } from "utils/export";
 import { useLevelContext } from "./selected-level";
-import { LeftCircleOutlined } from "@ant-design/icons";
-import { BiRightArrow } from "react-icons/bi";
-import { set } from "lodash";
 
 interface CustomHeaderProps {
   data: AssessmentListType[];
@@ -106,6 +98,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
               size="large"
               type="default"
               icon={<DownloadCloud02 />}
+              onClick={() => {
+                exportFromTable(
+                  [`Асуумжийн түүх`],
+                  window.document.getElementById(`main-table`) as HTMLElement,
+                  window
+                );
+              }}
               className="flex items-center gap-2"
             >
               <FormattedMessage id="download" />
@@ -118,10 +117,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
             >
               <FormattedMessage id="print" />
             </Button>
-            <img
-              src={RefreshIcon}
-              className="flex items-center gap-2 hover:scale-75"
-            />
           </div>
         </div>
       </div>

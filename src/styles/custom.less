@@ -249,8 +249,20 @@
 }
 
 .custom-ant-drawer-body {
-  .ant-drawer .ant-drawer-body {
+  .ant-dropdown
+    .ant-dropdown-menu
+    .ant-dropdown-menu
+    .ant-dropdown-menu-root
+    .ant-dropdown-menu-vertical
+    .ant-dropdown-menu-light
+    css-dev-only-do-not-override-17drczg {
     background: #f5f8f8 !important;
+  }
+}
+
+.custom-ant-dropdown {
+  .ant-dropdown .ant-dropdown-menu {
+    padding: 0px !important;
   }
 }
 
@@ -280,7 +292,9 @@
     width: 150px !important;
     height: 140px !important;
   }
-  .ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload-list.ant-upload-list-picture-card .ant-upload-list-item-container{
+  .ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload-list.ant-upload-list-picture-card
+    .ant-upload-list-item-container {
     width: 150px !important;
     height: 140px !important;
   }

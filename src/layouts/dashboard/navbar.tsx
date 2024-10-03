@@ -75,11 +75,11 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ">
             <div className="flex items-center">
               <LanguageSelector />
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mr-6">
               <Notification />
             </div>
             <Popover
