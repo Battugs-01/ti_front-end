@@ -10,7 +10,6 @@ import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 import { reportFilter } from "utils/index";
 import { EditScreenList } from "./components/table-actions/update";
-import { getScreeningTableColumns } from "./components/table-column";
 import TableHeader from "./components/table-header";
 
 const MyPlannedWork: React.FC = () => {
@@ -88,7 +87,7 @@ const MyPlannedWork: React.FC = () => {
               );
             },
           },
-          ...getScreeningTableColumns(intl),
+          ...PlannedWorkTableColumns(intl),
         ]}
         refresh={refreshList}
         UpdateComponent={EditScreenList}

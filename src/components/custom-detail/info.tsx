@@ -3,7 +3,7 @@ import { Button, Divider } from "antd";
 import ButtonSvg from "assets/img/Button.svg";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import { ScreeningListType } from "service/screening_list/type";
 import { ChevronLeft } from "untitledui-js-base";
@@ -16,6 +16,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   if (!data) {
     return <PageLoading />;
   }
+  const intl = useIntl();
   return (
     <PageCard>
       <div className="flex items-center justify-between">
@@ -57,7 +58,9 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             <FormattedMessage id="gender" />
           </div>
           <div className="text-sm font-bold">
-            {<FormattedMessage id={data?.gender} />}
+            {data?.gender === "male"
+              ? intl.formatMessage({ id: "male" })
+              : intl.formatMessage({ id: "female" })}
           </div>
         </div>
         <div>
