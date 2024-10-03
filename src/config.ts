@@ -102,7 +102,7 @@ export enum DevPlanQuistions {
 }
 
 export enum CareFociEnum {
-  physicalCondition = 1,
+  loseActivity = 1,
   psychologyChange = 2,
   Econemy = 3,
   HealthRisk = 4,

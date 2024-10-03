@@ -50,9 +50,9 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
       .filter((item) => item?.valuation_id)
       .flatMap((item) => item?.general_items || []) || [];
 
-  const physicalConditionData =
+  const loseActivityData =
     devPlanData.data?.items
-      .filter((item) => item?.care_foci_id === CareFociEnum.physicalCondition)
+      .filter((item) => item?.care_foci_id === CareFociEnum.loseActivity)
       .flatMap((item) => item?.care_foci_items || []) || [];
 
   const psychologyChangeData =
@@ -139,9 +139,9 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
               }}
             />
             <DevPlanTables
-              name="physical_condition"
+              name="lose_activity"
               id="edit-table-physical"
-              data={physicalConditionData}
+              data={loseActivityData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
               onFinish={async () => {
