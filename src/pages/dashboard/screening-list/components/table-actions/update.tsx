@@ -134,7 +134,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                    placeholder={intl.formatMessage({ id: "name" })}
                     name="first_name"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -164,7 +164,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                    placeholder={intl.formatMessage({ id: "gender" })}
                     name="gender"
                     initialValue={workersGenderArray[0]}
                     label={
@@ -182,7 +182,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                    placeholder={intl.formatMessage({ id: "register_no" })}
                     name="rd"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -196,7 +196,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                    placeholder={intl.formatMessage({ id: "phone" })}
                     name="phone"
                     label={
                       <div className="text-gray-700 font-medium ">
@@ -221,7 +221,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "city_id"]}
-                    placeholder={intl.formatMessage({ id: "select" })}
+                    placeholder={"Аймаг/Нийслэл"}
                     label={"Аймаг/Нийслэл"}
                     onChange={(val) => {
                       form?.setFieldValue(
@@ -246,7 +246,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "district_id"]}
-                    placeholder={intl.formatMessage({ id: "select" })}
+                    placeholder={"Сум/Дүүрэг"}
                     label={"Сум/Дүүрэг"}
                     onChange={(value) => {
                       form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -271,7 +271,7 @@ export const EditScreenList: React.FC<
                 <Col sm={12} xs={21}>
                   <ProFormSelect
                     name={["address", "khoroo_id"]}
-                    placeholder={intl.formatMessage({ id: "select" })}
+                    placeholder={"Баг/Хороо"}
                     label={"Баг/Хороо"}
                     fieldProps={{
                       showSearch: true,
@@ -294,7 +294,7 @@ export const EditScreenList: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                    placeholder={intl.formatMessage({ id: "address" })}
                   />
                 </Col>
               </Row>
@@ -311,7 +311,9 @@ export const EditScreenList: React.FC<
                         {intl.formatMessage({ id: "senior_living_question" })}
                       </div>
                     }
-                    placeholder={intl.formatMessage({ id: "select" })}
+                    placeholder={intl.formatMessage({
+                      id: "senior_living_question",
+                    })}
                     fieldProps={{
                       size: "large",
                     }}

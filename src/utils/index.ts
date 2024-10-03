@@ -209,5 +209,5 @@ export const parseMongolianID = (id: any) => {
     age--;
   }
 
-  return age;
+  return age || 0;
 };

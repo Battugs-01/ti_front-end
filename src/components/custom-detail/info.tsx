@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { ScreeningListType } from "service/screening_list/type";
 import { ChevronLeft } from "untitledui-js-base";
+import { parseMongolianID } from "utils/index";
 
 interface InfoProps {
   data: ScreeningListType;
@@ -47,13 +48,17 @@ const Info: React.FC<InfoProps> = ({ data }) => {
           <div className="text-gray-500">
             <FormattedMessage id="age" />
           </div>
-          <div className="font-bold uppercase text-sm">{data?.age}</div>
+          <div className="font-bold uppercase text-sm">
+            {parseMongolianID(data?.rd)}
+          </div>
         </div>
         <div>
           <div className="text-gray-500">
             <FormattedMessage id="gender" />
           </div>
-          <div className="text-sm font-bold">{data?.gender}</div>
+          <div className="text-sm font-bold">
+            {<FormattedMessage id={data?.gender} />}
+          </div>
         </div>
         <div>
           <div className="text-gray-500 text-sm">

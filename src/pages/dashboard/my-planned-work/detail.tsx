@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 
-const PlanningWorkDetail: React.FC = () => {
+const MyPlannedWorkDetail: React.FC = () => {
   const location = useLocation();
   const customerId = location.search?.split("=")[1];
 
@@ -64,4 +64,4 @@ const PlanningWorkDetail: React.FC = () => {
   );
 };
 
-export default PlanningWorkDetail;
+export default MyPlannedWorkDetail;

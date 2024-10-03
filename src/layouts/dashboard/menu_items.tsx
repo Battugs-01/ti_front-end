@@ -1,5 +1,11 @@
 import { FormattedMessage } from "react-intl";
-import { File03, File04, PieChart02, Settings01 } from "untitledui-js-base";
+import {
+  File03,
+  File04,
+  PieChart02,
+  Settings01,
+  User01,
+} from "untitledui-js-base";
 
 export const menuItems = [
   {
@@ -11,6 +17,11 @@ export const menuItems = [
     icon: <File04 />,
     name: <FormattedMessage id="screening_list" />,
     path: "/dashboard/screening-list",
+  },
+  {
+    icon: <User01 />,
+    name: <FormattedMessage id="my_planning_work" />,
+    path: "/dashboard/my-planned-work",
   },
   {
     icon: <File03 />,
