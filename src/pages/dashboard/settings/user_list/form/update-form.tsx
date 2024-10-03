@@ -1,11 +1,11 @@
 import ProForm, {
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-form";
-import ProFormDatePickerYear from "@ant-design/pro-form/es/components/DatePicker/YearPicker";
 import { Col, Row } from "antd";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, permissionArray } from "config";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface FormProps {
@@ -14,7 +14,7 @@ interface FormProps {
   khoroo: any;
 }
 
-export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
+export const UpdateForm: React.FC<FormProps> = ({ city, district, khoroo }) => {
   const intl = useIntl();
   return (
     <ProForm.Item noStyle shouldUpdate>
@@ -26,40 +26,40 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <Row gutter={[16, 16]}>
                   <Col span={24}>
                     <ProFormText
-                      name="name"
+                      fieldProps={{
+                        size: "large",
+                      }}
+                      placeholder={intl.formatMessage({
+                        id: "last_name",
+                      })}
+                      name="last_name"
                       rules={[
                         {
                           required: true,
                           message: intl.formatMessage({ id: "required" }),
                         },
                       ]}
-                      placeholder={intl.formatMessage({
-                        id: "placeholder_text",
-                      })}
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      label={intl.formatMessage({ id: "agency_name" })}
+                      label={intl.formatMessage({ id: "last_name" })}
                     />
                   </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                   <Col span={24}>
                     <ProFormText
-                      name="director_name"
-                      placeholder={intl.formatMessage({
-                        id: "placeholder_text",
-                      })}
                       fieldProps={{
                         size: "large",
                       }}
+                      name="first_name"
+                      placeholder={intl.formatMessage({
+                        id: "first_name",
+                      })}
                       rules={[
                         {
                           required: true,
                           message: intl.formatMessage({ id: "required" }),
                         },
                       ]}
-                      label={intl.formatMessage({ id: "director_name" })}
+                      label={intl.formatMessage({ id: "name" })}
                     />
                   </Col>
                 </Row>
@@ -70,7 +70,6 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   title={
                     <div className="flex items-center flex-col justify-center gap-2 text-[#00000073] p-2">
                       <div className="text-sm">
-                        {" "}
                         <div className="text-primary-700 font-semibold">
                           <FormattedMessage id="upload" />{" "}
                         </div>
@@ -85,10 +84,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   rules={[
                     {
                       validator: (_, file) => {
-                        if (file && file.length > 0) {
+                        if (file && file?.length > 0) {
                           if (
-                            file[0].type === "image/jpeg" ||
-                            file[0].type === "image/png"
+                            file[0]?.type === "image/jpeg" ||
+                            file[0]?.type === "image/png"
                           ) {
                             return Promise.resolve();
                           }
@@ -100,7 +99,6 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                         }
                       },
                     },
-                    ...FORM_ITEM_RULE(),
                   ]}
                   name="profile"
                   fieldProps={{
@@ -115,11 +113,46 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
             </Row>
 
             <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <ProFormSelect
+                  name="role"
+                  options={permissionArray?.map((el) => ({
+                    label: <FormattedMessage id={el} />,
+                    value: el,
+                  }))}
+                  label={intl.formatMessage({ id: "position" })}
+                  placeholder={intl.formatMessage({ id: "position" })}
+                  fieldProps={{
+                    size: "large",
+                  }}
+                  rules={FORM_ITEM_RULE()}
+                />
+              </Col>
+
+              <Col span={12}>
+                <ProFormText
+                  fieldProps={{
+                    size: "large",
+                  }}
+                  name={"email"}
+                  placeholder={intl.formatMessage({ id: "email" })}
+                  label={intl.formatMessage({ id: "email" })}
+                  rules={[
+                    {
+                      required: true,
+                      type: "email",
+                      message: intl.formatMessage({ id: "email_error" }),
+                    },
+                  ]}
+                />
+              </Col>
+            </Row>
+            <Row gutter={[16, 16]}>
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "city_id"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
                   label={"Аймаг/Нийслэл"}
+                  placeholder={"Аймаг/Нийслэл"}
                   onChange={(val) => {
                     form?.setFieldValue(["address", "district_id"], undefined);
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -140,8 +173,8 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "district_id"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
                   label={"Сум/Дүүрэг"}
+                  placeholder={"Сум/Дүүрэг"}
                   onChange={(value) => {
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
                     khoroo.run(value);
@@ -165,13 +198,14 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "khoroo_id"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
+                  placeholder={"Баг/Хороо"}
                   label={"Баг/Хороо"}
                   fieldProps={{
                     showSearch: true,
                     loading: khoroo?.loading,
                     size: "large",
                   }}
+                  rules={FORM_ITEM_RULE()}
                   options={khoroo?.data?.map((item: any) => {
                     return {
                       label: item?.name,
@@ -182,41 +216,16 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               </Col>
               <Col sm={12} xs={21}>
                 <ProFormText
-                  name={["address", "desc"]}
+                  name={"phone"}
                   fieldProps={{
                     size: "large",
                   }}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "address" })}
-                />
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <ProFormText
-                  name="email"
-                  fieldProps={{
-                    size: "large",
-                  }}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "company_email" })}
+                  placeholder={intl.formatMessage({ id: "phone" })}
                   rules={[
                     {
-                      type: "email",
-                      message: intl.formatMessage({ id: "email_error" }),
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
                     },
-                  ]}
-                />
-              </Col>
-              <Col span={12}>
-                <ProFormText
-                  name="phone_no"
-                  fieldProps={{
-                    size: "large",
-                  }}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "company_phone" })}
-                  rules={[
                     {
                       pattern: /^[\d]{8}$/,
                       message: intl.formatMessage({
@@ -224,82 +233,41 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       }),
                     },
                   ]}
+                  label={intl.formatMessage({ id: "phone" })}
                 />
               </Col>
             </Row>
-
-            <Row gutter={[16, 16]}>
+            <Row>
               <Col span={24}>
-                <ProFormText
-                  name="link"
-                  extra={intl.formatMessage({ id: "link_extra" })}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  fieldProps={{
-                    size: "large",
-                    addonBefore: "http://",
-                  }}
-                  rules={[
-                    {
-                      required: true,
-                      message: intl.formatMessage({ id: "required" }),
-                    },
-                  ]}
-                  label={intl.formatMessage({ id: "link" })}
-                />
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <ProFormDatePickerYear
-                  name="establishment_year"
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  rules={[
-                    {
-                      required: true,
-                      message: intl.formatMessage({ id: "required" }),
-                    },
-                  ]}
+                <ProFormTextArea
+                  name={["address", "desc"]}
+                  placeholder={intl.formatMessage({ id: "address_detail" })}
                   fieldProps={{
                     size: "large",
                   }}
-                  label={intl.formatMessage({ id: "date_establishment" })}
+                  label={intl.formatMessage({ id: "address_detail" })}
                 />
               </Col>
             </Row>
-            <div className="text-base font-semibold mb-4">
-              <FormattedMessage id="permission_control" />
-            </div>
             <Row gutter={[16, 16]}>
               <Col span={12}>
-                <ProFormText
-                  name={["user", "email"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                <ProFormSelect
+                  label={intl.formatMessage({ id: "is_active" })}
+                  name={"is_active"}
                   fieldProps={{
                     size: "large",
                   }}
-                  label={intl.formatMessage({ id: "login_name" })}
-                  rules={[
+                  placeholder={intl.formatMessage({ id: "is_active" })}
+                  options={[
                     {
-                      type: "email",
-                      message: intl.formatMessage({ id: "email_error" }),
+                      value: true,
+                      label: <FormattedMessage id="yes" />,
+                    },
+                    {
+                      value: false,
+                      label: <FormattedMessage id="no" />,
                     },
                   ]}
-                />
-              </Col>
-              <Col span={12}>
-                <ProFormText.Password
-                  name={["user", "password"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  fieldProps={{
-                    size: "large",
-                  }}
-                  rules={[
-                    {
-                      required: true,
-                      message: intl.formatMessage({ id: "required" }),
-                    },
-                  ]}
-                  label={intl.formatMessage({ id: "password" })}
                 />
               </Col>
             </Row>

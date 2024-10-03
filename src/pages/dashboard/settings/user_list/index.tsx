@@ -1,19 +1,20 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import IBadge from "components/badge";
+import OtherBadge from "components/badge/other";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import userList from "service/settings/user_list";
 import { UserType } from "service/settings/user_list/type";
+import { Lock01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
+import { ChangePassword } from "./change_password";
 import { CreateUser } from "./create";
 import { UpdateUser } from "./update";
-import dayjs from "dayjs";
-import { Lock01 } from "untitledui-js-base";
-import { ChangePassword } from "./change_password";
 
 export const Userlist: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -74,14 +75,13 @@ export const Userlist: React.FC = () => {
         }}
         customActions={(record) => {
           return (
-            <div
-              className="flex items-center px-1 py-3"
+            <Lock01
+              size="20"
               onClick={() => {
                 setChangePassword(record);
               }}
-            >
-              <Lock01 size="20" />
-            </div>
+              className="ml-2"
+            />
           );
         }}
         create={create}
@@ -106,6 +106,13 @@ export const Userlist: React.FC = () => {
                   color="gray"
                 />
               );
+            },
+          },
+          {
+            title: intl.formatMessage({ id: "is_active" }),
+            dataIndex: "is_active",
+            render: (value: any) => {
+              return <OtherBadge status={value} />;
             },
           },
           {

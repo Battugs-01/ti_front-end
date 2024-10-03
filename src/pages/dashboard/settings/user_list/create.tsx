@@ -3,10 +3,10 @@ import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
+import file from "service/file";
 import userList from "service/settings/user_list";
 import { ActionComponentProps } from "types";
 import { Form } from "./form";
-import file from "service/file";
 
 export const CreateUser: React.FC<ActionComponentProps<any>> = ({
   onCancel,

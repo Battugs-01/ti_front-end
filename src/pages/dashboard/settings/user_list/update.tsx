@@ -4,11 +4,11 @@ import { Button, notification } from "antd";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
+import file from "service/file";
 import userList from "service/settings/user_list";
 import { UserType } from "service/settings/user_list/type";
 import { ActionComponentProps } from "types";
-import file from "service/file";
-import { Form } from "./form";
+import { UpdateForm } from "./form/update-form";
 export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
   onCancel,
   onFinish,
@@ -142,7 +142,7 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
         },
       }}
     >
-      <Form city={city} khoroo={khoroo} district={district} />
+      <UpdateForm city={city} khoroo={khoroo} district={district} />
     </ModalForm>
   );
 };

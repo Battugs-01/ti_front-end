@@ -1,6 +1,7 @@
 import ProForm, {
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
@@ -29,7 +30,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                         size: "large",
                       }}
                       placeholder={intl.formatMessage({
-                        id: "placeholder_text",
+                        id: "last_name",
                       })}
                       name="last_name"
                       rules={[
@@ -50,7 +51,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       }}
                       name="first_name"
                       placeholder={intl.formatMessage({
-                        id: "placeholder_text",
+                        id: "first_name",
                       })}
                       rules={[
                         {
@@ -98,7 +99,6 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                         }
                       },
                     },
-                    ...FORM_ITEM_RULE(),
                   ]}
                   name="profile"
                   fieldProps={{
@@ -113,7 +113,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
             </Row>
 
             <Row gutter={[16, 16]}>
-              <Col span={24}>
+              <Col span={12}>
                 <ProFormSelect
                   name="role"
                   options={permissionArray?.map((el) => ({
@@ -121,10 +121,28 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     value: el,
                   }))}
                   label={intl.formatMessage({ id: "position" })}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
+                  placeholder={intl.formatMessage({ id: "position" })}
                   fieldProps={{
                     size: "large",
                   }}
+                  rules={FORM_ITEM_RULE()}
+                />
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  fieldProps={{
+                    size: "large",
+                  }}
+                  name={"email"}
+                  placeholder={intl.formatMessage({ id: "email" })}
+                  label={intl.formatMessage({ id: "email" })}
+                  rules={[
+                    {
+                      required: true,
+                      type: "email",
+                      message: intl.formatMessage({ id: "email_error" }),
+                    },
+                  ]}
                 />
               </Col>
             </Row>
@@ -133,7 +151,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "city_id"]}
                   label={"Аймаг/Нийслэл"}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
+                  placeholder={"Аймаг/Нийслэл"}
                   onChange={(val) => {
                     form?.setFieldValue(["address", "district_id"], undefined);
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -155,7 +173,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "district_id"]}
                   label={"Сум/Дүүрэг"}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
+                  placeholder={"Сум/Дүүрэг"}
                   onChange={(value) => {
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
                     khoroo.run(value);
@@ -179,13 +197,14 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "khoroo_id"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_select" })}
+                  placeholder={"Баг/Хороо"}
                   label={"Баг/Хороо"}
                   fieldProps={{
                     showSearch: true,
                     loading: khoroo?.loading,
                     size: "large",
                   }}
+                  rules={FORM_ITEM_RULE()}
                   options={khoroo?.data?.map((item: any) => {
                     return {
                       label: item?.name,
@@ -196,39 +215,11 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               </Col>
               <Col sm={12} xs={21}>
                 <ProFormText
-                  name={["address", "desc"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  fieldProps={{
-                    size: "large",
-                  }}
-                  label={intl.formatMessage({ id: "address" })}
-                />
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <ProFormText
-                  fieldProps={{
-                    size: "large",
-                  }}
-                  name={"email"}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "email" })}
-                  rules={[
-                    {
-                      type: "email",
-                      message: intl.formatMessage({ id: "email_error" }),
-                    },
-                  ]}
-                />
-              </Col>
-              <Col span={12}>
-                <ProFormText
                   name={"phone"}
                   fieldProps={{
                     size: "large",
                   }}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                  placeholder={intl.formatMessage({ id: "phone" })}
                   rules={[
                     {
                       required: true,
@@ -245,30 +236,23 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 />
               </Col>
             </Row>
-            {/* <div className="text-base font-semibold mb-4">
-              <FormattedMessage id="permission_control" />
-            </div>
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <ProFormText
+            <Row>
+              <Col span={24}>
+                <ProFormTextArea
+                  name={["address", "desc"]}
+                  placeholder={intl.formatMessage({ id: "address_detail" })}
                   fieldProps={{
                     size: "large",
                   }}
-                  name={["user", "email"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
-                  label={intl.formatMessage({ id: "login_name" })}
-                  rules={[
-                    {
-                      type: "email",
-                      message: intl.formatMessage({ id: "email_error" }),
-                    },
-                  ]}
+                  label={intl.formatMessage({ id: "address_detail" })}
                 />
               </Col>
+            </Row>
+            <Row gutter={[16, 16]}>
               <Col span={12}>
                 <ProFormText.Password
-                  name={["user", "password"]}
-                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                  name={"password"}
+                  placeholder={intl.formatMessage({ id: "password" })}
                   fieldProps={{
                     size: "large",
                   }}
@@ -281,7 +265,35 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   label={intl.formatMessage({ id: "password" })}
                 />
               </Col>
-            </Row> */}
+              <Col span={12}>
+                <ProFormText.Password
+                  name={"confirm_password"}
+                  placeholder={intl.formatMessage({ id: "confirm_password" })}
+                  fieldProps={{
+                    size: "large",
+                  }}
+                  rules={[
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            intl.formatMessage({ id: "password_mismatch" })
+                          )
+                        );
+                      },
+                    }),
+                  ]}
+                  label={intl.formatMessage({ id: "confirm_password" })}
+                />
+              </Col>
+            </Row>
           </>
         );
       }}

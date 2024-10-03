@@ -192,7 +192,6 @@ export const ITable = <T extends {}>({
                         }}
                       />
                     )}
-
                     {(RemoveModelConfig || RemoveComponent) && (
                       <DeleteButton
                         onClick={() => {
