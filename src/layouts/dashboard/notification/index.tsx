@@ -1,9 +1,9 @@
 import { useRequest } from "ahooks";
 import { Avatar, Badge, Dropdown, Menu, notification } from "antd";
+import notifactionSvg from "assets/img/Notification.svg";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Bell01, XCloseIcon } from "untitledui-js-base";
-
+import { XCloseIcon } from "untitledui-js-base";
 export const Notification = () => {
   const [notifications, setNotification] = useState<boolean>(false);
   const [intervalId, setIntervalId] = useState<any>(null);
@@ -41,36 +41,38 @@ export const Notification = () => {
   }, []);
 
   const renderNotificationItem = (list: any, key: number) => (
-    <Menu.Item key={key}>
-      <div className="flex flex-col">
-        <div className="flex items-start justify-between  py-6">
-          <div className="flex items-center gap-4">
-            <Avatar size={40}>CA</Avatar>
-            <div>
-              <div className="text-primary-700 font-semibold">
-                <FormattedMessage id="case_assigned" />
-              </div>
-              <div className="text-gray-400">
-                <FormattedMessage id="case_assigned_description" />
+    <>
+      <Menu.Item key={key} className="h-[117px]">
+        <div className="flex flex-col">
+          <div className="flex items-start justify-between  py-6">
+            <div className="flex items-center gap-4">
+              <Avatar size={40}>CA</Avatar>
+              <div>
+                <div className="text-primary-700 font-semibold">
+                  <FormattedMessage id="case_assigned" />
+                </div>
+                <div className="text-gray-400">
+                  <FormattedMessage id="case_assigned_description" />
+                </div>
               </div>
             </div>
+            <div className="text-gray-400">2 days ago</div>
           </div>
-          <div className="text-gray-400">2 days ago</div>
         </div>
-        <div className="bg-[#f5f8f8] w-full h-[1px]" />
-      </div>
-    </Menu.Item>
+      </Menu.Item>
+      <div className="bg-[#dee1e1] w-full h-[1px]" />
+    </>
   );
 
   const notificationMenu = (
     <>
-      <Menu>
-        <div className="bg-primary-700 text-white px-4 py-6 flex items-center justify-between rounded-md">
-          <div className="text-base">
-            <FormattedMessage id="notifications" />
-          </div>
-          <XCloseIcon size="24" onClick={() => setNotification(false)} />
+      <div className="bg-primary-700 h-[54px] text-white px-4 py-6 flex items-center justify-between rounded-t-lg  mt-5">
+        <div className="text-base">
+          <FormattedMessage id="notifications" />
         </div>
+        <XCloseIcon size="24" onClick={() => setNotification(false)} />
+      </div>
+      <Menu className="overflow-y-auto h-[500px] w-[439px]">
         {list?.data?.products.map(renderNotificationItem)}
       </Menu>
     </>
@@ -83,14 +85,20 @@ export const Notification = () => {
       open={notifications}
       className="flex items-center justify-center p-0 custom-ant-dropdown"
       onOpenChange={() => setNotification(!notifications)}
-      rootClassName="custom-ant-dropdown p-0"
+      rootClassName="custom-ant-dropdown p-0 h-9"
     >
-      <Badge count={list?.data?.total} className="cursor-pointer">
-        <Bell01
-          size="20"
-          className="p-2 bg-white bg-opacity-10 rounded-full"
-          // onClick={() => setNotification(!notification)}
-        />
+      <Badge
+        count={list?.data?.total}
+        className="cursor-pointer"
+        color="#A0B6BA"
+      >
+        <div className="p-2 rounded-full bg-[#fff] bg-opacity-10 ">
+          <img
+            src={notifactionSvg}
+            alt=""
+            className="bg-opacity-10 rounded-full"
+          />
+        </div>
       </Badge>
     </Dropdown>
   );
