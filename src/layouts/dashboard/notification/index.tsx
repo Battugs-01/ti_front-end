@@ -1,6 +1,6 @@
 import { useRequest } from "ahooks";
 import { Avatar, Badge, Dropdown, Menu, notification } from "antd";
-import notifactionSvg from "assets/img/Notification.svg";
+import notifactionSvg from "assets/img/notification.svg";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { XCloseIcon } from "untitledui-js-base";
