@@ -211,3 +211,11 @@ export const parseMongolianID = (id: any) => {
 
   return age || 0;
 };
+
+export const parseMongolianGender = (id: any) => {
+  const secondToLastChar = id.charAt(id.length - 2);
+  const isOdd = parseInt(secondToLastChar) % 2 === 0;
+  const gender = isOdd ? "female" : "male";
+  console.log(gender, "sda");
+  return gender;
+};

@@ -2,9 +2,8 @@ import { ProColumns } from "@ant-design/pro-table";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
-import { FormattedMessage } from "react-intl";
 import { ScreeningListType } from "service/screening_list/type"; // Assuming this is your table data type
-import { parseMongolianID } from "utils/index";
+import { parseMongolianGender, parseMongolianID } from "utils/index";
 
 export const getScreeningTableColumns = (
   intl: any
@@ -34,7 +33,17 @@ export const getScreeningTableColumns = (
     title: intl.formatMessage({ id: "gender" }),
     dataIndex: "gender",
     width: 80,
-    render: (value: any): any => <FormattedMessage id={value} />,
+    render: (_: any, record: ScreeningListType): any => {
+      const gender = parseMongolianGender(record?.rd);
+      console.log(gender, "llr");
+      return (
+        <div className="flex items-center justify-center">
+          {gender === "male"
+            ? intl.formatMessage({ id: "male" })
+            : intl.formatMessage({ id: "female" })}
+        </div>
+      );
+    },
   },
   {
     title: intl.formatMessage({ id: "levels" }),
@@ -89,11 +98,17 @@ export const getScreeningTableColumns = (
     title: intl.formatMessage({ id: "hcu_date" }),
     dataIndex: "levels",
     width: 130,
-    render: (_: any, record: ScreeningListType): React.ReactNode => (
-      <div className="flex items-center ">
-        {dayjs(record?.assessment?.date_comp_ass).format("YYYY-MM-DD")}
-      </div>
-    ),
+    render: (_: any, record: ScreeningListType): React.ReactNode => {
+      const date = record?.assessment?.date_comp_ass;
+      if (!date || dayjs(date).format("YYYY-MM-DD") === "0001-01-01") {
+        return <div className="flex items-center">-</div>;
+      }
+      return (
+        <div className="flex items-center">
+          {dayjs(date).format("YYYY-MM-DD")}
+        </div>
+      );
+    },
   },
   {
     title: intl.formatMessage({ id: "address" }),
@@ -131,7 +146,7 @@ export const getScreeningTableColumns = (
         case "low":
           return <IBadge title="Бага" color="green" />;
         default:
-          return <IBadge title="-" color="gray" />;
+          return "-";
       }
     },
   },

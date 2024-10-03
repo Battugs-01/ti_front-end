@@ -66,7 +66,6 @@ export const PlannedWorkTableColumns = (
       </div>
     ),
   },
-
   {
     title: intl.formatMessage({ id: "hcu_date" }),
     dataIndex: "levels",
