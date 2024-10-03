@@ -4,7 +4,6 @@ import { ProColumns } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Avatar, Input, notification, Select } from "antd";
 import IBadge from "components/badge";
-import BooleanBadge from "components/badge/boolean";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
 import { debounce } from "lodash";
 import { useEffect } from "react";
@@ -166,13 +165,13 @@ const DevPlanColumns = ({
             <ProFormSelect
               name={"person_in_charge_id"}
               shouldUpdate
-              className="flex items-center justify-center custom-input w-full"
+              className="flex items-center justify-center custom-input w-full bg-white"
               fieldProps={{
                 showSearch: true,
                 loading: emplyoee.loading,
                 filterOption: false,
                 onSearch: debouncedSearch,
-                className: "w-[160px]",
+                className: "w-[160px] bg-white custom-input",
                 onChange: (newValue) => {
                   handleFieldChange(index, "person_in_charge_id", newValue);
                 },
@@ -276,20 +275,20 @@ const DevPlanColumns = ({
     },
   ];
 
-  if (isEvaluated) {
-    columns.splice(2, 0, {
-      title: intl.formatMessage({ id: "evaluation" }),
-      dataIndex: "is_have",
-      editable: false,
-      width: 80,
-      className: "text-left",
-      render: (_, record) => (
-        <BooleanBadge
-          status={record?.customer_care_foci_item?.is_have ?? "N/A"}
-        />
-      ),
-    });
-  }
+  // if (isEvaluated) {
+  //   columns.splice(2, 0, {
+  //     title: intl.formatMessage({ id: "evaluation" }),
+  //     dataIndex: "is_have",
+  //     editable: false,
+  //     width: 80,
+  //     className: "text-left",
+  //     render: (_, record) => (
+  //       <BooleanBadge
+  //         status={record?.customer_care_foci_item?.is_have ?? "N/A"}
+  //       />
+  //     ),
+  //   });
+  // }
   return columns;
 };
 

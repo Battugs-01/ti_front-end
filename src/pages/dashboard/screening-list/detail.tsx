@@ -53,8 +53,11 @@ const ScreeningListDetailCaseManager: React.FC = () => {
           <Emergency customerId={customerId} />
         </div>
         <div className="xl:col-span-4">
-          <CustomHeader data={assessmentData?.data || []} />
-          <MainDetail />
+          <CustomHeader
+            data={assessmentData?.data || []}
+            customerMainData={data?.data as ScreeningListType}
+          />
+          <MainDetail customerMainData={data?.data as ScreeningListType} />
         </div>
       </div>
     </>

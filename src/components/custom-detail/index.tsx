@@ -1,13 +1,18 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { ScreeningTab } from "config";
+import { ScreeningListType } from "service/screening_list/type";
 import Assesment from "./assesment";
 import DevPlanEdit from "./dev-plan-table/dev_plan_edit";
 import QuistionHistory from "./quesion-history";
 import { useLevelContext } from "./selected-level";
 
-const MainDetail: React.FC = () => {
+interface MainDetailProps {
+  customerMainData: ScreeningListType;
+}
+const MainDetail: React.FC<MainDetailProps> = ({ customerMainData }) => {
   const { selectedLevel } = useLevelContext();
-  if (!selectedLevel) {
+
+  if (!selectedLevel || !customerMainData) {
     return <PageLoading />;
   }
 
@@ -18,7 +23,7 @@ const MainDetail: React.FC = () => {
         {selectedLevel?.level === ScreeningTab.level_3 && (
           <>
             <Assesment selectedLevel={selectedLevel} />
-            <DevPlanEdit />
+            <DevPlanEdit customerMainData={customerMainData} />
           </>
         )}
       </div>

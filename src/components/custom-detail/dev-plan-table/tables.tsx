@@ -17,8 +17,9 @@ import DevPlanColumns from "./column";
 
 interface CareFociProps {
   data: CareFociItemElement[];
-  name: string;
   isEvaluated?: boolean;
+  name: string;
+  id: string;
   isClose?: boolean;
   onFinish?: () => void;
 }
@@ -26,6 +27,7 @@ interface CareFociProps {
 const DevPlanTables: React.FC<CareFociProps> = ({
   name,
   data,
+  id,
   isEvaluated,
   isClose,
   onFinish,
@@ -85,7 +87,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   if (!data) return <PageLoading />;
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <Collapse
         defaultActiveKey={["1"]}
         collapsible="icon"
@@ -128,6 +130,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
             children: (
               <EditableProTable<CareFociItemElement>
                 rowKey="id"
+                id={id}
                 className="custom-antd-table-cell remove-padding-table"
                 value={dataSource}
                 bordered

@@ -6,12 +6,17 @@ import { AuthContext } from "context/auth";
 import { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
+import { ScreeningListType } from "service/screening_list/type";
 import { DownloadCloud02, LineChartUp05, Printer } from "untitledui-js-base";
+import { exportFromTableManyData } from "utils/export";
 import { useLevelContext } from "../selected-level";
 import { DevPlanEndModal } from "./dev_plan_close";
 import DevPlanTables from "./tables";
 
-const DevPlanEdit: React.FC = () => {
+interface DevPlanEditProps {
+  customerMainData: ScreeningListType;
+}
+const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
   const { selectedLevel } = useLevelContext();
   const [user] = useContext(AuthContext);
   const [modal, setModal] = useState<boolean>(false);
@@ -81,6 +86,19 @@ const DevPlanEdit: React.FC = () => {
                 size="large"
                 type="default"
                 icon={<DownloadCloud02 />}
+                onClick={() => {
+                  exportFromTableManyData(
+                    [`Development Plan Export ${customerMainData?.first_name}`],
+                    [
+                      "edit-table-general", // Table 1
+                      "edit-table-physical", // Table 2
+                      "edit-table-psychology", // Table 3
+                      "edit-table-economy", // Table 4
+                      "edit-table-health-risk", // Table 5
+                    ],
+                    window
+                  );
+                }}
                 className="flex items-center gap-2"
               >
                 <FormattedMessage id="download" />
@@ -112,6 +130,7 @@ const DevPlanEdit: React.FC = () => {
           <div className="flex flex-col gap-6">
             <DevPlanTables
               name="general"
+              id="edit-table-general"
               data={generalData}
               isEvaluated={false}
               isClose={devPlanData?.data?.is_close}
@@ -121,6 +140,7 @@ const DevPlanEdit: React.FC = () => {
             />
             <DevPlanTables
               name="physical_condition"
+              id="edit-table-physical"
               data={physicalConditionData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
@@ -130,6 +150,7 @@ const DevPlanEdit: React.FC = () => {
             />
             <DevPlanTables
               name="psychology_change"
+              id="edit-table-psychology"
               data={psychologyChangeData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
@@ -139,6 +160,7 @@ const DevPlanEdit: React.FC = () => {
             />
             <DevPlanTables
               name="economy_diff"
+              id="edit-table-economy"
               data={EconemyData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}
@@ -148,6 +170,7 @@ const DevPlanEdit: React.FC = () => {
             />
             <DevPlanTables
               name="health_risk"
+              id="edit-table-health-risk"
               data={HealthRiskData}
               isEvaluated={true}
               isClose={devPlanData?.data?.is_close}

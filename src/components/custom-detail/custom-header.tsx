@@ -5,16 +5,23 @@ import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { AssessmentListType } from "service/screening_list/type";
+import {
+  AssessmentListType,
+  ScreeningListType,
+} from "service/screening_list/type";
 import { DownloadCloud02, Printer } from "untitledui-js-base";
 import { exportFromTable } from "utils/export";
 import { useLevelContext } from "./selected-level";
 
 interface CustomHeaderProps {
   data: AssessmentListType[];
+  customerMainData: ScreeningListType;
 }
 
-const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({
+  data,
+  customerMainData,
+}) => {
   const { selectedLevel, setSelectedLevel } = useLevelContext();
   const [tab, setTab] = useState(data[0]?.id || null);
 
@@ -100,7 +107,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ data }) => {
               icon={<DownloadCloud02 />}
               onClick={() => {
                 exportFromTable(
-                  [`Асуумжийн түүх`],
+                  [`Асуумжийн түүх ${customerMainData?.first_name}`],
                   window.document.getElementById(`main-table`) as HTMLElement,
                   window
                 );
