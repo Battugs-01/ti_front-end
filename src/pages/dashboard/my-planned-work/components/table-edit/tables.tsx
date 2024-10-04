@@ -35,7 +35,7 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
 }) => {
   const [user] = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
-  const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
+  const updateDevPlan = useRequest(developmentPlan.updateItemDevPlan, {
     manual: true,
     onSuccess: () => {
       setIsEditing(false);
@@ -50,7 +50,6 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
   });
 
   const [isSwitched, setIsSwitched] = useState(true);
-
   const [dataSource, setDataSource] = useState<CareFociItemElement[]>(data);
 
   useEffect(() => {
