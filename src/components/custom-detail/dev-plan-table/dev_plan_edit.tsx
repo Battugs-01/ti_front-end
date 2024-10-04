@@ -112,7 +112,8 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
                 <FormattedMessage id="print" />
               </Button> */}
               {user &&
-                user.user?.role === UserRoleType.doctor &&
+                (user.user?.role === UserRoleType.doctor ||
+                  user.user?.role === UserRoleType.senior_case_manager) &&
                 devPlanData?.data?.is_close === false && (
                   <Button
                     size="large"

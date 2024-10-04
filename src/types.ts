@@ -9,10 +9,6 @@ export interface FilterFormButton {
 export type Locale = "mn" | "en";
 
 export interface ActionComponentProps<T> {
-  setCloseModal?: any;
-  setWaitModal?: any;
-  setApproveModal?: any;
-  setTransictionModal?: any;
   open: boolean;
   onCancel: () => void;
   onFinish?: () => void;

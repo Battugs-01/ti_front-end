@@ -137,7 +137,7 @@ const DevPlanColumns = ({
       render: (value, record, index) =>
         isEditing ? (
           <Select
-            defaultValue={value == 7 ? "7 хоног" : "14 хоног"}
+            defaultValue={value}
             style={{ width: 120 }}
             onChange={(newValue) =>
               handleFieldChange(index, "duration", newValue)

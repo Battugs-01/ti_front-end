@@ -1,5 +1,6 @@
 import ProForm, {
   ModalForm,
+  ModalFormProps,
   ProFormDatePicker,
   ProFormInstance,
   ProFormRadio,
@@ -15,11 +16,18 @@ import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { ActionComponentProps } from "types";
 
-export const EditScreenList: React.FC<
-  ActionComponentProps<ScreeningListType>
-> = ({ onCancel, onFinish, open, detail }) => {
+type PropsUpdate = ModalFormProps & {
+  onCancel: () => void;
+  data: ScreeningListType;
+  onFinish?: () => void;
+};
+export const EditScreenList = ({
+  onCancel,
+  data,
+  onFinish,
+  ...rest
+}: PropsUpdate) => {
   const formRef = useRef<ProFormInstance>();
   const editScreen = useRequest(screenList.edit, {
     manual: true,
@@ -47,30 +55,30 @@ export const EditScreenList: React.FC<
     manual: true,
   });
   useEffect(() => {
-    if (detail) {
-      district.run(detail?.address?.city_id);
-      khoroo.run(detail?.address?.district_id);
+    if (data) {
+      district.run(data?.address?.city_id);
+      khoroo.run(data?.address?.district_id);
     }
-  }, [detail]);
+  }, [data]);
   return (
     <ModalForm
+      {...rest}
       formRef={formRef}
       initialValues={{
-        ...detail,
+        ...data,
         address: {
-          city_id: detail?.address?.city_id,
-          district_id: detail?.address?.district_id,
-          khoroo_id: detail?.address?.khoroo_id,
-          desc: detail?.address?.desc,
+          city_id: data?.address?.city_id,
+          district_id: data?.address?.district_id,
+          khoroo_id: data?.address?.khoroo_id,
+          desc: data?.address?.desc,
         },
-        assessment_date: dayjs(detail?.assessment?.date).toDate(),
+        assessment_date: dayjs(data?.assessment?.date).toDate(),
       }}
       onFinish={async (values) => {
-        await editScreen.runAsync(detail?.id || 0, values);
-        console.log(values, "Form Values:");
+        await editScreen.runAsync(data?.id || 0, values);
       }}
       title={intl.formatMessage({ id: "update" })}
-      open={open}
+      open={!!data}
       onOpenChange={() => {
         formRef?.current?.resetFields();
       }}

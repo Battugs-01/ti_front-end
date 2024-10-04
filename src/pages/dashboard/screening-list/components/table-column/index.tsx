@@ -35,7 +35,6 @@ export const getScreeningTableColumns = (
     width: 80,
     render: (_: any, record: ScreeningListType): any => {
       const gender = parseMongolianGender(record?.rd);
-      console.log(gender, "llr");
       return (
         <div className="flex items-center justify-center">
           {gender === "male"

@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { MinusCircle, SwitchHorizontal01 } from "untitledui-js-base";
+import { Edit04, MinusCircle, SwitchHorizontal01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
 import { screeningListFilter } from "utils/screening_list_filter";
 import { CloseModal } from "./components/table-actions/close";
@@ -18,6 +18,7 @@ import { SwitchModal } from "./components/table-actions/switch";
 import { EditScreenList } from "./components/table-actions/update";
 import { getScreeningTableColumns } from "./components/table-column";
 import TableHeader from "./components/table-header";
+
 const ScreeningList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const { setSelectedLevel } = useLevelContext();
@@ -25,6 +26,7 @@ const ScreeningList: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [tab, setTab] = useState<ScreeningTab>(ScreeningTab.all);
   const [switchAction, setSwitchAction] = useState<ScreeningListType>();
+  const [updateAction, setUpdateAction] = useState<ScreeningListType>();
   const [close, setCloseModal] = useState<ScreeningListType>();
 
   const intl = useIntl();
@@ -103,21 +105,29 @@ const ScreeningList: React.FC = () => {
           ...getScreeningTableColumns(intl),
         ]}
         refresh={refreshList}
-        UpdateComponent={EditScreenList}
+        // UpdateComponent={EditScreenList }
         customActions={(record) => {
           if (user?.user?.role === UserRoleType.case_manager) {
             return (
-              <div className="flex items-center">
-                <SwitchHorizontal01
-                  size="20"
-                  onClick={() => setSwitchAction(record)}
-                />
+              <div className="flex gap-6">
+                <div className="flex items-center">
+                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                </div>
+                <div className="flex items-center">
+                  <SwitchHorizontal01
+                    size="20"
+                    onClick={() => setSwitchAction(record)}
+                  />
+                </div>
               </div>
             );
           }
           if (user?.user?.role === UserRoleType.senior_case_manager) {
             return (
-              <div className="flex gap-4">
+              <div className="flex gap-6">
+                <div className="flex items-center">
+                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                </div>
                 <div className="flex items-center">
                   <SwitchHorizontal01
                     size="20"
@@ -135,13 +145,23 @@ const ScreeningList: React.FC = () => {
             );
           } else if (user?.user?.role === UserRoleType.doctor) {
             return (
-              <div className="flex items-center">
-                <MinusCircle
-                  className="text-red-600"
-                  color="red"
-                  size="20"
-                  onClick={() => setCloseModal(record)}
-                />
+              <div className="flex gap-6">
+                <div className="flex items-center">
+                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                </div>
+                <div className="flex items-center">
+                  <SwitchHorizontal01
+                    size="20"
+                    onClick={() => setSwitchAction(record)}
+                  />
+                </div>
+                <div className="flex items-center">
+                  <MinusCircle
+                    size="20"
+                    className="text-red-600"
+                    onClick={() => setCloseModal(record)}
+                  />
+                </div>
               </div>
             );
           }
@@ -164,6 +184,16 @@ const ScreeningList: React.FC = () => {
           setCloseModal(undefined);
         }}
       />
+      {updateAction && (
+        <EditScreenList
+          data={updateAction}
+          onCancel={() => setUpdateAction(undefined)}
+          onFinish={async () => {
+            refreshList();
+            setUpdateAction(undefined);
+          }}
+        />
+      )}
     </PageCard>
   );
 };
