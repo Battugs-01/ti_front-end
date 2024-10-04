@@ -54,7 +54,7 @@ const dashboardRoutes: IRoute[] = [
   {
     key: "my-planned-work-detail",
     path: "my-planned-work/detail",
-    component: <ScreeningListDetail />,
+    component: <MyPlannedWorkDetail />,
   },
   {
     key: "dashboard",

@@ -12,6 +12,7 @@
   "close_quistion": "Close quistion",
   "screening_list": "Screening List",
   "screening_history": "Screening History",
+  "assigned_to_me": "Assigned to me",
   "development_plan": "Development Plan",
   "is_active": "Is active",
   "all_read": "Make all read",
@@ -242,9 +243,8 @@
   "count_comp_ass": "CCA",
   "priority": "Priority",
   "notifications": "Notifications",
-  "permission_denied":"Permission denied",
-  "back_dashboard":"Back to dashboard",
-  "permission_denied_description":"You do not have the necessary permissions to view this page. Please contact your administrator or try logging in with an authorized account.",
-  "super_admin":"Super admin"
-
+  "permission_denied": "Permission denied",
+  "back_dashboard": "Back to dashboard",
+  "permission_denied_description": "You do not have the necessary permissions to view this page. Please contact your administrator or try logging in with an authorized account.",
+  "super_admin": "Super admin"
 }

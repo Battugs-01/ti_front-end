@@ -114,6 +114,7 @@
   "add_plan": "Төлөвлөгөө нэмэх",
   "mini_cog": "Mini-Cog",
   "gds": "GDS",
+  "assigned_to_me": "Надад оноогдсон",
   "barthel_index": "Barthel Index",
   "login_success": "Амжилттай нэвтэрлээ.",
   "reset": "Дахин тохируулах",
@@ -251,8 +252,8 @@
   "count_comp_ass": "ХЦҮ",
   "priority": "Чухлын зэрэг",
   "notifications": "Мэдэгдлүүд",
-  "permission_denied":"Хандах эрх байхгүй байна.",
-  "back_dashboard":"Нүүр хуудас руу буцах",
-  "permission_denied_description":"Танд энэ хуудсыг үзэх шаардлагатай зөвшөөрөл байхгүй байна. Админтайгаа холбогдох эсвэл эрх бүхий бүртгэлээр нэвтэрч үзнэ үү.",
-  "super_admin":"Super admin"
+  "permission_denied": "Хандах эрх байхгүй байна.",
+  "back_dashboard": "Нүүр хуудас руу буцах",
+  "permission_denied_description": "Танд энэ хуудсыг үзэх шаардлагатай зөвшөөрөл байхгүй байна. Админтайгаа холбогдох эсвэл эрх бүхий бүртгэлээр нэвтэрч үзнэ үү.",
+  "super_admin": "Super admin"
 }

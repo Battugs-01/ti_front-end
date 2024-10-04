@@ -111,11 +111,16 @@ const ScreeningList: React.FC = () => {
             return (
               <div className="flex gap-6">
                 <div className="flex items-center">
-                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                  <Edit04
+                    size="20"
+                    onClick={() => setUpdateAction(record)}
+                    className="cursor-pointer"
+                  />
                 </div>
                 <div className="flex items-center">
                   <SwitchHorizontal01
                     size="20"
+                    className="cursor-pointer"
                     onClick={() => setSwitchAction(record)}
                   />
                 </div>
@@ -126,10 +131,15 @@ const ScreeningList: React.FC = () => {
             return (
               <div className="flex gap-6">
                 <div className="flex items-center">
-                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                  <Edit04
+                    className="cursor-pointer"
+                    size="20"
+                    onClick={() => setUpdateAction(record)}
+                  />
                 </div>
                 <div className="flex items-center">
                   <SwitchHorizontal01
+                    className="cursor-pointer"
                     size="20"
                     onClick={() => setSwitchAction(record)}
                   />
@@ -137,7 +147,7 @@ const ScreeningList: React.FC = () => {
                 <div className="flex items-center">
                   <MinusCircle
                     size="20"
-                    className="text-red-600"
+                    className="text-red-600 cursor-pointer"
                     onClick={() => setCloseModal(record)}
                   />
                 </div>
@@ -147,18 +157,23 @@ const ScreeningList: React.FC = () => {
             return (
               <div className="flex gap-6">
                 <div className="flex items-center">
-                  <Edit04 size="20" onClick={() => setUpdateAction(record)} />
+                  <Edit04
+                    size="20"
+                    onClick={() => setUpdateAction(record)}
+                    className="cursor-pointer"
+                  />
                 </div>
                 <div className="flex items-center">
                   <SwitchHorizontal01
                     size="20"
                     onClick={() => setSwitchAction(record)}
+                    className="cursor-pointer"
                   />
                 </div>
                 <div className="flex items-center">
                   <MinusCircle
                     size="20"
-                    className="text-red-600"
+                    className="text-red-600 cursor-pointer"
                     onClick={() => setCloseModal(record)}
                   />
                 </div>
