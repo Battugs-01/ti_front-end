@@ -7,19 +7,14 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
+import PlannedWork from "./components/table-edit";
 
 const MyPlannedWorkDetail: React.FC = () => {
   const location = useLocation();
-  const customerId = location.search?.split("=")[1];
 
-  const assessmentData = useRequest(screenList.assessmentDetail, {
-    manual: true,
-    ready: !!customerId,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
+  const searchParams = new URLSearchParams(location.search);
+  const customerId = searchParams.get("customer_id");
+  const assId = searchParams.get("ass_id");
 
   const data = useRequest(screenList.customerDetail, {
     manual: true,
@@ -31,15 +26,14 @@ const MyPlannedWorkDetail: React.FC = () => {
   });
 
   const run = () => {
-    data.run(customerId);
-    assessmentData.run(customerId);
+    data.run(customerId as string);
   };
 
   useEffect(() => {
     run();
   }, [customerId]);
 
-  if (!data && !assessmentData && !customerId) {
+  if (!data && !customerId) {
     return <PageLoading />;
   }
 
@@ -50,10 +44,12 @@ const MyPlannedWorkDetail: React.FC = () => {
           <Info data={data?.data as ScreeningListType} />
           <Emergency customerId={customerId} />
         </div>
-        "planned Table"
-        {/* <div className="xl:col-span-4">
-          <MainDetail customerMainData={data?.data as ScreeningListType} />
-        </div> */}
+        <div className="xl:col-span-4">
+          <PlannedWork
+            customerMainData={data?.data as ScreeningListType}
+            assesment_id={assId ? Number(assId) : 0}
+          />
+        </div>
       </div>
     </>
   );

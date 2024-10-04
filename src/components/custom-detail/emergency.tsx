@@ -7,7 +7,7 @@ import screenList from "service/screening_list";
 import { useLevelContext } from "./selected-level";
 
 interface EmergencyProps {
-  customerId: string;
+  customerId: any;
 }
 const Emergency: React.FC<EmergencyProps> = ({ customerId }) => {
   const { selectedLevel } = useLevelContext();

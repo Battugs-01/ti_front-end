@@ -91,7 +91,7 @@ const MyPlannedWork: React.FC = () => {
                   size="20"
                   onClick={() =>
                     navigate(
-                      `/dashboard/my-planned-work/detail?customer_id=${record.id}`
+                      `/dashboard/my-planned-work/detail?customer_id=${record.id}&ass_id=${record.ass_id}`
                     )
                   }
                   className="cursor-pointer"
