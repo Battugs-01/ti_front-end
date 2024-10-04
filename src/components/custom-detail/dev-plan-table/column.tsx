@@ -98,14 +98,11 @@ const DevPlanColumns = ({
             className="custom-input"
             options={[
               {
-                value: "low",
-                label: <IBadge color="green" title="Хөнгөн" />,
+                value: "Хөнгөн",
+                label: "Хөнгөн",
               },
-              {
-                value: "medium",
-                label: <IBadge color="yellow" title="Дунд" />,
-              },
-              { value: "high", label: <IBadge color="red" title="Хүнд" /> },
+              { value: "Дунд", label: "Дунд" },
+              { value: "Хүнд", label: "Хүнд" },
             ]}
             onChange={(newValue) =>
               handleFieldChange(index, "severity_level", newValue)
@@ -258,9 +255,9 @@ const DevPlanColumns = ({
             options={[
               {
                 value: true,
-                label: <IBadge color="green" title="Тийм" />,
+                label: "Тийм",
               },
-              { value: false, label: <IBadge color="gray" title="Үгүй" /> },
+              { value: false, label: "Үгүй" },
             ]}
             onChange={(newValue) => {
               handleFieldChange(index, "is_resolved", newValue);
