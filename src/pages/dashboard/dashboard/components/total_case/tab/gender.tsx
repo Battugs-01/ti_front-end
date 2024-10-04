@@ -45,7 +45,19 @@ export const Gender: React.FC<GenderProps> = ({ data }) => {
             color: item.color,
           }))}
         />
-        <Tooltip />
+        <Tooltip
+          content={({ payload }) => {
+            if (payload && payload.length) {
+              const { type, value } = payload[0].payload;
+              return (
+                <div className="bg-white p-2 border border-solid border-gray-200">
+                  {type} - {value}
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
       </PieChart>
     </div>
   );

@@ -28,6 +28,10 @@ export const menuItems = [
     name: <FormattedMessage id="stastical_report" />,
     path: "/dashboard/stastical-report",
   },
+];
+
+export const menuAdminItems = [
+  ...menuItems,
   {
     icon: <Settings01 />,
     name: <FormattedMessage id="settings" />,

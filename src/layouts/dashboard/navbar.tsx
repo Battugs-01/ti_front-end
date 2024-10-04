@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-4 ">
-            <div className="flex items-center">
+            <div className="flex items-center mb-1">
               <LanguageSelector />
             </div>
             <div className="flex items-center mr-6">

@@ -2,7 +2,7 @@ import { Table } from "antd";
 import { DashboardLevel } from "components/badge/dashboard_level";
 import { GenderBadge } from "components/badge/gender";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
 import { Levels } from "service/dashboard/type";
 
 interface LevelProps {
@@ -46,7 +46,19 @@ export const Level: React.FC<LevelProps> = ({ data }) => {
             <Cell key={`cell-${index}`} fill={entry?.color} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip
+          content={({ payload }) => {
+            if (payload && payload.length) {
+              const { name, percent } = payload[0].payload;
+              return (
+                <div className="bg-white p-2 border border-solid border-gray-200">
+                  {name} : {percent.toFixed(0)}%
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
       </PieChart>
       <Table
         className="p-4"
