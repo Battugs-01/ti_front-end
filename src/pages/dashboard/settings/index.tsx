@@ -1,83 +1,34 @@
-import { Segmented } from "antd";
-import { IfCondition } from "components/condition";
-import { SettingsTab, UserRoleType } from "config";
-import { useContext, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { AgencyList } from "./agency_list";
-import { StackholderList } from "./stackholder_list";
-import { Userlist } from "./user_list";
+import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
+import { useContext } from "react";
+import { Admin } from "./admin";
+import { SuperAdmin } from "./super_admin";
+import { Button, Result } from "antd";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 const Settings: React.FC = () => {
-  const [tab, setTab] = useState<SettingsTab>(SettingsTab.agency_list);
+  const intl = useIntl();
   const [user] = useContext(AuthContext);
+  if (user?.user?.role === UserRoleType.super_admin) {
+    return <SuperAdmin />;
+  } else if (user?.user?.role === UserRoleType.admin) {
+    return <Admin />;
+  }
   return (
     <>
-      {/* {user?.user?.role === UserRoleType.admin ? (
-        <Segmented
-          options={[
-            {
-              value: SettingsTab.agency_list,
-              label: <FormattedMessage id="agency_list" />,
-            },
-          ]}
-          size="large"
-          onChange={(e: any) => {
-            setTab(e);
-          }}
-        />
-      ) : (
-        <Segmented
-          options={[
-            {
-              value: SettingsTab.stakeholder_list,
-              label: <FormattedMessage id="stakeholder_list" />,
-            },
-            {
-              value: SettingsTab.user_list,
-              label: <FormattedMessage id="user_list" />,
-            },
-          ]}
-          size="large"
-          onChange={(e: any) => {
-            setTab(e);
-          }}
-        />
-      )} */}
-      <Segmented
-        options={[
-          {
-            value: SettingsTab.agency_list,
-            label: <FormattedMessage id="agency_list" />,
-          },
-          {
-            value: SettingsTab.stakeholder_list,
-            label: <FormattedMessage id="stakeholder_list" />,
-          },
-          {
-            value: SettingsTab.user_list,
-            label: <FormattedMessage id="user_list" />,
-          },
-        ]}
-        size="large"
-        onChange={(e: any) => {
-          setTab(e);
-        }}
-      />
-      <div className="mt-7"></div>
-
-      <IfCondition
-        condition={SettingsTab.agency_list === tab}
-        whenTrue={<AgencyList />}
-      />
-      <IfCondition
-        condition={SettingsTab.stakeholder_list === tab}
-        whenTrue={<StackholderList />}
-      />
-      <IfCondition
-        condition={SettingsTab.user_list === tab}
-        whenTrue={<Userlist />}
-      />
+      <Result
+        status="500"
+        title={intl.formatMessage({ id: "permission_denied" })}
+        subTitle={intl.formatMessage({ id: "permission_denied_description" })}
+        extra={
+          <Link to="/dashboard/dashboard" className="no-underline">
+            <Button type="primary" key="console">
+              <FormattedMessage id="back_dashboard" />
+            </Button>
+          </Link>
+        }
+      ></Result>
     </>
   );
 };

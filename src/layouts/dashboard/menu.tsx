@@ -1,7 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
-import { menuItems } from "./menu_items";
-import Logo from "assets/img/menu_logo.png";
 import { Drawer } from "antd";
+import Logo from "assets/img/menu_logo.png";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { menuAdminItems, menuItems } from "./menu_items";
 
 const triangleStyle: React.CSSProperties = {
   width: 0,
@@ -18,6 +21,14 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   mobile,
   onClose,
 }) => {
+  const [user] = useContext(AuthContext);
+  let menus = menuItems;
+  if (
+    user?.user?.role === UserRoleType.super_admin ||
+    user?.user?.role === UserRoleType.admin
+  ) {
+    menus = menuAdminItems;
+  }
   if (mobile) {
     return (
       <Drawer open={mobile} placement="left" onClose={onClose}>
@@ -29,7 +40,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
           >
             <img src={Logo} alt="logo" />
           </Link>
-          {menuItems.map((item, index) => (
+          {menus.map((item, index) => (
             <div key={index} className="flex items-center relative p-5">
               <Link
                 onClick={onClose}
@@ -47,7 +58,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   }
   return (
     <div className="flex items-center">
-      {menuItems.map((item, index) => (
+      {menus.map((item, index) => (
         <div key={index} className="flex items-center relative p-6">
           <NavLink
             to={item.path}
