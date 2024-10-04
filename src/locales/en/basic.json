@@ -242,6 +242,7 @@
   "notifications": "Notifications",
   "permission_denied":"Permission denied",
   "back_dashboard":"Back to dashboard",
-  "permission_denied_description":"You do not have the necessary permissions to view this page. Please contact your administrator or try logging in with an authorized account."
+  "permission_denied_description":"You do not have the necessary permissions to view this page. Please contact your administrator or try logging in with an authorized account.",
+  "super_admin":"Super admin"
 
 }
