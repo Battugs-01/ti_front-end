@@ -150,7 +150,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "city_id"]}
-                  label={"Аймаг/Нийслэл"}
+                  label={intl.formatMessage({ id: "city" })}
                   placeholder={"Аймаг/Нийслэл"}
                   onChange={(val) => {
                     form?.setFieldValue(["address", "district_id"], undefined);
@@ -172,7 +172,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
               <Col sm={12} xs={21}>
                 <ProFormSelect
                   name={["address", "district_id"]}
-                  label={"Сум/Дүүрэг"}
+                  label={intl.formatMessage({ id: "district" })}
                   placeholder={"Сум/Дүүрэг"}
                   onChange={(value) => {
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -198,7 +198,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "khoroo_id"]}
                   placeholder={"Баг/Хороо"}
-                  label={"Баг/Хороо"}
+                  label={intl.formatMessage({ id: "khoroo" })}
                   fieldProps={{
                     showSearch: true,
                     loading: khoroo?.loading,

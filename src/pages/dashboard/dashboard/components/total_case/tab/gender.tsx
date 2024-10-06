@@ -1,5 +1,12 @@
 import { useIntl } from "react-intl";
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import { Sex } from "service/dashboard/type";
 
 interface GenderProps {
@@ -22,43 +29,45 @@ export const Gender: React.FC<GenderProps> = ({ data }) => {
   ];
   return (
     <div>
-      <PieChart width={300} height={350}>
-        <Pie
-          data={graphData}
-          cx={175}
-          cy={140}
-          innerRadius={60}
-          outerRadius={75}
-          dataKey="value"
-          label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-        >
-          {graphData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry?.color} />
-          ))}
-        </Pie>
-        <Legend
-          iconSize={10}
-          iconType="circle"
-          layout="vertical"
-          payload={graphData.map((item) => ({
-            value: `${item.type}`,
-            color: item.color,
-          }))}
-        />
-        <Tooltip
-          content={({ payload }) => {
-            if (payload && payload.length) {
-              const { type, value } = payload[0].payload;
-              return (
-                <div className="bg-white p-2 border border-solid border-gray-200">
-                  {type} - {value}
-                </div>
-              );
-            }
-            return null;
-          }}
-        />
-      </PieChart>
+      <ResponsiveContainer width="100%" height={350}>
+        <PieChart height={350}>
+          <Pie
+            data={graphData}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={75}
+            dataKey="value"
+            label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+          >
+            {graphData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry?.color} />
+            ))}
+          </Pie>
+          <Legend
+            iconSize={10}
+            iconType="circle"
+            layout="vertical"
+            payload={graphData.map((item) => ({
+              value: `${item.type}`,
+              color: item.color,
+            }))}
+          />
+          <Tooltip
+            content={({ payload }) => {
+              if (payload && payload.length) {
+                const { type, value } = payload[0].payload;
+                return (
+                  <div className="bg-white p-2 border border-solid border-gray-200">
+                    {type} - {value}
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };

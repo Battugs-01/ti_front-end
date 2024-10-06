@@ -81,7 +81,7 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
       open={open}
       initialValues={{
         ...detail,
-        establishment_year: dayjs(detail?.date_establishment),
+        establishment_year: `${detail?.establishment_year}`,
         profile: [
           {
             uid: `${detail?.profile?.id}`,

@@ -1,4 +1,11 @@
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 const colorMapping: { [key: string]: string } = {
   "-54": "#86CB3C",
@@ -24,30 +31,32 @@ export const Age: React.FC<AgeProps> = ({ data }) => {
 
   return (
     <div>
-      <PieChart width={350} height={350}>
-        <Pie
-          data={graphData}
-          cx={175}
-          cy={140}
-          innerRadius={60}
-          outerRadius={75}
-          dataKey="value"
-          label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-        >
-          {graphData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry?.color} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend
-          iconSize={10}
-          payload={graphData.map((item) => ({
-            value: `${item.name}`,
-            type: "circle",
-            color: item.color,
-          }))}
-        />
-      </PieChart>
+      <ResponsiveContainer width="100%" height={350}>
+        <PieChart>
+          <Pie
+            data={graphData}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={75}
+            dataKey="value"
+            label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+          >
+            {graphData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry?.color} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            iconSize={10}
+            payload={graphData.map((item) => ({
+              value: `${item.name}`,
+              type: "circle",
+              color: item.color,
+            }))}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };

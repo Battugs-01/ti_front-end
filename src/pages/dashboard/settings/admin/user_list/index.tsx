@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { Avatar, notification } from "antd";
 import IBadge from "components/badge";
 import OtherBadge from "components/badge/other";
 import { PageCard } from "components/card";
@@ -15,6 +15,7 @@ import { initPagination } from "utils/index";
 import { ChangePassword } from "./change_password";
 import { CreateUser } from "./create";
 import { UpdateUser } from "./update";
+import file from "service/file";
 
 export const Userlist: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -88,6 +89,22 @@ export const Userlist: React.FC = () => {
         setCreate={setCreate}
         className="p-0 remove-padding-table"
         columns={[
+          {
+            title: "",
+            dataIndex: "id",
+            render: (_, record) => {
+              return (
+                <Avatar
+                  shape="circle"
+                  size={25}
+                  className="flex items-center"
+                  src={file.fileToUrl(record?.profile?.physical_path || "")}
+                >
+                  {record?.first_name?.substring(0, 2).toUpperCase()}
+                </Avatar>
+              );
+            },
+          },
           {
             title: intl.formatMessage({ id: "last_name" }),
             dataIndex: "last_name",

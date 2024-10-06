@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center mb-1">
               <LanguageSelector />
             </div>
-            <div className="flex items-center mr-6">
+            <div className="flex items-center justify-center">
               <Notification />
             </div>
             <Popover
@@ -114,9 +114,6 @@ const Navbar: React.FC = () => {
                     <div
                       onClick={() => {
                         setLogout(true);
-                        // auth.removeToken();
-                        // setAuth([Action.SIGN_OUT]);
-                        // navigate("/auth/login");
                       }}
                       className="flex items-center gap-3 p-2 m-2 bg-[#FEF3F2] text-[#F04438] rounded-md cursor-pointer"
                     >
@@ -133,7 +130,7 @@ const Navbar: React.FC = () => {
                 <Avatar
                   src={file.fileToUrl(user.user?.profile?.physical_path || "")}
                 >
-                  BA
+                  {user?.user?.email?.substring(0, 2).toUpperCase()}
                 </Avatar>
                 <div className="flex flex-col justify-center items-start">
                   <div className="text-sm">{user?.user?.email || "user"}</div>
