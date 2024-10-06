@@ -222,7 +222,7 @@ export const EditScreenList: React.FC<
                   <ProFormSelect
                     name={["address", "city_id"]}
                     placeholder={intl.formatMessage({ id: "select" })}
-                    label={"Аймаг/Нийслэл"}
+                    label={intl.formatMessage({id:"city"})}
                     onChange={(val) => {
                       form?.setFieldValue(
                         ["address", "district_id"],
