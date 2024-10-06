@@ -241,10 +241,6 @@ export const ITable = <T extends {}>({
       )}
       {DetailComponent && (
         <DetailComponent
-          setCloseModal={setCloseModal}
-          setWaitModal={setWaitModal}
-          setApproveModal={setApproveModal}
-          setTransictionModal={setTransictionModal}
           open={!!detail}
           detail={detail}
           onCancel={() => setDetail(undefined)}

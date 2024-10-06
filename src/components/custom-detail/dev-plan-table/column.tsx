@@ -99,10 +99,10 @@ const DevPlanColumns = ({
             options={[
               {
                 value: "Хөнгөн",
-                label: <IBadge color="green" title="Хөнгөн" />,
+                label: "Хөнгөн",
               },
-              { value: "Дунд", label: <IBadge color="yellow" title="Дунд" /> },
-              { value: "Хүнд", label: <IBadge color="red" title="Хүнд" /> },
+              { value: "Дунд", label: "Дунд" },
+              { value: "Хүнд", label: "Хүнд" },
             ]}
             onChange={(newValue) =>
               handleFieldChange(index, "severity_level", newValue)
@@ -137,7 +137,7 @@ const DevPlanColumns = ({
       render: (value, record, index) =>
         isEditing ? (
           <Select
-            defaultValue={value == 7 ? "7 хоног" : "14 хоног"}
+            defaultValue={value}
             style={{ width: 120 }}
             onChange={(newValue) =>
               handleFieldChange(index, "duration", newValue)
@@ -255,9 +255,9 @@ const DevPlanColumns = ({
             options={[
               {
                 value: true,
-                label: <IBadge color="green" title="Тийм" />,
+                label: "Тийм",
               },
-              { value: false, label: <IBadge color="gray" title="Үгүй" /> },
+              { value: false, label: "Үгүй" },
             ]}
             onChange={(newValue) => {
               handleFieldChange(index, "is_resolved", newValue);

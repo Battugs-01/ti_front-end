@@ -1,18 +1,20 @@
 import { Radio } from "antd";
 import { IfCondition } from "components/condition";
 import { StatisticalTab } from "config";
-import { useState } from "react";
+import { AuthContext } from "context/auth";
+import { useContext, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { CareFoci } from "./care_foci";
 import { CaseManagerReport } from "./case_manager_report";
 import { ClosedCaseReport } from "./closed_case_report";
+import { DevelopmentPlanReport } from "./development_plan";
 import { ManagementReport } from "./management_report";
 import { ReportLog } from "./report_log";
 import { Statistical } from "./statistical_report";
 import { StatisticalReportAge } from "./statistical_report_withage";
-import { DevelopmentPlanReport } from "./development_plan";
 
 const StasticalReport = () => {
+  const [user] = useContext(AuthContext);
   const [tab, setTab] = useState<StatisticalTab>(
     StatisticalTab.management_report
   );
@@ -69,14 +71,6 @@ const StasticalReport = () => {
               </div>
             ),
           },
-          // {
-          //   value: StatisticalTab.statistic_report,
-          //   label: (
-          //     <div className="font-semibold text-primary-700">
-          //       <FormattedMessage id="statistic_report" />
-          //     </div>
-          //   ),
-          // },
           {
             value: StatisticalTab.development_plan,
             label: (

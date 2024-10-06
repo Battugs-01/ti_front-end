@@ -1,27 +1,20 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { notification } from "antd";
-import MainDetail from "components/custom-detail";
-import CustomHeader from "components/custom-detail/custom-header";
 import Emergency from "components/custom-detail/emergency";
 import Info from "components/custom-detail/info";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
+import PlannedWork from "./components/table-edit";
 
 const MyPlannedWorkDetail: React.FC = () => {
   const location = useLocation();
-  const customerId = location.search?.split("=")[1];
 
-  const assessmentData = useRequest(screenList.assessmentDetail, {
-    manual: true,
-    ready: !!customerId,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
+  const searchParams = new URLSearchParams(location.search);
+  const customerId = searchParams.get("customer_id");
+  const assId = searchParams.get("ass_id");
 
   const data = useRequest(screenList.customerDetail, {
     manual: true,
@@ -33,15 +26,14 @@ const MyPlannedWorkDetail: React.FC = () => {
   });
 
   const run = () => {
-    data.run(customerId);
-    assessmentData.run(customerId);
+    data.run(customerId as string);
   };
 
   useEffect(() => {
     run();
   }, [customerId]);
 
-  if (!data && !assessmentData && !customerId) {
+  if (!data && !customerId) {
     return <PageLoading />;
   }
 
@@ -53,11 +45,10 @@ const MyPlannedWorkDetail: React.FC = () => {
           <Emergency customerId={customerId} />
         </div>
         <div className="xl:col-span-4">
-          <CustomHeader
-            data={assessmentData?.data || []}
+          <PlannedWork
             customerMainData={data?.data as ScreeningListType}
+            assesment_id={assId ? Number(assId) : 0}
           />
-          <MainDetail customerMainData={data?.data as ScreeningListType} />
         </div>
       </div>
     </>

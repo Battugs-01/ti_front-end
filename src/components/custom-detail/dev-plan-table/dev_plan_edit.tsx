@@ -103,16 +103,9 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
               >
                 <FormattedMessage id="download" />
               </Button>
-              {/* <Button
-                size="large"
-                type="default"
-                icon={<Printer />}
-                className="flex items-center gap-2"
-              >
-                <FormattedMessage id="print" />
-              </Button> */}
               {user &&
-                user.user?.role === UserRoleType.doctor &&
+                (user.user?.role === UserRoleType.doctor ||
+                  user.user?.role === UserRoleType.senior_case_manager) &&
                 devPlanData?.data?.is_close === false && (
                   <Button
                     size="large"
@@ -125,7 +118,7 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
                 )}
             </div>
           }
-          className="card-header-remove"
+          className="card-header-remove "
         >
           <div className="flex flex-col gap-6">
             <DevPlanTables

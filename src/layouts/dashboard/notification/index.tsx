@@ -1,30 +1,55 @@
 import { useRequest } from "ahooks";
-import { Avatar, Badge, Dropdown, Menu, notification } from "antd";
+import { Badge, Checkbox, Dropdown, Menu, notification } from "antd";
+import ellipse from "assets/img/ellipse.svg";
 import notifactionSvg from "assets/img/notification.svg";
+import warning from "assets/img/warning.svg";
+import { useLevelContext } from "components/custom-detail/selected-level";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import notificationsWeb from "service/notifaction";
+import { ListType } from "service/notifaction/types";
 import { XCloseIcon } from "untitledui-js-base";
 export const Notification = () => {
   const [notifications, setNotification] = useState<boolean>(false);
   const [intervalId, setIntervalId] = useState<any>(null);
+  const [reading, setReading] = useState<number>();
+  const [readingAll, setReadingAll] = useState<boolean>(false);
+  const { selectedLevel, setSelectedLevel } = useLevelContext();
 
-  const fetchProduct = async () => {
-    const response = await fetch("https://dummyjson.com/products");
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  };
-
-  const list = useRequest(fetchProduct, {
+  const list = useRequest(notificationsWeb.list, {
     manual: true,
-    onSuccess: (hello) => {
-      console.log(hello, "hello");
-    },
-    onError: (err) =>
+    onError: (err) => {
       notification.error({
         message: err.message,
-      }),
+      });
+    },
+  });
+
+  const onNotificationIsRead = useRequest(notificationsWeb.read, {
+    manual: true,
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
+    onSuccess: () => {
+      setReading(undefined);
+      fetchData();
+    },
+  });
+
+  const onNotificationIsReadAll = useRequest(notificationsWeb.readALl, {
+    manual: true,
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
+    onSuccess: () => {
+      setReadingAll(false);
+      fetchData();
+    },
   });
 
   const fetchData = () => {
@@ -40,23 +65,58 @@ export const Notification = () => {
     };
   }, []);
 
-  const renderNotificationItem = (list: any, key: number) => (
+  useEffect(() => {
+    if (reading) {
+      onNotificationIsRead.run(reading);
+    }
+  }, [reading]);
+
+  useEffect(() => {
+    if (readingAll) {
+      onNotificationIsReadAll.run();
+    }
+  }, [readingAll]);
+
+  const renderNotificationItem = (item: ListType, key: number) => (
     <>
-      <Menu.Item key={key} className="h-[117px]">
+      <Menu.Item
+        key={key}
+        className={`h-[117px] rounded-b-lg ${
+          !item.is_read ? "bg-[#f5f8f8]" : "bg-[#fff]"
+        }`}
+        onClick={() => {
+          setReading(item?.id);
+        }}
+      >
         <div className="flex flex-col">
-          <div className="flex items-start justify-between  py-6">
-            <div className="flex items-center gap-4">
-              <Avatar size={40}>CA</Avatar>
-              <div>
-                <div className="text-primary-700 font-semibold">
-                  <FormattedMessage id="case_assigned" />
+          <div className="flex justify-between">
+            <div className="flex items-start gap-3 col-span-2 w-[250px]">
+              <img src={warning} alt="warning" className="mt-1" />
+              <div className="flex flex-col gap-1">
+                <div
+                  className={`font-normal" ${
+                    !item?.is_read ? "text-gray-700" : "text-gray-500"
+                  }`}
+                >
+                  {item?.notification?.title}
                 </div>
-                <div className="text-gray-400">
-                  <FormattedMessage id="case_assigned_description" />
+                <div
+                  className="text-primary-700 font-bold underline"
+                  onClick={() => {
+                    setSelectedLevel(item?.notification?.assessment_id);
+                    window.location.href = `/dashboard/screening-list/detail?customer_id=${item?.notification?.customer_id}`;
+                  }}
+                >
+                  <FormattedMessage id="detail" />
                 </div>
               </div>
             </div>
-            <div className="text-gray-400">2 days ago</div>
+            <div className="text-gray-600 font-normal text-xs col-span-1 mt-1">
+              {dayjs(item?.notification?.date).format("YYYY-MM-DD hh:mm:ss")}
+              {!item?.is_read && (
+                <img src={ellipse} alt="ellipse" className="mt-1 pl-1" />
+              )}
+            </div>
           </div>
         </div>
       </Menu.Item>
@@ -66,14 +126,19 @@ export const Notification = () => {
 
   const notificationMenu = (
     <>
-      <div className="bg-primary-700 h-[40px] text-white px-4 py-6 flex items-center justify-between rounded-t-lg  mt-5">
-        <div className="text-base">
-          <FormattedMessage id="notifications" />
+      <div className="bg-primary-700 h-[40px] text-white px-3 pt-2 pb-8 flex items-start justify-between rounded-t-lg  mt-5">
+        <div className="flex gap-3 flex-col text-white ">
+          <div className="text-base">
+            <FormattedMessage id="notifications" />
+          </div>
+          <Checkbox className="text-white" onClick={() => setReadingAll(true)}>
+            <FormattedMessage id="all_read" />
+          </Checkbox>
         </div>
         <XCloseIcon size="24" onClick={() => setNotification(false)} />
       </div>
-      <Menu className="overflow-y-auto h-[500px] w-[439px]">
-        {list?.data?.products.map(renderNotificationItem)}
+      <Menu className="overflow-y-auto max-h-[500px] w-[459px] rounded-b-lg">
+        {list?.data?.map((item, key) => renderNotificationItem(item, key))}
       </Menu>
     </>
   );
@@ -88,7 +153,7 @@ export const Notification = () => {
       rootClassName="custom-ant-dropdown p-0 h-9"
     >
       <Badge
-        count={list?.data?.total}
+        count={list?.data?.filter((item) => !item?.is_read).length}
         className="cursor-pointer"
         color="#A0B6BA"
       >
