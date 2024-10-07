@@ -1,25 +1,32 @@
 // DevPlanColumns.tsx
 import { ProColumns } from "@ant-design/pro-table";
-import { Avatar, Input, Select } from "antd";
+import { Avatar, Button, Input, Select } from "antd";
+import EditSvg from "assets/img/edit.svg";
 import IBadge from "components/badge";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
+import { StopPagination } from "components/stop_pagination";
 import { useIntl } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
+import { Save02 } from "untitledui-js-base";
 import { DevPlanQuistion } from "utils/dev_plan";
 
 interface PlannedWordDetailTableColumnProps {
-  isEditing: boolean;
+  editingRow: any;
   dataSource: CareFociItemElement[];
   handleFieldChange: (index: number, key: string, value: any) => void;
   isEvaluated?: boolean;
+  handleSave: (index: number) => Promise<void>;
+  handleEditClick: (index: number) => void;
 }
 
 const PlannedWordDetailTableColumn = ({
-  isEditing,
+  editingRow,
   dataSource,
   handleFieldChange,
   isEvaluated,
+  handleSave,
+  handleEditClick,
 }: PlannedWordDetailTableColumnProps): ProColumns<CareFociItemElement>[] => {
   const intl = useIntl();
 
@@ -109,7 +116,7 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: "result" }),
       dataIndex: "result",
       render: (value, record, index) =>
-        isEditing ? (
+        editingRow === index ? (
           <Input.TextArea
             defaultValue={value as string}
             name="result"
@@ -125,7 +132,7 @@ const PlannedWordDetailTableColumn = ({
       key: "is_resolved",
       dataIndex: "is_resolved",
       render: (value, record, index) =>
-        isEditing ? (
+        editingRow === index ? (
           <Select
             defaultValue={value}
             style={{ width: 120 }}
@@ -150,6 +157,31 @@ const PlannedWordDetailTableColumn = ({
             <IBadge color="gray" title="Үгүй" />
           </div>
         ),
+    },
+    {
+      title: "",
+      fixed: "right",
+      dataIndex: "action",
+      align: "right",
+      width: 80,
+      render: (_, record, index) => {
+        const isRowEditing = editingRow === index;
+        return (
+          <StopPagination>
+            <div className="flex justify-center items-center">
+              <Button
+                style={{ opacity: 1, cursor: "pointer" }}
+                className="flex items-center justify-center "
+                onClick={() =>
+                  isRowEditing ? handleSave(index) : handleEditClick(index)
+                }
+              >
+                {isRowEditing === true ? <Save02 /> : <img src={EditSvg} />}
+              </Button>
+            </div>
+          </StopPagination>
+        );
+      },
     },
   ];
 
