@@ -38,7 +38,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "city_id"]}
                   placeholder={intl.formatMessage({ id: "placeholder_select" })}
-                  label={"Аймаг/Нийслэл"}
+                  label={intl.formatMessage({ id: "city" })}
                   onChange={(val) => {
                     form?.setFieldValue(["address", "district_id"], undefined);
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
@@ -60,7 +60,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "district_id"]}
                   placeholder={intl.formatMessage({ id: "placeholder_select" })}
-                  label={"Сум/Дүүрэг"}
+                  label={intl.formatMessage({ id: "district" })}
                   onChange={(value) => {
                     form?.setFieldValue(["address", "khoroo_id"], undefined);
                     khoroo.run(value);
@@ -85,12 +85,13 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                 <ProFormSelect
                   name={["address", "khoroo_id"]}
                   placeholder={intl.formatMessage({ id: "placeholder_select" })}
-                  label={"Баг/Хороо"}
+                  label={intl.formatMessage({ id: "khoroo" })}
                   fieldProps={{
                     showSearch: true,
                     loading: khoroo?.loading,
                     size: "large",
                   }}
+                  rules={FORM_ITEM_RULE()}
                   options={khoroo?.data?.map((item: any) => {
                     return {
                       label: item?.name,
@@ -106,6 +107,12 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   fieldProps={{
                     size: "large",
                   }}
+                  rules={[
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
+                    },
+                  ]}
                   label={intl.formatMessage({ id: "address" })}
                 />
               </Col>
@@ -120,6 +127,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                   }}
                   label={intl.formatMessage({ id: "company_email" })}
                   rules={[
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
+                    },
                     {
                       type: "email",
                       message: intl.formatMessage({ id: "email_error" }),
@@ -154,6 +165,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       message: intl.formatMessage({
                         id: "phone_number_error",
                       }),
+                    },
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
                     },
                   ]}
                 />
@@ -196,6 +211,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     {
                       type: "email",
                       message: intl.formatMessage({ id: "email_error" }),
+                    },
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
                     },
                   ]}
                 />

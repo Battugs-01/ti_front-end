@@ -6,11 +6,11 @@ import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
-import { initFilter } from "utils/index";
+import { reportFilter } from "utils/index";
 
 export const ReportLog: React.FC = () => {
   const intl = useIntl();
-  const [filter, setFilter] = useState(initFilter);
+  const [filter, setFilter] = useState(reportFilter);
 
   const list = useRequest(statisticalReport.casemanagerReportList, {
     manual: true,
