@@ -39,6 +39,7 @@
   "screening_history": "Асуумжийн түүх",
   "development_plan": "Хөгжлийн төлөвлөгөө",
   "development_plan_end": "Хөгжлийн төлөвлөгөө дуусгах",
+  "development_plan_update": "Хөгжлийн төлөвлөгөө засах",
   "stastical_report": "Статистикийн тайлан",
   "settings": "Тохиргоо",
   "all": "Бүгд",
@@ -260,9 +261,9 @@
   "new_password_repeat": "Шинэ нууц үг давтаж оруулна уу",
   "khoroo": "Баг/Хороо",
   "district": "Сум/Дүүрэг",
-  "by_case_manager":"Кэйс менежерээр",
-  "person_charge":"Хариуцсан",
-  "development_plan_date":"ХТ огноо",
-  "distributed":"Хуваарилагдсан",
-  "decided":"Шийдэгдсэн"
+  "by_case_manager": "Кэйс менежерээр",
+  "person_charge": "Хариуцсан",
+  "development_plan_date": "ХТ огноо",
+  "distributed": "Хуваарилагдсан",
+  "decided": "Шийдэгдсэн"
 }

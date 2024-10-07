@@ -142,7 +142,7 @@ export const SwitchModal = ({
                 }
                 name={"employee_id"}
                 shouldUpdate
-                className="flex items-center justify-center custom-input"
+                className="flex items-center justify-center "
                 fieldProps={{
                   showSearch: true,
                   loading: emplyoee.loading,

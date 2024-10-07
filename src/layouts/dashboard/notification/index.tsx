@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Badge, Checkbox, Dropdown, Menu, notification } from "antd";
+import { Badge, Checkbox, Dropdown, Empty, Menu, notification } from "antd";
 import ellipse from "assets/img/ellipse.svg";
 import notifactionSvg from "assets/img/notification.svg";
 import warning from "assets/img/warning.svg";
@@ -137,9 +137,16 @@ export const Notification = () => {
         </div>
         <XCloseIcon size="24" onClick={() => setNotification(false)} />
       </div>
-      <Menu className="overflow-y-auto max-h-[500px] w-[459px] rounded-b-lg">
-        {list?.data?.map((item, key) => renderNotificationItem(item, key))}
-      </Menu>
+      {/* <Empty /> */}
+      {list?.data?.length ? (
+        <Menu className="overflow-y-auto max-h-[500px] w-[459px] rounded-b-lg">
+          {list?.data?.map((item, key) => renderNotificationItem(item, key))}
+        </Menu>
+      ) : (
+        <Menu className="overflow-y-auto max-h-[500px] w-[459px] rounded-b-lg">
+          <Empty className="my-4" />
+        </Menu>
+      )}
     </>
   );
 

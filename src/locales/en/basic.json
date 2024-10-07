@@ -15,6 +15,7 @@
   "assigned_to_me": "Assigned to me",
   "development_plan": "Development Plan",
   "is_active": "Is active",
+  "development_plan_update": "Development plan update",
   "all_read": "Make all read",
   "confirm_password": "Confirm password",
   "detail": "Detail",
@@ -250,8 +251,8 @@
   "city": "City",
   "khoroo": "Street",
   "district": "District",
-  "by_case_manager":"By case manager",
-  "development_plan_date":"DP date",
-  "distributed":"Distributed",
-  "decided":"Decided"
+  "by_case_manager": "By case manager",
+  "development_plan_date": "DP date",
+  "distributed": "Distributed",
+  "decided": "Decided"
 }
