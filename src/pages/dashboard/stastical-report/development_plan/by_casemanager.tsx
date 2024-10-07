@@ -65,6 +65,7 @@ export const ByCaseManager: React.FC = () => {
         }
         hideCreate
         hideSearch
+        fileName="by_casemanager"
         refresh={refreshList}
       />
       <ITable

@@ -85,6 +85,7 @@ export const CareFoci: React.FC = () => {
         }
         hideCreate
         hideSearch
+        fileName="care_foci_report"
         refresh={refreshList}
       />
       <Table

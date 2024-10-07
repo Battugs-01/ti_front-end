@@ -65,6 +65,7 @@ export const ManagementReport: React.FC = () => {
         }
         hideSearch
         hideCreate
+        fileName="management_report"
         refresh={refreshList}
       />
       <ITable<ManagementReportType>

@@ -10,7 +10,11 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { CaseManagerReportType } from "service/statistical_report/type";
-import { reportFilter } from "utils/index";
+import {
+  parseMongolianGender,
+  parseMongolianID,
+  reportFilter,
+} from "utils/index";
 
 export const CaseManagerReport: React.FC = () => {
   const intl = useIntl();
@@ -66,6 +70,7 @@ export const CaseManagerReport: React.FC = () => {
         }
         hideCreate
         hideSearch
+        fileName="case_manager_report"
         refresh={refreshList}
       />
       <ITable<CaseManagerReportType>
@@ -83,6 +88,13 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
+            width: 50,
+            align: "center",
+            render: (_: any, record): React.ReactNode => (
+              <div className="flex items-center justify-center">
+                {parseMongolianID(record?.rd)}
+              </div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "register" }),
@@ -91,8 +103,16 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
-            render: (value: any) => {
-              return <FormattedMessage id={value} />;
+            width: 80,
+            render: (_: any, record): any => {
+              const gender = parseMongolianGender(record?.rd);
+              return (
+                <div className="flex items-center justify-center">
+                  {gender === "male"
+                    ? intl.formatMessage({ id: "male" })
+                    : intl.formatMessage({ id: "female" })}
+                </div>
+              );
             },
           },
           {

@@ -64,6 +64,7 @@ export const AgeAndGender: React.FC = () => {
         }
         hideCreate
         hideSearch
+        fileName="age_and_gender"
         refresh={refreshList}
       />
       {list.data?.map((levelTable, index) => {

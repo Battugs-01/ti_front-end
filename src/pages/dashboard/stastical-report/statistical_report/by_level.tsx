@@ -75,6 +75,7 @@ export const ByLevel: React.FC = () => {
         }
         hideCreate
         hideSearch
+        fileName="by_level"
         refresh={refreshList}
       />
       <ITable

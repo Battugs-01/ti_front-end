@@ -91,6 +91,7 @@ export const ManagementReport: React.FC = () => {
             />
           </div>
         }
+        fileName="management_report"
         hideCreate
         hideSearch
         refresh={refreshList}
