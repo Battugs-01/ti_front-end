@@ -101,10 +101,10 @@ export const AgeAndGender: React.FC = () => {
                   <Table.Summary.Cell index={3} align="right" className={level}>
                     {levelTable?.total_count === 0
                       ? "0%"
-                      : (
+                      : `${(
                           (levelTable?.total_male / levelTable?.total_count) *
                           100
-                        ).toFixed(2)}
+                        ).toFixed(2)} %`}
                   </Table.Summary.Cell>
                   <Table.Summary.Cell index={4} align="right" className={level}>
                     {levelTable?.total_female}
@@ -112,10 +112,10 @@ export const AgeAndGender: React.FC = () => {
                   <Table.Summary.Cell index={5} align="right" className={level}>
                     {levelTable?.total_count === 0
                       ? "0%"
-                      : (
+                      : `${(
                           (levelTable?.total_female / levelTable?.total_count) *
                           100
-                        ).toFixed(2)}
+                        ).toFixed(2)} %`}
                   </Table.Summary.Cell>
                   <Table.Summary.Cell index={6} align="right" className={level}>
                     {levelTable?.total_count}
