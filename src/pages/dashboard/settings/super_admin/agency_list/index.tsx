@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { Avatar, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -11,6 +11,7 @@ import { AgencyListType } from "service/settings/agency_list/type";
 import { initPagination } from "utils/index";
 import { CreateAgency } from "./create";
 import { UpdateAgency } from "./update";
+import file from "service/file";
 
 export const AgencyList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -74,8 +75,20 @@ export const AgencyList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "name",
-            render: (value) => {
-              return <p className="text-primary-700 font-bold">{value}</p>;
+            render: (value, record) => {
+              return (
+                <div className="flex items-center gap-3">
+                  <Avatar
+                    shape="circle"
+                    size={25}
+                    className="flex items-center"
+                    src={file.fileToUrl(record?.profile?.physical_path || "")}
+                  >
+                    {record?.name?.substring(0, 2).toUpperCase()}
+                  </Avatar>
+                  <p className="text-primary-700 font-bold">{value}</p>
+                </div>
+              );
             },
           },
           {

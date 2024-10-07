@@ -322,6 +322,7 @@ export enum StatisticalTab {
 export enum DevelopmentPlanReportTab {
   by_agency = "by_agency",
   management_report = "management_report",
+  by_case_manager = "by_case_manager",
 }
 
 export enum StatisticalReportTab {

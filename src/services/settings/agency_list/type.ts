@@ -11,7 +11,7 @@ export interface AgencyListType {
   email: string;
   phone_no: string;
   link: string;
-  date_establishment: number;
+  establishment_year: number;
   profile: Profile;
   profile_id: number;
 }

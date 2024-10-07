@@ -45,13 +45,19 @@ export const CreateUser: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        const file = await uploadProfile.runAsync({
-          file: values?.profile[0]?.originFileObj,
-        });
-        await userAdd.runAsync({
-          ...values,
-          profile_id: file[0]?.id,
-        });
+        if (values?.profile?.length === 0) {
+          await userAdd.runAsync({
+            ...values,
+          });
+        } else {
+          const file = await uploadProfile.runAsync({
+            file: values?.profile[0]?.originFileObj,
+          });
+          await userAdd.runAsync({
+            ...values,
+            profile_id: file[0]?.id,
+          });
+        }
         onFinish?.();
       }}
       title={intl.formatMessage({ id: "add_user" })}

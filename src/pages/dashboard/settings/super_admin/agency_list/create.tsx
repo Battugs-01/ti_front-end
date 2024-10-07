@@ -52,7 +52,7 @@ export const CreateAgency: React.FC<ActionComponentProps<any>> = ({
         await createPermission.runAsync({
           ...values,
           profile_id: file[0]?.id,
-          establishment_year: dayjs(values?.establishment_year).year(),
+          establishment_year: values?.establishment_year?.$y,
         });
         onFinish?.();
       }}
