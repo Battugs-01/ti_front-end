@@ -28,6 +28,20 @@ export interface StatisticalReportType {
   level_3: number;
 }
 
+export interface StatisticalAgeReportType {
+  name: string;
+  items: AgeItem[];
+  total_male: number;
+  total_female: number;
+  total_count: number;
+}
+
+export interface AgeItem {
+  age: string;
+  male: number;
+  female: number;
+}
+
 export interface CareFociReportType {
   name: string;
   items: CareFociReportItem[];

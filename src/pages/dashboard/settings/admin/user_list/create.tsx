@@ -45,7 +45,7 @@ export const CreateUser: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        if (values?.profile?.length === 0) {
+        if (!values?.profile) {
           await userAdd.runAsync({
             ...values,
           });

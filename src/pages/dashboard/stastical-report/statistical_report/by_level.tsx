@@ -8,11 +8,11 @@ import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
-import { reportFilterYear } from "utils/index";
+import { reportStatisticalFilterLevel } from "utils/index";
 
 export const ByLevel: React.FC = () => {
   const intl = useIntl();
-  const [filter, setFilter] = useState(reportFilterYear);
+  const [filter, setFilter] = useState(reportStatisticalFilterLevel);
 
   const list = useRequest(statisticalReport.statisticalReportList, {
     manual: true,
@@ -57,20 +57,24 @@ export const ByLevel: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker
-            className="w-max"
-            placeholder={intl.formatMessage({ id: "select_date" })}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                year: dayjs(values?.toDate()).year(),
-              });
-            }}
-            picker="year"
-            defaultValue={filter.year ? dayjs().year(filter.year) : dayjs()}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker
+              className="w-max"
+              size="large"
+              placeholder={intl.formatMessage({ id: "select_date" })}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  year: dayjs(values?.toDate()).year(),
+                });
+              }}
+              picker="year"
+              defaultValue={filter.year ? dayjs().year(filter.year) : dayjs()}
+            />
+          </div>
         }
         hideCreate
+        hideSearch
         refresh={refreshList}
       />
       <ITable
@@ -81,6 +85,7 @@ export const ByLevel: React.FC = () => {
           {
             title: intl.formatMessage({ id: "levels" }),
             dataIndex: "level",
+            align: "center",
             render: (value: any) => {
               return <LevelBadge status={value} />;
             },

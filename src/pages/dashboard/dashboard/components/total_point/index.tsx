@@ -65,7 +65,33 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
               verticalAlign="top"
               height={36}
             />
-            <Tooltip />
+            <Tooltip
+              content={({ payload }) => {
+                if (payload && payload.length) {
+                  const { mini_cog, barthel_index, gds } = payload[0].payload;
+                  return (
+                    <div className="bg-white p-2 border border-solid border-gray-200">
+                      <div
+                        style={{
+                          color: payload[0]?.stroke,
+                        }}
+                      >{`Mini Cog: ${mini_cog?.toFixed(2)}`}</div>
+                      <div
+                        style={{
+                          color: payload[1]?.stroke,
+                        }}
+                      >{`Barthel Index: ${barthel_index?.toFixed(2)}`}</div>
+                      <div
+                        style={{
+                          color: payload[2]?.stroke,
+                        }}
+                      >{`GDS: ${gds?.toFixed(2)}`}</div>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
             <Area
               type="monotone"
               dataKey="mini_cog"

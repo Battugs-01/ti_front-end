@@ -40,28 +40,32 @@ export const CaseManagerReport: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            placeholder={[
-              intl.formatMessage({ id: "select_start_date" }),
-              intl.formatMessage({ id: "select_end_date" }),
-            ]}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-              });
-            }}
-            defaultValue={[
-              filter.start_date
-                ? dayjs(filter.start_date)
-                : dayjs().subtract(3, "month"),
-              filter.end_date ? dayjs(filter.end_date) : dayjs(),
-            ]}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker.RangePicker
+              className="w-max"
+              size="large"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
+          </div>
         }
         hideCreate
+        hideSearch
         refresh={refreshList}
       />
       <ITable<CaseManagerReportType>
@@ -96,7 +100,7 @@ export const CaseManagerReport: React.FC = () => {
             dataIndex: "cfs_score",
             render: (_, record) => {
               return (
-                <p>
+                <p className="text-[#98A2B3]">
                   <span
                     className={`${
                       record?.assessment?.cfs_point > 6
@@ -106,7 +110,7 @@ export const CaseManagerReport: React.FC = () => {
                   >
                     {record?.assessment?.cfs_point}
                   </span>{" "}
-                  /9
+                  / 9
                 </p>
               );
             },
@@ -187,8 +191,33 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "priority" }),
             dataIndex: "pirority",
+            align: "center",
             render: (_, record) => {
-              return <div>{record?.assessment?.priority}</div>;
+              switch (record?.assessment?.priority) {
+                case "high":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="high" />}
+                      color="red"
+                    />
+                  );
+                case "medium":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="medium" />}
+                      color="yellow"
+                    />
+                  );
+                case "low":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="low" />}
+                      color="green"
+                    />
+                  );
+                default:
+                  return "-";
+              }
             },
           },
         ]}

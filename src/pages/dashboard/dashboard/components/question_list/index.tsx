@@ -1,16 +1,14 @@
 import { useRequest } from "ahooks";
-import { Avatar, notification } from "antd";
+import { notification } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
-import { PopoverFilter } from "components/filter";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 // import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import file from "service/file";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 import { initPagination } from "utils/index";

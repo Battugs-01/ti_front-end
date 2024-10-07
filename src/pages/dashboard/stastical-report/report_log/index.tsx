@@ -36,18 +36,22 @@ export const ReportLog: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            placeholder={[
-              intl.formatMessage({ id: "select_start_date" }),
-              intl.formatMessage({ id: "select_end_date" }),
-            ]}
-            onChange={(values) => {
-              console.log(values);
-            }}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker.RangePicker
+              className="w-max"
+              size="large"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
+              onChange={(values) => {
+                console.log(values);
+              }}
+            />
+          </div>
         }
         hideCreate
+        hideSearch
         refresh={refreshList}
       />
       <ITable

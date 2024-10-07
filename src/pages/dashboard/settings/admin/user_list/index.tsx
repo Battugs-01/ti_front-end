@@ -128,6 +128,7 @@ export const Userlist: React.FC = () => {
           {
             title: intl.formatMessage({ id: "is_active" }),
             dataIndex: "is_active",
+            align: "center",
             render: (value: any) => {
               return <OtherBadge status={value} />;
             },
@@ -145,10 +146,7 @@ export const Userlist: React.FC = () => {
           },
           {
             title: intl.formatMessage({ id: "phone" }),
-            dataIndex: "phone_no",
-            render: (_, record) => {
-              return <div>{record.agency?.phone_no || "-"}</div>;
-            },
+            dataIndex: "phone",
           },
           {
             title: intl.formatMessage({ id: "created_at" }),

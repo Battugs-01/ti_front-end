@@ -6,6 +6,7 @@ import {
   ClosedReportType,
   ManagementReportType,
   ResponseType,
+  StatisticalAgeReportType,
   StatisticalReportType,
 } from "./type";
 
@@ -56,6 +57,12 @@ namespace statisticalReport {
 
   export const statisticalReportList = (body?: any) =>
     http.post<StatisticalReportType[]>("statistics/statistical/report", {
+      hasAuth: true,
+      body,
+    });
+
+  export const statisticalAgeReportList = (body?: any) =>
+    http.post<StatisticalAgeReportType[]>("statistics/statistical/report", {
       hasAuth: true,
       body,
     });

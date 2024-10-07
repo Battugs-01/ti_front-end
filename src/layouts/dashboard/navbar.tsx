@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
       <div className="px-6 h-full flex justify-between items-center">
         <div className="flex items-center gap-6 ">
           <Link
-            to="/dashboard/screening-list"
+            to="/dashboard/dashboard"
             className="lg:flex items-center gap-2 hidden"
           >
             <img src={Logo} alt="logo" />

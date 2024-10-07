@@ -41,7 +41,7 @@ export const ManagementReport: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 h-full">
             <Radio.Group
               optionType="button"
               value={tab}
@@ -92,6 +92,7 @@ export const ManagementReport: React.FC = () => {
           </div>
         }
         hideCreate
+        hideSearch
         refresh={refreshList}
       />
       <ITable

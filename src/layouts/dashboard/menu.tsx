@@ -35,7 +35,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
         <div className="flex items-start flex-col">
           <Link
             onClick={onClose}
-            to="/dashboard/screening-list"
+            to="/dashboard/dashboard"
             className="flex items-center gap-2 px-5 py-1"
           >
             <img src={Logo} alt="logo" />
