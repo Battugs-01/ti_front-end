@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ByAgency } from "./by_agency";
 import { ManagementReport } from "./management_report";
+import { ByCaseManager } from "./by_casemanager";
 
 export const DevelopmentPlanReport: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanReportTab>(
@@ -35,6 +36,14 @@ export const DevelopmentPlanReport: React.FC = () => {
               </div>
             ),
           },
+          {
+            value: DevelopmentPlanReportTab.by_case_manager,
+            label: (
+              <div className="font-semibold text-primary-700">
+                <FormattedMessage id="by_case_manager" />
+              </div>
+            ),
+          },
         ]}
       />
       <IfCondition
@@ -44,6 +53,10 @@ export const DevelopmentPlanReport: React.FC = () => {
       <IfCondition
         condition={DevelopmentPlanReportTab.management_report === tab}
         whenTrue={<ManagementReport />}
+      />
+      <IfCondition
+        condition={DevelopmentPlanReportTab.by_case_manager === tab}
+        whenTrue={<ByCaseManager />}
       />
     </>
   );

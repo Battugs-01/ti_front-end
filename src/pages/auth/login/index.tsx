@@ -51,7 +51,11 @@ const Login: FC = () => {
         onFinish={async (data: LoginData) => {
           auth.rememberUser(data);
 
-          const sendJSON = { ...data, email: data.email.toLowerCase() };
+          const sendJSON = {
+            ...data,
+            email: data.email.toLowerCase(),
+            web: true,
+          };
 
           await login.runAsync(sendJSON);
         }}

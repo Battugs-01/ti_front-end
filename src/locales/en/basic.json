@@ -249,5 +249,9 @@
   "super_admin": "Super admin",
   "city": "City",
   "khoroo": "Street",
-  "district": "District"
+  "district": "District",
+  "by_case_manager":"By case manager",
+  "development_plan_date":"DP date",
+  "distributed":"Distributed",
+  "decided":"Decided"
 }

@@ -99,6 +99,10 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                         }
                       },
                     },
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
+                    },
                   ]}
                   name="profile"
                   fieldProps={{
@@ -245,6 +249,12 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                     size: "large",
                   }}
                   label={intl.formatMessage({ id: "address_detail" })}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: intl.formatMessage({ id: "required" }),
+                  //   },
+                  // ]}
                 />
               </Col>
             </Row>

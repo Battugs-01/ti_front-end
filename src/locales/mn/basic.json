@@ -233,7 +233,7 @@
   "health_risks": "Эрүүл мэндийн эрсдлүүд",
   "care_foci_percent": "Care Foci %",
   "date_entered_by_pt": "ХТ оруулсан огноо",
-  "result_plan": "Дүгнэлт төлөвлөгөө",
+  "result_plan": "Дүгнэлт, төлөвлөгөө",
   "result_percent": "Үр дүн %",
   "case": "Кейс",
   "by_agency": "Агентлагаар",
@@ -259,5 +259,10 @@
   "city": "Аймаг/Нийслэл",
   "new_password_repeat": "Шинэ нууц үг давтаж оруулна уу",
   "khoroo": "Баг/Хороо",
-  "district": "Сум/Дүүрэг"
+  "district": "Сум/Дүүрэг",
+  "by_case_manager":"Кэйс менежерээр",
+  "person_charge":"Хариуцсан",
+  "development_plan_date":"ХТ огноо",
+  "distributed":"Хуваарилагдсан",
+  "decided":"Шийдэгдсэн"
 }
