@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Radio } from "antd";
+import { DatePicker, notification, Radio, Select, Table } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
@@ -7,14 +7,16 @@ import { DashboardTab } from "config";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import agencyList from "service/settings/agency_list";
 import statisticalReport from "service/statistical_report";
+import { DPManagementType } from "service/statistical_report/type";
 
 const managementReportFilter = {
   current: 1,
   pageSize: 20,
   start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
   end_date: dayjs().format("YYYY-MM-DD"),
-  type: DashboardTab.all,
+  agency_id: 0,
 };
 
 export const ManagementReport: React.FC = () => {
@@ -30,6 +32,17 @@ export const ManagementReport: React.FC = () => {
     },
   });
 
+  const listAgency = useRequest(
+    async () => agencyList.list({ current: 1, pageSize: 20 }),
+    {
+      onError: (err) => {
+        notification.error({
+          message: err,
+        });
+      },
+    }
+  );
+
   useEffect(() => {
     list.run({
       ...filter,
@@ -41,40 +54,37 @@ export const ManagementReport: React.FC = () => {
     });
   };
 
+  let data = [
+    {
+      label: intl.formatMessage({ id: "all" }),
+      value: 0,
+    },
+  ];
+
+  listAgency?.data?.items?.map((item) => {
+    data.push({
+      label: item.name,
+      value: item?.id,
+    });
+  });
+
   return (
     <PageCard xR>
       <InitTableHeader
         hideTitle
         leftContent={
           <div className="flex items-center gap-4 h-full">
-            <Radio.Group
-              optionType="button"
-              value={filter.type}
-              onChange={(e) => {
+            <Select
+              options={data}
+              defaultValue={0}
+              size="large"
+              className="min-w-[200px]"
+              onChange={(value) => {
                 setFilter({
                   ...filter,
-                  type: e.target.value,
+                  agency_id: value,
                 });
               }}
-              options={[
-                {
-                  label: <FormattedMessage id="all" />,
-                  value: DashboardTab.all,
-                },
-                {
-                  label: <FormattedMessage id="darkhan" />,
-                  value: DashboardTab.darkhan,
-                },
-                {
-                  label: <FormattedMessage id="mandal" />,
-                  value: DashboardTab.mandal,
-                },
-                {
-                  label: <FormattedMessage id="achlalt" />,
-                  value: DashboardTab.achlalt,
-                },
-              ]}
-              size="large"
             />
             <DatePicker.RangePicker
               className="w-max"
@@ -104,70 +114,170 @@ export const ManagementReport: React.FC = () => {
         hideSearch
         refresh={refreshList}
       />
-      <ITable
-        className="p-0 remove-padding-table"
-        dataSource={list?.data}
-        columns={[
-          {
-            title: intl.formatMessage({ id: "agency" }),
-            dataIndex: "agency",
-            render: (value) => {
-              return <p className="text-primary-700 font-bold">{value}</p>;
-            },
-          },
-          {
-            title: intl.formatMessage({ id: "case" }),
-            dataIndex: "case",
-          },
-          {
-            title: intl.formatMessage({ id: "hcu_date" }),
-            dataIndex: "hcu_date",
-            render: (value: any) => {
-              return <FormattedMessage id={value} />;
-            },
-          },
-          {
-            title: intl.formatMessage({ id: "functional_impairment" }),
-            dataIndex: "cfs",
-          },
-          {
-            title: intl.formatMessage({ id: "social_psychological_change" }),
-            dataIndex: "social_psychological_change",
-          },
-          {
-            title: intl.formatMessage({ id: "socio_economic_difficulties" }),
-            dataIndex: "socio_economic_difficulties",
-          },
-          {
-            title: intl.formatMessage({ id: "health_risks" }),
-            dataIndex: "health_risks",
-          },
-          {
-            title: intl.formatMessage({ id: "care_foci" }),
-            dataIndex: "care_foci",
-          },
-          {
-            title: intl.formatMessage({ id: "care_foci_percent" }),
-            dataIndex: "care_foci_percent",
-          },
-          {
-            title: intl.formatMessage({ id: "date_entered_by_pt" }),
-            dataIndex: "date_entered_by_pt",
-          },
-          {
-            title: intl.formatMessage({ id: "result_plan" }),
-            dataIndex: "result_plan",
-          },
-          {
-            title: intl.formatMessage({ id: "result" }),
-            dataIndex: "result",
-          },
-          {
-            title: intl.formatMessage({ id: "result_percent" }),
-            dataIndex: "result_percent",
-          },
-        ]}
-      />
+      {list?.data?.map((agency) => {
+        if (agency?.items?.length === 0 || !agency?.items) return null;
+        return (
+          <Table
+            pagination={false}
+            summary={() => {
+              return (
+                <Table.Summary.Row className="bg-[#F5F8F8] mx-4 px-4">
+                  <Table.Summary.Cell
+                    index={0}
+                    align="center"
+                    className="bg-[#F5F8F8] text-[#475467] font-semibold ml-4"
+                  >
+                    <FormattedMessage id="total" />
+                  </Table.Summary.Cell>
+                  <Table.Summary.Cell
+                    index={1}
+                    align="left"
+                    colSpan={10}
+                    className="bg-[#F5F8F8] text-[#475467] font-semibold"
+                  ></Table.Summary.Cell>
+                  <Table.Summary.Cell
+                    index={2}
+                    align="center"
+                    className="bg-[#F5F8F8] text-[#475467] font-semibold"
+                  >
+                    {agency?.items?.length}
+                  </Table.Summary.Cell>
+                </Table.Summary.Row>
+              );
+            }}
+            loading={list.loading}
+            dataSource={agency?.items}
+            columns={[
+              {
+                title: intl.formatMessage({ id: "agency" }),
+                dataIndex: "agency",
+                width: 200,
+                align: "left",
+                className: "ml-5",
+                render: (_) => {
+                  return <p className="ml-4">{agency?.name}</p>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "case" }),
+                dataIndex: "customer_first_name",
+                align: "left",
+              },
+              {
+                title: intl.formatMessage({ id: "hcu_date" }),
+                dataIndex: "comp_ass_date",
+                width: 100,
+                align: "left",
+                render: (value: any) => {
+                  return <div>{dayjs(value)?.format("YYYY/MM/DD")}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "functional_impairment" }),
+                dataIndex: "functional",
+                align: "center",
+                render: (_, record) => {
+                  const data = record.care_foci?.find((value) => {
+                    return value.key === "functional";
+                  });
+                  return <div>{data?.count || 0}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({
+                  id: "social_psychological_change",
+                }),
+                dataIndex: "psycho_emotional",
+                align: "center",
+                render: (_, record) => {
+                  const data = record.care_foci?.find((value) => {
+                    return value.key === "psycho_emotional";
+                  });
+                  return <div>{data?.count || 0}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({
+                  id: "socio_economic_difficulties",
+                }),
+                dataIndex: "socio_economic",
+                align: "center",
+                render: (_, record) => {
+                  const data = record.care_foci?.find((value) => {
+                    return value.key === "socio_economic";
+                  });
+                  return <div>{data?.count || 0}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "health_risks" }),
+                dataIndex: "clinical",
+                align: "center",
+                render: (_, record) => {
+                  const data = record.care_foci?.find((value) => {
+                    return value.key === "clinical";
+                  });
+                  return <div>{data?.count || 0}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "care_foci" }),
+                dataIndex: "care_foci",
+                align: "center",
+                render: (_, record) => {
+                  return <div>{record?.care_foci?.length}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "care_foci_percent" }),
+                dataIndex: "care_foci_percent",
+                align: "center",
+                render: (_, record) => {
+                  return (
+                    <div>
+                      {/* care foci huviig bodohdoo staticaar 31 d huvaana */}
+                      {((record?.care_foci?.length / 31) * 100).toFixed(2)}%
+                    </div>
+                  );
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "date_entered_by_pt" }),
+                dataIndex: "dp_date",
+                align: "center",
+                render: (value: any) => {
+                  if (
+                    !value ||
+                    dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
+                  ) {
+                    return <div className="flex items-center">-</div>;
+                  }
+                  return <div>{dayjs(value)?.format("YYYY/MM/DD")}</div>;
+                },
+              },
+              {
+                title: intl.formatMessage({ id: "result_plan" }),
+                dataIndex: "dp_resolved",
+                align: "center",
+              },
+              {
+                title: intl.formatMessage({ id: "result_percent" }),
+                dataIndex: "dp_resolved_percent",
+                align: "center",
+                render: (_, record) => {
+                  return (
+                    <div>
+                      {record?.dp_resolved_percent
+                        ? `${record.dp_resolved_percent}%`
+                        : "-"}
+                    </div>
+                  );
+                },
+              },
+            ]}
+          />
+        );
+      })}
     </PageCard>
   );
 };

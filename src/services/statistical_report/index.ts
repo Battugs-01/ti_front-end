@@ -5,6 +5,7 @@ import {
   CaseManagerReportType,
   ClosedReportType,
   DPAgencyType,
+  DPManagementType,
   ManagementReportType,
   ResponseType,
   StatisticalAgeReportType,
@@ -93,13 +94,13 @@ namespace statisticalReport {
     });
 
   export const developmentPlanManagement = (body?: any) =>
-    http.post<ResponseType[]>("statistics/development-plan/management", {
+    http.post<DPManagementType[]>("statistics/development_plan/management", {
       hasAuth: true,
       body,
     });
 
   export const developmentPlanCase = (body?: any) =>
-    http.post<ResponseType[]>("statistics/development-plan/case-manager", {
+    http.post<ResponseType[]>("statistics/development_plan/case-manager", {
       hasAuth: true,
       body,
     });
