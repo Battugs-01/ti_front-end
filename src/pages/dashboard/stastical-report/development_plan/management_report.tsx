@@ -8,15 +8,20 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
-import { reportFilter } from "utils/index";
+
+const managementReportFilter = {
+  current: 1,
+  pageSize: 20,
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
+  type: DashboardTab.all,
+};
 
 export const ManagementReport: React.FC = () => {
-  const [tab, setTab] = useState<DashboardTab>(DashboardTab.all);
-
   const intl = useIntl();
-  const [filter, setFilter] = useState(reportFilter);
+  const [filter, setFilter] = useState(managementReportFilter);
 
-  const list = useRequest(statisticalReport.casemanagerReportList, {
+  const list = useRequest(statisticalReport.developmentPlanManagement, {
     manual: true,
     onError: (err) => {
       notification.error({
@@ -44,9 +49,12 @@ export const ManagementReport: React.FC = () => {
           <div className="flex items-center gap-4 h-full">
             <Radio.Group
               optionType="button"
-              value={tab}
+              value={filter.type}
               onChange={(e) => {
-                setTab(e.target.value);
+                setFilter({
+                  ...filter,
+                  type: e.target.value,
+                });
               }}
               options={[
                 {

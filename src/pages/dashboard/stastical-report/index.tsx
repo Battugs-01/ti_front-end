@@ -15,7 +15,7 @@ import { Statistical } from "./statistical_report";
 const StasticalReport = () => {
   const [user] = useContext(AuthContext);
   const [tab, setTab] = useState<StatisticalTab>(
-    StatisticalTab.management_report
+    StatisticalTab.development_plan
   );
   return (
     <>

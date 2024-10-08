@@ -13,7 +13,7 @@ export const ByCaseManager: React.FC = () => {
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilter);
 
-  const list = useRequest(statisticalReport.casemanagerReportList, {
+  const list = useRequest(statisticalReport.developmentPlanCase, {
     manual: true,
     onError: (err) => {
       notification.error({
