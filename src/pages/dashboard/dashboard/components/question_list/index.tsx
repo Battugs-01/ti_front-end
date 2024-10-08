@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { Avatar, notification } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 // import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import file from "service/file";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
 import {
@@ -181,6 +182,34 @@ export const QuestionList: React.FC = () => {
               }  ${record?.address?.khoroo?.name || ""}  ${
                 record?.address?.desc || ""
               }`}</div>
+            ),
+          },
+          {
+            title: intl.formatMessage({ id: "person_in_charge" }),
+            dataIndex: "person_in_charge",
+            render: (value, record, index) => (
+              <div>
+                <div className="flex gap-2 items-center">
+                  {record?.person_in_charge?.profile?.physical_path && (
+                    <Avatar
+                      shape="circle"
+                      size={"small"}
+                      src={file.fileToUrl(
+                        record?.person_in_charge?.profile?.physical_path || "-"
+                      )}
+                    />
+                  )}
+                  <span>
+                    {record?.person_in_charge?.last_name &&
+                    record?.person_in_charge?.first_name
+                      ? `${record?.person_in_charge?.last_name?.substring(
+                          0,
+                          1
+                        )}. ${record?.person_in_charge?.first_name}`
+                      : "-"}
+                  </span>
+                </div>
+              </div>
             ),
           },
           {
