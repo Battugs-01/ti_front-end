@@ -39,6 +39,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   setTransictionModal?: (record: T) => void;
   actionWidth?: number | string;
   hidePagination?: boolean;
+  rowKey?: string;
 };
 
 export const ITable = <T extends {}>({
@@ -70,6 +71,7 @@ export const ITable = <T extends {}>({
   setApproveModal,
   setTransictionModal,
   actionWidth,
+  rowKey,
   ...rest
 }: Props<T>) => {
   const [pageData, setPageData] = useState<{ page: number; pageSize: number }>({
@@ -80,6 +82,8 @@ export const ITable = <T extends {}>({
   const [update, setUpdate] = useState<T>();
   const [detail, setDetail] = useState<T>();
   const [remove, setRemove] = useState<T>();
+
+  console.log("key", rowKey);
 
   return (
     <>
@@ -93,7 +97,7 @@ export const ITable = <T extends {}>({
           setting: false,
           density: false,
         }}
-        rowKey={`id`}
+        rowKey={rowKey ? rowKey : `id`}
         scroll={scroll ?? { x: "max-content" }}
         size="small"
         search={false}

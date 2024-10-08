@@ -4,8 +4,8 @@ import { DevelopmentPlanReportTab } from "config";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ByAgency } from "./by_agency";
-import { ManagementReport } from "./management_report";
 import { ByCaseManager } from "./by_casemanager";
+import { ManagementReport } from "./management_report";
 
 export const DevelopmentPlanReport: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanReportTab>(
