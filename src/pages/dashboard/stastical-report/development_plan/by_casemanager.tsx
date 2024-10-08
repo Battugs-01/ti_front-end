@@ -1,11 +1,11 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Select } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { reportFilter } from "utils/index";
 
@@ -82,6 +82,9 @@ export const ByCaseManager: React.FC = () => {
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
+            render: (value) => {
+              return <p className="uppercase">{value}</p>;
+            },
           },
           {
             title: intl.formatMessage({ id: "phone" }),

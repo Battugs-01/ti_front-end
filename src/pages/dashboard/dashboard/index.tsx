@@ -1,6 +1,6 @@
-import { Radio, Segmented } from "antd";
+import { Radio } from "antd";
 import { IfCondition } from "components/condition";
-import { DashboardTab, ScreeningTab } from "config";
+import { DashboardTab } from "config";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { All } from "./all";

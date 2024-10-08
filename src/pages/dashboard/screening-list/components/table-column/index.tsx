@@ -1,7 +1,9 @@
 import { ProColumns } from "@ant-design/pro-table";
+import { Avatar } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
+import file from "service/file";
 import { ScreeningListType } from "service/screening_list/type"; // Assuming this is your table data type
 import { parseMongolianGender, parseMongolianID } from "utils/index";
 
@@ -12,6 +14,9 @@ export const getScreeningTableColumns = (
     title: intl.formatMessage({ id: "register" }),
     dataIndex: "rd",
     width: 150,
+    render: (value) => {
+      return <p className="uppercase">{value}</p>;
+    },
   },
   {
     title: intl.formatMessage({ id: "phone" }),
@@ -117,6 +122,36 @@ export const getScreeningTableColumns = (
       <div>{`${record?.address?.city?.name || ""}  ${
         record?.address?.district?.name || ""
       }  ${record?.address?.khoroo?.name || ""}`}</div>
+    ),
+  },
+  {
+    title: intl.formatMessage({ id: "responsible" }),
+    dataIndex: "person_in_charge_id",
+    width: 120,
+    render: (value, record, index) => (
+      <div>
+        {
+          <div className="flex gap-2 items-center">
+            {record?.person_in_charge?.profile?.physical_path && (
+              <Avatar
+                shape="circle"
+                size={"small"}
+                src={file.fileToUrl(
+                  record?.person_in_charge?.profile?.physical_path || "-"
+                )}
+              />
+            )}
+            <span>
+              {record?.person_in_charge?.last_name &&
+              record?.person_in_charge?.first_name
+                ? `${record?.person_in_charge?.last_name?.substring(0, 1)}. ${
+                    record?.person_in_charge?.first_name
+                  }`
+                : "-"}
+            </span>
+          </div>
+        }
+      </div>
     ),
   },
   {

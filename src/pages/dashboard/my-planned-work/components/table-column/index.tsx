@@ -11,6 +11,9 @@ export const PlannedWorkTableColumns = (
     title: intl.formatMessage({ id: "register" }),
     dataIndex: "rd",
     width: 150,
+    render: (value) => {
+      return <p className="uppercase">{value}</p>;
+    },
   },
   {
     title: intl.formatMessage({ id: "phone" }),

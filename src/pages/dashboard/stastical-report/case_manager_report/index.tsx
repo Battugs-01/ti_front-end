@@ -99,6 +99,9 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
+            render: (value) => {
+              return <p className="uppercase">{value}</p>;
+            },
           },
           {
             title: intl.formatMessage({ id: "gender" }),
