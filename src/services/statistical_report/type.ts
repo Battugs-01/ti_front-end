@@ -206,3 +206,30 @@ export interface CaseManagerReportType {
   close: Close;
   assessment: PurpleAssessment;
 }
+
+export interface DPAgencyType {
+  customer_id: number;
+  customer_rd: string;
+  customer_first_name: string;
+  cfs_point: number;
+  comp_ass_date: Date;
+  diseases: Disease[];
+  care_foci: CareFocus[];
+  dp_resolved_count: number;
+  dp_resolved_percent: number;
+  comp_ass_id: number;
+}
+
+export interface CareFocus {
+  name: string;
+  key: string;
+  count: number;
+}
+
+export interface Disease {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  name: string;
+  description: string;
+}

@@ -4,6 +4,7 @@ import {
   CareFociReportType,
   CaseManagerReportType,
   ClosedReportType,
+  DPAgencyType,
   ManagementReportType,
   ResponseType,
   StatisticalAgeReportType,
@@ -75,6 +76,24 @@ namespace statisticalReport {
 
   export const statisticalReportAge = (body?: any) =>
     http.post<ResponseType[]>("statistics/statistical-age/report", {
+      hasAuth: true,
+      body,
+    });
+
+  export const developmentPlanAgency = (body?: any) =>
+    http.post<DPAgencyType[]>("statistics/development_plan/agency", {
+      hasAuth: true,
+      body,
+    });
+
+  export const developmentPlanManagement = (body?: any) =>
+    http.post<ResponseType[]>("statistics/development-plan/management", {
+      hasAuth: true,
+      body,
+    });
+
+  export const developmentPlanCase = (body?: any) =>
+    http.post<ResponseType[]>("statistics/development-plan/case-manager", {
       hasAuth: true,
       body,
     });

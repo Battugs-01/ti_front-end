@@ -13,7 +13,7 @@ const colorMapping: { [key: string]: string } = {
   "60-64": "#36BFFA",
   "64-69": "#22CCEE",
   "70-74": "#FDB022",
-  "+75": "#F670C7",
+  "75+": "#F670C7",
 };
 
 interface AgeProps {

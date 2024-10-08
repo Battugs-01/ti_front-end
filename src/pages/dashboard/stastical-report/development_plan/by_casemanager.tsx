@@ -1,11 +1,11 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Select } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { reportFilter } from "utils/index";
 
@@ -13,7 +13,7 @@ export const ByCaseManager: React.FC = () => {
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilter);
 
-  const list = useRequest(statisticalReport.casemanagerReportList, {
+  const list = useRequest(statisticalReport.developmentPlanCase, {
     manual: true,
     onError: (err) => {
       notification.error({

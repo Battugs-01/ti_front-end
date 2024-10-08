@@ -234,8 +234,8 @@
   "health_risks": "Эрүүл мэндийн эрсдлүүд",
   "care_foci_percent": "Care Foci %",
   "date_entered_by_pt": "ХТ оруулсан огноо",
-  "result_plan": "Дүгнэлт, төлөвлөгөө",
-  "result_percent": "Үр дүн %",
+  "result_plan": "Шийдэгдсэн тоо",
+  "result_percent": "Шийдэгдсэн %",
   "case": "Кейс",
   "by_agency": "Агентлагаар",
   "medical_history": "Өвчний түүх",
@@ -265,5 +265,6 @@
   "person_charge": "Хариуцсан",
   "development_plan_date": "ХТ огноо",
   "distributed": "Хуваарилагдсан",
-  "decided": "Шийдэгдсэн"
+  "decided": "Шийдэгдсэн",
+  "ou":"ӨҮ"
 }
