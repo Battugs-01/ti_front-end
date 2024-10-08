@@ -183,6 +183,20 @@ export const reportFilterYear = {
   year: dayjs().year(),
 };
 
+export const reportStatisticalFilterLevel = {
+  current: 1,
+  pageSize: 20,
+  year: dayjs().year(),
+  report_type: "level",
+};
+
+export const reportStatisticalFilterAge = {
+  current: 1,
+  pageSize: 20,
+  year: dayjs().year(),
+  report_type: "age",
+};
+
 export const parseMongolianID = (id: any) => {
   const yearPart = id.slice(2, 4);
   const monthPart = id.slice(4, 6);

@@ -39,7 +39,7 @@ export const ByCaseManager: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center h-full">
             <DatePicker.RangePicker
               className="w-max"
               placeholder={[
@@ -64,6 +64,8 @@ export const ByCaseManager: React.FC = () => {
           </div>
         }
         hideCreate
+        hideSearch
+        fileName="by_casemanager"
         refresh={refreshList}
       />
       <ITable

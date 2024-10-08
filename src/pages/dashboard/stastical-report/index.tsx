@@ -11,7 +11,6 @@ import { DevelopmentPlanReport } from "./development_plan";
 import { ManagementReport } from "./management_report";
 import { ReportLog } from "./report_log";
 import { Statistical } from "./statistical_report";
-import { StatisticalReportAge } from "./statistical_report_withage";
 
 const StasticalReport = () => {
   const [user] = useContext(AuthContext);
@@ -108,10 +107,6 @@ const StasticalReport = () => {
       <IfCondition
         condition={StatisticalTab.care_foci === tab}
         whenTrue={<CareFoci />}
-      />
-      <IfCondition
-        condition={StatisticalTab.statistic_report === tab}
-        whenTrue={<StatisticalReportAge />}
       />
       <IfCondition
         condition={StatisticalTab.development_plan === tab}

@@ -6,10 +6,14 @@ import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { ClosedReportType } from "service/statistical_report/type";
-import { reportFilter } from "utils/index";
+import {
+  parseMongolianGender,
+  parseMongolianID,
+  reportFilter,
+} from "utils/index";
 
 export const ClosedCaseReport: React.FC = () => {
   const intl = useIntl();
@@ -34,33 +38,39 @@ export const ClosedCaseReport: React.FC = () => {
       ...filter,
     });
   };
+
   return (
     <PageCard xR>
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            placeholder={[
-              intl.formatMessage({ id: "select_start_date" }),
-              intl.formatMessage({ id: "select_end_date" }),
-            ]}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-              });
-            }}
-            defaultValue={[
-              filter.start_date
-                ? dayjs(filter.start_date)
-                : dayjs().subtract(3, "month"),
-              filter.end_date ? dayjs(filter.end_date) : dayjs(),
-            ]}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker.RangePicker
+              className="w-max"
+              size="large"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
+          </div>
         }
+        fileName="closed_case_report"
         hideCreate
+        hideSearch
         refresh={refreshList}
       />
       <ITable<ClosedReportType>
@@ -77,20 +87,31 @@ export const ClosedCaseReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
+            width: 50,
+            align: "center",
+            render: (_: any, record): React.ReactNode => (
+              <div className="flex items-center justify-center">
+                {parseMongolianID(record?.rd)}
+              </div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
           },
           {
-            title: intl.formatMessage({ id: "phone" }),
-            dataIndex: "phone",
-          },
-          {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
-            render: (value: any) => {
-              return <FormattedMessage id={value} />;
+            width: 80,
+            render: (_: any, record): any => {
+              const gender = parseMongolianGender(record?.rd);
+              return (
+                <div className="flex items-center justify-center">
+                  {gender === "male"
+                    ? intl.formatMessage({ id: "male" })
+                    : intl.formatMessage({ id: "female" })}
+                </div>
+              );
             },
           },
           {
@@ -108,10 +129,14 @@ export const ClosedCaseReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "cfs" }),
             dataIndex: "cfs",
+            render: (_, record) => {
+              return <div>{record?.assessment?.total}</div>;
+            },
           },
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
+            align: "center",
             render: (_, record) => {
               return <LevelBadge status={record?.assessment?.level} />;
             },
@@ -131,18 +156,10 @@ export const ClosedCaseReport: React.FC = () => {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
           },
-          // {
-          //   title: intl.formatMessage({ id: "ht_date" }),
-          //   dataIndex: "ht_date",
-          // },
           {
             title: intl.formatMessage({ id: "risk_level" }),
             dataIndex: "risk_level",
           },
-          // {
-          //   title: intl.formatMessage({ id: "ht_time" }),
-          //   dataIndex: "ht_time",
-          // },
           {
             title: intl.formatMessage({ id: "end_date" }),
             dataIndex: "end_date",

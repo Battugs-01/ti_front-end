@@ -62,30 +62,30 @@ export const CareFoci: React.FC = () => {
     return result;
   }, [list.data]);
 
-  console.log(filteredData, "ssss");
-
-  console.log(dayjs(filter.year).year(), "year");
-
   return (
     <PageCard xR>
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker
-            className="w-max"
-            placeholder={intl.formatMessage({ id: "select_date" })}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                year: dayjs(values?.toDate()).year(),
-              });
-            }}
-            size="large"
-            picker="year"
-            defaultValue={filter.year ? dayjs().year(filter.year) : dayjs()}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker
+              className="w-max"
+              placeholder={intl.formatMessage({ id: "select_date" })}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  year: dayjs(values?.toDate()).year(),
+                });
+              }}
+              size="large"
+              picker="year"
+              defaultValue={filter.year ? dayjs().year(filter.year) : dayjs()}
+            />
+          </div>
         }
         hideCreate
+        hideSearch
+        fileName="care_foci_report"
         refresh={refreshList}
       />
       <Table

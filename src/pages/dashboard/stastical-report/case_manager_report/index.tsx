@@ -10,7 +10,11 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { CaseManagerReportType } from "service/statistical_report/type";
-import { reportFilter } from "utils/index";
+import {
+  parseMongolianGender,
+  parseMongolianID,
+  reportFilter,
+} from "utils/index";
 
 export const CaseManagerReport: React.FC = () => {
   const intl = useIntl();
@@ -40,28 +44,33 @@ export const CaseManagerReport: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            placeholder={[
-              intl.formatMessage({ id: "select_start_date" }),
-              intl.formatMessage({ id: "select_end_date" }),
-            ]}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-              });
-            }}
-            defaultValue={[
-              filter.start_date
-                ? dayjs(filter.start_date)
-                : dayjs().subtract(3, "month"),
-              filter.end_date ? dayjs(filter.end_date) : dayjs(),
-            ]}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker.RangePicker
+              className="w-max"
+              size="large"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
+          </div>
         }
         hideCreate
+        hideSearch
+        fileName="case_manager_report"
         refresh={refreshList}
       />
       <ITable<CaseManagerReportType>
@@ -79,6 +88,13 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
+            width: 50,
+            align: "center",
+            render: (_: any, record): React.ReactNode => (
+              <div className="flex items-center justify-center">
+                {parseMongolianID(record?.rd)}
+              </div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "register" }),
@@ -87,8 +103,16 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
-            render: (value: any) => {
-              return <FormattedMessage id={value} />;
+            width: 80,
+            render: (_: any, record): any => {
+              const gender = parseMongolianGender(record?.rd);
+              return (
+                <div className="flex items-center justify-center">
+                  {gender === "male"
+                    ? intl.formatMessage({ id: "male" })
+                    : intl.formatMessage({ id: "female" })}
+                </div>
+              );
             },
           },
           {
@@ -96,7 +120,7 @@ export const CaseManagerReport: React.FC = () => {
             dataIndex: "cfs_score",
             render: (_, record) => {
               return (
-                <p>
+                <p className="text-[#98A2B3]">
                   <span
                     className={`${
                       record?.assessment?.cfs_point > 6
@@ -106,7 +130,7 @@ export const CaseManagerReport: React.FC = () => {
                   >
                     {record?.assessment?.cfs_point}
                   </span>{" "}
-                  /9
+                  / 9
                 </p>
               );
             },
@@ -187,8 +211,33 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "priority" }),
             dataIndex: "pirority",
+            align: "center",
             render: (_, record) => {
-              return <div>{record?.assessment?.priority}</div>;
+              switch (record?.assessment?.priority) {
+                case "high":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="high" />}
+                      color="red"
+                    />
+                  );
+                case "medium":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="medium" />}
+                      color="yellow"
+                    />
+                  );
+                case "low":
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="low" />}
+                      color="green"
+                    />
+                  );
+                default:
+                  return "-";
+              }
             },
           },
         ]}

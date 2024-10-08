@@ -69,6 +69,16 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
     <ModalForm
       formRef={formRef}
       onFinish={async (values) => {
+        if (!values?.profile) {
+          await userUpdate.runAsync(
+            {
+              ...values,
+            },
+            detail?.id
+          );
+          onFinish?.();
+          return;
+        }
         const id = await newFileUpload(values?.profile);
         await userUpdate.runAsync(
           {

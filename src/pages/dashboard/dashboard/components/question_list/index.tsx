@@ -1,22 +1,25 @@
-import { useRequest } from "ahooks";
-import { Avatar, notification } from "antd";
+import { useDebounceFn, useRequest } from "ahooks";
+import { List, notification } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
-import { PopoverFilter } from "components/filter";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 // import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import file from "service/file";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import { initPagination } from "utils/index";
+import {
+  initPagination,
+  parseMongolianGender,
+  parseMongolianID,
+} from "utils/index";
 
 export const QuestionList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
+  const [search, setSearch] = useState<string>("");
   const intl = useIntl();
 
   const screen = useRequest(screenList.list, {
@@ -38,14 +41,22 @@ export const QuestionList: React.FC = () => {
       ...filter,
     });
   };
+  const searchRun = useDebounceFn(screen.run, { wait: 1000 });
+
   return (
     <PageCard xR>
       <InitTableHeader
+        search={search}
+        setSearch={(e) => {
+          setSearch(e);
+          searchRun.run({ ...filter, query: e });
+        }}
         customHeaderTitle={
           <div className="font-semibold text-[#344054] text-lg">
             <FormattedMessage id="last_screening_list" />
           </div>
         }
+        fileName="last_screening_list"
         refresh={refreshList}
         hideCreate
       />
@@ -72,17 +83,32 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "age" }),
             dataIndex: "age",
+            width: 50,
+            align: "center",
+            render: (_: any, record: ScreeningListType): React.ReactNode => (
+              <div className="flex items-center justify-center">
+                {parseMongolianID(record?.rd)}
+              </div>
+            ),
           },
           {
             title: intl.formatMessage({ id: "gender" }),
             dataIndex: "gender",
-            render: (value: any) => {
-              return <FormattedMessage id={value} />;
+            width: 80,
+            render: (_: any, record: ScreeningListType): any => {
+              const gender = parseMongolianGender(record?.rd);
+              return (
+                <div className="flex items-center justify-center">
+                  {gender === "male"
+                    ? intl.formatMessage({ id: "male" })
+                    : intl.formatMessage({ id: "female" })}
+                </div>
+              );
             },
           },
           {
-            title: intl.formatMessage({ id: "risk_level" }),
-            dataIndex: "risk_level",
+            title: intl.formatMessage({ id: "levels" }),
+            dataIndex: "levels",
             render: (_, record) => (
               <LevelBadge status={record?.assessment?.level} />
             ),
@@ -108,9 +134,17 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "cfs_date" }),
             dataIndex: "cfs_date",
-            render: (_, record) => (
-              <div>{dayjs(record?.assessment?.date)?.format("YYYY/MM/DD")}</div>
-            ),
+            render: (_: any, record: ScreeningListType): React.ReactNode => {
+              const date = record?.assessment?.date;
+              if (!date || dayjs(date).format("YYYY-MM-DD") === "0001-01-01") {
+                return <div className="flex items-center">-</div>;
+              }
+              return (
+                <div className="flex items-center">
+                  {dayjs(date).format("YYYY/MM/DD")}
+                </div>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "count_comp_ass" }),
@@ -122,11 +156,18 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "by_hcu_date" }),
             dataIndex: "by_hcu_date",
-            render: (_, record) => (
-              <div>
-                {dayjs(record?.assessment?.date_comp_ass).format("YYYY/MM/DD")}
-              </div>
-            ),
+            width: 130,
+            render: (_: any, record: ScreeningListType): React.ReactNode => {
+              const date = record?.assessment?.date_comp_ass;
+              if (!date || dayjs(date).format("YYYY-MM-DD") === "0001-01-01") {
+                return <div className="flex items-center">-</div>;
+              }
+              return (
+                <div className="flex items-center">
+                  {dayjs(date).format("YYYY/MM/DD")}
+                </div>
+              );
+            },
           },
           {
             title: intl.formatMessage({ id: "address" }),

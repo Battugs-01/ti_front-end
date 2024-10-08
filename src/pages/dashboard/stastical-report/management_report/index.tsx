@@ -39,29 +39,33 @@ export const ManagementReport: React.FC = () => {
       <InitTableHeader
         hideTitle
         leftContent={
-          <DatePicker.RangePicker
-            className="w-max"
-            placeholder={[
-              intl.formatMessage({ id: "select_start_date" }),
-              intl.formatMessage({ id: "select_end_date" }),
-            ]}
-            onChange={(values) => {
-              setFilter({
-                ...filter,
-                start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-              });
-            }}
-            defaultValue={[
-              filter.start_date
-                ? dayjs(filter.start_date)
-                : dayjs().subtract(3, "month"),
-              filter.end_date ? dayjs(filter.end_date) : dayjs(),
-            ]}
-          />
+          <div className="flex items-center h-full">
+            <DatePicker.RangePicker
+              className="w-max"
+              size="large"
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
+          </div>
         }
         hideSearch
         hideCreate
+        fileName="management_report"
         refresh={refreshList}
       />
       <ITable<ManagementReportType>
