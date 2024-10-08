@@ -233,3 +233,8 @@ export interface Disease {
   name: string;
   description: string;
 }
+
+export interface DPManagementType {
+  name: string;
+  items: DPAgencyType[];
+}
