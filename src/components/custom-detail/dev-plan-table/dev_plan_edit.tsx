@@ -69,7 +69,6 @@ const DevPlanEdit: React.FC<DevPlanEditProps> = ({ customerMainData }) => {
     devPlanData.data?.items
       .filter((item) => item?.care_foci_id === CareFociEnum.HealthRisk)
       .flatMap((item) => item?.care_foci_items || []) || [];
-
   return (
     <>
       {devPlanData?.data?.items && error === false && (

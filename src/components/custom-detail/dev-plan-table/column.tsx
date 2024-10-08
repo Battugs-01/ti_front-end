@@ -85,6 +85,11 @@ const DevPlanColumns = ({
       dataIndex: "desc",
       editable: false,
       width: 200,
+      render: (value, record) => (
+        <div className="flex items-center ">
+          {isEvaluated ? record?.care_foci_desc || "-" : value || "-"}
+        </div>
+      ),
     },
     {
       title: intl.formatMessage({ id: "severity_syndrome" }),
