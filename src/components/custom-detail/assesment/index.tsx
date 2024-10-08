@@ -64,25 +64,25 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
         </Col>
         <Col xl={18} md={24} xs={24} className="flex flex-col gap-4">
           <Row gutter={[12, 24]}>
-            <Col lg={6} md={24} sm={24} xs={24}>
+            <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="arter_pressure"
                 value={data?.health.blood_presure || 0}
               />
             </Col>
-            <Col lg={6} md={24} sm={24} xs={24}>
+            <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="heart_rate"
                 value={data?.health.heart_rate || 0}
               />
             </Col>
-            <Col lg={6} md={24} sm={24} xs={24}>
+            <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="respiratory_rate"
                 value={data?.health?.respiratory_rate || 0}
               />
             </Col>
-            <Col lg={6} md={24} sm={24} xs={24}>
+            <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="body_temp"
                 value={data?.health?.body_temp || 0}
