@@ -86,6 +86,12 @@ namespace statisticalReport {
       body,
     });
 
+  export const developmentPlanCaseManager = (body?: any) =>
+    http.post<any[]>("statistics/development_plan/case_manager", {
+      hasAuth: true,
+      body,
+    });
+
   export const developmentPlanManagement = (body?: any) =>
     http.post<ResponseType[]>("statistics/development-plan/management", {
       hasAuth: true,
