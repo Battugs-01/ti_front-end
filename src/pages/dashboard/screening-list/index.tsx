@@ -109,7 +109,7 @@ const ScreeningList: React.FC = () => {
         customActions={(record) => {
           if (user?.user?.role === UserRoleType.case_manager) {
             return (
-              <div className="flex gap-6">
+              <div className="flex gap-6 ml-2">
                 <div className="flex items-center">
                   <Edit04
                     size="20"
@@ -129,7 +129,7 @@ const ScreeningList: React.FC = () => {
           }
           if (user?.user?.role === UserRoleType.senior_case_manager) {
             return (
-              <div className="flex gap-6">
+              <div className="flex gap-6  ml-2">
                 <div className="flex items-center">
                   <Edit04
                     className="cursor-pointer"
@@ -155,7 +155,7 @@ const ScreeningList: React.FC = () => {
             );
           } else if (user?.user?.role === UserRoleType.doctor) {
             return (
-              <div className="flex gap-6">
+              <div className="flex gap-6 ml-2">
                 <div className="flex items-center">
                   <Edit04
                     size="20"
