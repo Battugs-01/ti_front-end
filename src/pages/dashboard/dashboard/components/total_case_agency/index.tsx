@@ -88,7 +88,7 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-4 justify-center mt-10">
+      <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
         <div className="flex gap-2">
           <img src={Vector} alt="Vector" />
           <div className="flex flex-col">
