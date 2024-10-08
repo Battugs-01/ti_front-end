@@ -9,12 +9,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { DPAgencyType } from "service/statistical_report/type";
 
+enum DateFilter {
+  comp_ass = "comp_ass",
+  development = "development",
+}
+
 const filterAgency = {
   current: 1,
   pageSize: 20,
   start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
   end_date: dayjs().format("YYYY-MM-DD"),
-  type: "by_hcu_date",
+  filter_type: DateFilter.comp_ass,
 };
 
 export const ByAgency: React.FC = () => {
@@ -50,21 +55,21 @@ export const ByAgency: React.FC = () => {
           <div className="flex items-center gap-4 h-full">
             <Select
               size="large"
-              onChange={(value) => {
+              onChange={(value: DateFilter) => {
                 setFilter({
                   ...filter,
-                  type: value,
+                  filter_type: value,
                 });
               }}
-              defaultValue={"by_hcu_date"}
+              defaultValue={DateFilter.comp_ass}
               options={[
                 {
                   label: <FormattedMessage id="by_hcu_date" />,
-                  value: "by_hcu_date",
+                  value: DateFilter.comp_ass,
                 },
                 {
                   label: <FormattedMessage id="by_ht_date" />,
-                  value: "by_ht_date",
+                  value: DateFilter.development,
                 },
               ]}
             />

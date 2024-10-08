@@ -6,7 +6,7 @@ import { TotalCase } from "../components/total_case";
 import { TotalCaseAgency } from "../components/total_case_agency";
 import { TotalPoint } from "../components/total_point";
 
-export const All: React.FC = () => {
+export const Admin: React.FC = () => {
   const totalPoint = useRequest(dashboard.points, {
     onError: (err) => {
       notification.error({

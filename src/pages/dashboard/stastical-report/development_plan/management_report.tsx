@@ -106,6 +106,7 @@ export const ManagementReport: React.FC = () => {
       />
       <ITable
         className="p-0 remove-padding-table"
+        dataSource={list?.data}
         columns={[
           {
             title: intl.formatMessage({ id: "agency" }),
