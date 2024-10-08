@@ -70,7 +70,7 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: "question" }),
       dataIndex: "result",
       className: "text-left",
-      width: 200,
+      width: 220,
       editable: false,
       render: (_, record) => (
         <div className="flex items-center ">
@@ -84,7 +84,6 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: isEvaluated ? "description" : "answer" }),
       dataIndex: "desc",
       editable: false,
-      width: 200,
       render: (value, record) => (
         <div className="flex items-center ">
           {isEvaluated ? record?.care_foci_desc || "-" : value || "-"}
@@ -95,6 +94,7 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
+      width: 100,
       render: (value, record, index) =>
         isEditing ? (
           <Select
@@ -139,6 +139,8 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
+      width: 100,
+      align: "center",
       render: (value, record, index) =>
         isEditing ? (
           <Select
@@ -163,7 +165,7 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "responsible" }),
       dataIndex: "person_in_charge_id",
-      width: 200,
+      width: 120,
       render: (value, record, index) =>
         isEditing ? (
           <div className="flex items-center justify-center w-full mt-6">
@@ -235,6 +237,7 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "result" }),
       dataIndex: "result",
+
       render: (value, record, index) =>
         isEditing ? (
           <Input.TextArea
@@ -250,6 +253,7 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "is_resolved" }),
       key: "is_resolved",
+      width: 100,
       dataIndex: "is_resolved",
       render: (value, record, index) =>
         isEditing ? (

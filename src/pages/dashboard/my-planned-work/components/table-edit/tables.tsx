@@ -3,7 +3,8 @@ import { Collapse } from "antd";
 import DownButton from "assets/img/down_button.svg";
 import UpButton from "assets/img/up_button.svg";
 import { ITable } from "components/table";
-import React, { useEffect, useState } from "react";
+import { AuthContext } from "context/auth";
+import React, { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import { Edit04 } from "untitledui-js-base";
@@ -27,6 +28,7 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
   onFinish,
   assesment_id,
 }) => {
+  const [user] = useContext(AuthContext);
   const [updateAction, setUpdateAction] = useState<CareFociItemElement>();
 
   const [isSwitched, setIsSwitched] = useState(true);
@@ -78,15 +80,17 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
                   isEvaluated,
                 })}
                 pagination={false}
-                customActions={(record) => (
-                  <div className="flex items-center">
-                    <Edit04
-                      size="20"
-                      onClick={() => setUpdateAction(record)}
-                      className="cursor-pointer"
-                    />
-                  </div>
-                )}
+                customActions={(record) =>
+                  user?.user?.id === record?.person_in_charge?.id ? (
+                    <div className="flex items-center justify-center">
+                      <Edit04
+                        size="20"
+                        onClick={() => setUpdateAction(record)}
+                        className="cursor-pointer flex justify-center"
+                      />
+                    </div>
+                  ) : null
+                }
               />
             ),
           },

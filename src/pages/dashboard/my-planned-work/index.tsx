@@ -5,7 +5,7 @@ import { useLevelContext } from "components/custom-detail/selected-level";
 import { ITable } from "components/table";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import plannedWorks from "service/my_planned_work";
 import { PlannedWorksType } from "service/my_planned_work/types";
 import { Eye } from "untitledui-js-base";
@@ -66,17 +66,9 @@ const MyPlannedWork: React.FC = () => {
             width: 200,
             render: (value, record) => {
               return (
-                <Link
-                  to={`/dashboard/screening-list/detail?customer_id=${record.id}`}
-                  onClick={() => setSelectedLevel(null)}
-                >
-                  <Typography.Text
-                    className="text-primary-700 font-bold"
-                    style={{ cursor: "pointer" }}
-                  >
-                    {value}
-                  </Typography.Text>
-                </Link>
+                <Typography.Text className="" style={{ cursor: "pointer" }}>
+                  {value}
+                </Typography.Text>
               );
             },
           },
@@ -86,7 +78,7 @@ const MyPlannedWork: React.FC = () => {
         customActions={(record) => {
           return (
             <div className="flex gap-6">
-              <div className="flex items-center">
+              <div className="flex items-center justify-center">
                 <Eye
                   size="20"
                   onClick={() =>
@@ -94,7 +86,7 @@ const MyPlannedWork: React.FC = () => {
                       `/dashboard/my-planned-work/detail?customer_id=${record.id}&ass_id=${record.ass_id}`
                     )
                   }
-                  className="cursor-pointer"
+                  className="cursor-pointer flex items-center justify-center"
                 />
               </div>
             </div>

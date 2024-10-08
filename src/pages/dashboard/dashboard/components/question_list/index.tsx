@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { Avatar, List, notification } from "antd";
+import { Avatar, notification } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
@@ -76,6 +76,9 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
+            render: (value) => {
+              return <p className="uppercase">{value}</p>;
+            },
           },
           {
             title: intl.formatMessage({ id: "phone" }),

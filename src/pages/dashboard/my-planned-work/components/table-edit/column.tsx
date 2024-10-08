@@ -23,7 +23,7 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: "question" }),
       dataIndex: "result",
       className: "text-left",
-      width: 200,
+      width: 220,
       editable: false,
       render: (_, record) => (
         <div className="flex items-center ">
@@ -37,12 +37,12 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: isEvaluated ? "description" : "answer" }),
       dataIndex: "desc",
       editable: false,
-      width: 200,
     },
     {
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
+      width: 100,
       render: (value, record, index) => (
         <div className="flex items-center justify-center">
           <SeverityLevelBadge title={record?.severity_level} />
@@ -57,12 +57,14 @@ const PlannedWordDetailTableColumn = ({
     {
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
+      width: 100,
+      align: "center",
       render: (value, record, index) => value + " хоног",
     },
     {
       title: intl.formatMessage({ id: "responsible" }),
       dataIndex: "person_in_charge_id",
-      width: 200,
+      width: 120,
       render: (value, record, index) => (
         <div>
           {
@@ -98,6 +100,7 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: "is_resolved" }),
       key: "is_resolved",
       dataIndex: "is_resolved",
+      width: 100,
       render: (value) =>
         value ? (
           <div className="flex items-center justify-center">
