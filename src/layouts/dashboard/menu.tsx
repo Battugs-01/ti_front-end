@@ -4,7 +4,7 @@ import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { menuAdminItems, menuItems } from "./menu_items";
+import { menuAdminItems, menuItems, menuSuperAdminItems } from "./menu_items";
 
 const triangleStyle: React.CSSProperties = {
   width: 0,
@@ -23,10 +23,9 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
 }) => {
   const [user] = useContext(AuthContext);
   let menus = menuItems;
-  if (
-    user?.user?.role === UserRoleType.super_admin ||
-    user?.user?.role === UserRoleType.admin
-  ) {
+  if (user?.user?.role === UserRoleType.super_admin) {
+    menus = menuSuperAdminItems;
+  } else if (user?.user?.role === UserRoleType.admin) {
     menus = menuAdminItems;
   }
   if (mobile) {
