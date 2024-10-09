@@ -9,7 +9,7 @@ import { ManagementReport } from "./management_report";
 
 export const DevelopmentPlanReport: React.FC = () => {
   const [tab, setTab] = useState<DevelopmentPlanReportTab>(
-    DevelopmentPlanReportTab.by_agency
+    DevelopmentPlanReportTab.by_case_manager
   );
   return (
     <>

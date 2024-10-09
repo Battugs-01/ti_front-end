@@ -16,6 +16,7 @@ interface CareFociProps {
   isEvaluated?: boolean;
   name: string;
   id: string;
+  loading?: boolean;
   onFinish?: () => void;
   assesment_id: number;
 }
@@ -27,6 +28,7 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
   isEvaluated,
   onFinish,
   assesment_id,
+  loading,
 }) => {
   const [user] = useContext(AuthContext);
   const [updateAction, setUpdateAction] = useState<CareFociItemElement>();
@@ -75,6 +77,7 @@ const PlannedWorkTables: React.FC<CareFociProps> = ({
                 className="custom-antd-table-cell remove-padding-table"
                 dataSource={dataSource}
                 bordered
+                loading={loading}
                 columns={PlannedWordDetailTableColumn({
                   dataSource,
                   isEvaluated,

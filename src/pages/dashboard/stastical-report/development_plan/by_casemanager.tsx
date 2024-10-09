@@ -2,12 +2,12 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { DatePicker, notification, Typography } from "antd";
 import { PageCard } from "components/card";
-import DevPlanTables from "components/custom-detail/dev-plan-table/tables";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { CareFociEnum } from "config";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { PlannedWorksType } from "service/my_planned_work/types";
@@ -18,12 +18,13 @@ import {
   parseMongolianID,
   reportFilter,
 } from "utils/index";
+import DevPlanTablesReport from "./expand_table";
 
 export const ByCaseManager: React.FC = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilter);
-
+  const [user] = useContext(AuthContext);
   const list = useRequest(statisticalReport.developmentPlanCaseManager, {
     manual: true,
     onError: (err) => {
@@ -65,27 +66,53 @@ export const ByCaseManager: React.FC = () => {
   const generalData =
     devPlanData.data?.items
       .filter((item) => item?.valuation_id)
-      .flatMap((item) => item?.general_items || []) || [];
+      .flatMap(
+        (item) =>
+          item?.general_items?.filter(
+            (value) => value?.person_in_charge_id === user?.user?.id
+          ) || []
+      ) || [];
 
   const loseActivityData =
     devPlanData.data?.items
       .filter((item) => item?.care_foci_id === CareFociEnum.loseActivity)
-      .flatMap((item) => item?.care_foci_items || []) || [];
+      .flatMap(
+        (item) =>
+          item?.care_foci_items?.filter(
+            (value) => value?.person_in_charge_id === user?.user?.id
+          ) || []
+      ) || [];
 
   const psychologyChangeData =
     devPlanData.data?.items
       .filter((item) => item?.care_foci_id === CareFociEnum.psychologyChange)
-      .flatMap((item) => item?.care_foci_items || []) || [];
+      .flatMap(
+        (item) =>
+          item?.care_foci_items?.filter(
+            (value) => value?.person_in_charge_id === user?.user?.id
+          ) || []
+      ) || [];
 
   const EconemyData =
     devPlanData.data?.items
       .filter((item) => item?.care_foci_id === CareFociEnum.Econemy)
-      .flatMap((item) => item?.care_foci_items || []) || [];
+      .flatMap(
+        (item) =>
+          item?.care_foci_items?.filter(
+            (value) => value?.person_in_charge_id === user?.user?.id
+          ) || []
+      ) || [];
 
   const HealthRiskData =
     devPlanData.data?.items
       .filter((item) => item?.care_foci_id === CareFociEnum.HealthRisk)
-      .flatMap((item) => item?.care_foci_items || []) || [];
+      .flatMap(
+        (item) =>
+          item?.care_foci_items?.filter(
+            (value) => value?.person_in_charge_id === user?.user?.id
+          ) || []
+      ) || [];
+
   return (
     <PageCard xR>
       <InitTableHeader
@@ -239,7 +266,7 @@ export const ByCaseManager: React.FC = () => {
               <div className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium truncate bg-[#fffaeb] text-[#b54708] gap-1">
                 <AlertCircle size="15" color="#f99009" />
                 <div>
-                  <span className="">{record?.care_foci_resolved_count}</span>/
+                  <span className="">{record?.resolved_count}</span>/
                   {record?.allocated_count}
                 </div>
               </div>
@@ -258,38 +285,43 @@ export const ByCaseManager: React.FC = () => {
                 !EconemyData &&
                 !HealthRiskData && <PageLoading />}
               <div className="flex flex-col gap-2">
-                <DevPlanTables
+                <DevPlanTablesReport
                   name="general"
                   id="edit-table-general"
+                  loading={devPlanData?.loading}
                   data={generalData}
                   isEvaluated={false}
                   isClose={true}
                 />
-                <DevPlanTables
+                <DevPlanTablesReport
                   name="lose_activity"
                   id="edit-table-physical"
                   data={loseActivityData}
+                  loading={devPlanData?.loading}
                   isEvaluated={true}
                   isClose={true}
                 />
-                <DevPlanTables
+                <DevPlanTablesReport
                   name="psychology_change"
                   id="edit-table-psychology"
                   data={psychologyChangeData}
+                  loading={devPlanData?.loading}
                   isEvaluated={true}
                   isClose={true}
                 />
-                <DevPlanTables
+                <DevPlanTablesReport
                   name="economy_diff"
                   id="edit-table-economy"
                   data={EconemyData}
+                  loading={devPlanData?.loading}
                   isEvaluated={true}
                   isClose={true}
                 />
-                <DevPlanTables
+                <DevPlanTablesReport
                   name="health_risk"
                   id="edit-table-health-risk"
                   data={HealthRiskData}
+                  loading={devPlanData?.loading}
                   isEvaluated={true}
                   isClose={true}
                 />
