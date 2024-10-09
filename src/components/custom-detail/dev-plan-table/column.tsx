@@ -94,7 +94,6 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
-      width: 100,
       render: (value, record, index) =>
         isEditing ? (
           <Select
@@ -139,7 +138,7 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
-      width: 100,
+
       align: "center",
       render: (value, record, index) =>
         isEditing ? (
@@ -165,20 +164,19 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "responsible" }),
       dataIndex: "person_in_charge_id",
-      width: 120,
       render: (value, record, index) =>
         isEditing ? (
           <div className="flex items-center justify-center w-full mt-6">
             <ProFormSelect
               name={"person_in_charge_id"}
               shouldUpdate
-              className="flex items-center justify-center custom-input w-full bg-white"
+              className="flex items-center justify-center custom-input w-full bg-white "
               fieldProps={{
                 showSearch: true,
                 loading: emplyoee.loading,
                 filterOption: false,
                 onSearch: debouncedSearch,
-                className: "w-[160px] bg-white custom-input",
+                className: " bg-white custom-input",
                 onChange: (newValue) => {
                   handleFieldChange(index, "person_in_charge_id", newValue);
                 },
@@ -253,13 +251,12 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "is_resolved" }),
       key: "is_resolved",
-      width: 100,
+
       dataIndex: "is_resolved",
       render: (value, record, index) =>
         isEditing ? (
           <Select
             defaultValue={value}
-            style={{ width: 120 }}
             className="custom-input"
             options={[
               {

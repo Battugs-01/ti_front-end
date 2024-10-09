@@ -112,7 +112,7 @@ export const Notification = () => {
               </div>
             </div>
             <div className="text-gray-600 font-normal text-xs col-span-1 mt-1">
-              {dayjs(item?.notification?.date).format("YYYY-MM-DD hh:mm:ss")}
+              {dayjs(item?.notification?.date).format("YYYY-MM-DD HH:mm:ss")}
               {!item?.is_read && (
                 <img src={ellipse} alt="ellipse" className="mt-1 pl-1" />
               )}

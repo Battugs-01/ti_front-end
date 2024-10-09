@@ -135,7 +135,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 id={id}
                 className="custom-antd-table-cell remove-padding-table"
                 value={dataSource}
-                loading={loading}
+                loading={loading || updateDevPlan.loading}
                 bordered
                 onChange={(value) => setDataSource([...value])}
                 columns={DevPlanColumns({
