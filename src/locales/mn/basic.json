@@ -35,7 +35,7 @@
   "desease_history": "Өвчний түүх",
   "emergency": "Эмнэлгийн яаралтай тусламж",
   "early_screening_is_required": "Өвчтөнд эрт үзлэг хийх шаардлагатай эсэхийг үнэлэх хяналтын хуудас  ",
-  "screening_list": "Асуумжийн жагсаалт",
+  "screening_list": "Кейсийн жагсаалт",
   "screening_history": "Асуумжийн түүх",
   "development_plan": "Хөгжлийн төлөвлөгөө",
   "development_plan_end": "Хөгжлийн төлөвлөгөө дуусгах",
@@ -266,5 +266,5 @@
   "development_plan_date": "ХТ огноо",
   "distributed": "Хуваарилагдсан",
   "decided": "Шийдэгдсэн",
-  "ou":"ӨҮ"
+  "ou": "ӨҮ"
 }
