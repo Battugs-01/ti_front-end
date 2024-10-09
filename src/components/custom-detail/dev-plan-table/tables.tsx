@@ -20,6 +20,7 @@ interface CareFociProps {
   isEvaluated?: boolean;
   name: string;
   id: string;
+  loading?: boolean;
   isClose?: boolean;
   onFinish?: () => void;
 }
@@ -31,6 +32,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   isEvaluated,
   isClose,
   onFinish,
+  loading,
 }) => {
   const [user] = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
@@ -133,6 +135,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 id={id}
                 className="custom-antd-table-cell remove-padding-table"
                 value={dataSource}
+                loading={loading}
                 bordered
                 onChange={(value) => setDataSource([...value])}
                 columns={DevPlanColumns({

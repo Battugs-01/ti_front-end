@@ -11,7 +11,6 @@ import PlannedWork from "./components/table-edit";
 
 const MyPlannedWorkDetail: React.FC = () => {
   const location = useLocation();
-
   const searchParams = new URLSearchParams(location.search);
   const customerId = searchParams.get("customer_id");
   const assId = searchParams.get("ass_id");

@@ -1,11 +1,14 @@
 import { useRequest } from "ahooks";
-import { QuestionList } from "../components/question_list";
-import { TotalCase } from "../components/total_case";
-import { TotalPoint } from "../components/total_point";
-import dashboard from "service/dashboard";
 import { notification } from "antd";
+import dashboard from "service/dashboard";
+import { QuestionList } from "../../components/question_list";
+import { TotalCase } from "../../components/total_case";
+import { TotalPoint } from "../../components/total_point";
 
-export const Other: React.FC = () => {
+interface TotalPointInterface {
+  id: number;
+}
+export const OtherAgency: React.FC<TotalPointInterface> = ({ id }) => {
   const totalPoint = useRequest(dashboard.points, {
     onError: (err) => {
       notification.error({

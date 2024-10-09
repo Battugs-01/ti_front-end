@@ -102,6 +102,7 @@ const PlannedWork: React.FC<PlannedWorkProps> = ({
             name="general"
             id="edit-table-general"
             data={generalData}
+            loading={devPlanData?.loading}
             isEvaluated={false}
             onFinish={async () => {
               run();
@@ -113,6 +114,7 @@ const PlannedWork: React.FC<PlannedWorkProps> = ({
             id="edit-table-physical"
             data={loseActivityData}
             isEvaluated={true}
+            loading={devPlanData?.loading}
             onFinish={async () => {
               run();
             }}
@@ -123,6 +125,7 @@ const PlannedWork: React.FC<PlannedWorkProps> = ({
             id="edit-table-psychology"
             data={psychologyChangeData}
             isEvaluated={true}
+            loading={devPlanData?.loading}
             onFinish={async () => {
               run();
             }}
@@ -132,6 +135,7 @@ const PlannedWork: React.FC<PlannedWorkProps> = ({
             name="economy_diff"
             id="edit-table-economy"
             data={EconemyData}
+            loading={devPlanData?.loading}
             isEvaluated={true}
             onFinish={async () => {
               run();
@@ -142,6 +146,7 @@ const PlannedWork: React.FC<PlannedWorkProps> = ({
             name="health_risk"
             id="edit-table-health-risk"
             data={HealthRiskData}
+            loading={devPlanData?.loading}
             isEvaluated={true}
             onFinish={async () => {
               run();
