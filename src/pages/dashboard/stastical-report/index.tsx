@@ -1,6 +1,6 @@
-import { Radio } from "antd";
+import { CheckboxOptionType, Radio } from "antd";
 import { IfCondition } from "components/condition";
-import { StatisticalTab } from "config";
+import { StatisticalTab, UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -14,71 +14,267 @@ import { Statistical } from "./statistical_report";
 
 const StasticalReport = () => {
   const [user] = useContext(AuthContext);
-  const [tab, setTab] = useState<StatisticalTab>(
-    StatisticalTab.development_plan
-  );
+  let options: any[] | undefined = [];
+  const [tab, setTab] = useState<StatisticalTab>(StatisticalTab.care_foci);
+  if (user?.user?.role === UserRoleType.case_manager) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.case_manager_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="case_manager_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.senior_case_manager) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.case_manager_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="case_manager_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.closed_case_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="closed_case_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.doctor) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.closed_case_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="closed_case_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.operation_manager) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.closed_case_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="closed_case_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.management_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="management_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.report_log,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="report_log" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.admin) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.closed_case_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="closed_case_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.management_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="management_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.report_log,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="report_log" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.super_admin) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.stack_holder) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  }
   return (
     <>
       <Radio.Group
         optionType="button"
-        options={[
-          {
-            value: StatisticalTab.management_report,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="management_report" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.closed_case_report,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="closed_case_report" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.case_manager_report,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="case_manager_report" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.report_log,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="report_log" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.statistical_report,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="statistical_report" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.care_foci,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="care_foci" />
-              </div>
-            ),
-          },
-          {
-            value: StatisticalTab.development_plan,
-            label: (
-              <div className="font-semibold text-primary-700">
-                <FormattedMessage id="development_plan_report" />
-              </div>
-            ),
-          },
-        ]}
+        options={options}
         value={tab}
         size="large"
         onChange={(e) => setTab(e.target.value)}

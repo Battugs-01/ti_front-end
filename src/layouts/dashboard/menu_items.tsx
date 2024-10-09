@@ -30,7 +30,7 @@ export const menuItems = [
   },
 ];
 
-export const menuAdminItems = [
+export const menuSuperAdminItems = [
   {
     icon: <PieChart02 />,
     name: <FormattedMessage id="dashboard" />,
@@ -41,6 +41,15 @@ export const menuAdminItems = [
     name: <FormattedMessage id="stastical_report" />,
     path: "/dashboard/stastical-report",
   },
+  {
+    icon: <Settings01 />,
+    name: <FormattedMessage id="settings" />,
+    path: "/dashboard/settings",
+  },
+];
+
+export const menuAdminItems = [
+  ...menuItems,
   {
     icon: <Settings01 />,
     name: <FormattedMessage id="settings" />,

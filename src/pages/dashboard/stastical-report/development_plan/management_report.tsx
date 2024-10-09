@@ -1,15 +1,12 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Radio, Select, Table } from "antd";
+import { Col, DatePicker, notification, Row, Select, Table } from "antd";
 import { PageCard } from "components/card";
-import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
-import { DashboardTab } from "config";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import agencyList from "service/settings/agency_list";
 import statisticalReport from "service/statistical_report";
-import { DPManagementType } from "service/statistical_report/type";
 
 const managementReportFilter = {
   current: 1,
@@ -48,6 +45,7 @@ export const ManagementReport: React.FC = () => {
       ...filter,
     });
   }, [filter]);
+
   const refreshList = () => {
     list?.run({
       ...filter,
@@ -78,7 +76,7 @@ export const ManagementReport: React.FC = () => {
               options={data}
               defaultValue={0}
               size="large"
-              className="min-w-[200px]"
+              className="w-[350px]"
               onChange={(value) => {
                 setFilter({
                   ...filter,
