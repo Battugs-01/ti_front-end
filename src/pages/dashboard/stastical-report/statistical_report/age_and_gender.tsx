@@ -72,6 +72,7 @@ export const AgeAndGender: React.FC = () => {
           <Table
             loading={list.loading}
             bordered
+            scroll={{ x: "max-content" }}
             dataSource={levelTable?.items}
             summary={() => {
               let level = `bg-[#ECFDF3] text-[#12B76A] font-semibold`;
@@ -144,7 +145,6 @@ export const AgeAndGender: React.FC = () => {
                   };
                 },
                 width: 250,
-                fixed: "left",
                 render: () => {
                   return <LevelBadge status={`level_${index + 1}`} />;
                 },

@@ -117,6 +117,7 @@ export const ManagementReport: React.FC = () => {
         return (
           <Table
             pagination={false}
+            scroll={{ x: "max-content" }}
             summary={() => {
               return (
                 <Table.Summary.Row className="bg-[#F5F8F8] mx-4 px-4">
