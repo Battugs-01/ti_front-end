@@ -154,6 +154,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "medical_history" }),
             dataIndex: "medical_history",
             align: "left",
+            width: 250,
             render: (_, record) => {
               return (
                 <div>
@@ -170,6 +171,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "functional_impairment" }),
             dataIndex: "functional",
             align: "center",
+            width: 150,
             render: (_, record) => {
               const data = record.care_foci?.find((value) => {
                 return value.key === "functional";
@@ -181,6 +183,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "social_psychological_change" }),
             dataIndex: "psycho_emotional",
             align: "center",
+            width: 100,
             render: (_, record) => {
               const data = record.care_foci?.find((value) => {
                 return value.key === "psycho_emotional";
@@ -192,6 +195,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "socio_economic_difficulties" }),
             dataIndex: "socio_economic",
             align: "center",
+            width: 100,
             render: (_, record) => {
               const data = record.care_foci?.find((value) => {
                 return value.key === "socio_economic";
@@ -203,6 +207,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "health_risks" }),
             dataIndex: "clinical",
             align: "center",
+            width: 100,
             render: (_, record) => {
               const data = record.care_foci?.find((value) => {
                 return value.key === "clinical";
@@ -214,6 +219,7 @@ export const ByAgency: React.FC = () => {
             title: intl.formatMessage({ id: "care_foci" }),
             dataIndex: "care_foci",
             align: "center",
+            width: 100,
             render: (_, record) => {
               return <div>{record?.care_foci?.length}</div>;
             },
@@ -221,6 +227,7 @@ export const ByAgency: React.FC = () => {
           {
             title: intl.formatMessage({ id: "care_foci_percent" }),
             dataIndex: "care_foci_percent",
+            width: 100,
             align: "center",
             render: (_, record) => {
               return (
@@ -234,6 +241,7 @@ export const ByAgency: React.FC = () => {
           {
             title: intl.formatMessage({ id: "date_entered_by_pt" }),
             dataIndex: "dp_date",
+            width: 150,
             align: "center",
             render: (value: any) => {
               if (
@@ -247,12 +255,14 @@ export const ByAgency: React.FC = () => {
           },
           {
             title: intl.formatMessage({ id: "result_plan" }),
+            width: 100,
             dataIndex: "dp_resolved",
             align: "center",
           },
           {
             title: intl.formatMessage({ id: "result_percent" }),
             dataIndex: "dp_resolved_percent",
+            width: 100,
             align: "center",
             render: (_, record) => {
               return (

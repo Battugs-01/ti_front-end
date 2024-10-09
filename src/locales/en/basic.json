@@ -172,7 +172,7 @@
   "total_point": "Total Point",
   "total_case_agency": "Total Case Agency",
   "total_case": "Total Case",
-  "last_screening_list": "List of recent queries",
+  "last_screening_list": "Last added case",
   "end_date": "End Date",
   "total_level_percent": "Total level %",
   "total_percent": "Total %",
@@ -255,5 +255,6 @@
   "development_plan_date": "DP date",
   "distributed": "Distributed",
   "decided": "Decided",
-  "ou":"ӨҮ"
+  "ou":"ӨҮ",
+  "stack_holder":"Stackholder"
 }

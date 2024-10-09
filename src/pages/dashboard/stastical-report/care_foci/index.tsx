@@ -93,6 +93,7 @@ export const CareFoci: React.FC = () => {
         loading={list.loading}
         className="p-0 remove-padding-table"
         dataSource={filteredData}
+        scroll={{ x: "max-content" }}
         columns={[
           {
             title: (

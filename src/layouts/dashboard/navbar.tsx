@@ -57,10 +57,10 @@ const Navbar: React.FC = () => {
           >
             <img src={Logo} alt="logo" />
           </Link>
-          <div className="xl:block hidden">
+          <div className="lg:block hidden">
             <Menu />
           </div>
-          <div className="xl:hidden">
+          <div className="lg:hidden">
             {nav ? (
               <XClose size="35" onClick={onClose} />
             ) : (

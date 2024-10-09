@@ -89,7 +89,12 @@ export const CreateUser: React.FC<ActionComponentProps<any>> = ({
               <Button onClick={onCancel} size="large" type="default">
                 <FormattedMessage id="cancel" />
               </Button>
-              <Button onClick={props.submit} size="large" type="primary">
+              <Button
+                onClick={props.submit}
+                size="large"
+                type="primary"
+                loading={userAdd.loading}
+              >
                 <FormattedMessage id="save" />
               </Button>
             </div>

@@ -9,7 +9,6 @@ interface TotalPointInterface {
   id: number;
 }
 export const OtherAgency: React.FC<TotalPointInterface> = ({ id }) => {
-  console.log(id, "iddddd");
   const totalPoint = useRequest(dashboard.points, {
     onError: (err) => {
       notification.error({

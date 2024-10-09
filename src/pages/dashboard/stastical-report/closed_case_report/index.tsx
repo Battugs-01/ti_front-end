@@ -76,6 +76,7 @@ export const ClosedCaseReport: React.FC = () => {
       <ITable<ClosedReportType>
         className="p-0 remove-padding-table"
         dataSource={list?.data?.items}
+        loading={list?.loading}
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),

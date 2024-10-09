@@ -144,7 +144,12 @@ export const UpdateUser: React.FC<ActionComponentProps<UserType>> = ({
               >
                 <FormattedMessage id="cancel" />
               </Button>
-              <Button onClick={props.submit} size="large" type="primary">
+              <Button
+                onClick={props.submit}
+                size="large"
+                type="primary"
+                loading={userUpdate.loading}
+              >
                 <FormattedMessage id="save" />
               </Button>
             </div>
