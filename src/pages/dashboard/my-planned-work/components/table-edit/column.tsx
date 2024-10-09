@@ -1,13 +1,13 @@
 // DevPlanColumns.tsx
 import { ProColumns } from "@ant-design/pro-table";
+import ReadMoreArea from "@foxeian/react-read-more";
 import { Avatar } from "antd";
 import IBadge from "components/badge";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
 import { DevPlanQuistion } from "utils/dev_plan";
-
 interface PlannedWordDetailTableColumnProps {
   dataSource: CareFociItemElement[];
   isEvaluated?: boolean;
@@ -52,7 +52,16 @@ const PlannedWordDetailTableColumn = ({
     {
       title: intl.formatMessage({ id: "summary_plan" }),
       dataIndex: "summary_plan",
-      render: (value, record, index) => value,
+      render: (value) => (
+        <ReadMoreArea
+          expandLabel={<FormattedMessage id="detail" />}
+          collapseLabel={<FormattedMessage id="summary" />}
+          buttonClassName="text-[12px] text-green-700 p-0 m-0"
+          lettersLimit={100}
+        >
+          {value}
+        </ReadMoreArea>
+      ),
     },
     {
       title: intl.formatMessage({ id: "time" }),
@@ -94,7 +103,16 @@ const PlannedWordDetailTableColumn = ({
     {
       title: intl.formatMessage({ id: "result" }),
       dataIndex: "result",
-      render: (value) => value,
+      render: (value, record, index) => (
+        <ReadMoreArea
+          expandLabel={<FormattedMessage id="detail" />}
+          collapseLabel={<FormattedMessage id="summary" />}
+          buttonClassName="text-[12px] text-green-700 p-0 m-0"
+          lettersLimit={100}
+        >
+          {value}
+        </ReadMoreArea>
+      ),
     },
     {
       title: intl.formatMessage({ id: "is_resolved" }),

@@ -1,18 +1,18 @@
 // DevPlanColumns.tsx
 import { ProFormSelect } from "@ant-design/pro-form";
 import { ProColumns } from "@ant-design/pro-table";
+import ReadMoreArea from "@foxeian/react-read-more";
 import { useRequest } from "ahooks";
-import { Avatar, Input, notification, Select } from "antd";
+import { Avatar, Input, InputNumber, notification, Select } from "antd";
 import IBadge from "components/badge";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
 import { debounce } from "lodash";
 import { useEffect } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
 import userList from "service/settings/user_list";
 import { DevPlanQuistion } from "utils/dev_plan";
-
 interface DevPlanColumnsProps {
   isEditing: boolean;
   dataSource: CareFociItemElement[];
@@ -132,30 +132,30 @@ const DevPlanColumns = ({
             }
           />
         ) : (
-          value
+          <ReadMoreArea
+            expandLabel={<FormattedMessage id="detail" />}
+            collapseLabel={<FormattedMessage id="summary" />}
+            buttonClassName="text-[12px] text-green-700 p-0 m-0"
+            lettersLimit={100}
+          >
+            {value}
+          </ReadMoreArea>
         ),
     },
     {
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
-
       align: "center",
       render: (value, record, index) =>
         isEditing ? (
-          <Select
-            defaultValue={value}
+          <InputNumber
+            defaultValue={value as any}
             style={{ width: 120 }}
+            type="number"
             onChange={(newValue) =>
               handleFieldChange(index, "duration", newValue)
             }
-            className="custom-input"
-            options={[
-              {
-                value: 7,
-                label: "7 хоног",
-              },
-              { value: 14, label: "14 хоног" },
-            ]}
+            className="custom-input bg-white"
           />
         ) : (
           value + " хоног"
@@ -245,7 +245,14 @@ const DevPlanColumns = ({
             className="m-0 w-full h-20 custom-input bg-white text-xs"
           />
         ) : (
-          value
+          <ReadMoreArea
+            expandLabel={<FormattedMessage id="detail" />}
+            collapseLabel={<FormattedMessage id="summary" />}
+            buttonClassName="text-[12px] text-green-700 p-0 m-0"
+            lettersLimit={100}
+          >
+            {value}
+          </ReadMoreArea>
         ),
     },
     {
