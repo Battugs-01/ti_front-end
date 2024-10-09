@@ -176,6 +176,7 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
+            width: 300,
             render: (_, record) => (
               <div>{`${record?.address?.city?.name || ""}  ${
                 record?.address?.district?.name || ""

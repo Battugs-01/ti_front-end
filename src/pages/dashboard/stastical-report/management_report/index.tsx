@@ -71,6 +71,7 @@ export const ManagementReport: React.FC = () => {
       <ITable<ManagementReportType>
         className="remove-padding-table"
         dataSource={list?.data}
+        loading={list?.loading}
         columns={[
           {
             title: <FormattedMessage id="name" />,

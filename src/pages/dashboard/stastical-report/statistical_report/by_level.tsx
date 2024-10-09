@@ -81,6 +81,7 @@ export const ByLevel: React.FC = () => {
       <ITable
         className="p-0 remove-padding-table"
         dataSource={statisticalData}
+        loading={list?.loading}
         hidePagination
         columns={[
           {

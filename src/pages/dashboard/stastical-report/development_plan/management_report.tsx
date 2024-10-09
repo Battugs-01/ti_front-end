@@ -151,6 +151,14 @@ export const ManagementReport: React.FC = () => {
                 dataIndex: "agency",
                 width: 200,
                 align: "left",
+                onCell: (_, index: any) => {
+                  return {
+                    rowSpan:
+                      index % agency?.items.length === 0
+                        ? agency?.items?.length
+                        : 0,
+                  };
+                },
                 className: "ml-5",
                 render: (_) => {
                   return <p className="ml-4">{agency?.name}</p>;

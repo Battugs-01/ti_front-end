@@ -56,3 +56,16 @@ export const menuAdminItems = [
     path: "/dashboard/settings",
   },
 ];
+
+export const menuStackholderItems = [
+  {
+    icon: <PieChart02 />,
+    name: <FormattedMessage id="dashboard" />,
+    path: "/dashboard/dashboard",
+  },
+  {
+    icon: <File03 />,
+    name: <FormattedMessage id="stastical_report" />,
+    path: "/dashboard/stastical-report",
+  },
+];
