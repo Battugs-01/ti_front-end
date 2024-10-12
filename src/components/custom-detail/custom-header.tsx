@@ -62,61 +62,59 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   }
 
   return (
-    <>
-      <div>
-        <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between">
-          <div className="lg:w-[75%] w-full flex">
-            <ProFormRadio.Group
-              className="flex items-center gap-2"
-              radioType="button"
-              options={segmentedData || []}
-              fieldProps={{
-                size: "large",
-                value: tab,
-                className: "custom-select",
-                onChange: (e) => {
-                  setTab(e.target.value);
-                  const level = data?.find((entry) => entry?.id === tab);
-                  if (level) {
-                    setSelectedLevel(level);
-                  }
-                },
-              }}
-            />
-            {extraItems.length > 0 && (
-              <Select
-                style={{ width: 210 }}
-                size="large"
-                className="custom-select rounded-r-lg custom-selected-level"
-                placeholder={<FormattedMessage id="select" />}
-                options={extraOptions}
-                onChange={(value) => {
-                  setTab(value);
-                  const level = data?.find((entry) => entry?.id === value);
-                  if (level) {
-                    setSelectedLevel(level);
-                  }
-                }}
-              />
-            )}
-          </div>
-          <div className="flex flex-wrap gap-4 mb-6">
-            <Button
-              size="large"
-              type="default"
-              icon={<DownloadCloud02 />}
-              onClick={() => {
-                exportFromTable(
-                  [`Асуумжийн түүх ${customerMainData?.first_name}`],
-                  window.document.getElementById(`main-table`) as HTMLElement,
-                  window
-                );
-              }}
-              className="flex items-center gap-2"
-            >
-              <FormattedMessage id="download" />
-            </Button>
-            {/* <Button
+    <div className="flex flex-col xl:flex-row gap-4 xl:items-center justify-between mb-0 pb-0">
+      <div className="lg:w-[75%] w-full flex m-0 p-0">
+        <ProFormRadio.Group
+          className="flex items-center gap-2"
+          radioType="button"
+          options={segmentedData || []}
+          fieldProps={{
+            size: "large",
+            value: tab,
+            className: "custom-select",
+            onChange: (e) => {
+              setTab(e.target.value);
+              const level = data?.find((entry) => entry?.id === tab);
+              if (level) {
+                setSelectedLevel(level);
+              }
+            },
+          }}
+        />
+        {extraItems.length > 0 && (
+          <Select
+            style={{ width: 210 }}
+            size="large"
+            className="custom-select rounded-r-lg custom-selected-level"
+            placeholder={<FormattedMessage id="select" />}
+            options={extraOptions}
+            onChange={(value) => {
+              setTab(value);
+              const level = data?.find((entry) => entry?.id === value);
+              if (level) {
+                setSelectedLevel(level);
+              }
+            }}
+          />
+        )}
+      </div>
+      <div className="flex flex-wrap gap-4 mb-6">
+        <Button
+          size="large"
+          type="default"
+          icon={<DownloadCloud02 />}
+          onClick={() => {
+            exportFromTable(
+              [`Асуумжийн түүх ${customerMainData?.first_name}`],
+              window.document.getElementById(`main-table`) as HTMLElement,
+              window
+            );
+          }}
+          className="flex items-center gap-2"
+        >
+          <FormattedMessage id="download" />
+        </Button>
+        {/* <Button
               size="large"
               type="default"
               icon={<Printer />}
@@ -124,10 +122,8 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
             >
               <FormattedMessage id="print" />
             </Button> */}
-          </div>
-        </div>
       </div>
-    </>
+    </div>
   );
 };
 

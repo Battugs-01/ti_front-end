@@ -1,47 +1,32 @@
 import { PageLoading } from "@ant-design/pro-layout";
-import { useRequest } from "ahooks";
 import { Card, Col, Row } from "antd";
 import AssesmentSvg from "assets/img/assesment.svg";
 import { ProgressCard, StatCard } from "components/card";
-import { ScreeningTab, UserRoleType } from "config";
 import { AuthContext } from "context/auth";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { FormattedMessage } from "react-intl";
-import screenList from "service/screening_list";
-import { AssessmentListType } from "service/screening_list/type";
+import {
+  AssessmentListType,
+  ComprehensiveType,
+} from "service/screening_list/type";
 import { BartherIndexModal } from "./assesment-modal/barthel-index";
 import { GDSModal } from "./assesment-modal/gds";
 import { MiniCogModal } from "./assesment-modal/mini-cog";
 import CareFociPercent from "./care-foci-percent";
-import DeseaseHistory from "./desease-history";
-import CareFoci from "./tables/care-foci";
-import General from "./tables/general";
 
 interface AssesmentProps {
   selectedLevel: AssessmentListType | null;
+  data: ComprehensiveType;
 }
 
-const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
+const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
   const [user] = useContext(AuthContext);
-  const comprehensiveData = useRequest(screenList.assessmentComprehensive, {
-    manual: true,
-  });
 
   const [openModal, setOpenModal] = React.useState<string>("");
-
-  const run = () => {
-    comprehensiveData.run(selectedLevel?.id || 0);
-  };
-
-  useEffect(() => {
-    run();
-  }, [selectedLevel]);
 
   if (!selectedLevel) {
     return <PageLoading />;
   }
-
-  const data = comprehensiveData?.data;
 
   return data ? (
     <Card
@@ -117,23 +102,6 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel }) => {
           </Row>
         </Col>
       </Row>
-      <DeseaseHistory data={data?.diseases} />
-      {user.user?.role !== UserRoleType.doctor &&
-        selectedLevel?.level !== ScreeningTab.level_3 && (
-          <>
-            <General data={data?.comp_ass?.valuation} />
-            <CareFoci
-              data={data?.care_foci[0]?.items}
-              name={"physical_condition"}
-            />
-            <CareFoci
-              data={data?.care_foci[1]?.items}
-              name={"psychology_change"}
-            />
-            <CareFoci data={data?.care_foci[2]?.items} name={"economy_diff"} />
-            <CareFoci data={data?.care_foci[3]?.items} name={"health_risk"} />
-          </>
-        )}
 
       {openModal === "mini-cog" && (
         <MiniCogModal data={data?.mini_cog} onCancel={() => setOpenModal("")} />

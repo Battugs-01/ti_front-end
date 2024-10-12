@@ -1,4 +1,5 @@
 // import { PermissionList } from "service/settings/permission/type";
+import { Caregiver } from "service/statistical_report/type";
 import { Address, Agency, Profile } from "service/type";
 
 export interface ScreeningListType {
@@ -16,6 +17,7 @@ export interface ScreeningListType {
   address: Address;
   person_in_charge_id: number;
   person_in_charge: PersonInCharge;
+  caregiver: Caregiver;
   assessments: Assessments[];
   development_plans: DevelopmentPlan[];
   assessment: Assessment;

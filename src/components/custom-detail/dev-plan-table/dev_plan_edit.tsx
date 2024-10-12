@@ -10,8 +10,8 @@ import { ScreeningListType } from "service/screening_list/type";
 import { DownloadCloud02, LineChartUp05 } from "untitledui-js-base";
 import { exportFromTableManyData } from "utils/export";
 import { useLevelContext } from "../selected-level";
-import { DevPlanEndModal } from "./dev_plan_close";
-import DevPlanTables from "./tables";
+import { DevPlanEndModal } from "../table-edit/dev_plan_close";
+import DevPlanTables from "../table-edit/tables";
 
 interface DevPlanEditProps {
   customerMainData: ScreeningListType;

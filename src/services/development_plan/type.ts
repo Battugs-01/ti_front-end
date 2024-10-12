@@ -52,6 +52,8 @@ export interface CareFociItemElement {
   created_at: Date;
   updated_at: Date;
   plan_item_id: number;
+  is_general: boolean;
+  care_foci_id?: number;
   customer_care_foci_item_id?: number;
   customer_care_foci_item?: CustomerCareFociItem;
   care_foci_desc?: string;
