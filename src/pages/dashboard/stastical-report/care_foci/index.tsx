@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Table } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
+import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
@@ -88,8 +89,10 @@ export const CareFoci: React.FC = () => {
         fileName="care_foci_report"
         refresh={refreshList}
       />
-      <Table
-        pagination={false}
+      <ITable
+        hideCounter
+        hideAction
+        hidePagination
         loading={list.loading}
         className="p-0 remove-padding-table"
         dataSource={filteredData}

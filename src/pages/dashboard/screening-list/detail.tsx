@@ -1,6 +1,6 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { Button, notification } from "antd";
+import { notification } from "antd";
 import Assesment from "components/custom-detail/assesment";
 import CustomHeader from "components/custom-detail/custom-header";
 import Emergency from "components/custom-detail/emergency";
@@ -10,15 +10,13 @@ import { useLevelContext } from "components/custom-detail/selected-level";
 import TableEditDevPlan from "components/custom-detail/table-edit";
 import { ScreeningTab } from "config";
 import { useEffect } from "react";
-import { FormattedMessage } from "react-intl";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import {
   AssessmentListType,
   ComprehensiveType,
   ScreeningListType,
 } from "service/screening_list/type";
-import { ChevronLeft } from "untitledui-js-base";
 
 const ScreeningListDetailCaseManager: React.FC = () => {
   const location = useLocation();
@@ -78,7 +76,10 @@ const ScreeningListDetailCaseManager: React.FC = () => {
   return (
     <>
       <div className="flex flex-col justify-between gap-4">
-        <Info data={customerData?.data as ScreeningListType} />
+        <Info
+          data={customerData?.data as ScreeningListType}
+          refreshData={run}
+        />
         <CustomHeader
           data={assessmentData?.data || []}
           customerMainData={customerData?.data as ScreeningListType}

@@ -33,13 +33,10 @@ type Props<T> = ProTableProps<T, any, any> & {
   limit?: number;
   setCreate?: Function;
   scroll?: any;
-  setCloseModal?: (record: T) => void;
-  setWaitModal?: (record: T) => void;
-  setApproveModal?: (record: T) => void;
-  setTransictionModal?: (record: T) => void;
   actionWidth?: number | string;
   hidePagination?: boolean;
   rowKey?: string;
+  hideCounter?: boolean;
 };
 
 export const ITable = <T extends {}>({
@@ -66,10 +63,7 @@ export const ITable = <T extends {}>({
   noShadow = false,
   page,
   limit,
-  setCloseModal,
-  setWaitModal,
-  setApproveModal,
-  setTransictionModal,
+  hideCounter = false,
   actionWidth,
   rowKey,
   ...rest
@@ -147,6 +141,7 @@ export const ITable = <T extends {}>({
             title: "№",
             align: "center",
             width: 50,
+            hideInTable: hideCounter,
             fixed: "left",
             dataIndex: "index",
             valueType: "index",

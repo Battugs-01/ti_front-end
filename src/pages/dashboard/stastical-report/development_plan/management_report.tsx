@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
-import { Col, DatePicker, notification, Row, Select, Table } from "antd";
+import { DatePicker, notification, Select, Table } from "antd";
 import { PageCard } from "components/card";
+import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -115,7 +116,10 @@ export const ManagementReport: React.FC = () => {
       {list?.data?.map((agency) => {
         if (agency?.items?.length === 0 || !agency?.items) return null;
         return (
-          <Table
+          <ITable
+            hideAction
+            hideCounter
+            hidePagination
             pagination={false}
             scroll={{ x: "max-content" }}
             summary={() => {

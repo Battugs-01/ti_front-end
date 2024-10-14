@@ -2,6 +2,7 @@ import { useRequest } from "ahooks";
 import { DatePicker, notification, Table } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
+import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
@@ -69,7 +70,10 @@ export const AgeAndGender: React.FC = () => {
       />
       {list.data?.map((levelTable, index) => {
         return (
-          <Table
+          <ITable
+            hideCounter
+            hideAction
+            hidePagination
             loading={list.loading}
             bordered
             scroll={{ x: "max-content" }}

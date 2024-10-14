@@ -7,7 +7,6 @@ import ProForm, {
 import { Button, Popover } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { FiCalendar } from "react-icons/fi";
-import { RiFilter3Fill } from "react-icons/ri";
 import { FilterDeadline, FilterFormButton } from "types";
 import { FilterLines } from "untitledui-js-base";
 import { calculateDeadlineDate } from "utils/index";
@@ -172,26 +171,13 @@ export const FilterForm = ({
 };
 
 export const PopoverFilter = ({ children }: { children: any }) => {
-  const [visible, setVisible] = useState(false);
-
-  const handleChange = (isVisible: boolean) => {
-    setVisible(true);
-  };
-
   return (
     <Popover
       placement="bottomLeft"
       arrow={false}
       content={<div className="p-3 w-80 min-[350]">{children}</div>}
-      trigger="click"
-      open={visible}
-      onOpenChange={handleChange}
     >
-      <Button
-        size="large"
-        icon={<FilterLines />}
-        onClick={() => setVisible(!visible)}
-      />
+      <Button size="large" icon={<FilterLines />} />
     </Popover>
   );
 };

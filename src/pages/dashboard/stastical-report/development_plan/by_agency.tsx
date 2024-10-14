@@ -103,6 +103,7 @@ export const ByAgency: React.FC = () => {
         refresh={refreshList}
       />
       <ITable<DPAgencyType>
+        hideAction
         dataSource={list?.data}
         loading={list.loading}
         className="p-0 remove-padding-table"
