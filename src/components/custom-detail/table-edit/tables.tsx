@@ -1,9 +1,8 @@
 import { PageLoading } from "@ant-design/pro-layout";
-import { EditableProTable } from "@ant-design/pro-table";
+import ProTable from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Collapse, notification } from "antd";
+import { Collapse, notification } from "antd";
 import DownButton from "assets/img/down_button.svg";
-import EditSvg from "assets/img/edit.svg";
 import UpButton from "assets/img/up_button.svg";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
@@ -11,8 +10,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { CareFociItemElement } from "service/development_plan/type";
-import { Save02 } from "untitledui-js-base";
-import { useLevelContext } from "../selected-level";
 import DevPlanColumns from "./column";
 
 interface CareFociProps {
@@ -21,8 +18,10 @@ interface CareFociProps {
   name: string;
   id: string;
   loading?: boolean;
-  isClose?: boolean;
   onFinish?: () => void;
+  onRowSelected: (item: CareFociItemElement) => void;
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  selectedRowKeys: React.Key[];
 }
 
 const DevPlanTables: React.FC<CareFociProps> = ({
@@ -30,12 +29,14 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   data,
   id,
   isEvaluated,
-  isClose,
   onFinish,
   loading,
+  onRowSelected,
+  setSelectedRowKeys,
+  selectedRowKeys,
 }) => {
-  const [user] = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [user] = useContext(AuthContext);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
     onSuccess: () => {
@@ -50,7 +51,6 @@ const DevPlanTables: React.FC<CareFociProps> = ({
     },
   });
 
-  const { selectedLevel } = useLevelContext();
   const [isSwitched, setIsSwitched] = useState(true);
 
   const [dataSource, setDataSource] = useState<CareFociItemElement[]>(data);
@@ -58,30 +58,6 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   useEffect(() => {
     setDataSource([...data]);
   }, [data]);
-
-  const handleFieldChange = (index: number, key: string, value: any) => {
-    const newDataSource = [...dataSource];
-    newDataSource[index] = { ...newDataSource[index], [key]: value };
-    setDataSource(newDataSource);
-  };
-
-  const handleSave = async () => {
-    const updatedData = dataSource.map((item) => {
-      return {
-        ...item,
-      };
-    });
-    await updateDevPlan.run({
-      assessment_id: selectedLevel?.id,
-      ...(isEvaluated
-        ? { care_foci_items: updatedData }
-        : { general_items: updatedData }),
-      ...(isEvaluated ? { is_general: false } : { is_general: true }),
-      care_foci_id:
-        data?.find((item) => item?.customer_care_foci_item?.care_foci_id)
-          ?.customer_care_foci_item?.care_foci_id || 0,
-    });
-  };
 
   const handleEditClick = () => {
     setIsSwitched(!isSwitched);
@@ -109,44 +85,62 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 <div className="text-[18px] font-semibold flex flex-row gap-4 items-center">
                   <FormattedMessage id={name} />
                 </div>
-                {isSwitched &&
-                  user.user?.role === UserRoleType.doctor &&
-                  isClose === false && (
-                    <Button
-                      style={{ opacity: 1, cursor: "pointer" }}
-                      className="flex items-center gap-2"
-                      onClick={() =>
-                        isEditing ? handleSave() : setIsEditing(true)
-                      }
-                    >
-                      {isEditing === true ? <Save02 /> : <img src={EditSvg} />}
-                      <div className="text-sm text-gray-700 font-medium">
-                        <FormattedMessage
-                          id={isEditing ? "save" : "member_drawer_title_update"}
-                        />
-                      </div>
-                    </Button>
-                  )}
               </div>
             ),
             children: (
-              <EditableProTable<CareFociItemElement>
+              <ProTable<CareFociItemElement>
                 rowKey="id"
                 id={id}
+                options={{
+                  reload: false,
+                  setting: false,
+                  density: false,
+                }}
                 className="custom-antd-table-cell remove-padding-table"
-                value={dataSource}
+                dataSource={dataSource}
                 loading={loading || updateDevPlan.loading}
-                bordered
-                onChange={(value) => setDataSource([...value])}
+                pagination={false}
+                search={false}
+                tableAlertRender={false}
+                scroll={{ x: 1400 }}
+                rowSelection={
+                  user?.user?.role === UserRoleType.doctor
+                    ? {
+                        type: "radio",
+                        onChange: (lselectedRowKeys, selectedRows) => {
+                          setSelectedRowKeys(lselectedRowKeys);
+                          selectedRows[0].is_general = isEvaluated
+                            ? false
+                            : true;
+                          onRowSelected(selectedRows[0]);
+                        },
+                        selectedRowKeys: selectedRowKeys,
+                      }
+                    : {}
+                }
+                onRow={(record, rowIndex) => {
+                  if (user?.user?.role === UserRoleType.doctor) {
+                    return {
+                      onClick: (event) => {
+                        if (selectedRowKeys.includes(record.id)) {
+                          setSelectedRowKeys(
+                            selectedRowKeys.filter((key) => key !== record.id)
+                          );
+                          onRowSelected(null as any);
+                        } else {
+                          setSelectedRowKeys([record.id]);
+                          record.is_general = isEvaluated ? false : true;
+                          onRowSelected(record);
+                        }
+                      },
+                    };
+                  }
+                  return {};
+                }}
                 columns={DevPlanColumns({
-                  isEditing,
                   dataSource,
-                  handleFieldChange,
                   isEvaluated,
                 })}
-                pagination={false}
-                scroll={{ x: 1400 }}
-                recordCreatorProps={false}
               />
             ),
           },

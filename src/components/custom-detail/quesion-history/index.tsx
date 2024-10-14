@@ -1,13 +1,13 @@
 import { Pie } from "@ant-design/plots";
+import { Avatar } from "antd";
 import BooleanBadge from "components/badge/boolean";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
-import { FormattedMessage, useIntl } from "react-intl";
-import { AssessmentListType, Questions } from "service/screening_list/type";
-import dayjs from "dayjs";
-import { Avatar } from "antd";
-import file from "service/file";
 import { ITable } from "components/table";
+import dayjs from "dayjs";
+import { FormattedMessage, useIntl } from "react-intl";
+import file from "service/file";
+import { AssessmentListType, Questions } from "service/screening_list/type";
 
 interface QuistionHistoryProps {
   selectedLevel: AssessmentListType;
@@ -98,7 +98,7 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
         <div className="flex gap-2 items-center">
           <FormattedMessage id="agency" />
           <span className="text-gray-700 font-bold">
-            {selectedLevel.employee?.agency?.name}
+            {selectedLevel?.employee?.agency?.name}
           </span>
         </div>
         <div className="flex gap-2 items-center">
@@ -111,13 +111,13 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
                 selectedLevel?.employee.profile?.physical_path || "AS"
               )}
             />
-            {selectedLevel.employee?.first_name}
+            {selectedLevel?.employee?.first_name}
           </span>
         </div>
         <div className="flex gap-2 items-center">
           <FormattedMessage id="assessment_date" />
           <span className="text-gray-700 font-bold">
-            {dayjs(selectedLevel.employee?.updated_at).format("DD/MM/YYYY")}
+            {dayjs(selectedLevel?.employee?.updated_at).format("DD/MM/YYYY")}
           </span>
         </div>
       </div>

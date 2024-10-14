@@ -83,8 +83,6 @@ export const ITable = <T extends {}>({
   const [detail, setDetail] = useState<T>();
   const [remove, setRemove] = useState<T>();
 
-  console.log("key", rowKey);
-
   return (
     <>
       <ProTable
