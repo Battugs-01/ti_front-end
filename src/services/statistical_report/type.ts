@@ -1,3 +1,4 @@
+import { CreatedEmployee } from "service/screening_list/type";
 import { Address } from "service/type";
 
 export interface ResponseType {
@@ -237,4 +238,19 @@ export interface Disease {
 export interface DPManagementType {
   name: string;
   items: DPAgencyType[];
+}
+
+export interface LogType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  agency_id: number;
+  agency: Agency;
+  employee_id: number;
+  employee: CreatedEmployee;
+  action: string;
+  before: string;
+  after: string;
+  type: string;
+  description: string;
 }

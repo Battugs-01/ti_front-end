@@ -7,7 +7,7 @@ import address from "service/address";
 import stackholderList from "service/settings/stackholder";
 import { StackholderType } from "service/settings/stackholder/type";
 import { ActionComponentProps } from "types";
-import { Form } from "./form";
+import { UpdateForm } from "./form/update-form";
 
 export const UpdateStakeholder: React.FC<
   ActionComponentProps<StackholderType>
@@ -110,7 +110,7 @@ export const UpdateStakeholder: React.FC<
         },
       }}
     >
-      <Form city={city} district={district} khoroo={khoroo} />
+      <UpdateForm city={city} district={district} khoroo={khoroo} />
     </ModalForm>
   );
 };
