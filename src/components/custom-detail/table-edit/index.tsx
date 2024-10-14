@@ -163,6 +163,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                 onFinish={async () => {
                   run();
                 }}
+                devPlanIsClose={devPlanData?.data?.is_close}
                 onRowSelected={(row: CareFociItemElement) =>
                   setSelectedRow(row)
                 }
@@ -174,6 +175,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                 id="edit-table-physical"
                 data={loseActivityData as any}
                 isEvaluated={true}
+                devPlanIsClose={devPlanData?.data?.is_close}
                 onFinish={async () => {
                   run();
                 }}
@@ -188,6 +190,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                 id="edit-table-psychology"
                 data={psychologyChangeData as CareFociItemElement[]}
                 isEvaluated={true}
+                devPlanIsClose={devPlanData?.data?.is_close}
                 onFinish={async () => {
                   run();
                 }}
@@ -202,6 +205,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                 id="edit-table-economy"
                 data={EconemyData as CareFociItemElement[]}
                 isEvaluated={true}
+                devPlanIsClose={devPlanData?.data?.is_close}
                 onFinish={async () => {
                   run();
                 }}
@@ -216,6 +220,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                 id="edit-table-health-risk"
                 data={HealthRiskData as CareFociItemElement[]}
                 isEvaluated={true}
+                devPlanIsClose={devPlanData?.data?.is_close}
                 onFinish={async () => {
                   run();
                 }}

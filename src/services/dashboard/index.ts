@@ -1,4 +1,3 @@
-import { ListType } from "service/type";
 import http from "..";
 import { TotalCaseInterface, TotalPointInterface } from "./type";
 namespace dashboard {
@@ -11,6 +10,10 @@ namespace dashboard {
     http.get<TotalCaseInterface>("dashboard/total_cases", {
       hasAuth: true,
       body,
+    });
+  export const mapData = () =>
+    http.get<any>("dashboard/map", {
+      hasAuth: true,
     });
 }
 

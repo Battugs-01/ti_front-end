@@ -1,7 +1,11 @@
+import { useRequest } from "ahooks";
+import { notification } from "antd";
 import Vector from "assets/img/Vector.svg";
 import { GenderBadge } from "components/badge/gender";
 import { ICard } from "components/card";
+import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
+import dashboard from "service/dashboard";
 import { TotalPointInterface } from "service/dashboard/type";
 
 interface TotalCaseAgencyProps {
@@ -9,6 +13,24 @@ interface TotalCaseAgencyProps {
 }
 
 export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
+  const mapData = useRequest(dashboard.mapData, {
+    manual: true,
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
+  });
+
+  const run = () => {
+    mapData.run();
+  };
+
+  useEffect(() => {
+    run();
+  }, []);
+
+  console.log(mapData);
   return (
     <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
