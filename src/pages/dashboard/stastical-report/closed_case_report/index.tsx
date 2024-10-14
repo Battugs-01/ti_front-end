@@ -74,6 +74,7 @@ export const ClosedCaseReport: React.FC = () => {
         refresh={refreshList}
       />
       <ITable<ClosedReportType>
+        hideAction
         className="p-0 remove-padding-table"
         dataSource={list?.data?.items}
         loading={list?.loading}

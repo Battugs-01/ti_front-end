@@ -2,19 +2,27 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { Button, Card } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import { EditScreenList } from "pages/dashboard/screening-list/components/table-actions/update";
+import { useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import { ScreeningListType } from "service/screening_list/type";
-import { ChevronLeft } from "untitledui-js-base";
+import { ChevronLeft, Edit04 } from "untitledui-js-base";
 import { parseMongolianID } from "utils/index";
 interface InfoProps {
   data: ScreeningListType;
+  refreshData?: () => void;
 }
-const Info: React.FC<InfoProps> = ({ data }) => {
+const Info: React.FC<InfoProps> = ({ data, refreshData }) => {
   if (!data) {
     return <PageLoading />;
   }
   const intl = useIntl();
+  const [updateinfo, setUpdateInfo] = useState<ScreeningListType>();
+  const [user] = useContext(AuthContext);
+
   return (
     <PageCard className="w-full p-8 rounded-md" paddingRemove>
       <div className="flex items-center justify-between flex-wrap">
@@ -34,17 +42,22 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             </div>
           </div>
         </div>
-        {/* <div className="flex justify-center flex-col items-center lg:block pb-6">
+        <div className="flex justify-center flex-col items-center lg:block pb-6">
           <div className="lg:flex-row lg:flex flex-col gap-2 justify-between p-4 lg:p-2">
-            <Button
-              type="primary"
-              icon={<Edit04 />}
-              className="flex items-center gap-3 mt-3 lg:ml-0 "
-            >
-              <FormattedMessage id="general_info_update" />
-            </Button>
+            {user?.user?.role === UserRoleType.case_manager ||
+              user?.user?.role === UserRoleType.senior_case_manager ||
+              (user?.user?.role === UserRoleType.doctor && (
+                <Button
+                  type="primary"
+                  icon={<Edit04 />}
+                  className="flex items-center gap-3 mt-3 lg:ml-0 "
+                  onClick={() => setUpdateInfo(data)}
+                >
+                  <FormattedMessage id="general_info_update" />
+                </Button>
+              ))}
           </div>
-        </div> */}
+        </div>
       </div>
 
       <Card className="flex flex-col gap-4 mt-6 bg-[#F5F8F8]">
@@ -102,6 +115,16 @@ const Info: React.FC<InfoProps> = ({ data }) => {
           </div>
         </div>
       </Card>
+      {updateinfo && (
+        <EditScreenList
+          data={updateinfo}
+          onCancel={() => setUpdateInfo(undefined)}
+          onFinish={async () => {
+            refreshData?.();
+            setUpdateInfo(undefined);
+          }}
+        />
+      )}
     </PageCard>
   );
 };

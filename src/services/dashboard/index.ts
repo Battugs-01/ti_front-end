@@ -1,5 +1,5 @@
 import http from "..";
-import { TotalCaseInterface, TotalPointInterface } from "./type";
+import { MapDataType, TotalCaseInterface, TotalPointInterface } from "./type";
 namespace dashboard {
   export const points = (body: any) =>
     http.get<TotalPointInterface[]>("dashboard/points", {
@@ -12,7 +12,7 @@ namespace dashboard {
       body,
     });
   export const mapData = () =>
-    http.get<any>("dashboard/map", {
+    http.get<MapDataType[]>("dashboard/map", {
       hasAuth: true,
     });
 }

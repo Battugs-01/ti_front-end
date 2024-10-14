@@ -30,7 +30,10 @@ export const ScreeningListFilter: React.FC<ScreeningListFilterType> = ({
                 className="w-1/2 flex justify-center items-center gap-2"
                 type="default"
                 size="large"
-                onClick={() => reset?.()}
+                onClick={() => {
+                  reset?.();
+                  submit?.();
+                }}
               >
                 <FormattedMessage id="reset" />
               </Button>

@@ -1,4 +1,4 @@
-import { Radio, Segmented } from "antd";
+import { Radio } from "antd";
 import { PopoverFilter } from "components/filter";
 import InitTableHeader from "components/table-header";
 import { ScreeningTab } from "config";
@@ -33,6 +33,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       refresh={refreshList}
       hideCreate
       search={search}
+      fileName="Case list"
       setSearch={setSearch}
       leftContent={
         <Radio.Group
