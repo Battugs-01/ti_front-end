@@ -31,10 +31,10 @@ export const ByLevel: React.FC = () => {
       let levelData: { [key: string]: any } = {};
 
       levelData = {
-        level: `level_${i}`,
+        level: `level${i}`,
       };
       list?.data?.forEach((item: any) => {
-        levelData[`month_${item.month}`] = item[`level_${i}`];
+        levelData[`month_${item.month}`] = item[`level${i}`];
       });
 
       result.push(levelData);
