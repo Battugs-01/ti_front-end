@@ -5,7 +5,7 @@ import { PageCard } from "components/card";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import { ScreeningListType } from "service/screening_list/type";
-import { ChevronLeft, Edit04 } from "untitledui-js-base";
+import { ChevronLeft } from "untitledui-js-base";
 import { parseMongolianID } from "utils/index";
 interface InfoProps {
   data: ScreeningListType;
@@ -34,7 +34,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center flex-col items-center lg:block pb-6">
+        {/* <div className="flex justify-center flex-col items-center lg:block pb-6">
           <div className="lg:flex-row lg:flex flex-col gap-2 justify-between p-4 lg:p-2">
             <Button
               type="primary"
@@ -44,7 +44,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
               <FormattedMessage id="general_info_update" />
             </Button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Card className="flex flex-col gap-4 mt-6 bg-[#F5F8F8]">

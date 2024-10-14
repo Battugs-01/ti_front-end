@@ -7,7 +7,7 @@ import UpButton from "assets/img/up_button.svg";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import React, { useContext, useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { CareFociItemElement } from "service/development_plan/type";
 import DevPlanColumns from "./column";
@@ -21,6 +21,7 @@ interface CareFociProps {
   onFinish?: () => void;
   onRowSelected: (item: CareFociItemElement) => void;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  devPlanIsClose: boolean;
   selectedRowKeys: React.Key[];
 }
 
@@ -34,12 +35,17 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   onRowSelected,
   setSelectedRowKeys,
   selectedRowKeys,
+  devPlanIsClose,
 }) => {
+  const intl = useIntl();
   const [isEditing, setIsEditing] = useState(false);
   const [user] = useContext(AuthContext);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
     onSuccess: () => {
+      notification.success({
+        message: intl.formatMessage({ id: "success" }),
+      });
       setIsEditing(false);
       onFinish && onFinish();
     },
@@ -104,7 +110,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 tableAlertRender={false}
                 scroll={{ x: 1400 }}
                 rowSelection={
-                  user?.user?.role === UserRoleType.doctor
+                  user?.user?.role === UserRoleType.doctor && !devPlanIsClose
                     ? {
                         type: "radio",
                         onChange: (selectedRowKeys, selectedRows) => {
@@ -119,7 +125,10 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                     : {}
                 }
                 onRow={(record, rowIndex) => {
-                  if (user?.user?.role === UserRoleType.doctor) {
+                  if (
+                    user?.user?.role === UserRoleType.doctor &&
+                    !devPlanIsClose
+                  ) {
                     return {
                       onClick: (event) => {
                         if (selectedRowKeys.includes(record.id)) {

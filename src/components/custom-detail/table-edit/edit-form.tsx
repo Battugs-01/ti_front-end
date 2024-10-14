@@ -1,8 +1,8 @@
 import ProForm, {
+  ProFormDigit,
   ProFormInstance,
   ProFormRadio,
   ProFormSelect,
-  ProFormText,
   ProFormTextArea,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
@@ -174,7 +174,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
             </div>
           }
         />
-        <ProFormText
+        <ProFormDigit
           name={"duration"}
           placeholder={intl.formatMessage({ id: "time" })}
           label={
@@ -192,10 +192,6 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
             loading: employee.loading,
             filterOption: false,
             onSearch: debouncedSearch,
-            // onChange: (newValue) => {
-            //   handleFieldChange(index, "person_in_charge_id", newValue);
-            // },
-            // value: record.person_in_charge_id,
           }}
           label={intl.formatMessage({ id: "select" })}
           placeholder={intl.formatMessage({ id: "select" })}
