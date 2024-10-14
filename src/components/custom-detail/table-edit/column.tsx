@@ -18,7 +18,7 @@ const DevPlanColumns = ({
   isEvaluated,
 }: DevPlanColumnsProps): ProColumns<CareFociItemElement>[] => {
   const intl = useIntl();
-
+  console.log(dataSource, "sdaData");
   const columns: ProColumns<CareFociItemElement>[] = [
     {
       title: "№",
@@ -51,7 +51,9 @@ const DevPlanColumns = ({
       editable: false,
       render: (value, record) => (
         <div className="flex items-center ">
-          {isEvaluated ? record?.care_foci_desc || "-" : value || "-"}
+          {isEvaluated
+            ? record?.customer_care_foci_item?.description || "-"
+            : record?.desc || "-"}
         </div>
       ),
     },
