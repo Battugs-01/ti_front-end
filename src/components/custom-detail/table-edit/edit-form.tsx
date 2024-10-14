@@ -23,12 +23,14 @@ interface DevPlanEditFormProps {
   setIsEditing: any;
   isEditing: boolean;
   onFinish?: () => void;
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 }
 
 const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
   data,
   setSelectedRow,
   setIsEditing,
+  setSelectedRowKeys,
   isEditing,
   onFinish,
 }) => {
@@ -65,7 +67,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
     });
   }, [data]);
 
-  const updateDevPlan = useRequest(developmentPlan.updateItemDevPlan, {
+  const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
     onSuccess: () => {
       setIsEditing(false);
@@ -90,12 +92,15 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
       extra={
         <Button
           className="mt-2 p-1 flex items-center justify-center"
-          onClick={() => setSelectedRow(null)}
+          onClick={() => {
+            setSelectedRow(null);
+            setSelectedRowKeys([]);
+          }}
         >
           <X className="w-5 h-5" />
         </Button>
       }
-      className="w-full h-full card-header-remove"
+      className="h-full w-full card-header-remove"
     >
       <ProForm
         formRef={formRef}

@@ -16,7 +16,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   }
   const intl = useIntl();
   return (
-    <PageCard className="w-full p-8 rounded-md mb-2" paddingRemove>
+    <PageCard className="w-full p-8 rounded-md" paddingRemove>
       <div className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-6">
           <Link
@@ -39,7 +39,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             <Button
               type="primary"
               icon={<Edit04 />}
-              className="flex items-center gap-3 mr-6 mt-3 lg:ml-0 ml-5"
+              className="flex items-center gap-3 mt-3 lg:ml-0 "
             >
               <FormattedMessage id="general_info_update" />
             </Button>

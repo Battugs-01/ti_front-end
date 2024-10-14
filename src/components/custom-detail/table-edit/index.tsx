@@ -110,7 +110,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
         <div className="flex  gap-2">
           <Card
             title={
-              <div className="text-xl font-semibold flex gap-4 items-center mt-3 ml-6">
+              <div className="text-xl font-semibold xl:flex gap-4 items-center mt-3 ml-6 hidden ">
                 <LineChartUp05 className="text-primary-700" />
                 <FormattedMessage id="development_plan" />
               </div>
@@ -152,9 +152,9 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                   )}
               </div>
             }
-            className="card-header-remove h-full w-full"
+            className="card-header-remove h-full w-full overflow-x-hidden"
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 w-full">
               <DevPlanTables
                 name="general"
                 id="edit-table-general"
@@ -228,10 +228,11 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
             </div>
           </Card>
           {selectedRow ? (
-            <div className=" w-full h-[900px]">
+            <div className="h-[900px] min-w-[400px]">
               <DevPlanEditForm
                 setIsEditing={setIsEditing}
                 isEditing={isEditing}
+                setSelectedRowKeys={setSelectedRowKeys}
                 data={selectedRow as CareFociItemElement}
                 setSelectedRow={setSelectedRow}
                 onFinish={async () => {
