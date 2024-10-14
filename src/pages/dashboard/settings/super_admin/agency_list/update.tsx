@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import address from "service/address";
+import file from "service/file";
 import agencyList from "service/settings/agency_list";
 import { AgencyListType } from "service/settings/agency_list/type";
 import { ActionComponentProps } from "types";
-import { Form } from "./form";
-import file from "service/file";
+import { UpdateForm } from "./form/update-form";
 
 export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
   onCancel,
@@ -143,7 +143,7 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
         },
       }}
     >
-      <Form city={city} district={district} khoroo={khoroo} />
+      <UpdateForm city={city} district={district} khoroo={khoroo} />
     </ModalForm>
   );
 };

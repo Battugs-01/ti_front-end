@@ -3,7 +3,7 @@ import WomanImg from "assets/icons/woman.svg";
 
 interface GenderBadgeProps {
   status: string;
-  percent: number;
+  percent: number | string;
 }
 
 export const GenderBadge: React.FC<GenderBadgeProps> = ({

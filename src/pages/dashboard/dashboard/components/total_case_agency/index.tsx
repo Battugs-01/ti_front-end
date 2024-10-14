@@ -1,12 +1,12 @@
 import { useRequest } from "ahooks";
-import { notification } from "antd";
-import Vector from "assets/img/Vector.svg";
+import { Avatar, notification } from "antd";
 import { GenderBadge } from "components/badge/gender";
 import { ICard } from "components/card";
 import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import dashboard from "service/dashboard";
 import { TotalPointInterface } from "service/dashboard/type";
+import file from "service/file";
 
 interface TotalCaseAgencyProps {
   data?: TotalPointInterface[];
@@ -30,7 +30,18 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
     run();
   }, []);
 
-  console.log(mapData);
+  const mandalData = mapData?.data?.find((el, index) => {
+    return el?.address?.district?.id === 238; // mandal
+  });
+
+  const darkhanData = mapData?.data?.find((el, index) => {
+    return el?.address?.district?.id === 112; // darkhan
+  });
+
+  const achlaltData = mapData?.data?.find((el, index) => {
+    return el?.address?.district?.id === 7; // Ачлалт
+  });
+
   return (
     <ICard xR yR>
       <p className="px-5 text-xl font-semibold">
@@ -48,102 +59,104 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
           }}
           className="custom_divImage mt-4 relative flex justify-between"
         >
-          <div
-            style={{
-              backgroundImage: "url('/svg/pin.png')",
-              backgroundPosition: "top",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-              top: "50px",
-              right: "269px",
-            }}
-            className="h-[50px] w-[50px] absolute"
-          >
+          {darkhanData && (
             <div
-              className="flex justify-center items-center rounded-full bg-green-700 text-white text-[11px] p-1 m-2"
               style={{
-                borderRadius: "50%",
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "50px",
+                right: "269px",
               }}
+              className="h-[50px] w-[50px] absolute"
             >
-              60%
+              <div
+                className="flex justify-center items-center rounded-full bg-green-700 text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {darkhanData?.percent.toFixed(1)}%
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              backgroundImage: "url('/svg/pin.png')",
-              backgroundPosition: "top",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-              top: "54px",
-              right: "233px",
-            }}
-            className="h-[50px] w-[50px] absolute"
-          >
+          )}
+
+          {mandalData && (
             <div
-              className="flex justify-center items-center rounded-full bg-blue-700 text-white text-[11px] p-1 m-2"
               style={{
-                borderRadius: "50%",
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "54px",
+                right: "233px",
               }}
+              className="h-[50px] w-[50px] absolute"
             >
-              60%
+              <div
+                className="flex justify-center items-center rounded-full bg-blue-700 text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {mandalData?.percent.toFixed(1)}%
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              backgroundImage: "url('/svg/pin.png')",
-              backgroundPosition: "top",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-              top: "94px",
-              right: "253px",
-            }}
-            className="h-[50px] w-[50px] absolute"
-          >
+          )}
+
+          {achlaltData && (
             <div
-              className="flex justify-center items-center rounded-full bg-[#f2ae00] text-white text-[11px] p-1 m-2"
               style={{
-                borderRadius: "50%",
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "94px",
+                right: "253px",
               }}
+              className="h-[50px] w-[50px] absolute"
             >
-              60%
+              <div
+                className="flex justify-center items-center rounded-full bg-[#f2ae00] text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {achlaltData?.percent.toFixed(1)}%
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-      <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
-        <div className="flex gap-2">
-          <img src={Vector} alt="Vector" />
-          <div className="flex flex-col">
-            <div className="text-gray-700 font-medium text-base">Дархан</div>
-            <div className="flex gap-2">
-              <span className="text-[#7b878c] text-sm font-normal">60%</span>
-              <GenderBadge status="female" percent={45} />
-              <GenderBadge status="male" percent={55} />
+      <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap mb-2 items-center">
+        {mapData?.data?.map((el) => (
+          <div className="flex gap-2">
+            <Avatar
+              shape="circle"
+              size={"small"}
+              src={file.fileToUrl(el?.profile?.physical_path || "-")}
+            />
+            <div className="flex flex-col">
+              <div className="text-gray-700 font-medium text-base">
+                {el.name}
+              </div>
+              <div className="flex gap-2">
+                <span className="text-[#7b878c] text-sm font-normal">
+                  {el?.percent?.toFixed(2)}%
+                </span>
+                <GenderBadge
+                  status="female"
+                  percent={el?.female_percent.toFixed(1)}
+                />
+                <GenderBadge
+                  status="male"
+                  percent={el?.male_percent.toFixed(1)}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <img src={Vector} alt="Vector" />
-          <div className="flex flex-col">
-            <div className="text-gray-700 font-medium text-base">Дархан</div>
-            <div className="flex gap-2">
-              <span className="text-[#7b878c] text-sm font-normal">60%</span>
-              <GenderBadge status="female" percent={45} />
-              <GenderBadge status="male" percent={55} />
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <img src={Vector} alt="Vector" />
-          <div className="flex flex-col">
-            <div className="text-gray-700 font-medium text-base">Дархан</div>
-            <div className="flex gap-2">
-              <span className="text-[#7b878c] text-sm font-normal">60%</span>
-              <GenderBadge status="female" percent={45} />
-              <GenderBadge status="male" percent={55} />
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </ICard>
   );
