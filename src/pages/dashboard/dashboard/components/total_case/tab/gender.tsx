@@ -48,6 +48,9 @@ export const Gender: React.FC<GenderProps> = ({ data }) => {
             iconSize={10}
             iconType="circle"
             layout="vertical"
+            style={{
+              margin: "auto",
+            }}
             payload={graphData.map((item) => ({
               value: `${item.type}`,
               color: item.color,

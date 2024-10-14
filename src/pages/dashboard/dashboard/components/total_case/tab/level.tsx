@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Spin, Table } from "antd";
 import { DashboardLevel } from "components/badge/dashboard_level";
 import { GenderBadge } from "components/badge/gender";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,6 +22,10 @@ const getColor = (name: string) => {
 
 export const Level: React.FC<LevelProps> = ({ data }) => {
   const intl = useIntl();
+
+  if (!data) {
+    return <Spin />;
+  }
 
   const customData = data?.map((item) => {
     return {
