@@ -107,8 +107,8 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                   user?.user?.role === UserRoleType.doctor
                     ? {
                         type: "radio",
-                        onChange: (lselectedRowKeys, selectedRows) => {
-                          setSelectedRowKeys(lselectedRowKeys);
+                        onChange: (selectedRowKeys, selectedRows) => {
+                          setSelectedRowKeys(selectedRowKeys);
                           selectedRows[0].is_general = isEvaluated
                             ? false
                             : true;

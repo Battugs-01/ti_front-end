@@ -42,7 +42,7 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
 
   return (
     <Card
-      className="mb-4 card-header-remove"
+      className="card-header-remove"
       title={
         <div className="text-xl font-semibold flex flex-row gap-4">
           <img src={AssesmentSvg} alt="assesment" />

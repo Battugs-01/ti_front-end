@@ -1,11 +1,9 @@
 import { PageLoading } from "@ant-design/pro-layout";
-import { Avatar, Button, Card } from "antd";
-import infoBack from "assets/img/info_back.png";
+import { Button, Card } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import file from "service/file";
 import { ScreeningListType } from "service/screening_list/type";
 import { ChevronLeft, Edit04 } from "untitledui-js-base";
 import { parseMongolianID } from "utils/index";
@@ -18,7 +16,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   }
   const intl = useIntl();
   return (
-    <PageCard className="w-full p-8 rounded-md mb-2" paddingRemove>
+    <PageCard className="w-full p-8 rounded-md" paddingRemove>
       <div className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-6">
           <Link
@@ -41,7 +39,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             <Button
               type="primary"
               icon={<Edit04 />}
-              className="flex items-center gap-3 mr-6 mt-3 lg:ml-0 ml-5"
+              className="flex items-center gap-3 mt-3 lg:ml-0 "
             >
               <FormattedMessage id="general_info_update" />
             </Button>
