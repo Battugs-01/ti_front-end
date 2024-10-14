@@ -78,22 +78,6 @@ const ScreeningListDetailCaseManager: React.FC = () => {
   return (
     <>
       <div className="flex flex-col justify-between gap-4">
-        <div>
-          <Link
-            to="/dashboard/screening-list"
-            style={{ textDecoration: "none" }}
-          >
-            <Button
-              type="default"
-              size="large"
-              icon={<ChevronLeft />}
-              className="flex items-center"
-            >
-              <FormattedMessage id="back" />
-            </Button>
-          </Link>
-        </div>
-
         <Info data={customerData?.data as ScreeningListType} />
         <CustomHeader
           data={assessmentData?.data || []}
