@@ -83,7 +83,7 @@ export enum ScreeningTab {
 }
 
 export enum DashboardTab {
-  all = "all",
+  all = 0,
   darkhan = "darkhan",
   mandal = "mandal",
   achlalt = "achlalt",

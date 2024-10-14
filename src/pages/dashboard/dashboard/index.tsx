@@ -12,7 +12,7 @@ import { OtherAgency } from "./admin/other_agency";
 import { Other } from "./other_roles";
 
 const Dashboard: React.FC = () => {
-  const [tab, setTab] = useState<DashboardTab>(DashboardTab.all);
+  const [tab, setTab] = useState<number>(0);
   const [user] = useContext(AuthContext);
   const listAgency = useRequest(
     async () => agencyList.list({ current: 1, pageSize: 20 }),
@@ -39,10 +39,10 @@ const Dashboard: React.FC = () => {
             }}
             size="large"
           >
-            <Radio.Button value={DashboardTab.all}>
+            <Radio.Button value={0}>
               <FormattedMessage id="all" />
             </Radio.Button>
-            {listAgency?.data?.items?.slice(0, 5).map((item) => (
+            {listAgency?.data?.items?.map((item) => (
               <Radio.Button key={item.id} value={item.id}>
                 {item.name}
               </Radio.Button>

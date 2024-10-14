@@ -37,6 +37,13 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: isEvaluated ? "description" : "answer" }),
       dataIndex: "desc",
       editable: false,
+      render: (value, record) => (
+        <div className="flex items-center ">
+          {isEvaluated
+            ? record?.customer_care_foci_item?.description || "-"
+            : record?.desc || "-"}
+        </div>
+      ),
     },
     {
       title: intl.formatMessage({ id: "severity_syndrome" }),
