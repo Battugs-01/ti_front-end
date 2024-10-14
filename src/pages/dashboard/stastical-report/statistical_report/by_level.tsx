@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import LevelBadge from "components/badge/level";
+import LevelReport from "components/badge/level_report";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -31,10 +32,10 @@ export const ByLevel: React.FC = () => {
       let levelData: { [key: string]: any } = {};
 
       levelData = {
-        level: `level_${i}`,
+        level: `level${i}`,
       };
       list?.data?.forEach((item: any) => {
-        levelData[`month_${item.month}`] = item[`level_${i}`];
+        levelData[`month_${item.month}`] = item[`level${i}`];
       });
 
       result.push(levelData);
@@ -90,7 +91,7 @@ export const ByLevel: React.FC = () => {
             dataIndex: "level",
             align: "center",
             render: (value: any) => {
-              return <LevelBadge status={value} />;
+              return <LevelReport status={value} />;
             },
           },
           {
