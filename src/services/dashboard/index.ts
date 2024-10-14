@@ -2,12 +2,12 @@ import http from "..";
 import { MapDataType, TotalCaseInterface, TotalPointInterface } from "./type";
 namespace dashboard {
   export const points = (body: any) =>
-    http.get<TotalPointInterface[]>("dashboard/points", {
+    http.post<TotalPointInterface[]>("dashboard/points", {
       hasAuth: true,
       body,
     });
   export const totalCase = (body: any) =>
-    http.get<TotalCaseInterface>("dashboard/total_cases", {
+    http.post<TotalCaseInterface>("dashboard/total_cases", {
       hasAuth: true,
       body,
     });
