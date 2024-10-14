@@ -104,7 +104,6 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
           }))
       ) || [];
 
-  console.log(loseActivityData, "sdaa2");
   return (
     <>
       {devPlanData?.data?.items && error === false && (
@@ -140,8 +139,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
                   <FormattedMessage id="download" />
                 </Button>
                 {user &&
-                  (user.user?.role === UserRoleType.doctor ||
-                    user.user?.role === UserRoleType.senior_case_manager) &&
+                  user.user?.role === UserRoleType.doctor &&
                   devPlanData?.data?.is_close === false && (
                     <Button
                       size="large"
