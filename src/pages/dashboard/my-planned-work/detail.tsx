@@ -28,9 +28,19 @@ const MyPlannedWorkDetail: React.FC = () => {
     data.run(customerId as string);
   };
 
+  // Хэрэгцээний цогц үнэлгээ болон өвчний түүх
+  const comprehensiveData = useRequest(screenList.assessmentComprehensive, {
+    manual: true,
+  });
+
+  const comprehensiveDataRun = () => {
+    comprehensiveData.run((assId as any) || 0);
+  };
+
   useEffect(() => {
     run();
-  }, [customerId]);
+    comprehensiveDataRun();
+  }, [customerId, assId]);
 
   if (!data && !customerId) {
     return <PageLoading />;
@@ -38,17 +48,16 @@ const MyPlannedWorkDetail: React.FC = () => {
 
   return (
     <>
-      <div className="grid xl:grid-cols-5 grid-cols-1 gap-6">
-        <div className="xl:col-span-1 flex flex-col gap-6">
-          <Info data={data?.data as ScreeningListType} />
-          <Emergency customerId={customerId} />
-        </div>
-        <div className="xl:col-span-4">
-          <PlannedWork
-            customerMainData={data?.data as ScreeningListType}
-            assesment_id={assId ? Number(assId) : 0}
-          />
-        </div>
+      <div className="flex flex-col justify-between gap-4">
+        <Info data={data?.data as ScreeningListType} />
+        <Emergency
+          customerId={customerId}
+          deseaseData={comprehensiveData?.data?.diseases}
+        />
+        <PlannedWork
+          customerMainData={data?.data as ScreeningListType}
+          assesment_id={assId ? Number(assId) : 0}
+        />
       </div>
     </>
   );

@@ -7,7 +7,6 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Avatar, Button, Card, notification } from "antd";
-import { FORM_ITEM_RULE } from "config";
 import { debounce } from "lodash";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,8 +43,6 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
       });
     },
   });
-
-  console.log(data, "sdaData");
 
   const debouncedSearch = debounce((value) => {
     employee.run({
@@ -122,8 +119,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
                     type="primary"
                     onClick={onSubmit}
                   >
-                    {/* <IoMdAddCircleOutline size={18} /> */}
-                    Бүртгэх
+                    <FormattedMessage id="save" />
                   </Button>
                 </div>
               </>
@@ -151,7 +147,6 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
           }
           className="flex justify-between"
           name={"severity_level"}
-          rules={FORM_ITEM_RULE()}
           options={[
             {
               value: "Хөнгөн",
@@ -166,7 +161,6 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
             className: "w-full h-40",
           }}
           name={"summary_plan"}
-          rules={FORM_ITEM_RULE()}
           placeholder={intl.formatMessage({ id: "summary_plan" })}
           className="w-full h-40"
           label={
@@ -177,7 +171,6 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
         />
         <ProFormText
           name={"duration"}
-          rules={FORM_ITEM_RULE()}
           placeholder={intl.formatMessage({ id: "time" })}
           label={
             <div className="font-medium text-gray-700">
@@ -224,8 +217,8 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
           fieldProps={{
             className: "w-full h-40",
           }}
+          disabled
           name={"result"}
-          rules={FORM_ITEM_RULE()}
           placeholder={intl.formatMessage({ id: "result" })}
           className="w-full h-40"
           label={
@@ -242,7 +235,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
           }
           className="flex justify-between"
           name={"is_resolved"}
-          rules={FORM_ITEM_RULE()}
+          disabled
           options={[
             {
               value: true,

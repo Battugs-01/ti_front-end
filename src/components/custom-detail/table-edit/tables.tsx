@@ -4,7 +4,9 @@ import { useRequest } from "ahooks";
 import { Collapse, notification } from "antd";
 import DownButton from "assets/img/down_button.svg";
 import UpButton from "assets/img/up_button.svg";
-import React, { useEffect, useState } from "react";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import React, { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { CareFociItemElement } from "service/development_plan/type";
@@ -34,7 +36,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
   selectedRowKeys,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const [user] = useContext(AuthContext);
   const updateDevPlan = useRequest(developmentPlan.updateDevPlan, {
     manual: true,
     onSuccess: () => {
@@ -101,33 +103,39 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 search={false}
                 tableAlertRender={false}
                 scroll={{ x: 1400 }}
-                rowSelection={{
-                  type: "radio",
-                  onChange: (lselectedRowKeys, selectedRows) => {
-                    setSelectedRowKeys(lselectedRowKeys);
-                    selectedRows[0].is_general = isEvaluated ? false : true;
-                    onRowSelected(selectedRows[0]);
-                  },
-                  selectedRowKeys: selectedRowKeys,
-                }}
-                onRow={(record, rowIndex) => {
-                  return {
-                    onClick: (event) => {
-                      if (
-                        selectedRowKeys.find((element) => element === record.id)
-                      ) {
-                        setSelectedRowKeys(
-                          selectedRowKeys.filter((key) => key !== record.id)
-                        );
-                        onRowSelected(null as any);
-                      } else {
-                        setSelectedRowKeys([record.id]);
-                        record.is_general = isEvaluated ? false : true;
-
-                        onRowSelected(record);
+                rowSelection={
+                  user?.user?.role === UserRoleType.doctor
+                    ? {
+                        type: "radio",
+                        onChange: (lselectedRowKeys, selectedRows) => {
+                          setSelectedRowKeys(lselectedRowKeys);
+                          selectedRows[0].is_general = isEvaluated
+                            ? false
+                            : true;
+                          onRowSelected(selectedRows[0]);
+                        },
+                        selectedRowKeys: selectedRowKeys,
                       }
-                    },
-                  };
+                    : {}
+                }
+                onRow={(record, rowIndex) => {
+                  if (user?.user?.role === UserRoleType.doctor) {
+                    return {
+                      onClick: (event) => {
+                        if (selectedRowKeys.includes(record.id)) {
+                          setSelectedRowKeys(
+                            selectedRowKeys.filter((key) => key !== record.id)
+                          );
+                          onRowSelected(null as any);
+                        } else {
+                          setSelectedRowKeys([record.id]);
+                          record.is_general = isEvaluated ? false : true;
+                          onRowSelected(record);
+                        }
+                      },
+                    };
+                  }
+                  return {};
                 }}
                 columns={DevPlanColumns({
                   dataSource,
