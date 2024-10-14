@@ -165,6 +165,7 @@ export interface CreatedEmployee {
   phone: string;
   is_active: boolean;
   address: Address;
+  role: string;
 }
 
 export interface Item {

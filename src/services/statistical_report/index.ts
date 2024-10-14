@@ -6,11 +6,13 @@ import {
   ClosedReportType,
   DPAgencyType,
   DPManagementType,
+  LogType,
   ManagementReportType,
   ResponseType,
   StatisticalAgeReportType,
   StatisticalReportType,
 } from "./type";
+import { PaginationResponse } from "types";
 
 namespace statisticalReport {
   export const activeAgingList = (body: any) =>
@@ -52,7 +54,7 @@ namespace statisticalReport {
     );
 
   export const reportLogList = (body?: any) =>
-    http.post<ResponseType[]>("statistical_report/report_log/list", {
+    http.post<PaginationResponse<LogType>>("log/list", {
       hasAuth: true,
       body,
     });
