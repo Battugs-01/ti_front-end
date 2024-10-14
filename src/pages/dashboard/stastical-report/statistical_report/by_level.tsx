@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import LevelBadge from "components/badge/level";
+import LevelReport from "components/badge/level_report";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -90,7 +91,7 @@ export const ByLevel: React.FC = () => {
             dataIndex: "level",
             align: "center",
             render: (value: any) => {
-              return <LevelBadge status={value} />;
+              return <LevelReport status={value} />;
             },
           },
           {
