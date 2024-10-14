@@ -1,11 +1,9 @@
 import { PageLoading } from "@ant-design/pro-layout";
-import { Avatar, Button, Card } from "antd";
-import infoBack from "assets/img/info_back.png";
+import { Button, Card } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import file from "service/file";
 import { ScreeningListType } from "service/screening_list/type";
 import { ChevronLeft, Edit04 } from "untitledui-js-base";
 import { parseMongolianID } from "utils/index";
