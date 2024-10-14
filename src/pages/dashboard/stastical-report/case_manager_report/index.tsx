@@ -77,6 +77,7 @@ export const CaseManagerReport: React.FC = () => {
         loading={list.loading}
         className="p-0 remove-padding-table"
         dataSource={list?.data?.items || []}
+        hideAction
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),
@@ -121,6 +122,7 @@ export const CaseManagerReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "cfs_score" }),
             dataIndex: "cfs_score",
+            align: "center",
             render: (_, record) => {
               return (
                 <p className="text-[#98A2B3]">

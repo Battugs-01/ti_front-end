@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
 import { PlannedWorksType } from "service/my_planned_work/types";
 import statisticalReport from "service/statistical_report";
-import { AlertCircle } from "untitledui-js-base";
+import { AlertCircle, Check } from "untitledui-js-base";
 import {
   parseMongolianGender,
   parseMongolianID,
@@ -153,6 +153,7 @@ export const ByCaseManager: React.FC = () => {
         key="ass_id"
         rowKey="ass_id"
         dataSource={list?.data}
+        hideAction
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),
@@ -263,10 +264,21 @@ export const ByCaseManager: React.FC = () => {
             dataIndex: "cfs_score",
             align: "center",
             render: (_: any, record: PlannedWorksType): React.ReactNode => (
-              <div className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium truncate bg-[#fffaeb] text-[#b54708] gap-1">
-                <AlertCircle size="15" color="#f99009" />
+              <div
+                className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium truncate ${
+                  record?.care_foci_resolved_count === record?.allocated_count
+                    ? "bg-[#ECFDF3] text-[#027A48]"
+                    : "bg-[#fffaeb] text-[#b54708]"
+                }  gap-1`}
+              >
+                {record?.care_foci_resolved_count ===
+                record?.allocated_count ? (
+                  <Check size="15" />
+                ) : (
+                  <AlertCircle size="15" color="#f99009" />
+                )}
                 <div>
-                  <span className="">{record?.resolved_count}</span>/
+                  <span className="">{record?.care_foci_resolved_count}</span>/
                   {record?.allocated_count}
                 </div>
               </div>
