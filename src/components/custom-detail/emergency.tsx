@@ -10,7 +10,7 @@ import { useLevelContext } from "./selected-level";
 
 interface EmergencyProps {
   customerId: any;
-  deseaseData: Disease[] | undefined;
+  deseaseData?: Disease[] | undefined;
 }
 const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
   const { selectedLevel } = useLevelContext();
