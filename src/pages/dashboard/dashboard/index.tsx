@@ -27,7 +27,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <div>
-      {user?.user?.role === UserRoleType.super_admin ? (
+      {user?.user?.role === UserRoleType.super_admin ||
+      user?.user?.role === UserRoleType.stack_holder ? (
         <>
           {listAgency.loading && <PageLoading />}
           <Radio.Group
