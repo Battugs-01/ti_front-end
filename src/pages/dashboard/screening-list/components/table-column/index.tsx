@@ -3,6 +3,7 @@ import { Avatar } from "antd";
 import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
+import { FormattedMessage } from "react-intl";
 import file from "service/file";
 import { ScreeningListType } from "service/screening_list/type"; // Assuming this is your table data type
 import { parseMongolianGender, parseMongolianID } from "utils/index";
@@ -115,9 +116,30 @@ export const getScreeningTableColumns = (
     },
   },
   {
+    title: intl.formatMessage({ id: "hcu_state" }),
+    dataIndex: "is_temporary",
+    width: 130,
+    render: (_: any, record: ScreeningListType): React.ReactNode => {
+      if (record?.assessment?.is_temporary) {
+        return (
+          <IBadge
+            title={<FormattedMessage id="state_incomplete" />}
+            color="yellow"
+          />
+        );
+      }
+      return (
+        <IBadge
+          title={<FormattedMessage id="state_complete" />}
+          color="green"
+        />
+      );
+    },
+  },
+  {
     title: intl.formatMessage({ id: "address" }),
     dataIndex: "address",
-    width: 250,
+    width: 350,
     render: (_: any, record: ScreeningListType): React.ReactNode => (
       <div>{`${record?.address?.city?.name || ""}  ${
         record?.address?.district?.name || ""

@@ -193,6 +193,27 @@ export const CaseManagerReport: React.FC = () => {
             },
           },
           {
+            title: intl.formatMessage({ id: "hcu_state" }),
+            dataIndex: "is_temporary",
+            width: 130,
+            render: (_: any, record): React.ReactNode => {
+              if (record?.assessment?.is_temporary) {
+                return (
+                  <IBadge
+                    title={<FormattedMessage id="state_incomplete" />}
+                    color="yellow"
+                  />
+                );
+              }
+              return (
+                <IBadge
+                  title={<FormattedMessage id="state_complete" />}
+                  color="green"
+                />
+              );
+            },
+          },
+          {
             title: intl.formatMessage({ id: "development_plan" }),
             dataIndex: "development_plan",
             align: "center",

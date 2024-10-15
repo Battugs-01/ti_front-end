@@ -109,6 +109,7 @@ export interface PurpleAssessment {
   date_comp_ass: Date;
   priority: string;
   id: number;
+  is_temporary: boolean;
 }
 
 export interface PersonInCharge {

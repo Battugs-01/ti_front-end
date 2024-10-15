@@ -269,5 +269,8 @@
   "development_plan_date": "ХТ огноо",
   "distributed": "Хуваарилагдсан",
   "decided": "Шийдэгдсэн",
-  "ou": "ӨҮ"
+  "ou": "ӨҮ",
+  "hcu_state":"ХЦҮ төлөв",
+  "state_incomplete":"Түр хадгалсан",
+  "state_complete":"Бүрэн оруулсан"
 }

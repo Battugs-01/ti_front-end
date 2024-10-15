@@ -258,5 +258,8 @@
   "distributed": "Distributed",
   "decided": "Decided",
   "ou": "ӨҮ",
-  "stack_holder": "Stackholder"
+  "stack_holder": "Stackholder",
+  "hcu_state":"HCU state",
+  "state_incomplete":"Temporarily saved",
+  "state_complete":"Fully inserted"
 }
