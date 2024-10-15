@@ -8,6 +8,7 @@ import { BiSearch } from "react-icons/bi";
 import { ActionComponentProps } from "types";
 import { exportFromList, exportFromTable } from "utils/export";
 import { CreateButton, ExportButton } from "..";
+import { useIntl } from "react-intl";
 
 interface TableHeaderProps {
   customHeaderTitle?: string | React.ReactNode;
@@ -62,6 +63,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
+  const intl = useIntl();
 
   const form = useRef<ProFormInstance>();
 
@@ -106,7 +108,9 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           </Button> */}
           <ProFormText
             name={"text"}
-            placeholder={searchPlaceHolder || "Хайх"}
+            placeholder={
+              searchPlaceHolder || intl.formatMessage({ id: "search" })
+            }
             hidden={hideSearch}
             fieldProps={{
               size: "large",

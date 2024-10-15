@@ -206,22 +206,27 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "hcu_state" }),
             dataIndex: "is_temporary",
+            align: "center",
             width: 130,
             render: (_: any, record: ScreeningListType): React.ReactNode => {
-              if (record?.assessment?.is_temporary) {
+              if (record?.assessment?.level === "level_3") {
+                if (record?.assessment?.is_temporary) {
+                  return (
+                    <IBadge
+                      title={<FormattedMessage id="state_incomplete" />}
+                      color="yellow"
+                    />
+                  );
+                }
                 return (
                   <IBadge
-                    title={<FormattedMessage id="not_entered" />}
-                    color="yellow"
+                    title={<FormattedMessage id="state_complete" />}
+                    color="green"
                   />
                 );
+              } else {
+                return <div>-</div>;
               }
-              return (
-                <IBadge
-                  title={<FormattedMessage id="entered" />}
-                  color="green"
-                />
-              );
             },
           },
           {
@@ -271,9 +276,11 @@ export const QuestionList: React.FC = () => {
               <div className="">
                 <IBadge
                   title={
-                    record?.assessment?.developer_plan
-                      ?  <FormattedMessage id="entered"/>
-                      : <FormattedMessage id="not_entered"/>
+                    record?.assessment?.developer_plan ? (
+                      <FormattedMessage id="entered" />
+                    ) : (
+                      <FormattedMessage id="not_entered" />
+                    )
                   }
                   color={record?.assessment?.developer_plan ? "green" : "gray"}
                 />

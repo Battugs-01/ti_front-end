@@ -273,8 +273,15 @@
   "distributed": "Хуваарилагдсан",
   "decided": "Шийдэгдсэн",
   "ou": "ӨҮ",
-  "hcu_state":"ХЦҮ төлөв",
-  "state_incomplete":"Түр хадгалсан",
-  "state_complete":"Бүрэн оруулсан",
-  "login":"Нэвтрэх"
+  "hcu_state": "ХЦҮ төлөв",
+  "state_incomplete": "Түр хадгалсан",
+  "state_complete": "Бүрэн оруулсан",
+  "login": "Нэвтрэх",
+  "login_email": "Нэвтрэх и-мэйл",
+  "must_email": "Энэ талбар и-мэйл хаяг байх ёстой",
+  "required_password": "Нууц үг оруулна уу!",
+  "valid_password": "Хамгийн багадаа 8 тэмдэгт оруулна уу.",
+  "login_reminder": "Нэвтрэх нэр сануулах",
+  "dp_date": "ХТ огноо",
+  "search": "Хайх"
 }

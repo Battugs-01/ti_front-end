@@ -33,6 +33,8 @@ export const ManagementReport: React.FC = () => {
     },
   });
 
+  const isMn = localStorage.getItem("web.locale") === "mn";
+
   const listAgency = useRequest(
     async () => agencyList.list({ current: 1, pageSize: 20 }),
     {
@@ -181,7 +183,11 @@ export const ManagementReport: React.FC = () => {
                 },
                 className: "ml-5",
                 render: (_) => {
-                  return <p className="ml-4">{agency?.name}</p>;
+                  return (
+                    <p className="ml-4">
+                      {isMn ? agency?.name : agency?.name_en}
+                    </p>
+                  );
                 },
               },
               {
@@ -202,6 +208,7 @@ export const ManagementReport: React.FC = () => {
                 title: intl.formatMessage({ id: "functional_impairment" }),
                 dataIndex: "functional",
                 align: "center",
+                width: 150,
                 render: (_, record) => {
                   const data = record.care_foci?.find((value) => {
                     return value.key === "functional";
@@ -215,6 +222,7 @@ export const ManagementReport: React.FC = () => {
                 }),
                 dataIndex: "psycho_emotional",
                 align: "center",
+                width: 150,
                 render: (_, record) => {
                   const data = record.care_foci?.find((value) => {
                     return value.key === "psycho_emotional";
@@ -228,6 +236,7 @@ export const ManagementReport: React.FC = () => {
                 }),
                 dataIndex: "socio_economic",
                 align: "center",
+                width: 150,
                 render: (_, record) => {
                   const data = record.care_foci?.find((value) => {
                     return value.key === "socio_economic";
@@ -239,6 +248,7 @@ export const ManagementReport: React.FC = () => {
                 title: intl.formatMessage({ id: "health_risks" }),
                 dataIndex: "clinical",
                 align: "center",
+                width: 150,
                 render: (_, record) => {
                   const data = record.care_foci?.find((value) => {
                     return value.key === "clinical";
@@ -249,6 +259,7 @@ export const ManagementReport: React.FC = () => {
               {
                 title: intl.formatMessage({ id: "care_foci" }),
                 dataIndex: "care_foci",
+                width: 100,
                 align: "center",
                 render: (_, record) => {
                   return <div>{record?.care_foci?.length}</div>;

@@ -47,7 +47,7 @@ export const PlannedWorkTableColumns = (
     },
   },
   {
-    title: intl.formatMessage({ id: "hcu_date" }),
+    title: intl.formatMessage({ id: "by_hcu_date" }),
     dataIndex: "levels",
     width: 130,
     render: (_: any, record: PlannedWorksType): React.ReactNode => {
@@ -63,7 +63,7 @@ export const PlannedWorkTableColumns = (
     },
   },
   {
-    title: "Care-Foci",
+    title: intl.formatMessage({ id: "care_foci" }),
     dataIndex: "cfs_score",
     align: "center",
     render: (_: any, record: PlannedWorksType): React.ReactNode => (
@@ -76,7 +76,7 @@ export const PlannedWorkTableColumns = (
     ),
   },
   {
-    title: "ХТ огноо",
+    title: intl.formatMessage({ id: "dp_date" }),
     dataIndex: "levels",
     width: 130,
     render: (_: any, record: PlannedWorksType): React.ReactNode => {
