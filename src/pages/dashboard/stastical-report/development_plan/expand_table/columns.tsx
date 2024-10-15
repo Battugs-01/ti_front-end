@@ -86,7 +86,11 @@ const DevPlanColumnsReport = ({
       dataIndex: "duration",
       width: 100,
       align: "center",
-      render: (value) => value + " хоног",
+      render: (value) => (
+        <div className="flex gap-2">
+          {value + " " + intl.formatMessage({ id: "day" })}
+        </div>
+      ),
     },
     {
       title: intl.formatMessage({ id: "responsible" }),
