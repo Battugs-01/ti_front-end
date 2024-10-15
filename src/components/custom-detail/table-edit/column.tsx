@@ -40,9 +40,15 @@ const DevPlanColumns = ({
       editable: false,
       render: (_, record) => (
         <div className="flex items-center ">
-          {isEvaluated
-            ? record?.customer_care_foci_item?.care_foci_item?.name
-            : DevPlanQuistion(record?.key as string)}
+          {isEvaluated ? (
+            localStorage?.getItem("web.locale") === "en" ? (
+              record?.customer_care_foci_item?.care_foci_item?.name_eng
+            ) : (
+              record?.customer_care_foci_item?.care_foci_item?.name
+            )
+          ) : (
+            <FormattedMessage id={DevPlanQuistion(record?.key as string)} />
+          )}
         </div>
       ),
     },
@@ -86,7 +92,11 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
       align: "center",
-      render: (value, record, index) => value + " хоног",
+      render: (value) => (
+        <div className="flex gap-2">
+          {value + " " + intl.formatMessage({ id: "day" })}
+        </div>
+      ),
     },
     {
       title: intl.formatMessage({ id: "responsible" }),

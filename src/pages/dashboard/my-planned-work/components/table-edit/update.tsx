@@ -157,7 +157,7 @@ export const DevPlanUpdate = ({
             <FormattedMessage id="time" />
           </div>
           <div className="text-gray-700 font-normal text-sm ">
-            {data?.duration + " хоног" || "-"}
+            {data?.duration + " " + intl.formatMessage({ id: "day" }) || "-"}
           </div>
         </div>
         <div className="flex flex-row justify-between">
