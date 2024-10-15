@@ -9,7 +9,7 @@ import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
 import { DevPlanQuistion } from "utils/dev_plan";
 interface DevPlanColumnsProps {
-  dataSource: CareFociItemElement[];
+  dataSource: CareFociItemElement[] | any;
   isEvaluated?: boolean;
 }
 
@@ -18,7 +18,6 @@ const DevPlanColumns = ({
   isEvaluated,
 }: DevPlanColumnsProps): ProColumns<CareFociItemElement>[] => {
   const intl = useIntl();
-  console.log(dataSource, "sdaData");
   const columns: ProColumns<CareFociItemElement>[] = [
     {
       title: "№",
@@ -29,7 +28,9 @@ const DevPlanColumns = ({
       valueType: "index",
       className: "text-gray-600",
       render: (_value, _record, index) =>
-        index + 1 + (Array.isArray(dataSource) ? 0 : dataSource.length),
+        index +
+        1 +
+        (Array.isArray(dataSource) ? 0 : (dataSource?.length as any)),
     },
     {
       title: intl.formatMessage({ id: "question" }),

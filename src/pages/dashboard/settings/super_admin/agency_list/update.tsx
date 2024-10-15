@@ -98,7 +98,6 @@ export const UpdateAgency: React.FC<ActionComponentProps<AgencyListType>> = ({
         destroyOnClose: true,
         width: "650px",
         onCancel: () => {
-          console.log("open change", formRef);
           formRef?.current?.resetFields();
           onCancel?.();
         },

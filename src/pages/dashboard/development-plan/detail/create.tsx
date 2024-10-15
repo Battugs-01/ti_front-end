@@ -115,8 +115,6 @@ export const CreateDevelopmentPlan: React.FC<DevelopmentProps> = ({
                   <Button
                     ghost
                     onClick={(e) => {
-                      console.log(e, "e");
-                      console.log(index, "index");
                       ref.current?.remove(index);
                     }}
                     className="text-[#F04438] flex items-center border-none"

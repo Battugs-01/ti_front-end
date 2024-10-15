@@ -75,8 +75,6 @@ export const exportFromTable = async (
       maindata.push(record);
     }
 
-    console.log(maindata, "this is main data");
-
     await exportXLSX(maindata, filename);
     resolve(true);
   });
@@ -119,8 +117,6 @@ export const exportFromTableManyData = async (
         maindata.push(record);
       }
     }
-
-    console.log(maindata, "this is main data from all tables");
 
     // Call your export function (e.g., exportXLSX)
     await exportXLSX(maindata, filename);

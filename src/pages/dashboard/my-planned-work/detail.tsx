@@ -49,7 +49,10 @@ const MyPlannedWorkDetail: React.FC = () => {
   return (
     <>
       <div className="flex flex-col justify-between gap-4">
-        <Info data={data?.data as ScreeningListType} />
+        <Info
+          data={data?.data as ScreeningListType}
+          isMyPlanedWork={assId as string}
+        />
         <Emergency
           customerId={customerId}
           deseaseData={comprehensiveData?.data?.diseases}

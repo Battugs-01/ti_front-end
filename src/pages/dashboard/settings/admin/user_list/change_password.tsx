@@ -18,7 +18,6 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
   onFinish,
   record,
 }) => {
-  console.log(record, "kk");
   const updatePassword = useRequest(userList.updatePasswordUser, {
     manual: true,
     onSuccess: () => {

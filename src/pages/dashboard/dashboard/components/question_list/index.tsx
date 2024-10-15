@@ -5,9 +5,11 @@ import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
 // import { ScreeningListFilter } from "pages/dashboard/screening-list/components/filter";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
 import screenList from "service/screening_list";
@@ -21,6 +23,7 @@ import {
 export const QuestionList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
+  const [user] = useContext(AuthContext);
   const intl = useIntl();
 
   const screen = useRequest(screenList.list, {
@@ -70,6 +73,14 @@ export const QuestionList: React.FC = () => {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "first_name",
             render: (value) => {
+              if (
+                user?.user?.role === UserRoleType.super_admin ||
+                user?.user?.role === UserRoleType.stack_holder
+              ) {
+                return (
+                  <p className="text-primary-700 font-bold">***********</p>
+                );
+              }
               return <p className="text-primary-700 font-bold">{value}</p>;
             },
           },
@@ -77,12 +88,31 @@ export const QuestionList: React.FC = () => {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
             render: (value) => {
+              if (
+                user?.user?.role === UserRoleType.super_admin ||
+                user?.user?.role === UserRoleType.stack_holder
+              ) {
+                return (
+                  <p className="text-primary-700 font-bold">***********</p>
+                );
+              }
               return <p className="uppercase">{value}</p>;
             },
           },
           {
             title: intl.formatMessage({ id: "phone" }),
             dataIndex: "phone",
+            render: (value) => {
+              if (
+                user?.user?.role === UserRoleType.super_admin ||
+                user?.user?.role === UserRoleType.stack_holder
+              ) {
+                return (
+                  <p className="text-primary-700 font-bold">***********</p>
+                );
+              }
+              return <p>{value}</p>;
+            },
           },
           {
             title: intl.formatMessage({ id: "age" }),

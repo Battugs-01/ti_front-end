@@ -14,8 +14,9 @@ import { parseMongolianID } from "utils/index";
 interface InfoProps {
   data: ScreeningListType;
   refreshData?: () => void;
+  isMyPlanedWork?: string;
 }
-const Info: React.FC<InfoProps> = ({ data, refreshData }) => {
+const Info: React.FC<InfoProps> = ({ data, refreshData, isMyPlanedWork }) => {
   if (!data) {
     return <PageLoading />;
   }
@@ -46,16 +47,17 @@ const Info: React.FC<InfoProps> = ({ data, refreshData }) => {
           <div className="lg:flex-row lg:flex flex-col gap-2 justify-between p-4 lg:p-2">
             {(user?.user?.role === UserRoleType.case_manager ||
               user?.user?.role === UserRoleType.senior_case_manager ||
-              user?.user?.role === UserRoleType.doctor) && (
-              <Button
-                type="primary"
-                icon={<Edit04 />}
-                className="flex items-center gap-3 mt-3 lg:ml-0 "
-                onClick={() => setUpdateInfo(data)}
-              >
-                <FormattedMessage id="general_info_update" />
-              </Button>
-            )}
+              user?.user?.role === UserRoleType.doctor) &&
+              !isMyPlanedWork && (
+                <Button
+                  type="primary"
+                  icon={<Edit04 />}
+                  className="flex items-center gap-3 mt-3 lg:ml-0 "
+                  onClick={() => setUpdateInfo(data)}
+                >
+                  <FormattedMessage id="general_info_update" />
+                </Button>
+              )}
           </div>
         </div>
       </div>

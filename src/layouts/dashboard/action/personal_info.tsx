@@ -64,7 +64,6 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
       width={650}
       open={visible}
       onFinish={async (values) => {
-        console.log(values, "LLL");
         const id = await newFileUpload(values?.profile);
 
         await updateProfile.runAsync({
