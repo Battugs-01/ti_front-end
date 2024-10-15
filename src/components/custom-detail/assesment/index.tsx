@@ -1,10 +1,10 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { Card, Col, Row } from "antd";
 import AssesmentSvg from "assets/img/assesment.svg";
+import IBadge from "components/badge";
 import { ProgressCard, StatCard } from "components/card";
-import { AuthContext } from "context/auth";
-import React, { useContext } from "react";
-import { FormattedMessage } from "react-intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   AssessmentListType,
   ComprehensiveType,
@@ -20,8 +20,7 @@ interface AssesmentProps {
 }
 
 const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
-  const [user] = useContext(AuthContext);
-
+  const intl = useIntl();
   const [openModal, setOpenModal] = React.useState<string>("");
 
   if (!selectedLevel) {
@@ -34,6 +33,17 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
         <div className="text-xl font-semibold flex flex-row gap-4">
           <img src={AssesmentSvg} alt="assesment" />
           <FormattedMessage id="screening_assessment" />
+          {data?.comp_ass?.is_temporary ? (
+            <IBadge
+              title={intl.formatMessage({ id: "Incomplete" })}
+              color="yellow"
+            />
+          ) : (
+            <IBadge
+              title={intl.formatMessage({ id: "information_complete" })}
+              color="green"
+            />
+          )}
         </div>
       }
       className="card-header-remove"

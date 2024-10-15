@@ -281,6 +281,7 @@ export interface CompAss {
   cognition: Cognition;
   nutrition_hydration: NutritionHydration;
   mood: Mood;
+  is_temporary : boolean;
   health_risks: HealthRisks;
   preventive_health: PreventiveHealth;
   advance_care_planning: AdvanceCarePlanning;
