@@ -34,33 +34,23 @@ export const CareFoci: React.FC = () => {
   };
 
   const filteredData = useMemo(() => {
-    let result: any[] = [];
-    let count = 0;
-    list?.data?.map((item) => {
-      count = item.items.length;
-      item.items.map((i, key) => {
-        result.push({
+    return (
+      list?.data?.flatMap((item) =>
+        item.items.map((i, index) => ({
           group_name: item.name,
           name: i.name,
-          count: count,
-          key: key + 1,
-          month_1: i.months[0],
-          month_2: i.months[1],
-          month_3: i.months[2],
-          month_4: i.months[3],
-          month_5: i.months[4],
-          month_6: i.months[5],
-          month_7: i.months[6],
-          month_8: i.months[7],
-          month_9: i.months[8],
-          month_10: i.months[9],
-          month_11: i.months[10],
-          month_12: i.months[11],
-        });
-      });
-      count = 0;
-    });
-    return result;
+          count: item.items.length,
+          key: index + 1,
+          ...i.months.reduce(
+            (acc: { [key: string]: any }, monthData, monthIndex) => {
+              acc[`month_${monthIndex + 1}`] = monthData;
+              return acc;
+            },
+            {}
+          ),
+        }))
+      ) || []
+    );
   }, [list.data]);
 
   return (
