@@ -58,6 +58,7 @@ export interface Assessment {
   count_comp_ass: number;
   date_comp_ass: string;
   developer_plan: boolean;
+  is_temporary: boolean;
 }
 
 export interface PersonInCharge {
