@@ -16,6 +16,7 @@ export const BartherIndexModal = ({ data, onCancel }: PropsCancel) => {
   const formRef = useRef<ProFormInstance>();
   const intl = useIntl();
 
+  console.log(data, "sda");
   return (
     <ModalForm
       modalProps={{ maskClosable: false, onCancel, className: "rounded " }}
@@ -37,10 +38,14 @@ export const BartherIndexModal = ({ data, onCancel }: PropsCancel) => {
         {data?.map((item) => (
           <div key={item?.id} className="grid grid-cols-2">
             <div className="text-gray-900 font-medium text-sm col-span-1">
-              {item?.barthel_index?.name}
+              {localStorage?.getItem("web.locale") === "en"
+                ? item?.barthel_index?.name_en
+                : item?.barthel_index?.name}
             </div>
             <div className="text-gray-700 font-normal text-sm col-span-1">
-              {item?.answer?.answer}
+              {localStorage?.getItem("web.locale") === "en"
+                ? item?.answer?.answer_en
+                : item?.answer?.answer}
             </div>
           </div>
         ))}

@@ -80,7 +80,13 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "answer",
             render: (_, record) => {
-              return <div>{record.question.title}</div>;
+              return (
+                <div>
+                  {localStorage?.getItem("web.locale") === "en"
+                    ? record?.question?.title_en
+                    : record.question.title}
+                </div>
+              );
             },
           },
           {
@@ -98,7 +104,10 @@ const QuistionHistory: React.FC<QuistionHistoryProps> = ({ selectedLevel }) => {
         <div className="flex gap-2 items-center">
           <FormattedMessage id="agency" />
           <span className="text-gray-700 font-bold">
-            {selectedLevel?.employee?.agency?.name}
+            {localStorage?.getItem("web.locale") === "en"
+              ? selectedLevel?.employee?.agency?.name_en ||
+                selectedLevel?.employee?.agency?.name
+              : selectedLevel?.employee?.agency?.name}
           </span>
         </div>
         <div className="flex gap-2 items-center">

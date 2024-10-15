@@ -6,12 +6,12 @@ import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import file from "service/file";
 import agencyList from "service/settings/agency_list";
 import { AgencyListType } from "service/settings/agency_list/type";
 import { initPagination } from "utils/index";
 import { CreateAgency } from "./create";
 import { UpdateAgency } from "./update";
-import file from "service/file";
 
 export const AgencyList: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -86,7 +86,11 @@ export const AgencyList: React.FC = () => {
                   >
                     {record?.name?.substring(0, 2).toUpperCase()}
                   </Avatar>
-                  <p className="text-primary-700 font-bold">{value}</p>
+                  <p className="text-primary-700 font-bold">
+                    {localStorage?.getItem("web.locale") === "en"
+                      ? record?.name_en || value
+                      : value || "-"}
+                  </p>
                 </div>
               );
             },

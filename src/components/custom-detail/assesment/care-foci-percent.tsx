@@ -58,7 +58,10 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
     return {
       list: data?.map((item, index) => {
         return {
-          type: item.name,
+          type:
+            localStorage?.getItem("web.locale") === "en"
+              ? item.name_en
+              : item.name,
           value: item.percent,
           color: dataColors(index),
         };
@@ -69,6 +72,7 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
   if (!data) {
     return <PageLoading />;
   }
+
   return (
     <>
       <Pie

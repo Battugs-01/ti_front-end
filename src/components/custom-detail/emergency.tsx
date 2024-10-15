@@ -63,7 +63,9 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                     index === 0 ? "" : "mt-1"
                   }`}
                 >
-                  {item?.name}
+                  {localStorage?.getItem("web.locale") === "en"
+                    ? item?.name_en
+                    : item?.name}
                 </li>
               ))}
             </ul>
@@ -81,7 +83,9 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                     index === 0 ? "" : "mt-1"
                   }`}
                 >
-                  {item?.name}
+                  {localStorage?.getItem("web.locale") === "en"
+                    ? item?.name_en
+                    : item?.name}
                 </li>
               ))}
             </ul>
@@ -99,7 +103,9 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                     index === 0 ? "" : "mt-1"
                   }`}
                 >
-                  {item?.name}
+                  {localStorage?.getItem("web.locale") === "en"
+                    ? item?.name_en
+                    : item?.name}
                 </li>
               ))}
             </ul>

@@ -26,6 +26,7 @@ export interface Sex {
 
 export interface MapDataType {
   name: string;
+  name_en: string;
   percent: number;
   profile: Profile;
   male_count: number;

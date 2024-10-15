@@ -74,8 +74,14 @@ export const StackholderList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "participant_name" }),
             dataIndex: "name",
-            render: (value) => {
-              return <p className="text-primary-700 font-bold">{value}</p>;
+            render: (value, record) => {
+              return (
+                <p className="text-primary-700 font-bold">
+                  {localStorage?.getItem("web.locale") === "en"
+                    ? record?.name_en || value
+                    : value || "-"}
+                </p>
+              );
             },
           },
           {

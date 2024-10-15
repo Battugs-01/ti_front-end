@@ -129,7 +129,7 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
           )}
         </div>
       </div>
-      <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap mb-2 items-center">
+      <div className="flex flex-row gap-6 justify-start mt-10 flex-wrap mb-3 items-center md:justify-center md:ml-0 ml-6">
         {mapData?.data?.map((el) => (
           <div className="flex gap-2">
             <Avatar
@@ -139,7 +139,9 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
             />
             <div className="flex flex-col">
               <div className="text-gray-700 font-medium text-base">
-                {el.name}
+                {localStorage?.getItem("web.locale") === "en"
+                  ? el.name_en || el.name
+                  : el.name || "-"}
               </div>
               <div className="flex gap-2">
                 <span className="text-[#7b878c] text-sm font-normal">

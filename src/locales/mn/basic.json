@@ -280,5 +280,6 @@
   "hcu_state": "ХЦҮ төлөв",
   "state_incomplete": "Түр хадгалсан",
   "state_complete": "Бүрэн оруулсан",
-  "login": "Нэвтрэх"
+  "login": "Нэвтрэх",
+  "search": "Хайх"
 }

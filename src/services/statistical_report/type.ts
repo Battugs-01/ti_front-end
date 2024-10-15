@@ -233,6 +233,7 @@ export interface Disease {
   created_at: Date;
   updated_at: Date;
   name: string;
+  name_en: string;
   description: string;
 }
 

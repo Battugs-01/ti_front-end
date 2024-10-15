@@ -5,8 +5,9 @@ export interface AgencyListType {
   created_at: Date;
   updated_at: Date;
   is_active: boolean;
-  name: string;
   director_name: string;
+  name: string;
+  name_en: string;
   address: Address;
   email: string;
   phone_no: string;

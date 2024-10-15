@@ -127,12 +127,7 @@ export const getScreeningTableColumns = (
           />
         );
       }
-      return (
-        <IBadge
-          title={<FormattedMessage id="entered" />}
-          color="green"
-        />
-      );
+      return <IBadge title={<FormattedMessage id="entered" />} color="green" />;
     },
   },
   {
@@ -182,7 +177,13 @@ export const getScreeningTableColumns = (
     render: (_: any, record: ScreeningListType): React.ReactNode => (
       <div className="">
         <IBadge
-          title={record?.assessment?.developer_plan ? "Оруулсан" : "Оруулаагүй"}
+          title={
+            record?.assessment?.developer_plan ? (
+              <FormattedMessage id="entered" />
+            ) : (
+              <FormattedMessage id="not_entered" />
+            )
+          }
           color={record?.assessment?.developer_plan ? "green" : "gray"}
         />
       </div>

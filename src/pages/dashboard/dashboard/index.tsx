@@ -44,7 +44,9 @@ const Dashboard: React.FC = () => {
             </Radio.Button>
             {listAgency?.data?.items?.map((item) => (
               <Radio.Button key={item.id} value={item.id}>
-                {item.name}
+                {localStorage?.getItem("web.locale") === "en"
+                  ? item.name_en || item.name
+                  : item.name || "-"}
               </Radio.Button>
             ))}
           </Radio.Group>

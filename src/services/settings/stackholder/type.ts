@@ -6,6 +6,7 @@ export interface StackholderType {
   updated_at: Date;
   is_active: boolean;
   name: string;
+  name_en: string;
   fax: string;
   email: string;
   phone_no: string;

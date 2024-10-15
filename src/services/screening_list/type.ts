@@ -120,6 +120,7 @@ export interface Question {
   updated_at: Date;
   is_active: boolean;
   title: string;
+  title_en: string;
   is_boolean: boolean;
 }
 
@@ -237,6 +238,7 @@ export interface Answer {
   updated_at: Date;
   ref_barthel_index_id: number;
   answer: string;
+  answer_en: string;
   point: number;
 }
 
@@ -245,6 +247,7 @@ export interface ItemBarthelIndex {
   created_at: Date;
   updated_at: Date;
   name: string;
+  name_en: string;
   description: string;
 }
 
@@ -261,6 +264,7 @@ export interface CareFocusItem {
 
 export interface CareFociPercent {
   name: string;
+  name_en: string;
   percent: number;
 }
 
@@ -282,7 +286,7 @@ export interface CompAss {
   cognition: Cognition;
   nutrition_hydration: NutritionHydration;
   mood: Mood;
-  is_temporary : boolean;
+  is_temporary: boolean;
   health_risks: HealthRisks;
   preventive_health: PreventiveHealth;
   advance_care_planning: AdvanceCarePlanning;
@@ -538,6 +542,7 @@ export interface Emergency {
   created_at: Date;
   updated_at: Date;
   name: string;
+  name_en: string;
   description: string;
 }
 
