@@ -8,7 +8,7 @@ import { Button, notification } from "antd";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import { FC, useRef } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { LoginData } from "service/auth/type";
@@ -70,12 +70,14 @@ const Login: FC = () => {
               size="large"
               className="mt-7"
             >
-              Нэвтрэх
+              <FormattedMessage id="login"/>
             </Button>
           ),
         }}
       >
-        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">Нэвтрэх</div>
+        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
+              <FormattedMessage id="login"/>
+        </div>
         <div className="space-y-1">
           <ProFormText
             name="email"

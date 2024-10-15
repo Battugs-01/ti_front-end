@@ -268,5 +268,6 @@
   "stack_holder": "Stackholder",
   "hcu_state": "HCU state",
   "state_incomplete": "Temporarily saved",
-  "state_complete": "Fully inserted"
+  "state_complete": "Fully inserted",
+  "login": "Login"
 }
