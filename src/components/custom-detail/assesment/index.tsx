@@ -40,7 +40,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
             />
           ) : (
             <IBadge
-              title={intl.formatMessage({ id: "information_complete" })}
+              title={intl.formatMessage({ id: "state_complete" })}
               color="green"
             />
           )}

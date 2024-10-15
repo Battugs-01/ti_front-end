@@ -3,12 +3,12 @@ import { DevPlanQuistions } from "config";
 export const DevPlanQuistion = (value: string) => {
   switch (value) {
     case DevPlanQuistions.TreatInteract:
-      return "Танд бусад хүмүүс хэрхэн хандаж, харилцаасай гэж хүсдэг вэ?";
+      return "devPlanQuistion1";
     case DevPlanQuistions.LifePride:
-      return "Таны амьдралын бахархал юу вэ?";
+      return "devPlanQuistion2";
     case DevPlanQuistions.LifeValue:
-      return "Одоо таны амьдралын үнэт зүйл  юу вэ?";
+      return "devPlanQuistion3";
     case DevPlanQuistions.PriorityService:
-      return "Танд нэн тэргүүнд шаардлагатай ямар тусламж үйлчилгээ байна вэ?";
+      return "devPlanQuistion4";
   }
 };

@@ -283,5 +283,9 @@
   "login_reminder": "Login reminder",
   "valid_password": "Please enter at least 8 characters.",
   "dp_date": "DP date",
-  "search": "Search"
+  "search": "Search",
+  "devPlanQuistion1": "How do you want others to treat and interact with you?",
+  "devPlanQuistion2": "What is your pride in life",
+  "devPlanQuistion3": "What are your values ​​in life now?",
+  "devPlanQuistion4": "What are your priority care needs?"
 }
