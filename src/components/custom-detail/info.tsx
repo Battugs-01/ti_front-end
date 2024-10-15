@@ -29,7 +29,12 @@ const Info: React.FC<InfoProps> = ({ data, refreshData, isMyPlanedWork }) => {
       <div className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-6">
           <Link
-            to="/dashboard/screening-list"
+            // to="/dashboard/screening-list"
+            to={`${
+              isMyPlanedWork
+                ? "/dashboard/my-planned-work"
+                : "/dashboard/screening-list"
+            }`}
             style={{ textDecoration: "none" }}
           >
             <Button type="default" size="large" icon={<ChevronLeft />} />
