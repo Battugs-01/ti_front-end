@@ -248,21 +248,21 @@ export const CaseManagerReport: React.FC = () => {
                 case "high":
                   return (
                     <IBadge
-                      title={<FormattedMessage id="high" />}
+                      title={intl.formatMessage({ id: "high" })}
                       color="red"
                     />
                   );
                 case "medium":
                   return (
                     <IBadge
-                      title={<FormattedMessage id="medium" />}
+                      title={intl.formatMessage({ id: "medium" })}
                       color="yellow"
                     />
                   );
                 case "low":
                   return (
                     <IBadge
-                      title={<FormattedMessage id="low" />}
+                      title={intl.formatMessage({ id: "low" })}
                       color="green"
                     />
                   );

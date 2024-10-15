@@ -294,11 +294,26 @@ export const QuestionList: React.FC = () => {
             render: (_: any, record: ScreeningListType): React.ReactNode => {
               switch (record?.assessment?.priority) {
                 case "high":
-                  return <IBadge title="Өндөр" color="red" />;
+                  return (
+                    <IBadge
+                      title={intl.formatMessage({ id: "high" })}
+                      color="red"
+                    />
+                  );
                 case "medium":
-                  return <IBadge title="Дунд" color="yellow" />;
+                  return (
+                    <IBadge
+                      title={intl.formatMessage({ id: "medium" })}
+                      color="yellow"
+                    />
+                  );
                 case "low":
-                  return <IBadge title="Бага" color="green" />;
+                  return (
+                    <IBadge
+                      title={intl.formatMessage({ id: "low" })}
+                      color="green"
+                    />
+                  );
                 default:
                   return "-";
               }
