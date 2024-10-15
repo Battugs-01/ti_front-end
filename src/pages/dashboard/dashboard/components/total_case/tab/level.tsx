@@ -84,7 +84,7 @@ export const Level: React.FC<LevelProps> = ({ data }) => {
             dataIndex: "male_percent",
             width: "30%",
             render: (value) => {
-              return <GenderBadge status="male" percent={parseInt(value)} />;
+              return <GenderBadge status="male" percent={value.toFixed(1)} />;
             },
           },
           {
@@ -92,7 +92,7 @@ export const Level: React.FC<LevelProps> = ({ data }) => {
             dataIndex: "female_percent",
             width: "30%",
             render: (value) => {
-              return <GenderBadge status="female" percent={parseInt(value)} />;
+              return <GenderBadge status="female" percent={value.toFixed(1)} />;
             },
           },
         ]}

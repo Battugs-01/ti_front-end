@@ -89,8 +89,8 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
                 backgroundPosition: "top",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "100% 100%",
-                top: "54px",
-                right: "233px",
+                top: "17%",
+                right: "34%",
               }}
               className="h-[50px] w-[50px] absolute"
             >
