@@ -22,7 +22,6 @@ export const getScreeningTableColumns = (
   {
     title: intl.formatMessage({ id: "phone" }),
     dataIndex: "phone",
-    width: 150,
   },
   {
     title: intl.formatMessage({ id: "age" }),
