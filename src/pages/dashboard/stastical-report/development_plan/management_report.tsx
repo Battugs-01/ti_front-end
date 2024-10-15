@@ -3,8 +3,10 @@ import { DatePicker, notification, Select, Table } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import agencyList from "service/settings/agency_list";
 import statisticalReport from "service/statistical_report";
@@ -14,12 +16,13 @@ const managementReportFilter = {
   pageSize: 20,
   start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
   end_date: dayjs().format("YYYY-MM-DD"),
-  agency_id: 0,
+  agency_id: undefined as number | undefined,
 };
 
 export const ManagementReport: React.FC = () => {
   const intl = useIntl();
   const [filter, setFilter] = useState(managementReportFilter);
+  const [user] = useContext(AuthContext);
 
   const list = useRequest(statisticalReport.developmentPlanManagement, {
     manual: true,
@@ -41,16 +44,25 @@ export const ManagementReport: React.FC = () => {
     }
   );
 
+  const run = () => {
+    if (user?.user?.role !== UserRoleType.super_admin) {
+      list.run({
+        ...filter,
+        agency_id: user?.user?.agency_id,
+      });
+    } else {
+      list.run({
+        ...filter,
+      });
+    }
+  };
+
   useEffect(() => {
-    list.run({
-      ...filter,
-    });
+    run();
   }, [filter]);
 
   const refreshList = () => {
-    list?.run({
-      ...filter,
-    });
+    run();
   };
 
   let data = [
@@ -73,18 +85,21 @@ export const ManagementReport: React.FC = () => {
         hideTitle
         leftContent={
           <div className="flex items-center gap-4 h-full">
-            <Select
-              options={data}
-              defaultValue={0}
-              size="large"
-              className="w-[350px]"
-              onChange={(value) => {
-                setFilter({
-                  ...filter,
-                  agency_id: value,
-                });
-              }}
-            />
+            {user?.user?.role === UserRoleType.super_admin && (
+              <Select
+                options={data}
+                defaultValue={0}
+                size="large"
+                className="w-[350px]"
+                onChange={(value) => {
+                  setFilter({
+                    ...filter,
+                    agency_id: value,
+                  });
+                }}
+              />
+            )}
+
             <DatePicker.RangePicker
               className="w-max"
               placeholder={[

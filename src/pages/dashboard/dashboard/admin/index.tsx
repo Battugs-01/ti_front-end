@@ -41,13 +41,13 @@ export const Admin: React.FC = () => {
   // }, []);
   return (
     <div className="grid lg:grid-cols-3 grid-cols-2 3xl:grid-cols-5 gap-6">
-      <div className="lg:col-span-2 3xl:col-span-2 col-span-2">
+      <div className="lg:col-span-3 3xl:col-span-2 col-span-2">
         <TotalPoint data={totalPoint.data} />
       </div>
       <div className="lg:col-span-2 3xl:col-span-2 col-span-2">
         <TotalCaseAgency data={totalPoint.data} />
       </div>
-      <div className="3xl:col-span-1 col-span-1 h-full">
+      <div className="lg:col-span-1 col-span-2  h-full">
         <TotalCase data={totalCase.data} />
       </div>
       <div className="3xl:col-span-5 lg:col-span-3 col-span-2">

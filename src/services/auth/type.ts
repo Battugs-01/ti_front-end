@@ -30,4 +30,5 @@ export interface Admin {
   profile: Profile;
   profile_id: number;
   district_id: number;
+  agency_id: number;
 }
