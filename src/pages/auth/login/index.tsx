@@ -81,32 +81,32 @@ const Login: FC = () => {
         <div className="space-y-1">
           <ProFormText
             name="email"
-            placeholder="И-мэйл"
-            label="Нэвтрэх и-мэйл"
+            placeholder={intl.formatMessage({id:"login_email"})}
+            label={<FormattedMessage id="login_email"/>}
             fieldProps={{ size: "large" }}
             required
             rules={[
               {
-                message: "Энэ талбар и-мэйл хаяг байх ёстой",
+                message: <FormattedMessage id="must_email"/>,
                 type: "email",
                 required: true,
               },
             ]}
           />
           <ProFormText.Password
-            label="Нууц үг"
+            label={intl.formatMessage({id:"password"})}
             name="password"
-            placeholder="Нууц үг"
+            placeholder={intl.formatMessage({id:"password"})}
             fieldProps={{ size: "large" }}
             rules={[
               {
                 required: true,
-                message: "Нууц үг оруулна уу!",
+                message: <FormattedMessage id="required_password"/>,
               },
             ]}
             extra={
               <div className="text-[#475467] text-sm mt-1">
-                Хамгийн багадаа 8 тэмдэгт оруулна уу.
+               <FormattedMessage id="valid_password"/>
               </div>
             }
           />
@@ -123,7 +123,8 @@ const Login: FC = () => {
               }}
             />
             <label htmlFor="remember" className="text-gray-700">
-              Нэвтрэх нэр сануулах
+            <FormattedMessage id="login_reminder"/>
+              
             </label>
           </div>
         </div>

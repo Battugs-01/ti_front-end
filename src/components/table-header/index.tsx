@@ -64,6 +64,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
   const intl = useIntl();
+
   const form = useRef<ProFormInstance>();
 
   const checkIfChanged = () => {

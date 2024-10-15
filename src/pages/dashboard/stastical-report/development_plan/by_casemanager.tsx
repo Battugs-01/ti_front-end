@@ -223,7 +223,7 @@ export const ByCaseManager: React.FC = () => {
             },
           },
           {
-            title: "Care-Foci",
+            title: intl.formatMessage({ id: "care_foci" }),
             dataIndex: "cfs_score",
             align: "center",
             render: (_: any, record: PlannedWorksType): React.ReactNode => (
@@ -236,7 +236,7 @@ export const ByCaseManager: React.FC = () => {
             ),
           },
           {
-            title: "ХТ огноо",
+            title: intl.formatMessage({ id: "dp_date" }),
             dataIndex: "levels",
             width: 130,
             render: (_: any, record: PlannedWorksType): React.ReactNode => {

@@ -27,6 +27,9 @@ export const CareFoci: React.FC = () => {
       ...filter,
     });
   }, [filter]);
+
+  const isMn = localStorage.getItem("web.locale") === "mn";
+
   const refreshList = () => {
     list?.run({
       ...filter,
@@ -38,7 +41,9 @@ export const CareFoci: React.FC = () => {
       list?.data?.flatMap((item) =>
         item.items.map((i, index) => ({
           group_name: item.name,
+          group_name_en: item.name_en,
           name: i.name,
+          name_en: i.name_en,
           count: item.items.length,
           key: index + 1,
           ...i.months.reduce(
@@ -94,8 +99,10 @@ export const CareFoci: React.FC = () => {
             ),
             dataIndex: "group_name",
             width: 220,
-            render: (value) => {
-              return <p className="px-3">{value}</p>;
+            render: (value, record) => {
+              return (
+                <p className="px-3">{isMn ? value : record?.group_name_en}</p>
+              );
             },
             onCell: (record) => {
               return {
@@ -107,8 +114,8 @@ export const CareFoci: React.FC = () => {
             title: intl.formatMessage({ id: "name" }),
             width: 350,
             dataIndex: "name",
-            render: (value) => {
-              return <p className="px-1">{value}</p>;
+            render: (value, record) => {
+              return <p className="px-1">{isMn ? value : record?.name_en}</p>;
             },
           },
           {

@@ -45,11 +45,13 @@ export interface AgeItem {
 
 export interface CareFociReportType {
   name: string;
+  name_en: string;
   items: CareFociReportItem[];
 }
 
 export interface CareFociReportItem {
   name: string;
+  name_en: string;
   months: number[];
 }
 
@@ -239,6 +241,7 @@ export interface Disease {
 
 export interface DPManagementType {
   name: string;
+  name_en: string;
   items: DPAgencyType[];
 }
 
