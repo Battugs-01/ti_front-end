@@ -122,14 +122,14 @@ export const getScreeningTableColumns = (
       if (record?.assessment?.is_temporary) {
         return (
           <IBadge
-            title={<FormattedMessage id="state_incomplete" />}
+            title={<FormattedMessage id="not_entered" />}
             color="yellow"
           />
         );
       }
       return (
         <IBadge
-          title={<FormattedMessage id="state_complete" />}
+          title={<FormattedMessage id="entered" />}
           color="green"
         />
       );

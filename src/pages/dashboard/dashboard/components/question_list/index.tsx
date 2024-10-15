@@ -211,14 +211,14 @@ export const QuestionList: React.FC = () => {
               if (record?.assessment?.is_temporary) {
                 return (
                   <IBadge
-                    title={<FormattedMessage id="state_incomplete" />}
+                    title={<FormattedMessage id="not_entered" />}
                     color="yellow"
                   />
                 );
               }
               return (
                 <IBadge
-                  title={<FormattedMessage id="state_complete" />}
+                  title={<FormattedMessage id="entered" />}
                   color="green"
                 />
               );
@@ -272,8 +272,8 @@ export const QuestionList: React.FC = () => {
                 <IBadge
                   title={
                     record?.assessment?.developer_plan
-                      ? "Оруулсан"
-                      : "Оруулаагүй"
+                      ?  <FormattedMessage id="entered"/>
+                      : <FormattedMessage id="not_entered"/>
                   }
                   color={record?.assessment?.developer_plan ? "green" : "gray"}
                 />
