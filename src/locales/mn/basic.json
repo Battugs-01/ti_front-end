@@ -275,5 +275,6 @@
   "ou": "ӨҮ",
   "hcu_state":"ХЦҮ төлөв",
   "state_incomplete":"Түр хадгалсан",
-  "state_complete":"Бүрэн оруулсан"
+  "state_complete":"Бүрэн оруулсан",
+  "login":"Нэвтрэх"
 }

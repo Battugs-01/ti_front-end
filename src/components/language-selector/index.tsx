@@ -29,6 +29,7 @@ const LanguageSelector: React.FC = () => {
       onClick={() => {
         setLang(lang === "mn" ? "en" : "mn");
         localStorage.setItem("web.locale", lang === "mn" ? "en" : "mn");
+        location.reload()
       }}
     >
       <div className="flex items-center">{renderFlag()}</div>
