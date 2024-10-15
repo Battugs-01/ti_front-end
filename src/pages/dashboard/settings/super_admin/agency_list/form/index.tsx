@@ -23,8 +23,8 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
           <>
             <Row gutter={[16, 16]}>
               <Col span={16}>
-                <Row gutter={[16, 16]}>
-                  <Col span={24} className="flex gap-2">
+                <Row>
+                  <Col span={24}>
                     <ProFormText
                       name="name"
                       rules={[
@@ -39,10 +39,12 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       fieldProps={{
                         size: "large",
                       }}
-                      label={intl.formatMessage({ id: "agency_name" })}
+                      label={intl.formatMessage({ id: "agency_name_en" })}
                     />
+                  </Col>
+                  <Col span={24}>
                     <ProFormText
-                      name="name"
+                      name="name_en"
                       rules={[
                         {
                           required: true,
@@ -55,7 +57,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       fieldProps={{
                         size: "large",
                       }}
-                      label={intl.formatMessage({ id: "name_en" })}
+                      label={intl.formatMessage({ id: "agency_name_en" })}
                     />
                   </Col>
                 </Row>

@@ -199,12 +199,16 @@
   "stakeholder_list": "Stakeholder List",
   "user_list": "User List",
   "agency_name": "Agency Name",
+  "agency_name_mn": "Agency Name (Mongolia)",
+  "agency_name_en": "Agency Name (English)",
   "add_agency": "Add Agency",
   "link": "Link",
   "date_established": "Date Established",
   "director_name": "Director Name",
   "created_at": "Created At",
   "participant_name": "Participant Name",
+  "participant_name_mn": "Participant Name (Mongolian)",
+  "participant_name_en": "Participant Name (English)",
   "login_name": "Login Name",
   "another_phone": "Another phone",
   "fax": "Fax",
@@ -262,7 +266,7 @@
   "decided": "Decided",
   "ou": "ӨҮ",
   "stack_holder": "Stackholder",
-  "hcu_state":"HCU state",
-  "state_incomplete":"Temporarily saved",
-  "state_complete":"Fully inserted"
+  "hcu_state": "HCU state",
+  "state_incomplete": "Temporarily saved",
+  "state_complete": "Fully inserted"
 }
