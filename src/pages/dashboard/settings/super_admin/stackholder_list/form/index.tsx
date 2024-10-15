@@ -16,7 +16,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
         return (
           <>
             <Row gutter={[16, 16]}>
-              <Col span={24}>
+              <Col span={12}>
                 <ProFormText
                   name="name"
                   fieldProps={{
@@ -29,7 +29,24 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       message: intl.formatMessage({ id: "required" }),
                     },
                   ]}
-                  label={intl.formatMessage({ id: "participant_name" })}
+                  label={intl.formatMessage({ id: "participant_name_mn" })}
+                />
+              </Col>
+              <Col span={12}>
+                {" "}
+                <ProFormText
+                  name="name_en"
+                  fieldProps={{
+                    size: "large",
+                  }}
+                  placeholder={intl.formatMessage({ id: "placeholder_text" })}
+                  rules={[
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: "required" }),
+                    },
+                  ]}
+                  label={intl.formatMessage({ id: "participant_name_en" })}
                 />
               </Col>
             </Row>
