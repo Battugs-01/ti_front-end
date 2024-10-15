@@ -1,6 +1,6 @@
-import { BaseResponse } from "types";
 import axios, { AxiosRequestConfig, CancelToken } from "axios";
 import auth from "service/auth";
+import { BaseResponse } from "types";
 
 const baseURL = import.meta.env.VITE_API_URL;
 const webSocketURL = import.meta.env.VITE_WS_URL;
@@ -35,7 +35,9 @@ namespace http {
       : {};
 
   export const genHeader = (hasAuth = false, headers = {}) =>
-    Object.assign(headers, getAuth(hasAuth), { Locale: "mn" });
+    Object.assign(headers, getAuth(hasAuth), {
+      Locale: localStorage.getItem("web.locale") || "mn",
+    });
 
   export const handleError = (err: any, reject: any) => {
     if (err && err.response && err.response.data) {
