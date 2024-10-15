@@ -95,9 +95,11 @@ const ScreeningListDetailCaseManager: React.FC = () => {
               selectedLevel={selectedLevel}
               data={comprehensiveData?.data as ComprehensiveType}
             />
-            <TableEditDevPlan
-              customerMainData={customerData?.data as ScreeningListType}
-            />
+            {!comprehensiveData?.data?.comp_ass?.is_temporary && (
+              <TableEditDevPlan
+                customerMainData={customerData?.data as ScreeningListType}
+              />
+            )}
           </>
         )}
       </div>
