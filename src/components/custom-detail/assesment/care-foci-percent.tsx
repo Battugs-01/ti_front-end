@@ -1,5 +1,4 @@
 import { Pie } from "@ant-design/plots";
-import { PageLoading } from "@ant-design/pro-layout";
 import { useMemo } from "react";
 import { CareFociPercent as CareFociPercentType } from "service/screening_list/type";
 
@@ -70,7 +69,7 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
   }, [data]);
 
   if (!data) {
-    return <PageLoading />;
+    return null;
   }
 
   return (
@@ -81,7 +80,7 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
         data={data}
       />
       <div className="flex flex-col gap-2 mb-2">
-        {statusData.list?.map((data, index) => (
+        {statusData?.list?.map((data, index) => (
           <>
             <div className="flex justify-between items-center ml-4">
               <div key={index} className="flex items-center gap-1">
@@ -93,11 +92,11 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
                   }}
                 ></div>
                 <span className="text-xs font-normal text-[#4E5969] ">
-                  {data.type}
+                  {data?.type}
                 </span>
               </div>
               <div className="text-xs font-medium text-[#1D2129]">
-                {`${data.value}%`}
+                {`${data?.value}%`}
               </div>
             </div>
             {index !== 3 && (
