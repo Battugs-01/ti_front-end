@@ -69,6 +69,7 @@ export const AgeAndGender: React.FC = () => {
         refresh={refreshList}
       />
       {list.data?.map((levelTable, index) => {
+        console.log(levelTable, "lavel");
         return (
           <ITable
             hideCounter
@@ -157,6 +158,17 @@ export const AgeAndGender: React.FC = () => {
                 title: intl.formatMessage({ id: "age" }),
                 dataIndex: "age",
                 key: "age",
+                render: (_, record) => (
+                  <div className="flex items-center ">
+                    {localStorage?.getItem("web.locale") === "en"
+                      ? record?.age === "54-с доош"
+                        ? "Under 54"
+                        : record?.age === "75 дээш"
+                        ? "Upper 75"
+                        : record?.age
+                      : record?.age}
+                  </div>
+                ),
               },
               {
                 title: intl.formatMessage({ id: "gender" }),
@@ -211,7 +223,7 @@ export const AgeAndGender: React.FC = () => {
                 ],
               },
               {
-                title: "Нийт тоо",
+                title: intl.formatMessage({ id: "total" }),
                 dataIndex: "total_point",
                 key: "total_point",
                 align: "right",
