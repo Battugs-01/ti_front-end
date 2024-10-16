@@ -4,9 +4,9 @@ import ellipse from "assets/img/ellipse.svg";
 import notifactionSvg from "assets/img/notification.svg";
 import warning from "assets/img/warning.svg";
 import { useLevelContext } from "components/custom-detail/selected-level";
-import { AuthContext } from "context/auth";
+import { useAuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import notificationsWeb from "service/notifaction";
 import { ListType } from "service/notifaction/types";
@@ -17,8 +17,9 @@ export const Notification = () => {
   const [reading, setReading] = useState<number>();
   const [readingAll, setReadingAll] = useState<boolean>(false);
   const { selectedLevel, setSelectedLevel } = useLevelContext();
+  const intervalIdRef = useRef<any>(null);
   const intl = useIntl();
-  const [user] = useContext(AuthContext);
+  const [user] = useAuthContext();
 
   const list = useRequest(notificationsWeb.list, {
     manual: true,
@@ -56,16 +57,18 @@ export const Notification = () => {
   });
 
   const fetchData = () => {
-    list.run();
+    if (user?.authorized) {
+      list.run();
+    }
   };
 
   useEffect(() => {
     if (user.authorized) {
       fetchData();
-      const id = setInterval(fetchData, 50000);
-      setIntervalId(id);
+      const id = setInterval(fetchData, 40000);
+      intervalIdRef.current = id;
       return () => {
-        clearInterval(intervalId);
+        clearInterval(intervalIdRef.current);
       };
     }
   }, []);
