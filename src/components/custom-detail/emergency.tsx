@@ -2,6 +2,7 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Card, notification, Row } from "antd";
 import AssesmentSvg from "assets/img/assesment.svg";
+import IBadge from "components/badge";
 import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import screenList from "service/screening_list";
@@ -71,7 +72,10 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                 ))
               ) : (
                 <div>
-                  <FormattedMessage id="not_checklist_emergency" />
+                  <IBadge
+                    title={<FormattedMessage id="not_checklist_emergency" />}
+                    color="gray"
+                  />
                 </div>
               )}
             </ul>
@@ -97,7 +101,12 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                 ))
               ) : (
                 <div>
-                  <FormattedMessage id="not_early_screening_is_required" />
+                  <IBadge
+                    title={
+                      <FormattedMessage id="not_early_screening_is_required" />
+                    }
+                    color="gray"
+                  />
                 </div>
               )}
             </ul>
@@ -123,7 +132,10 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
                 ))
               ) : (
                 <div>
-                  <FormattedMessage id="not_desease_history" />
+                  <IBadge
+                    title={<FormattedMessage id="not_desease_history" />}
+                    color="gray"
+                  />
                 </div>
               )}
             </ul>

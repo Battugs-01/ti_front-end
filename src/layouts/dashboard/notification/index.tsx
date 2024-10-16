@@ -6,7 +6,7 @@ import warning from "assets/img/warning.svg";
 import { useLevelContext } from "components/custom-detail/selected-level";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import notificationsWeb from "service/notifaction";
 import { ListType } from "service/notifaction/types";
 import { XCloseIcon } from "untitledui-js-base";
@@ -16,7 +16,7 @@ export const Notification = () => {
   const [reading, setReading] = useState<number>();
   const [readingAll, setReadingAll] = useState<boolean>(false);
   const { selectedLevel, setSelectedLevel } = useLevelContext();
-
+  const intl = useIntl();
   const list = useRequest(notificationsWeb.list, {
     manual: true,
     onError: (err) => {
@@ -144,7 +144,10 @@ export const Notification = () => {
         </Menu>
       ) : (
         <Menu className="overflow-y-auto max-h-[500px] w-[459px] rounded-b-lg">
-          <Empty className="my-4" />
+          <Empty
+            className="my-4"
+            description={intl.formatMessage({ id: "noData" })}
+          />
         </Menu>
       )}
     </>

@@ -1,5 +1,7 @@
 import { Pie } from "@ant-design/plots";
+import { Empty } from "antd";
 import { useMemo } from "react";
+import { useIntl } from "react-intl";
 import { CareFociPercent as CareFociPercentType } from "service/screening_list/type";
 
 interface CareFociPercentProps {
@@ -7,6 +9,7 @@ interface CareFociPercentProps {
 }
 
 const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
+  const intl = useIntl();
   const config = {
     height: 160,
     autoFit: true,
@@ -69,7 +72,12 @@ const CareFociPercent: React.FC<CareFociPercentProps> = ({ data }) => {
   }, [data]);
 
   if (!data) {
-    return null;
+    return (
+      <Empty
+        className="my-4"
+        description={intl.formatMessage({ id: "noData" })}
+      />
+    );
   }
 
   return (

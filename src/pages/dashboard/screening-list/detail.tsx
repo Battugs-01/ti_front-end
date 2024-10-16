@@ -71,7 +71,12 @@ const ScreeningListDetailCaseManager: React.FC = () => {
     }
   }, [selectedLevel]);
 
-  if (customerData?.loading && assessmentData?.loading) return <PageLoading />;
+  if (
+    customerData?.loading &&
+    assessmentData?.loading &&
+    comprehensiveData?.loading
+  )
+    return <PageLoading />;
   return (
     <>
       {customerData?.data && assessmentData?.data ? (
