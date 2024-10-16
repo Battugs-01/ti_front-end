@@ -75,6 +75,7 @@ export const AgencyList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "name" }),
             dataIndex: "name",
+            width: 350,
             render: (value, record) => {
               return (
                 <div className="flex items-center gap-3">
@@ -102,6 +103,7 @@ export const AgencyList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "address" }),
             dataIndex: "address",
+            width: 300,
             render: (_, record) => (
               <div>{`${record.address.city?.name || ""} ${
                 record.address?.district?.name || ""
@@ -125,6 +127,7 @@ export const AgencyList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "link" }),
             dataIndex: "link",
+            width: 200,
           },
           {
             title: intl.formatMessage({ id: "created_at" }),

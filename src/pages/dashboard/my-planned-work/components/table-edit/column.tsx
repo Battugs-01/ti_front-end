@@ -49,7 +49,7 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
-      width: 100,
+      width: 200,
       render: (value, record, index) => (
         <div className="flex items-center justify-center">
           <SeverityLevelBadge title={record?.severity_level} />
@@ -76,7 +76,7 @@ const PlannedWordDetailTableColumn = ({
       width: 100,
       align: "center",
       render: (value) => (
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-center">
           {value + " " + intl.formatMessage({ id: "day" })}
         </div>
       ),
@@ -133,11 +133,11 @@ const PlannedWordDetailTableColumn = ({
       render: (value) =>
         value ? (
           <div className="flex items-center justify-center">
-            <IBadge color="green" title="Тийм" />
+            <IBadge color="green" title={intl.formatMessage({ id: "yes" })} />
           </div>
         ) : (
           <div className="flex items-center justify-center">
-            <IBadge color="gray" title="Үгүй" />
+            <IBadge color="gray" title={intl.formatMessage({ id: "no" })} />
           </div>
         ),
     },
