@@ -40,9 +40,15 @@ const DevPlanColumnsReport = ({
       editable: false,
       render: (_, record) => (
         <div className="flex items-center ">
-          {isEvaluated
-            ? record?.customer_care_foci_item?.care_foci_item?.name
-            : DevPlanQuistion(record?.key as string)}
+          {isEvaluated ? (
+            localStorage?.getItem("web.locale") === "en" ? (
+              record?.customer_care_foci_item?.care_foci_item?.name_eng
+            ) : (
+              record?.customer_care_foci_item?.care_foci_item?.name
+            )
+          ) : (
+            <FormattedMessage id={DevPlanQuistion(record?.key as string)} />
+          )}
         </div>
       ),
     },
@@ -52,7 +58,9 @@ const DevPlanColumnsReport = ({
       editable: false,
       render: (value, record) => (
         <div className="flex items-center ">
-          {isEvaluated ? record?.care_foci_desc || "-" : value || "-"}
+          {isEvaluated
+            ? record?.customer_care_foci_item?.description || "-"
+            : record?.desc || "-"}
         </div>
       ),
     },
@@ -60,8 +68,8 @@ const DevPlanColumnsReport = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
-      width: 100,
-      render: (_, record) => (
+      width: 150,
+      render: (value, record, index) => (
         <div className="flex items-center justify-center">
           <SeverityLevelBadge title={record?.severity_level} />
         </div>
@@ -87,7 +95,7 @@ const DevPlanColumnsReport = ({
       width: 100,
       align: "center",
       render: (value) => (
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-center">
           {value + " " + intl.formatMessage({ id: "day" })}
         </div>
       ),
@@ -96,7 +104,7 @@ const DevPlanColumnsReport = ({
       title: intl.formatMessage({ id: "responsible" }),
       dataIndex: "person_in_charge_id",
       width: 120,
-      render: (_, record) => (
+      render: (value, record, index) => (
         <div>
           {
             <div className="flex gap-2 items-center">
@@ -139,16 +147,16 @@ const DevPlanColumnsReport = ({
     {
       title: intl.formatMessage({ id: "is_resolved" }),
       key: "is_resolved",
-      width: 100,
       dataIndex: "is_resolved",
+      width: 100,
       render: (value) =>
         value ? (
           <div className="flex items-center justify-center">
-            <IBadge color="green" title="Тийм" />
+            <IBadge color="green" title={intl.formatMessage({ id: "yes" })} />
           </div>
         ) : (
           <div className="flex items-center justify-center">
-            <IBadge color="gray" title="Үгүй" />
+            <IBadge color="gray" title={intl.formatMessage({ id: "no" })} />
           </div>
         ),
     },

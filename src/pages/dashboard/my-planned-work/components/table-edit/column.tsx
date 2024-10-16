@@ -27,9 +27,15 @@ const PlannedWordDetailTableColumn = ({
       editable: false,
       render: (_, record) => (
         <div className="flex items-center ">
-          {isEvaluated
-            ? record?.customer_care_foci_item?.care_foci_item?.name
-            : DevPlanQuistion(record?.key as string)}
+          {isEvaluated ? (
+            localStorage?.getItem("web.locale") === "en" ? (
+              record?.customer_care_foci_item?.care_foci_item?.name_eng
+            ) : (
+              record?.customer_care_foci_item?.care_foci_item?.name
+            )
+          ) : (
+            <FormattedMessage id={DevPlanQuistion(record?.key as string)} />
+          )}
         </div>
       ),
     },
@@ -49,7 +55,7 @@ const PlannedWordDetailTableColumn = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
-      width: 200,
+      width: 150,
       render: (value, record, index) => (
         <div className="flex items-center justify-center">
           <SeverityLevelBadge title={record?.severity_level} />

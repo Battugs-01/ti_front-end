@@ -535,6 +535,10 @@ export interface Health {
   heart_rate: number;
   respiratory_rate: number;
   body_temp: number;
+  blood_presure_left_high: number;
+  blood_presure_left_low: number;
+  blood_presure_right_high: number;
+  blood_presure_right_low: number;
 }
 
 export interface Emergency {

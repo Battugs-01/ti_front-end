@@ -2,7 +2,7 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { Card, Col, Row } from "antd";
 import AssesmentSvg from "assets/img/assesment.svg";
 import IBadge from "components/badge";
-import { ProgressCard, StatCard } from "components/card";
+import { BloodPressureCard, ProgressCard, StatCard } from "components/card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -60,9 +60,9 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
         <Col xl={18} md={24} xs={24} className="flex flex-col gap-4">
           <Row gutter={[12, 24]}>
             <Col xxl={6} lg={12} sm={12} xs={24}>
-              <StatCard
+              <BloodPressureCard
                 title="arter_pressure"
-                value={data?.health?.blood_presure || 0}
+                value={data?.health || 0}
               />
             </Col>
             <Col xxl={6} lg={12} sm={12} xs={24}>

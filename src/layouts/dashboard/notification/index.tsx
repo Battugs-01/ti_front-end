@@ -60,7 +60,7 @@ export const Notification = () => {
   };
 
   useEffect(() => {
-    if (user?.authorized) {
+    if (user.authorized) {
       fetchData();
       const id = setInterval(fetchData, 50000);
       setIntervalId(id);

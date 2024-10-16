@@ -18,6 +18,7 @@ const DevPlanColumns = ({
   isEvaluated,
 }: DevPlanColumnsProps): ProColumns<CareFociItemElement>[] => {
   const intl = useIntl();
+  console.log();
   const columns: ProColumns<CareFociItemElement>[] = [
     {
       title: "№",
@@ -56,11 +57,11 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: isEvaluated ? "description" : "answer" }),
       dataIndex: "desc",
       editable: false,
-      render: (value, record) => (
+      render: (_, record) => (
         <div className="flex items-center ">
           {isEvaluated
-            ? record?.customer_care_foci_item?.description || "-"
-            : record?.desc || "-"}
+            ? record?.customer_care_foci_item?.description || ""
+            : record?.desc || ""}
         </div>
       ),
     },
@@ -68,7 +69,9 @@ const DevPlanColumns = ({
       title: intl.formatMessage({ id: "severity_syndrome" }),
       dataIndex: "severity_level",
       key: "severity_level",
-      render: (value, record, index) => (
+      align: "center",
+      width: 150,
+      render: (value, record) => (
         <div className="flex items-center justify-center">
           <SeverityLevelBadge title={record?.severity_level} />
         </div>
@@ -77,23 +80,34 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "summary_plan" }),
       dataIndex: "summary_plan",
-      render: (value, record, index) => (
-        <ReadMoreArea
-          expandLabel={<FormattedMessage id="detail" />}
-          collapseLabel={<FormattedMessage id="summary" />}
-          buttonClassName="text-[12px] text-green-700 p-0 m-0"
-          lettersLimit={100}
-        >
-          {value}
-        </ReadMoreArea>
+      render: (value, record) => (
+        <>
+          {record?.summary_plan?.length > 0 ? (
+            <ReadMoreArea
+              expandLabel={<FormattedMessage id="detail" />}
+              collapseLabel={<FormattedMessage id="summary" />}
+              buttonClassName="text-[12px] text-green-700 p-0 m-0"
+              lettersLimit={100}
+              textStyle={{
+                textOverflow: "clip",
+                whiteSpace: "normal",
+              }}
+            >
+              {value}
+            </ReadMoreArea>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
     {
       title: intl.formatMessage({ id: "time" }),
       dataIndex: "duration",
       align: "center",
+      width: 80,
       render: (value) => (
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-start">
           {value + " " + intl.formatMessage({ id: "day" })}
         </div>
       ),
@@ -101,7 +115,8 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "responsible" }),
       dataIndex: "person_in_charge_id",
-      render: (value, record, index) => (
+      width: 130,
+      render: (_, record) => (
         <div>
           {
             <div className="flex gap-2 items-center">
@@ -110,17 +125,16 @@ const DevPlanColumns = ({
                   shape="circle"
                   size={"small"}
                   src={file.fileToUrl(
-                    record?.person_in_charge?.profile?.physical_path || "-"
+                    record?.person_in_charge?.profile?.physical_path || ""
                   )}
                 />
               )}
               <span>
                 {record?.person_in_charge?.last_name &&
-                record?.person_in_charge?.first_name
-                  ? `${record?.person_in_charge?.last_name?.substring(0, 1)}. ${
-                      record?.person_in_charge?.first_name
-                    }`
-                  : "-"}
+                  record?.person_in_charge?.first_name &&
+                  `${record?.person_in_charge?.last_name?.substring(0, 1)}. ${
+                    record?.person_in_charge?.first_name
+                  }`}
               </span>
             </div>
           }
@@ -130,21 +144,29 @@ const DevPlanColumns = ({
     {
       title: intl.formatMessage({ id: "result" }),
       dataIndex: "result",
-      render: (value, record, index) => (
-        <ReadMoreArea
-          expandLabel={<FormattedMessage id="detail" />}
-          collapseLabel={<FormattedMessage id="summary" />}
-          buttonClassName="text-[12px] text-green-700 p-0 m-0"
-          lettersLimit={100}
-        >
-          {value}
-        </ReadMoreArea>
+      render: (value, record) => (
+        <>
+          {record?.result?.length > 0 ? (
+            <ReadMoreArea
+              expandLabel={<FormattedMessage id="detail" />}
+              collapseLabel={<FormattedMessage id="summary" />}
+              buttonClassName="text-[12px] text-green-700 p-0 m-0"
+              lettersLimit={100}
+            >
+              {value}
+            </ReadMoreArea>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
     {
       title: intl.formatMessage({ id: "is_resolved" }),
       key: "is_resolved",
       dataIndex: "is_resolved",
+      align: "center",
+      width: 90,
       render: (value) =>
         value ? (
           <div className="flex items-center justify-center">

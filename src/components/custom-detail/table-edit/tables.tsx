@@ -122,7 +122,7 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                         },
                         selectedRowKeys: selectedRowKeys,
                       }
-                    : {}
+                    : false
                 }
                 onRow={(record, rowIndex) => {
                   if (
