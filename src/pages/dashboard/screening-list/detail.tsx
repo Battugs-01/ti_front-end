@@ -1,3 +1,4 @@
+import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { Empty, notification } from "antd";
 import Assesment from "components/custom-detail/assesment";
@@ -70,6 +71,7 @@ const ScreeningListDetailCaseManager: React.FC = () => {
     }
   }, [selectedLevel]);
 
+  if (customerData?.loading && assessmentData?.loading) return <PageLoading />;
   return (
     <>
       {customerData?.data && assessmentData?.data ? (
