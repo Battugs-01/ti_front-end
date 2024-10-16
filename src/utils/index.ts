@@ -198,9 +198,9 @@ export const reportStatisticalFilterAge = {
 };
 
 export const parseMongolianID = (id: any) => {
-  const yearPart = id.slice(2, 4);
-  const monthPart = id.slice(4, 6);
-  const dayPart = id.slice(6, 8);
+  const yearPart = id?.slice(2, 4);
+  const monthPart = id?.slice(4, 6);
+  const dayPart = id?.slice(6, 8);
   const year = parseInt(yearPart, 10);
   let month = parseInt(monthPart, 10);
   const day = parseInt(dayPart, 10);

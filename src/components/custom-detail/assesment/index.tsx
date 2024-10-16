@@ -62,13 +62,13 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
             <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="arter_pressure"
-                value={data?.health.blood_presure || 0}
+                value={data?.health?.blood_presure || 0}
               />
             </Col>
             <Col xxl={6} lg={12} sm={12} xs={24}>
               <StatCard
                 title="heart_rate"
-                value={data?.health.heart_rate || 0}
+                value={data?.health?.heart_rate || 0}
               />
             </Col>
             <Col xxl={6} lg={12} sm={12} xs={24}>
