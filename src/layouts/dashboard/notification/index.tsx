@@ -4,8 +4,9 @@ import ellipse from "assets/img/ellipse.svg";
 import notifactionSvg from "assets/img/notification.svg";
 import warning from "assets/img/warning.svg";
 import { useLevelContext } from "components/custom-detail/selected-level";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import notificationsWeb from "service/notifaction";
 import { ListType } from "service/notifaction/types";
@@ -16,6 +17,7 @@ export const Notification = () => {
   const [reading, setReading] = useState<number>();
   const [readingAll, setReadingAll] = useState<boolean>(false);
   const { selectedLevel, setSelectedLevel } = useLevelContext();
+  const [user] = useContext(AuthContext);
 
   const list = useRequest(notificationsWeb.list, {
     manual: true,
@@ -57,12 +59,14 @@ export const Notification = () => {
   };
 
   useEffect(() => {
-    fetchData();
-    const id = setInterval(fetchData, 50000);
-    setIntervalId(id);
-    return () => {
-      clearInterval(intervalId);
-    };
+    if (user?.authorized) {
+      fetchData();
+      const id = setInterval(fetchData, 50000);
+      setIntervalId(id);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
   }, []);
 
   useEffect(() => {
