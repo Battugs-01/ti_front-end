@@ -1,4 +1,3 @@
-import { PageLoading } from "@ant-design/pro-layout";
 import { Button, Card } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
@@ -17,9 +16,6 @@ interface InfoProps {
   isMyPlanedWork?: string;
 }
 const Info: React.FC<InfoProps> = ({ data, refreshData, isMyPlanedWork }) => {
-  if (!data) {
-    return <PageLoading />;
-  }
   const intl = useIntl();
   const [updateinfo, setUpdateInfo] = useState<ScreeningListType>();
   const [user] = useContext(AuthContext);

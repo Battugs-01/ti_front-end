@@ -1,6 +1,6 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
-import { notification } from "antd";
+import { Empty, notification } from "antd";
 import Assesment from "components/custom-detail/assesment";
 import CustomHeader from "components/custom-detail/custom-header";
 import Emergency from "components/custom-detail/emergency";
@@ -10,6 +10,7 @@ import { useLevelContext } from "components/custom-detail/selected-level";
 import TableEditDevPlan from "components/custom-detail/table-edit";
 import { ScreeningTab } from "config";
 import { useEffect } from "react";
+import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import {
@@ -20,6 +21,7 @@ import {
 
 const ScreeningListDetailCaseManager: React.FC = () => {
   const location = useLocation();
+  const intl = useIntl();
   const customerId = location.search?.split("=")[1];
   const { selectedLevel } = useLevelContext();
 
@@ -69,40 +71,46 @@ const ScreeningListDetailCaseManager: React.FC = () => {
     }
   }, [selectedLevel]);
 
-  if (!customerData && !assessmentData && !customerId && !selectedLevel) {
-    return <PageLoading />;
-  }
-
+  if (customerData?.loading && assessmentData?.loading) return <PageLoading />;
   return (
     <>
-      <div className="flex flex-col justify-between gap-4">
-        <Info
-          data={customerData?.data as ScreeningListType}
-          refreshData={run}
-        />
-        <CustomHeader
-          data={assessmentData?.data || []}
-          customerMainData={customerData?.data as ScreeningListType}
-        />
-        <QuistionHistory selectedLevel={selectedLevel as AssessmentListType} />
-        <Emergency
-          customerId={customerId}
-          deseaseData={comprehensiveData?.data?.diseases}
-        />
-        {selectedLevel?.level === ScreeningTab.level_3 && (
-          <>
-            <Assesment
-              selectedLevel={selectedLevel}
-              data={comprehensiveData?.data as ComprehensiveType}
-            />
-            {!comprehensiveData?.data?.comp_ass.is_temporary && (
-              <TableEditDevPlan
-                customerMainData={customerData?.data as ScreeningListType}
+      {customerData?.data && assessmentData?.data ? (
+        <div className="flex flex-col justify-between gap-4">
+          <Info
+            data={customerData?.data as ScreeningListType}
+            refreshData={run}
+          />
+          <CustomHeader
+            data={assessmentData?.data || []}
+            customerMainData={customerData?.data as ScreeningListType}
+          />
+          <QuistionHistory
+            selectedLevel={selectedLevel as AssessmentListType}
+          />
+          <Emergency
+            customerId={customerId}
+            deseaseData={comprehensiveData?.data?.diseases}
+          />
+          {selectedLevel?.level === ScreeningTab.level_3 && (
+            <>
+              <Assesment
+                selectedLevel={selectedLevel}
+                data={comprehensiveData?.data as ComprehensiveType}
               />
-            )}
-          </>
-        )}
-      </div>
+              {!comprehensiveData?.data?.comp_ass?.is_temporary && (
+                <TableEditDevPlan
+                  customerMainData={customerData?.data as ScreeningListType}
+                />
+              )}
+            </>
+          )}
+        </div>
+      ) : (
+        <Empty
+          className="my-4"
+          description={intl.formatMessage({ id: "noData" })}
+        />
+      )}
     </>
   );
 };

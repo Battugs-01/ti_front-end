@@ -47,7 +47,7 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
       <p className="px-5 text-xl font-semibold">
         <FormattedMessage id="total_case_agency" />
       </p>
-      <div className="flex justify-center items-start">
+      <div className="justify-center items-start hidden md:flex">
         <div
           style={{
             backgroundImage: "url('/svg/mn_map1.svg')",
@@ -114,6 +114,88 @@ export const TotalCaseAgency: React.FC<TotalCaseAgencyProps> = (data) => {
                 backgroundSize: "100% 100%",
                 top: "94px",
                 right: "253px",
+              }}
+              className="h-[50px] w-[50px] absolute"
+            >
+              <div
+                className="flex justify-center items-center rounded-full bg-[#f2ae00] text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {achlaltData?.percent.toFixed(1)}%
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-center items-start md:hidden ">
+        <div
+          style={{
+            backgroundImage: "url('/svg/mn_map_small.svg')",
+            backgroundPosition: "top",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            width: "310px",
+            height: "152px",
+          }}
+          className="custom_divImage mt-4 relative flex justify-between"
+        >
+          {darkhanData && (
+            <div
+              style={{
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "0%",
+                right: "107px",
+              }}
+              className="h-[50px] w-[50px] absolute"
+            >
+              <div
+                className="flex justify-center items-center rounded-full bg-green-700 text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {darkhanData?.percent.toFixed(1)}%
+              </div>
+            </div>
+          )}
+
+          {mandalData && (
+            <div
+              style={{
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "1%",
+                right: "28%",
+              }}
+              className="h-[50px] w-[50px] absolute"
+            >
+              <div
+                className="flex justify-center items-center rounded-full bg-blue-700 text-white text-[11px] p-1 m-2"
+                style={{
+                  borderRadius: "50%",
+                }}
+              >
+                {mandalData?.percent.toFixed(1)}%
+              </div>
+            </div>
+          )}
+
+          {achlaltData && (
+            <div
+              style={{
+                backgroundImage: "url('/svg/pin.png')",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                top: "13%",
+                right: "31%",
               }}
               className="h-[50px] w-[50px] absolute"
             >

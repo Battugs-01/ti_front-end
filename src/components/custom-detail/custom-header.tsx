@@ -1,10 +1,9 @@
 import { ProFormRadio } from "@ant-design/pro-form";
-import { PageLoading } from "@ant-design/pro-layout";
-import { Button, Select } from "antd";
+import { Button, Empty, Select } from "antd";
 import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   AssessmentListType,
   ScreeningListType,
@@ -24,9 +23,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
 }) => {
   const { selectedLevel, setSelectedLevel } = useLevelContext();
   const [tab, setTab] = useState(data[0]?.id || null);
-
-  const initialData = data.slice(0, 3);
-  const extraItems = data.slice(3);
+  const intl = useIntl();
+  const initialData = data?.slice(0, 3);
+  const extraItems = data?.slice(3);
   const segmentedData = initialData?.map((item) => ({
     label: (
       <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A] font-semibold">
@@ -58,7 +57,12 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   }, [data, tab]);
 
   if (!selectedLevel) {
-    return <PageLoading />;
+    return (
+      <Empty
+        className="my-4"
+        description={intl.formatMessage({ id: "noData" })}
+      />
+    );
   }
 
   return (
