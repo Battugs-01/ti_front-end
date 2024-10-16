@@ -148,11 +148,11 @@ const DevPlanColumns = ({
       render: (value) =>
         value ? (
           <div className="flex items-center justify-center">
-            <IBadge color="green" title="Тийм" />
+            <IBadge color="green" title={intl.formatMessage({ id: "yes" })} />
           </div>
         ) : (
           <div className="flex items-center justify-center">
-            <IBadge color="gray" title="Үгүй" />
+            <IBadge color="gray" title={intl.formatMessage({ id: "no" })} />
           </div>
         ),
     },

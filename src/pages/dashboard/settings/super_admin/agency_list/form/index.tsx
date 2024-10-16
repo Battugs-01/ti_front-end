@@ -39,7 +39,7 @@ export const Form: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       fieldProps={{
                         size: "large",
                       }}
-                      label={intl.formatMessage({ id: "agency_name_en" })}
+                      label={intl.formatMessage({ id: "agency_name_mn" })}
                     />
                   </Col>
                   <Col span={24}>

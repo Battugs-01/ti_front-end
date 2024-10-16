@@ -68,6 +68,7 @@ export const QuestionList: React.FC = () => {
         dataSource={screen.data?.items}
         loading={screen.loading}
         className="p-0 remove-padding-table"
+        hideAction
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),

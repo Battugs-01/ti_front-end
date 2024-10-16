@@ -50,7 +50,7 @@
   "checklist_screening": "A checklist for assessing the need for early patient screening",
   "age": "Age",
   "gender": "Gender",
-  "risk_level": "Risk Level",
+  "risk_level": "Priority",
   "cfs_score": "Risk screening",
   "agency": "Agency",
   "total_assessment": "Total Assessment",
@@ -120,8 +120,7 @@
   "reset": "Reset",
   "filter": "Filter",
   "level_filter": "Level",
-  "blood_pressure": "Blood pressure",
-  "arter_pressure": "Arter pressure",
+  "arter_pressure": "Blood pressure",
   "heart_rate": "Heart rate",
   "respiratory_rate": "Respiratory rate",
   "body_temp": "Body temp",
@@ -244,7 +243,7 @@
   "by_agency": "By Agency",
   "medical_history": "Medical History",
   "by_hcu_date": "By CNA Date",
-  "by_ht_date": "By HT Date",
+  "by_ht_date": "By DP Date",
   "by_level": "By Level",
   "age_and_gender": "Age and gender",
   "percent": "Percent",
@@ -288,5 +287,8 @@
   "devPlanQuistion1": "How do you want others to treat and interact with you?",
   "devPlanQuistion2": "What is your pride in life",
   "devPlanQuistion3": "What are your values ​​in life now?",
-  "devPlanQuistion4": "What are your priority care needs?"
+  "devPlanQuistion4": "What are your priority care needs?",
+  "not_checklist_emergency": "No emergency medical care was required",
+  "not_early_screening_is_required": "No early screening was required",
+  "not_desease_history": "There is no desease history"
 }

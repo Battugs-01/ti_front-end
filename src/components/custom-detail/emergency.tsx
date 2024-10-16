@@ -57,17 +57,23 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
           </div>
           <Row gutter={16} className="flex flex-col ">
             <ul className="pl-6">
-              {data?.data?.emergency_care_service?.map((item, index) => (
-                <li
-                  className={`text-sm text-gray-600 font-medium ${
-                    index === 0 ? "" : "mt-1"
-                  }`}
-                >
-                  {localStorage?.getItem("web.locale") === "en"
-                    ? item?.name_en
-                    : item?.name}
-                </li>
-              ))}
+              {data?.data?.emergency_care_service?.length || 0 > 0 ? (
+                data?.data?.emergency_care_service?.map((item, index) => (
+                  <li
+                    className={`text-sm text-gray-600 font-medium ${
+                      index === 0 ? "" : "mt-1"
+                    }`}
+                  >
+                    {localStorage?.getItem("web.locale") === "en"
+                      ? item?.name_en
+                      : item?.name}
+                  </li>
+                ))
+              ) : (
+                <div>
+                  <FormattedMessage id="not_checklist_emergency" />
+                </div>
+              )}
             </ul>
           </Row>
         </div>
@@ -77,17 +83,23 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
           </div>
           <Row gutter={16} className="flex flex-col ">
             <ul className="pl-6">
-              {data?.data?.emergency_early_examinations?.map((item, index) => (
-                <li
-                  className={`text-sm text-gray-600 font-medium ${
-                    index === 0 ? "" : "mt-1"
-                  }`}
-                >
-                  {localStorage?.getItem("web.locale") === "en"
-                    ? item?.name_en
-                    : item?.name}
-                </li>
-              ))}
+              {data?.data?.emergency_early_examinations?.length || 0 > 0 ? (
+                data?.data?.emergency_early_examinations?.map((item, index) => (
+                  <li
+                    className={`text-sm text-gray-600 font-medium ${
+                      index === 0 ? "" : "mt-1"
+                    }`}
+                  >
+                    {localStorage?.getItem("web.locale") === "en"
+                      ? item?.name_en
+                      : item?.name}
+                  </li>
+                ))
+              ) : (
+                <div>
+                  <FormattedMessage id="not_early_screening_is_required" />
+                </div>
+              )}
             </ul>
           </Row>
         </div>
@@ -97,17 +109,23 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
           </div>
           <Row gutter={16} className="flex flex-col ">
             <ul className="pl-6">
-              {deseaseData?.map((item, index) => (
-                <li
-                  className={`text-sm text-gray-600 font-medium ${
-                    index === 0 ? "" : "mt-1"
-                  }`}
-                >
-                  {localStorage?.getItem("web.locale") === "en"
-                    ? item?.name_en
-                    : item?.name}
-                </li>
-              ))}
+              {deseaseData?.length || 0 > 0 ? (
+                deseaseData?.map((item, index) => (
+                  <li
+                    className={`text-sm text-gray-600 font-medium ${
+                      index === 0 ? "" : "mt-1"
+                    }`}
+                  >
+                    {localStorage?.getItem("web.locale") === "en"
+                      ? item?.name_en
+                      : item?.name}
+                  </li>
+                ))
+              ) : (
+                <div>
+                  <FormattedMessage id="not_desease_history" />
+                </div>
+              )}
             </ul>
           </Row>
         </div>

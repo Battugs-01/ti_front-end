@@ -23,7 +23,7 @@ export const UpdateForm: React.FC<FormProps> = ({ city, district, khoroo }) => {
           <>
             <Row gutter={[16, 16]}>
               <Col span={16}>
-                <Row gutter={[16, 16]}>
+                <Row>
                   <Col span={24}>
                     <ProFormText
                       name="name"
@@ -39,7 +39,25 @@ export const UpdateForm: React.FC<FormProps> = ({ city, district, khoroo }) => {
                       fieldProps={{
                         size: "large",
                       }}
-                      label={intl.formatMessage({ id: "agency_name" })}
+                      label={intl.formatMessage({ id: "agency_name_mn" })}
+                    />
+                  </Col>
+                  <Col span={24}>
+                    <ProFormText
+                      name="name_en"
+                      rules={[
+                        {
+                          required: true,
+                          message: intl.formatMessage({ id: "required" }),
+                        },
+                      ]}
+                      placeholder={intl.formatMessage({
+                        id: "placeholder_text",
+                      })}
+                      fieldProps={{
+                        size: "large",
+                      }}
+                      label={intl.formatMessage({ id: "agency_name_en" })}
                     />
                   </Col>
                 </Row>
