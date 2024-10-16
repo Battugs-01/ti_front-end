@@ -1,9 +1,9 @@
 // DevPlanColumns.tsx
 import { ProColumns } from "@ant-design/pro-table";
-import ReadMoreArea from "@foxeian/react-read-more";
 import { Avatar } from "antd";
 import IBadge from "components/badge";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
+import { ReadMore } from "components/read-more";
 import { FormattedMessage, useIntl } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
@@ -46,8 +46,8 @@ const PlannedWordDetailTableColumn = ({
       render: (value, record) => (
         <div className="flex items-center ">
           {isEvaluated
-            ? record?.customer_care_foci_item?.description || "-"
-            : record?.desc || "-"}
+            ? record?.customer_care_foci_item?.description || ""
+            : record?.desc || ""}
         </div>
       ),
     },
@@ -65,15 +65,17 @@ const PlannedWordDetailTableColumn = ({
     {
       title: intl.formatMessage({ id: "summary_plan" }),
       dataIndex: "summary_plan",
-      render: (value) => (
-        <ReadMoreArea
-          expandLabel={<FormattedMessage id="detail" />}
-          collapseLabel={<FormattedMessage id="summary" />}
-          buttonClassName="text-[12px] text-green-700 p-0 m-0"
-          lettersLimit={100}
-        >
-          {value}
-        </ReadMoreArea>
+      width: 400,
+      render: (value, record) => (
+        <>
+          {record?.summary_plan?.length > 0 ? (
+            <div className="text-xs text-gray-600">
+              {<ReadMore id={"read more plan"} text={record?.summary_plan} />}
+            </div>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
     {
@@ -100,7 +102,7 @@ const PlannedWordDetailTableColumn = ({
                   shape="circle"
                   size={"small"}
                   src={file.fileToUrl(
-                    record?.person_in_charge?.profile?.physical_path || "-"
+                    record?.person_in_charge?.profile?.physical_path || ""
                   )}
                 />
               )}
@@ -120,15 +122,17 @@ const PlannedWordDetailTableColumn = ({
     {
       title: intl.formatMessage({ id: "result" }),
       dataIndex: "result",
-      render: (value, record, index) => (
-        <ReadMoreArea
-          expandLabel={<FormattedMessage id="detail" />}
-          collapseLabel={<FormattedMessage id="summary" />}
-          buttonClassName="text-[12px] text-green-700 p-0 m-0"
-          lettersLimit={100}
-        >
-          {value}
-        </ReadMoreArea>
+      width: 400,
+      render: (value, record) => (
+        <>
+          {record?.result?.length > 0 ? (
+            <div className="text-xs text-gray-600">
+              {<ReadMore id={"read more result"} text={record?.result} />}
+            </div>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
     {

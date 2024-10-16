@@ -8,6 +8,7 @@ import {
 import { useRequest } from "ahooks";
 import { Avatar, Button, Col, notification, Row } from "antd";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
+import { ReadMore } from "components/read-more";
 import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import developmentPlan from "service/development_plan";
@@ -149,7 +150,7 @@ export const DevPlanUpdate = ({
             <FormattedMessage id="summary_plan" />
           </div>
           <div className="text-gray-700 font-normal text-sm ">
-            {data?.summary_plan || "-"}
+            {<ReadMore id={"read more plan"} text={data?.summary_plan} />}
           </div>
         </div>
         <div className="flex flex-row justify-between">

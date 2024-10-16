@@ -1,9 +1,9 @@
 // DevPlanColumns.tsx
 import { ProColumns } from "@ant-design/pro-table";
-import ReadMoreArea from "@foxeian/react-read-more";
 import { Avatar } from "antd";
 import IBadge from "components/badge";
 import SeverityLevelBadge from "components/badge/severity_level_badge";
+import { ReadMore } from "components/read-more";
 import { FormattedMessage, useIntl } from "react-intl";
 import { CareFociItemElement } from "service/development_plan/type";
 import file from "service/file";
@@ -18,7 +18,6 @@ const DevPlanColumns = ({
   isEvaluated,
 }: DevPlanColumnsProps): ProColumns<CareFociItemElement>[] => {
   const intl = useIntl();
-  console.log();
   const columns: ProColumns<CareFociItemElement>[] = [
     {
       title: "№",
@@ -83,18 +82,9 @@ const DevPlanColumns = ({
       render: (value, record) => (
         <>
           {record?.summary_plan?.length > 0 ? (
-            <ReadMoreArea
-              expandLabel={<FormattedMessage id="detail" />}
-              collapseLabel={<FormattedMessage id="summary" />}
-              buttonClassName="text-[12px] text-green-700 p-0 m-0"
-              lettersLimit={100}
-              textStyle={{
-                textOverflow: "clip",
-                whiteSpace: "normal",
-              }}
-            >
-              {value}
-            </ReadMoreArea>
+            <div className="text-xs text-gray-600">
+              {<ReadMore id={"read more plan"} text={record?.summary_plan} />}
+            </div>
           ) : (
             ""
           )}
@@ -147,14 +137,9 @@ const DevPlanColumns = ({
       render: (value, record) => (
         <>
           {record?.result?.length > 0 ? (
-            <ReadMoreArea
-              expandLabel={<FormattedMessage id="detail" />}
-              collapseLabel={<FormattedMessage id="summary" />}
-              buttonClassName="text-[12px] text-green-700 p-0 m-0"
-              lettersLimit={100}
-            >
-              {value}
-            </ReadMoreArea>
+            <div className="text-xs text-gray-600">
+              {<ReadMore id={"read more result"} text={record?.result} />}
+            </div>
           ) : (
             ""
           )}
