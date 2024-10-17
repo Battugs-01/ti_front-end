@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import agencyList from "service/settings/agency_list";
 import statisticalReport from "service/statistical_report";
 import { DownloadCloud02 } from "untitledui-js-base";
-import { exportFromTableManyData } from "utils/export";
+import { exportFromTableGroupedData } from "utils/export";
 
 const managementReportFilter = {
   current: 1,
@@ -26,7 +26,6 @@ export const ManagementReport: React.FC = () => {
   const [filter, setFilter] = useState(managementReportFilter);
   const [user] = useContext(AuthContext);
 
-  console.log(filter, "filter1");
   const list = useRequest(statisticalReport.developmentPlanManagement, {
     manual: true,
     onError: (err) => {
@@ -145,7 +144,7 @@ export const ManagementReport: React.FC = () => {
             type="default"
             icon={<DownloadCloud02 />}
             onClick={() => {
-              exportFromTableManyData(
+              exportFromTableGroupedData(
                 [`Development Plan Report`],
                 tableIds,
                 window

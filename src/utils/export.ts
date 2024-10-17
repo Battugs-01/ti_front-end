@@ -80,6 +80,50 @@ export const exportFromTable = async (
   });
 };
 
+// export const exportFromTableManyData = async (
+//   filename: string[],
+//   tableWrapperIds: string[], // Expecting an array of IDs of table wrappers
+//   window?: Window
+// ): Promise<boolean> => {
+//   return new Promise(async (resolve, reject) => {
+//     let maindata: any[] = [];
+//     let keys: string[] = [];
+
+//     for (let tableWrapperId of tableWrapperIds) {
+//       const tableWrapper = window?.document.getElementById(tableWrapperId);
+//       if (!tableWrapper) continue;
+
+//       const table = tableWrapper.querySelector("table") as HTMLTableElement;
+//       if (!table) continue;
+
+//       const rowArray = Array.from(table?.rows || []);
+
+//       // Collect headers if not already done
+//       if (keys.length === 0 && rowArray.length > 0) {
+//         Array.from(rowArray[0]?.cells).forEach((cell) => {
+//           keys.push(cell.innerText);
+//         });
+//       }
+
+//       // Collect table data
+//       for (let i = 2; i < rowArray.length; i++) {
+//         let record: any = {};
+//         let row = rowArray[i];
+//         let cells = Array.from(row.cells);
+//         for (let j = 0; j < cells.length; j++) {
+//           let cell = cells[j];
+//           record[keys[j]] = cell.innerText;
+//         }
+//         maindata.push(record);
+//       }
+//     }
+
+//     // Call your export function (e.g., exportXLSX)
+//     await exportXLSX(maindata, filename);
+//     resolve(true);
+//   });
+// };
+
 export const exportFromTableManyData = async (
   filename: string[],
   tableWrapperIds: string[], // Expecting an array of IDs of table wrappers
@@ -111,6 +155,59 @@ export const exportFromTableManyData = async (
         let row = rowArray[i];
         let cells = Array.from(row.cells);
         for (let j = 0; j < cells.length; j++) {
+          let cell = cells[j];
+          record[keys[j]] = cell.innerText;
+        }
+        maindata.push(record);
+      }
+    }
+
+    await exportXLSX(maindata, filename);
+    resolve(true);
+  });
+};
+
+export const exportFromTableGroupedData = async (
+  filename: string[],
+  tableWrapperIds: string[], // Expecting an array of IDs of table wrappers
+  window?: Window
+): Promise<boolean> => {
+  return new Promise(async (resolve, reject) => {
+    let maindata: any[] = [];
+    let keys: string[] = [];
+
+    for (let tableWrapperId of tableWrapperIds) {
+      const tableWrapper = window?.document.getElementById(tableWrapperId);
+      if (!tableWrapper) continue;
+
+      const table = tableWrapper.querySelector("table") as HTMLTableElement;
+      if (!table) continue;
+
+      const rowArray = Array.from(table?.rows || []);
+
+      // Collect headers if not already done
+      if (keys.length === 0 && rowArray.length > 0) {
+        Array.from(rowArray[0]?.cells).forEach((cell) => {
+          keys.push(cell.innerText);
+        });
+      }
+
+      // Collect table data
+      for (let i = 2; i < rowArray.length; i++) {
+        let record: any = {};
+        let row = rowArray[i];
+
+        let cells =
+          i > 2
+            ? (() => {
+                const cellArray = Array.from(row.cells);
+                const emptyCell = document.createElement("td"); // Create an actual HTMLTableCellElement
+                emptyCell.innerHTML = " ";
+                cellArray.unshift(emptyCell); // Add an empty cell at the start
+                return cellArray;
+              })()
+            : Array.from(row.cells);
+        for (let j = 0; j < cells.length - 1; j++) {
           let cell = cells[j];
           record[keys[j]] = cell.innerText;
         }
