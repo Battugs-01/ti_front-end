@@ -33,7 +33,9 @@ interface TableHeaderProps {
   store?: any;
   hideTitle?: boolean;
   leftContent?: React.ReactNode;
+  hideDownload?: boolean;
   downloadList?: {}[];
+  customDownload?: any;
   filter?: React.ReactNode;
 }
 
@@ -56,8 +58,10 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   tableID = "main-table",
   CreateComponent,
   store,
+  hideDownload = false,
   hideTitle,
   leftContent,
+  customDownload,
   downloadList = undefined,
   filter,
 }) => {
@@ -96,16 +100,6 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
         </div>
         <div className="flex gap-2 flex-wrap ant-form-item-margin-remove">
           {filter}
-          {/* <Button
-            size="large"
-            className={hideFormFilter ? "hidden" : ""}
-            hidden={hideFormFilter}
-            icon={<FilterOutlined rev />}
-          >
-            {checkIfChanged() && (
-              <div className="absolute -top-1 -right-1 w-2 z-[10] h-2 bg-red-500 rounded-full"></div>
-            )}
-          </Button> */}
           <ProFormText
             name={"text"}
             placeholder={
@@ -125,25 +119,29 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             onClick={refresh}
             size="large"
           />
-          {downloadList ? (
-            <ExportButton
-              hidden={!fileName}
-              onClick={() => {
-                exportFromList([`${fileName}`], downloadList);
-              }}
-            />
-          ) : (
-            <ExportButton
-              hidden={!fileName}
-              onClick={() => {
-                exportFromTable(
-                  [`${fileName}`],
-                  window.document.getElementById(`${tableID}`) as HTMLElement,
-                  window
-                );
-              }}
-            />
-          )}
+          {!hideDownload &&
+            (downloadList ? (
+              <ExportButton
+                hidden={!fileName}
+                onClick={() => {
+                  exportFromList([`${fileName}`], downloadList);
+                }}
+              />
+            ) : (
+              <ExportButton
+                hidden={!fileName}
+                onClick={() => {
+                  exportFromTable(
+                    [`${fileName}`],
+                    window.document.getElementById(`${tableID}`) as HTMLElement,
+                    window
+                  );
+                }}
+              />
+            ))}
+
+          {customDownload && customDownload}
+
           {toolbarItems}
           <CreateButton
             size="large"

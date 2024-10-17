@@ -1,14 +1,19 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Table } from "antd";
+import { Button, DatePicker, notification, Table } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
-import { ArrowNarrowDown, ArrowNarrowUp } from "untitledui-js-base";
+import {
+  ArrowNarrowDown,
+  ArrowNarrowUp,
+  DownloadCloud02,
+} from "untitledui-js-base";
+import { exportFromTableManyData } from "utils/export";
 import { reportStatisticalFilterAge } from "utils/index";
 
 export const AgeAndGender: React.FC = () => {
@@ -43,6 +48,7 @@ export const AgeAndGender: React.FC = () => {
     );
   }, [list.data]);
 
+  const tableIds: any = [];
   return (
     <PageCard xR>
       <InitTableHeader
@@ -66,14 +72,36 @@ export const AgeAndGender: React.FC = () => {
         }
         hideCreate
         hideSearch
-        fileName="age_and_gender"
+        hideDownload
         refresh={refreshList}
+        customDownload={
+          <Button
+            size="large"
+            type="default"
+            icon={<DownloadCloud02 />}
+            onClick={() => {
+              exportFromTableManyData(
+                [`Statistical report age and gender`],
+                tableIds,
+                window
+              );
+            }}
+            className="flex items-center gap-2"
+          >
+            <FormattedMessage id="download" />
+          </Button>
+        }
       />
       {list.data?.map((levelTable, index) => {
-        console.log(levelTable, "lavel");
+        const uniqueKey = `${levelTable.name}_${index}_${Math.random()
+          .toString(36)
+          .substr(2, 9)}`;
+        const tableId = `edit-table-${uniqueKey}`;
+        tableIds.push(tableId);
         return (
           <ITable
             hideCounter
+            id={tableId}
             hideAction
             hidePagination
             loading={list.loading}

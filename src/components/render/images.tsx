@@ -1,5 +1,5 @@
-import file from "service/file";
 import { Image } from "antd";
+import file from "service/file";
 
 type Props = {
   values?: string[];
@@ -13,7 +13,7 @@ export const ImageList = ({ values, imageHeight = 50, imageWidth }: Props) => {
         return (
           <Image
             key={"image-" + index}
-            src={el ? file.fileToUrl(el) : "/background/login.png"}
+            src={el ? file.fileToUrl(el) : "/background/main-logo.jpg"}
             className="rounded"
             height={imageHeight}
             width={imageWidth ?? "auto"}

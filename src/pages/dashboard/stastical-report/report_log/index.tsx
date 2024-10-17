@@ -6,7 +6,7 @@ import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { ArrowRight } from "untitledui-js-base";
 import { reportFilter } from "utils/index";
@@ -68,6 +68,7 @@ export const ReportLog: React.FC = () => {
             />
           </div>
         }
+        fileName="Log Report"
         hideCreate
         hideSearch
         refresh={refreshList}

@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { DatePicker, notification, Select, Table } from "antd";
+import { Button, DatePicker, notification, Select, Table } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
@@ -10,6 +10,8 @@ import { useContext, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import agencyList from "service/settings/agency_list";
 import statisticalReport from "service/statistical_report";
+import { DownloadCloud02 } from "untitledui-js-base";
+import { exportFromTableManyData } from "utils/export";
 
 const managementReportFilter = {
   current: 1,
@@ -24,6 +26,7 @@ export const ManagementReport: React.FC = () => {
   const [filter, setFilter] = useState(managementReportFilter);
   const [user] = useContext(AuthContext);
 
+  console.log(filter, "filter1");
   const list = useRequest(statisticalReport.developmentPlanManagement, {
     manual: true,
     onError: (err) => {
@@ -76,10 +79,15 @@ export const ManagementReport: React.FC = () => {
 
   listAgency?.data?.items?.map((item) => {
     data.push({
-      label: item.name,
+      label:
+        localStorage?.getItem("web.locale") === "en"
+          ? item.name_en || item.name
+          : item.name || "-",
       value: item?.id,
     });
   });
+
+  const tableIds: any = [];
 
   return (
     <PageCard xR>
@@ -94,6 +102,7 @@ export const ManagementReport: React.FC = () => {
                 size="large"
                 className="w-[350px]"
                 onChange={(value) => {
+                  console.log(filter, "filter2");
                   setFilter({
                     ...filter,
                     agency_id: value,
@@ -125,15 +134,43 @@ export const ManagementReport: React.FC = () => {
             />
           </div>
         }
+        hideDownload
         fileName="management_report"
         hideCreate
         hideSearch
         refresh={refreshList}
+        customDownload={
+          <Button
+            size="large"
+            type="default"
+            icon={<DownloadCloud02 />}
+            onClick={() => {
+              exportFromTableManyData(
+                [`Development Plan Report`],
+                tableIds,
+                window
+              );
+            }}
+            className="flex items-center gap-2"
+          >
+            <FormattedMessage id="download" />
+          </Button>
+        }
       />
-      {list?.data?.map((agency) => {
+
+      {list?.data?.map((agency, index) => {
         if (agency?.items?.length === 0 || !agency?.items) return null;
+        const uniqueKey = `${agency.name}_${index}_${Math.random()
+          .toString(36)
+          .substr(2, 9)}`;
+        const tableId = `edit-table-${uniqueKey}`;
+
+        tableIds.push(tableId);
+
         return (
           <ITable
+            key={index}
+            id={tableId}
             hideAction
             hideCounter
             hidePagination

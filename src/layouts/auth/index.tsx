@@ -8,12 +8,12 @@ const AuthLayout: FC = () => {
       <div
         className="hidden sm:block col-span-3 h-screen "
         style={{
-          backgroundImage: "url('/background/login.png')",
+          backgroundImage: "url('/background/main-logo.jpg')",
           backgroundSize: "cover",
+          backgroundPosition: "center",
           backgroundColor: "#5da7f0",
         }}
-      >
-      </div>
+      ></div>
       <div
         className="col-span-2 w-full h-screen flex justify-center items-center xs:w-full relative"
         style={{
@@ -21,10 +21,10 @@ const AuthLayout: FC = () => {
         }}
       >
         <div className="absolute top-5 right-10">
-        <LanguageSelector />
+          <LanguageSelector />
         </div>
         <div className="w-1/2">
-        <Outlet />
+          <Outlet />
         </div>
       </div>
     </div>

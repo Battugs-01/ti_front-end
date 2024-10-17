@@ -70,43 +70,43 @@ const Login: FC = () => {
               size="large"
               className="mt-7"
             >
-              <FormattedMessage id="login"/>
+              <FormattedMessage id="login" />
             </Button>
           ),
         }}
       >
         <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
-              <FormattedMessage id="login"/>
+          <FormattedMessage id="login" />
         </div>
         <div className="space-y-1">
           <ProFormText
             name="email"
-            placeholder={intl.formatMessage({id:"login_email"})}
-            label={<FormattedMessage id="login_email"/>}
+            placeholder={intl.formatMessage({ id: "login_email" })}
+            label={<FormattedMessage id="login_email" />}
             fieldProps={{ size: "large" }}
             required
             rules={[
               {
-                message: <FormattedMessage id="must_email"/>,
+                message: <FormattedMessage id="must_email" />,
                 type: "email",
                 required: true,
               },
             ]}
           />
           <ProFormText.Password
-            label={intl.formatMessage({id:"password"})}
+            label={intl.formatMessage({ id: "password" })}
             name="password"
-            placeholder={intl.formatMessage({id:"password"})}
+            placeholder={intl.formatMessage({ id: "password" })}
             fieldProps={{ size: "large" }}
             rules={[
               {
                 required: true,
-                message: <FormattedMessage id="required_password"/>,
+                message: <FormattedMessage id="required_password" />,
               },
             ]}
             extra={
               <div className="text-[#475467] text-sm mt-1">
-               <FormattedMessage id="valid_password"/>
+                <FormattedMessage id="valid_password" />
               </div>
             }
           />
@@ -123,8 +123,7 @@ const Login: FC = () => {
               }}
             />
             <label htmlFor="remember" className="text-gray-700">
-            <FormattedMessage id="login_reminder"/>
-              
+              <FormattedMessage id="login_reminder" />
             </label>
           </div>
         </div>
