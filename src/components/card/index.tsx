@@ -260,27 +260,6 @@ export const BloodPressureCard: React.FC<BloodPressureCardProps> = ({
         <div className="col-span-1">
           <div className="flex flex-col gap-2">
             <span className="text-sm text-[#4e5969]">
-              <FormattedMessage id={"left"} />
-            </span>
-            <div className="flex gap-1">
-              <div>
-                <BloodPressure
-                  color="purple"
-                  value={value?.blood_presure_left_high}
-                />
-              </div>
-              <div>
-                <BloodPressure
-                  color="blue"
-                  value={value?.blood_presure_left_low}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-span-1">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-[#4e5969]">
               <FormattedMessage id={"right"} />
             </span>
             <div className="flex gap-1">
@@ -294,6 +273,27 @@ export const BloodPressureCard: React.FC<BloodPressureCardProps> = ({
                 <BloodPressure
                   color="blue"
                   value={value?.blood_presure_right_low}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-span-1">
+          <div className="flex flex-col gap-2">
+            <span className="text-sm text-[#4e5969]">
+              <FormattedMessage id={"left"} />
+            </span>
+            <div className="flex gap-1">
+              <div>
+                <BloodPressure
+                  color="purple"
+                  value={value?.blood_presure_left_high}
+                />
+              </div>
+              <div>
+                <BloodPressure
+                  color="blue"
+                  value={value?.blood_presure_left_low}
                 />
               </div>
             </div>
