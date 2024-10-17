@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
+import { ArrowNarrowDown, ArrowNarrowUp } from "untitledui-js-base";
 import { reportStatisticalFilterAge } from "utils/index";
 
 export const AgeAndGender: React.FC = () => {
@@ -160,13 +161,21 @@ export const AgeAndGender: React.FC = () => {
                 key: "age",
                 render: (_, record) => (
                   <div className="flex items-center ">
-                    {localStorage?.getItem("web.locale") === "en"
-                      ? record?.age === "54-с доош"
-                        ? "Under 54"
-                        : record?.age === "75 дээш"
-                        ? "Upper 75"
-                        : record?.age
-                      : record?.age}
+                    {localStorage?.getItem("web.locale") === "en" ? (
+                      record?.age === "54-с доош" ? (
+                        <>
+                          <ArrowNarrowDown className="w-4 h-4" /> 54
+                        </>
+                      ) : record?.age === "75 дээш" ? (
+                        <>
+                          <ArrowNarrowUp className="w-4 h-4" /> 75
+                        </>
+                      ) : (
+                        record?.age
+                      )
+                    ) : (
+                      record?.age
+                    )}
                   </div>
                 ),
               },

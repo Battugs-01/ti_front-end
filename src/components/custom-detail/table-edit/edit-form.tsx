@@ -155,10 +155,16 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
           options={[
             {
               value: "Хөнгөн",
-              label: "Хөнгөн",
+              label: intl.formatMessage({ id: "low" }),
             },
-            { value: "Дунд", label: "Дунд" },
-            { value: "Хүнд", label: "Хүнд" },
+            {
+              value: "Дунд",
+              label: intl.formatMessage({ id: "medium" }),
+            },
+            {
+              value: "Хүнд",
+              label: intl.formatMessage({ id: "high" }),
+            },
           ]}
         />
         <ProFormTextArea
