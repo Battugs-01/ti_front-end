@@ -106,18 +106,18 @@ export const PlannedWorkTableColumns = (
     render: (_: any, record: PlannedWorksType): React.ReactNode => (
       <div
         className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium truncate ${
-          record?.care_foci_resolved_count === record?.allocated_count
+          record?.resolved_count === record?.allocated_count
             ? "bg-[#ECFDF3] text-[#027A48]"
             : "bg-[#fffaeb] text-[#b54708]"
         }  gap-1`}
       >
-        {record?.care_foci_resolved_count === record?.allocated_count ? (
+        {record?.resolved_count === record?.allocated_count ? (
           <Check size="15" />
         ) : (
           <AlertCircle size="15" color="#f99009" />
         )}
         <div>
-          <span className="">{record?.care_foci_resolved_count}</span>/
+          <span className="">{record?.resolved_count}</span>/
           {record?.allocated_count}
         </div>
       </div>
