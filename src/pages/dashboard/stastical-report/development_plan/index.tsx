@@ -11,11 +11,8 @@ export const DevelopmentPlanReport: React.FC = () => {
   return (
     <>
       <IfCondition
-        condition={
-          user?.user?.role === UserRoleType.super_admin ||
-          user?.user?.role === UserRoleType.stack_holder
-        }
-        whenTrue={<ByAgency />}
+        condition={user?.user?.role === UserRoleType.super_admin || user?.user?.role === UserRoleType.stack_holder}
+        whenTrue={<ManagementReport />}
       />
       <IfCondition
         condition={
@@ -23,13 +20,10 @@ export const DevelopmentPlanReport: React.FC = () => {
           user?.user?.role === UserRoleType.doctor ||
           user?.user?.role === UserRoleType.admin
         }
-        whenTrue={<ManagementReport />}
+        whenTrue={<ByAgency />}
       />
       <IfCondition
-        condition={
-          user?.user?.role === UserRoleType.case_manager ||
-          user?.user?.role === UserRoleType.senior_case_manager
-        }
+        condition={user?.user?.role === UserRoleType.case_manager || user?.user?.role === UserRoleType.senior_case_manager}
         whenTrue={<ByCaseManager />}
       />
     </>
