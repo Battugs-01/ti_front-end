@@ -272,7 +272,7 @@ export const BloodPressureCard: React.FC<BloodPressureCardProps> = ({
               <div>
                 <BloodPressure
                   color="blue"
-                  value={value?.blood_presure_left_high}
+                  value={value?.blood_presure_left_low}
                 />
               </div>
             </div>
