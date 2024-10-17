@@ -368,3 +368,53 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
     </Card>
   );
 };
+
+interface FamilyPicProps {
+  title: string;
+  value: number;
+  number?: number;
+  onClick?: () => void;
+}
+
+export const FamilyPicCard: React.FC<FamilyPicProps> = ({
+  title,
+  value,
+  number,
+  onClick,
+}) => {
+  let textColor = "#144E5A";
+  let percentPoint = 5;
+  switch (number) {
+    case 1:
+      textColor = "#144E5A";
+      percentPoint = 5;
+      break;
+    case 2:
+      textColor = "#F79009";
+      percentPoint = 20;
+      break;
+    case 3:
+      textColor = "#F04438";
+      percentPoint = 5;
+      break;
+    default:
+      percentPoint = 5;
+      textColor = "#144E5A";
+  }
+
+  return (
+    <Card className="w-full card-header-remove h-[144px]" bordered>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between">
+          <div className="text-xl text-gray-800">{title}</div>
+          <img
+            src={BackIcon}
+            alt="back"
+            onClick={onClick}
+            className="cursor-pointer"
+          />
+        </div>
+      </div>
+    </Card>
+  );
+};

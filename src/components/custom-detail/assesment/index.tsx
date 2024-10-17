@@ -2,7 +2,12 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { Card, Col, Row } from "antd";
 import AssesmentSvg from "assets/img/assesment.svg";
 import IBadge from "components/badge";
-import { BloodPressureCard, ProgressCard, StatCard } from "components/card";
+import {
+  BloodPressureCard,
+  FamilyPicCard,
+  ProgressCard,
+  StatCard,
+} from "components/card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -10,6 +15,8 @@ import {
   ComprehensiveType,
 } from "service/screening_list/type";
 import { BartherIndexModal } from "./assesment-modal/barthel-index";
+import { EcoMap } from "./assesment-modal/ecomap";
+import { FamilyPicModal } from "./assesment-modal/family_pic";
 import { GDSModal } from "./assesment-modal/gds";
 import { MiniCogModal } from "./assesment-modal/mini-cog";
 import CareFociPercent from "./care-foci-percent";
@@ -27,6 +34,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
     return <PageLoading />;
   }
 
+  console.log(data, "sdaData");
   return data ? (
     <Card
       title={
@@ -110,6 +118,24 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
               />
             </Col>
           </Row>
+          <Row gutter={[16, 16]}>
+            <Col lg={12} md={24} sm={24} xs={24}>
+              <FamilyPicCard
+                title={intl.formatMessage({ id: "family_pic" })}
+                value={data?.gds?.point || 0}
+                number={3}
+                onClick={() => setOpenModal("family_pic")}
+              />
+            </Col>
+            <Col lg={12} md={24} sm={24} xs={24}>
+              <FamilyPicCard
+                title={intl.formatMessage({ id: "elderly_social_conv" })}
+                value={data?.gds?.point || 0}
+                number={3}
+                onClick={() => setOpenModal("eco_map")}
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
 
@@ -124,6 +150,15 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
       )}
       {openModal === "gds" && (
         <GDSModal data={data?.gds} onCancel={() => setOpenModal("")} />
+      )}
+      {openModal === "family_pic" && (
+        <FamilyPicModal
+          data={data?.comp_ass}
+          onCancel={() => setOpenModal("")}
+        />
+      )}
+      {openModal === "eco_map" && (
+        <EcoMap data={data?.comp_ass} onCancel={() => setOpenModal("")} />
       )}
     </Card>
   ) : null;
