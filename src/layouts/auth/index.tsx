@@ -9,9 +9,10 @@ const AuthLayout: FC = () => {
         className="hidden sm:block col-span-3 h-screen "
         style={{
           backgroundImage: "url('/background/main-logo.jpg')",
-          backgroundSize: "cover",
+          backgroundSize: "auto",
           backgroundPosition: "center",
-          backgroundColor: "#5da7f0",
+          backgroundColor: "#d7dee4",
+          backgroundRepeat: "no-repeat",
         }}
       ></div>
       <div
