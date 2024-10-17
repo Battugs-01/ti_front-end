@@ -9,7 +9,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE, workersGenderArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -60,6 +60,8 @@ export const EditScreenList = ({
       khoroo.run(data?.address?.district_id);
     }
   }, [data]);
+
+  console.log(data, "data");
   return (
     <ModalForm
       {...rest}
@@ -167,7 +169,7 @@ export const EditScreenList = ({
                     }
                   />
                 </Col>
-                <Col span={12}>
+                {/* <Col span={12}>
                   <ProFormSelect
                     fieldProps={{
                       size: "large",
@@ -182,7 +184,7 @@ export const EditScreenList = ({
                     }
                     options={workersGenderArray.map((el) => ({ ...el }))}
                   />
-                </Col>
+                </Col> */}
               </Row>
               <Row gutter={[16, 16]}>
                 <Col span={12}>

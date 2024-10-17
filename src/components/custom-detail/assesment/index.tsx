@@ -34,7 +34,6 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
     return <PageLoading />;
   }
 
-  console.log(data, "sdaData");
   return data ? (
     <Card
       title={

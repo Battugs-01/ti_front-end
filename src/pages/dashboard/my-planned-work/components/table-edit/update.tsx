@@ -124,9 +124,15 @@ export const DevPlanUpdate = ({
             <FormattedMessage id="question" />
           </div>
           <div className="text-gray-700 font-normal text-sm text-right">
-            {isEvaluated
-              ? data?.customer_care_foci_item?.care_foci_item?.name
-              : DevPlanQuistion(data?.key as string)}
+            {isEvaluated ? (
+              localStorage?.getItem("web.locale") === "en" ? (
+                data?.customer_care_foci_item?.care_foci_item?.name_eng
+              ) : (
+                data?.customer_care_foci_item?.care_foci_item?.name
+              )
+            ) : (
+              <FormattedMessage id={DevPlanQuistion(data?.key as string)} />
+            )}
           </div>
         </div>
         <div className="flex flex-row justify-between">
@@ -134,7 +140,9 @@ export const DevPlanUpdate = ({
             <FormattedMessage id={isEvaluated ? "description" : "answer"} />
           </div>
           <div className="text-gray-700 font-normal text-sm ">
-            {data?.desc || "-"}
+            {isEvaluated
+              ? data?.customer_care_foci_item?.description || ""
+              : data?.desc || "-"}
           </div>
         </div>
         <div className="flex flex-row justify-between">
