@@ -26,7 +26,7 @@ const AuthLayout: FC = () => {
         <div className="absolute top-5 right-10">
           <LanguageSelector />
         </div>
-        <div className="w-1/2">
+        <div className="w-2/3 lg:w-1/2">
           <Outlet />
         </div>
       </div>
