@@ -76,18 +76,7 @@ export const Handbooks = () => {
           />
         </Tooltip>
       </div>
-      {found?.role !== UserRoleType.case_manager ? (
-        <Drawer
-          title={intl.formatMessage({ id: "hand_book" })}
-          onClose={onClose}
-          open={open}
-          width={850}
-        >
-          {found?.url && (
-            <iframe src={found?.url} className="w-full h-full"></iframe>
-          )}
-        </Drawer>
-      ) : (
+      {found?.role === UserRoleType.case_manager && (
         <Drawer
           title={intl.formatMessage({ id: "hand_book" })}
           onClose={onClose}
@@ -123,6 +112,53 @@ export const Handbooks = () => {
           )}
         </Drawer>
       )}
+      {found?.role === UserRoleType.senior_case_manager && (
+        <Drawer
+          title={intl.formatMessage({ id: "hand_book" })}
+          onClose={onClose}
+          open={open}
+          width={850}
+        >
+          <Radio.Group
+            optionType="button"
+            value={isMobile}
+            onChange={(e) => {
+              setIsMobile(e.target.value);
+            }}
+            size="large"
+            className="mb-4"
+          >
+            <Radio.Button value={false}>
+              {intl.formatMessage({ id: "senior_web_case" })}
+            </Radio.Button>
+            <Radio.Button value={true}>
+              {intl.formatMessage({ id: "senior_mobile_case" })}
+            </Radio.Button>
+          </Radio.Group>
+
+          {isMobile ? (
+            <iframe src={found?.url} className="w-full h-full"></iframe>
+          ) : (
+            found?.url && (
+              <iframe src={found?.url} className="w-full h-full"></iframe>
+            )
+          )}
+        </Drawer>
+      )}
+
+      {found?.role !== UserRoleType.case_manager &&
+        found?.role !== UserRoleType.senior_case_manager && (
+          <Drawer
+            title={intl.formatMessage({ id: "hand_book" })}
+            onClose={onClose}
+            open={open}
+            width={850}
+          >
+            {found?.url && (
+              <iframe src={found?.url} className="w-full h-full"></iframe>
+            )}
+          </Drawer>
+        )}
     </>
   );
 };

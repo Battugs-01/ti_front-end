@@ -303,5 +303,7 @@
   "change": "болгож өөрчлөв.",
   "auth_title": "CASE MANAGEMENT PLATFORM",
   "web_case": "Кейс менежер Вебсайт",
-  "mobile_case": "Кейс менежер Мобайл"
+  "mobile_case": "Кейс менежер Мобайл",
+  "senior_web_case": "Ахлах кейс менежер Вебсайт",
+  "senior_mobile_case": "Ахлах кейс менежер Мобайл"
 }
