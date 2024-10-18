@@ -170,7 +170,7 @@
   "method": "Үйлдэл",
   "months": "{number}-сар",
   "case_manager": "Кейс менежер",
-  "senior_case_manager": "Ахлах Кэйс менежер",
+  "senior_case_manager": "Ахлах Кейс менежер",
   "operation_manager": "Үйл ажиллагааны менежер",
   "doctor": "Эмч",
   "admin": "Админ",
@@ -255,7 +255,7 @@
   "medical_history": "Өвчний түүх",
   "by_hcu_date": "ХЦҮ огноогоор",
   "by_ht_date": "ХТ огноогоор",
-  "case_movement": "Кэйс шилжүүлэх",
+  "case_movement": "Кейс шилжүүлэх",
   "by_level": "Түвшингөөр",
   "age_and_gender": "Нас болон хүйсээр",
   "percent": "Эзлэх хувь",
@@ -276,7 +276,7 @@
   "new_password_repeat": "Шинэ нууц үг давтаж оруулна уу",
   "khoroo": "Баг/Хороо",
   "district": "Сум/Дүүрэг",
-  "by_case_manager": "Кэйс менежерээр",
+  "by_case_manager": "Кейс менежерээр",
   "person_charge": "Хариуцсан",
   "development_plan_date": "ХТ огноо",
   "distributed": "Хуваарилагдсан",
@@ -302,6 +302,6 @@
   "not_desease_history": "Өвчний түүх байхгүй байна",
   "change": "болгож өөрчлөв.",
   "auth_title": "CASE MANAGEMENT PLATFORM",
-  "web_case": "Кэйс менежер Вебсайт",
-  "mobile_case": "Кэйс менежер Мобайл"
+  "web_case": "Кейс менежер Вебсайт",
+  "mobile_case": "Кейс менежер Мобайл"
 }
