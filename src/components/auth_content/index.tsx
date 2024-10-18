@@ -9,10 +9,10 @@ export const AuthContent: React.FC = () => {
       <div className="flex items-center justify-start mb-4">
         <img src={Logo} />
       </div>
-      <div className="text-primary-700 font-bold text-4xl lg:text-5xl 2xl:text-6xl text-center mx-10">
+      <div className="text-primary-700 font-bold text-2xl lg:text-3xl 2xl:text-6xl text-center mx-10">
         <FormattedMessage id="auth_title" />
       </div>
-      <div className="h-2/3">
+      <div className="h-1/2">
         <div className="relative">
           <img
             src={ContentOne}
@@ -24,7 +24,7 @@ export const AuthContent: React.FC = () => {
           />
         </div>
       </div>
-      <div className="text-[#416D74] text-xl lg:text-2xl text-center mt-8">
+      <div className="text-[#416D74] text-xl lg:text-2xl text-center mt-32">
         © Developed by Quantum Partners LLC
       </div>
     </div>
