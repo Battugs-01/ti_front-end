@@ -1,3 +1,4 @@
+import { Handbooks } from "components/handbook";
 import { useAuthContext } from "context/auth";
 import { FC } from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ const DashboardLayout: FC<Props> = ({}) => {
       <WorkerLayout>
         <Outlet />
       </WorkerLayout>
+      <Handbooks />
     </div>
   );
 };

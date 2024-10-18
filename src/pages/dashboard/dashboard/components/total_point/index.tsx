@@ -58,7 +58,6 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
             <Legend
               iconType="circle"
               formatter={(value) => {
-                console.log(value, "kkk");
                 if (value === "Barthel Index")
                   return <FormattedMessage id="barthel_index" />;
                 if (value === "Mini Cog")
