@@ -1,4 +1,5 @@
-import { Button, Drawer, Tooltip } from "antd";
+import { Button, Drawer, Radio, Tooltip } from "antd";
+import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext, useState } from "react";
 import { MdEditDocument } from "react-icons/md";
@@ -44,6 +45,7 @@ export const Handbooks = () => {
   ];
 
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [user] = useContext(AuthContext);
   const intl = useIntl();
   const found = data.find((el) => user?.user?.role === el.role);
@@ -74,16 +76,53 @@ export const Handbooks = () => {
           />
         </Tooltip>
       </div>
-      <Drawer
-        title={intl.formatMessage({ id: "hand_book" })}
-        onClose={onClose}
-        open={open}
-        width={850}
-      >
-        {found?.url && (
-          <iframe src={found?.url} className="w-full h-full"></iframe>
-        )}
-      </Drawer>
+      {found?.role !== UserRoleType.case_manager ? (
+        <Drawer
+          title={intl.formatMessage({ id: "hand_book" })}
+          onClose={onClose}
+          open={open}
+          width={850}
+        >
+          {found?.url && (
+            <iframe src={found?.url} className="w-full h-full"></iframe>
+          )}
+        </Drawer>
+      ) : (
+        <Drawer
+          title={intl.formatMessage({ id: "hand_book" })}
+          onClose={onClose}
+          open={open}
+          width={850}
+        >
+          <Radio.Group
+            optionType="button"
+            value={isMobile}
+            onChange={(e) => {
+              setIsMobile(e.target.value);
+            }}
+            size="large"
+            className="mb-4"
+          >
+            <Radio.Button value={false}>
+              {intl.formatMessage({ id: "web_case" })}
+            </Radio.Button>
+            <Radio.Button value={true}>
+              {intl.formatMessage({ id: "mobile_case" })}
+            </Radio.Button>
+          </Radio.Group>
+
+          {isMobile ? (
+            <iframe
+              src="/handbooks/Mobile_Casemanagers.pdf"
+              className="w-full h-full"
+            ></iframe>
+          ) : (
+            found?.url && (
+              <iframe src={found?.url} className="w-full h-full"></iframe>
+            )
+          )}
+        </Drawer>
+      )}
     </>
   );
 };

@@ -301,5 +301,7 @@
   "not_early_screening_is_required": "Өвчтөнд эрт үзлэг хийх шаардлагагүй байсан",
   "not_desease_history": "Өвчний түүх байхгүй байна",
   "change": "болгож өөрчлөв.",
-  "auth_title": "CASE MANAGEMENT PLATFORM"
+  "auth_title": "CASE MANAGEMENT PLATFORM",
+  "web_case": "Кэйс менежер Вебсайт",
+  "mobile_case": "Кэйс менежер Мобайл"
 }
