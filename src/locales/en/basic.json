@@ -298,5 +298,7 @@
   "devPlanQuistion4": "What are your priority care needs?",
   "not_checklist_emergency": "Not required at the moment",
   "not_early_screening_is_required": "Not required at the moment",
-  "not_desease_history": "There is no desease history"
+  "not_desease_history": "There is no desease history",
+  "change": "changed to",
+  "auth_title": "CASE MANAGEMENT PLATFORM"
 }

@@ -13,7 +13,7 @@ import {
   ArrowNarrowUp,
   DownloadCloud02,
 } from "untitledui-js-base";
-import { exportFromTableManyData } from "utils/export";
+import { exportFromTableGroupedData } from "utils/export";
 import { reportStatisticalFilterAge } from "utils/index";
 
 export const AgeAndGender: React.FC = () => {
@@ -80,7 +80,7 @@ export const AgeAndGender: React.FC = () => {
             type="default"
             icon={<DownloadCloud02 />}
             onClick={() => {
-              exportFromTableManyData(
+              exportFromTableGroupedData(
                 [`Statistical report age and gender`],
                 tableIds,
                 window
