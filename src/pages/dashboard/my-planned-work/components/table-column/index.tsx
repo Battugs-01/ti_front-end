@@ -66,6 +66,7 @@ export const PlannedWorkTableColumns = (
     title: intl.formatMessage({ id: "care_foci" }),
     dataIndex: "cfs_score",
     align: "center",
+    width: 150,
     render: (_: any, record: PlannedWorksType): React.ReactNode => (
       <div className="text-gray-400  ">
         <span className="text-gray-900 font-medium">

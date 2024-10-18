@@ -1,5 +1,5 @@
 import { ICard } from "components/card";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   Area,
   AreaChart,
@@ -18,6 +18,7 @@ interface TotalPointProps {
 }
 
 export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
+  const intl = useIntl();
   const customizedData = data?.map((item, index) => {
     return {
       name: index + 1,
@@ -57,7 +58,8 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
             <Legend
               iconType="circle"
               formatter={(value) => {
-                if (value === "barthel_index") return "Barthel Index";
+                if (value === "barthel_index")
+                  return <FormattedMessage id="barthel_index" />;
                 if (value === "mini_cog") return "Mini Cog";
                 if (value === "gds") return "GDS";
                 return value;
@@ -70,22 +72,28 @@ export const TotalPoint: React.FC<TotalPointProps> = ({ data }) => {
                 if (payload && payload.length) {
                   const { mini_cog, barthel_index, gds } = payload[0].payload;
                   return (
-                    <div className="bg-white p-2 border border-solid border-gray-200">
+                    <div className="bg-white p-2 border border-solid border-gray-200 flex flex-col gap-2">
                       <div
                         style={{
                           color: payload[0]?.stroke,
                         }}
-                      >{`Mini Cog: ${mini_cog?.toFixed(2)}`}</div>
+                      >{`${intl.formatMessage({
+                        id: "mini_cog",
+                      })}: ${mini_cog?.toFixed(2)}`}</div>
                       <div
                         style={{
                           color: payload[1]?.stroke,
                         }}
-                      >{`Barthel Index: ${barthel_index?.toFixed(2)}`}</div>
+                      >{`${intl.formatMessage({
+                        id: "barthel_index",
+                      })}: ${barthel_index?.toFixed(2)}`}</div>
                       <div
                         style={{
                           color: payload[2]?.stroke,
                         }}
-                      >{`GDS: ${gds?.toFixed(2)}`}</div>
+                      >{`${intl.formatMessage({
+                        id: "gds",
+                      })}: ${gds?.toFixed(2)}`}</div>
                     </div>
                   );
                 }

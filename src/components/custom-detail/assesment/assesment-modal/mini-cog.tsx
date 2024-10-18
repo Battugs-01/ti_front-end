@@ -26,7 +26,7 @@ export const MiniCogModal = ({ data, onCancel }: PropsCancel) => {
       submitter={false}
       title={
         <div className="text-lg font-semibold text-gray-900">
-          {intl.formatMessage({ id: "mini-cog" }).toUpperCase()}
+          {intl.formatMessage({ id: "mini_cog" }).toUpperCase()}
         </div>
       }
       width={550}

@@ -76,7 +76,10 @@ export const ByAgency: React.FC = () => {
 
             <DatePicker.RangePicker
               className="w-max"
-              placeholder={[intl.formatMessage({ id: "select_start_date" }), intl.formatMessage({ id: "select_end_date" })]}
+              placeholder={[
+                intl.formatMessage({ id: "select_start_date" }),
+                intl.formatMessage({ id: "select_end_date" }),
+              ]}
               size="large"
               onChange={(values) => {
                 setFilter({
@@ -86,7 +89,9 @@ export const ByAgency: React.FC = () => {
                 });
               }}
               defaultValue={[
-                filter.start_date ? dayjs(filter.start_date) : dayjs().subtract(3, "month"),
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
                 filter.end_date ? dayjs(filter.end_date) : dayjs(),
               ]}
             />
@@ -115,7 +120,14 @@ export const ByAgency: React.FC = () => {
             render: (value: any) => {
               return (
                 <div className="text-gray-400">
-                  <span className={`${value > 6 ? "text-red-400" : "text-black"} font-medium`}>{value}</span> / 9
+                  <span
+                    className={`${
+                      value > 6 ? "text-red-400" : "text-black"
+                    } font-medium`}
+                  >
+                    {value}
+                  </span>{" "}
+                  / 9
                 </div>
               );
             },
@@ -228,7 +240,10 @@ export const ByAgency: React.FC = () => {
             width: 150,
             align: "center",
             render: (value: any) => {
-              if (!value || dayjs(value).format("YYYY-MM-DD") === "0001-01-01") {
+              if (
+                !value ||
+                dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
+              ) {
                 return <div className="flex items-center">-</div>;
               }
               return <div>{dayjs(value)?.format("YYYY/MM/DD")}</div>;
@@ -246,7 +261,13 @@ export const ByAgency: React.FC = () => {
             width: 100,
             align: "center",
             render: (_, record) => {
-              return <div>{record?.dp_resolved_percent ? `${record.dp_resolved_percent}%` : "-"}</div>;
+              return (
+                <div>
+                  {record?.dp_resolved_percent
+                    ? `${record.dp_resolved_percent}%`
+                    : "-"}
+                </div>
+              );
             },
           },
         ]}
