@@ -341,7 +341,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
     <Card className="w-full card-header-remove h-[144px]" bordered>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
-          <div className="text-xl text-gray-800">{title}</div>
+          <div className="text-xl text-gray-800 mr-3">{title}</div>
           <img
             src={BackIcon}
             alt="back"

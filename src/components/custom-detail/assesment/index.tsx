@@ -94,7 +94,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
           <Row gutter={[12, 24]}>
             <Col lg={8} md={24} sm={24} xs={24}>
               <ProgressCard
-                title="Mini-Cog"
+                title={intl.formatMessage({ id: "mini_cog" })}
                 value={data?.mini_cog?.total_point || 0}
                 number={1}
                 onClick={() => setOpenModal("mini-cog")}
@@ -102,7 +102,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
             </Col>
             <Col lg={8} md={24} sm={24} xs={24}>
               <ProgressCard
-                title="Barthel Index"
+                title={intl.formatMessage({ id: "barthel_index" })}
                 value={data?.barthel_index?.point || 0}
                 number={2}
                 onClick={() => setOpenModal("barthel")}
@@ -110,7 +110,7 @@ const Assesment: React.FC<AssesmentProps> = ({ selectedLevel, data }) => {
             </Col>
             <Col lg={8} md={24} sm={24} xs={24}>
               <ProgressCard
-                title="GDS"
+                title={intl.formatMessage({ id: "gds" })}
                 value={data?.gds?.point || 0}
                 number={3}
                 onClick={() => setOpenModal("gds")}
