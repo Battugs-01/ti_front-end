@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const AuthLayout: FC = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-5 h-full">
+    <div className="grid grid-cols-1 md:grid-cols-5 h-full">
       <AuthContent />
       {/* <div
         className="hidden sm:block col-span-3 h-screen "
