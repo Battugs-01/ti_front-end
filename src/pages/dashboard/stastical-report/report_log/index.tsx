@@ -6,7 +6,7 @@ import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import statisticalReport from "service/statistical_report";
 import { ArrowRight } from "untitledui-js-base";
 import { reportFilter } from "utils/index";
@@ -130,7 +130,9 @@ export const ReportLog: React.FC = () => {
                                 <div>{JSON.parse(record?.before)[key]}</div>
                                 <ArrowRight size="12" />
                                 <div>{JSON.parse(record?.after)[key]}</div>
-                                <div>болгож өөрчлөв</div>
+                                <div>
+                                  <FormattedMessage id="change" />
+                                </div>
                               </div>
                             }
                           />

@@ -299,5 +299,7 @@
   "devPlanQuistion4": "Танд нэн тэргүүнд шаардлагатай ямар тусламж үйлчилгээ байна вэ?",
   "not_checklist_emergency": "Эмнэлгийн яаралтай тусламж үйлчилгээ авах шаардлагагүй байсан",
   "not_early_screening_is_required": "Өвчтөнд эрт үзлэг хийх шаардлагагүй байсан",
-  "not_desease_history": "Өвчний түүх байхгүй байна"
+  "not_desease_history": "Өвчний түүх байхгүй байна",
+  "change": "болгож өөрчлөв.",
+  "auth_title": "CASE MANAGEMENT PLATFORM"
 }
