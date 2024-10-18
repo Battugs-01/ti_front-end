@@ -68,7 +68,7 @@ export const Handbooks = () => {
           <Button
             icon={<MdEditDocument size={25} color="#fff" />}
             color="#144E5A"
-            className="bg-[#144E5A] rounded-none rounded-l-lg"
+            className="bg-[#144E5A] rounded-none rounded-l-lg z-20"
             size="large"
             onClick={showDrawer}
           />

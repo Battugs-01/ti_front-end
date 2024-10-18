@@ -17,7 +17,9 @@ const DashboardLayout: FC<Props> = ({}) => {
       <WorkerLayout>
         <Outlet />
       </WorkerLayout>
-      <Handbooks />
+      <div className="fixed top-1/2 right-0 z-20">
+        <Handbooks />
+      </div>
     </div>
   );
 };
