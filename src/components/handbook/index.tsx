@@ -137,7 +137,10 @@ export const Handbooks = () => {
           </Radio.Group>
 
           {isMobile ? (
-            <iframe src={found?.url} className="w-full h-full"></iframe>
+            <iframe
+              src="/handbooks/Mobile_Casemanagers.pdf"
+              className="w-full h-full"
+            ></iframe>
           ) : (
             found?.url && (
               <iframe src={found?.url} className="w-full h-full"></iframe>
