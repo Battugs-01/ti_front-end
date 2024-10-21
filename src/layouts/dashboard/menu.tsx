@@ -1,5 +1,5 @@
 import { Drawer } from "antd";
-import Logo from "assets/img/menu_logo.png";
+import Logo from "/images/logo1.png";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
