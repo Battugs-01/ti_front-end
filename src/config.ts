@@ -73,6 +73,7 @@ export const permissionArraySuperAdmin = Object.freeze([
   UserRoleType.doctor,
   UserRoleType.admin,
   UserRoleType.super_admin,
+  UserRoleType.stack_holder,
 ]);
 
 export enum ScreeningTab {

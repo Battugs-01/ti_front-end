@@ -92,7 +92,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
       initialValues={{
         first_name: user.user?.first_name,
         last_name: user.user?.last_name,
-        role: intl.formatMessage({ id: user?.user?.role }),
+        role: user?.user?.role,
         profile: [
           {
             uid: `${user.user?.profile?.id}`,
