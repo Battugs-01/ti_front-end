@@ -39,14 +39,18 @@ export const AuthContent: React.FC = () => {
         <img
           src={ContentOne}
           className={`absolute top-4 w-[300px] ${
-            isScrollable ? "lg:w-[300px]" : "lg:w-[400px] xl:w-[450px]"
+            isScrollable
+              ? "lg:w-[300px]"
+              : "lg:w-[400px] xl:w-[450px] 2xl:[500px]"
           }  object-contain`}
           alt="Content 1"
         />
         <img
           src={ContentTwo}
           className={`absolute lg:top-10 top-40 right-10 w-[300px] ${
-            isScrollable ? "lg:w-[300px]" : "lg:w-[400px] xl:w-[450px]"
+            isScrollable
+              ? "lg:w-[300px]"
+              : "lg:w-[400px] xl:w-[450px] 2xl:w-[500px]"
           }  object-contain`}
           alt="Content 2"
         />
