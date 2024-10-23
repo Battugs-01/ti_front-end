@@ -94,21 +94,22 @@ export const ManagementReport: React.FC = () => {
         hideTitle
         leftContent={
           <div className="flex items-center gap-4 h-full">
-            {user?.user?.role === UserRoleType.super_admin && (
-              <Select
-                options={data}
-                defaultValue={0}
-                size="large"
-                className="w-[350px]"
-                onChange={(value) => {
-                  console.log(filter, "filter2");
-                  setFilter({
-                    ...filter,
-                    agency_id: value,
-                  });
-                }}
-              />
-            )}
+            {user?.user?.role === UserRoleType.super_admin ||
+              (user?.user?.role === UserRoleType.stack_holder && (
+                <Select
+                  options={data}
+                  defaultValue={0}
+                  size="large"
+                  className="w-[350px]"
+                  onChange={(value) => {
+                    console.log(filter, "filter2");
+                    setFilter({
+                      ...filter,
+                      agency_id: value,
+                    });
+                  }}
+                />
+              ))}
 
             <DatePicker.RangePicker
               className="w-max"
