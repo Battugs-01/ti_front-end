@@ -119,51 +119,51 @@ export const CareFoci: React.FC = () => {
             },
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 1 }),
+            title: intl.formatMessage({ id: "month_1" }),
             dataIndex: "month_1",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 2 }),
+            title: intl.formatMessage({ id: "month_2" }),
             dataIndex: "month_2",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 3 }),
+            title: intl.formatMessage({ id: "month_3" }),
             dataIndex: "month_3",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 4 }),
+            title: intl.formatMessage({ id: "month_4" }),
             dataIndex: "month_4",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 5 }),
+            title: intl.formatMessage({ id: "month_5" }),
             dataIndex: "month_5",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 6 }),
+            title: intl.formatMessage({ id: "month_6" }),
             dataIndex: "month_6",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 7 }),
+            title: intl.formatMessage({ id: "month_7" }),
             dataIndex: "month_7",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 8 }),
+            title: intl.formatMessage({ id: "month_8" }),
             dataIndex: "month_8",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 9 }),
+            title: intl.formatMessage({ id: "month_9" }),
             dataIndex: "month_9",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 10 }),
+            title: intl.formatMessage({ id: "month_10" }),
             dataIndex: "month_10",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 11 }),
+            title: intl.formatMessage({ id: "month_11" }),
             dataIndex: "month_11",
           },
           {
-            title: intl.formatMessage({ id: "months" }, { number: 12 }),
+            title: intl.formatMessage({ id: "month_12" }),
             dataIndex: "month_12",
           },
         ]}
