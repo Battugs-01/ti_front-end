@@ -217,7 +217,24 @@ export const ByAgency: React.FC = () => {
             align: "center",
             width: 100,
             render: (_, record) => {
-              return <div>{record?.care_foci?.length}</div>;
+              const functionalCount =
+                record.care_foci?.find((value) => value.key === "functional")
+                  ?.count || 0;
+              const psychoCount =
+                record.care_foci?.find(
+                  (value) => value.key === "psycho_emotional"
+                )?.count || 0;
+              const socioCount =
+                record.care_foci?.find(
+                  (value) => value.key === "socio_economic"
+                )?.count || 0;
+              const clinicalCount =
+                record.care_foci?.find((value) => value.key === "clinical")
+                  ?.count || 0;
+
+              const totalCount =
+                functionalCount + psychoCount + socioCount + clinicalCount;
+              return <div>{totalCount}</div>;
             },
           },
           {
@@ -226,12 +243,24 @@ export const ByAgency: React.FC = () => {
             width: 100,
             align: "center",
             render: (_, record) => {
-              return (
-                <div>
-                  {/* care foci huviig bodohdoo staticaar 31 d huvaana */}
-                  {((record?.care_foci?.length / 31) * 100).toFixed(2)}%
-                </div>
-              );
+              const functionalCount =
+                record.care_foci?.find((value) => value.key === "functional")
+                  ?.count || 0;
+              const psychoCount =
+                record.care_foci?.find(
+                  (value) => value.key === "psycho_emotional"
+                )?.count || 0;
+              const socioCount =
+                record.care_foci?.find(
+                  (value) => value.key === "socio_economic"
+                )?.count || 0;
+              const clinicalCount =
+                record.care_foci?.find((value) => value.key === "clinical")
+                  ?.count || 0;
+
+              const totalCount =
+                functionalCount + psychoCount + socioCount + clinicalCount;
+              return <div>{((totalCount / 31) * 100).toFixed(2)}%</div>;
             },
           },
           {
