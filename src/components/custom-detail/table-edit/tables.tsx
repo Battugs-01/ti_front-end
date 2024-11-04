@@ -128,7 +128,8 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 }
                 onRow={(record, rowIndex) => {
                   if (
-                    user?.user?.role === UserRoleType.doctor &&
+                    (user?.user?.role === UserRoleType.doctor ||
+                      user?.user?.role === UserRoleType.senior_case_manager) &&
                     !devPlanIsClose
                   ) {
                     return {
