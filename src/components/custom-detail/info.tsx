@@ -47,6 +47,7 @@ const Info: React.FC<InfoProps> = ({ data, refreshData, isMyPlanedWork }) => {
         <div className="flex justify-center flex-col items-center lg:block pb-6">
           <div className="lg:flex-row lg:flex flex-col gap-2 justify-between p-4 lg:p-2">
             {(user?.user?.role === UserRoleType.case_manager ||
+              user?.user?.role === UserRoleType.case_management_associate ||
               user?.user?.role === UserRoleType.senior_case_manager ||
               user?.user?.role === UserRoleType.doctor) &&
               !isMyPlanedWork && (

@@ -107,7 +107,10 @@ const ScreeningList: React.FC = () => {
         refresh={refreshList}
         // UpdateComponent={EditScreenList }
         customActions={(record) => {
-          if (user?.user?.role === UserRoleType.case_manager) {
+          if (
+            user?.user?.role === UserRoleType.case_manager ||
+            user?.user?.role === UserRoleType.case_management_associate
+          ) {
             return (
               <div className="flex gap-6 ml-2">
                 <div className="flex items-center">
