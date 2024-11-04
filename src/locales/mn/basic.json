@@ -318,5 +318,13 @@
   "mobile_case": "Кейс менежер Мобайл",
   "senior_web_case": "Ахлах кейс менежер Вебсайт",
   "senior_mobile_case": "Ахлах кейс менежер Мобайл",
-  "case_associate": "Туслах кейс менежер"
+  "case_management_associate": "Туслах кейс менежер",
+  "today": "Өнөөдөр",
+  "tommorow": "Маргааш",
+  "this_week": "Энэ долоо хоног",
+  "next_week": "Дараагийн долоо хоног",
+  "this_month": "Энэ сар",
+  "next_month": "Дараагийн сар",
+  "this_year": "Энэ жил",
+  "next_year": "Дараагийн жил"
 }

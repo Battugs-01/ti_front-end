@@ -43,7 +43,7 @@ const StasticalReport = () => {
         ),
       },
     ];
-  } else if (user?.user?.role === UserRoleType.case_associate) {
+  } else if (user?.user?.role === UserRoleType.case_management_associate) {
     options = [
       {
         value: StatisticalTab.care_foci,

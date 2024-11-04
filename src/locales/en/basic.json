@@ -315,5 +315,13 @@
   "not_desease_history": "There is no desease history",
   "change": "changed to",
   "auth_title": "CASE MANAGEMENT PLATFORM",
-  "case_associate": "Case associate"
+  "case_management_associate": "Case management associate",
+  "today": "Today",
+  "tommorow": "Tomorrow",
+  "this_week": "This week",
+  "next_week": "Next week",
+  "this_month": "This month",
+  "next_month": "Next month",
+  "this_year": "This year",
+  "next_year": "Next year"
 }

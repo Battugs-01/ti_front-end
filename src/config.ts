@@ -56,7 +56,7 @@ export enum UserRoleType {
   admin = "admin",
   super_admin = "super_admin",
   stack_holder = "stack_holder",
-  case_associate = "case_associate",
+  case_management_associate = "case_management_associate",
 }
 
 export const permissionArray = Object.freeze([
@@ -65,7 +65,7 @@ export const permissionArray = Object.freeze([
   UserRoleType.operation_manager,
   UserRoleType.doctor,
   UserRoleType.admin,
-  UserRoleType.case_associate,
+  UserRoleType.case_management_associate,
 ]);
 
 export const permissionArraySuperAdmin = Object.freeze([

@@ -29,7 +29,7 @@ export const DevelopmentPlanReport: React.FC = () => {
       <IfCondition
         condition={
           user?.user?.role === UserRoleType.case_manager ||
-          user?.user?.role === UserRoleType.case_associate
+          user?.user?.role === UserRoleType.case_management_associate
         }
         whenTrue={<ByCaseManager />}
       />

@@ -227,3 +227,38 @@ export const parseMongolianGender = (id: any) => {
   const gender = isOdd ? "female" : "male";
   return gender;
 };
+
+export const chooseDate = (date: String) => {
+  switch (date) {
+    case "today":
+      return [dayjs().startOf("day"), dayjs().endOf("day")];
+    case "tommorow":
+      return [
+        dayjs().add(1, "day").startOf("day"),
+        dayjs().add(1, "day").endOf("day"),
+      ];
+    case "this_week":
+      return [dayjs().startOf("week"), dayjs().endOf("week")];
+    case "next_week":
+      return [
+        dayjs().add(1, "week").startOf("week"),
+        dayjs().add(1, "week").endOf("week"),
+      ];
+    case "this_month":
+      return [dayjs().startOf("month"), dayjs().endOf("month")];
+    case "next_month":
+      return [
+        dayjs().add(1, "month").startOf("month"),
+        dayjs().add(1, "month").endOf("month"),
+      ];
+    case "this_year":
+      return [dayjs().startOf("year"), dayjs().endOf("year")];
+    case "next_year":
+      return [
+        dayjs().add(1, "year").startOf("year"),
+        dayjs().add(1, "year").endOf("year"),
+      ];
+    default:
+      return [dayjs().startOf("day"), dayjs().endOf("day")];
+  }
+};

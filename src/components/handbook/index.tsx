@@ -33,7 +33,7 @@ export const Handbooks = () => {
       name: "Санхүү",
     },
     {
-      role: "case_associate",
+      role: "case_management_associate",
       url: "/handbooks/Case_manager.pdf",
       name: "Байгууллагын мэдээлэл",
     },
@@ -82,7 +82,7 @@ export const Handbooks = () => {
         </Tooltip>
       </div>
       {found?.role === UserRoleType.case_manager ||
-        (found?.role === UserRoleType.case_associate && (
+        (found?.role === UserRoleType.case_management_associate && (
           <Drawer
             title={intl.formatMessage({ id: "hand_book" })}
             onClose={onClose}

@@ -109,7 +109,7 @@ const ScreeningList: React.FC = () => {
         customActions={(record) => {
           if (
             user?.user?.role === UserRoleType.case_manager ||
-            user?.user?.role === UserRoleType.case_associate
+            user?.user?.role === UserRoleType.case_management_associate
           ) {
             return (
               <div className="flex gap-6 ml-2">
