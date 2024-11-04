@@ -1,9 +1,7 @@
-import ProForm, { ProFormText } from "@ant-design/pro-form";
-import { Button, DatePicker, Divider, Tabs } from "antd";
-import { TabsType } from "antd/lib/tabs";
+import { Button, DatePicker, Divider, Input, Tabs } from "antd";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
-import { useRef } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { chooseDate } from "utils/index";
 
@@ -13,6 +11,7 @@ interface TableHeaderProps {
   search: string;
   setFilter: any;
   filter: any;
+  submitFilter: () => void;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
@@ -21,9 +20,15 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   search,
   setFilter,
   filter,
+  submitFilter,
 }) => {
   const intl = useIntl();
-  const dateRef = useRef<any>(null);
+  const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
+    filter.start_date ? dayjs(filter.start_date) : dayjs().subtract(3, "month"),
+    filter.end_date ? dayjs(filter.end_date) : dayjs(),
+  ]);
+  const [open, setOpen] = useState(false);
+
   const tabItems: any = [
     {
       label: intl.formatMessage({ id: "today" }),
@@ -58,6 +63,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       value: "next_year",
     },
   ];
+
   return (
     <InitTableHeader
       hideTitle
@@ -68,7 +74,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       fileName="My Planned work"
       leftContent={
         <DatePicker.RangePicker
-          ref={dateRef}
+          open={open}
+          onOpenChange={(isOpen) => setOpen(isOpen)}
+          value={dateRange}
           panelRender={(originPanel) => {
             return (
               <div className="flex items-center justify-between p-3">
@@ -76,41 +84,43 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   <Tabs
                     tabPosition="left"
                     onChange={(value) => {
-                      console.log(dateRef.current);
+                      const [startDate, endDate] = chooseDate(value);
+                      setDateRange([startDate, endDate]);
                       setFilter({
                         ...filter,
-                        start_date: chooseDate(value)[0].format("YYYY-MM-DD"),
-                        end_date: chooseDate(value)[1].format("YYYY-MM-DD"),
+                        start_date: startDate.format("YYYY-MM-DD"),
+                        end_date: endDate.format("YYYY-MM-DD"),
                       });
                     }}
-                    items={tabItems?.map((el: any, key: number) => {
-                      return {
-                        label: el.label,
-                        key: el.value,
-                        value: el.value,
-                      };
-                    })}
+                    items={tabItems?.map((el: any) => ({
+                      label: el.label,
+                      key: el.value,
+                      value: el.value,
+                    }))}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
                   <div>{originPanel}</div>
-
                   <div>
                     <Divider />
                     <div className="flex justify-between">
+                      <div className="flex items-center gap-2">
+                        <Input type="text" name="start_date" value={filter.start_date} style={{width: "130px"}}/>
+                        <div>-</div>
+                        <Input type="text" name="end_date" value={filter.end_date} style={{width: "130px"}}/>
+                      </div>
                       <div className="flex items-center gap-3">
-                        <div className="flex gap-3 items-center"></div>
-                        <Button type="default">
+                        <Button 
+                          type="default" 
+                          onClick={() => setOpen(false)}
+                        >
                           <FormattedMessage id="cancel" />
                         </Button>
                         <Button
                           type="primary"
                           onClick={() => {
-                            setFilter({
-                              ...filter,
-                              start_date: dayjs().format("YYYY-MM-DD"),
-                              end_date: dayjs().format("YYYY-MM-DD"),
-                            });
+                            submitFilter();
+                            setOpen(false);
                           }}
                         >
                           <FormattedMessage id="search" />
@@ -123,25 +133,24 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             );
           }}
           className="w-max"
-          value={filter}
           placeholder={[
             intl.formatMessage({ id: "select_start_date" }),
             intl.formatMessage({ id: "select_end_date" }),
           ]}
           size="large"
           onChange={(values) => {
-            setFilter({
-              ...filter,
-              start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-              end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
-            });
+            if (values?.[0] && values?.[1]) {
+              setDateRange([
+                values[0] as dayjs.Dayjs,
+                values[1] as dayjs.Dayjs,
+              ]);
+              setFilter({
+                ...filter,
+                start_date: values[0].format("YYYY-MM-DD"),
+                end_date: values[1].format("YYYY-MM-DD"),
+              });
+            }
           }}
-          defaultValue={[
-            filter.start_date
-              ? dayjs(filter.start_date)
-              : dayjs().subtract(3, "month"),
-            filter.end_date ? dayjs(filter.end_date) : dayjs(),
-          ]}
         />
       }
     />

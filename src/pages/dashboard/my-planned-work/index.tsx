@@ -33,7 +33,13 @@ const MyPlannedWork: React.FC = () => {
     list.run({
       ...filter,
     });
-  }, [filter]);
+  }, []);
+
+  const submitFilter = () => {
+    list.run({
+      ...filter,
+    });
+  };
 
   const refreshList = () => {
     list?.run({
@@ -47,6 +53,7 @@ const MyPlannedWork: React.FC = () => {
     <PageCard xR>
       <TableHeader
         refreshList={refreshList}
+        submitFilter={submitFilter}
         setSearch={(e) => {
           setSearch(e);
           searchRun.run({ ...filter, query: e });
