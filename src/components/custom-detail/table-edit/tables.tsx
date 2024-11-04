@@ -110,7 +110,9 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                 tableAlertRender={false}
                 scroll={{ x: 1400 }}
                 rowSelection={
-                  user?.user?.role === UserRoleType.doctor && !devPlanIsClose
+                  (user?.user?.role === UserRoleType.doctor ||
+                    user?.user?.role === UserRoleType.senior_case_manager) &&
+                  !devPlanIsClose
                     ? {
                         type: "radio",
                         onChange: (selectedRowKeys, selectedRows) => {
