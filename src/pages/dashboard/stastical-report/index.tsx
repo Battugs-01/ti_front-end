@@ -43,7 +43,7 @@ const StasticalReport = () => {
         ),
       },
     ];
-  } else if (user?.user?.role === UserRoleType.senior_case_manager) {
+  } else if (user?.user?.role === UserRoleType.case_associate) {
     options = [
       {
         value: StatisticalTab.care_foci,
@@ -62,10 +62,37 @@ const StasticalReport = () => {
         ),
       },
       {
+        value: StatisticalTab.development_plan,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="development_plan_report" />
+          </div>
+        ),
+      },
+    ];
+  } else if (user?.user?.role === UserRoleType.senior_case_manager) {
+    options = [
+      {
+        value: StatisticalTab.care_foci,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="care_foci" />
+          </div>
+        ),
+      },
+      {
         value: StatisticalTab.closed_case_report,
         label: (
           <div className="font-semibold text-primary-700">
             <FormattedMessage id="closed_case_report" />
+          </div>
+        ),
+      },
+      {
+        value: StatisticalTab.statistical_report,
+        label: (
+          <div className="font-semibold text-primary-700">
+            <FormattedMessage id="statistical_report" />
           </div>
         ),
       },

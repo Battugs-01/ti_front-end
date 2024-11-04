@@ -11,19 +11,26 @@ export const DevelopmentPlanReport: React.FC = () => {
   return (
     <>
       <IfCondition
-        condition={user?.user?.role === UserRoleType.super_admin || user?.user?.role === UserRoleType.stack_holder}
+        condition={
+          user?.user?.role === UserRoleType.super_admin ||
+          user?.user?.role === UserRoleType.stack_holder
+        }
         whenTrue={<ManagementReport />}
       />
       <IfCondition
         condition={
           user?.user?.role === UserRoleType.operation_manager ||
           user?.user?.role === UserRoleType.doctor ||
-          user?.user?.role === UserRoleType.admin
+          user?.user?.role === UserRoleType.admin ||
+          user?.user?.role === UserRoleType.senior_case_manager
         }
         whenTrue={<ByAgency />}
       />
       <IfCondition
-        condition={user?.user?.role === UserRoleType.case_manager || user?.user?.role === UserRoleType.senior_case_manager}
+        condition={
+          user?.user?.role === UserRoleType.case_manager ||
+          user?.user?.role === UserRoleType.case_associate
+        }
         whenTrue={<ByCaseManager />}
       />
     </>

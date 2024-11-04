@@ -314,5 +314,6 @@
   "not_early_screening_is_required": "Not required at the moment",
   "not_desease_history": "There is no desease history",
   "change": "changed to",
-  "auth_title": "CASE MANAGEMENT PLATFORM"
+  "auth_title": "CASE MANAGEMENT PLATFORM",
+  "case_associate": "Case associate"
 }
