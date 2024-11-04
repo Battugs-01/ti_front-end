@@ -1,4 +1,5 @@
 node_modules
+.cursorrules
 dist
 yarn-error.log
 pnpm-lock.yaml
