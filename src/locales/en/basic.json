@@ -323,5 +323,7 @@
   "this_month": "This month",
   "next_month": "Next month",
   "this_year": "This year",
-  "next_year": "Next year"
+  "next_year": "Next year",
+  "reminder_list": "Reminder List",
+  "service_provided": "Service Provided"
 }

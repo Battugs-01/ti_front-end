@@ -88,8 +88,8 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
 
   return (
     <>
-      <div className="flex justify-between pt-2  flex-wrap px-4 gap-4 items-center">
-        <div className="space-x-2 md:w-3/5 p-0 m-0 h-16">
+      <div className="flex justify-between pt-2 flex-wrap px-4 gap-4 items-end mb-5">
+        <div className="space-x-2 md:w-3/5 p-0 m-0">
           {hideTitle ? (
             leftContent
           ) : (
@@ -98,7 +98,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             </span>
           )}
         </div>
-        <div className="flex gap-2 flex-wrap ant-form-item-margin-remove">
+        <div className="flex items-end gap-2 flex-wrap ant-form-item-margin-remove custom-ant-form-item">
           {filter}
           <ProFormText
             name={"text"}

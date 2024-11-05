@@ -177,6 +177,14 @@ export const reportFilter = {
   end_date: dayjs().format("YYYY-MM-DD"),
 };
 
+export const myPlanedFilter = {
+  current: 1,
+  pageSize: 20,
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
+  filter_type: "comp_ass",
+};
+
 export const reportFilterYear = {
   current: 1,
   pageSize: 20,
@@ -238,11 +246,14 @@ export const chooseDate = (date: String) => {
         dayjs().add(1, "day").endOf("day"),
       ];
     case "this_week":
-      return [dayjs().startOf("week"), dayjs().endOf("week")];
+      return [
+        dayjs().startOf("week").add(1, "day"),
+        dayjs().endOf("week").add(1, "day"),
+      ];
     case "next_week":
       return [
-        dayjs().add(1, "week").startOf("week"),
-        dayjs().add(1, "week").endOf("week"),
+        dayjs().add(1, "week").startOf("week").add(1, "day"),
+        dayjs().add(1, "week").endOf("week").add(1, "day"),
       ];
     case "this_month":
       return [dayjs().startOf("month"), dayjs().endOf("month")];
