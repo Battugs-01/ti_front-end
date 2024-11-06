@@ -234,7 +234,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
             </div>
           </Card>
           {selectedRow ? (
-            <div className="h-[900px] min-w-[400px]">
+            <div className="h-[900px] min-w-[400px]  max-w-[450px]">
               <DevPlanEditForm
                 setIsEditing={setIsEditing}
                 isEditing={isEditing}

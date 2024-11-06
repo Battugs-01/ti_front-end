@@ -51,7 +51,7 @@ const Emergency: React.FC<EmergencyProps> = ({ customerId, deseaseData }) => {
         </div>
       }
     >
-      <div className="lg:flex-row lg:justify-between flex flex-col justify-center lg:items-start items-center ">
+      <div className="lg:flex-row lg:justify-between flex flex-col justify-center lg:items-start items-start ">
         <div className="flex flex-col gap-4">
           <div className="text-base font-semibold ">
             <FormattedMessage id="checklist_emergency" />
