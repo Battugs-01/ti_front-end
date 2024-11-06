@@ -1,15 +1,12 @@
 import ProForm, {
-  ProFormCheckbox,
-  ProFormDatePicker,
+  ProFormDigit,
   ProFormInstance,
-  ProFormItem,
   ProFormRadio,
   ProFormSelect,
   ProFormTextArea,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Avatar, Button, Card, Col, notification, Row } from "antd";
-import dayjs from "dayjs";
+import { Avatar, Button, Card, notification } from "antd";
 import { debounce } from "lodash";
 import React, { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -244,7 +241,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
             </div>
           }
         />
-        <Row gutter={[16, 16]}>
+        {/* <Row gutter={[16, 16]}>
           <div className="font-medium text-gray-700">
             <FormattedMessage id="service_provided" />
           </div>
@@ -435,9 +432,9 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
               </ProFormItem>
             </React.Fragment>
           ))}
-        </Row>
+        </Row> */}
 
-        {/* <ProFormDigit
+        <ProFormDigit
           name={"duration"}
           placeholder={intl.formatMessage({ id: "time" })}
           label={
@@ -507,7 +504,7 @@ const DevPlanEditForm: React.FC<DevPlanEditFormProps> = ({
             },
             { value: false, label: "Үгүй" },
           ]}
-        /> */}
+        />
       </ProForm>
     </Card>
   );
