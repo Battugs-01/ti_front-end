@@ -163,6 +163,15 @@ export const initPagination = {
   pageSize: 20,
 };
 
+export const reminderFilter = {
+  current: 1,
+  pageSize: 20,
+  levels: ["level_2", "level_3"],
+  filter_type: "comp_ass",
+  // start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  // end_date: dayjs().format("YYYY-MM-DD"),
+};
+
 export const settingsFilter = {
   current: 1,
   pageSize: 20,
@@ -247,13 +256,13 @@ export const chooseDate = (date: String) => {
       ];
     case "this_week":
       return [
-        dayjs().startOf("week").add(1, "day"),
-        dayjs().endOf("week").add(1, "day"),
+        dayjs().startOf("week"), // Start of current week
+        dayjs().endOf("week"), // End of current week
       ];
     case "next_week":
       return [
-        dayjs().add(1, "week").startOf("week").add(1, "day"),
-        dayjs().add(1, "week").endOf("week").add(1, "day"),
+        dayjs().add(1, "week").startOf("week"), // Start of next week
+        dayjs().add(1, "week").endOf("week"),
       ];
     case "this_month":
       return [dayjs().startOf("month"), dayjs().endOf("month")];

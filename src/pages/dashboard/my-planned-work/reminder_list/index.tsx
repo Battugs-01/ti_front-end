@@ -5,18 +5,18 @@ import { ITable } from "components/table";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
+import screenList from "service/screening_list";
+import { ScreeningListType } from "service/screening_list/type";
 import { Eye } from "untitledui-js-base";
-import { initPagination } from "utils/index";
+import { reminderFilter } from "utils/index";
 import { ReminderListTableColumns } from "./components/table-column";
 import TableHeader from "./components/table-header";
-import { ScreeningListType } from "service/screening_list/type";
-import screenList from "service/screening_list";
 
 export const ReminderList: React.FC = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const [search, setSearch] = useState<string>("");
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(reminderFilter);
 
   const screen = useRequest(screenList.list, {
     manual: true,

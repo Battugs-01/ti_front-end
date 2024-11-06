@@ -4,7 +4,6 @@ import LevelBadge from "components/badge/level";
 import dayjs from "dayjs";
 import { FormattedMessage } from "react-intl";
 import { ScreeningListType } from "service/screening_list/type";
-import { AlertCircle, Check } from "untitledui-js-base";
 import { parseMongolianGender, parseMongolianID } from "utils/index";
 
 export const ReminderListTableColumns = (
@@ -101,15 +100,35 @@ export const ReminderListTableColumns = (
     title: intl.formatMessage({ id: "remaining_day" }),
     dataIndex: "levels",
     render: (_: any, record: ScreeningListType): React.ReactNode => {
+      const screeningDate = record?.created_at;
+      if (
+        !screeningDate ||
+        dayjs(screeningDate).format("YYYY-MM-DD") === "0001-01-01"
+      ) {
+        return <div className="flex items-center">-</div>;
+      }
+
+      let nextScreeningDate;
       if (record?.assessment?.level === "level_2") {
-        return (
-          <IBadge title={<FormattedMessage id={"half_year"} />} color="gray" />
-        );
+        nextScreeningDate = dayjs(screeningDate).add(1, "year");
       } else if (record?.assessment?.level === "level_3") {
-        return <IBadge title={<FormattedMessage id={"year"} />} color="gray" />;
+        nextScreeningDate = dayjs(screeningDate).add(6, "month");
       } else {
         return <div>-</div>;
       }
+
+      const remainingDays = nextScreeningDate.diff(dayjs(screeningDate), "day");
+      return (
+        <IBadge
+          title={
+            <div className="flex items-center gap-1">
+              <div>{remainingDays}</div>
+              <FormattedMessage id={"day"} />
+            </div>
+          }
+          color="gray"
+        />
+      );
     },
   },
 ];
