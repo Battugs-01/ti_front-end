@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 import screenList from "service/screening_list";
 import { ScreeningListType } from "service/screening_list/type";
-import PlannedWork from "./components/table-edit";
+import PlannedWork from "./reminder_list/components/table-edit";
 
 const MyPlannedWorkDetail: React.FC = () => {
   const location = useLocation();

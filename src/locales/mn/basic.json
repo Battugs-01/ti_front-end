@@ -328,5 +328,7 @@
   "this_month": "Энэ сар",
   "next_month": "Дараагийн сар",
   "this_year": "Энэ жил",
-  "next_year": "Дараагийн жил"
+  "next_year": "Дараагийн жил",
+  "reminder_list": "Сануулгын жагсаалт",
+  "service_provided": "Үзүүлэх үйлчилгээ"
 }

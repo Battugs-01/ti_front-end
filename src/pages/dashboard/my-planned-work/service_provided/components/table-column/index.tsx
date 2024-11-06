@@ -4,7 +4,7 @@ import { PlannedWorksType } from "service/my_planned_work/types";
 import { AlertCircle, Check } from "untitledui-js-base";
 import { parseMongolianGender, parseMongolianID } from "utils/index";
 
-export const PlannedWorkTableColumns = (
+export const ServiceProvidedTableColumns = (
   intl: any
 ): ProColumns<PlannedWorksType>[] => [
   {
