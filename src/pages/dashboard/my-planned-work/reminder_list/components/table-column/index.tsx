@@ -117,7 +117,10 @@ export const ReminderListTableColumns = (
         return <div>-</div>;
       }
 
-      const remainingDays = nextScreeningDate.diff(dayjs(screeningDate), "day");
+      const remainingDays = nextScreeningDate
+        .startOf("day")
+        .diff(dayjs().startOf("day"), "day");
+
       return (
         <IBadge
           title={
