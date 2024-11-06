@@ -1,4 +1,4 @@
-import { Button, DatePicker, Divider, Input, Select, Tabs } from "antd";
+import { Button, DatePicker, Divider, Select, Tabs } from "antd";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -134,7 +134,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                         <Divider />
                         <div className="flex justify-between">
                           <div className="flex items-center gap-2">
-                            <Input
+                            {/* <Input
                               type="text"
                               name="start_date"
                               value={filter.start_date}
@@ -146,7 +146,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                               name="end_date"
                               value={filter.end_date}
                               style={{ width: "130px" }}
-                            />
+                            /> */}
                           </div>
                           <div className="flex items-center gap-3">
                             <Button
