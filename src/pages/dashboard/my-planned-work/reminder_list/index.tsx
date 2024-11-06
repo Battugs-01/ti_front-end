@@ -1,26 +1,24 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification, Typography } from "antd";
 import { PageCard } from "components/card";
-import { useLevelContext } from "components/custom-detail/selected-level";
 import { ITable } from "components/table";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
-import plannedWorks from "service/my_planned_work";
-import { PlannedWorksType } from "service/my_planned_work/types";
 import { Eye } from "untitledui-js-base";
-import { myPlanedFilter } from "utils/index";
+import { initPagination } from "utils/index";
 import { ReminderListTableColumns } from "./components/table-column";
 import TableHeader from "./components/table-header";
+import { ScreeningListType } from "service/screening_list/type";
+import screenList from "service/screening_list";
 
 export const ReminderList: React.FC = () => {
-  const { setSelectedLevel } = useLevelContext();
   const navigate = useNavigate();
   const intl = useIntl();
   const [search, setSearch] = useState<string>("");
-  const [filter, setFilter] = useState(myPlanedFilter);
+  const [filter, setFilter] = useState(initPagination);
 
-  const list = useRequest(plannedWorks.list, {
+  const screen = useRequest(screenList.list, {
     manual: true,
     onError: (err) => {
       notification.error({
@@ -30,25 +28,25 @@ export const ReminderList: React.FC = () => {
   });
 
   useEffect(() => {
-    list.run({
+    screen.run({
       ...filter,
     });
-  }, [filter.filter_type]);
+  }, [filter]);
 
   const submitFilter = () => {
-    list.run({
+    screen.run({
       ...filter,
     });
   };
 
   const refreshList = () => {
-    list?.run({
+    screen?.run({
       ...filter,
     });
   };
 
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
-
+  const searchRun = useDebounceFn(screen.run, { wait: 1000 });
+  console.log(screen?.data, "list");
   return (
     <PageCard xR>
       <TableHeader
@@ -62,9 +60,9 @@ export const ReminderList: React.FC = () => {
         filter={filter}
         search={search}
       />
-      <ITable<PlannedWorksType>
-        dataSource={list.data}
-        loading={list.loading}
+      <ITable<ScreeningListType>
+        dataSource={screen?.data?.items}
+        loading={screen.loading}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -83,6 +81,7 @@ export const ReminderList: React.FC = () => {
         ]}
         refresh={refreshList}
         customActions={(record) => {
+          console.log(record, "kkk");
           return (
             <div className="flex gap-6">
               <div className="flex items-center justify-center">
@@ -90,7 +89,7 @@ export const ReminderList: React.FC = () => {
                   size="20"
                   onClick={() =>
                     navigate(
-                      `/dashboard/my-planned-work/detail?customer_id=${record.id}&ass_id=${record.ass_id}`
+                      `/dashboard/my-planned-work/detail?customer_id=${record.id}&ass_id=${record?.assessment?.id}`
                     )
                   }
                   className="cursor-pointer flex items-center justify-center"

@@ -50,6 +50,7 @@ export interface Assessments {
 }
 
 export interface Assessment {
+  id: number;
   level: string;
   cfs_point: number;
   date: Date;

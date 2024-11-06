@@ -328,5 +328,10 @@
   "this_year": "Энэ жил",
   "next_year": "Дараагийн жил",
   "reminder_list": "Сануулгын жагсаалт",
-  "service_provided": "Үзүүлэх үйлчилгээ"
+  "service_provided": "Үзүүлэх үйлчилгээ",
+  "screening_date": "Асуумжийн огноо",
+  "remaining_day": "Үлдсэн хоног",
+  "next_screening_date": "Дараагийн асуумжийн огноо",
+  "year": "1 жил",
+  "half_year": "6 сар"
 }
