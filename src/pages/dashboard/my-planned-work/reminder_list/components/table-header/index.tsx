@@ -28,8 +28,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 }) => {
   const intl = useIntl();
   const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
-    filter.start_date ? dayjs(filter.start_date) : dayjs().subtract(3, "month"),
-    filter.end_date ? dayjs(filter.end_date) : dayjs(),
+    filter.start_date ? dayjs(filter.start_date) : dayjs().startOf("month"),
+    filter.end_date ? dayjs(filter.end_date) : dayjs().endOf("month"),
   ]);
   const [open, setOpen] = useState(false);
 
@@ -111,6 +111,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                     <div className="custom-ant-tabs-tab">
                       <Tabs
                         tabPosition="left"
+                        defaultActiveKey="this_month"
                         onChange={(value) => {
                           const [startDate, endDate] = chooseDate(value);
                           setDateRange([startDate, endDate]);

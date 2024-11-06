@@ -27,6 +27,8 @@ export const ReminderList: React.FC = () => {
     },
   });
 
+  console.log(screen?.data, "helloooooo");
+
   useEffect(() => {
     screen.run({
       ...filter,
@@ -46,6 +48,7 @@ export const ReminderList: React.FC = () => {
   };
 
   const searchRun = useDebounceFn(screen.run, { wait: 1000 });
+
   console.log(screen?.data, "list");
   return (
     <PageCard xR>
