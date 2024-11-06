@@ -168,8 +168,8 @@ export const reminderFilter = {
   pageSize: 20,
   levels: ["level_2", "level_3"],
   filter_type: "comp_ass",
-  // start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
-  // end_date: dayjs().format("YYYY-MM-DD"),
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
 };
 
 export const settingsFilter = {
