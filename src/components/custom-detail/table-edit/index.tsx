@@ -104,6 +104,7 @@ const TableEditDevPlan: React.FC<TableEditDevPlanProps> = ({
           }))
       ) || [];
 
+  console.log(generalData, loseActivityData, "generalData");
   return (
     <>
       {devPlanData?.data?.items && error === false && (

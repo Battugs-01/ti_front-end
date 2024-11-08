@@ -95,8 +95,8 @@ const DevPlanTables: React.FC<CareFociProps> = ({
             ),
             children: (
               <ProTable<CareFociItemElement>
-                rowKey="id"
-                id={id}
+                rowKey={(record) => `${record.id}${name}`}
+                id={id + name}
                 options={{
                   reload: false,
                   setting: false,
@@ -134,13 +134,15 @@ const DevPlanTables: React.FC<CareFociProps> = ({
                   ) {
                     return {
                       onClick: (event) => {
-                        if (selectedRowKeys.includes(record.id)) {
+                        if (selectedRowKeys.includes(record.id + name)) {
                           setSelectedRowKeys(
-                            selectedRowKeys.filter((key) => key !== record.id)
+                            selectedRowKeys.filter(
+                              (key) => key !== record.id + name
+                            )
                           );
                           onRowSelected(null as any);
                         } else {
-                          setSelectedRowKeys([record.id]);
+                          setSelectedRowKeys([record.id + name]);
                           record.is_general = isEvaluated ? false : true;
                           onRowSelected(record);
                         }
