@@ -34,7 +34,7 @@ export const Handbooks = () => {
     },
     {
       role: "case_management_associate",
-      url: "/handbooks/Case_manager.pdf",
+      url: "/handbooks/Case_management.pdf",
       name: "Байгууллагын мэдээлэл",
     },
     {
