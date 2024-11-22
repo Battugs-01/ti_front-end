@@ -77,6 +77,7 @@ export const ReportLog: React.FC = () => {
         className="p-0 remove-padding-table"
         hideAction
         setForm={setFilter}
+        form={filter}
         total={list?.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items}

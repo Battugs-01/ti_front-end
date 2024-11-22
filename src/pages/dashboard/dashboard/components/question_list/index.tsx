@@ -69,6 +69,7 @@ export const QuestionList: React.FC = () => {
         loading={screen.loading}
         className="p-0 remove-padding-table"
         hideAction
+        form={filter}
         setForm={setFilter}
         total={screen.data?.total}
         columns={[

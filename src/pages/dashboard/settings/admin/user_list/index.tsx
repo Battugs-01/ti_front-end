@@ -64,6 +64,7 @@ export const Userlist: React.FC = () => {
         dataSource={user.data?.items}
         loading={user.loading}
         setForm={setFilter}
+        form={filter}
         total={user.data?.total || 0}
         CreateComponent={CreateUser}
         UpdateComponent={UpdateUser}

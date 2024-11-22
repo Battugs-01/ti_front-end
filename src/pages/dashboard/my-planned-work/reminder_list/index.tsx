@@ -63,6 +63,7 @@ export const ReminderList: React.FC = () => {
       <ITable<ScreeningListType>
         dataSource={screen?.data?.items}
         loading={screen.loading}
+        form={filter}
         className="p-0 remove-padding-table"
         columns={[
           {
