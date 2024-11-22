@@ -79,9 +79,9 @@ export const ReminderList: React.FC = () => {
           },
           ...ReminderListTableColumns(intl),
         ]}
-        refresh={refreshList}
+        setForm={setFilter}
+        total={screen?.data?.total}
         customActions={(record) => {
-          console.log(record, "kkk");
           return (
             <div className="flex gap-6">
               <div className="flex items-center justify-center">
@@ -89,7 +89,7 @@ export const ReminderList: React.FC = () => {
                   size="20"
                   onClick={() =>
                     navigate(
-                      `/dashboard/my-planned-work/detail?customer_id=${record.id}&ass_id=${record?.assessment?.id}`
+                      `/dashboard/my-planned-work/detail?customer_id=${record?.id}&ass_id=${record?.assessment?.id}`
                     )
                   }
                   className="cursor-pointer flex items-center justify-center"

@@ -63,8 +63,9 @@ export const Userlist: React.FC = () => {
       <ITable<UserType>
         dataSource={user.data?.items}
         loading={user.loading}
+        setForm={setFilter}
+        total={user.data?.total || 0}
         CreateComponent={CreateUser}
-        refresh={refreshList}
         UpdateComponent={UpdateUser}
         RemoveModelConfig={{
           action: userList.deleteUser,

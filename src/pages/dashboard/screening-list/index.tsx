@@ -82,6 +82,8 @@ const ScreeningList: React.FC = () => {
         dataSource={screen.data?.items}
         loading={screen.loading}
         className="p-0 remove-padding-table"
+        setForm={setFilter}
+        total={screen.data?.total}
         columns={[
           {
             title: intl.formatMessage({ id: "name" }),

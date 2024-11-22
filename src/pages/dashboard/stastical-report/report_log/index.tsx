@@ -76,6 +76,8 @@ export const ReportLog: React.FC = () => {
       <ITable
         className="p-0 remove-padding-table"
         hideAction
+        setForm={setFilter}
+        total={list?.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items}
         columns={[
@@ -90,7 +92,15 @@ export const ReportLog: React.FC = () => {
             title: intl.formatMessage({ id: "position" }),
             dataIndex: "position",
             render: (_, record) => {
-              return <div>{record?.employee?.role}</div>;
+              if (record?.employee?.role) {
+                return (
+                  <IBadge
+                    color="gray"
+                    title={<FormattedMessage id={record?.employee?.role} />}
+                  />
+                );
+              }
+              return <div>-</div>;
             },
           },
           {
