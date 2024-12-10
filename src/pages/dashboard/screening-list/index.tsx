@@ -64,6 +64,7 @@ const ScreeningList: React.FC = () => {
   };
 
   const searchRun = useDebounceFn(screen.run, { wait: 1000 });
+  console.log("screen", screen);
 
   return (
     <PageCard xR>
@@ -77,6 +78,7 @@ const ScreeningList: React.FC = () => {
         tab={tab ? tab : ScreeningTab.all}
         search={search}
         onFinishFilter={onFinishFilter}
+        screenData={screen.data}
       />
       <ITable<ScreeningListType>
         dataSource={screen.data?.items}
@@ -91,14 +93,8 @@ const ScreeningList: React.FC = () => {
             dataIndex: "first_name",
             render: (value, record) => {
               return (
-                <Link
-                  to={`/dashboard/screening-list/detail?customer_id=${record.id}`}
-                  onClick={() => setSelectedLevel(null)}
-                >
-                  <Typography.Text
-                    className="text-primary-700 font-bold"
-                    style={{ cursor: "pointer" }}
-                  >
+                <Link to={`/dashboard/screening-list/detail?customer_id=${record.id}`} onClick={() => setSelectedLevel(null)}>
+                  <Typography.Text className="text-primary-700 font-bold" style={{ cursor: "pointer" }}>
                     {value}
                   </Typography.Text>
                 </Link>
@@ -110,25 +106,14 @@ const ScreeningList: React.FC = () => {
         refresh={refreshList}
         // UpdateComponent={EditScreenList }
         customActions={(record) => {
-          if (
-            user?.user?.role === UserRoleType.case_manager ||
-            user?.user?.role === UserRoleType.case_management_associate
-          ) {
+          if (user?.user?.role === UserRoleType.case_manager || user?.user?.role === UserRoleType.case_management_associate) {
             return (
               <div className="flex gap-6 ml-2">
                 <div className="flex items-center">
-                  <Edit04
-                    size="20"
-                    onClick={() => setUpdateAction(record)}
-                    className="cursor-pointer"
-                  />
+                  <Edit04 size="20" onClick={() => setUpdateAction(record)} className="cursor-pointer" />
                 </div>
                 <div className="flex items-center">
-                  <SwitchHorizontal01
-                    size="20"
-                    className="cursor-pointer"
-                    onClick={() => setSwitchAction(record)}
-                  />
+                  <SwitchHorizontal01 size="20" className="cursor-pointer" onClick={() => setSwitchAction(record)} />
                 </div>
               </div>
             );
@@ -137,25 +122,13 @@ const ScreeningList: React.FC = () => {
             return (
               <div className="flex gap-6  ml-2">
                 <div className="flex items-center">
-                  <Edit04
-                    className="cursor-pointer"
-                    size="20"
-                    onClick={() => setUpdateAction(record)}
-                  />
+                  <Edit04 className="cursor-pointer" size="20" onClick={() => setUpdateAction(record)} />
                 </div>
                 <div className="flex items-center">
-                  <SwitchHorizontal01
-                    className="cursor-pointer"
-                    size="20"
-                    onClick={() => setSwitchAction(record)}
-                  />
+                  <SwitchHorizontal01 className="cursor-pointer" size="20" onClick={() => setSwitchAction(record)} />
                 </div>
                 <div className="flex items-center">
-                  <MinusCircle
-                    size="20"
-                    className="text-red-600 cursor-pointer"
-                    onClick={() => setCloseModal(record)}
-                  />
+                  <MinusCircle size="20" className="text-red-600 cursor-pointer" onClick={() => setCloseModal(record)} />
                 </div>
               </div>
             );
@@ -163,25 +136,13 @@ const ScreeningList: React.FC = () => {
             return (
               <div className="flex gap-6 ml-2">
                 <div className="flex items-center">
-                  <Edit04
-                    size="20"
-                    onClick={() => setUpdateAction(record)}
-                    className="cursor-pointer"
-                  />
+                  <Edit04 size="20" onClick={() => setUpdateAction(record)} className="cursor-pointer" />
                 </div>
                 <div className="flex items-center">
-                  <SwitchHorizontal01
-                    size="20"
-                    onClick={() => setSwitchAction(record)}
-                    className="cursor-pointer"
-                  />
+                  <SwitchHorizontal01 size="20" onClick={() => setSwitchAction(record)} className="cursor-pointer" />
                 </div>
                 <div className="flex items-center">
-                  <MinusCircle
-                    size="20"
-                    className="text-red-600 cursor-pointer"
-                    onClick={() => setCloseModal(record)}
-                  />
+                  <MinusCircle size="20" className="text-red-600 cursor-pointer" onClick={() => setCloseModal(record)} />
                 </div>
               </div>
             );

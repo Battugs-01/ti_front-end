@@ -65,4 +65,7 @@ export interface CreatePermissionType {
 export interface ListType<T> {
   total: number;
   items: T;
+  total_level_1?: number;
+  total_level_2?: number;
+  total_level_3?: number;
 }
