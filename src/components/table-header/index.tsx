@@ -70,13 +70,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   const intl = useIntl();
 
   const form = useRef<ProFormInstance>();
-
-  const checkIfChanged = () => {
-    const { deadline, full_date, ...rest } =
-      form.current?.getFieldsValue() || {};
-    const arr = Object.values(rest || {});
-    return arr.some((el: any) => (el?.length || 0) > 0 && el);
-  };
+  console.log(downloadList, "downloadList");
 
   const searchDebounce = useDebounceFn(
     (value) => {

@@ -39,6 +39,31 @@ export const ByLevel: React.FC = () => {
 
       result.push(levelData);
     }
+
+    for (let i = 0; i < result.length; i++) {
+      let total = 0;
+      for (let j = 1; j <= 12; j++) {
+        total += result[i][`month_${j}`] || 0;
+      }
+      result[i].total = total;
+    }
+    let a = [];
+
+    const sumObject: any = {
+      level: "Нийт /Сараар /",
+    };
+
+    for (let j = 1; j <= 12; j++) {
+      sumObject[`month_${j}`] = result.reduce(
+        (acc, curr) => acc + (curr[`month_${j}`] || 0),
+        0
+      );
+    }
+
+    sumObject.total = result.reduce((acc, curr) => acc + (curr.total || 0), 0);
+
+    result.push(sumObject);
+
     return result;
   }, [list.data]);
 
@@ -90,6 +115,13 @@ export const ByLevel: React.FC = () => {
             dataIndex: "level",
             align: "center",
             render: (value: any) => {
+              if (value === "Нийт /Сараар /") {
+                return (
+                  <div className="font-semibold text-primary-700">
+                    {intl.formatMessage({ id: "sum_up_all_month" })}
+                  </div>
+                );
+              }
               return <LevelReport status={value} />;
             },
           },
@@ -140,6 +172,17 @@ export const ByLevel: React.FC = () => {
           {
             title: intl.formatMessage({ id: "month_12" }),
             dataIndex: "month_12",
+          },
+          {
+            title: intl.formatMessage({ id: "total" }),
+            dataIndex: "total",
+            render: (value: any, record: any) => {
+              return (
+                <div className="font-semibold text-primary-700">
+                  {record.total}
+                </div>
+              );
+            },
           },
         ]}
       />
