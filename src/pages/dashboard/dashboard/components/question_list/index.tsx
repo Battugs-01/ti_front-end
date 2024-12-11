@@ -4,6 +4,7 @@ import IBadge from "components/badge";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
+import MaskedValue from "components/masked/masked-value";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
@@ -21,6 +22,9 @@ import {
 } from "utils/index";
 
 export const QuestionList: React.FC = () => {
+  const [visibleRows, setVisibleRows] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
   const [user] = useContext(AuthContext);
@@ -91,7 +95,14 @@ export const QuestionList: React.FC = () => {
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
-            render: (value) => {
+            render: (value, record) => {
+              const isVisible = visibleRows[record.id] || false;
+              const handleEyeClick = () => {
+                setVisibleRows((prev) => ({
+                  ...prev,
+                  [record.id]: !isVisible,
+                }));
+              };
               if (
                 user?.user?.role === UserRoleType.super_admin ||
                 user?.user?.role === UserRoleType.stack_holder
@@ -100,7 +111,13 @@ export const QuestionList: React.FC = () => {
                   <p className="text-primary-700 font-bold">***********</p>
                 );
               }
-              return <p className="uppercase">{value}</p>;
+              return (
+                <MaskedValue
+                  value={value as string}
+                  isVisible={isVisible}
+                  onToggle={handleEyeClick}
+                />
+              );
             },
           },
           {

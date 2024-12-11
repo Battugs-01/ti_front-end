@@ -3,6 +3,7 @@ import { DatePicker, notification } from "antd";
 import LevelBadge from "components/badge/level";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
+import MaskedValue from "components/masked/masked-value";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -18,7 +19,9 @@ import {
 export const ClosedCaseReport: React.FC = () => {
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilter);
-
+  const [visibleRows, setVisibleRows] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const list = useRequest(statisticalReport.closedReportList, {
     manual: true,
     onError: (err) => {
@@ -100,8 +103,21 @@ export const ClosedCaseReport: React.FC = () => {
           {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
-            render: (value) => {
-              return <p className="uppercase">{value}</p>;
+            render: (value, record) => {
+              const isVisible = visibleRows[record.id] || false;
+              const handleEyeClick = () => {
+                setVisibleRows((prev) => ({
+                  ...prev,
+                  [record.id]: !isVisible,
+                }));
+              };
+              return (
+                <MaskedValue
+                  value={value as string}
+                  isVisible={isVisible}
+                  onToggle={handleEyeClick}
+                />
+              );
             },
           },
           {

@@ -2,6 +2,7 @@ import { PageLoading } from "@ant-design/pro-layout";
 import { useRequest } from "ahooks";
 import { DatePicker, notification, Typography } from "antd";
 import { PageCard } from "components/card";
+import MaskedValue from "components/masked/masked-value";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { CareFociEnum } from "config";
@@ -22,6 +23,9 @@ import DevPlanTablesReport from "./expand_table";
 
 export const ByCaseManager: React.FC = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
+  const [visibleRows, setVisibleRows] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const intl = useIntl();
   const [filter, setFilter] = useState(reportFilter);
   const [user] = useContext(AuthContext);
@@ -171,8 +175,21 @@ export const ByCaseManager: React.FC = () => {
             title: intl.formatMessage({ id: "register" }),
             dataIndex: "rd",
             width: 150,
-            render: (value) => {
-              return <p className="uppercase">{value}</p>;
+            render: (value, record) => {
+              const isVisible = visibleRows[record.id] || false;
+              const handleEyeClick = () => {
+                setVisibleRows((prev) => ({
+                  ...prev,
+                  [record.id]: !isVisible,
+                }));
+              };
+              return (
+                <MaskedValue
+                  value={value as string}
+                  isVisible={isVisible}
+                  onToggle={handleEyeClick}
+                />
+              );
             },
           },
           {
