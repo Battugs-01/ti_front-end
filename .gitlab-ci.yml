@@ -11,12 +11,12 @@ zap-check:
   before_script:
     - mkdir -p /zap/wrk
   script:
-    - zap-adb-front.py -t $ZAP_TARGET -g gen.conf -I -r adb-front.html
-    - cp /zap/wrk/adb-front.html adb-front.html
+    - zap-baseline.py -t $ZAP_TARGET -g gen.conf -I -r case-manager-front.html
+    - cp /zap/wrk/case-manager-front.html case-manager-front.html
   artifacts:
     when: always
     paths:
-      - adb-front.html
+      - case-manager-front.html
 
 main:
   only:
