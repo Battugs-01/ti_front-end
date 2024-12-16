@@ -1,6 +1,6 @@
 stages:
   - check
-  - deploy
+  - run
 
 zap-check:
   image: ghcr.io/zaproxy/zaproxy
@@ -18,10 +18,10 @@ zap-check:
     paths:
       - baseline.html
 
-deploy:
+run:
   only:
     - main
-  stage: deploy
+  stage: run
   script:
     - cp $ENV "$(pwd)/.env"
       - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
