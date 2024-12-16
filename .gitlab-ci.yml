@@ -1,11 +1,46 @@
+image:
+  name: sonarsource/sonar-scanner-cli:11
+  entrypoint: [""]
+
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+  GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+
 stages:
   - check
-  - run
+  - sonarqube-vulnerability-report
+  - deploy
+
+sonarqube-check:
+  stage: check
+  script:
+    - sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}"
+  allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
+
+sonarqube-vulnerability-report:
+  stage: sonarqube-vulnerability-report
+  script:
+    - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=ADB-Dashboard&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
+  allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
+  artifacts:
+    expire_in: 1 day
+    reports:
+      sast: gl-sast-sonar-report.json
 
 zap-check:
   image: ghcr.io/zaproxy/zaproxy
   stage: check
-  allow_failure: true
+  allow_failure: false
   variables:
     ZAP_TARGET: "https://case-manager.qpartners.tech/"
   before_script:
@@ -21,7 +56,7 @@ zap-check:
 main:
   only:
     - main
-  stage: run
+  stage: deploy
   script:
     - cp $ENV "$(pwd)/.env"
     - docker login registry.fibo.cloud -p ${REGISTRY_FIBO_PASSWORD} -u ${REGISTRY_FIBO_USERNAME}
