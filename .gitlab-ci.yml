@@ -1,5 +1,22 @@
 stages:
+  - check
   - run
+
+zap-check:
+  image: ghcr.io/zaproxy/zaproxy
+  stage: check
+  allow_failure: true
+  variables:
+    ZAP_TARGET: "https://case-manager.qpartners.tech/"
+  before_script:
+    - mkdir -p /zap/wrk
+  script:
+    - zap-baseline.py -t $ZAP_TARGET -g gen.conf -I -r baseline.html
+    - cp /zap/wrk/baseline.html baseline.html
+  artifacts:
+    when: always
+    paths:
+      - baseline.html
 
 main:
   only:
