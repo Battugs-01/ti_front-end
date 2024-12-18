@@ -51,7 +51,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
               <Link
                 onClick={onClose}
                 to={item.path}
-                className="flex items-center gap-2 text-[#144E5A] no-underline"
+                className="flex items-center gap-2 text-[#0077F4] no-underline"
               >
                 {item.icon}
                 <div className="text-base">{item.name}</div>

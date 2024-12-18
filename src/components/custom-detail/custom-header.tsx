@@ -28,7 +28,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   const extraItems = data?.slice(3);
   const segmentedData = initialData?.map((item) => ({
     label: (
-      <div className="flex items-center gap-2 text-[16px] justify-center  text-[#144E5A] font-semibold">
+      <div className="flex items-center gap-2 text-[16px] justify-center  text-[#0077F4] font-semibold">
         {dayjs(item?.date).format("YYYY-MM-DD")}
         <LevelBadge status={item.level} OneNone={true} />
       </div>
@@ -39,7 +39,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   const extraOptions = extraItems?.map((item) => ({
     value: item.id,
     label: (
-      <div className="flex items-center gap-2 text-[16px] justify-center text-[#144E5A] font-semibold">
+      <div className="flex items-center gap-2 text-[16px] justify-center text-[#0077F4] font-semibold">
         {dayjs(item?.date).format("YYYY-MM-DD")}
         <LevelBadge status={item.level} OneNone={true} />
       </div>

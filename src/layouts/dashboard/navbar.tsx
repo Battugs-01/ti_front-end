@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-[#144E5A] text-white h-[72px]">
+    <div className="w-full bg-[#0077F4] text-white h-[72px]">
       <div className="px-6 h-full flex justify-between items-center">
         <div className="flex items-center gap-6 ">
           <Link

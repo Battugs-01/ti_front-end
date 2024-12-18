@@ -34,7 +34,7 @@ const DashboardAccessCard = ({
           <div className="flex flex-col">
             <span className="text-[#475467] text-sm font-normal">Орон тоо</span>
             <span>
-              <span className="text-[#144E5A] text-2xl font-bold">46</span> /
+              <span className="text-[#0077F4] text-2xl font-bold">46</span> /
               <span className="text-[#475467] text-sm font-normal">50</span>
             </span>
           </div>
@@ -43,7 +43,7 @@ const DashboardAccessCard = ({
       <Tooltip>
         <Progress
           percent={60}
-          success={{ percent: 30, strokeColor: "#144E5A" }}
+          success={{ percent: 30, strokeColor: "#0077F4" }}
           strokeColor={"#A0B6BA"}
           strokeWidth={20}
           type="line"

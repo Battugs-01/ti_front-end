@@ -28,7 +28,7 @@ const reducer: AuthReducerType = (state, action) => {
 };
 
 export const AuthContext = createContext<AuthContextType>([
-  { authorized: false, init: false, user: undefined },
+  { authorized: true, init: false, user: undefined },
   () => {},
   "en",
   () => {},
@@ -36,7 +36,7 @@ export const AuthContext = createContext<AuthContextType>([
 
 export const AuthProvider = ({ children }: Props) => {
   const [state, setState] = useReducer(reducer, {
-    authorized: false,
+    authorized: true,
     init: false,
   });
   const [lang, setLang] = useState<string>("en");
