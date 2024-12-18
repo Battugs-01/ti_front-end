@@ -1,5 +1,4 @@
 import { Drawer } from "antd";
-import Logo from "/images/logo1.png";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
@@ -10,6 +9,7 @@ import {
   menuStackholderItems,
   menuSuperAdminItems,
 } from "./menu_items";
+import Logo from "/images/logo1.png";
 
 const triangleStyle: React.CSSProperties = {
   width: 0,
@@ -35,6 +35,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   } else if (user?.user?.role === UserRoleType.stack_holder) {
     menus = menuStackholderItems;
   }
+
   if (mobile) {
     return (
       <Drawer open={mobile} placement="left" onClose={onClose}>
@@ -62,6 +63,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
       </Drawer>
     );
   }
+
   return (
     <div className="flex items-center">
       {menus.map((item, index) => (
@@ -69,7 +71,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
           <NavLink
             to={item.path}
             className={({ isActive }) => {
-              return `flex items-center gap-2 text-primary-300 no-underline
+              return `flex items-center gap-2 text-gray-300 no-underline
             ${isActive && "text-primary-600"}      
             `;
             }}

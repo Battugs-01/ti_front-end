@@ -1,11 +1,9 @@
 import { useRequest } from "ahooks";
 import { Avatar, Popover } from "antd";
 import Logo from "assets/img/menu_logo.png";
-import LanguageSelector from "components/language-selector";
 import { AuthContext, useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import { useContext, useState } from "react";
-import { FormattedMessage } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import file from "service/file";
@@ -21,7 +19,6 @@ import { ChangePassword } from "./action/change_password";
 import { Logout } from "./action/logout";
 import { PersonalInfo } from "./action/personal_info";
 import { Menu } from "./menu";
-import { Notification } from "./notification";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -76,12 +73,6 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-4 ">
-            <div className="flex items-center mb-1">
-              <LanguageSelector />
-            </div>
-            <div className="flex items-center justify-center">
-              <Notification />
-            </div>
             <Popover
               placement="bottom"
               arrow={false}
@@ -95,9 +86,7 @@ const Navbar: React.FC = () => {
                     }}
                   >
                     <User03 size="18" />
-                    <div>
-                      <FormattedMessage id="personal_info" />
-                    </div>
+                    <div>Хувийн мэдээлэл</div>
                   </div>
                   <div
                     className="flex items-center gap-3 p-2 m-2 cursor-pointer"
@@ -106,9 +95,7 @@ const Navbar: React.FC = () => {
                     }}
                   >
                     <LockUnlocked04 size="18" />
-                    <div>
-                      <FormattedMessage id="change_password" />
-                    </div>
+                    <div>Нууц үг солих</div>
                   </div>
                   <div style={{ borderTop: "1px solid #EAECF0" }}>
                     <div
@@ -118,9 +105,7 @@ const Navbar: React.FC = () => {
                       className="flex items-center gap-3 p-2 m-2 bg-[#FEF3F2] text-[#F04438] rounded-md cursor-pointer"
                     >
                       <Logout01 size="18" />
-                      <div>
-                        <FormattedMessage id="system_logout" />
-                      </div>
+                      <div>Системээс гарах</div>
                     </div>
                   </div>
                 </div>
@@ -134,8 +119,8 @@ const Navbar: React.FC = () => {
                 </Avatar>
                 <div className="flex flex-col justify-center items-start">
                   <div className="text-sm">{user?.user?.email || "user"}</div>
-                  <div className="text-sm text-[#A0B6BA]">
-                    <FormattedMessage id={user?.user?.role || "position"} />
+                  <div className="text-sm text-white">
+                    {user?.user?.role || "Үүрэг"}
                   </div>
                 </div>
                 <ChevronDown size="24" />

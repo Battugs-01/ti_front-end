@@ -25,6 +25,10 @@ const StasticalReportPage = lazy(
 
 const SettingsPage = lazy(() => import("pages/dashboard/settings/index"));
 
+const EmployeRegistration = lazy(
+  () => import("pages/dashboard/employ-registration/index")
+);
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "screening-list",
@@ -55,6 +59,11 @@ const dashboardRoutes: IRoute[] = [
     key: "my-planned-work-detail",
     path: "my-planned-work/detail",
     component: <MyPlannedWorkDetail />,
+  },
+  {
+    key: "employ-registration",
+    path: "employ-registration",
+    component: <EmployeRegistration />,
   },
   {
     key: "dashboard",

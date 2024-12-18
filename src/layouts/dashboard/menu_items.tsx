@@ -9,6 +9,11 @@ import {
 
 export const menuItems = [
   {
+    icon: <User01 />,
+    name: "Ажилтны бүртгэл",
+    path: "/dashboard/employ-registration",
+  },
+  {
     icon: <PieChart02 />,
     name: <FormattedMessage id="dashboard" />,
     path: "/dashboard/dashboard",

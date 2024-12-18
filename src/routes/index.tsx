@@ -32,7 +32,6 @@ const MainRoutes: FC = () => {
   }
   return (
     <Routes>
-      {/* Other Routes */}
       {routes.map((route) => (
         <Route
           key={route.key}

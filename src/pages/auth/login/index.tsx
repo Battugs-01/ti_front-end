@@ -14,7 +14,6 @@ import auth from "service/auth";
 import { LoginData } from "service/auth/type";
 
 const Login: FC = () => {
-  // const [loading, setLoading] = useState(false);
   const intl = useIntl();
   const formRef = useRef<ProFormInstance<LoginData>>();
   const [, setAuth] = useAuthContext();
@@ -39,7 +38,12 @@ const Login: FC = () => {
   return (
     <div className="bg-white rounded-xl w-full">
       <div className="align-left flex justify-start">
-        <img src="/images/logo1.png" alt="logo" width={140} className="mb-7" />
+        <img
+          src="/images/til-logo.jpg"
+          alt="logo"
+          width={140}
+          className="mb-7"
+        />
       </div>
       <ProForm<LoginData>
         formRef={formRef}
@@ -75,40 +79,33 @@ const Login: FC = () => {
           ),
         }}
       >
-        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
-          <FormattedMessage id="login" />
-        </div>
+        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">Нэвтрэх</div>
         <div className="space-y-1">
           <ProFormText
             name="email"
-            placeholder={intl.formatMessage({ id: "login_email" })}
-            label={<FormattedMessage id="login_email" />}
+            placeholder="Имэйл"
+            label={<FormattedMessage id="Нэвтрэх имэйл" />}
             fieldProps={{ size: "large" }}
             required
             rules={[
               {
-                message: <FormattedMessage id="must_email" />,
+                message: "Энэ талбар и-мэйл хаяг байх ёстой",
                 type: "email",
                 required: true,
               },
             ]}
           />
           <ProFormText.Password
-            label={intl.formatMessage({ id: "password" })}
+            label="Нууц үг"
             name="password"
             placeholder={intl.formatMessage({ id: "password" })}
             fieldProps={{ size: "large" }}
             rules={[
               {
                 required: true,
-                message: <FormattedMessage id="required_password" />,
+                message: "Нууц үг",
               },
             ]}
-            extra={
-              <div className="text-[#475467] text-sm mt-1">
-                <FormattedMessage id="valid_password" />
-              </div>
-            }
           />
           <div className="flex items-center space-x-3 custom-ant-item-margin-remove">
             <ProFormCheckbox
@@ -128,7 +125,6 @@ const Login: FC = () => {
           </div>
         </div>
       </ProForm>
-      {/* <div>Нууц үгээ мартсан уу?</div> */}
     </div>
   );
 };

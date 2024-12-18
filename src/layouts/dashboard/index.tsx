@@ -1,7 +1,7 @@
 import { Handbooks } from "components/handbook";
 import { useAuthContext } from "context/auth";
 import { FC } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import WorkerLayout from "./layout";
 
 type Props = {
