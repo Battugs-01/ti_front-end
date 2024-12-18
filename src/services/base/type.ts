@@ -7,6 +7,12 @@ export interface Address {
   is_active: boolean;
 }
 
+export interface CreatedBy {
+  id: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface DisabilityTypeInterface {
   id: number;
   created_at: Date;
