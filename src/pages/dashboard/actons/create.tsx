@@ -2,7 +2,6 @@ import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { notification } from "antd";
 import { IModalForm } from "components/modal";
-import dayjs from "dayjs";
 import { useRef } from "react";
 import workers from "service/employ-registration";
 import file from "service/file";
@@ -45,18 +44,9 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       className="px-3"
       onRequest={async (values) => {
         if (!!values) {
-          if (values.profile_id && values.profile_id.length > 0) {
-            values.profile_id = await upload
-              .runAsync({
-                file: values.profile_id[0].originFileObj,
-              })
-              .then((el: any) => el.map((el: any) => el.id));
-          }
           if (
             await createEmployee.runAsync({
               ...values,
-              profile_id: values.profile_id[0],
-              birth_date: dayjs(values.birth_date).toDate(),
             })
           ) {
             return true;

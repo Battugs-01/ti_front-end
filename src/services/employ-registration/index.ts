@@ -8,13 +8,12 @@ namespace workers {
       hasAuth: true,
       body,
     });
-
   export const deleteEmploy = (id: number) =>
     http.del<SuccessResponse>(`/admin/user/${id}`, {
       hasAuth: true,
     });
   export const updateWorkers = (body: any, id: number) =>
-    http.put(`/carecenter/user/${id}`, {
+    http.put(`/admin/user/${id}`, {
       hasAuth: true,
       body,
     });

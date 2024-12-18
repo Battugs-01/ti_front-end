@@ -1,11 +1,7 @@
 import { ProFormInstance } from "@ant-design/pro-form";
-import { useRequest } from "ahooks";
-import { notification } from "antd";
 import { IModalForm } from "components/modal";
-import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import workers from "service/employ-registration";
-import file from "service/file";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
@@ -21,41 +17,18 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
-        family_name: detail?.family_name ?? undefined,
         first_name: detail?.first_name ?? undefined,
         last_name: detail?.last_name,
-        rd: detail?.rd,
-        birth_date: detail?.birth_date ?? undefined,
+        registration_number: detail?.registration_number,
         gender: detail?.gender ?? undefined,
         email: detail?.email ?? undefined,
         phone: detail?.phone,
-        is_disability: detail?.is_disability,
         position: detail?.position,
-        total_worked_year: detail?.total_worked_year,
-        worker_year: detail?.worker_year,
-        salary: detail?.salary,
         role_id: detail?.role_id,
-        profile_id: [
-          {
-            url: file.fileToUrl(detail?.profile?.physical_path as string),
-            id: detail?.profile?.id as any,
-            name: detail?.profile?.original_name,
-            size: detail?.profile?.file_size,
-            uid: `${detail?.profile?.id}`,
-            type: detail?.profile?.extention,
-          },
-        ],
+        password: detail?.password,
       });
     }
   }, [open]);
-
-  const upload = useRequest(file.upload, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
 
   return (
     <IModalForm
@@ -67,39 +40,15 @@ export const UpdateService = ({
       okText={"Хадгалах"}
       modalProps={{ maskClosable: false, onCancel }}
       onRequest={async (values) => {
-        if (values?.profile_id[0]?.uid.includes("rc-upload")) {
-          if (values.profile_id && values.profile_id.length > 0) {
-            values.profile_id = await upload
-              .runAsync({
-                file: values.profile_id[0].originFileObj,
-              })
-              .then((el: any) => el.map((el: any) => el.id));
-          }
-          if (
-            await workers.updateWorkers(
-              {
-                ...values,
-                profile_id: values.profile_id[0],
-                birth_date: dayjs(values?.birth_date).toDate(),
-              },
-              detail?.id || 0
-            )
-          ) {
-            return true;
-          }
-        } else {
-          if (
-            await workers.updateWorkers(
-              {
-                ...values,
-                profile_id: detail?.profile_id,
-                birth_date: dayjs(values?.birth_date).toDate(),
-              },
-              detail?.id || 0
-            )
-          ) {
-            return true;
-          }
+        if (
+          await workers.updateWorkers(
+            {
+              ...values,
+            },
+            detail?.id || 0
+          )
+        ) {
+          return true;
         }
       }}
       onSuccess={onFinish}

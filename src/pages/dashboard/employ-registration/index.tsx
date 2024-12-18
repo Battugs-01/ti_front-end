@@ -1,14 +1,12 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { Avatar, notification } from "antd";
+import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Admin } from "service/auth/type";
 import employRegistration from "service/employ-registration";
-import file from "service/file";
-import { initPagination, moneyFormat } from "utils/index";
+import { initPagination } from "utils/index";
 import { CreateService } from "../actons/create";
 import { UpdateService } from "../actons/update";
 
@@ -65,31 +63,6 @@ const EmployeRegistration = () => {
         setForm={setFilter}
         columns={[
           {
-            dataIndex: ["elderly", "profile", "physical_path"],
-            title: "",
-            align: "center",
-            width: 40,
-            render: (_, record) => (
-              <Avatar
-                shape="circle"
-                size={25}
-                src={file.fileToUrl(record?.profile?.physical_path || "AS")}
-              />
-            ),
-          },
-          {
-            dataIndex: "family_name",
-            title: "Ургийн овог",
-            align: "left",
-            render: (_, record) => (
-              <div className="flex gap-2">
-                <span className="text-sm text-[#475467] font-normal">
-                  {record?.family_name}
-                </span>
-              </div>
-            ),
-          },
-          {
             dataIndex: "last_name",
             title: "Овог",
             align: "left",
@@ -112,20 +85,12 @@ const EmployeRegistration = () => {
             ),
           },
           {
-            dataIndex: "rd",
+            dataIndex: "registration_number",
             title: "Регистрийн дугаар",
+            width: "200",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
                 {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "birth_date",
-            title: "Төрсөн огноо",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {dayjs(record.birth_date).format("YYYY-MM-DD")}
               </span>
             ),
           },
@@ -165,51 +130,6 @@ const EmployeRegistration = () => {
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
                 {value || "-"}
-              </span>
-            ),
-          },
-          // {
-          //   dataIndex: "email",
-          //   title: "Ажилтны төрөл",
-          //   render: (_, record) => (
-          //     <span className="text-sm text-[#475467] font-normal">
-          //       {record?.type || "-"}
-          //     </span>
-          //   ),
-          // },
-          // {
-          //   dataIndex: "email",
-          //   title: "Ажилд орсон огноо",
-          //   render: (_, record) => (
-          //     <span className="text-sm text-[#475467] font-normal">
-          //       {record?.type || "-"}
-          //     </span>
-          //   ),
-          // },
-          {
-            dataIndex: "worker_year",
-            title: "Ажилласан жил",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "total_worked_year",
-            title: "Нийт ажилласан жил",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "salary",
-            title: "Үндсэн цалин",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(value as number) + " ₮" || "-"}
               </span>
             ),
           },
