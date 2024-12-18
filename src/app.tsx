@@ -1,17 +1,16 @@
+import { ConfigProvider } from "antd";
+import enUSIntl from "antd/lib/locale/en_US";
+import mnIntl from "antd/lib/locale/mn_MN";
 import { useAuthContext } from "context/auth";
+import dayjs from "dayjs";
+import "dayjs/locale/mn";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 import MainRoutes from "routes";
 import english from "./locales/en";
 import mongolia from "./locales/mn";
-import { LevelProvider } from "components/custom-detail/selected-level";
-import { ConfigProvider } from "antd";
-import enUSIntl from "antd/lib/locale/en_US";
-import "dayjs/locale/mn";
-import mnIntl from "antd/lib/locale/mn_MN";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 
 const locales = {
   mn: mongolia,
@@ -98,11 +97,9 @@ const App: React.FC = () => {
       locale={auth === "en" ? enUSIntl : mnIntl}
     >
       <IntlProvider messages={locale} locale={auth?.substring(0, 2)}>
-        <LevelProvider>
-          <BrowserRouter>
-            <MainRoutes />
-          </BrowserRouter>
-        </LevelProvider>
+        <BrowserRouter>
+          <MainRoutes />
+        </BrowserRouter>
       </IntlProvider>
     </ConfigProvider>
   );

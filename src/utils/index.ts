@@ -159,8 +159,8 @@ export const initFilter = {
   },
 };
 export const initPagination = {
-  current: 1,
-  pageSize: 20,
+  page: 0,
+  limit: 20,
 };
 
 export const reminderFilter = {

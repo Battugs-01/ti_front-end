@@ -7,6 +7,7 @@ import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
+import { menuItems } from "layout/dashboard/menu_items";
 import { FC, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +24,8 @@ const Login: FC = () => {
     manual: true,
     onSuccess: (data) => {
       auth.saveToken(data.token);
-      setAuth([Action.SIGN_IN, data.employee]);
-      navigate("dashboard/screening-list");
+      setAuth([Action.SIGN_IN, data.user]);
+      navigate(menuItems[0].path);
       notification.success({
         message: intl.formatMessage({ id: "login_success" }),
       });

@@ -1,12 +1,12 @@
 import { PageLoading } from "@ant-design/pro-layout";
 import { ErrorBoundary } from "@ant-design/pro-utils";
 import { useAuthContext } from "context/auth";
+import { menuItems } from "layout/dashboard/menu_items";
 import { FC, lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import auhtRoutes from "routes/auth";
 import dashboardRoutes from "routes/dashboard";
 import { IRoute } from "./types";
-
 const AuthLayout = lazy(() => import("layout/auth"));
 const DashboardLayout = lazy(() => import("layout/dashboard"));
 
@@ -64,7 +64,7 @@ const MainRoutes: FC = () => {
         path="*"
         element={
           authorized ? (
-            <Navigate to="/dashboard/dashboard" />
+            <Navigate to={menuItems[0].path} />
           ) : (
             <Navigate to="/auth/login" />
           )
