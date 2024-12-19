@@ -73,24 +73,24 @@ const App: React.FC = () => {
             colorText: "#1D2939",
           },
           Table: {
-            rowHoverBg: "#F5F8F8",
+            rowHoverBg: "#F9FAFB",
             rowSelectedHoverBg: "#E7EDEE",
-            rowExpandedBg: "#F5F8F8",
+            rowExpandedBg: "#F9FAFB",
           },
           Input: {
-            colorBgContainer: "#F5F8F8",
+            colorBgContainer: "#F9FAFB",
           },
           InputNumber: {
-            colorBgContainer: "#F5F8F8",
+            colorBgContainer: "#F9FAFB",
           },
           Select: {
-            colorBgContainer: "#F5F8F8",
+            colorBgContainer: "#F9FAFB",
           },
           DatePicker: {
-            colorBgContainer: "#F5F8F8",
+            colorBgContainer: "#F9FAFB",
           },
           Descriptions: {
-            colorBgContainer: "#F5F8F8",
+            colorBgContainer: "#F9FAFB",
           },
         },
       }}

@@ -1,8 +1,9 @@
 import { Drawer } from "antd";
+import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { menuItems } from "./menu_items";
+import { menuItems, menuManagerItems } from "./menu_items";
 import Logo from "/images/logo1.png";
 
 const triangleStyle: React.CSSProperties = {
@@ -22,13 +23,9 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
 }) => {
   const [user] = useContext(AuthContext);
   let menus = menuItems;
-  // if (user?.user?.role === UserRoleType.super_admin) {
-  //   menus = menuSuperAdminItems;
-  // } else if (user?.user?.role === UserRoleType.admin) {
-  //   menus = menuAdminItems;
-  // } else if (user?.user?.role === UserRoleType.stack_holder) {
-  //   menus = menuStackholderItems;
-  // }
+  if (user.user?.position === UserRoleType.manager) {
+    menus = menuManagerItems;
+  }
 
   if (mobile) {
     return (

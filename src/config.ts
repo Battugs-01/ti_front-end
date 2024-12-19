@@ -49,33 +49,18 @@ export const agencyArray = Object.freeze([
 ]);
 
 export enum UserRoleType {
-  case_manager = "case_manager",
-  senior_case_manager = "senior_case_manager",
-  operation_manager = "operation_manager",
-  doctor = "doctor",
   admin = "admin",
-  super_admin = "super_admin",
-  stack_holder = "stack_holder",
-  case_management_associate = "case_management_associate",
+  manager = "manager",
 }
 
 export const permissionArray = Object.freeze([
-  UserRoleType.case_manager,
-  UserRoleType.senior_case_manager,
-  UserRoleType.operation_manager,
-  UserRoleType.doctor,
   UserRoleType.admin,
-  UserRoleType.case_management_associate,
+  UserRoleType.manager,
 ]);
 
 export const permissionArraySuperAdmin = Object.freeze([
-  UserRoleType.case_manager,
-  UserRoleType.senior_case_manager,
-  UserRoleType.operation_manager,
-  UserRoleType.doctor,
   UserRoleType.admin,
-  UserRoleType.super_admin,
-  UserRoleType.stack_holder,
+  UserRoleType.manager,
 ]);
 
 export enum ScreeningTab {
@@ -310,47 +295,8 @@ export const LANGUAGES = Object.freeze([
   },
 ]);
 
-export enum SettingsTab {
-  agency_list = "agency_list",
-  stakeholder_list = "stakeholder_list",
-  user_list = "user_list",
-}
-
-export enum StatisticalTab {
-  management_report = "management_report",
-  closed_case_report = "closed_case_report",
-  case_manager_report = "case_manager_report",
-  report_log = "report_log",
-  statistical_report = "statistical_report",
-  care_foci = "care_foci",
-  statistic_report = "statistic_report",
-  development_plan = "development_plan",
-}
-
-export enum DevelopmentPlanReportTab {
-  by_agency = "by_agency",
-  management_report = "management_report",
-  by_case_manager = "by_case_manager",
-}
-
-export enum StatisticalReportTab {
-  by_level = "by_level",
-  age_and_gender = "age_and_gender",
-}
-
-export enum DevelopmentPlanDetailTab {
-  general = "general_info",
-  development = "development_plan",
-}
-
-export enum DevelopmentPlanGraphTab {
-  mini_cog = "mini_cog",
-  gds = "gds",
-  barthel = "barthel_index",
-}
-
-export enum DashboardLevelEnum {
-  level1 = "level_1",
-  level2 = "level_2",
-  level3 = "level_3",
+export enum FieldRegistrationTab {
+  CargoApproach = "cargo_approach",
+  Remainder = "remainder",
+  ArrivalField = "arrival_field",
 }
