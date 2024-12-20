@@ -3,7 +3,7 @@ import http from "..";
 
 namespace fieldRegistration {
   export const list = (body: any) =>
-    http.post<any[]>("admin/user/page", {
+    http.post<any[]>("admin/field_register/page", {
       hasAuth: true,
       body,
     });

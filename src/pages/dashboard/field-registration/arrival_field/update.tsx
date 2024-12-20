@@ -21,7 +21,7 @@ enum FieldRegistrationTab {
   shipping_cost = "shipping_cost",
 }
 
-export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
+export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
@@ -29,7 +29,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
   const [tab, setTab] = useState<FieldRegistrationTab>(
     FieldRegistrationTab.grant
   );
-  const addAcrivalField = useRequest(fieldRegistration.create, {
+  const updateAcrivalField = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
     onSuccess: () => {
       notification.success({
@@ -49,12 +49,12 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        await addAcrivalField.runAsync({
+        await updateAcrivalField.runAsync({
           ...values,
         });
         onFinish?.();
       }}
-      title="Талбайн бүртгэл "
+      title="Талбайн бүртгэл засах "
       open={open}
       modalProps={{
         destroyOnClose: true,
@@ -87,7 +87,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={addAcrivalField.loading}
+                loading={updateAcrivalField.loading}
               >
                 Хадгалах
               </Button>

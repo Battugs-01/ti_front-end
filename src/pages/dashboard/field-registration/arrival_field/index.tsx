@@ -4,11 +4,10 @@ import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
-import { Lock01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
-// import { UpdateUser } from "./update";
 import fieldRegistration from "service/feild_registration";
 import { CreateArrivalField } from "./create";
+import { UpdateArrivalField } from "./update";
 
 export const ArrivalField: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -18,9 +17,9 @@ export const ArrivalField: React.FC = () => {
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
+      // notification.error({
+      //   message: err.message,
+      // });
     },
   });
 
@@ -57,7 +56,7 @@ export const ArrivalField: React.FC = () => {
         loading={fieldRegister.loading}
         CreateComponent={CreateArrivalField}
         refresh={refreshList}
-        // UpdateComponent={UpdateUser}
+        UpdateComponent={UpdateArrivalField}
         RemoveModelConfig={{
           action: fieldRegistration.deleteRegistration,
           config: (record) => ({

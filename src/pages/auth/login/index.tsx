@@ -5,9 +5,10 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
+import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
-import { menuItems } from "layout/dashboard/menu_items";
+import { menuItems, menuManagerItems } from "layout/dashboard/menu_items";
 import { FC, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +26,11 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
-      navigate(menuItems[0].path);
+      if (data.user.position === UserRoleType.manager) {
+        navigate(menuManagerItems[0].path);
+      } else {
+        navigate(menuItems[0].path);
+      }
       notification.success({
         message: intl.formatMessage({ id: "login_success" }),
       });

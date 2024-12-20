@@ -4,10 +4,10 @@ import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
-import { Lock01 } from "untitledui-js-base";
-import { initPagination } from "utils/index";
 import fieldRegistration from "service/feild_registration";
+import { initPagination } from "utils/index";
 import { CreateCargoApproach } from "./create";
+import { UpdateCargoApproach } from "./update";
 
 export const CargoApproach: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -17,9 +17,9 @@ export const CargoApproach: React.FC = () => {
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
+      // notification.error({
+      //   message: err.message,
+      // });
     },
   });
 
@@ -55,8 +55,8 @@ export const CargoApproach: React.FC = () => {
         // dataSource={fieldRegister.data}
         loading={fieldRegister.loading}
         CreateComponent={CreateCargoApproach}
+        UpdateComponent={UpdateCargoApproach}
         refresh={refreshList}
-        // UpdateComponent={UpdateUser}
         RemoveModelConfig={{
           action: fieldRegistration.deleteRegistration,
           config: (record) => ({
@@ -64,9 +64,6 @@ export const CargoApproach: React.FC = () => {
             display: record?.first_name,
             title: "Remove",
           }),
-        }}
-        customActions={(record) => {
-          return <Lock01 size="20" onClick={() => {}} className="ml-2" />;
         }}
         create={create}
         setCreate={setCreate}

@@ -7,6 +7,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArray } from "config";
+import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
@@ -14,9 +15,9 @@ import { ActionComponentProps } from "types";
 export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
-  open,
+  detail,
 }) => {
-  const addCargo = useRequest(fieldRegistration.updateRegistration, {
+  const updateCargo = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
     onSuccess: () => {
       notification.success({
@@ -36,13 +37,17 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        await addCargo.runAsync({
+        await updateCargo.runAsync({
           ...values,
         });
         onFinish?.();
       }}
-      title="Ачаа чингэлэг тээврийн бүртгэл "
-      open={open}
+      title="Ачаа чингэлэг тээврийн бүртгэл засах "
+      open={!!detail}
+      initialValues={{
+        ...detail,
+        date: detail?.date ? dayjs(detail.date) : undefined,
+      }}
       modalProps={{
         destroyOnClose: true,
         width: "650px",
@@ -74,7 +79,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={addCargo.loading}
+                loading={updateCargo.loading}
               >
                 Хадгалах
               </Button>

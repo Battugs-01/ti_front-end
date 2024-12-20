@@ -25,28 +25,8 @@ export const workersGenderArray = Object.freeze([
   },
 ]);
 
-export enum AgencyType {
-  dev_area = 7,
-  care_foci = 8,
-  care_center = 9,
-}
 // male = "male",
 // female = "female",
-
-export const agencyArray = Object.freeze([
-  {
-    label: "Дархан–Уул аймгийн Ахмадын Хөгжлийн төв ОНӨУТҮГ",
-    value: AgencyType.dev_area,
-  },
-  {
-    label: "“АЧЛАЛТ ХҮҮХДҮҮД “ Идэвхтэй насжилтыг дэмжих төв",
-    value: AgencyType.care_foci,
-  },
-  {
-    label: "Мандал сум",
-    value: AgencyType.care_center,
-  },
-]);
 
 export enum UserRoleType {
   admin = "admin",
@@ -63,54 +43,12 @@ export const permissionArraySuperAdmin = Object.freeze([
   UserRoleType.manager,
 ]);
 
-export enum ScreeningTab {
-  all = "all",
-  level_1 = "level_1",
-  level_2 = "level_2",
-  level_3 = "level_3",
-}
-
-export enum DashboardTab {
-  all = 0,
-  darkhan = "darkhan",
-  mandal = "mandal",
-  achlalt = "achlalt",
-}
-
-export enum TotalCaseTab {
-  level = "level",
-  age = "age",
-  gender = "gender",
-}
-
 export enum DevPlanQuistions {
   TreatInteract = "TreatInteract",
   LifePride = "LifePride",
   LifeValue = "LifeValue",
   PriorityService = "PriorityService",
 }
-
-export enum CareFociEnum {
-  loseActivity = 1,
-  psychologyChange = 2,
-  Econemy = 3,
-  HealthRisk = 4,
-}
-
-export const levelOptions = Object.freeze([
-  {
-    label: "Түвшин 1",
-    value: ScreeningTab.level_1,
-  },
-  {
-    label: "Түвшин 2",
-    value: ScreeningTab.level_2,
-  },
-  {
-    label: "Түвшин 3",
-    value: ScreeningTab.level_3,
-  },
-]);
 
 export const ageOptions = Object.freeze([
   {
