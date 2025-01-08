@@ -4,7 +4,6 @@ import BloodPressure from "components/badge/blood-pressure";
 import { ReactNode } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FormattedMessage } from "react-intl";
-import { Health } from "service/screening_list/type";
 
 interface CustomCardProps {
   title: ReactNode | string;
@@ -237,68 +236,6 @@ export const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
       </div>
       <div>
         <div className="text-[36px] font-semibold">{value}</div>
-      </div>
-    </div>
-  </Card>
-);
-
-interface BloodPressureCardProps {
-  title: string;
-  value: Health;
-}
-
-export const BloodPressureCard: React.FC<BloodPressureCardProps> = ({
-  title,
-  value,
-}) => (
-  <Card className="bg-[#E7EDEE] w-full h-[120px]">
-    <div className="flex flex-col gap-1">
-      <div className="text-sm text-[#101828]  font-semibold ">
-        <FormattedMessage id={title} />
-      </div>
-      <div className="flex justify-between">
-        <div className="col-span-1">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-[#4e5969]">
-              <FormattedMessage id={"right"} />
-            </span>
-            <div className="flex gap-1">
-              <div>
-                <BloodPressure
-                  color="purple"
-                  value={value?.blood_presure_right_high}
-                />
-              </div>
-              <div>
-                <BloodPressure
-                  color="blue"
-                  value={value?.blood_presure_right_low}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-span-1">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-[#4e5969]">
-              <FormattedMessage id={"left"} />
-            </span>
-            <div className="flex gap-1">
-              <div>
-                <BloodPressure
-                  color="purple"
-                  value={value?.blood_presure_left_high}
-                />
-              </div>
-              <div>
-                <BloodPressure
-                  color="blue"
-                  value={value?.blood_presure_left_low}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </Card>

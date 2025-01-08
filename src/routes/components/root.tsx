@@ -1,8 +1,7 @@
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 import { useAuthContext } from "context/auth";
 
-import React, { FC } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { FC } from "react";
+import { Navigate } from "react-router-dom";
 
 const Root: FC = () => {
   const [{ authorized }] = useAuthContext();

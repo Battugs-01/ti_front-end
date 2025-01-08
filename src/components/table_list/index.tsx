@@ -58,7 +58,6 @@ export const ITableList = <T,>({
   const isRightColumn = columns?.some((col) => col.right);
 
   useEffect(() => {
-    // at least 3 second to load
     setIsLoading(true);
     if (!loading)
       setTimeout(() => {

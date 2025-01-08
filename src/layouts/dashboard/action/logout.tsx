@@ -1,6 +1,6 @@
 import { ModalForm } from "@ant-design/pro-form";
 import { Button } from "antd";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Logout04 } from "untitledui-js-base";
 
 interface Logout {

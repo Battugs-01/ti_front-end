@@ -6,11 +6,7 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import {
-  FORM_ITEM_RULE,
-  permissionArray,
-  permissionArraySuperAdmin,
-} from "config";
+import { FORM_ITEM_RULE, permissionArraySuperAdmin } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
