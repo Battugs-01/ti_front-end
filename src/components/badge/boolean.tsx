@@ -1,21 +1,19 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
 
 interface Props {
   status?: any | React.ReactNode;
 }
 
 export const BooleanBadge: FC<Props> = ({ status }) => {
-  const intl = useIntl();
   let text = "None";
   let colorClass = "bg-[#F2F4F7] text-[#344054]";
   switch (status) {
     case true:
-      text = intl.formatMessage({ id: "yes" }, { number: 1 });
+      text = "Тийм";
       colorClass = "bg-[#FEF3F2] text-[#B42318]";
       break;
     case false:
-      text = intl.formatMessage({ id: "no" }, { number: 3 });
+      text = "Үгүй";
       colorClass = "bg-[#ECFDF3] text-[#027A48]";
       break;
     default:

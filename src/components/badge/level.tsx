@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
 
 interface Props {
   status: string;
@@ -7,20 +6,19 @@ interface Props {
 }
 
 const LevelBadge: FC<Props> = ({ status, OneNone }) => {
-  const intl = useIntl();
   let text = "None";
   let colorClass = "bg-[#F2F4F7] text-[#344054]";
   switch (status) {
     case "level_1":
-      text = intl.formatMessage({ id: "level" }, { number: 1 });
+      text = "Level 1";
       colorClass = "bg-[#ECFDF3] text-[#027A48]";
       break;
     case "level_2":
-      text = intl.formatMessage({ id: "level" }, { number: 2 });
+      text = "Level 2";
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;
     case "level_3":
-      text = intl.formatMessage({ id: "level" }, { number: 3 });
+      text = "Level 3";
       colorClass = "bg-[#FEF3F2] text-[#B42318]";
       break;
     default:

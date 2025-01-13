@@ -5,7 +5,6 @@ import { Button } from "antd"; // Import your component library
 import { atom, useAtom } from "jotai";
 import React, { useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { useIntl } from "react-intl";
 import { ActionComponentProps } from "types";
 import { exportFromList, exportFromTable } from "utils/export";
 import { CreateButton, ExportButton } from "..";
@@ -67,10 +66,8 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
-  const intl = useIntl();
 
   const form = useRef<ProFormInstance>();
-  console.log(downloadList, "downloadList");
 
   const searchDebounce = useDebounceFn(
     (value) => {
@@ -96,9 +93,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           {filter}
           <ProFormText
             name={"text"}
-            placeholder={
-              searchPlaceHolder || intl.formatMessage({ id: "search" })
-            }
+            placeholder={searchPlaceHolder || "Хайлт хийх утгаа оруулна уу"}
             hidden={hideSearch}
             fieldProps={{
               size: "large",

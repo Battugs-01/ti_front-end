@@ -9,7 +9,6 @@ import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArraySuperAdmin } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import file from "service/file";
 import profile from "service/profile";
 
@@ -29,7 +28,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -53,10 +52,9 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
     });
     return file[0].id;
   };
-  const intl = useIntl();
   return (
     <ModalForm
-      title={intl.formatMessage({ id: "personal_info" })}
+      title="Хувийн мэдээлэл"
       width={650}
       open={visible}
       onFinish={async (values) => {
@@ -106,10 +104,10 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
           return (
             <div className="flex items-center gap-4">
               <Button onClick={onClose} size="large" type="default">
-                <FormattedMessage id="cancel" />
+                Болих
               </Button>
               <Button onClick={props.submit} size="large" type="primary">
-                <FormattedMessage id="save" />
+                Хадгалах
               </Button>
             </div>
           );
@@ -122,21 +120,17 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
             <Col span={24}>
               <ProFormText
                 name="last_name"
-                placeholder={intl.formatMessage({
-                  id: "placeholder_text",
-                })}
+                placeholder={"Овог"}
                 rules={[
                   {
                     required: true,
-                    message: intl.formatMessage({
-                      id: "required",
-                    }),
+                    message: "Овог оруулна уу",
                   },
                 ]}
                 fieldProps={{
                   size: "large",
                 }}
-                label={intl.formatMessage({ id: "last_name" })}
+                label={"Овог"}
               />
             </Col>
           </Row>
@@ -144,21 +138,17 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
             <Col span={24}>
               <ProFormText
                 name="first_name"
-                placeholder={intl.formatMessage({
-                  id: "placeholder_text",
-                })}
+                placeholder={"Нэр"}
                 fieldProps={{
                   size: "large",
                 }}
                 rules={[
                   {
                     required: true,
-                    message: intl.formatMessage({
-                      id: "required",
-                    }),
+                    message: "Нэр оруулна уу",
                   },
                 ]}
-                label={intl.formatMessage({ id: "first_name" })}
+                label={"Нэр"}
               />
             </Col>
           </Row>
@@ -170,15 +160,13 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
                 <div className="text-sm">
                   {" "}
                   <div className="text-primary-700 font-semibold">
-                    <FormattedMessage id="upload" />{" "}
+                    Зураг оруулах
                   </div>
-                  <div>
-                    <FormattedMessage id="image_types" />
-                  </div>
+                  <div>Зургийн төрөл</div>
                 </div>
               </div>
             }
-            label={intl.formatMessage({ id: "upload_picture" })}
+            label={"Зураг оруулах"}
             max={1}
             rules={[
               {
@@ -216,12 +204,12 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({
           <ProFormSelect
             name="role"
             options={permissionArraySuperAdmin?.map((el) => ({
-              label: <FormattedMessage id={el} />,
+              label: el,
               value: el,
             }))}
             disabled
-            label={intl.formatMessage({ id: "position" })}
-            placeholder={intl.formatMessage({ id: "placeholder_select" })}
+            label={"Албан тушаал"}
+            placeholder={"Албан тушаал"}
             fieldProps={{
               size: "large",
             }}

@@ -10,13 +10,11 @@ import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import { menuItems, menuManagerItems } from "layout/dashboard/menu_items";
 import { FC, useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { LoginData } from "service/auth/type";
 
 const Login: FC = () => {
-  const intl = useIntl();
   const formRef = useRef<ProFormInstance<LoginData>>();
   const [, setAuth] = useAuthContext();
   const userData = auth.getRememberUser();
@@ -32,7 +30,7 @@ const Login: FC = () => {
         navigate(menuItems[0].path);
       }
       notification.success({
-        message: intl.formatMessage({ id: "login_success" }),
+        message: "Амжилттай нэвтэрлээ",
       });
     },
     onError: (err) => {
@@ -80,7 +78,7 @@ const Login: FC = () => {
               size="large"
               className="mt-7"
             >
-              <FormattedMessage id="login" />
+              Нэвтрэх
             </Button>
           ),
         }}
@@ -90,7 +88,7 @@ const Login: FC = () => {
           <ProFormText
             name="email"
             placeholder="Имэйл"
-            label={<FormattedMessage id="Нэвтрэх имэйл" />}
+            label={"Нэвтрэх имэйл"}
             fieldProps={{ size: "large" }}
             required
             rules={[
@@ -104,7 +102,7 @@ const Login: FC = () => {
           <ProFormText.Password
             label="Нууц үг"
             name="password"
-            placeholder={intl.formatMessage({ id: "password" })}
+            placeholder={"Нууц үг"}
             fieldProps={{ size: "large" }}
             rules={[
               {
@@ -126,7 +124,7 @@ const Login: FC = () => {
               }}
             />
             <label htmlFor="remember" className="text-gray-700">
-              <FormattedMessage id="login_reminder" />
+              Намайг сана
             </label>
           </div>
         </div>

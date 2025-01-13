@@ -1,9 +1,7 @@
 import { Card, Progress, Skeleton } from "antd";
 import BackIcon from "assets/img/icon-back.svg";
-import BloodPressure from "components/badge/blood-pressure";
 import { ReactNode } from "react";
 import { FaArrowRight } from "react-icons/fa6";
-import { FormattedMessage } from "react-intl";
 
 interface CustomCardProps {
   title: ReactNode | string;
@@ -231,9 +229,7 @@ interface StatCardProps {
 export const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
   <Card className="bg-[#E7EDEE] w-full h-[120px]">
     <div className="flex flex-col gap-1">
-      <div className="text-sm text-[#101828] font-semibold">
-        <FormattedMessage id={title} />
-      </div>
+      <div className="text-sm text-[#101828] font-semibold">{title}</div>
       <div>
         <div className="text-[36px] font-semibold">{value}</div>
       </div>
@@ -288,9 +284,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
         </div>
         <div className="flex flex-col ">
           <div className="flex gap-2 items-center m-0 p-0">
-            <p className="text-sm font-normal text-gray-500 m-0 p-0">
-              <FormattedMessage id="point" />
-            </p>
+            <p className="text-sm font-normal text-gray-500 m-0 p-0">Оноо</p>
             <p className="text-base font-medium text-gray-800 m-0 p-0">{`${value}/${percentPoint}`}</p>
           </div>
           <Progress

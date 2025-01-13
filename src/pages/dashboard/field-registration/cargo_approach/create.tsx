@@ -7,7 +7,6 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArray } from "config";
-import { useIntl } from "react-intl";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 
@@ -20,7 +19,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -28,10 +27,9 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       notification.error({
         message: error.message,
       });
-      onFinish?.();
+      onCancel?.();
     },
   });
-  const intl = useIntl();
 
   return (
     <ModalForm
@@ -39,7 +37,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await addCargo.runAsync({
           ...values,
         });
-        onFinish?.();
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
       open={open}

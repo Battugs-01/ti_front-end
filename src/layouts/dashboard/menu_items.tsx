@@ -1,4 +1,3 @@
-import { FormattedMessage } from "react-intl";
 import {
   Archive,
   File03,
@@ -26,17 +25,17 @@ export const menuManagerItems = [
 export const menuSuperAdminItems = [
   {
     icon: <PieChart02 />,
-    name: <FormattedMessage id="dashboard" />,
+    name: "Хяналтын самбар",
     path: "/dashboard/dashboard",
   },
   {
     icon: <File03 />,
-    name: <FormattedMessage id="stastical_report" />,
+    name: "Статистик тайлан",
     path: "/dashboard/stastical-report",
   },
   {
     icon: <Settings01 />,
-    name: <FormattedMessage id="settings" />,
+    name: "Тохиргоо",
     path: "/dashboard/settings",
   },
 ];
@@ -45,7 +44,7 @@ export const menuAdminItems = [
   ...menuItems,
   {
     icon: <Settings01 />,
-    name: <FormattedMessage id="settings" />,
+    name: "Тохиргоо",
     path: "/dashboard/settings",
   },
 ];
@@ -53,12 +52,12 @@ export const menuAdminItems = [
 export const menuStackholderItems = [
   {
     icon: <PieChart02 />,
-    name: <FormattedMessage id="dashboard" />,
+    name: "Хяналтын самбар",
     path: "/dashboard/dashboard",
   },
   {
     icon: <File03 />,
-    name: <FormattedMessage id="stastical_report" />,
+    name: "Статистик тайлан",
     path: "/dashboard/stastical-report",
   },
 ];

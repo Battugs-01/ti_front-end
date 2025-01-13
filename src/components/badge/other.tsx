@@ -1,21 +1,19 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
 
 interface Props {
   status?: any | React.ReactNode;
 }
 
 export const OtherBadge: FC<Props> = ({ status }) => {
-  const intl = useIntl();
   let text = "None";
   let colorClass = "bg-[#F2F4F7] text-[#344054]";
   switch (status) {
     case true:
-      text = intl.formatMessage({ id: "yes" }, { number: 1 });
+      text = "Тийм";
       colorClass = "bg-[#ECFDF3] text-[#027A48]";
       break;
     case false:
-      text = intl.formatMessage({ id: "no" }, { number: 3 });
+      text = "Үгүй";
       colorClass = "bg-[#F2F4F7] text-[#344054]";
       break;
     default:

@@ -11,7 +11,6 @@ import { Button, Col, notification, Radio, Row } from "antd";
 import IBadge from "components/badge";
 import { FORM_ITEM_RULE, permissionArray } from "config";
 import { useState } from "react";
-import { useIntl } from "react-intl";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 
@@ -33,7 +32,7 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай засагдлаа",
       });
       onFinish?.();
     },
@@ -41,10 +40,9 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
       notification.error({
         message: error.message,
       });
-      onFinish?.();
+      onCancel?.();
     },
   });
-  const intl = useIntl();
 
   return (
     <ModalForm
@@ -52,7 +50,6 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
         await updateAcrivalField.runAsync({
           ...values,
         });
-        onFinish?.();
       }}
       title="Талбайн бүртгэл засах "
       open={open}
@@ -250,6 +247,7 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
                 optionType="button"
                 size="large"
                 className="mb-4"
+                value={tab}
                 onChange={(e) => setTab(e.target.value)}
                 defaultValue={FieldRegistrationTab.grant}
                 options={[

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
 
 interface ReadMoreProps {
   id: string;
@@ -43,11 +42,7 @@ export const ReadMore = ({ id, text, amountOfWords = 16 }: ReadMoreProps) => {
             onKeyDown={handleKeyboard}
             onClick={() => setIsExpanded(!isExpanded)}
           >
-            {isExpanded ? (
-              <FormattedMessage id="summary" />
-            ) : (
-              <FormattedMessage id="detail" />
-            )}
+            {isExpanded ? "Summary" : "Details"}
           </span>
         </>
       )}

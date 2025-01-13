@@ -9,9 +9,8 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Radio, Row } from "antd";
 import IBadge from "components/badge";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import { useState } from "react";
-import { useIntl } from "react-intl";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 
@@ -33,7 +32,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -44,7 +43,6 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
       onFinish?.();
     },
   });
-  const intl = useIntl();
 
   return (
     <ModalForm
@@ -52,7 +50,6 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
         await addAcrivalField.runAsync({
           ...values,
         });
-        onFinish?.();
       }}
       title="Талбайн бүртгэл "
       open={open}

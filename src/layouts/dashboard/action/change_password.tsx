@@ -1,7 +1,6 @@
 import { ModalForm, ProFormText } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FormattedMessage, useIntl } from "react-intl";
 import profile from "service/profile";
 
 interface ChangePasswordProps {
@@ -19,7 +18,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -30,16 +29,15 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
       onClose?.();
     },
   });
-  const intl = useIntl();
   return (
     <ModalForm
-      title={intl.formatMessage({ id: "change_password" })}
+      title={"Нууц үг солих"}
       width={650}
       open={visible}
       onFinish={async (values) => {
         if (values?.new_password !== values?.new_password_repeat) {
           notification.error({
-            message: intl.formatMessage({ id: "password_not_match" }),
+            message: "Нууц үг тохирохгүй байна",
           });
           return;
         }
@@ -72,10 +70,10 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
           return (
             <div className="flex items-center gap-4">
               <Button onClick={onClose} size="large" type="default">
-                <FormattedMessage id="cancel" />
+                Болих
               </Button>
               <Button onClick={props.submit} size="large" type="primary">
-                <FormattedMessage id="save" />
+                Хадгалах
               </Button>
             </div>
           );
@@ -86,17 +84,17 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
         <Col span={24}>
           <ProFormText.Password
             name="old_password"
-            label={intl.formatMessage({ id: "old_password" })}
+            label={"Хуучин нууц үг"}
             rules={[
               {
                 required: true,
-                message: intl.formatMessage({ id: "required" }),
+                message: "Хуучин нууц үгээ оруулна уу",
               },
             ]}
             fieldProps={{
               size: "large",
             }}
-            placeholder={intl.formatMessage({ id: "placeholder_text" })}
+            placeholder={"Хуучин нууц үг"}
           />
         </Col>
       </Row>
@@ -104,17 +102,17 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
         <Col span={24}>
           <ProFormText.Password
             name="new_password"
-            label={intl.formatMessage({ id: "new_password" })}
+            label={"Шинэ нууц үг"}
             rules={[
               {
                 required: true,
-                message: intl.formatMessage({ id: "required" }),
+                message: "Шинэ нууц үгээ оруулна уу",
               },
             ]}
             fieldProps={{
               size: "large",
             }}
-            placeholder={intl.formatMessage({ id: "placeholder_text" })}
+            placeholder={"Шинэ нууц үг"}
           />
         </Col>
       </Row>
@@ -125,14 +123,14 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
             rules={[
               {
                 required: true,
-                message: intl.formatMessage({ id: "required" }),
+                message: "Шинэ нууц үгээ давтан оруулна уу",
               },
             ]}
             fieldProps={{
               size: "large",
             }}
-            label={intl.formatMessage({ id: "new_password_repeat" })}
-            placeholder={intl.formatMessage({ id: "placeholder_text" })}
+            label={"Шинэ нууц үг давтах"}
+            placeholder={"Шинэ нууц үг давтах"}
           />
         </Col>
       </Row>

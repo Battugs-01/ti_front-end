@@ -8,7 +8,6 @@ import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE, permissionArray } from "config";
 import dayjs from "dayjs";
-import { useIntl } from "react-intl";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 
@@ -21,7 +20,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: intl.formatMessage({ id: "success" }),
+        message: "Амжилттай засагдлаа",
       });
       onFinish?.();
     },
@@ -29,10 +28,9 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       notification.error({
         message: error.message,
       });
-      onFinish?.();
+      onCancel?.();
     },
   });
-  const intl = useIntl();
 
   return (
     <ModalForm
@@ -40,7 +38,6 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await updateCargo.runAsync({
           ...values,
         });
-        onFinish?.();
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл засах "
       open={!!detail}

@@ -1,6 +1,5 @@
 import { ModalForm } from "@ant-design/pro-form";
 import { Button } from "antd";
-import { FormattedMessage } from "react-intl";
 import { Logout04 } from "untitledui-js-base";
 
 interface Logout {
@@ -47,7 +46,7 @@ export const Logout: React.FC<Logout> = ({ visible, onClose, onFinish }) => {
                 type="default"
                 className="w-1/2"
               >
-                <FormattedMessage id="cancel" />
+                Үгүй
               </Button>
               <Button
                 onClick={() => {
@@ -57,7 +56,7 @@ export const Logout: React.FC<Logout> = ({ visible, onClose, onFinish }) => {
                 size="large"
                 type="primary"
               >
-                <FormattedMessage id="yes" />
+                Тийм
               </Button>
             </div>
           );
@@ -65,7 +64,7 @@ export const Logout: React.FC<Logout> = ({ visible, onClose, onFinish }) => {
       }}
     >
       <div className="font-semibold text-lg">
-        <FormattedMessage id="logout_message" />
+        Та системээс гарахдаа итгэлтэй байна уу?
       </div>
     </ModalForm>
   );
