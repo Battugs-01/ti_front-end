@@ -1,12 +1,13 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
+  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { DirectionType, FORM_ITEM_RULE, permissionArray } from "config";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 
@@ -37,6 +38,9 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await addCargo.runAsync({
           ...values,
         });
+      }}
+      initialValues={{
+        direction: DirectionType.south,
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
       open={open}
@@ -131,6 +135,28 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={"arrival_field"}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <ProFormRadio.Group
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    name={"direction"}
+                    label="Чиглэл"
+                    options={[
+                      {
+                        label: "Урд",
+                        value: DirectionType.south,
+                      },
+                      {
+                        label: "Хойд",
+                        value: DirectionType.north,
+                      },
+                    ]}
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>

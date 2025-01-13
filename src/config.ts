@@ -238,3 +238,8 @@ export enum FieldRegistrationTab {
   Remainder = "remainder",
   ArrivalField = "arrival_field",
 }
+
+export enum DirectionType {
+  south = "south",
+  north = "north",
+}
