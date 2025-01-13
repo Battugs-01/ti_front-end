@@ -3,25 +3,25 @@ import http from "..";
 
 namespace fieldRegistration {
   export const list = (body: any) =>
-    http.post<any[]>("admin/field_register/page", {
+    http.post<any[]>("/field_register/page", {
       hasAuth: true,
       body,
     });
 
   export const create = (body: any) =>
-    http.post<SuccessResponse>("admin/user/create", {
+    http.post<SuccessResponse>("/user/create", {
       hasAuth: true,
       body,
     });
 
   export const deleteRegistration = (body: any) =>
-    http.del<SuccessResponse>("admin/user/delete", {
+    http.del<SuccessResponse>("/user/delete", {
       hasAuth: true,
       body,
     });
 
   export const updateRegistration = (body: any) =>
-    http.put<SuccessResponse>("admin/user/update", {
+    http.put<SuccessResponse>("/user/update", {
       hasAuth: true,
       body,
     });

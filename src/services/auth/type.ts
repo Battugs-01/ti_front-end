@@ -22,10 +22,9 @@ export interface Admin {
   email: string;
   phone: string;
   is_active: boolean;
-  position: string;
   user_type: number;
   city_id: number;
-  role: string;
+  role_name: string;
   // city: Address;
   profile: Profile;
   profile_id: number;

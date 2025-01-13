@@ -241,3 +241,15 @@ export enum FieldRegistrationTab {
   Remainder = "remainder",
   ArrivalField = "arrival_field",
 }
+
+export enum FininciarTab {
+  CustomerCompany = 0,
+  AdditionalFeeSettings = 1,
+  CustomerAccountSettlement = 2,
+  CancellingTicket = 3,
+}
+
+export interface FininciarTabtButton {
+  value: FininciarTab;
+  label: string;
+}
