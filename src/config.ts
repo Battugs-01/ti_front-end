@@ -253,3 +253,8 @@ export interface FininciarTabtButton {
   value: FininciarTab;
   label: string;
 }
+
+export enum DirectionType {
+  south = "south",
+  north = "north",
+}
