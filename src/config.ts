@@ -25,22 +25,25 @@ export const workersGenderArray = Object.freeze([
   },
 ]);
 
-// male = "male",
-// female = "female",
-
 export enum UserRoleType {
   admin = "admin",
-  manager = "manager",
+  transport_manager = "transport_manager",
+  financier = "financier",
+  cashier = "cashier",
 }
 
 export const permissionArray = Object.freeze([
   UserRoleType.admin,
-  UserRoleType.manager,
+  UserRoleType.transport_manager,
+  UserRoleType.financier,
+  UserRoleType.cashier,
 ]);
 
 export const permissionArraySuperAdmin = Object.freeze([
   UserRoleType.admin,
-  UserRoleType.manager,
+  UserRoleType.transport_manager,
+  UserRoleType.financier,
+  UserRoleType.cashier,
 ]);
 
 export enum DevPlanQuistions {

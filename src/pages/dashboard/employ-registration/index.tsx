@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { Admin } from "service/auth/type";
 import employRegistration from "service/employ-registration";
 import { initPagination } from "utils/index";
-import { CreateService } from "../actons/create";
-import { UpdateService } from "../actons/update";
+import { CreateService } from "./actions/create";
+import { UpdateService } from "./actions/update";
 
 const EmployeRegistration = () => {
   const [filter, setFilter] = useState(initPagination);
