@@ -23,7 +23,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
 }) => {
   const [user] = useContext(AuthContext);
   let menus = menuItems;
-  if (user.user?.position === UserRoleType.manager) {
+  if (user.user?.position === UserRoleType.transport_manager) {
     menus = menuManagerItems;
   }
 

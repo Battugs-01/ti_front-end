@@ -4,20 +4,11 @@ import { notification } from "antd";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
 import workers from "service/employ-registration";
-import file from "service/file";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
-
-  const upload = useRequest(file.upload, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
 
   const createEmployee = useRequest(workers.createWorkers, {
     manual: true,

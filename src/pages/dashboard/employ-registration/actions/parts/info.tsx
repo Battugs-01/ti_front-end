@@ -1,7 +1,7 @@
 import { ProFormDigit, ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
-import { FORM_ITEM_RULE, workersGenderArray } from "config";
+import { FORM_ITEM_RULE, UserRoleType, workersGenderArray } from "config";
 
 export const Info = () => {
   return (
@@ -92,11 +92,29 @@ export const Info = () => {
           />
         </Col>
         <Col span={12}>
-          <ProFormText
+          <ProFormSelect
             rules={FORM_ITEM_RULE()}
             name={"position"}
             placeholder={"Албан тушаал"}
             label="Албан тушаал"
+            options={[
+              {
+                label: "Тээврийн манежер",
+                value: UserRoleType.transport_manager,
+              },
+              {
+                label: "Санхүүч",
+                value: UserRoleType.financier,
+              },
+              {
+                label: "Кассир",
+                value: UserRoleType.cashier,
+              },
+              {
+                label: "Админ",
+                value: UserRoleType.admin,
+              },
+            ]}
           />
         </Col>
       </Row>
