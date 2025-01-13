@@ -3,13 +3,13 @@ import http from "..";
 
 namespace fieldRegistration {
   export const list = (body: any) =>
-    http.post<any[]>("admin/field_register/page", {
+    http.post<any[]>("transport-record/page", {
       hasAuth: true,
       body,
     });
 
   export const create = (body: any) =>
-    http.post<SuccessResponse>("admin/user/create", {
+    http.post<SuccessResponse>("transport-record", {
       hasAuth: true,
       body,
     });

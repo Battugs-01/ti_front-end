@@ -25,10 +25,10 @@ export interface Admin {
   position: string;
   user_type: number;
   city_id: number;
-  role: string;
   // city: Address;
   profile: Profile;
   profile_id: number;
   district_id: number;
   agency_id: number;
+  role_name: string;
 }

@@ -22,6 +22,19 @@ export const menuManagerItems = [
   },
 ];
 
+export const menuCashierItems = [
+  {
+    icon: <Archive />,
+    name: "Талбайн бүртгэл",
+    path: "/dashboard/field-registration",
+  },
+  {
+    icon: <File03 />,
+    name: "Тайлан",
+    path: "/dashboard/report",
+  },
+];
+
 export const menuSuperAdminItems = [
   {
     icon: <PieChart02 />,

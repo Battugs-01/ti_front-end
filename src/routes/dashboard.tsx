@@ -19,6 +19,11 @@ const dashboardRoutes: IRoute[] = [
     path: "field-registration",
     component: <FieldRegistration />,
   },
+  {
+    key: "report",
+    path: "report",
+    component: <FieldRegistration />,
+  },
 ];
 
 export default [...dashboardRoutes];

@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { initPagination } from "utils/index";
 import { UpdateCargoApproach } from "./update";
-import { CreateCargoApproach } from "./create";
 
-export const CargoApproach: React.FC = () => {
+export const RemainderCargo: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
-  const [create, setCreate] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
@@ -36,6 +34,16 @@ export const CargoApproach: React.FC = () => {
   };
   const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
 
+  const data = [
+    {
+      id: 1,
+      created_at: "2021-09-09 10:00",
+      arrival_field: "Орох",
+      arrive_depart: "Ирэх",
+      cargo_number: "123456",
+    },
+  ];
+
   return (
     <PageCard xR>
       <InitTableHeader
@@ -45,16 +53,15 @@ export const CargoApproach: React.FC = () => {
           setSearch(e);
           searchRun.run({ ...filter, query: e });
         }}
-        setCreate={setCreate}
         refresh={refreshList}
-        addButtonName="Шинэ"
-        fileName="CargoApproach"
+        hideCreate
+        fileName="RemainderCargo"
         hideDownload
       />
       <ITable<any>
+        dataSource={data}
         // dataSource={fieldRegister.data}
         loading={fieldRegister.loading}
-        CreateComponent={CreateCargoApproach}
         UpdateComponent={UpdateCargoApproach}
         refresh={refreshList}
         RemoveModelConfig={{
@@ -65,8 +72,6 @@ export const CargoApproach: React.FC = () => {
             title: "Remove",
           }),
         }}
-        create={create}
-        setCreate={setCreate}
         className="p-0 remove-padding-table"
         columns={[
           {

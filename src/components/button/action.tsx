@@ -20,7 +20,7 @@ export const CreateButton = ({ addButtonName, ...rest }: PropsCreate) => {
       {...rest}
       className={`flex items-center   font-medium gap-1 ${rest.className}`}
       icon={<IoAddOutline size={20} />}
-      type="primary"
+      type={rest.type || "primary"}
     >
       {addButtonName || "Бүртгэх"}
     </Button>

@@ -94,7 +94,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"cargo_number"}
+                    name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
                     rules={FORM_ITEM_RULE()}
@@ -106,7 +106,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       size: "large",
                     }}
                     options={[]}
-                    name={"daats"}
+                    name={"capacity"}
                     placeholder="Даац"
                     label={"Даац"}
                     rules={FORM_ITEM_RULE()}
@@ -118,7 +118,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       size: "large",
                     }}
                     options={[]}
-                    name="name"
+                    name="broken_name"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
@@ -132,7 +132,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"arrival_field"}
+                    name={"direction"}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
                     rules={FORM_ITEM_RULE()}
@@ -145,7 +145,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction"}
+                    name={"direction-2"}
                     label="Чиглэл"
                     options={[
                       {
@@ -164,7 +164,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormDatePicker
-                    name={"date"}
+                    name={"approach_report_date"}
                     fieldProps={{
                       size: "large",
                     }}
@@ -181,7 +181,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"cargo_type"}
+                    name={["container-cargo", "cargo_name"]}
                     placeholder="Ачааны нэр төрөл"
                     label="Ачааны нэр төрөл"
                     rules={FORM_ITEM_RULE()}
@@ -194,7 +194,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"reciever"}
+                    name={["container-cargo", "receiver_email"]}
                     placeholder="Хүлээн авагч"
                     label="Хүлээн авагч"
                     rules={FORM_ITEM_RULE()}
@@ -205,7 +205,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"phone"}
+                    name={["container-cargo", "receiver_phone"]}
                     placeholder="Утас"
                     label="Утас"
                     rules={[
@@ -228,7 +228,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"price"}
+                    name={"transport_fee"}
                     placeholder="Тээврийн хөлс"
                     label={"Тээврийн хөлс"}
                     rules={FORM_ITEM_RULE()}
@@ -252,7 +252,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       size: "large",
                     }}
                     options={[]}
-                    name="empty_full"
+                    name="customer_company_id"
                     placeholder="Харилцагч"
                     label="Харилцагч"
                     rules={FORM_ITEM_RULE()}
@@ -277,7 +277,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"recomendation"}
+                    name={"additional_fee_note"}
                     placeholder="Э/Хураамж санамж"
                     label="Э/Хураамж санамж"
                     rules={FORM_ITEM_RULE()}
@@ -291,22 +291,18 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"is_sale"}
+                    name={"transport_fee"}
                     placeholder="Шилжүүлэх тээврийн хөлс"
                     label="Шилжүүлэх тээврийн хөлс"
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
-                  <ProFormSelect
+                  <ProFormText
                     fieldProps={{
                       size: "large",
                     }}
-                    options={permissionArray.map((item) => ({
-                      label: item,
-                      value: item,
-                    }))}
-                    name={"permission"}
+                    name={"tranport_broker"}
                     placeholder="Гадаад тээвэр зууч"
                     label="Гадаад тээвэр зууч"
                     rules={FORM_ITEM_RULE()}
@@ -319,7 +315,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"name_person_liable_payment"}
+                    name={"additional_fee"}
                     placeholder="Төлбөр хариуцагчийн нэр"
                     label="Төлбөр хариуцагчийн нэр"
                     rules={FORM_ITEM_RULE()}
