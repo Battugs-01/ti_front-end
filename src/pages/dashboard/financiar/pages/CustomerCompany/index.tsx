@@ -1,22 +1,21 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
-import UserBadge from "components/badge/userbadge";
+import { notification, Switch } from "antd";
 import { PageCard } from "components/card";
-import { ITable } from "components/table";
+import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
-import { Admin } from "service/auth/type";
-import employRegistration from "service/employ-registration";
+import customerCompany from "service/fininaciar/customerCompany";
+import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
 
-const EmployeRegistration = () => {
+const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const list = useRequest(employRegistration.list, {
+  const list = useRequest(customerCompany.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -42,8 +41,8 @@ const EmployeRegistration = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Ажилчдын жагсаалт"
-          searchPlaceHolder="Овог, нэр , регистрийн дугаар "
+          customHeaderTitle="Харилцагч компанийн жагсаалт"
+          searchPlaceHolder="Нэр, данс"
           setCreate={setCreate}
           search={search}
           setSearch={(e) => {
@@ -54,7 +53,7 @@ const EmployeRegistration = () => {
         />
       </div>
 
-      <ITable<Admin>
+      <ITable<CustomerCompanyType>
         total={list.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
@@ -64,8 +63,8 @@ const EmployeRegistration = () => {
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "last_name",
-            title: "Овог",
+            dataIndex: "shortcut_name",
+            title: "Товчлол",
             align: "left",
             render: (value) => (
               <div className="flex gap-2">
@@ -76,8 +75,8 @@ const EmployeRegistration = () => {
             ),
           },
           {
-            dataIndex: "first_name",
-            title: "Нэр",
+            dataIndex: "name",
+            title: "Компаний нэр",
             align: "left",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
@@ -86,8 +85,18 @@ const EmployeRegistration = () => {
             ),
           },
           {
-            dataIndex: "registration_number",
-            title: "Регистрийн дугаар",
+            dataIndex: "is_broker",
+            title: "Зууч эсэх",
+            width: "200",
+            render: (value) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center ">
+                {<Switch disabled checked={!!value} />}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "ledger_id",
+            title: "Данс",
             width: "200",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
@@ -96,8 +105,8 @@ const EmployeRegistration = () => {
             ),
           },
           {
-            dataIndex: "gender",
-            title: "Хүйс",
+            dataIndex: "contact_number",
+            title: "Харилцах дугаар",
             align: "center",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal">
@@ -105,42 +114,15 @@ const EmployeRegistration = () => {
               </span>
             ),
           },
-          {
-            dataIndex: "email",
-            title: "Цахим хаяг",
-            align: "left",
-            width: "10%",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "phone",
-            title: "Утасны дугаар",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "role_name",
-            title: "Албан тушаал",
-            render: (value) => {
-              return value ? <UserBadge status={value.toString()} /> : "-";
-            },
-          },
         ]}
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
         RemoveModelConfig={{
-          action: employRegistration.deleteEmploy,
+          action: customerCompany.deleteA,
           config: (record) => ({
             uniqueKey: record?.id,
-            display: record?.first_name,
+            display: record?.name,
             title: "Remove",
           }),
         }}
@@ -149,4 +131,4 @@ const EmployeRegistration = () => {
   );
 };
 
-export default EmployeRegistration;
+export default CustomerCompany;

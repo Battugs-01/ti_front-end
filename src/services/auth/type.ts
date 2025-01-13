@@ -22,7 +22,6 @@ export interface Admin {
   email: string;
   phone: string;
   is_active: boolean;
-  position: string;
   user_type: number;
   city_id: number;
   // city: Address;

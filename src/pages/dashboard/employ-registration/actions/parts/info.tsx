@@ -94,7 +94,7 @@ export const Info = () => {
         <Col span={12}>
           <ProFormSelect
             rules={FORM_ITEM_RULE()}
-            name={"position"}
+            name={"role_name"}
             placeholder={"Албан тушаал"}
             label="Албан тушаал"
             options={[

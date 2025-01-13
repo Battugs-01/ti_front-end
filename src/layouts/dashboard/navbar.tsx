@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import { Avatar, Popover } from "antd";
 import Logo from "assets/img/menu_logo.png";
+import UserBadge from "components/badge/userbadge";
 import { AuthContext, useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import { useContext, useState } from "react";
@@ -120,7 +121,7 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col justify-center items-start">
                   <div className="text-sm">{user?.user?.email || "user"}</div>
                   <div className="text-sm text-white">
-                    {user?.user?.role || "Үүрэг"}
+                    {<UserBadge status={user?.user?.role_name || "Үүрэг"} />}
                   </div>
                 </div>
                 <ChevronDown size="24" />

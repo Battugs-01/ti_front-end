@@ -8,6 +8,11 @@ import {
 
 export const menuItems = [
   {
+    icon: <Archive />,
+    name: "Талбайн бүртгэл",
+    path: "/dashboard/field-registration",
+  },
+  {
     icon: <User01 />,
     name: "Ажилтны бүртгэл",
     path: "/dashboard/employ-registration",
@@ -62,15 +67,15 @@ export const menuAdminItems = [
   },
 ];
 
-export const menuStackholderItems = [
+export const menuFininciarItems = [
   {
-    icon: <PieChart02 />,
-    name: "Хяналтын самбар",
-    path: "/dashboard/dashboard",
+    icon: <Archive />,
+    name: "Талбайн бүртгэл",
+    path: "/dashboard/field-registration",
   },
   {
-    icon: <File03 />,
-    name: "Статистик тайлан",
-    path: "/dashboard/stastical-report",
+    icon: <PieChart02 />,
+    name: "Лавлах мэдээлэл",
+    path: "/dashboard/financiar",
   },
 ];

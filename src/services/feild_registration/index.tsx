@@ -15,13 +15,13 @@ namespace fieldRegistration {
     });
 
   export const deleteRegistration = (body: any) =>
-    http.del<SuccessResponse>("admin/user/delete", {
+    http.del<SuccessResponse>("/user/delete", {
       hasAuth: true,
       body,
     });
 
   export const updateRegistration = (body: any) =>
-    http.put<SuccessResponse>("admin/user/update", {
+    http.put<SuccessResponse>("/user/update", {
       hasAuth: true,
       body,
     });
