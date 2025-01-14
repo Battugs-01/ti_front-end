@@ -150,7 +150,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
               </Row>
               <div className="text-xl font-medium mb-3">Олголт</div>
               <Row gutter={[16, 16]}>
-                <Col span={8}>
+                <Col span={16}>
                   <ProFormRadio.Group
                     name={"type"}
                     label="Талбайд задарсан бол чагтлана уу."

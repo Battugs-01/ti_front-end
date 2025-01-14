@@ -8,6 +8,7 @@ import fieldRegistration from "service/feild_registration";
 import { initPagination } from "utils/index";
 import { UpdateCargoApproach } from "./update";
 import { CreateCargoApproach } from "./create";
+import dayjs from "dayjs";
 
 export const CargoApproach: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -17,9 +18,9 @@ export const CargoApproach: React.FC = () => {
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
-      // notification.error({
-      //   message: err.message,
-      // });
+      notification.error({
+        message: err.message,
+      });
     },
   });
 
@@ -43,7 +44,7 @@ export const CargoApproach: React.FC = () => {
         search={search}
         setSearch={(e) => {
           setSearch(e);
-          searchRun.run({ ...filter, query: e });
+          searchRun.run({ ...filter, search: e });
         }}
         setCreate={setCreate}
         refresh={refreshList}
@@ -52,7 +53,7 @@ export const CargoApproach: React.FC = () => {
         hideDownload
       />
       <ITable<any>
-        // dataSource={fieldRegister.data}
+        dataSource={fieldRegister?.data?.items}
         loading={fieldRegister.loading}
         CreateComponent={CreateCargoApproach}
         UpdateComponent={UpdateCargoApproach}
@@ -75,11 +76,17 @@ export const CargoApproach: React.FC = () => {
             children: [
               {
                 title: "Дөхөлт огноо",
-                dataIndex: "created_at",
+                dataIndex: "approach_report_date",
+                render: (value) => {
+                  if (!value) return <div>-</div>;
+                  return (
+                    <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>
+                  );
+                },
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrival_field",
+                dataIndex: "arrived_at_site",
               },
               {
                 title: "Ирэх/Явах",
@@ -87,11 +94,11 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Чингэлэг дугаар",
-                dataIndex: "cargo_number",
+                dataIndex: "container_code",
               },
               {
                 title: "Даац",
-                dataIndex: "cargo_type",
+                dataIndex: "capacity",
               },
               {
                 title: "Зуучийн нэр",
@@ -103,7 +110,7 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Зарах эсэх",
-                dataIndex: "is_sale",
+                dataIndex: "for_sale",
               },
               {
                 title: "Зарах үнэ",

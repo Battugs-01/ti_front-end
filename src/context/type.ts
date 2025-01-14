@@ -22,3 +22,8 @@ export type Refreshs = {
 };
 export type AuthContextType = [DataType, (action: Actions) => void];
 export type AuthReducerType = (state: DataType, action: Actions) => DataType;
+
+export enum ThemeType {
+  LIGHT = "light",
+  DARK = "dark",
+}
