@@ -1,18 +1,20 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
-import { ITable } from "components/index";
+import { CreateButton, ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import { initPagination } from "utils/index";
 import fieldRegistration from "service/feild_registration";
 import { CreateArrivalField } from "./create";
 import { UpdateArrivalField } from "./update";
+import { AssignationCreate } from "./assignation_create";
 
 export const ArrivalField: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState(false);
+  const [assignationCreate, setAssignationCreate] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
@@ -50,6 +52,28 @@ export const ArrivalField: React.FC = () => {
         addButtonName="Шинэ"
         fileName="ArrivalField"
         hideDownload
+        customAction={
+          <div className="flex items-center gap-3">
+            <CreateButton
+              size="large"
+              type="default"
+              className="text-[#007AFF]"
+              onClick={() => {
+                setAssignationCreate(true);
+              }}
+              addButtonName="Олголт"
+            />
+            <CreateButton
+              size="large"
+              type="default"
+              className="text-[#34C759]"
+              onClick={() => {
+                console.log("Jjjj");
+              }}
+              addButtonName="Ачилт"
+            />
+          </div>
+        }
       />
       <ITable<any>
         // dataSource={fieldRegister.data}
@@ -169,6 +193,18 @@ export const ArrivalField: React.FC = () => {
           },
         ]}
       />
+      {assignationCreate && (
+        <AssignationCreate
+          open={assignationCreate}
+          onCancel={() => {
+            setAssignationCreate(false);
+          }}
+          onFinish={() => {
+            setAssignationCreate(false);
+            refreshList();
+          }}
+        />
+      )}
     </PageCard>
   );
 };

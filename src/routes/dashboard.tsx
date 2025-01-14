@@ -22,6 +22,11 @@ const dashboardRoutes: IRoute[] = [
     component: <FieldRegistration />,
   },
   {
+    key: "report",
+    path: "report",
+    component: <FieldRegistration />,
+  },
+  {
     key: "financiar",
     path: "financiar",
     component: <Fininciar />,

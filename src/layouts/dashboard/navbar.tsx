@@ -3,7 +3,7 @@ import { Avatar, Popover } from "antd";
 import Logo from "assets/img/menu_logo.png";
 import UserBadge from "components/badge/userbadge";
 import { AuthContext, useAuthContext } from "context/auth";
-import { Action } from "context/type";
+import { Action, ThemeType } from "context/type";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "service/auth";
@@ -13,6 +13,8 @@ import {
   LockUnlocked04,
   Logout01,
   Menu01,
+  Moon02,
+  Sun,
   User03,
   XClose,
 } from "untitledui-js-base";
@@ -20,6 +22,7 @@ import { ChangePassword } from "./action/change_password";
 import { Logout } from "./action/logout";
 import { PersonalInfo } from "./action/personal_info";
 import { Menu } from "./menu";
+import { useThemeContext } from "context/theme";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -28,6 +31,7 @@ const Navbar: React.FC = () => {
   const [logout, setLogout] = useState<boolean>(false);
   const [_, setAuth] = useAuthContext();
   const [user] = useContext(AuthContext);
+  const { theme, toggleTheme } = useThemeContext();
   const info = useRequest(auth.info, {
     manual: true,
     onSuccess: (data) => {
@@ -73,6 +77,13 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-6">
+          <div className="flex items-center">
+            {theme === ThemeType.LIGHT ? (
+              <Sun size="24" onClick={toggleTheme} />
+            ) : (
+              <Moon02 size="24" onClick={toggleTheme} />
+            )}
+          </div>
           <div className="flex items-center gap-4 ">
             <Popover
               placement="bottom"

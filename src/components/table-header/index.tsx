@@ -36,6 +36,7 @@ interface TableHeaderProps {
   downloadList?: {}[];
   customDownload?: any;
   filter?: React.ReactNode;
+  customAction?: React.ReactNode;
 }
 
 const init = atom<any>({});
@@ -63,6 +64,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
   customDownload,
   downloadList = undefined,
   filter,
+  customAction,
 }) => {
   const [stre, setStore] = useAtom<any>(store || init);
   const [createShow, setCreateShow] = useState(false);
@@ -90,6 +92,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           )}
         </div>
         <div className="flex items-end gap-2 flex-wrap ant-form-item-margin-remove custom-ant-form-item">
+          {customAction && customAction}
           {filter}
           <ProFormText
             name={"text"}

@@ -1,15 +1,19 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
+  ProFormDigit,
+  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { DirectionType, FORM_ITEM_RULE, permissionArray } from "config";
 import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
+import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
+import { CurrencyOptions, PaymentMethod } from "utils/options";
 
 export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
@@ -32,18 +36,31 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
     },
   });
 
+  const customerCompanyList = useRequest(customerCompany.list, {
+    manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
+
+  console.log(detail, "detail");
+
   return (
     <ModalForm
       onFinish={async (values) => {
-        await updateCargo.runAsync({
-          ...values,
-        });
+        await updateCargo.runAsync(
+          {
+            ...values,
+          },
+          detail?.id
+        );
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл засах "
       open={!!detail}
       initialValues={{
         ...detail,
-        date: detail?.date ? dayjs(detail.date) : undefined,
+        approach_report_date: dayjs(detail?.approach_report_date),
       }}
       modalProps={{
         destroyOnClose: true,
@@ -95,19 +112,18 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"cargo_number"}
+                    name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={8}>
-                  <ProFormSelect
+                  <ProFormDigit
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name={"daats"}
+                    name={"capacity"}
                     placeholder="Даац"
                     label={"Даац"}
                     rules={FORM_ITEM_RULE()}
@@ -118,8 +134,14 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name="name"
+                    options={[{ label: "TI Logistic", value: 1 }].map(
+                      (item) => ({
+                        label: item.label,
+                        value: item.value,
+                      })
+                    )}
+                    initialValue={1}
+                    name="broker_id"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
@@ -133,7 +155,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"arrival_field"}
+                    name={"direction"}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
                     rules={FORM_ITEM_RULE()}
@@ -141,9 +163,31 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <ProFormRadio.Group
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    name={"direction-2"}
+                    label="Чиглэл"
+                    options={[
+                      {
+                        label: "Урд",
+                        value: DirectionType.south,
+                      },
+                      {
+                        label: "Хойд",
+                        value: DirectionType.north,
+                      },
+                    ]}
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormDatePicker
-                    name={"date"}
+                    name={"approach_report_date"}
                     fieldProps={{
                       size: "large",
                     }}
@@ -160,7 +204,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"cargo_type"}
+                    name={["container_cargo", "cargo_name"]}
                     placeholder="Ачааны нэр төрөл"
                     label="Ачааны нэр төрөл"
                     rules={FORM_ITEM_RULE()}
@@ -173,7 +217,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"reciever"}
+                    name={["container_cargo", "reciever_email"]}
                     placeholder="Хүлээн авагч"
                     label="Хүлээн авагч"
                     rules={FORM_ITEM_RULE()}
@@ -184,7 +228,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"phone"}
+                    name={["container_cargo", "reciever_phone"]}
                     placeholder="Утас"
                     label="Утас"
                     rules={[
@@ -203,11 +247,11 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <div className="text-xl font-medium mb-3">Авах</div>
               <Row gutter={[16, 16]}>
                 <Col span={8}>
-                  <ProFormText
+                  <ProFormDigit
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"price"}
+                    name={["transport_recieve", "transport_fee"]}
                     placeholder="Тээврийн хөлс"
                     label={"Тээврийн хөлс"}
                     rules={FORM_ITEM_RULE()}
@@ -218,8 +262,11 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name={"currency"}
+                    options={CurrencyOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
+                    name={["transport_recieve", "currency"]}
                     placeholder="Вальют"
                     label={"Вальют"}
                     rules={FORM_ITEM_RULE()}
@@ -230,22 +277,33 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name="empty_full"
+                    name={["transport_recieve", "customer_company_id"]}
                     placeholder="Харилцагч"
                     label="Харилцагч"
-                    rules={FORM_ITEM_RULE()}
+                    request={async () => {
+                      const data = await customerCompanyList.runAsync({
+                        is_all: true,
+                      });
+                      return data?.items.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    }}
+                    // rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormSelect
-                    options={[]}
+                    options={PaymentMethod.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"payment_method"}
+                    name={["transport_recieve", "payment_method"]}
                     placeholder="Төлөх арга"
                     label="Төлөх арга"
                     rules={FORM_ITEM_RULE()}
@@ -256,7 +314,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"recomendation"}
+                    name={["transport_recieve", "additional_fee_note"]}
                     placeholder="Э/Хураамж санамж"
                     label="Э/Хураамж санамж"
                     rules={FORM_ITEM_RULE()}
@@ -266,26 +324,22 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <div className="text-xl font-medium mb-3">Өгөх</div>
               <Row gutter={[16, 16]}>
                 <Col span={12}>
-                  <ProFormText
+                  <ProFormDigit
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"is_sale"}
+                    name={["transport_give", "transfer_fee"]}
                     placeholder="Шилжүүлэх тээврийн хөлс"
                     label="Шилжүүлэх тээврийн хөлс"
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
-                  <ProFormSelect
+                  <ProFormText
                     fieldProps={{
                       size: "large",
                     }}
-                    options={permissionArray.map((item) => ({
-                      label: item,
-                      value: item,
-                    }))}
-                    name={"permission"}
+                    name={["transport_give", "transport_broker"]}
                     placeholder="Гадаад тээвэр зууч"
                     label="Гадаад тээвэр зууч"
                     rules={FORM_ITEM_RULE()}
@@ -298,7 +352,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"name_person_liable_payment"}
+                    name={["transport_give", "transfer_broker_name"]}
                     placeholder="Төлбөр хариуцагчийн нэр"
                     label="Төлбөр хариуцагчийн нэр"
                     rules={FORM_ITEM_RULE()}

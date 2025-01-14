@@ -1,14 +1,21 @@
 import { Fragment, ReactNode } from "react";
 import Menu from "./navbar";
+import { useThemeContext } from "context/theme";
+import { ThemeType } from "context/type";
 
 type WorkerLayoutType = {
   children?: ReactNode;
 };
 
 const WorkerLayout: React.FC<WorkerLayoutType> = ({ children }) => {
+  const { theme, toggleTheme } = useThemeContext();
   return (
     <Fragment>
-      <div className="bg-[#E7EDEE] font-inter bg-color-body min-h-screen relative">
+      <div
+        className={`${
+          theme === ThemeType.DARK ? "bg-gray-900" : "bg-[#E7EDEE]"
+        } font-inter bg-color-body min-h-screen relative`}
+      >
         <div className="z-0">
           <Menu />
         </div>

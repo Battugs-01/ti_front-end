@@ -25,6 +25,8 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   let menus = menuItems;
   if (user.user?.role_name === UserRoleType.transport_manager) {
     menus = menuManagerItems;
+  } else if (user.user?.role_name === UserRoleType.cashier) {
+    menus = menuItems;
   } else if (user.user?.role_name === UserRoleType.financier) {
     menus = menuFininciarItems;
   }

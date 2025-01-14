@@ -24,10 +24,10 @@ export interface Admin {
   is_active: boolean;
   user_type: number;
   city_id: number;
-  role_name: string;
   // city: Address;
   profile: Profile;
   profile_id: number;
   district_id: number;
   agency_id: number;
+  role_name: string;
 }

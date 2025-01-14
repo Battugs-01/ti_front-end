@@ -4,6 +4,7 @@ import { FieldRegistrationTab } from "config";
 import { useState } from "react";
 import { CargoApproach } from "./cargo_approach";
 import { ArrivalField } from "./arrival_field";
+import { RemainderCargo } from "./remainder_cargo";
 
 const FieldRegistration: React.FC = () => {
   const [tab, setTab] = useState<FieldRegistrationTab>(
@@ -28,6 +29,10 @@ const FieldRegistration: React.FC = () => {
       <IfCondition
         condition={tab === FieldRegistrationTab.CargoApproach}
         whenTrue={<CargoApproach />}
+      />
+      <IfCondition
+        condition={tab === FieldRegistrationTab.Remainder}
+        whenTrue={<RemainderCargo />}
       />
       <IfCondition
         condition={tab === FieldRegistrationTab.ArrivalField}

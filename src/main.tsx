@@ -2,6 +2,7 @@ import { notification } from "antd";
 import App from "app";
 
 import { AuthProvider } from "context/auth";
+import { ThemeProvider } from "context/theme";
 import { createRoot } from "react-dom/client";
 import "./styles/custom.less";
 import "./styles/global.less";
@@ -16,7 +17,9 @@ notification.config({
 });
 
 root.render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>
+  <ThemeProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </ThemeProvider>
 );

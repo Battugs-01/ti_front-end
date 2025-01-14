@@ -24,7 +24,7 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
-      if (data.user.position === UserRoleType.manager) {
+      if (data.user.role_name === UserRoleType.transport_manager) {
         navigate(menuManagerItems[0].path);
       } else {
         navigate(menuItems[0].path);

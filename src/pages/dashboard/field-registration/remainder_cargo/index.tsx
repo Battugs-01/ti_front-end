@@ -7,20 +7,17 @@ import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { initPagination } from "utils/index";
 import { UpdateCargoApproach } from "./update";
-import { CreateCargoApproach } from "./create";
-import dayjs from "dayjs";
 
-export const CargoApproach: React.FC = () => {
+export const RemainderCargo: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
-  const [create, setCreate] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
+      // notification.error({
+      //   message: err.message,
+      // });
     },
   });
 
@@ -37,6 +34,16 @@ export const CargoApproach: React.FC = () => {
   };
   const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
 
+  const data = [
+    {
+      id: 1,
+      created_at: "2021-09-09 10:00",
+      arrival_field: "Орох",
+      arrive_depart: "Ирэх",
+      cargo_number: "123456",
+    },
+  ];
+
   return (
     <PageCard xR>
       <InitTableHeader
@@ -44,18 +51,17 @@ export const CargoApproach: React.FC = () => {
         search={search}
         setSearch={(e) => {
           setSearch(e);
-          searchRun.run({ ...filter, search: e });
+          searchRun.run({ ...filter, query: e });
         }}
-        setCreate={setCreate}
         refresh={refreshList}
-        addButtonName="Шинэ"
-        fileName="CargoApproach"
+        hideCreate
+        fileName="RemainderCargo"
         hideDownload
       />
       <ITable<any>
-        dataSource={fieldRegister?.data?.items}
+        dataSource={data}
+        // dataSource={fieldRegister.data}
         loading={fieldRegister.loading}
-        CreateComponent={CreateCargoApproach}
         UpdateComponent={UpdateCargoApproach}
         refresh={refreshList}
         RemoveModelConfig={{
@@ -66,8 +72,6 @@ export const CargoApproach: React.FC = () => {
             title: "Remove",
           }),
         }}
-        create={create}
-        setCreate={setCreate}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -76,17 +80,11 @@ export const CargoApproach: React.FC = () => {
             children: [
               {
                 title: "Дөхөлт огноо",
-                dataIndex: "approach_report_date",
-                render: (value) => {
-                  if (!value) return <div>-</div>;
-                  return (
-                    <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>
-                  );
-                },
+                dataIndex: "created_at",
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrived_at_site",
+                dataIndex: "arrival_field",
               },
               {
                 title: "Ирэх/Явах",
@@ -94,11 +92,11 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Чингэлэг дугаар",
-                dataIndex: "container_code",
+                dataIndex: "cargo_number",
               },
               {
                 title: "Даац",
-                dataIndex: "capacity",
+                dataIndex: "cargo_type",
               },
               {
                 title: "Зуучийн нэр",
@@ -110,7 +108,7 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Зарах эсэх",
-                dataIndex: "for_sale",
+                dataIndex: "is_sale",
               },
               {
                 title: "Зарах үнэ",

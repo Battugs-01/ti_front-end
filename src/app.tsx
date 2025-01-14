@@ -1,5 +1,7 @@
 import { ConfigProvider } from "antd";
 import mnIntl from "antd/lib/locale/mn_MN";
+import { useThemeContext } from "context/theme";
+import { ThemeType } from "context/type";
 import dayjs from "dayjs";
 import "dayjs/locale/mn";
 import timezone from "dayjs/plugin/timezone";
@@ -8,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 import MainRoutes from "routes";
 
 const App: React.FC = () => {
+  const { theme, toggleTheme } = useThemeContext();
   dayjs.extend(utc);
   dayjs.extend(timezone);
   dayjs.locale("mn");
@@ -38,51 +41,96 @@ const App: React.FC = () => {
     ];
   }
   dayjs.tz.setDefault("Asia/Ulaanbaatar");
+
+  const antdTheme =
+    theme === ThemeType.LIGHT
+      ? {
+          token: {
+            colorPrimary: "#0077F4",
+            fontFamily: "Inter",
+            colorBorder: "#D0D5DD",
+          },
+          components: {
+            Radio: {
+              buttonCheckedBg: "#CFDADC",
+            },
+            Collapse: {
+              colorBgContainer: "#fff",
+              headerBg: "#fff",
+              colorBorder: "#fff",
+            },
+            Segmented: {
+              colorBgLayout: "#CFDADC",
+              colorText: "#1D2939",
+            },
+            Table: {
+              rowHoverBg: "#F9FAFB",
+              rowSelectedHoverBg: "#E7EDEE",
+              rowExpandedBg: "#F9FAFB",
+            },
+            Input: {
+              colorBgContainer: "#F9FAFB",
+            },
+            InputNumber: {
+              colorBgContainer: "#F9FAFB",
+            },
+            Select: {
+              colorBgContainer: "#F9FAFB",
+            },
+            DatePicker: {
+              colorBgContainer: "#F9FAFB",
+            },
+            Descriptions: {
+              colorBgContainer: "#F9FAFB",
+            },
+          },
+        }
+      : {
+          token: {
+            colorPrimary: "#0077F4",
+            fontFamily: "Inter",
+            colorBorder: "#4A4A4A",
+          },
+          components: {
+            Radio: {
+              buttonCheckedBg: "#2A2A2A",
+            },
+            Collapse: {
+              colorBgContainer: "#1E1E1E",
+              headerBg: "#2A2A2A",
+              colorBorder: "#3A3A3A",
+            },
+            Segmented: {
+              colorBgLayout: "#2A2A2A",
+              colorText: "#F9FAFB",
+            },
+            Table: {
+              rowHoverBg: "#333333",
+              rowSelectedHoverBg: "#444444",
+              rowExpandedBg: "#333333",
+            },
+            Input: {
+              colorBgContainer: "#2A2A2A",
+            },
+            InputNumber: {
+              colorBgContainer: "#2A2A2A",
+            },
+            Select: {
+              colorBgContainer: "#2A2A2A",
+            },
+            DatePicker: {
+              colorBgContainer: "#2A2A2A",
+            },
+            Descriptions: {
+              colorBgContainer: "#2A2A2A",
+            },
+            Card: {
+              colorBgContainer: "#2A2A2A",
+            },
+          },
+        };
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#0077F4",
-          fontFamily: "Inter",
-          colorBorder: "#D0D5DD",
-        },
-        components: {
-          Radio: {
-            buttonCheckedBg: "#CFDADC",
-          },
-          Collapse: {
-            colorBgContainer: "#fff",
-            headerBg: "#fff",
-            colorBorder: "#fff",
-          },
-          Segmented: {
-            colorBgLayout: "#CFDADC",
-            colorText: "#1D2939",
-          },
-          Table: {
-            rowHoverBg: "#F9FAFB",
-            rowSelectedHoverBg: "#E7EDEE",
-            rowExpandedBg: "#F9FAFB",
-          },
-          Input: {
-            colorBgContainer: "#F9FAFB",
-          },
-          InputNumber: {
-            colorBgContainer: "#F9FAFB",
-          },
-          Select: {
-            colorBgContainer: "#F9FAFB",
-          },
-          DatePicker: {
-            colorBgContainer: "#F9FAFB",
-          },
-          Descriptions: {
-            colorBgContainer: "#F9FAFB",
-          },
-        },
-      }}
-      locale={mnIntl}
-    >
+    <ConfigProvider theme={antdTheme} locale={mnIntl}>
       <BrowserRouter>
         <MainRoutes />
       </BrowserRouter>
