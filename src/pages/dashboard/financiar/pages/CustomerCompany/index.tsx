@@ -95,12 +95,12 @@ const CustomerCompany = () => {
             ),
           },
           {
-            dataIndex: "ledger_id",
+            dataIndex: "ledger_name",
             title: "Данс",
             width: "200",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+                {record?.ledger?.name || "-"}
               </span>
             ),
           },
@@ -110,7 +110,7 @@ const CustomerCompany = () => {
             align: "center",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal">
-                {value === 0 ? "Эрэгтэй" : "Эмэгтэй"}
+                {value || "-"}
               </span>
             ),
           },
@@ -118,14 +118,14 @@ const CustomerCompany = () => {
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
-        RemoveModelConfig={{
-          action: customerCompany.deleteA,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.name,
-            title: "Remove",
-          }),
-        }}
+        // RemoveModelConfig={{
+        //   action: customerCompany.deleteA,
+        //   config: (record) => ({
+        //     uniqueKey: record?.id,
+        //     display: record?.name,
+        //     title: "Remove",
+        //   }),
+        // }}
       />
     </PageCard>
   );

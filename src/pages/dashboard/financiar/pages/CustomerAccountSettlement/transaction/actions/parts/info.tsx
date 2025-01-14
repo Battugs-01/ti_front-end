@@ -1,56 +1,50 @@
-import { ProFormRadio, ProFormText } from "@ant-design/pro-form";
+import {
+  ProFormDatePicker,
+  ProFormDigit,
+  ProFormText,
+} from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
+import dayjs from "dayjs";
 
 export const Info = () => {
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormText
-            name={"shortcut_name"}
-            placeholder={"Товчлол"}
-            label={"Товчлол"}
-            rules={FORM_ITEM_RULE()}
+          <ProFormDatePicker
+            fieldProps={{
+              size: "large",
+            }}
+            name="birth_date"
+            initialValue={dayjs().endOf("day")}
+            label={<div className="text-gray-700 font-medium ">Огноо</div>}
           />
         </Col>
         <Col span={12}>
           <ProFormText
             name={"name"}
-            placeholder={"Компаний нэр"}
-            label="Компаний нэр"
+            placeholder={"Данс"}
+            label="Данс"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormRadio.Group
-            name="is_broker"
-            radioType="radio"
-            label="Зууч эсэх"
-            fieldProps={{
-              size: "middle",
-            }}
-            options={[
-              {
-                label: "Тийм",
-                value: true,
-              },
-              {
-                label: "Үгүй",
-                value: false,
-              },
-            ]}
-            initialValue={true}
+          <ProFormText
+            name={"name"}
+            placeholder={"Бэлэн"}
+            label="Бэлэн"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormText
-            name={"ledger_name"}
+          <ProFormDigit
+            name={"ledger_id"}
             placeholder={"Данс"}
             label="Данс"
             rules={FORM_ITEM_RULE()}

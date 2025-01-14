@@ -17,6 +17,10 @@ const UserBadge: FC<Props> = ({ status }) => {
       text = "Кассир";
       colorClass = "bg-blue-50 text-blue-700";
       break;
+    case UserRoleType.admin:
+      text = "Админ";
+      colorClass = "bg-[#FEF3F2] text-[#B42318]";
+      break;
     default:
       colorClass = "bg-[#FFFAEB] text-[#B54708]";
       break;

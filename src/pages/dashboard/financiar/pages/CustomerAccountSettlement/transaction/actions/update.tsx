@@ -17,7 +17,6 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
-        ledger_name: detail?.ledger?.name,
       });
     }
   }, [open]);

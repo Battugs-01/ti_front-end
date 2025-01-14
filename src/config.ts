@@ -254,6 +254,16 @@ export interface FininciarTabtButton {
   label: string;
 }
 
+export enum CustomerAccountSettlementTab {
+  ledger = "ledger",
+  transaction = "transaction",
+}
+
+export interface CustomerAccountSettlementTabtButton {
+  value: CustomerAccountSettlementTab;
+  label: string;
+}
+
 export enum DirectionType {
   south = "south",
   north = "north",

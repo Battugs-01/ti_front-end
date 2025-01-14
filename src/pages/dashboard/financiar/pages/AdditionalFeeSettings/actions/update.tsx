@@ -1,7 +1,7 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { IModalForm } from "components/modal";
 import { useEffect, useRef } from "react";
-import customerCompany from "service/fininaciar/customerCompany";
+import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
@@ -17,7 +17,6 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
-        ledger_name: detail?.ledger?.name,
       });
     }
   }, [open]);
@@ -33,7 +32,7 @@ export const UpdateService = ({
       modalProps={{ maskClosable: false, onCancel }}
       onRequest={async (values) => {
         if (
-          await customerCompany.update(
+          await addinitionalFeeSettings.update(
             {
               ...values,
             },

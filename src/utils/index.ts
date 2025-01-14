@@ -159,8 +159,8 @@ export const initFilter = {
   },
 };
 export const initPagination = {
-  page: 0,
-  limit: 20,
+  current: 0,
+  pageSize: 20,
 };
 
 export const reminderFilter = {
@@ -173,13 +173,6 @@ export const reminderFilter = {
 };
 
 export const settingsFilter = {
-  current: 1,
-  pageSize: 20,
-  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
-  end_date: dayjs().format("YYYY-MM-DD"),
-};
-
-export const reportFilter = {
   current: 1,
   pageSize: 20,
   start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
@@ -281,4 +274,24 @@ export const chooseDate = (date: String) => {
     default:
       return [dayjs().startOf("day"), dayjs().endOf("day")];
   }
+};
+
+export const ledgerFilter = {
+  current: 0,
+  pageSize: 20,
+  start_date: dayjs().subtract(3, "month").toDate(),
+  end_date: dayjs().toDate(),
+  sorter: {
+    created_at: "desc",
+  },
+};
+
+export const transictionFilter = {
+  current: 0,
+  pageSize: 20,
+  start_date: dayjs().subtract(3, "month").toDate(),
+  end_date: dayjs().toDate(),
+  sorter: {
+    created_at: "desc",
+  },
 };
