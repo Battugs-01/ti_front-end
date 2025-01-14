@@ -12,7 +12,6 @@ export const UpdateService = ({
   detail,
 }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
-
   useEffect(() => {
     if (open) {
       formRef.current?.setFieldsValue({

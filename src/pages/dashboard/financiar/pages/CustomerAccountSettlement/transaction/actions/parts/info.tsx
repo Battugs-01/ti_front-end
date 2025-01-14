@@ -1,7 +1,7 @@
 import {
   ProFormDatePicker,
   ProFormDigit,
-  ProFormText,
+  ProFormText
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
@@ -23,20 +23,49 @@ export const Info = () => {
           />
         </Col>
         <Col span={12}>
-          <ProFormText
-            name={"name"}
+          {/* <ProFormSelect
+            label={<div className="font-medium text-gray-700">Данс</div>}
+            name={"employee_id"}
+            shouldUpdate
+            className="flex items-center justify-center "
+            fieldProps={{
+              showSearch: true,
+              loading: emplyoee.loading,
+              filterOption: false,
+              onSearch: debouncedSearch,
+              size: "large",
+            }}
             placeholder={"Данс"}
-            label="Данс"
-            rules={FORM_ITEM_RULE()}
-          />
+            options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
+              acc.push({
+                label: (
+                  <div className="flex gap-2 items-center">
+                    <span>{`${record?.last_name?.substring(0, 1)}. ${
+                      record?.first_name
+                    }`}</span>
+                  </div>
+                ),
+                value: record?.id,
+              });
+              return acc;
+            }, [])}
+          /> */}
         </Col>
       </Row>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormText
+          <ProFormDigit
             name={"name"}
             placeholder={"Бэлэн"}
             label="Бэлэн"
+            rules={FORM_ITEM_RULE()}
+          />
+        </Col>
+        <Col span={12}>
+          <ProFormDigit
+            name={"name"}
+            placeholder={"Бэлэн бус"}
+            label="Бэлэн бус"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
@@ -45,26 +74,17 @@ export const Info = () => {
         <Col span={12}>
           <ProFormDigit
             name={"ledger_id"}
-            placeholder={"Данс"}
-            label="Данс"
+            placeholder={"Баримт"}
+            label="Баримт"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
         <Col span={12}>
           <ProFormText
-            name={"contact_number"}
-            placeholder={"Харилцах дугаар"}
-            fieldProps={{
-              addonBefore: "+976",
-            }}
-            rules={[
-              {
-                pattern: /^[1-9]{1}[0-9]{7}$/g,
-                message: "Энэ талбар утасны дугаар байх ёстой",
-              },
-              ...FORM_ITEM_RULE(),
-            ]}
-            label="Харилцах дугаар"
+            name={"Төлөгч"}
+            placeholder={"Төлөгч"}
+            label="Төлөгч"
+            rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>

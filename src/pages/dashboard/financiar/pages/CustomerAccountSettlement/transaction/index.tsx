@@ -73,6 +73,7 @@ const Transaction = () => {
               />
             </div>
           }
+          setCreate={setCreate}
           searchPlaceHolder="Үнэ"
           search={search}
           setSearch={(e) => {

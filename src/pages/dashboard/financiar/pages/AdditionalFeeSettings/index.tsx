@@ -5,7 +5,6 @@ import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
-import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination, moneyFormat } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
@@ -53,7 +52,7 @@ const AdditionalFeeSettings = () => {
         />
       </div>
 
-      <ITable<CustomerCompanyType>
+      <ITable<any>
         total={list.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
