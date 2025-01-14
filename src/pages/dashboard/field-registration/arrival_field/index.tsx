@@ -19,9 +19,9 @@ export const ArrivalField: React.FC = () => {
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
-      // notification.error({
-      //   message: err.message,
-      // });
+      notification.error({
+        message: err.message,
+      });
     },
   });
 

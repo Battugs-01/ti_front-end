@@ -40,7 +40,14 @@ export const CargoApproach: React.FC = () => {
   return (
     <PageCard xR>
       <InitTableHeader
-        customHeaderTitle="Нийт"
+        leftContent={
+          <div className="flex items-center gap-3">
+            <div className="text-lg font-semibold text-gray-700">
+              Нийт ({fieldRegister?.data?.total})
+            </div>
+          </div>
+        }
+        hideTitle
         search={search}
         setSearch={(e) => {
           setSearch(e);

@@ -37,9 +37,12 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        await updateCargo.runAsync({
-          ...values,
-        });
+        await updateCargo.runAsync(
+          {
+            ...values,
+          },
+          detail?.id
+        );
       }}
       title="Талбайн бүртгэл"
       open={!!detail}
