@@ -9,8 +9,12 @@ import { initPagination } from "utils/index";
 import { UpdateCargoApproach } from "./update";
 import { CreateCargoApproach } from "./create";
 import dayjs from "dayjs";
+import { useAuthContext } from "context/auth";
+import { UserRoleType } from "config";
+import { CargoApproachList } from "service/feild_registration/type";
 
 export const CargoApproach: React.FC = () => {
+  const [user, _] = useAuthContext();
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState(false);
@@ -59,18 +63,22 @@ export const CargoApproach: React.FC = () => {
         fileName="CargoApproach"
         hideDownload
       />
-      <ITable<any>
+      <ITable<CargoApproachList>
         dataSource={fieldRegister?.data?.items}
         loading={fieldRegister.loading}
         CreateComponent={CreateCargoApproach}
-        UpdateComponent={UpdateCargoApproach}
+        UpdateComponent={
+          user.user?.role_name === UserRoleType.transport_manager
+            ? UpdateCargoApproach
+            : undefined
+        }
         refresh={refreshList}
         RemoveModelConfig={{
           action: fieldRegistration.deleteRegistration,
           config: (record) => ({
             uniqueKey: record?.id,
-            display: record?.first_name,
-            title: "Remove",
+            display: record?.broker_name,
+            title: "Устгах",
           }),
         }}
         create={create}

@@ -1,4 +1,5 @@
 export interface CargoApproachList {
+  id: number;
   container_code: string;
   capacity: number;
   broker_name: string;
