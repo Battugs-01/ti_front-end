@@ -1,12 +1,11 @@
 import {
   ProFormDatePicker,
   ProFormDigit,
-  ProFormText
+  ProFormText,
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
-import dayjs from "dayjs";
 
 export const Info = () => {
   return (
@@ -17,8 +16,7 @@ export const Info = () => {
             fieldProps={{
               size: "large",
             }}
-            name="birth_date"
-            initialValue={dayjs().endOf("day")}
+            name="created_at"
             label={<div className="text-gray-700 font-medium ">Огноо</div>}
           />
         </Col>
@@ -55,7 +53,7 @@ export const Info = () => {
       <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormDigit
-            name={"name"}
+            name={"cash"}
             placeholder={"Бэлэн"}
             label="Бэлэн"
             rules={FORM_ITEM_RULE()}
@@ -63,7 +61,7 @@ export const Info = () => {
         </Col>
         <Col span={12}>
           <ProFormDigit
-            name={"name"}
+            name={"non_cash"}
             placeholder={"Бэлэн бус"}
             label="Бэлэн бус"
             rules={FORM_ITEM_RULE()}
@@ -73,7 +71,7 @@ export const Info = () => {
       <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormDigit
-            name={"ledger_id"}
+            name={"barimt"}
             placeholder={"Баримт"}
             label="Баримт"
             rules={FORM_ITEM_RULE()}
@@ -81,7 +79,7 @@ export const Info = () => {
         </Col>
         <Col span={12}>
           <ProFormText
-            name={"Төлөгч"}
+            name={"payer"}
             placeholder={"Төлөгч"}
             label="Төлөгч"
             rules={FORM_ITEM_RULE()}

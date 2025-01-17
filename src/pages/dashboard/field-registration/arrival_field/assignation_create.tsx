@@ -1,34 +1,25 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
-  ProFormDigit,
   ProFormRadio,
   ProFormSelect,
-  ProFormSwitch,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Col, notification, Radio, Row } from "antd";
+import { Button, Col, notification, Row } from "antd";
 import IBadge from "components/badge";
+import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
-import { useState } from "react";
+import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
-
-enum FieldRegistrationTab {
-  grant = "grant",
-  shipment = "shipment",
-  shipping_cost = "shipping_cost",
-}
+import { moneyFormat } from "utils/index";
 
 export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
 }) => {
-  const [tab, setTab] = useState<FieldRegistrationTab>(
-    FieldRegistrationTab.grant
-  );
   const addAcrivalField = useRequest(fieldRegistration.create, {
     manual: true,
     onSuccess: () => {
@@ -56,7 +47,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
       open={open}
       modalProps={{
         destroyOnClose: true,
-        width: "700px",
+        width: "900px",
         onCancel,
         styles: {
           header: {
@@ -291,22 +282,121 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
-
-              <Radio.Group
-                optionType="button"
-                size="large"
-                className="mb-4"
-                onChange={(e) => setTab(e.target.value)}
-                defaultValue={FieldRegistrationTab.grant}
-                options={[
+              <ITable<any>
+                tableStyle={{}}
+                style={{}}
+                title={() => {
+                  return (
+                    <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
+                      <div>3 хураамж</div>
+                      <div>Нийт өртөг: {moneyFormat(375100)}</div>
+                      <div className="flex items-center gap-3">
+                        <Button size="middle" type="default">
+                          Э/Х нэмэх
+                        </Button>
+                        <Button size="middle" type="default">
+                          Э/Х цуцлах хүсэлт
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                }}
+                className="p-0 remove-padding-table"
+                columns={[
                   {
-                    label: "Олголт",
-                    value: FieldRegistrationTab.grant,
+                    title: "Код",
+                    dataIndex: "code",
+                    key: "code",
                   },
-                  { label: "Ачилт", value: FieldRegistrationTab.shipment },
                   {
-                    label: "Тээврийн тооцоо",
-                    value: FieldRegistrationTab.shipping_cost,
+                    title: "Хураамжийн нэр",
+                    dataIndex: "fee_name",
+                    key: "fee_name",
+                  },
+                  {
+                    title: "Хэмжих нэгж",
+                    dataIndex: "unit",
+                    key: "unit",
+                  },
+                  {
+                    title: "Өртөг",
+                    dataIndex: "cost",
+                    key: "cost",
+                  },
+                  {
+                    title: "Тоо 1",
+                    dataIndex: "quantity_1",
+                    key: "quantity_1",
+                  },
+                  {
+                    title: "Тоо 2",
+                    dataIndex: "quantity_2",
+                    key: "quantity_2",
+                  },
+                  {
+                    title: "Дүн",
+                    dataIndex: "price",
+                    key: "price",
+                  },
+                ]}
+              />
+
+              <div className="text-xl font-medium mb-3">Төлөлтийн жагсаалт</div>
+              <ITable<any>
+                tableStyle={{}}
+                style={{}}
+                title={() => {
+                  return (
+                    <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
+                      <div>3 хураамж</div>
+                      <div>Нийт өртөг: {moneyFormat(375100)}</div>
+                      <div className="flex items-center gap-3">
+                        <Button size="middle" type="default">
+                          Э/Х нэмэх
+                        </Button>
+                        <Button size="middle" type="default">
+                          Э/Х цуцлах хүсэлт
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                }}
+                className="p-0 remove-padding-table"
+                columns={[
+                  {
+                    title: "Код",
+                    dataIndex: "code",
+                    key: "code",
+                  },
+                  {
+                    title: "Хураамжийн нэр",
+                    dataIndex: "fee_name",
+                    key: "fee_name",
+                  },
+                  {
+                    title: "Хэмжих нэгж",
+                    dataIndex: "unit",
+                    key: "unit",
+                  },
+                  {
+                    title: "Өртөг",
+                    dataIndex: "cost",
+                    key: "cost",
+                  },
+                  {
+                    title: "Тоо 1",
+                    dataIndex: "quantity_1",
+                    key: "quantity_1",
+                  },
+                  {
+                    title: "Тоо 2",
+                    dataIndex: "quantity_2",
+                    key: "quantity_2",
+                  },
+                  {
+                    title: "Дүн",
+                    dataIndex: "price",
+                    key: "price",
                   },
                 ]}
               />

@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FiCalendar } from "react-icons/fi";
 import transaction from "service/fininaciar/accountSettlement/transaction";
-import { CustomerCompanyType } from "service/fininaciar/additionalFeeSettings/type";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
@@ -37,6 +36,8 @@ const Transaction = () => {
       search: search,
     });
   };
+
+  console.log(list.data?.items, "list");
 
   useEffect(() => {
     run();
@@ -84,76 +85,76 @@ const Transaction = () => {
         />
       </div>
 
-      <ITable<CustomerCompanyType>
+      <ITable<any>
         total={list.data?.total}
         loading={list.loading}
-        dataSource={list?.data?.items ?? []}
+        dataSource={list.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
         form={filter}
         UpdateComponent={UpdateService}
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "Огноо",
+            dataIndex: "created_at",
             title: "Огноо",
             align: "left",
-            render: (value) => (
+            render: (value: any) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
+                  {dayjs(value).format("YYYY-MM-DD") || "-"}
                 </span>
               </div>
             ),
           },
           {
-            dataIndex: "Данс",
+            dataIndex: "ledger",
             title: "Данс",
             align: "left",
-            render: (value) => (
+            render: (value: any) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
+                  {value?.name || "-"}
                 </span>
               </div>
             ),
           },
           {
-            dataIndex: "is_broker",
+            dataIndex: "cash",
             title: "Бэлэн",
             width: "200",
-            render: (value) => (
+            render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {moneyFormat(record?.initial_balance) || "-"}
+                {moneyFormat(value) || "-"}
               </span>
             ),
           },
           {
-            dataIndex: "ledger_id",
+            dataIndex: "non_cash",
             title: "Бэлэн бус",
             width: "200",
-            render: (value) => (
+            render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(record?.initial_balance) || "-"}
+                {moneyFormat(value) || "-"}
               </span>
             ),
           },
           {
-            dataIndex: "contact_number",
+            dataIndex: "barimt",
             title: "Баримт",
             align: "center",
-            render: (value) => (
+            render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.initial_balance) || "-"}
+                {moneyFormat(value) || "-"}
               </span>
             ),
           },
           {
-            dataIndex: "contact_number",
+            dataIndex: "payer",
             title: "Төлөгч",
             align: "center",
-            render: (value) => (
+            render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.initial_balance) || "-"}
+                {value || "-"}
               </span>
             ),
           },

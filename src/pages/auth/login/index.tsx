@@ -41,7 +41,7 @@ const Login: FC = () => {
   });
   return (
     <div className="bg-white rounded-xl w-full">
-      <div className="align-left flex justify-start">
+      <div className="align-left flex justify-center">
         <img
           src="/images/til-logo.jpg"
           alt="logo"

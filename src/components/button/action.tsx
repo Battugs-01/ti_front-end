@@ -7,7 +7,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { IoAddOutline } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline, MdOutlineClose } from "react-icons/md";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { Edit04 } from "untitledui-js-base";
+import { Edit04, MinusCircle } from "untitledui-js-base";
 
 // type PropsCreate = ButtonProps;
 interface PropsCreate extends ButtonProps {
@@ -48,7 +48,7 @@ export const DeleteButton = ({ ...rest }: ButtonProps) => {
         className="text-red-500 flex gap-1 items-center font-medium px-1"
         type="link"
       >
-        <FiTrash2 size={20} />
+        <MinusCircle size="20" />
       </Button>
     </Tooltip>
   );
