@@ -3,7 +3,7 @@ import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { menuFininciarItems, menuItems, menuManagerItems } from "./menu_items";
+import { menuCashierItems, menuFininciarItems, menuItems, menuManagerItems } from "./menu_items";
 import Logo from "/images/logo1.png";
 
 const triangleStyle: React.CSSProperties = {
@@ -26,9 +26,9 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   if (user.user?.role_name === UserRoleType.transport_manager) {
     menus = menuManagerItems;
   } else if (user.user?.role_name === UserRoleType.cashier) {
-    menus = menuItems;
+    menus = menuCashierItems;
   } else if (user.user?.role_name === UserRoleType.financier) {
-    menus = menuFininciarItems;
+    menus = menuFininciarItems; 
   }
 
   if (mobile) {

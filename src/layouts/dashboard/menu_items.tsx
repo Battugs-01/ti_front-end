@@ -8,11 +8,6 @@ import {
 
 export const menuItems = [
   {
-    icon: <Archive />,
-    name: "Талбайн бүртгэл",
-    path: "/dashboard/field-registration",
-  },
-  {
     icon: <User01 />,
     name: "Ажилтны бүртгэл",
     path: "/dashboard/employ-registration",

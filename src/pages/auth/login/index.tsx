@@ -8,7 +8,7 @@ import { Button, notification } from "antd";
 import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
-import { menuItems, menuManagerItems } from "layout/dashboard/menu_items";
+import { menuCashierItems, menuItems, menuManagerItems } from "layout/dashboard/menu_items";
 import { FC, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
@@ -26,7 +26,10 @@ const Login: FC = () => {
       setAuth([Action.SIGN_IN, data.user]);
       if (data.user.role_name === UserRoleType.transport_manager) {
         navigate(menuManagerItems[0].path);
-      } else {
+      } else if (data.user.role_name === UserRoleType.cashier) {
+        navigate(menuCashierItems[0].path);
+      }
+      else {
         navigate(menuItems[0].path);
       }
       notification.success({

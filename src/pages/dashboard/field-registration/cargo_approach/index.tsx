@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useAuthContext } from "context/auth";
 import { UserRoleType } from "config";
 import { CargoApproachList } from "service/feild_registration/type";
+import { AssignationCargoApproach } from "./assignation";
 
 export const CargoApproach: React.FC = () => {
   const [user, _] = useAuthContext();
@@ -70,7 +71,7 @@ export const CargoApproach: React.FC = () => {
         UpdateComponent={
           user.user?.role_name === UserRoleType.transport_manager
             ? UpdateCargoApproach
-            : undefined
+            : user.user?.role_name === UserRoleType.cashier ? AssignationCargoApproach : undefined
         }
         refresh={refreshList}
         RemoveModelConfig={{
