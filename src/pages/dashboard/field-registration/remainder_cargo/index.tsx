@@ -5,11 +5,13 @@ import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
-import { initPagination } from "utils/index";
 import { UpdateCargoApproach } from "./update";
+import { fieldRegistrationPaginate } from "utils/index";
+import { CargoApproachList } from "service/feild_registration/type";
+import dayjs from "dayjs";
 
 export const RemainderCargo: React.FC = () => {
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(fieldRegistrationPaginate);
   const [search, setSearch] = useState<string>("");
 
   const fieldRegister = useRequest(fieldRegistration.list, {
@@ -34,20 +36,17 @@ export const RemainderCargo: React.FC = () => {
   };
   const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
 
-  const data = [
-    {
-      id: 1,
-      created_at: "2021-09-09 10:00",
-      arrival_field: "Орох",
-      arrive_depart: "Ирэх",
-      cargo_number: "123456",
-    },
-  ];
-
   return (
     <PageCard xR>
       <InitTableHeader
-        customHeaderTitle="Нийт"
+        leftContent={
+          <div className="flex items-center gap-3">
+            <div className="text-lg font-semibold text-gray-700">
+              Нийт ({fieldRegister?.data?.total})
+            </div>
+          </div>
+        }
+        hideTitle
         search={search}
         setSearch={(e) => {
           setSearch(e);
@@ -58,20 +57,10 @@ export const RemainderCargo: React.FC = () => {
         fileName="RemainderCargo"
         hideDownload
       />
-      <ITable<any>
-        dataSource={data}
-        // dataSource={fieldRegister.data}
+      <ITable<CargoApproachList>
+        dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
-        UpdateComponent={UpdateCargoApproach}
         refresh={refreshList}
-        RemoveModelConfig={{
-          action: fieldRegistration.deleteRegistration,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.first_name,
-            title: "Remove",
-          }),
-        }}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -80,11 +69,16 @@ export const RemainderCargo: React.FC = () => {
             children: [
               {
                 title: "Дөхөлт огноо",
-                dataIndex: "created_at",
+                dataIndex: "approach_report_date",
+                render: (value) => {
+                  return (
+                    <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>
+                  );
+                },
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrival_field",
+                dataIndex: "arrived_at_site",
               },
               {
                 title: "Ирэх/Явах",
@@ -92,11 +86,11 @@ export const RemainderCargo: React.FC = () => {
               },
               {
                 title: "Чингэлэг дугаар",
-                dataIndex: "cargo_number",
+                dataIndex: "container_code",
               },
               {
                 title: "Даац",
-                dataIndex: "cargo_type",
+                dataIndex: "capacity",
               },
               {
                 title: "Зуучийн нэр",
@@ -108,7 +102,7 @@ export const RemainderCargo: React.FC = () => {
               },
               {
                 title: "Зарах эсэх",
-                dataIndex: "is_sale",
+                dataIndex: "for_sale",
               },
               {
                 title: "Зарах үнэ",

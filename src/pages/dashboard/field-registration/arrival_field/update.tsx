@@ -162,7 +162,7 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"date_t"}
+                    name={"arrived_at_site"}
                     placeholder="Т-д ирсэн"
                     label="Т-д ирсэн"
                     rules={FORM_ITEM_RULE()}
@@ -268,7 +268,7 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"wagon_number"}
+                    name={"waggon_number"}
                     placeholder="Вагоны дугаар"
                     label="Вагоны дугаар"
                     rules={FORM_ITEM_RULE()}

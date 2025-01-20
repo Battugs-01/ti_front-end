@@ -55,7 +55,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
       onFinish={async (values) => {
         await updateCargo.runAsync(
           {
-            date_t: dayjs(values.date_t).toString(),
+            arrived_at_site: dayjs(values.arrived_at_site).toDate(),
           },
           detail?.id
         );
@@ -67,9 +67,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
       title="Талбайн бүртгэл"
       open={!!detail}
       initialValues={{
-        ...detail,
         date: detail?.date ? dayjs(detail.date) : undefined,
         broker_id: detail?.broker_id,
+        container_code: detail?.container_code,
       }}
       modalProps={{
         destroyOnClose: true,
@@ -162,7 +162,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"date_t"}
+                    name={"arrived_at_site"}
                     placeholder="Т-д ирсэн"
                     label="Т-д ирсэн"
                     rules={FORM_ITEM_RULE()}
@@ -251,7 +251,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"wagon_number"}
+                    name={"waggon_number"}
                     placeholder="Вагоны дугаар"
                     label="Вагоны дугаар"
                     rules={FORM_ITEM_RULE()}

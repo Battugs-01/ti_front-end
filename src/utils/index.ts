@@ -163,6 +163,12 @@ export const initPagination = {
   pageSize: 20,
 };
 
+export const fieldRegistrationPaginate = {
+  current: 0,
+  pageSize: 20,
+  status: "arrived_at_site",
+};
+
 export const reminderFilter = {
   current: 1,
   pageSize: 20,

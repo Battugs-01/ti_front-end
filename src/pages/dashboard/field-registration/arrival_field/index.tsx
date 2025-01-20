@@ -4,16 +4,18 @@ import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
-import { initPagination } from "utils/index";
+import { fieldRegistrationPaginate, initPagination } from "utils/index";
 import fieldRegistration from "service/feild_registration";
 import { CreateArrivalField } from "./create";
 import { UpdateArrivalField } from "./update";
 import { AssignationCreate } from "./assignation_create";
+import { CargoApproachList } from "service/feild_registration/type";
 
 export const ArrivalField: React.FC = () => {
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(fieldRegistrationPaginate);
   const [search, setSearch] = useState<string>("");
-  const [create, setCreate] = useState(false);
+  const [record, setRecord] = useState<CargoApproachList>();
+
   const [assignationCreate, setAssignationCreate] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
@@ -41,13 +43,19 @@ export const ArrivalField: React.FC = () => {
   return (
     <PageCard xR>
       <InitTableHeader
-        customHeaderTitle="Нийт"
+        leftContent={
+          <div className="flex items-center gap-3">
+            <div className="text-lg font-semibold text-gray-700">
+              Нийт ({fieldRegister?.data?.total})
+            </div>
+          </div>
+        }
+        hideTitle
         search={search}
         setSearch={(e) => {
           setSearch(e);
           searchRun.run({ ...filter, query: e });
         }}
-        setCreate={setCreate}
         refresh={refreshList}
         addButtonName="Шинэ"
         fileName="ArrivalField"
@@ -55,6 +63,7 @@ export const ArrivalField: React.FC = () => {
         customAction={
           <div className="flex items-center gap-3">
             <CreateButton
+              disabled={!record}
               size="large"
               type="default"
               className="text-[#007AFF]"
@@ -67,17 +76,21 @@ export const ArrivalField: React.FC = () => {
               size="large"
               type="default"
               className="text-[#34C759]"
-              onClick={() => {
-                console.log("Jjjj");
-              }}
+              onClick={() => {}}
               addButtonName="Ачилт"
             />
           </div>
         }
       />
       <ITable<any>
-        // dataSource={fieldRegister.data}
+        dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
+        rowSelection={{
+          type: "radio",
+          onChange: (_, selectedRows) => {
+            setRecord(selectedRows[0]);
+          },
+        }}
         CreateComponent={CreateArrivalField}
         refresh={refreshList}
         UpdateComponent={UpdateArrivalField}
@@ -89,8 +102,6 @@ export const ArrivalField: React.FC = () => {
             title: "Remove",
           }),
         }}
-        create={create}
-        setCreate={setCreate}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -203,6 +214,7 @@ export const ArrivalField: React.FC = () => {
             setAssignationCreate(false);
             refreshList();
           }}
+          detail={record}
         />
       )}
     </PageCard>

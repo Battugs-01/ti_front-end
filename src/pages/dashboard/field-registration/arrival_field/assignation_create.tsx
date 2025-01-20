@@ -11,6 +11,7 @@ import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
+import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
@@ -19,6 +20,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
+  detail,
 }) => {
   const addAcrivalField = useRequest(fieldRegistration.create, {
     manual: true,
@@ -32,10 +34,18 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
       notification.error({
         message: error.message,
       });
-      onFinish?.();
+      onCancel?.();
     },
   });
 
+  const categoryList = useRequest(additionalFeeCategory.list, {
+    manual: true,
+    onError: (error) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
   return (
     <ModalForm
       onFinish={async (values) => {
@@ -44,6 +54,9 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         });
       }}
       title="Олголт "
+      initialValues={{
+        ...detail,
+      }}
       open={open}
       modalProps={{
         destroyOnClose: true,
@@ -91,12 +104,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
             <>
               <Row gutter={[16, 16]}>
                 <Col span={10}>
-                  <ProFormSelect
+                  <ProFormText
+                    disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name={"contianer_code"}
+                    name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
                     rules={FORM_ITEM_RULE()}
@@ -104,6 +117,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                 </Col>
                 <Col span={4}>
                   <ProFormText
+                    disabled
                     fieldProps={{
                       size: "large",
                     }}
@@ -115,11 +129,17 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                 </Col>
                 <Col span={10}>
                   <ProFormSelect
+                    disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
-                    name="broker_name"
+                    options={[{ label: "TI Logistic", value: 1 }].map(
+                      (item) => ({
+                        label: item.label,
+                        value: item.value,
+                      })
+                    )}
+                    name="broker_id"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
@@ -129,10 +149,11 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormDatePicker
+                    disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"date_t"}
+                    name={"arrived_at_site"}
                     placeholder="Т-д ирсэн"
                     label="Т-д ирсэн"
                     rules={FORM_ITEM_RULE()}
@@ -162,7 +183,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                       }}
-                      name={"date_2"}
+                      name={"opened_at"}
                       placeholder="Задарсан"
                       label="Задарсан"
                       rules={FORM_ITEM_RULE()}
@@ -178,7 +199,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                       }}
-                      name={"date_3"}
+                      name={"freed_at"}
                       placeholder="Суларсан"
                       label="Суларсан"
                       rules={FORM_ITEM_RULE()}
@@ -192,7 +213,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                       }}
-                      name={"date_4"}
+                      name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
                       rules={FORM_ITEM_RULE()}
@@ -208,7 +229,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                       }}
-                      name={"comeback_date"}
+                      name={"returned_at"}
                       placeholder="Буцаж ирсэн"
                       label="Буцаж ирсэн"
                       rules={FORM_ITEM_RULE()}
@@ -219,10 +240,11 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
+                      disabled
                       fieldProps={{
                         size: "large",
                       }}
-                      name={"date_6"}
+                      name={"shipped_at"}
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
                       rules={FORM_ITEM_RULE()}
@@ -262,7 +284,13 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
+                    request={async () => {
+                      const res = await categoryList.runAsync({ is_all: true });
+                      return res?.items.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    }}
                     name="category"
                     placeholder="Ангилал"
                     label={"Ангилал"}
@@ -274,7 +302,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[]}
+                    options={[{ label: "40 kg", value: "100" }].map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     name="cargo_weight"
                     placeholder="Ачааны жин"
                     label={"Ачааны жин"}
@@ -406,7 +437,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"wagon_number"}
+                    name={"waggon_number"}
                     placeholder="Вагоны дугаар"
                     label="Вагоны дугаар"
                     rules={FORM_ITEM_RULE()}
