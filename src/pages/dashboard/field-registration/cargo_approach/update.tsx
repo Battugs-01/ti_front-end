@@ -52,6 +52,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await updateCargo.runAsync(
           {
             ...values,
+            approach_report_date: dayjs(values.approach_report_date).toDate(),
           },
           detail?.id
         );

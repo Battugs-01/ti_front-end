@@ -13,7 +13,7 @@ const WorkerLayout: React.FC<WorkerLayoutType> = ({ children }) => {
     <Fragment>
       <div
         className={`${
-          theme === ThemeType.DARK ? "bg-gray-900" : "bg-[#E7EDEE]"
+          theme === ThemeType.DARK ? "bg-[#2B2B2B]" : "bg-[#E7EDEE]"
         } font-inter bg-color-body min-h-screen relative`}
       >
         <div className="z-0">

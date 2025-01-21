@@ -3,6 +3,7 @@ import { Avatar, Popover } from "antd";
 import Logo from "assets/img/menu_logo.png";
 import UserBadge from "components/badge/userbadge";
 import { AuthContext, useAuthContext } from "context/auth";
+import { useThemeContext } from "context/theme";
 import { Action, ThemeType } from "context/type";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,18 +16,14 @@ import {
   Menu01,
   Moon02,
   Sun,
-  User03,
   XClose,
 } from "untitledui-js-base";
 import { ChangePassword } from "./action/change_password";
 import { Logout } from "./action/logout";
-import { PersonalInfo } from "./action/personal_info";
 import { Menu } from "./menu";
-import { useThemeContext } from "context/theme";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
-  const [personalInfo, setPersonalInfo] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);
   const [logout, setLogout] = useState<boolean>(false);
   const [_, setAuth] = useAuthContext();
@@ -50,15 +47,16 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-[#0077F4] text-white h-[72px]">
+    <div
+      className={`w-full ${
+        theme === ThemeType.DARK ? "bg-[#021427]" : "bg-[#0077F4]"
+      }  text-white h-[72px]`}
+    >
       <div className="px-6 h-full flex justify-between items-center">
         <div className="flex items-center gap-6 ">
-          <Link
-            to="/dashboard/dashboard"
-            className="lg:flex items-center gap-2 hidden"
-          >
+          <div className="lg:flex items-center gap-2 hidden">
             <img src={Logo} alt="logo" />
-          </Link>
+          </div>
           <div className="lg:block hidden">
             <Menu />
           </div>
@@ -91,15 +89,6 @@ const Navbar: React.FC = () => {
               overlayInnerStyle={{ padding: 0 }}
               content={
                 <div className="flex flex-col">
-                  <div
-                    className="flex items-center gap-3 p-2 mx-2 mt-2 cursor-pointer"
-                    onClick={() => {
-                      setPersonalInfo(true);
-                    }}
-                  >
-                    <User03 size="18" />
-                    <div>Хувийн мэдээлэл</div>
-                  </div>
                   <div
                     className="flex items-center gap-3 p-2 m-2 cursor-pointer"
                     onClick={() => {
@@ -138,18 +127,6 @@ const Navbar: React.FC = () => {
                 <ChevronDown size="24" />
               </div>
             </Popover>
-            {personalInfo && (
-              <PersonalInfo
-                visible={personalInfo}
-                onClose={() => {
-                  setPersonalInfo(false);
-                }}
-                onFinish={() => {
-                  info?.run();
-                  setPersonalInfo(false);
-                }}
-              />
-            )}
             {changePassword && (
               <ChangePassword
                 visible={changePassword}

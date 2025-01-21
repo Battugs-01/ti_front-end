@@ -73,4 +73,9 @@ export const menuFininciarItems = [
     name: "Лавлах мэдээлэл",
     path: "/dashboard/financiar",
   },
+  {
+    icon: <File03 />,
+    name: "Статистик тайлан",
+    path: "/dashboard/report",
+  },
 ];

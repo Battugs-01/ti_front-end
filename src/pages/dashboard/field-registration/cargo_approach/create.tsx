@@ -47,7 +47,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        console.log(values.approach_report_date, "sss");
         await addCargo.runAsync({
           ...values,
           approach_report_date: dayjs(values.approach_report_date).toDate(),
@@ -183,7 +182,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormDatePicker
-                    name={"approach_report_date"}
+                    name="approach_report_date"
                     fieldProps={{
                       size: "large",
                     }}

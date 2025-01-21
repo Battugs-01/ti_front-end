@@ -92,9 +92,6 @@ const App: React.FC = () => {
             colorBorder: "#4A4A4A",
           },
           components: {
-            Radio: {
-              buttonCheckedBg: "#2A2A2A",
-            },
             Collapse: {
               colorBgContainer: "#1E1E1E",
               headerBg: "#2A2A2A",
@@ -110,22 +107,25 @@ const App: React.FC = () => {
               rowExpandedBg: "#333333",
             },
             Input: {
-              colorBgContainer: "#2A2A2A",
+              colorBgContainer: "#8E8E93",
             },
             InputNumber: {
-              colorBgContainer: "#2A2A2A",
+              colorBgContainer: "#8E8E93",
             },
             Select: {
-              colorBgContainer: "#2A2A2A",
+              colorBgContainer: "#8E8E93",
             },
             DatePicker: {
-              colorBgContainer: "#2A2A2A",
+              colorBgContainer: "#8E8E93",
             },
             Descriptions: {
               colorBgContainer: "#2A2A2A",
             },
+            Radio: {
+              buttonBg: "#8E8E93",
+            },
             Card: {
-              colorBgContainer: "#2A2A2A",
+              colorBgContainer: "#000",
             },
           },
         };

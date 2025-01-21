@@ -10,6 +10,8 @@ const FieldRegistration = lazy(
   () => import("pages/dashboard/field-registration/index")
 );
 
+const ReportPage = lazy(() => import("pages/dashboard/report/index"));
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "employ-registration",
@@ -24,7 +26,7 @@ const dashboardRoutes: IRoute[] = [
   {
     key: "report",
     path: "report",
-    component: <FieldRegistration />,
+    component: <ReportPage />,
   },
   {
     key: "financiar",

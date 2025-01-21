@@ -3,7 +3,7 @@ import { notification } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fieldRegistrationPaginate, initPagination } from "utils/index";
 import fieldRegistration from "service/feild_registration";
 import { CreateArrivalField } from "./create";
@@ -11,12 +11,14 @@ import { UpdateArrivalField } from "./update";
 import { AssignationCreate } from "./assignation_create";
 import { CargoApproachList } from "service/feild_registration/type";
 import { ShippmentCreate } from "./shippment_create";
+import { AuthContext } from "context/auth";
+import { UserRoleType } from "config";
 
 export const ArrivalField: React.FC = () => {
+  const [user] = useContext(AuthContext);
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
   const [search, setSearch] = useState<string>("");
   const [record, setRecord] = useState<CargoApproachList>();
-
   const [assignationCreate, setAssignationCreate] = useState(false);
   const [shippmentCreate, setShippmentCreate] = useState(false);
 
@@ -59,32 +61,34 @@ export const ArrivalField: React.FC = () => {
           searchRun.run({ ...filter, query: e });
         }}
         refresh={refreshList}
-        addButtonName="Шинэ"
+        hideCreate
         fileName="ArrivalField"
         hideDownload
         customAction={
-          <div className="flex items-center gap-3">
-            <CreateButton
-              disabled={!record}
-              size="large"
-              type="default"
-              className="text-[#007AFF]"
-              onClick={() => {
-                setAssignationCreate(true);
-              }}
-              addButtonName="Олголт"
-            />
-            <CreateButton
-              disabled={!record}
-              size="large"
-              type="default"
-              className="text-[#34C759]"
-              onClick={() => {
-                setShippmentCreate(true);
-              }}
-              addButtonName="Ачилт"
-            />
-          </div>
+          user?.user?.role_name === UserRoleType.cashier && (
+            <div className="flex items-center gap-3">
+              <CreateButton
+                disabled={!record}
+                size="large"
+                type="default"
+                className="text-[#007AFF]"
+                onClick={() => {
+                  setAssignationCreate(true);
+                }}
+                addButtonName="Олголт"
+              />
+              <CreateButton
+                disabled={!record}
+                size="large"
+                type="default"
+                className="text-[#34C759]"
+                onClick={() => {
+                  setShippmentCreate(true);
+                }}
+                addButtonName="Ачилт"
+              />
+            </div>
+          )
         }
       />
       <ITable<any>
@@ -98,7 +102,6 @@ export const ArrivalField: React.FC = () => {
         }}
         CreateComponent={CreateArrivalField}
         refresh={refreshList}
-        UpdateComponent={UpdateArrivalField}
         RemoveModelConfig={{
           action: fieldRegistration.deleteRegistration,
           config: (record) => ({
