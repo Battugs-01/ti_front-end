@@ -4,7 +4,7 @@ export const PaymentMethod = Object.freeze([
     label: "Бэлэн",
   },
   {
-    value: "card",
+    value: "non_cash",
     label: "Бэлэн бус",
   },
 ]);

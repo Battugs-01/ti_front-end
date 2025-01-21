@@ -9,3 +9,19 @@ export interface CustomerCompanyType {
   contact_number: string;
   ledger_name: string;
 }
+
+export interface AdditionalFeeType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  category_code: string;
+  fee_code: string;
+  fee_name: string;
+  unit_measurement: string;
+  fee_amount: number;
+  number_1: number;
+  number_2: number;
+  total_amount: number;
+}

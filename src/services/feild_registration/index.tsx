@@ -1,6 +1,6 @@
 import { PaginationResponse, SuccessResponse } from "types";
 import http from "..";
-import { CargoApproachList } from "./type";
+import { CargoApproachList, GetTempAdditionalFeeType } from "./type";
 
 namespace fieldRegistration {
   export const list = (body: any) =>
@@ -14,6 +14,23 @@ namespace fieldRegistration {
       hasAuth: true,
       body,
     });
+
+  export const ticketAdditionalFee = (body: any) =>
+    http.post<SuccessResponse>(
+      "/transport-record/create/additional-fee-ticket",
+      {
+        hasAuth: true,
+        body,
+      }
+    );
+
+  export const getTempAdditionalFee = (id: number) =>
+    http.get<GetTempAdditionalFeeType>(
+      `/transport-record/additional-fee-ticket/${id}`,
+      {
+        hasAuth: true,
+      }
+    );
 
   export const deleteRegistration = (body: any) =>
     http.del<SuccessResponse>("/transport-create/delete", {

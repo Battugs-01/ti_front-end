@@ -1,6 +1,6 @@
 import { PaginationResponse, SuccessResponse } from "types";
 import http from "../..";
-import { CustomerCompanyType } from "./type";
+import { AdditionalFeeType, CustomerCompanyType } from "./type";
 
 namespace addinitionalFeeSettings {
   export const list = (body: any) =>
@@ -14,6 +14,15 @@ namespace addinitionalFeeSettings {
       hasAuth: true,
       body,
     });
+
+  export const byCategory = (body: any) =>
+    http.post<PaginationResponse<AdditionalFeeType>>(
+      "/additional-fee/by-category",
+      {
+        hasAuth: true,
+        body,
+      }
+    );
 
   export const deleteA = (id: number) =>
     http.del<SuccessResponse>(`/additional-fee/${id}`, {

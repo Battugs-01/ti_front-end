@@ -1,3 +1,5 @@
+import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+
 export interface CargoApproachList {
   id: number;
   container_code: string;
@@ -36,4 +38,32 @@ export interface TransportRecieve {
   customer_company_id: number;
   payment_method: string;
   additional_fee_note: string;
+}
+
+export interface GetTempAdditionalFeeType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  container_transport_record_id: number;
+  ticket_number: string;
+  cargo_weight: number;
+  category_fee_id: number;
+  date: Date;
+  additional_fee_ticket_calculated: TempAdditionalFee[];
+}
+
+export interface TempAdditionalFee {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  temp_additional_fee_wrapper_id: number;
+  additional_fee_id: number;
+  additional_fee: AdditionalFeeType;
+  number_1: number;
+  number_2: number;
+  total_amount: number;
 }
