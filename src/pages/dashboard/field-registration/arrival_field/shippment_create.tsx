@@ -1,7 +1,6 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
-  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
@@ -10,13 +9,12 @@ import { Button, Col, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
-import dayjs from "dayjs";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
 
-export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
+export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
@@ -160,84 +158,9 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
-              <div className="text-xl font-medium mb-3">Олголт</div>
+              <div className="text-xl font-medium mb-3">Ачилт</div>
               <Row gutter={[16, 16]}>
-                <Col span={16}>
-                  <ProFormRadio.Group
-                    name={"type"}
-                    label="Талбайд задарсан бол чагтлана уу."
-                    options={[
-                      {
-                        label: "Чагтлах",
-                        value: "check",
-                      },
-                    ]}
-                  />
-                </Col>
-              </Row>
-
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"opened_at"}
-                      placeholder="Задарсан"
-                      label="Задарсан"
-                      rules={FORM_ITEM_RULE()}
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"freed_at"}
-                      placeholder="Суларсан"
-                      label="Суларсан"
-                      rules={FORM_ITEM_RULE()}
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"left_site_at"}
-                      placeholder="Т-c явсан"
-                      label="Т-c явсан"
-                      rules={FORM_ITEM_RULE()}
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"returned_at"}
-                      placeholder="Буцаж ирсэн"
-                      label="Буцаж ирсэн"
-                      rules={FORM_ITEM_RULE()}
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-                <Col span={12}>
+                <Col span={24}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
                       disabled
@@ -253,6 +176,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   </div>
                 </Col>
               </Row>
+
               <div className="text-xl font-medium mb-3">
                 Элдэв хураамжийн жагсаалт
               </div>

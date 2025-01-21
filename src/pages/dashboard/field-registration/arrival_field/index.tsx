@@ -10,6 +10,7 @@ import { CreateArrivalField } from "./create";
 import { UpdateArrivalField } from "./update";
 import { AssignationCreate } from "./assignation_create";
 import { CargoApproachList } from "service/feild_registration/type";
+import { ShippmentCreate } from "./shippment_create";
 
 export const ArrivalField: React.FC = () => {
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
@@ -17,6 +18,7 @@ export const ArrivalField: React.FC = () => {
   const [record, setRecord] = useState<CargoApproachList>();
 
   const [assignationCreate, setAssignationCreate] = useState(false);
+  const [shippmentCreate, setShippmentCreate] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
@@ -73,10 +75,13 @@ export const ArrivalField: React.FC = () => {
               addButtonName="Олголт"
             />
             <CreateButton
+              disabled={!record}
               size="large"
               type="default"
               className="text-[#34C759]"
-              onClick={() => {}}
+              onClick={() => {
+                setShippmentCreate(true);
+              }}
               addButtonName="Ачилт"
             />
           </div>
@@ -212,6 +217,20 @@ export const ArrivalField: React.FC = () => {
           }}
           onFinish={() => {
             setAssignationCreate(false);
+            refreshList();
+          }}
+          detail={record}
+        />
+      )}
+
+      {shippmentCreate && (
+        <ShippmentCreate
+          open={shippmentCreate}
+          onCancel={() => {
+            setShippmentCreate(false);
+          }}
+          onFinish={() => {
+            setShippmentCreate(false);
             refreshList();
           }}
           detail={record}
