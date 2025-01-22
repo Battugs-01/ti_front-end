@@ -163,6 +163,12 @@ export const initPagination = {
   pageSize: 20,
 };
 
+export const cargoApproachPaginate = {
+  current: 0,
+  pageSize: 20,
+  status: "created",
+};
+
 export const fieldRegistrationPaginate = {
   current: 0,
   pageSize: 20,

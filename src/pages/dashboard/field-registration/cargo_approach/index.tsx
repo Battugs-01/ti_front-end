@@ -3,20 +3,20 @@ import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import { UserRoleType } from "config";
+import { useAuthContext } from "context/auth";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
-import { initPagination } from "utils/index";
-import { UpdateCargoApproach } from "./update";
-import { CreateCargoApproach } from "./create";
-import dayjs from "dayjs";
-import { useAuthContext } from "context/auth";
-import { UserRoleType } from "config";
 import { CargoApproachList } from "service/feild_registration/type";
+import { cargoApproachPaginate } from "utils/index";
 import { AssignationCargoApproach } from "./assignation";
+import { CreateCargoApproach } from "./create";
+import { UpdateCargoApproach } from "./update";
 
 export const CargoApproach: React.FC = () => {
   const [user, _] = useAuthContext();
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(cargoApproachPaginate);
   const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState(false);
 
@@ -63,6 +63,7 @@ export const CargoApproach: React.FC = () => {
         addButtonName="Шинэ"
         fileName="CargoApproach"
         hideDownload
+        hideCreate={user?.user?.role_name !== UserRoleType.transport_manager}
       />
       <ITable<CargoApproachList>
         dataSource={fieldRegister?.data?.items}
@@ -71,7 +72,9 @@ export const CargoApproach: React.FC = () => {
         UpdateComponent={
           user.user?.role_name === UserRoleType.transport_manager
             ? UpdateCargoApproach
-            : user.user?.role_name === UserRoleType.cashier ? AssignationCargoApproach : undefined
+            : user.user?.role_name === UserRoleType.cashier
+            ? AssignationCargoApproach
+            : undefined
         }
         refresh={refreshList}
         RemoveModelConfig={{
