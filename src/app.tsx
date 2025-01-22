@@ -105,6 +105,8 @@ const App: React.FC = () => {
               rowHoverBg: "#333333",
               rowSelectedHoverBg: "#444444",
               rowExpandedBg: "#333333",
+              colorBgContainer: "#2A2A2A",
+              colorText: "#fff",
             },
             Input: {
               colorBgContainer: "#8E8E93",

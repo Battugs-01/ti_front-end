@@ -37,8 +37,6 @@ const Transaction = () => {
     });
   };
 
-  console.log(list.data?.items, "list");
-
   useEffect(() => {
     run();
   }, [filter]);
@@ -51,14 +49,15 @@ const Transaction = () => {
         <InitTableHeader
           hideTitle
           leftContent={
-            <div className="flex gap-2">
+            <div className="flex gap-3 items-end">
+              <div className="text-lg font-semibold text-gray-700">
+                Нийт ({list?.data?.total})
+              </div>
               <ProFormDateRangePicker
                 name="full_date"
-                className="text-gray-700 cursor-pointer m-0  ant-layot-picker"
+                className="text-gray-700 cursor-pointer mt-6"
                 allowClear={false}
                 fieldProps={{
-                  size: "large",
-                  className: "text-sm m-0",
                   suffixIcon: <FiCalendar className="text-gray-700 text-xl" />,
                   value: dateRange,
                   onChange(value, formatString) {

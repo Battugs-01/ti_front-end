@@ -1,7 +1,6 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
-  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
@@ -18,10 +17,10 @@ import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
-import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
 import { PaymentMethod } from "utils/options";
+import { downloadPDF, generatePDF } from "utils/pdf_generate";
 
 export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
@@ -573,7 +572,27 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                           Төлөлт нэмэх
                         </Button>
                         <Button size="middle">Төлөлт хасах</Button>
-                        <Button size="middle">Хэвлэх</Button>
+                        <Button
+                          size="middle"
+                          onClick={async () => {
+                            console.log("kkkk");
+                            const data = await generatePDF({
+                              title: "Элдэв хураамж тасалбар талон үйлдвэр",
+                              headers: ["Орлогын төрөл", "Дүн"],
+                              rows: paymentList.map((value) => {
+                                return [
+                                  value?.payment_method,
+                                  value?.payment_amount,
+                                ];
+                              }),
+                              totalMonthly: "100000",
+                              totalDaily: "100000",
+                            });
+                            downloadPDF(data);
+                          }}
+                        >
+                          Хэвлэх
+                        </Button>
                       </div>
                     </div>
                   );

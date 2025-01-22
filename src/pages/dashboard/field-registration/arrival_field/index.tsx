@@ -3,16 +3,16 @@ import { notification } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { useContext, useEffect, useState } from "react";
-import { fieldRegistrationPaginate, initPagination } from "utils/index";
-import fieldRegistration from "service/feild_registration";
-import { CreateArrivalField } from "./create";
-import { UpdateArrivalField } from "./update";
-import { AssignationCreate } from "./assignation_create";
-import { CargoApproachList } from "service/feild_registration/type";
-import { ShippmentCreate } from "./shippment_create";
-import { AuthContext } from "context/auth";
 import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import { useContext, useEffect, useState } from "react";
+import fieldRegistration from "service/feild_registration";
+import { CargoApproachList } from "service/feild_registration/type";
+import { fieldRegistrationPaginate } from "utils/index";
+import { AssignationCreate } from "./assignation_create";
+import { CreateArrivalField } from "./create";
+import { ShippmentCreate } from "./shippment_create";
+import dayjs from "dayjs";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -91,7 +91,7 @@ export const ArrivalField: React.FC = () => {
           )
         }
       />
-      <ITable<any>
+      <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
         rowSelection={{
@@ -102,14 +102,6 @@ export const ArrivalField: React.FC = () => {
         }}
         CreateComponent={CreateArrivalField}
         refresh={refreshList}
-        RemoveModelConfig={{
-          action: fieldRegistration.deleteRegistration,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.first_name,
-            title: "Remove",
-          }),
-        }}
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -168,7 +160,10 @@ export const ArrivalField: React.FC = () => {
               },
               {
                 title: "Талбайд задарсан",
-                dataIndex: "field_cleaned",
+                dataIndex: "opened_at",
+                render: (value: any) => {
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
                 title: "Задарсан",

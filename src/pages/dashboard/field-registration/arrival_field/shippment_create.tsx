@@ -5,14 +5,23 @@ import ProForm, {
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Button, Col, notification, Row } from "antd";
+import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
+import dayjs from "dayjs";
+import { useEffect, useMemo, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
+import { downloadPDF } from "utils/pdf_generate";
+import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
+import ledger from "service/fininaciar/accountSettlement/ledger";
+import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
+import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
+import { PaymentMethod } from "utils/options";
+import { generatePDF } from "utils/pdf_generate";
 
 export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
@@ -20,6 +29,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   open,
   detail,
 }) => {
+  const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
+  const [paymentList, setPaymentList] = useState<any[]>([]);
   const addAcrivalField = useRequest(fieldRegistration.create, {
     manual: true,
     onSuccess: () => {
@@ -44,16 +55,101 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       });
     },
   });
+  const additionalFeeByCategory = useRequest(
+    addinitionalFeeSettings.byCategory,
+    {
+      manual: true,
+      onError: (error) => {
+        notification.error({
+          message: error.message,
+        });
+      },
+    }
+  );
+
+  const ticketAdditionalFee = useRequest(
+    fieldRegistration.ticketAdditionalFee,
+    {
+      manual: true,
+      onError: (error) => {
+        notification.error({
+          message: error.message,
+        });
+      },
+    }
+  );
+
+  const getTempAdditionalFee = useRequest(
+    fieldRegistration.getTempAdditionalFee,
+    {
+      manual: true,
+    }
+  );
+
+  const bankList = useRequest(ledger.list, {
+    manual: true,
+    onError: (error) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
+
+  const addAdditionalFeeDebit = useRequest(additionalFeeDebit.create, {
+    manual: true,
+    onSuccess: () => {
+      onFinish?.();
+      notification.success({
+        message: "Амжилттай хадгалагдлаа",
+      });
+    },
+    onError: (error) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getTempAdditionalFee.runAsync(detail?.id);
+      form.setFieldsValue({
+        ...res,
+      });
+      setAdditionalFee(
+        res?.additional_fee_ticket_calculated?.map((values) => {
+          return {
+            ...values.additional_fee,
+            number_1: values.number_1,
+            number_2: values.number_2,
+            total_amount: values.total_amount,
+          };
+        }) || []
+      );
+    };
+    fetch();
+  }, [detail?.id]);
+
+  const totalAmount = useMemo(() => {
+    return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
+  }, [additionalFee]);
+
   return (
     <ModalForm
+      form={form}
       onFinish={async (values) => {
         await addAcrivalField.runAsync({
           ...values,
         });
       }}
-      title="Олголт "
+      title="Ачилт"
       initialValues={{
-        ...detail,
+        container_code: detail?.container_code,
+        capacity: detail?.capacity,
+        broker_id: detail?.broker_id,
+        arrived_at_site: detail?.arrived_at_site,
       }}
       open={open}
       modalProps={{
@@ -163,7 +259,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 <Col span={24}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
-                      disabled
                       fieldProps={{
                         size: "large",
                       }}
@@ -186,7 +281,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"ticket_no"}
+                    name={"ticket_number"}
                     placeholder="ЭХ тасалбарын №"
                     label={"ЭХ тасалбарын №"}
                     rules={FORM_ITEM_RULE()}
@@ -207,6 +302,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   <ProFormSelect
                     fieldProps={{
                       size: "large",
+                      onChange: async (value) => {
+                        const data = await additionalFeeByCategory.runAsync({
+                          category_id: value,
+                        });
+                        setAdditionalFee(data?.items || []);
+                      },
                     }}
                     request={async () => {
                       const res = await categoryList.runAsync({ is_all: true });
@@ -215,7 +316,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         value: item.id,
                       }));
                     }}
-                    name="category"
+                    name="category_fee_id"
                     placeholder="Ангилал"
                     label={"Ангилал"}
                     rules={FORM_ITEM_RULE()}
@@ -226,7 +327,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "40 kg", value: "100" }].map((item) => ({
+                    options={[{ label: "40 kg", value: 40 }].map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
@@ -237,15 +338,26 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
-              <ITable<any>
-                tableStyle={{}}
-                style={{}}
+              <ITable<AdditionalFeeType>
+                rowSelection={{
+                  type: "checkbox",
+                  onChange: (_, selectedRows) => {},
+                }}
+                dataSource={additionalFee}
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
-                      <div>3 хураамж</div>
-                      <div>Нийт өртөг: {moneyFormat(375100)}</div>
-                      <div className="flex items-center gap-3">
+                      <div>{additionalFee.length} хураамж</div>
+                      <div>Нийт өртөг: {moneyFormat(totalAmount)}</div>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <Button
+                          size="middle"
+                          onClick={() => {
+                            form.setFieldValue("payment_amount", totalAmount);
+                          }}
+                        >
+                          Төлөлтийн жагсаалт нэмэх
+                        </Button>
                         <Button size="middle" type="default">
                           Э/Х нэмэх
                         </Button>
@@ -260,8 +372,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 columns={[
                   {
                     title: "Код",
-                    dataIndex: "code",
-                    key: "code",
+                    dataIndex: "fee_code",
+                    key: "fee_code",
                   },
                   {
                     title: "Хураамжийн нэр",
@@ -270,88 +382,201 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Хэмжих нэгж",
-                    dataIndex: "unit",
-                    key: "unit",
+                    dataIndex: "unit_measurement",
+                    key: "unit_measurement",
                   },
                   {
                     title: "Өртөг",
-                    dataIndex: "cost",
-                    key: "cost",
+                    dataIndex: "fee_amount",
+                    key: "fee_amount",
                   },
                   {
                     title: "Тоо 1",
-                    dataIndex: "quantity_1",
-                    key: "quantity_1",
+                    dataIndex: "number_1",
+                    key: "number_1",
                   },
                   {
                     title: "Тоо 2",
-                    dataIndex: "quantity_2",
-                    key: "quantity_2",
+                    dataIndex: "number_2",
+                    key: "number_2",
                   },
                   {
                     title: "Дүн",
-                    dataIndex: "price",
-                    key: "price",
+                    dataIndex: "total_amount",
+                    key: "total_amount",
                   },
                 ]}
               />
-
+              <div className="flex justify-end">
+                <Button
+                  size="middle"
+                  type="primary"
+                  disabled={additionalFee.length === 0 || !additionalFee}
+                  onClick={async () => {
+                    await ticketAdditionalFee.runAsync({
+                      additional_fees: additionalFee.map((values) => {
+                        return {
+                          additional_fee_id: values.id,
+                          number_1: values.number_1,
+                          number_2: values.number_2,
+                          total_amount: values.total_amount,
+                        };
+                      }),
+                      cargo_weight: form.getFieldValue("cargo_weight"),
+                      category_fee_id: form.getFieldValue("category_fee_id"),
+                      date: dayjs(form.getFieldValue("date")).toDate(),
+                      ticket_number: form.getFieldValue("ticket_number"),
+                      container_transport_record_id: detail?.id,
+                    });
+                  }}
+                >
+                  Түр хадгалах
+                </Button>
+              </div>
               <div className="text-xl font-medium mb-3">Төлөлтийн жагсаалт</div>
               <ITable<any>
-                tableStyle={{}}
-                style={{}}
                 title={() => {
                   return (
-                    <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
-                      <div>3 хураамж</div>
-                      <div>Нийт өртөг: {moneyFormat(375100)}</div>
-                      <div className="flex items-center gap-3">
-                        <Button size="middle" type="default">
-                          Э/Х нэмэх
+                    <div className=" bg-[#f9fafb] p-3 text-[#475467]">
+                      <Row gutter={[16, 16]}>
+                        <Col span={4}>
+                          <ProFormDatePicker
+                            name="payment_date"
+                            placeholder="Огноо"
+                            label="Огноо"
+                          />
+                        </Col>
+                        <Col span={5}>
+                          <ProFormSelect
+                            name="payment_type"
+                            placeholder="Төлөлтийн хэлбэр"
+                            options={PaymentMethod.map((item) => ({
+                              label: item.label,
+                              value: item.value,
+                            }))}
+                            label="Төлөлтийн хэлбэр"
+                          />
+                        </Col>
+                        <Col span={5}>
+                          <ProFormText
+                            name="payment_amount"
+                            placeholder="Мөнгөн дүн"
+                            label="Мөнгөн дүн"
+                          />
+                        </Col>
+                        <Col span={5}>
+                          <ProFormSelect
+                            name="ledger_id"
+                            placeholder="Данс"
+                            label="Данс"
+                            request={async () => {
+                              const res = await bankList.runAsync({
+                                is_all: true,
+                              });
+                              return res?.items.map((item) => ({
+                                label: item.name,
+                                value: item.id,
+                              }));
+                            }}
+                          />
+                        </Col>
+                        <Col span={5}>
+                          <ProFormText
+                            name="payer_name"
+                            placeholder="Төлөгч"
+                            label="Төлөгч"
+                          />
+                        </Col>
+                      </Row>
+                      <div className="flex justify-end gap-3">
+                        <Button
+                          size="middle"
+                          onClick={() => {
+                            setPaymentList([
+                              {
+                                ticket_number:
+                                  form.getFieldValue("ticket_number"),
+                                payment_date:
+                                  form.getFieldValue("payment_date"),
+                                payment_method:
+                                  form.getFieldValue("payment_method"),
+                                payment_amount:
+                                  form.getFieldValue("payment_amount"),
+                                bank_id: form.getFieldValue("bank_id"),
+                                payer_name: form.getFieldValue("payer_name"),
+                              },
+                            ]);
+                            form.setFieldValue("payment_amount", totalAmount);
+                          }}
+                        >
+                          Төлөлт нэмэх
                         </Button>
-                        <Button size="middle" type="default">
-                          Э/Х цуцлах хүсэлт
+                        <Button size="middle">Төлөлт хасах</Button>
+                        <Button
+                          size="middle"
+                          onClick={async () => {
+                            console.log("kkkk");
+                            const data = await generatePDF({
+                              title: "Элдэв хураамж тасалбар талон үйлдвэр",
+                              headers: ["Орлогын төрөл", "Дүн"],
+                              rows: paymentList.map((value) => {
+                                return [
+                                  value?.payment_method,
+                                  value?.payment_amount,
+                                ];
+                              }),
+                              totalMonthly: "100000",
+                              totalDaily: "100000",
+                            });
+                            downloadPDF(data);
+                          }}
+                        >
+                          Хэвлэх
                         </Button>
                       </div>
                     </div>
                   );
                 }}
                 className="p-0 remove-padding-table"
+                dataSource={paymentList}
                 columns={[
                   {
                     title: "Код",
-                    dataIndex: "code",
-                    key: "code",
+                    dataIndex: "ticket_number",
+                    key: "ticket_number",
                   },
                   {
-                    title: "Хураамжийн нэр",
-                    dataIndex: "fee_name",
-                    key: "fee_name",
+                    title: "Огноо",
+                    dataIndex: "payment_date",
+                    key: "payment_date",
+                    render: (_, record) => {
+                      return dayjs(record.payment_date).format("YYYY-MM-DD");
+                    },
                   },
                   {
-                    title: "Хэмжих нэгж",
-                    dataIndex: "unit",
-                    key: "unit",
+                    title: "Төлөлтийн хэлбэр",
+                    dataIndex: "payment_method",
+                    key: "payment_method",
+                    render: (_, record) => {
+                      return PaymentMethod.find(
+                        (item) => item.value === record.payment_method
+                      )?.label;
+                    },
                   },
                   {
-                    title: "Өртөг",
-                    dataIndex: "cost",
-                    key: "cost",
+                    title: "Мөнгөн дүн",
+                    dataIndex: "payment_amount",
+                    key: "payment_amount",
                   },
                   {
-                    title: "Тоо 1",
-                    dataIndex: "quantity_1",
-                    key: "quantity_1",
+                    title: "Данс",
+                    dataIndex: "bank_id",
+                    key: "bank_id",
                   },
                   {
-                    title: "Тоо 2",
-                    dataIndex: "quantity_2",
-                    key: "quantity_2",
-                  },
-                  {
-                    title: "Дүн",
-                    dataIndex: "price",
-                    key: "price",
+                    title: "Төлөгч",
+                    dataIndex: "payer_name",
+                    key: "payer_name",
                   },
                 ]}
               />
