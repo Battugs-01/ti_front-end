@@ -3,14 +3,14 @@ import { useRequest } from "ahooks";
 import { notification } from "antd";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
-import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
+import categoryType from "service/fininaciar/categoryType";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
 
-  const create = useRequest(addinitionalFeeSettings.create, {
+  const create = useRequest(categoryType.create, {
     manual: true,
     onError: (err) => {
       notification.error({
@@ -22,7 +22,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   return (
     <IModalForm
       open={rest.open}
-      title="Элдэв хураамж тохиргоо нэмэх"
+      title="Элдэв хураамжийн ангилал нэмэх"
       formRef={formRef}
       onOpenChange={() => {
         formRef.current?.resetFields();
@@ -38,6 +38,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
           if (
             await create.runAsync({
               ...values,
+              code: values?.category_code,
             })
           ) {
             return true;
