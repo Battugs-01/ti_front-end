@@ -118,7 +118,10 @@ export const ArrivalField: React.FC = () => {
             children: [
               {
                 title: "Дөхөлт огноо",
-                dataIndex: "created_at",
+                dataIndex: "approach_report_date",
+                render: (value: any) => {
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
                 title: "Орох хил",

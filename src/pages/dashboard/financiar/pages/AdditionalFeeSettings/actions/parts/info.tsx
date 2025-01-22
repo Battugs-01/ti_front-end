@@ -9,7 +9,7 @@ export const Info = () => {
       <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormText
-            name={"category"}
+            name={"category_code"}
             placeholder={"Ангилал код"}
             label={"Ангилал код"}
             rules={FORM_ITEM_RULE()}

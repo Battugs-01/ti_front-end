@@ -62,7 +62,7 @@ const AdditionalFeeSettings = () => {
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "category",
+            dataIndex: "category_code",
             title: "Ангилал код",
             align: "left",
             render: (value) => (
