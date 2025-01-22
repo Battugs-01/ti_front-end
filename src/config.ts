@@ -247,6 +247,7 @@ export enum FininciarTab {
   AdditionalFeeSettings = 1,
   CustomerAccountSettlement = 2,
   CancellingTicket = 3,
+  CategoryType = 4,
 }
 
 export interface FininciarTabtButton {
@@ -267,4 +268,9 @@ export interface CustomerAccountSettlementTabtButton {
 export enum DirectionType {
   south = "south",
   north = "north",
+}
+
+export enum CategoryTypeEnum {
+  assignation = "assignation",
+  shiping = "shiping",
 }

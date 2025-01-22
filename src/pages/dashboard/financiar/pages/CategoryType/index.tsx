@@ -3,18 +3,20 @@ import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
+import { CategoryTypeEnum } from "config";
 import { useEffect, useState } from "react";
-import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
-import { initPagination, moneyFormat } from "utils/index";
+import categoryType from "service/fininaciar/categoryType";
+import { CategoryTypeTypes } from "service/fininaciar/categoryType/type";
+import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
 
-const AdditionalFeeSettings = () => {
+const CategoryType = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const list = useRequest(addinitionalFeeSettings.list, {
+  const list = useRequest(categoryType.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -40,7 +42,7 @@ const AdditionalFeeSettings = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Элдэв хураамжийн тохиргоо"
+          customHeaderTitle="Элдэв хураамжийн ангилал"
           searchPlaceHolder="Дүн, ангилал код"
           setCreate={setCreate}
           search={search}
@@ -52,7 +54,7 @@ const AdditionalFeeSettings = () => {
         />
       </div>
 
-      <ITable<any>
+      <ITable<CategoryTypeTypes>
         total={list.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
@@ -62,7 +64,7 @@ const AdditionalFeeSettings = () => {
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "category_code",
+            dataIndex: "code",
             title: "Ангилал код",
             align: "left",
             render: (value) => (
@@ -74,18 +76,8 @@ const AdditionalFeeSettings = () => {
             ),
           },
           {
-            dataIndex: "fee_code",
-            title: "Хураамжийн код",
-            align: "left",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "fee_name",
-            title: "Хураамжийн нэр",
+            dataIndex: "name",
+            title: "Нэр",
             width: "200",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
@@ -94,22 +86,12 @@ const AdditionalFeeSettings = () => {
             ),
           },
           {
-            dataIndex: "unit_measurement",
-            title: "Хэмжих нэгж",
+            dataIndex: "category_type",
+            title: "Ангилал",
             width: "200",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "fee_amount",
-            title: "Хураамжийн дүн",
-            align: "center",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(value as any) || "-"}
+                {value === CategoryTypeEnum.assignation ? "Олголт" : "Ачилт"}
               </span>
             ),
           },
@@ -118,7 +100,7 @@ const AdditionalFeeSettings = () => {
         create={create as boolean}
         setCreate={setCreate}
         RemoveModelConfig={{
-          action: addinitionalFeeSettings.deleteA,
+          action: categoryType.deleteA,
           config: (record) => ({
             uniqueKey: record?.id,
             display: record?.name,
@@ -130,4 +112,4 @@ const AdditionalFeeSettings = () => {
   );
 };
 
-export default AdditionalFeeSettings;
+export default CategoryType;
