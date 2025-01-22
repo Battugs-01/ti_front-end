@@ -68,7 +68,10 @@ export const ArrivalField: React.FC = () => {
           user?.user?.role_name === UserRoleType.cashier && (
             <div className="flex items-center gap-3">
               <CreateButton
-                disabled={!record}
+                disabled={
+                  !record ||
+                  record?.assignation_status?.is_assignation_additional_fee_paid
+                }
                 size="large"
                 type="default"
                 className="text-[#007AFF]"
@@ -78,7 +81,12 @@ export const ArrivalField: React.FC = () => {
                 addButtonName="Олголт"
               />
               <CreateButton
-                disabled={!record}
+                disabled={
+                  !record ||
+                  !record?.assignation_status
+                    ?.is_assignation_additional_fee_paid ||
+                  record?.recieve_status?.is_recieve_additional_fee_paid
+                }
                 size="large"
                 type="default"
                 className="text-[#34C759]"

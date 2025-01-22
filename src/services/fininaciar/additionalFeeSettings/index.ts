@@ -10,7 +10,7 @@ namespace addinitionalFeeSettings {
     });
 
   export const create = (body: any) =>
-    http.post<SuccessResponse>("/additional-fee", {
+    http.post<SuccessResponse>("/additional-fee/create", {
       hasAuth: true,
       body,
     });
@@ -25,12 +25,12 @@ namespace addinitionalFeeSettings {
     );
 
   export const deleteA = (id: number) =>
-    http.del<SuccessResponse>(`/additional-fee/${id}`, {
+    http.del<SuccessResponse>(`/additional-fee/delete/${id}`, {
       hasAuth: true,
     });
 
   export const update = (body: any, id: number) =>
-    http.put<SuccessResponse>(`/additional-fee/${id}`, {
+    http.put<SuccessResponse>(`/additional-fee/update/${id}`, {
       hasAuth: true,
       body,
     });

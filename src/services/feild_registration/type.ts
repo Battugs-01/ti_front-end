@@ -18,6 +18,18 @@ export interface CargoApproachList {
   container_cargo: ContainerCargo;
   transport_recieve: TransportRecieve;
   transport_give: TransportGive;
+  assignation_status: AssignationStatus;
+  recieve_status: RecieveStatus;
+}
+
+export interface AssignationStatus {
+  is_assignation_additional_fee_calculated: boolean;
+  is_assignation_additional_fee_paid: boolean;
+}
+
+export interface RecieveStatus {
+  is_recieve_additional_fee_calculated: boolean;
+  is_recieve_additional_fee_paid: boolean;
 }
 
 export interface ContainerCargo {
