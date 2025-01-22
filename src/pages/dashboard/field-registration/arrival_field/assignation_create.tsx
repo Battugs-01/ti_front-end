@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
+import { TicketAdditionalFeeType } from "service/feild_registration/type";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
@@ -30,6 +31,8 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
+  const [ticketAdditional, setTicketAdditional] =
+    useState<TicketAdditionalFeeType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
     onError: (error: any) => {
@@ -141,7 +144,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          ticket_id: getTempAdditionalFee.data?.id,
+          ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
         });
       }}
@@ -376,7 +379,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         value: item.id,
                       }));
                     }}
-                    name="category_fee_id"
+                    name="additional_fee_category_id"
                     placeholder="Ангилал"
                     label={"Ангилал"}
                     rules={FORM_ITEM_RULE()}
@@ -473,7 +476,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   type="primary"
                   disabled={additionalFee.length === 0 || !additionalFee}
                   onClick={async () => {
-                    await ticketAdditionalFee.runAsync({
+                    const data = await ticketAdditionalFee.runAsync({
                       additional_fees: additionalFee.map((values) => {
                         return {
                           additional_fee_id: values.id,
@@ -483,11 +486,15 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         };
                       }),
                       cargo_weight: form.getFieldValue("cargo_weight"),
-                      category_fee_id: form.getFieldValue("category_fee_id"),
+                      additional_fee_category_id: form.getFieldValue(
+                        "additional_fee_category_id"
+                      ),
                       date: dayjs(form.getFieldValue("date")).toDate(),
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
+
+                    setTicketAdditional(data);
                   }}
                 >
                   Түр хадгалах
@@ -558,11 +565,11 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                                   form.getFieldValue("ticket_number"),
                                 payment_date:
                                   form.getFieldValue("payment_date"),
-                                payment_method:
-                                  form.getFieldValue("payment_method"),
+                                payment_type:
+                                  form.getFieldValue("payment_type"),
                                 payment_amount:
                                   form.getFieldValue("payment_amount"),
-                                bank_id: form.getFieldValue("bank_id"),
+                                ledger_id: form.getFieldValue("ledger_id"),
                                 payer_name: form.getFieldValue("payer_name"),
                               },
                             ]);
@@ -575,13 +582,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         <Button
                           size="middle"
                           onClick={async () => {
-                            console.log("kkkk");
                             const data = await generatePDF({
                               title: "Элдэв хураамж тасалбар талон үйлдвэр",
                               headers: ["Орлогын төрөл", "Дүн"],
                               rows: paymentList.map((value) => {
                                 return [
-                                  value?.payment_method,
+                                  value?.payment_type,
                                   value?.payment_amount,
                                 ];
                               }),
@@ -615,11 +621,11 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Төлөлтийн хэлбэр",
-                    dataIndex: "payment_method",
-                    key: "payment_method",
+                    dataIndex: "payment_type",
+                    key: "payment_type",
                     render: (_, record) => {
                       return PaymentMethod.find(
-                        (item) => item.value === record.payment_method
+                        (item) => item.value === record.payment_type
                       )?.label;
                     },
                   },
@@ -630,8 +636,8 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Данс",
-                    dataIndex: "bank_id",
-                    key: "bank_id",
+                    dataIndex: "ledger_id",
+                    key: "ledger_id",
                   },
                   {
                     title: "Төлөгч",

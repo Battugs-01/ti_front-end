@@ -1,6 +1,10 @@
 import { PaginationResponse, SuccessResponse } from "types";
 import http from "..";
-import { CargoApproachList, GetTempAdditionalFeeType } from "./type";
+import {
+  CargoApproachList,
+  GetTempAdditionalFeeType,
+  TicketAdditionalFeeType,
+} from "./type";
 
 namespace fieldRegistration {
   export const list = (body: any) =>
@@ -16,7 +20,7 @@ namespace fieldRegistration {
     });
 
   export const ticketAdditionalFee = (body: any) =>
-    http.post<SuccessResponse>(
+    http.post<TicketAdditionalFeeType>(
       "/transport-record/create/additional-fee-ticket",
       {
         hasAuth: true,

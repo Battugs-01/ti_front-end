@@ -49,6 +49,7 @@ const App: React.FC = () => {
             colorPrimary: "#0077F4",
             fontFamily: "Inter",
             colorBorder: "#D0D5DD",
+            colorText: "#475467",
           },
           components: {
             Radio: {
@@ -89,13 +90,16 @@ const App: React.FC = () => {
           token: {
             colorPrimary: "#0077F4",
             fontFamily: "Inter",
-            colorBorder: "#4A4A4A",
+            colorBorder: "#D0D5DD",
+            colorBgContainer: "#333",
+            colorText: "#fff",
           },
           components: {
             Collapse: {
               colorBgContainer: "#1E1E1E",
               headerBg: "#2A2A2A",
               colorBorder: "#3A3A3A",
+              colorText: "#fff",
             },
             Segmented: {
               colorBgLayout: "#2A2A2A",
@@ -106,7 +110,6 @@ const App: React.FC = () => {
               rowSelectedHoverBg: "#444444",
               rowExpandedBg: "#333333",
               colorBgContainer: "#2A2A2A",
-              colorText: "#fff",
             },
             Input: {
               colorBgContainer: "#8E8E93",
@@ -128,6 +131,11 @@ const App: React.FC = () => {
             },
             Card: {
               colorBgContainer: "#000",
+            },
+            Modal: {
+              contentBg: "#333",
+              headerBg: "#333",
+              colorText: "#fff",
             },
           },
         };

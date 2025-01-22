@@ -58,7 +58,7 @@ export const ArrivalField: React.FC = () => {
         search={search}
         setSearch={(e) => {
           setSearch(e);
-          searchRun.run({ ...filter, query: e });
+          searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
         hideCreate
@@ -85,7 +85,7 @@ export const ArrivalField: React.FC = () => {
                   !record ||
                   !record?.assignation_status
                     ?.is_assignation_additional_fee_paid ||
-                  record?.recieve_status?.is_recieve_additional_fee_paid
+                  record?.shipping_status?.is_shipping_additional_fee_paid
                 }
                 size="large"
                 type="default"
@@ -120,28 +120,38 @@ export const ArrivalField: React.FC = () => {
                 title: "Дөхөлт огноо",
                 dataIndex: "approach_report_date",
                 render: (value: any) => {
-                  return dayjs(value).format("YYYY-MM-DD");
+                  if (
+                    !value ||
+                    dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
+                  ) {
+                    return <div className="flex items-center">-</div>;
+                  }
+                  return (
+                    <div className="flex items-center">
+                      {dayjs(value).format("YYYY/MM/DD")}
+                    </div>
+                  );
                 },
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrival_field",
+                dataIndex: "direction",
               },
               {
                 title: "Ирэх/Явах",
-                dataIndex: "arrive_depart",
+                dataIndex: "transport_direction",
               },
               {
                 title: "Чингэлэг дугаар",
-                dataIndex: "cargo_number",
+                dataIndex: "container_code",
               },
               {
                 title: "Даац",
-                dataIndex: "cargo_type",
+                dataIndex: "capacity",
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_name",
+                dataIndex: "carrier_code",
               },
               {
                 title: "Хоосон/Ачаатай",
@@ -178,11 +188,14 @@ export const ArrivalField: React.FC = () => {
               },
               {
                 title: "Задарсан",
-                dataIndex: "cleaned",
+                dataIndex: "",
               },
               {
                 title: "Суларсан",
-                dataIndex: "watered",
+                dataIndex: "freed_at",
+                render: (value: any) => {
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
                 title: "Ачилт хийсэн",

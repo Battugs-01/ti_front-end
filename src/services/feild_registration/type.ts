@@ -19,7 +19,7 @@ export interface CargoApproachList {
   transport_recieve: TransportRecieve;
   transport_give: TransportGive;
   assignation_status: AssignationStatus;
-  recieve_status: RecieveStatus;
+  shipping_status: ShippingStatus;
 }
 
 export interface AssignationStatus {
@@ -27,9 +27,9 @@ export interface AssignationStatus {
   is_assignation_additional_fee_paid: boolean;
 }
 
-export interface RecieveStatus {
-  is_recieve_additional_fee_calculated: boolean;
-  is_recieve_additional_fee_paid: boolean;
+export interface ShippingStatus {
+  is_shipping_additional_fee_calculated: boolean;
+  is_shipping_additional_fee_paid: boolean;
 }
 
 export interface ContainerCargo {
@@ -78,4 +78,19 @@ export interface TempAdditionalFee {
   number_1: number;
   number_2: number;
   total_amount: number;
+}
+
+export interface TicketAdditionalFeeType {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  container_transport_record_id: number;
+  ticket_number: string;
+  cargo_weight: number;
+  additional_fee_category_id: number;
+  additional_fee_category: null;
+  date: Date;
+  additional_fee_ticket_calculated: null;
 }

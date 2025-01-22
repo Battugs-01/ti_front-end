@@ -8,12 +8,13 @@ import { initPagination } from "utils/index";
 import { CargoApproachList } from "service/feild_registration/type";
 import dayjs from "dayjs";
 import report from "service/report";
+import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 
 const ReportPage: React.FC = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
 
-  const fieldRegister = useRequest(report.list, {
+  const reportList = useRequest(additionalFeeDebit.list, {
     manual: true,
     onError: (err) => {
       notification.error({
@@ -23,17 +24,17 @@ const ReportPage: React.FC = () => {
   });
 
   useEffect(() => {
-    fieldRegister.run({
+    reportList.run({
       ...filter,
     });
   }, [filter]);
 
   const refreshList = () => {
-    fieldRegister?.run({
+    reportList?.run({
       ...filter,
     });
   };
-  const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
+  const searchRun = useDebounceFn(reportList.run, { wait: 1000 });
 
   return (
     <PageCard xR>
@@ -41,7 +42,7 @@ const ReportPage: React.FC = () => {
         leftContent={
           <div className="flex items-center gap-3">
             <div className="text-lg font-semibold text-gray-700">
-              Нийт ({fieldRegister?.data?.total})
+              Нийт ({reportList?.data?.total})
             </div>
           </div>
         }
@@ -57,8 +58,8 @@ const ReportPage: React.FC = () => {
         hideDownload
       />
       <ITable<CargoApproachList>
-        dataSource={fieldRegister.data?.items}
-        loading={fieldRegister.loading}
+        dataSource={reportList.data?.items}
+        loading={reportList.loading}
         refresh={refreshList}
         className="p-0 remove-padding-table"
         columns={[
@@ -75,23 +76,26 @@ const ReportPage: React.FC = () => {
           },
           {
             title: "Баримтын дугаар",
-            dataIndex: "arrive_depart",
+            dataIndex: "ticket_number",
           },
           {
             title: "Огноо",
-            dataIndex: "container_code",
+            dataIndex: "created_at",
+            render: (value: any) => {
+              return dayjs(value).format("YYYY-MM-DD");
+            },
           },
           {
             title: "Нийт төлсөн",
-            dataIndex: "capacity",
+            dataIndex: "total_amount",
           },
           {
             title: "Бэлнээр",
-            dataIndex: "carrier_name",
+            dataIndex: "cash",
           },
           {
             title: "Бэлэн бусаар",
-            dataIndex: "empty_full",
+            dataIndex: "non_cash",
           },
           {
             title: "Нийт төлбөр",

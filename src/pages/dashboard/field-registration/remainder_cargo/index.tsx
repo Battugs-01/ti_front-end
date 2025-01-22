@@ -50,7 +50,7 @@ export const RemainderCargo: React.FC = () => {
         search={search}
         setSearch={(e) => {
           setSearch(e);
-          searchRun.run({ ...filter, query: e });
+          searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
         hideCreate
