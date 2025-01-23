@@ -1,6 +1,5 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { notification } from "antd";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
 import customerCompany from "service/fininaciar/customerCompany";
@@ -12,11 +11,11 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
 
   const create = useRequest(customerCompany.create, {
     manual: true,
-    onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
-    },
+    // onError: (err) => {
+    //   notification.error({
+    //     message: err.message,
+    //   });
+    // },
   });
 
   return (

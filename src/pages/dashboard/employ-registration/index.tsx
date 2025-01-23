@@ -4,6 +4,7 @@ import UserBadge from "components/badge/userbadge";
 import { PageCard } from "components/card";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
+import { GenderType } from "config";
 import { useEffect, useState } from "react";
 import { Admin } from "service/auth/type";
 import employRegistration from "service/employ-registration";
@@ -43,7 +44,7 @@ const EmployeRegistration = () => {
         <InitTableHeader
           addButtonName="Нэмэх"
           customHeaderTitle="Ажилчдын жагсаалт"
-          searchPlaceHolder="Овог, нэр , регистрийн дугаар "
+          searchPlaceHolder="Овог, нэр , утасны дугаар "
           setCreate={setCreate}
           search={search}
           setSearch={(e) => {
@@ -101,7 +102,7 @@ const EmployeRegistration = () => {
             align: "center",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal">
-                {value === 0 ? "Эрэгтэй" : "Эмэгтэй"}
+                {value === GenderType.male ? "Эрэгтэй" : "Эмэгтэй"}
               </span>
             ),
           },

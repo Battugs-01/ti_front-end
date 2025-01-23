@@ -121,7 +121,7 @@ export const Info = () => {
       <Row gutter={[24, 24]} style={{ marginTop: 15 }}>
         <Col span={12}>
           <ProFormText.Password
-            rules={FORM_ITEM_RULE()}
+            // rules={FORM_ITEM_RULE()}
             name={"password"}
             placeholder={"Нууц үг"}
             label="Нууц үг"
