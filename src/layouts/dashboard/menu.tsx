@@ -3,7 +3,12 @@ import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { menuCashierItems, menuFininciarItems, menuItems, menuManagerItems } from "./menu_items";
+import {
+  menuCashierItems,
+  menuFininciarItems,
+  menuItems,
+  menuManagerItems,
+} from "./menu_items";
 import Logo from "/images/logo1.png";
 
 const triangleStyle: React.CSSProperties = {
@@ -28,7 +33,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
   } else if (user.user?.role_name === UserRoleType.cashier) {
     menus = menuCashierItems;
   } else if (user.user?.role_name === UserRoleType.financier) {
-    menus = menuFininciarItems; 
+    menus = menuFininciarItems;
   }
 
   if (mobile) {
@@ -40,7 +45,7 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
             to={menus[0].path}
             className="flex items-center gap-2 px-5 py-1"
           >
-            <img src={Logo} alt="logo" />
+            <img src={Logo} alt="logo" width={200} />
           </Link>
           {menus.map((item, index) => (
             <div key={index} className="flex items-center relative p-5">

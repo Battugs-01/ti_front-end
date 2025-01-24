@@ -1,4 +1,4 @@
-import { ConfigProvider } from "antd";
+import { ConfigProvider, Popover } from "antd";
 import mnIntl from "antd/lib/locale/mn_MN";
 import { useThemeContext } from "context/theme";
 import { ThemeType } from "context/type";
@@ -88,7 +88,7 @@ const App: React.FC = () => {
         }
       : {
           token: {
-            colorPrimary: "#0077F4",
+            colorPrimary: "#333",
             fontFamily: "Inter",
             colorBorder: "#D0D5DD",
             colorBgContainer: "#333",
@@ -133,6 +133,15 @@ const App: React.FC = () => {
               colorBgContainer: "#000",
             },
             Modal: {
+              contentBg: "#333",
+              headerBg: "#333",
+              colorText: "#fff",
+            },
+            Popover: {
+              colorText: "#333",
+            },
+            Drawer: {
+              colorBgContainer: "#333",
               contentBg: "#333",
               headerBg: "#333",
               colorText: "#fff",
