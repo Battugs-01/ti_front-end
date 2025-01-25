@@ -11,6 +11,7 @@ import employRegistration from "service/employ-registration";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { Label } from "components/label";
 
 const EmployeRegistration = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -43,7 +44,7 @@ const EmployeRegistration = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Ажилчдын жагсаалт"
+          customHeaderTitle={<Label title="Ажилчдын жагсаалт" />}
           searchPlaceHolder="Овог, нэр , утасны дугаар "
           setCreate={setCreate}
           search={search}

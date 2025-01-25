@@ -37,7 +37,7 @@ namespace fieldRegistration {
     );
 
   export const deleteRegistration = (body: any) =>
-    http.del<SuccessResponse>("/transport-create/delete", {
+    http.del<SuccessResponse>("/transport-record/delete", {
       hasAuth: true,
       body,
     });

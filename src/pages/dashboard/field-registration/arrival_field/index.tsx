@@ -13,6 +13,7 @@ import { AssignationCreate } from "./assignation_create";
 import { CreateArrivalField } from "./create";
 import { ShippmentCreate } from "./shippment_create";
 import dayjs from "dayjs";
+import { Label } from "components/label";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -50,7 +51,7 @@ export const ArrivalField: React.FC = () => {
         leftContent={
           <div className="flex items-center gap-3">
             <div className="text-lg font-semibold text-gray-700">
-              Нийт ({fieldRegister?.data?.total})
+              <Label title={`Нийт (${fieldRegister?.data?.total || 0})`} />
             </div>
           </div>
         }

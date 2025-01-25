@@ -5,6 +5,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
+import { Label } from "components/label";
 import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
@@ -92,7 +93,9 @@ const Login: FC = () => {
           ),
         }}
       >
-        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">Нэвтрэх</div>
+        <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
+          <Label title="Нэвтрэх" />
+        </div>
         <div className="space-y-1">
           <ProFormText
             name="email"

@@ -9,6 +9,7 @@ import { UpdateCargoApproach } from "./update";
 import { fieldRegistrationPaginate } from "utils/index";
 import { CargoApproachList } from "service/feild_registration/type";
 import dayjs from "dayjs";
+import { Label } from "components/label";
 
 export const RemainderCargo: React.FC = () => {
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
@@ -42,7 +43,7 @@ export const RemainderCargo: React.FC = () => {
         leftContent={
           <div className="flex items-center gap-3">
             <div className="text-lg font-semibold text-gray-700">
-              Нийт ({fieldRegister?.data?.total})
+              <Label title={`Нийт (${fieldRegister?.data?.total || 0})`} />
             </div>
           </div>
         }

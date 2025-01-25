@@ -13,6 +13,7 @@ import { cargoApproachPaginate } from "utils/index";
 import { AssignationCargoApproach } from "./assignation";
 import { CreateCargoApproach } from "./create";
 import { UpdateCargoApproach } from "./update";
+import { Label } from "components/label";
 
 export const CargoApproach: React.FC = () => {
   const [user, _] = useAuthContext();
@@ -48,7 +49,7 @@ export const CargoApproach: React.FC = () => {
         leftContent={
           <div className="flex items-center gap-3">
             <div className="text-lg font-semibold text-gray-700">
-              Нийт ({fieldRegister?.data?.total})
+              <Label title={`Нийт (${fieldRegister?.data?.total || 0})`} />
             </div>
           </div>
         }

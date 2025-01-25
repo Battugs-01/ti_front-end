@@ -6,6 +6,7 @@ import { useRef } from "react";
 import workers from "service/employ-registration";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
+import { Label } from "components/label";
 
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
@@ -22,7 +23,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   return (
     <IModalForm
       open={rest.open}
-      title="Ажилтан нэмэх"
+      title={<Label title="Ажилтан нэмэх" />}
       formRef={formRef}
       onOpenChange={() => {
         formRef.current?.resetFields();
