@@ -53,17 +53,17 @@ const Transaction = () => {
                 onChange={(values) => {
                   setFilter({
                     ...filter,
-                    start_date:
+                    between: [
                       dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD") ?? "",
-                    end_date:
                       dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD") ?? "",
+                    ],
                   });
                 }}
                 defaultValue={[
-                  filter.start_date
-                    ? dayjs(filter.start_date)
+                  filter.between[0]
+                    ? dayjs(filter.between[0])
                     : dayjs().subtract(3, "month"),
-                  filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                  filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
                 ]}
               />
             </div>
@@ -147,29 +147,17 @@ const Transaction = () => {
             ),
           },
           {
-            dataIndex: "ledger_id",
-            title: "Дебит",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(record?.debit) || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "contact_number",
-            title: "Кредит",
-            align: "center",
-            render: (_, record) => (
+            title: "Мөнгөн дүн",
+            dataIndex: "amount",
+            render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.credit) || "-"}
+                {moneyFormat(value) || "-"}
               </span>
             ),
           },
           {
             dataIndex: "barimt",
             title: "Баримт",
-            align: "center",
             render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal">
                 {moneyFormat(value) || "-"}

@@ -2,6 +2,7 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
+import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
@@ -9,12 +10,10 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
-import { cargoApproachPaginate, formatNumber } from "utils/index";
-import { AssignationCargoApproach } from "./assignation";
+import { cargoApproachPaginate, moneyFormat } from "utils/index";
+import { DirectionOptions, PaymentMethod } from "utils/options";
 import { CreateCargoApproach } from "./create";
 import { UpdateCargoApproach } from "./update";
-import { Label } from "components/label";
-import { PaymentMethod } from "utils/options";
 
 export const CargoApproach: React.FC = () => {
   const [user, _] = useAuthContext();
@@ -58,15 +57,17 @@ export const CargoApproach: React.FC = () => {
               onChange={(values) => {
                 setFilter({
                   ...filter,
-                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  between: [
+                    dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                    dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  ],
                 });
               }}
               defaultValue={[
-                filter.start_date
-                  ? dayjs(filter.start_date)
+                filter.between[0]
+                  ? dayjs(filter.between[0])
                   : dayjs().subtract(3, "month"),
-                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
               ]}
             />
           </div>
@@ -87,12 +88,11 @@ export const CargoApproach: React.FC = () => {
       <ITable<CargoApproachList>
         dataSource={fieldRegister?.data?.items}
         loading={fieldRegister.loading}
+        bordered
         CreateComponent={CreateCargoApproach}
         UpdateComponent={
           user.user?.role_name === UserRoleType.transport_manager
             ? UpdateCargoApproach
-            : user.user?.role_name === UserRoleType.cashier
-            ? AssignationCargoApproach
             : undefined
         }
         refresh={refreshList}
@@ -132,6 +132,11 @@ export const CargoApproach: React.FC = () => {
               {
                 title: "Орох хил",
                 dataIndex: "direction",
+                render: (_, record) => {
+                  return DirectionOptions.find(
+                    (item) => item.value === record?.direction
+                  )?.label;
+                },
               },
               {
                 title: "Ирэх/Явах",
@@ -147,7 +152,10 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_code",
+                dataIndex: "broker_name",
+                render: (_, record) => {
+                  return record?.broker?.name;
+                },
               },
               {
                 title: "Ачааны нэр төрөл",
@@ -157,7 +165,7 @@ export const CargoApproach: React.FC = () => {
                 title: "Тээврийн хөлс",
                 dataIndex: "transport_fee",
                 render: (_, record) => {
-                  return record?.transport_recieve?.transport_fee;
+                  return moneyFormat(record?.transport_recieve?.transport_fee);
                 },
               },
               {
@@ -168,10 +176,10 @@ export const CargoApproach: React.FC = () => {
                 },
               },
               {
-                title: "Харилцагч",
+                title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company_id;
+                  return record?.transport_recieve?.customer_company?.name;
                 },
               },
               {
@@ -195,7 +203,7 @@ export const CargoApproach: React.FC = () => {
                 title: "Шилжүүлэх тээврийн хөлс",
                 dataIndex: "transfer_fee",
                 render: (_, record) => {
-                  return record?.transport_give?.transfer_fee;
+                  return moneyFormat(record?.transport_give?.transfer_fee);
                 },
               },
               {

@@ -1,19 +1,22 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { DatePicker } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
-import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
-import fieldRegistration from "service/feild_registration";
-import { UpdateCargoApproach } from "./update";
-import { fieldRegistrationPaginate } from "utils/index";
-import { CargoApproachList } from "service/feild_registration/type";
-import dayjs from "dayjs";
 import { Label } from "components/label";
-import { PaymentMethod } from "utils/options";
+import InitTableHeader from "components/table-header";
+import { UserRoleType } from "config";
+import { AuthContext } from "context/auth";
+import dayjs from "dayjs";
+import { useContext, useEffect, useState } from "react";
+import fieldRegistration from "service/feild_registration";
+import { CargoApproachList } from "service/feild_registration/type";
+import { cargoApproachPaginate, moneyFormat } from "utils/index";
+import { DirectionOptions, PaymentMethod } from "utils/options";
+import { AssignationCargoApproach } from "./assignation";
 
 export const RemainderCargo: React.FC = () => {
-  const [filter, setFilter] = useState(fieldRegistrationPaginate);
+  const [user] = useContext(AuthContext);
+  const [filter, setFilter] = useState(cargoApproachPaginate);
   const [search, setSearch] = useState<string>("");
 
   const fieldRegister = useRequest(fieldRegistration.list, {
@@ -52,15 +55,17 @@ export const RemainderCargo: React.FC = () => {
               onChange={(values) => {
                 setFilter({
                   ...filter,
-                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  between: [
+                    dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                    dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  ],
                 });
               }}
               defaultValue={[
-                filter.start_date
-                  ? dayjs(filter.start_date)
+                filter.between[0]
+                  ? dayjs(filter.between[0])
                   : dayjs().subtract(3, "month"),
-                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
               ]}
             />
           </div>
@@ -80,6 +85,12 @@ export const RemainderCargo: React.FC = () => {
         dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
         refresh={refreshList}
+        bordered
+        UpdateComponent={
+          user.user?.role_name === UserRoleType.cashier
+            ? AssignationCargoApproach
+            : undefined
+        }
         className="p-0 remove-padding-table"
         columns={[
           {
@@ -106,6 +117,11 @@ export const RemainderCargo: React.FC = () => {
               {
                 title: "Орох хил",
                 dataIndex: "direction",
+                render: (_, record) => {
+                  return DirectionOptions.find(
+                    (item) => item.value === record?.direction
+                  )?.label;
+                },
               },
               {
                 title: "Ирэх/Явах",
@@ -121,7 +137,10 @@ export const RemainderCargo: React.FC = () => {
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_code",
+                dataIndex: "broker_name",
+                render: (_, record) => {
+                  return record?.broker?.name;
+                },
               },
               {
                 title: "Ачааны нэр төрөл",
@@ -131,7 +150,7 @@ export const RemainderCargo: React.FC = () => {
                 title: "Тээврийн хөлс",
                 dataIndex: "transport_fee",
                 render: (_, record) => {
-                  return record?.transport_recieve?.transport_fee;
+                  return moneyFormat(record?.transport_recieve?.transport_fee);
                 },
               },
               {
@@ -142,10 +161,10 @@ export const RemainderCargo: React.FC = () => {
                 },
               },
               {
-                title: "Харилцагч",
+                title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company_id;
+                  return record?.transport_recieve?.customer_company?.name;
                 },
               },
               {
@@ -169,7 +188,7 @@ export const RemainderCargo: React.FC = () => {
                 title: "Шилжүүлэх тээврийн хөлс",
                 dataIndex: "transfer_fee",
                 render: (_, record) => {
-                  return record?.transport_give?.transfer_fee;
+                  return moneyFormat(record?.transport_give?.transfer_fee);
                 },
               },
               {
