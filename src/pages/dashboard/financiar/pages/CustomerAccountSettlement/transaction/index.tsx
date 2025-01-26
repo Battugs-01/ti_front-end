@@ -7,9 +7,9 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
+import { PaymentMethod } from "utils/options";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { PaymentMethod } from "utils/options";
 
 const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
@@ -130,7 +130,7 @@ const Transaction = () => {
             width: "200",
             render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
+                {value === "debit" ? "Орлого" : "Зарлага"}
               </span>
             ),
           },
