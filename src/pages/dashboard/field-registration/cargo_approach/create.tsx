@@ -278,6 +278,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     request={async () => {
                       const data = await customerCompanyList.runAsync({
                         is_all: true,
+                        is_broker: true,
                       });
                       return data?.items.map((item) => ({
                         label: item.name,
