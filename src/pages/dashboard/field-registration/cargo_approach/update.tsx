@@ -160,7 +160,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction"}
+                    name={"transport_direction"}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
                     rules={FORM_ITEM_RULE()}
@@ -173,7 +173,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction-2"}
+                    name={"direction"}
                     label="Чиглэл"
                     options={DirectionOptions.map((item) => ({
                       label: item.label,
