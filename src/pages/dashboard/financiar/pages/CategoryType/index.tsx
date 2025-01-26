@@ -10,6 +10,7 @@ import { CategoryTypeTypes } from "service/fininaciar/categoryType/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { Label } from "components/label";
 
 const CategoryType = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -42,7 +43,7 @@ const CategoryType = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Элдэв хураамжийн ангилал"
+          customHeaderTitle={<Label title="Элдэв хураамжийн ангилал" />}
           searchPlaceHolder="Дүн, ангилал код"
           setCreate={setCreate}
           search={search}

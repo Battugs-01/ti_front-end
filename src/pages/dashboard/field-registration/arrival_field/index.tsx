@@ -14,6 +14,7 @@ import { CreateArrivalField } from "./create";
 import { ShippmentCreate } from "./shippment_create";
 import dayjs from "dayjs";
 import { Label } from "components/label";
+import { PaymentMethod } from "utils/options";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -174,16 +175,67 @@ export const ArrivalField: React.FC = () => {
                 dataIndex: "carrier_code",
               },
               {
-                title: "Хоосон/Ачаатай",
-                dataIndex: "empty_full",
+                title: "Ачааны нэр төрөл",
+                dataIndex: "cargo_name",
               },
               {
-                title: "Зарах эсэх",
-                dataIndex: "is_sale",
+                title: "Тээврийн хөлс",
+                dataIndex: "transport_fee",
+                render: (_, record) => {
+                  return record?.transport_recieve?.transport_fee;
+                },
               },
               {
-                title: "Зарах үнэ",
-                dataIndex: "price",
+                title: "Вальют",
+                dataIndex: "currency",
+                render: (_, record) => {
+                  return record?.transport_recieve?.currency;
+                },
+              },
+              {
+                title: "Харилцагч",
+                dataIndex: "customer_company_id",
+                render: (_, record) => {
+                  return record?.transport_recieve?.customer_company_id;
+                },
+              },
+              {
+                title: "Төлөх арга",
+                dataIndex: "payment_method",
+                render: (_, record) => {
+                  return PaymentMethod.find(
+                    (item) =>
+                      item.value === record?.transport_recieve?.payment_method
+                  )?.label;
+                },
+              },
+              {
+                title: "Э/Хураамж санамж",
+                dataIndex: "additional_fee_note",
+                render: (_, record) => {
+                  return record?.transport_recieve?.additional_fee_note;
+                },
+              },
+              {
+                title: "Шилжүүлэх тээврийн хөлс",
+                dataIndex: "transfer_fee",
+                render: (_, record) => {
+                  return record?.transport_give?.transfer_fee;
+                },
+              },
+              {
+                title: "Гадаад тээвэр зууч",
+                dataIndex: "transport_broker",
+                render: (_, record) => {
+                  return record?.transport_give?.transport_broker;
+                },
+              },
+              {
+                title: "Төлбөр хариуцагчийн нэр",
+                dataIndex: "transfer_broker_name",
+                render: (_, record) => {
+                  return record?.transport_give?.transfer_broker_name;
+                },
               },
             ],
           },

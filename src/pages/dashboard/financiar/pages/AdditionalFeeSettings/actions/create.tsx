@@ -12,11 +12,6 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
 
   const create = useRequest(addinitionalFeeSettings.create, {
     manual: true,
-    onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
-    },
   });
 
   return (

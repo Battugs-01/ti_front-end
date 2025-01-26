@@ -35,7 +35,7 @@ export const Info = () => {
                 value: item.id,
               }));
             }}
-            name="category_code"
+            name="category_ids"
             placeholder="Ангилал код"
             label={"Ангилал код"}
             rules={FORM_ITEM_RULE()}

@@ -9,6 +9,7 @@ import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { Label } from "components/label";
 
 const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -41,7 +42,7 @@ const CustomerCompany = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Харилцагч компанийн жагсаалт"
+          customHeaderTitle={<Label title="Харилцагч компанийн жагсаалт" />}
           searchPlaceHolder="Нэр, данс"
           fileName="Харилцагч компанийн жагсаалт"
           setCreate={setCreate}

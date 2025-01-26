@@ -1,13 +1,24 @@
 import {
   ProFormDatePicker,
   ProFormDigit,
+  ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
-import { Col, Row } from "antd";
+import { useRequest } from "ahooks";
+import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
+import ledger from "service/fininaciar/accountSettlement/ledger";
+import { PaymentMethod } from "utils/options";
 
 export const Info = () => {
+  const list = useRequest(ledger.list, {
+    manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
@@ -21,49 +32,47 @@ export const Info = () => {
           />
         </Col>
         <Col span={12}>
-          {/* <ProFormSelect
+          <ProFormSelect
             label={<div className="font-medium text-gray-700">Данс</div>}
-            name={"employee_id"}
+            name={"ledger_id"}
             shouldUpdate
             className="flex items-center justify-center "
             fieldProps={{
               showSearch: true,
-              loading: emplyoee.loading,
+              loading: list.loading,
               filterOption: false,
-              onSearch: debouncedSearch,
               size: "large",
             }}
             placeholder={"Данс"}
-            options={emplyoee?.data?.items.reduce<any[]>((acc, record) => {
-              acc.push({
-                label: (
-                  <div className="flex gap-2 items-center">
-                    <span>{`${record?.last_name?.substring(0, 1)}. ${
-                      record?.first_name
-                    }`}</span>
-                  </div>
-                ),
-                value: record?.id,
+            request={async (value) => {
+              const res = await list.runAsync({
+                is_all: true,
               });
-              return acc;
-            }, [])}
-          /> */}
+              return res?.items?.map((item: any) => ({
+                label: `${item?.customer_company?.name} - ${item?.name}`,
+                value: item?.id,
+              }));
+            }}
+          />
         </Col>
       </Row>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormDigit
-            name={"cash"}
-            placeholder={"Бэлэн"}
-            label="Бэлэн"
-            rules={FORM_ITEM_RULE()}
+          <ProFormSelect
+            name="payment_type"
+            placeholder="Төлөлтийн хэлбэр"
+            options={PaymentMethod.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+            label="Төлөлтийн хэлбэр"
           />
         </Col>
         <Col span={12}>
           <ProFormDigit
-            name={"non_cash"}
-            placeholder={"Бэлэн бус"}
-            label="Бэлэн бус"
+            name={"amount"}
+            placeholder={"Мөнгөн дүн"}
+            label="Мөнгөн дүн"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
