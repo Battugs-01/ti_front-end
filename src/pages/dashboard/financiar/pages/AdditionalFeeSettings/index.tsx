@@ -8,6 +8,7 @@ import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { initPagination, moneyFormat } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { Label } from "components/label";
 
 const AdditionalFeeSettings = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -40,7 +41,7 @@ const AdditionalFeeSettings = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle="Элдэв хураамжийн тохиргоо"
+          customHeaderTitle={<Label title="Элдэв хураамжийн тохиргоо" />}
           fileName="Элдэв хураамжийн тохиргооны жагсаалт"
           searchPlaceHolder="Дүн, ангилал код"
           setCreate={setCreate}

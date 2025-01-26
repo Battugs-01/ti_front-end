@@ -2,6 +2,7 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
+import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -40,7 +41,7 @@ const CancellingTicket = () => {
           leftContent={
             <div className="flex items-center gap-3">
               <div className="text-lg font-semibold text-gray-700">
-                Нийт ({list?.data?.total})
+                <Label title={`Нийт (${list?.data?.total})`} />
               </div>
             </div>
           }
