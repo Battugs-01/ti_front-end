@@ -1,14 +1,13 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
-  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import IBadge from "components/badge";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
@@ -40,6 +39,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await updateCargo.runAsync(
           {
             ...values,
+            arrived_at_site: dayjs(values.arrived_at_site).toDate(),
           },
           detail?.id
         );

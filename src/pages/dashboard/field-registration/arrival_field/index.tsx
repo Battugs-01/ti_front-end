@@ -14,8 +14,8 @@ import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
 import { DirectionOptions, PaymentMethod } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateArrivalField } from "./create";
-import { ShippmentCreate } from "./shippment_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
+import { ShippmentCreate } from "./shippment_create";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -198,6 +198,9 @@ export const ArrivalField: React.FC = () => {
               {
                 title: "Ачааны нэр төрөл",
                 dataIndex: "cargo_name",
+                render: (_, record) => {
+                  return record?.container_cargo?.cargo_name;
+                },
               },
               {
                 title: "Тээврийн хөлс",

@@ -299,7 +299,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      rules={FORM_ITEM_RULE()}
+                      // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge title="2" color="blue" />
                   </div>
@@ -541,7 +541,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                                 is_all: true,
                               });
                               return res?.items.map((item) => ({
-                                label: item.name,
+                                label: `${item.name} - ${item.customer_company?.name}`,
                                 value: item.id,
                               }));
                             }}
