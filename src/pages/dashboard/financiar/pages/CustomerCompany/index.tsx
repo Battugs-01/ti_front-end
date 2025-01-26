@@ -115,6 +115,17 @@ const CustomerCompany = () => {
               </span>
             ),
           },
+          {
+            dataIndex: "email",
+            title: "Цахим хаяг",
+            align: "left",
+            width: "10%",
+            render: (value) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center ">
+                {value || "-"}
+              </span>
+            ),
+          },
         ]}
         CreateComponent={CreateService}
         create={create as boolean}
