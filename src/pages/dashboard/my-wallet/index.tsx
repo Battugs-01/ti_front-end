@@ -3,21 +3,18 @@ import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { AuthContext } from "context/auth";
+import { useAuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { PaymentMethod } from "utils/options";
-import { CreateService } from "./actions/create";
-import { UpdateService } from "./actions/update";
 
-const Transaction = () => {
+const myWallet = () => {
   const [filter, setFilter] = useState(transictionFilter);
   const [search, setSearch] = useState<string>("");
-  const [create, setCreate] = useState<boolean>(false);
-  const [user] = useContext(AuthContext);
-  const list = useRequest(transaction.customerPaymentlist, {
+  const [{ authorized, user }] = useAuthContext();
+  const list = useRequest(transaction.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -25,12 +22,11 @@ const Transaction = () => {
       }),
   });
 
-  console.log(user, "sdauser");
   const run = () => {
     list.run({
       ...filter,
       search: search,
-      created_by: user?.user?.id,
+      customer_company_id: user?.customer_company_id,
     });
   };
 
@@ -39,7 +35,6 @@ const Transaction = () => {
   }, [filter]);
 
   const searchRun = useDebounceFn(list.run, { wait: 1000 });
-
   return (
     <PageCard xR>
       <div className="px-2 pb-0">
@@ -68,14 +63,14 @@ const Transaction = () => {
               />
             </div>
           }
-          setCreate={setCreate}
-          searchPlaceHolder="Данс , Харилцагчийн нэр , Мөнгөн дүн"
+          searchPlaceHolder="Мөнгөн дүн"
           search={search}
           setSearch={(e) => {
             setSearch(e);
             searchRun.run({ ...filter, search: e });
           }}
-          fileName="Харилцагчийн дансны гүйлгээний жагсаалт"
+          hideCreate
+          fileName="Миний гүйлгээний жагсаалт"
           refresh={() => list.run({ ...filter, search: search })}
         />
       </div>
@@ -84,11 +79,8 @@ const Transaction = () => {
         total={list.data?.total}
         loading={list.loading}
         dataSource={list.data?.items ?? []}
-        refresh={(values) =>
-          list.run({ ...filter, created_by: user?.user?.id, ...values })
-        }
+        refresh={(values) => list.run({ ...filter, ...values })}
         form={filter}
-        UpdateComponent={UpdateService}
         setForm={setFilter}
         columns={[
           {
@@ -186,12 +178,9 @@ const Transaction = () => {
             ),
           },
         ]}
-        CreateComponent={CreateService}
-        create={create as boolean}
-        setCreate={setCreate}
       />
     </PageCard>
   );
 };
 
-export default Transaction;
+export default myWallet;

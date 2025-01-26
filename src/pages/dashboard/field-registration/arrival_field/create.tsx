@@ -207,7 +207,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
                       name={"date_4"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      rules={FORM_ITEM_RULE()}
+                      // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge title="2" color="blue" />
                   </div>

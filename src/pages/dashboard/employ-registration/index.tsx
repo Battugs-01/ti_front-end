@@ -2,6 +2,7 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import UserBadge from "components/badge/userbadge";
 import { PageCard } from "components/card";
+import { Label } from "components/label";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { GenderType } from "config";
@@ -11,7 +12,6 @@ import employRegistration from "service/employ-registration";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { Label } from "components/label";
 
 const EmployeRegistration = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -45,6 +45,7 @@ const EmployeRegistration = () => {
         <InitTableHeader
           addButtonName="Нэмэх"
           customHeaderTitle={<Label title="Ажилчдын жагсаалт" />}
+          fileName="Ажилчдын жагсаалт"
           searchPlaceHolder="Овог, нэр , утасны дугаар "
           setCreate={setCreate}
           search={search}

@@ -12,6 +12,9 @@ const FieldRegistration = lazy(
 
 const ReportPage = lazy(() => import("pages/dashboard/report/index"));
 
+const MyWallet = lazy(() => import("pages/dashboard/my-wallet/index"));
+const MyFill = lazy(() => import("pages/dashboard/my-fill/index"));
+
 const dashboardRoutes: IRoute[] = [
   {
     key: "employ-registration",
@@ -32,6 +35,16 @@ const dashboardRoutes: IRoute[] = [
     key: "financiar",
     path: "financiar",
     component: <Fininciar />,
+  },
+  {
+    key: "my-wallet",
+    path: "my-wallet",
+    component: <MyWallet />,
+  },
+  {
+    key: "my-fill",
+    path: "my-fill",
+    component: <MyFill />,
   },
 ];
 

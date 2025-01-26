@@ -1,6 +1,7 @@
 import ProForm, {
   ProFormCheckbox,
   ProFormInstance,
+  ProFormRadio,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
@@ -11,11 +12,12 @@ import { useAuthContext } from "context/auth";
 import { Action } from "context/type";
 import {
   menuCashierItems,
+  menuCustomerItems,
   menuFininciarItems,
   menuItems,
   menuManagerItems,
 } from "layout/dashboard/menu_items";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import auth from "service/auth";
 import { LoginData } from "service/auth/type";
@@ -25,6 +27,8 @@ const Login: FC = () => {
   const [, setAuth] = useAuthContext();
   const userData = auth.getRememberUser();
   const navigate = useNavigate();
+  const [isEmployee, setIsEmployee] = useState<boolean>(true);
+
   const login = useRequest(auth.login, {
     manual: true,
     onSuccess: (data) => {
@@ -36,6 +40,8 @@ const Login: FC = () => {
         navigate(menuCashierItems[0].path);
       } else if (data.user.role_name === UserRoleType.financier) {
         navigate(menuFininciarItems[0].path);
+      } else if (data.user.role_name === UserRoleType.customer) {
+        navigate(menuCustomerItems[0].path);
       } else {
         navigate(menuItems[0].path);
       }
@@ -49,6 +55,7 @@ const Login: FC = () => {
       });
     },
   });
+
   return (
     <div className="bg-white rounded-xl w-full">
       <div className="align-left flex justify-center">
@@ -74,7 +81,6 @@ const Login: FC = () => {
             email: data.email.toLowerCase(),
             web: true,
           };
-
           await login.runAsync(sendJSON);
         }}
         submitter={{
@@ -96,6 +102,28 @@ const Login: FC = () => {
         <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
           <Label title="Нэвтрэх" />
         </div>
+        <ProFormRadio.Group
+          name="is_broker"
+          radioType="radio"
+          label="Нэвтрэх төрөл"
+          fieldProps={{
+            size: "middle",
+            onChange: (e) => {
+              setIsEmployee(e.target.value);
+            },
+          }}
+          options={[
+            {
+              label: "Ажилтан",
+              value: true,
+            },
+            {
+              label: "Харилцагч",
+              value: false,
+            },
+          ]}
+          initialValue={true}
+        />
         <div className="space-y-1">
           <ProFormText
             name="email"

@@ -1,6 +1,7 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
+import { Label } from "components/label";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { CategoryTypeEnum } from "config";
@@ -10,7 +11,6 @@ import { CategoryTypeTypes } from "service/fininaciar/categoryType/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { Label } from "components/label";
 
 const CategoryType = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -44,7 +44,8 @@ const CategoryType = () => {
         <InitTableHeader
           addButtonName="Нэмэх"
           customHeaderTitle={<Label title="Элдэв хураамжийн ангилал" />}
-          searchPlaceHolder="Дүн, ангилал код"
+          fileName="Элдэв хураамжийн ангилал"
+          searchPlaceHolder="Нэр"
           setCreate={setCreate}
           search={search}
           setSearch={(e) => {

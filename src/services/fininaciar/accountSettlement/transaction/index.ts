@@ -8,6 +8,12 @@ namespace transaction {
       body,
     });
 
+  export const customerPaymentlist = (body: any) =>
+    http.post<PaginationResponse<any>>("/transaction/page", {
+      hasAuth: true,
+      body,
+    });
+
   export const create = (body: any) =>
     http.post<SuccessResponse>("/transaction/create", {
       hasAuth: true,

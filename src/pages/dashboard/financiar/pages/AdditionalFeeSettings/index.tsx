@@ -1,6 +1,7 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import { PageCard } from "components/card";
+import { Label } from "components/label";
 import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
@@ -8,7 +9,6 @@ import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { initPagination, moneyFormat } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { Label } from "components/label";
 
 const AdditionalFeeSettings = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -41,9 +41,9 @@ const AdditionalFeeSettings = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle={<Label title="Элдэв хураамжийн тохиргоо" />}
-          fileName="Элдэв хураамжийн тохиргооны жагсаалт"
-          searchPlaceHolder="Дүн, ангилал код"
+          customHeaderTitle={<Label title="Элдэв хураамжийн жагсаалт" />}
+          fileName="Элдэв хураамжийн  жагсаалт"
+          searchPlaceHolder="Ангилал нэр , Хураамжийн нэр"
           setCreate={setCreate}
           search={search}
           setSearch={(e) => {
@@ -98,6 +98,16 @@ const AdditionalFeeSettings = () => {
           {
             dataIndex: "unit_measurement",
             title: "Хэмжих нэгж",
+            width: "200",
+            render: (value) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center">
+                {value || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "capacity",
+            title: "Даац",
             width: "200",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">

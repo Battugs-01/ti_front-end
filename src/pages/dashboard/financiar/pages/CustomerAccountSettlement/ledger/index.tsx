@@ -1,9 +1,8 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { LedgerType } from "service/fininaciar/accountSettlement/ledger/type";
@@ -42,7 +41,7 @@ const Ledger = () => {
           hideTitle
           leftContent={
             <div className="flex gap-2">
-              <DatePicker.RangePicker
+              {/* <DatePicker.RangePicker
                 className="w-max"
                 placeholder={["Эхлэх огноо", "Дуусах огноо"]}
                 onChange={(values) => {
@@ -60,7 +59,7 @@ const Ledger = () => {
                     : dayjs().subtract(3, "month"),
                   filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
                 ]}
-              />
+              /> */}
             </div>
           }
           fileName="Харилцагчийн дансны жагсаалт"

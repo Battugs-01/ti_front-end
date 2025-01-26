@@ -340,7 +340,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      rules={FORM_ITEM_RULE()}
+                      // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge title={dates?.left_site} color="blue" />
                   </div>
