@@ -2,43 +2,30 @@ import ProForm, {
   ModalForm,
   ProFormDatePicker,
   ProFormDigit,
+  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import IBadge from "components/badge";
-import { FORM_ITEM_RULE } from "config";
+import { DirectionType, FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
-import assignation from "service/feild_registration/assignation";
+import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
+import { CurrencyOptions, PaymentMethod } from "utils/options";
 
 export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
+  open,
   detail,
 }) => {
-  const updateCargo = useRequest(fieldRegistration.updateRegistration, {
+  const addCargo = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: "Амжилттай засагдлаа",
-      });
-    },
-    onError: (error: any) => {
-      notification.error({
-        message: error.message,
-      });
-      onCancel?.();
-    },
-  });
-
-  const createAssign = useRequest(assignation.create, {
-    manual: true,
-    onSuccess: () => {
-      notification.success({
-        message: "Амжилттай бүртгэгдлээ",
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -50,33 +37,36 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
     },
   });
 
+  const customerCompanyList = useRequest(customerCompany.list, {
+    manual: true,
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
+
   return (
     <ModalForm
       onFinish={async (values) => {
-        await updateCargo.runAsync(
+        await addCargo.runAsync(
           {
+            ...values,
+            approach_report_date: dayjs(values.approach_report_date).toDate(),
             arrived_at_site: dayjs(values.arrived_at_site).toDate(),
           },
           detail?.id
         );
-        if (values.assignation) {
-          await createAssign.runAsync({
-            ...values,
-            container_transport_id: detail?.id,
-          });
-        }
-        onFinish?.();
       }}
-      title="Талбайн бүртгэл"
-      open={!!detail}
       initialValues={{
-        date: detail?.date ? dayjs(detail.date) : undefined,
-        broker_id: detail?.broker_id,
-        container_code: detail?.container_code,
+        ...detail,
+        approach_report_date: dayjs(detail?.approach_report_date),
+        arrived_at_site: null,
       }}
+      title="Ачаа чингэлэг тээврийн бүртгэл "
+      open={open}
       modalProps={{
         destroyOnClose: true,
-        width: "700px",
+        width: "650px",
         onCancel,
         styles: {
           header: {
@@ -105,7 +95,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={updateCargo.loading}
+                loading={addCargo.loading}
               >
                 Хадгалах
               </Button>
@@ -119,43 +109,99 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
           return (
             <>
               <Row gutter={[16, 16]}>
-                <Col span={4}>
+                <Col span={8}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"category"}
-                    placeholder="Төрөл"
-                    label={"Төрөл"}
-                  />
-                </Col>
-                <Col span={10}>
-                  <ProFormText
                     disabled
-                    fieldProps={{
-                      size: "large",
-                    }}
                     name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col span={10}>
+                <Col span={8}>
+                  <ProFormDigit
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={"capacity"}
+                    placeholder="Даац"
+                    label={"Даац"}
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+                <Col span={8}>
                   <ProFormSelect
                     fieldProps={{
                       size: "large",
                     }}
+                    disabled
                     options={[{ label: "TI Logistic", value: 1 }].map(
                       (item) => ({
                         label: item.label,
                         value: item.value,
                       })
                     )}
+                    initialValue={1}
                     name="broker_id"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={"transport_direction"}
+                    placeholder="Тээврийн чиглэл"
+                    label="Тээврийн чиглэл"
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <ProFormRadio.Group
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={"direction"}
+                    label="Чиглэл"
+                    options={[
+                      {
+                        label: "Урд",
+                        value: DirectionType.south,
+                      },
+                      {
+                        label: "Хойд",
+                        value: DirectionType.north,
+                      },
+                    ]}
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col sm={12} xs={21}>
+                  <ProFormDatePicker
+                    name="approach_report_date"
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    placeholder="Дөхөлтийн мэдээний огноо"
+                    rules={FORM_ITEM_RULE()}
+                    label="Дөхөлтийн мэдээний огноо"
                   />
                 </Col>
               </Row>
@@ -171,156 +217,19 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      disabled
-                      name={"date_2"}
-                      placeholder="Задарсан"
-                      label="Задарсан"
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
               </Row>
+              <div className="text-xl font-medium mb-3">Ачаа</div>
               <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      disabled
-                      name={"date_3"}
-                      placeholder="Суларсан"
-                      label="Суларсан"
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      disabled
-                      name={"date_4"}
-                      placeholder="Т-c явсан"
-                      label="Т-c явсан"
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"comeback_date"}
-                      disabled
-                      placeholder="Буцаж ирсэн"
-                      label="Буцаж ирсэн"
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-                <Col span={12}>
-                  <div className="flex items-center gap-3">
-                    <ProFormDatePicker
-                      fieldProps={{
-                        size: "large",
-                      }}
-                      name={"date_6"}
-                      placeholder="Ачилт хийсэн"
-                      disabled
-                      label="Ачилт хийсэн"
-                    />
-                    <IBadge title="2" color="blue" />
-                  </div>
-                </Col>
-              </Row>
-              <div className="text-xl font-medium mb-3">Олголт</div>
-
-              <Row gutter={[16, 16]}>
-                <Col span={8}>
+                <Col span={24}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
                     }}
-                    name={["assignation", "waggon_number"]}
-                    placeholder="Вагоны дугаар"
-                    label="Вагоны дугаар"
-                  />
-                </Col>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "shipping_number"]}
-                    placeholder="Илгээлтийн дугаар"
-                    label="Илгээлтийн дугаар"
-                  />
-                </Col>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "sent_from"]}
-                    placeholder="Хаанаас илгээсэн /Өртөө/"
-                    label="Хаанаас илгээсэн /Өртөө/"
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "direction"]}
-                    placeholder="Тээврийн чиглэл"
-                    label="Тээврийн чиглэл"
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "cargo_name"]}
+                    disabled
+                    name={["container_cargo", "cargo_name"]}
                     placeholder="Ачааны нэр төрөл"
                     label="Ачааны нэр төрөл"
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormDigit
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "net_weight"]}
-                    placeholder="Цэвэр жин"
-                    label="Цэвэр жин"
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormDigit
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "gross_weight"]}
-                    placeholder="Бохир жин"
-                    label="Бохир жин"
+                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
@@ -330,9 +239,11 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={["assignation", "reciever_name"]}
+                    disabled
+                    name={["container_cargo", "reciever_email"]}
                     placeholder="Хүлээн авагч"
                     label="Хүлээн авагч"
+                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
@@ -340,19 +251,143 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={["assignation", "reciever_phone"]}
+                    disabled
+                    name={["container_cargo", "reciever_phone"]}
                     placeholder="Утас"
                     label="Утас"
                     rules={[
-                      // {
-                      //   required: true,
-                      //   message: "Утас оруулах шаардлагатай!",
-                      // },
+                      {
+                        required: true,
+                        message: "Утас оруулах шаардлагатай!",
+                      },
                       {
                         pattern: /^[0-9]{8}$/,
                         message: "Утас буруу байна!",
                       },
                     ]}
+                  />
+                </Col>
+              </Row>
+              <div className="text-xl font-medium mb-3">Авах</div>
+              <Row gutter={[16, 16]}>
+                <Col span={8}>
+                  <ProFormDigit
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_recieve", "transport_fee"]}
+                    placeholder="Тээврийн хөлс"
+                    label={"Тээврийн хөлс"}
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+                <Col span={8}>
+                  <ProFormSelect
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    options={CurrencyOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
+                    name={["transport_recieve", "currency"]}
+                    placeholder="Вальют"
+                    label={"Вальют"}
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+                <Col span={8}>
+                  <ProFormSelect
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_recieve", "customer_company_id"]}
+                    placeholder="Харилцагч"
+                    label="Харилцагч"
+                    request={async () => {
+                      const data = await customerCompanyList.runAsync({
+                        is_all: true,
+                        is_broker: true,
+                      });
+                      return data?.items.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    }}
+                    // rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <ProFormSelect
+                    options={PaymentMethod.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
+                    disabled
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    name={["transport_recieve", "payment_method"]}
+                    placeholder="Төлөх арга"
+                    label="Төлөх арга"
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+                <Col span={12}>
+                  <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_recieve", "additional_fee_note"]}
+                    placeholder="Э/Хураамж санамж"
+                    label="Э/Хураамж санамж"
+                  />
+                </Col>
+              </Row>
+              <div className="text-xl font-medium mb-3">Өгөх</div>
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <ProFormDigit
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_give", "transfer_fee"]}
+                    placeholder="Шилжүүлэх тээврийн хөлс"
+                    label="Шилжүүлэх тээврийн хөлс"
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+                <Col span={12}>
+                  <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_give", "transport_broker"]}
+                    placeholder="Гадаад тээвэр зууч"
+                    label="Гадаад тээвэр зууч"
+                    rules={FORM_ITEM_RULE()}
+                  />
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <ProFormText
+                    fieldProps={{
+                      size: "large",
+                    }}
+                    disabled
+                    name={["transport_give", "transfer_broker_name"]}
+                    placeholder="Төлбөр хариуцагчийн нэр"
+                    label="Төлбөр хариуцагчийн нэр"
+                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>

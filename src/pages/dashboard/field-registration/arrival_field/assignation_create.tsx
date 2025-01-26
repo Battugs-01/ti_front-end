@@ -10,6 +10,7 @@ import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
+import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
@@ -31,6 +32,13 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
+  const [dates, setDates] = useState({
+    opened: 0,
+    freed: 0,
+    left_site: 0,
+    returned: 0,
+    shipped: 0,
+  });
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
@@ -139,11 +147,17 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         await updateArrivalField.runAsync(
           {
             ...values,
+            opened_at: moment(values.opened_at).toDate(),
+            freed_at: moment(values.freed_at).toDate(),
+            left_site_at: moment(values.left_site_at).toDate(),
+            returned_at: moment(values.returned_at).toDate(),
+            shipped_at: moment(values.shipped_at).toDate(),
           },
           detail?.id
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
+          date: moment(values.date).toDate(),
           ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
         });
@@ -266,12 +280,21 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            opened: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
                       }}
                       name={"opened_at"}
                       placeholder="Задарсан"
                       label="Задарсан"
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates.opened} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -281,13 +304,22 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            freed: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
                       }}
                       name={"freed_at"}
                       placeholder="Суларсан"
                       label="Суларсан"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates.freed} color="blue" />
                   </div>
                 </Col>
                 <Col span={12}>
@@ -295,13 +327,22 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            left_site: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
                       }}
                       name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates?.left_site} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -311,13 +352,22 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            returned: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
                       }}
                       name={"returned_at"}
                       placeholder="Буцаж ирсэн"
                       label="Буцаж ирсэн"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates?.returned} color="blue" />
                   </div>
                 </Col>
                 <Col span={12}>
@@ -326,12 +376,21 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       disabled
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            shipped: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
                       }}
                       name={"shipped_at"}
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates?.shipped} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -541,7 +600,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                                 is_all: true,
                               });
                               return res?.items.map((item) => ({
-                                label: item.name,
+                                label: `${item.customer_company?.name} - ${item.name}`,
                                 value: item.id,
                               }));
                             }}

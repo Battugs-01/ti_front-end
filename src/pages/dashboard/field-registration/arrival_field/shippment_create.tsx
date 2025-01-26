@@ -515,7 +515,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         <Button
                           size="middle"
                           onClick={async () => {
-                            console.log("kkkk");
                             const data = await generatePDF({
                               title: "Элдэв хураамж тасалбар талон үйлдвэр",
                               headers: ["Орлогын төрөл", "Дүн"],

@@ -13,7 +13,6 @@ import { CargoApproachList } from "service/feild_registration/type";
 import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
 import { DirectionOptions, PaymentMethod } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
-import { CreateArrivalField } from "./create";
 import { ShippmentCreate } from "./shippment_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 
@@ -24,6 +23,7 @@ export const ArrivalField: React.FC = () => {
   const [record, setRecord] = useState<CargoApproachList>();
   const [assignationCreate, setAssignationCreate] = useState(false);
   const [shippmentCreate, setShippmentCreate] = useState(false);
+  const [createCargoApproach, setCreateCargoApproach] = useState(false);
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
@@ -83,12 +83,8 @@ export const ArrivalField: React.FC = () => {
           searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
-        CreateComponent={
-          user?.user?.role_name === UserRoleType.cashier
-            ? CreateCargoApproach
-            : undefined
-        }
         hideCreate={user?.user?.role_name !== UserRoleType.cashier}
+        setCreate={setCreateCargoApproach}
         fileName="ArrivalField"
         hideDownload
         customAction={
@@ -138,12 +134,10 @@ export const ArrivalField: React.FC = () => {
             },
           }
         }
-        CreateComponent={
-          user?.user?.role_name === UserRoleType.cashier
-            ? CreateArrivalField
-            : undefined
-        }
         refresh={refreshList}
+        CreateComponent={CreateCargoApproach}
+        create={createCargoApproach}
+        setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"
         columns={[
           {

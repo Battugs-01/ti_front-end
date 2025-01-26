@@ -14,7 +14,7 @@ namespace fieldRegistration {
     });
 
   export const create = (body: any) =>
-    http.post<SuccessResponse>("/transport-record/create", {
+    http.post<CargoApproachList>("/transport-record/create", {
       hasAuth: true,
       body,
     });
