@@ -10,6 +10,7 @@ import { fieldRegistrationPaginate } from "utils/index";
 import { CargoApproachList } from "service/feild_registration/type";
 import dayjs from "dayjs";
 import { Label } from "components/label";
+import { PaymentMethod } from "utils/options";
 
 export const RemainderCargo: React.FC = () => {
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
@@ -88,19 +89,27 @@ export const RemainderCargo: React.FC = () => {
               {
                 title: "Дөхөлт огноо",
                 dataIndex: "approach_report_date",
-                render: (value) => {
+                render: (value: any) => {
+                  if (
+                    !value ||
+                    dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
+                  ) {
+                    return <div className="flex items-center">-</div>;
+                  }
                   return (
-                    <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>
+                    <div className="flex items-center">
+                      {dayjs(value).format("YYYY/MM/DD")}
+                    </div>
                   );
                 },
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrived_at_site",
+                dataIndex: "direction",
               },
               {
                 title: "Ирэх/Явах",
-                dataIndex: "arrive_depart",
+                dataIndex: "transport_direction",
               },
               {
                 title: "Чингэлэг дугаар",
@@ -112,19 +121,70 @@ export const RemainderCargo: React.FC = () => {
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_name",
+                dataIndex: "carrier_code",
               },
               {
-                title: "Хоосон/Ачаатай",
-                dataIndex: "empty_full",
+                title: "Ачааны нэр төрөл",
+                dataIndex: "cargo_name",
               },
               {
-                title: "Зарах эсэх",
-                dataIndex: "for_sale",
+                title: "Тээврийн хөлс",
+                dataIndex: "transport_fee",
+                render: (_, record) => {
+                  return record?.transport_recieve?.transport_fee;
+                },
               },
               {
-                title: "Зарах үнэ",
-                dataIndex: "price",
+                title: "Вальют",
+                dataIndex: "currency",
+                render: (_, record) => {
+                  return record?.transport_recieve?.currency;
+                },
+              },
+              {
+                title: "Харилцагч",
+                dataIndex: "customer_company_id",
+                render: (_, record) => {
+                  return record?.transport_recieve?.customer_company_id;
+                },
+              },
+              {
+                title: "Төлөх арга",
+                dataIndex: "payment_method",
+                render: (_, record) => {
+                  return PaymentMethod.find(
+                    (item) =>
+                      item.value === record?.transport_recieve?.payment_method
+                  )?.label;
+                },
+              },
+              {
+                title: "Э/Хураамж санамж",
+                dataIndex: "additional_fee_note",
+                render: (_, record) => {
+                  return record?.transport_recieve?.additional_fee_note;
+                },
+              },
+              {
+                title: "Шилжүүлэх тээврийн хөлс",
+                dataIndex: "transfer_fee",
+                render: (_, record) => {
+                  return record?.transport_give?.transfer_fee;
+                },
+              },
+              {
+                title: "Гадаад тээвэр зууч",
+                dataIndex: "transport_broker",
+                render: (_, record) => {
+                  return record?.transport_give?.transport_broker;
+                },
+              },
+              {
+                title: "Төлбөр хариуцагчийн нэр",
+                dataIndex: "transfer_broker_name",
+                render: (_, record) => {
+                  return record?.transport_give?.transfer_broker_name;
+                },
               },
             ],
           },

@@ -11,6 +11,7 @@ import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { PaymentMethod } from "utils/options";
 
 const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
@@ -118,22 +119,43 @@ const Transaction = () => {
             ),
           },
           {
-            dataIndex: "cash",
-            title: "Бэлэн",
+            dataIndex: "payment_type",
+            title: "Төлөлтийн хэлбэр",
             width: "200",
             render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {moneyFormat(value) || "-"}
+                {PaymentMethod.find((item) => item.value === value)?.label ||
+                  "-"}
               </span>
             ),
           },
           {
-            dataIndex: "non_cash",
-            title: "Бэлэн бус",
+            dataIndex: "transaction_type",
+            title: "Гүйлгээний төрөл",
             width: "200",
             render: (value: any) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center ">
+                {value || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "ledger_id",
+            title: "Дебит",
+            width: "200",
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(value) || "-"}
+                {moneyFormat(record?.debit) || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "contact_number",
+            title: "Кредит",
+            align: "center",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal">
+                {moneyFormat(record?.credit) || "-"}
               </span>
             ),
           },

@@ -135,26 +135,6 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "ledger_id",
-            title: "Дебит",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(record?.debit) || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "contact_number",
-            title: "Кредит",
-            align: "center",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.credit) || "-"}
-              </span>
-            ),
-          },
-          {
             dataIndex: "contact_number",
             title: "Эцсийн үлдэгдэл",
             align: "center",

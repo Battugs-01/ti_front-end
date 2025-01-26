@@ -39,7 +39,7 @@ export const IModalForm = ({
       onDone && onDone();
       successData && successData();
       notification.success({
-        message: "Амжилттай хадгалагдлаа",
+        message: "Амжилттай",
       });
     },
     onError: (err) =>

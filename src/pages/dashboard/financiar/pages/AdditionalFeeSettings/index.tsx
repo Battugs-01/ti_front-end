@@ -62,13 +62,13 @@ const AdditionalFeeSettings = () => {
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "category_code",
-            title: "Ангилал код",
+            dataIndex: "categories",
+            title: "Ангилалын нэр",
             align: "left",
-            render: (value) => (
+            render: (value: any) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
+                  {value?.map((item: any) => item?.name).join(", ")}
                 </span>
               </div>
             ),

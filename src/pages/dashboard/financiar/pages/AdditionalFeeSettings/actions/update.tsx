@@ -17,6 +17,7 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
+        category_ids: detail?.categories?.map((item: any) => item?.id),
       });
     }
   }, [open]);

@@ -12,11 +12,6 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
 
   const create = useRequest(transaction.create, {
     manual: true,
-    onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
-    },
   });
 
   return (
@@ -38,6 +33,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
           if (
             await create.runAsync({
               ...values,
+              transaction_type: "debit",
             })
           ) {
             return true;
