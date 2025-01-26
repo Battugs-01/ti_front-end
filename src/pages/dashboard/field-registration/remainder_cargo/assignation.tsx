@@ -59,10 +59,13 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
           },
           detail?.id
         );
-        await createAssign.runAsync({
-          ...values,
-          container_transport_id: detail?.id,
-        });
+        if (values.assignation) {
+          await createAssign.runAsync({
+            ...values,
+            container_transport_id: detail?.id,
+          });
+        }
+        onFinish?.();
       }}
       title="Талбайн бүртгэл"
       open={!!detail}
@@ -251,10 +254,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"waggon_number"}
+                    name={["assignation", "waggon_number"]}
                     placeholder="Вагоны дугаар"
                     label="Вагоны дугаар"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={8}>
@@ -262,10 +264,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"shipping_number"}
+                    name={["assignation", "shipping_number"]}
                     placeholder="Илгээлтийн дугаар"
                     label="Илгээлтийн дугаар"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={8}>
@@ -273,10 +274,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"sent_from"}
+                    name={["assignation", "sent_from"]}
                     placeholder="Хаанаас илгээсэн /Өртөө/"
                     label="Хаанаас илгээсэн /Өртөө/"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
@@ -286,10 +286,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction"}
+                    name={["assignation", "direction"]}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
@@ -297,10 +296,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"cargo_name"}
+                    name={["assignation", "cargo_name"]}
                     placeholder="Ачааны нэр төрөл"
                     label="Ачааны нэр төрөл"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
@@ -310,10 +308,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"net_weight"}
+                    name={["assignation", "net_weight"]}
                     placeholder="Цэвэр жин"
                     label="Цэвэр жин"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
@@ -321,10 +318,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"gross_weight"}
+                    name={["assignation", "gross_weight"]}
                     placeholder="Бохир жин"
                     label="Бохир жин"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
@@ -334,10 +330,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"reciever_name"}
+                    name={["assignation", "reciever_name"]}
                     placeholder="Хүлээн авагч"
                     label="Хүлээн авагч"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
@@ -345,14 +340,14 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"reciever_phone"}
+                    name={["assignation", "reciever_phone"]}
                     placeholder="Утас"
                     label="Утас"
                     rules={[
-                      {
-                        required: true,
-                        message: "Утас оруулах шаардлагатай!",
-                      },
+                      // {
+                      //   required: true,
+                      //   message: "Утас оруулах шаардлагатай!",
+                      // },
                       {
                         pattern: /^[0-9]{8}$/,
                         message: "Утас буруу байна!",

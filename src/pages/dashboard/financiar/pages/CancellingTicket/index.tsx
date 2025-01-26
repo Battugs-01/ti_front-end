@@ -41,7 +41,7 @@ const CancellingTicket = () => {
           leftContent={
             <div className="flex items-center gap-3">
               <div className="text-lg font-semibold text-gray-700">
-                <Label title={`Нийт (${list?.data?.total})`} />
+                <Label title={`Нийт (${list?.data?.total || 0})`} />
               </div>
             </div>
           }

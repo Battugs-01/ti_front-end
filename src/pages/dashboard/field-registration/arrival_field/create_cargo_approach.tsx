@@ -8,27 +8,23 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
-import { DirectionType, FORM_ITEM_RULE, permissionArray } from "config";
+import { DirectionType, FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
-import {
-  CurrencyOptions,
-  DirectionOptions,
-  PaymentMethod,
-} from "utils/options";
+import { CurrencyOptions, PaymentMethod } from "utils/options";
 
-export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
+export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
-  detail,
+  open,
 }) => {
-  const updateCargo = useRequest(fieldRegistration.updateRegistration, {
+  const addCargo = useRequest(fieldRegistration.create, {
     manual: true,
     onSuccess: () => {
       notification.success({
-        message: "Амжилттай засагдлаа",
+        message: "Амжилттай хадгалагдлаа",
       });
       onFinish?.();
     },
@@ -48,25 +44,19 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       }),
   });
 
-  console.log(detail, "detail");
-
   return (
     <ModalForm
       onFinish={async (values) => {
-        await updateCargo.runAsync(
-          {
-            ...values,
-            approach_report_date: dayjs(values.approach_report_date).toDate(),
-          },
-          detail?.id
-        );
+        await addCargo.runAsync({
+          ...values,
+          approach_report_date: dayjs(values.approach_report_date).toDate(),
+        });
       }}
-      title="Ачаа чингэлэг тээврийн бүртгэл засах "
-      open={!!detail}
       initialValues={{
-        ...detail,
-        approach_report_date: dayjs(detail?.approach_report_date),
+        direction: DirectionType.south,
       }}
+      title="Ачаа чингэлэг тээврийн бүртгэл "
+      open={open}
       modalProps={{
         destroyOnClose: true,
         width: "650px",
@@ -98,7 +88,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={updateCargo.loading}
+                loading={addCargo.loading}
               >
                 Хадгалах
               </Button>
@@ -160,7 +150,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction"}
+                    name={"transport_direction"}
                     placeholder="Тээврийн чиглэл"
                     label="Тээврийн чиглэл"
                     rules={FORM_ITEM_RULE()}
@@ -173,12 +163,18 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"direction-2"}
+                    name={"direction"}
                     label="Чиглэл"
-                    options={DirectionOptions.map((item) => ({
-                      label: item.label,
-                      value: item.value,
-                    }))}
+                    options={[
+                      {
+                        label: "Урд",
+                        value: DirectionType.south,
+                      },
+                      {
+                        label: "Хойд",
+                        value: DirectionType.north,
+                      },
+                    ]}
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
@@ -186,7 +182,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <Row gutter={[16, 16]}>
                 <Col sm={12} xs={21}>
                   <ProFormDatePicker
-                    name={"approach_report_date"}
+                    name="approach_report_date"
                     fieldProps={{
                       size: "large",
                     }}
@@ -316,6 +312,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["transport_recieve", "additional_fee_note"]}
                     placeholder="Э/Хураамж санамж"
                     label="Э/Хураамж санамж"
+                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>

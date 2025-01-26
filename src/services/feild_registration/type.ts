@@ -1,4 +1,5 @@
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 
 export interface CargoApproachList {
   id: number;
@@ -20,6 +21,7 @@ export interface CargoApproachList {
   transport_give: TransportGive;
   assignation_status: AssignationStatus;
   shipping_status: ShippingStatus;
+  broker: any;
 }
 
 export interface AssignationStatus {
@@ -48,6 +50,7 @@ export interface TransportRecieve {
   transport_fee: number;
   currency: string;
   customer_company_id: number;
+  customer_company: CustomerCompanyType;
   payment_method: string;
   additional_fee_note: string;
 }

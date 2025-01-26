@@ -2,19 +2,20 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
+import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
+import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
-import { fieldRegistrationPaginate } from "utils/index";
+import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
+import { DirectionOptions, PaymentMethod } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateArrivalField } from "./create";
 import { ShippmentCreate } from "./shippment_create";
-import dayjs from "dayjs";
-import { Label } from "components/label";
-import { PaymentMethod } from "utils/options";
+import { CreateCargoApproach } from "./create_cargo_approach";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -60,15 +61,17 @@ export const ArrivalField: React.FC = () => {
               onChange={(values) => {
                 setFilter({
                   ...filter,
-                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
-                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  between: [
+                    dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                    dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                  ],
                 });
               }}
               defaultValue={[
-                filter.start_date
-                  ? dayjs(filter.start_date)
+                filter.between[0]
+                  ? dayjs(filter.between[0])
                   : dayjs().subtract(3, "month"),
-                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
               ]}
             />
           </div>
@@ -80,7 +83,7 @@ export const ArrivalField: React.FC = () => {
           searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
-        hideCreate
+        CreateComponent={CreateCargoApproach}
         fileName="ArrivalField"
         hideDownload
         customAction={
@@ -120,6 +123,7 @@ export const ArrivalField: React.FC = () => {
       />
       <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}
+        bordered
         loading={fieldRegister.loading}
         rowSelection={
           user?.user?.role_name === UserRoleType.cashier && {
@@ -129,7 +133,11 @@ export const ArrivalField: React.FC = () => {
             },
           }
         }
-        CreateComponent={CreateArrivalField}
+        CreateComponent={
+          user?.user?.role_name === UserRoleType.cashier
+            ? CreateArrivalField
+            : undefined
+        }
         refresh={refreshList}
         className="p-0 remove-padding-table"
         columns={[
@@ -157,6 +165,11 @@ export const ArrivalField: React.FC = () => {
               {
                 title: "Орох хил",
                 dataIndex: "direction",
+                render: (_, record) => {
+                  return DirectionOptions.find(
+                    (item) => item.value === record?.direction
+                  )?.label;
+                },
               },
               {
                 title: "Ирэх/Явах",
@@ -172,7 +185,10 @@ export const ArrivalField: React.FC = () => {
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_code",
+                dataIndex: "broker_name",
+                render: (_, record) => {
+                  return record?.broker?.name;
+                },
               },
               {
                 title: "Ачааны нэр төрөл",
@@ -182,7 +198,7 @@ export const ArrivalField: React.FC = () => {
                 title: "Тээврийн хөлс",
                 dataIndex: "transport_fee",
                 render: (_, record) => {
-                  return record?.transport_recieve?.transport_fee;
+                  return moneyFormat(record?.transport_recieve?.transport_fee);
                 },
               },
               {
@@ -193,10 +209,10 @@ export const ArrivalField: React.FC = () => {
                 },
               },
               {
-                title: "Харилцагч",
+                title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company_id;
+                  return record?.transport_recieve?.customer_company?.name;
                 },
               },
               {
@@ -220,7 +236,7 @@ export const ArrivalField: React.FC = () => {
                 title: "Шилжүүлэх тээврийн хөлс",
                 dataIndex: "transfer_fee",
                 render: (_, record) => {
-                  return record?.transport_give?.transfer_fee;
+                  return moneyFormat(record?.transport_give?.transfer_fee);
                 },
               },
               {

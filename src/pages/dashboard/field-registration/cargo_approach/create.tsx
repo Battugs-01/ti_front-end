@@ -312,7 +312,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["transport_recieve", "additional_fee_note"]}
                     placeholder="Э/Хураамж санамж"
                     label="Э/Хураамж санамж"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
