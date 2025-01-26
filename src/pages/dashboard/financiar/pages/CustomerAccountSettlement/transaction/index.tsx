@@ -156,11 +156,20 @@ const Transaction = () => {
             ),
           },
           {
+            title: "Дансны үлдэгдэл",
+            dataIndex: "amount",
+            render: (_: any, record: any) => (
+              <span className="text-sm text-[#475467] font-normal">
+                {moneyFormat(record?.ledger_amount) || "-"}
+              </span>
+            ),
+          },
+          {
             dataIndex: "barimt",
             title: "Баримт",
             render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(value) || "-"}
+                {value || "-"}
               </span>
             ),
           },

@@ -145,6 +145,9 @@ export const RemainderCargo: React.FC = () => {
               {
                 title: "Ачааны нэр төрөл",
                 dataIndex: "cargo_name",
+                render: (_, record) => {
+                  return record?.container_cargo?.cargo_name;
+                },
               },
               {
                 title: "Тээврийн хөлс",

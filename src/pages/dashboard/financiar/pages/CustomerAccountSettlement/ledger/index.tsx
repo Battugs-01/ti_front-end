@@ -118,16 +118,16 @@ const Ledger = () => {
               </div>
             ),
           },
-          {
-            dataIndex: "is_broker",
-            title: "Эхний үлдэгдэл",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(record?.initial_balance) || "-"}
-              </span>
-            ),
-          },
+          // {
+          //   dataIndex: "is_broker",
+          //   title: "Эхний үлдэгдэл",
+          //   width: "200",
+          //   render: (_, record) => (
+          //     <span className="text-sm text-[#475467] font-normal flex text-center">
+          //       {moneyFormat(record?.initial_balance) || "-"}
+          //     </span>
+          //   ),
+          // },
           {
             dataIndex: "contact_number",
             title: "Эцсийн үлдэгдэл",
