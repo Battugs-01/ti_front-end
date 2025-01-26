@@ -73,6 +73,7 @@ export const Info = () => {
             name={"amount"}
             placeholder={"Мөнгөн дүн"}
             label="Мөнгөн дүн"
+            min={0}
             rules={FORM_ITEM_RULE()}
           />
         </Col>
