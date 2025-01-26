@@ -83,7 +83,12 @@ export const ArrivalField: React.FC = () => {
           searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
-        CreateComponent={CreateCargoApproach}
+        CreateComponent={
+          user?.user?.role_name === UserRoleType.cashier
+            ? CreateCargoApproach
+            : undefined
+        }
+        hideCreate={user?.user?.role_name !== UserRoleType.cashier}
         fileName="ArrivalField"
         hideDownload
         customAction={
