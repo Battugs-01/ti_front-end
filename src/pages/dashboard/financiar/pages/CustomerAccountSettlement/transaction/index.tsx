@@ -69,7 +69,7 @@ const Transaction = () => {
             </div>
           }
           setCreate={setCreate}
-          searchPlaceHolder="Үнэ"
+          searchPlaceHolder="Данс , Харилцагчийн нэр , Мөнгөн дүн"
           search={search}
           setSearch={(e) => {
             setSearch(e);
@@ -97,6 +97,18 @@ const Transaction = () => {
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
                   {dayjs(value).format("YYYY-MM-DD") || "-"}
+                </span>
+              </div>
+            ),
+          },
+          {
+            dataIndex: "initial_balance",
+            title: "Харилцагчийн нэр ",
+            align: "left",
+            render: (_, record) => (
+              <div className="flex gap-2">
+                <span className="text-sm text-[#475467] font-normal">
+                  {record?.ledger?.customer_company?.name || "-"}
                 </span>
               </div>
             ),
