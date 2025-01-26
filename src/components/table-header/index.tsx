@@ -135,14 +135,16 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
           {customDownload && customDownload}
 
           {toolbarItems}
-          <CreateButton
-            size="large"
-            className={`${hideCreate && "hidden"}`}
-            onClick={() =>
-              setCreate ? setCreate?.(true) : setCreateShow(true)
-            }
-            addButtonName={addButtonName}
-          />
+          {!hideCreate && (
+            <CreateButton
+              size="large"
+              className={`${hideCreate && "hidden"}`}
+              onClick={() =>
+                setCreate ? setCreate?.(true) : setCreateShow(true)
+              }
+              addButtonName={addButtonName}
+            />
+          )}
           {actions}
         </div>
       </div>
