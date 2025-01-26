@@ -50,9 +50,9 @@ const Transaction = () => {
           hideTitle
           leftContent={
             <div className="flex gap-3 items-end">
-              <div className="text-lg font-semibold text-gray-700">
+              {/* <div className="text-lg font-semibold text-gray-700">
                 Нийт ({list?.data?.total})
-              </div>
+              </div> */}
               <ProFormDateRangePicker
                 name="full_date"
                 className="text-gray-700 cursor-pointer mt-6"
