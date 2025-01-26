@@ -1,12 +1,10 @@
-import { ProFormDateRangePicker } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FiCalendar } from "react-icons/fi";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { LedgerType } from "service/fininaciar/accountSettlement/ledger/type";
 import { ledgerFilter, moneyFormat } from "utils/index";
@@ -14,10 +12,6 @@ import { ledgerFilter, moneyFormat } from "utils/index";
 const Ledger = () => {
   const [filter, setFilter] = useState(ledgerFilter);
   const [search, setSearch] = useState<string>("");
-  const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
-    filter.start_date ? dayjs(filter.start_date) : dayjs().startOf("month"),
-    filter.end_date ? dayjs(filter.end_date) : dayjs().endOf("month"),
-  ]);
 
   const list = useRequest(ledger.list, {
     manual: true,
@@ -48,28 +42,28 @@ const Ledger = () => {
           hideTitle
           leftContent={
             <div className="flex gap-2">
-              <ProFormDateRangePicker
-                name="full_date"
-                className="text-gray-700 cursor-pointer m-0  ant-layot-picker"
-                allowClear={false}
-                fieldProps={{
-                  size: "large",
-                  className: "text-sm m-0",
-                  suffixIcon: <FiCalendar className="text-gray-700 text-xl" />,
-                  value: dateRange,
-                  onChange(value, formatString) {
-                    if (formatString.length === 2) {
-                      setFilter({
-                        ...filter,
-                        start_date: value?.[0]?.toDate() ?? new Date(),
-                        end_date: value?.[1]?.toDate() ?? new Date(),
-                      });
-                    }
-                  },
+              <DatePicker.RangePicker
+                className="w-max"
+                placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+                onChange={(values) => {
+                  setFilter({
+                    ...filter,
+                    start_date:
+                      dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD") ?? "",
+                    end_date:
+                      dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD") ?? "",
+                  });
                 }}
+                defaultValue={[
+                  filter.start_date
+                    ? dayjs(filter.start_date)
+                    : dayjs().subtract(3, "month"),
+                  filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                ]}
               />
             </div>
           }
+          fileName="Харилцагчийн дансны жагсаалт"
           searchPlaceHolder="Үлдэгдэл, Дебит , Кредит"
           search={search}
           setSearch={(e) => {
