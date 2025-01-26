@@ -4,6 +4,7 @@ import {
   PieChart02,
   Settings01,
   User01,
+  Wallet01,
 } from "untitledui-js-base";
 
 export const menuItems = [
@@ -19,6 +20,19 @@ export const menuManagerItems = [
     icon: <Archive />,
     name: "Талбайн бүртгэл",
     path: "/dashboard/field-registration",
+  },
+];
+
+export const menuCustomerItems = [
+  {
+    icon: <PieChart02 />,
+    name: "Талбайн тооцоо",
+    path: "/dashboard/my-fill",
+  },
+  {
+    icon: <Wallet01 />,
+    name: "Дансны бүртгэл",
+    path: "/dashboard/my-wallet",
   },
 ];
 

@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   menuCashierItems,
+  menuCustomerItems,
   menuFininciarItems,
   menuItems,
   menuManagerItems,
@@ -34,6 +35,8 @@ export const Menu: React.FC<{ mobile?: boolean; onClose?: () => void }> = ({
     menus = menuCashierItems;
   } else if (user.user?.role_name === UserRoleType.financier) {
     menus = menuFininciarItems;
+  } else if (user.user?.role_name === UserRoleType.customer) {
+    menus = menuCustomerItems;
   }
 
   if (mobile) {

@@ -25,11 +25,23 @@ export const workersGenderArray = Object.freeze([
   },
 ]);
 
+export const unitTonnArray = Object.freeze([
+  {
+    label: "20 Тонн",
+    value: 20,
+  },
+  {
+    label: "40 Тонн",
+    value: 40,
+  },
+]);
+
 export enum UserRoleType {
   admin = "admin",
   transport_manager = "transport_manager",
   financier = "financier",
   cashier = "cashier",
+  customer = "customer_company",
 }
 
 export const permissionArray = Object.freeze([
