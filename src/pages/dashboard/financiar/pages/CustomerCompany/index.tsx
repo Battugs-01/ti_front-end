@@ -9,7 +9,6 @@ import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { ProFormDateRangePicker } from "@ant-design/pro-form";
 
 const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -44,6 +43,7 @@ const CustomerCompany = () => {
           addButtonName="Нэмэх"
           customHeaderTitle="Харилцагч компанийн жагсаалт"
           searchPlaceHolder="Нэр, данс"
+          fileName="Харилцагч компанийн жагсаалт"
           setCreate={setCreate}
           search={search}
           setSearch={(e) => {

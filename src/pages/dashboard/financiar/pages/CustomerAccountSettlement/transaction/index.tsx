@@ -1,12 +1,10 @@
-import { ProFormDateRangePicker } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FiCalendar } from "react-icons/fi";
 import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { CreateService } from "./actions/create";
@@ -17,11 +15,6 @@ const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
   const [search, setSearch] = useState<string>("");
   const [create, setCreate] = useState<boolean>(false);
-
-  const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
-    filter.start_date ? dayjs(filter.start_date) : dayjs().startOf("month"),
-    filter.end_date ? dayjs(filter.end_date) : dayjs().endOf("month"),
-  ]);
 
   const list = useRequest(transaction.list, {
     manual: true,
@@ -51,26 +44,27 @@ const Transaction = () => {
           hideTitle
           leftContent={
             <div className="flex gap-3 items-end">
-              <div className="text-lg font-semibold text-gray-700">
+              {/* <div className="text-lg font-semibold text-gray-700">
                 Нийт ({list?.data?.total})
-              </div>
-              <ProFormDateRangePicker
-                name="full_date"
-                className="text-gray-700 cursor-pointer mt-6"
-                allowClear={false}
-                fieldProps={{
-                  suffixIcon: <FiCalendar className="text-gray-700 text-xl" />,
-                  value: dateRange,
-                  onChange(value, formatString) {
-                    if (formatString.length === 2) {
-                      setFilter({
-                        ...filter,
-                        start_date: value?.[0]?.toDate() ?? new Date(),
-                        end_date: value?.[1]?.toDate() ?? new Date(),
-                      });
-                    }
-                  },
+              </div> */}
+              <DatePicker.RangePicker
+                className="w-max"
+                placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+                onChange={(values) => {
+                  setFilter({
+                    ...filter,
+                    start_date:
+                      dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD") ?? "",
+                    end_date:
+                      dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD") ?? "",
+                  });
                 }}
+                defaultValue={[
+                  filter.start_date
+                    ? dayjs(filter.start_date)
+                    : dayjs().subtract(3, "month"),
+                  filter.end_date ? dayjs(filter.end_date) : dayjs(),
+                ]}
               />
             </div>
           }
@@ -81,6 +75,7 @@ const Transaction = () => {
             setSearch(e);
             searchRun.run({ ...filter, search: e });
           }}
+          fileName="Харилцагчийн дансны гүйлгээний жагсаалт"
           refresh={() => list.run({ ...filter, search: search })}
         />
       </div>

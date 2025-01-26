@@ -328,8 +328,8 @@ export const getBase64ImageFromURL = (url: string): Promise<string> => {
 export const ledgerFilter = {
   current: 0,
   pageSize: 20,
-  start_date: dayjs().subtract(3, "month").toDate(),
-  end_date: dayjs().toDate(),
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
   sorter: {
     created_at: "desc",
   },
@@ -338,8 +338,8 @@ export const ledgerFilter = {
 export const transictionFilter = {
   current: 0,
   pageSize: 20,
-  start_date: dayjs().subtract(3, "month").toDate(),
-  end_date: dayjs().toDate(),
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
   sorter: {
     created_at: "desc",
   },

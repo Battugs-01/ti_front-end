@@ -41,6 +41,7 @@ const AdditionalFeeSettings = () => {
         <InitTableHeader
           addButtonName="Нэмэх"
           customHeaderTitle="Элдэв хураамжийн тохиргоо"
+          fileName="Элдэв хураамжийн тохиргооны жагсаалт"
           searchPlaceHolder="Дүн, ангилал код"
           setCreate={setCreate}
           search={search}
