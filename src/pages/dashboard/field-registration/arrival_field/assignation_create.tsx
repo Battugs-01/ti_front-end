@@ -4,7 +4,7 @@ import ProForm, {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
-import { EditableProTable } from "@ant-design/pro-table";
+import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
@@ -13,7 +13,7 @@ import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import { values } from "lodash";
 import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
@@ -22,6 +22,7 @@ import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
+import { Edit01 } from "untitledui-js-base";
 import { moneyFormat } from "utils/index";
 import { PaymentMethod } from "utils/options";
 import { downloadPDF, generatePDF } from "utils/pdf_generate";
@@ -34,6 +35,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
+  const actionRef = useRef<ActionType>();
   const [dates, setDates] = useState({
     opened: 0,
     freed: 0,
@@ -468,37 +470,27 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   onChange: (_, selectedRows) => {},
                 }}
                 rowKey={"id"}
-                // recordCreatorProps={{
-                //   newRecordType: "dataSource",
-                //   record: () => ({
-                //     id: Math.random(),
-                //     fee_code: "",
-                //     fee_name: "",
-                //     unit_measurement: "",
-                //     fee_amount: 0,
-                //     number_1: 0,
-                //     number_2: 0,
-                //     total_amount: 0,
-                //   }),
-                // }}
+                recordCreatorProps={{
+                  newRecordType: "dataSource",
+                  record: (index): any => {
+                    return {
+                      id: index + 1,
+                    };
+                  },
+                }}
+                maxLength={10}
+                size="large"
+                bordered
+                actionRef={actionRef}
                 editable={{
                   type: "multiple",
                   editableKeys: additionalFee.map((values) => values.id),
-                  onSave: async (key, record) => {
-                    console.log(key, record);
-                    const index = additionalFee.findIndex(
-                      (values) => values.id === key
-                    );
-                    additionalFee[index] = record;
-                    setAdditionalFee([...additionalFee]);
-                  },
-                  onValuesChange: async (record, recordList) => {
+                  onValuesChange: async (record) => {
                     const index = additionalFee.findIndex(
                       (values) => values.id === record.id
                     );
                     additionalFee[index].total_amount =
                       record.fee_amount * record.number_1;
-
                     setAdditionalFee([...additionalFee]);
                   },
                 }}
@@ -536,36 +528,53 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     title: "Код",
                     dataIndex: "fee_code",
                     key: "fee_code",
-                    editable: false,
+                    className: "p-3",
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
                     key: "fee_name",
-                    editable: false,
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
-                    editable: false,
                   },
                   {
                     title: "Өртөг",
                     dataIndex: "fee_amount",
                     key: "fee_amount",
-                    editable: false,
+                    valueType: "money",
                   },
                   {
                     title: "Тоо 1",
                     dataIndex: "number_1",
                     key: "number_1",
+                    valueType: "digit",
                   },
                   {
                     title: "Дүн",
                     dataIndex: "total_amount",
                     key: "total_amount",
+                    valueType: "money",
                     editable: false,
+                  },
+                  {
+                    title: "Үйлдэл",
+                    valueType: "option",
+                    width: 200,
+                    render: (_, record, __, action) => {
+                      return [
+                        <a
+                          key="editable"
+                          onClick={() => {
+                            actionRef.current?.startEditable?.(record.id);
+                          }}
+                        >
+                          Засах
+                        </a>,
+                      ];
+                    },
                   },
                 ]}
               />
@@ -601,6 +610,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
               </div>
               <div className="text-xl font-medium mb-3">Төлөлтийн жагсаалт</div>
               <ITable<any>
+                bordered
                 title={() => {
                   return (
                     <div className=" bg-[#f9fafb] p-3 text-[#475467]">
