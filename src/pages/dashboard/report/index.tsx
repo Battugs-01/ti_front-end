@@ -1,17 +1,16 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
-import { initPagination } from "utils/index";
-import { CargoApproachList } from "service/feild_registration/type";
 import dayjs from "dayjs";
-import report from "service/report";
+import { useEffect, useState } from "react";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
+import { CargoApproachList } from "service/feild_registration/type";
+import { reportPaginate } from "utils/index";
 
 const ReportPage: React.FC = () => {
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(reportPaginate);
   const [search, setSearch] = useState<string>("");
 
   const reportList = useRequest(additionalFeeDebit.list, {
@@ -44,13 +43,30 @@ const ReportPage: React.FC = () => {
             <div className="text-lg font-semibold text-gray-700">
               Нийт ({reportList?.data?.total})
             </div>
+            <DatePicker.RangePicker
+              className="w-max"
+              placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
           </div>
         }
         hideTitle
         search={search}
         setSearch={(e) => {
           setSearch(e);
-          searchRun.run({ ...filter, query: e });
+          searchRun.run({ ...filter, search: e });
         }}
         refresh={refreshList}
         hideCreate

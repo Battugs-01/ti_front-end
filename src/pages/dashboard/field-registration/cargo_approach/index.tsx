@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
-import { cargoApproachPaginate } from "utils/index";
+import { cargoApproachPaginate, formatNumber } from "utils/index";
 import { AssignationCargoApproach } from "./assignation";
 import { CreateCargoApproach } from "./create";
 import { UpdateCargoApproach } from "./update";
@@ -51,6 +51,23 @@ export const CargoApproach: React.FC = () => {
             <div className="text-lg font-semibold text-gray-700">
               <Label title={`Нийт (${fieldRegister?.data?.total || 0})`} />
             </div>
+            <DatePicker.RangePicker
+              className="w-max"
+              placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
           </div>
         }
         hideTitle
@@ -97,20 +114,27 @@ export const CargoApproach: React.FC = () => {
               {
                 title: "Дөхөлт огноо",
                 dataIndex: "approach_report_date",
-                render: (value) => {
-                  if (!value) return <div>-</div>;
+                render: (value: any) => {
+                  if (
+                    !value ||
+                    dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
+                  ) {
+                    return <div className="flex items-center">-</div>;
+                  }
                   return (
-                    <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>
+                    <div className="flex items-center">
+                      {dayjs(value).format("YYYY/MM/DD")}
+                    </div>
                   );
                 },
               },
               {
                 title: "Орох хил",
-                dataIndex: "arrived_at_site",
+                dataIndex: "direction",
               },
               {
                 title: "Ирэх/Явах",
-                dataIndex: "arrive_depart",
+                dataIndex: "transport_direction",
               },
               {
                 title: "Чингэлэг дугаар",
@@ -122,15 +146,30 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Зуучийн нэр",
-                dataIndex: "carrier_name",
+                dataIndex: "carrier_code",
               },
               {
-                title: "Хоосон/Ачаатай",
-                dataIndex: "empty_full",
+                title: "Ачааны нэр төрөл",
+                dataIndex: "cargo_name",
+              },
+              {
+                title: "Хүлээн авагч",
+                dataIndex: "reciever_email",
+              },
+              {
+                title: "Утас",
+                dataIndex: "reciever_phone",
+              },
+              {
+                title: "Тээврийн хөлс",
+                dataIndex: "transport_fee",
+                render: (_, record) => {
+                  return record?.transport_recieve?.transport_fee;
+                },
               },
               {
                 title: "Зарах эсэх",
-                dataIndex: "for_sale",
+                dataIndex: "is_sale",
               },
               {
                 title: "Зарах үнэ",

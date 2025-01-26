@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -53,6 +53,23 @@ export const ArrivalField: React.FC = () => {
             <div className="text-lg font-semibold text-gray-700">
               <Label title={`Нийт (${fieldRegister?.data?.total || 0})`} />
             </div>
+            <DatePicker.RangePicker
+              className="w-max"
+              placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+              onChange={(values) => {
+                setFilter({
+                  ...filter,
+                  start_date: dayjs(values?.[0]?.toDate()).format("YYYY-MM-DD"),
+                  end_date: dayjs(values?.[1]?.toDate()).format("YYYY-MM-DD"),
+                });
+              }}
+              defaultValue={[
+                filter.start_date
+                  ? dayjs(filter.start_date)
+                  : dayjs().subtract(3, "month"),
+                filter.end_date ? dayjs(filter.end_date) : dayjs(),
+              ]}
+            />
           </div>
         }
         hideTitle
@@ -103,12 +120,14 @@ export const ArrivalField: React.FC = () => {
       <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
-        rowSelection={{
-          type: "radio",
-          onChange: (_, selectedRows) => {
-            setRecord(selectedRows[0]);
-          },
-        }}
+        rowSelection={
+          user?.user?.role_name === UserRoleType.cashier && {
+            type: "radio",
+            onChange: (_, selectedRows) => {
+              setRecord(selectedRows[0]);
+            },
+          }
+        }
         CreateComponent={CreateArrivalField}
         refresh={refreshList}
         className="p-0 remove-padding-table"
