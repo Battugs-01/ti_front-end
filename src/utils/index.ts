@@ -167,12 +167,23 @@ export const cargoApproachPaginate = {
   current: 0,
   pageSize: 20,
   status: "created",
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
 };
 
 export const fieldRegistrationPaginate = {
   current: 0,
   pageSize: 20,
   status: "arrived_at_site",
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
+};
+
+export const reportPaginate = {
+  current: 0,
+  pageSize: 20,
+  start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+  end_date: dayjs().format("YYYY-MM-DD"),
 };
 
 export const reminderFilter = {
