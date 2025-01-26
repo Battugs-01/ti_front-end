@@ -4,12 +4,14 @@ import ProForm, {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
+import { EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
+import { values } from "lodash";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
@@ -460,12 +462,50 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
-              <ITable<AdditionalFeeType>
+              <EditableProTable<AdditionalFeeType>
                 rowSelection={{
                   type: "checkbox",
                   onChange: (_, selectedRows) => {},
                 }}
-                dataSource={additionalFee}
+                rowKey={"id"}
+                // recordCreatorProps={{
+                //   newRecordType: "dataSource",
+                //   record: () => ({
+                //     id: Math.random(),
+                //     fee_code: "",
+                //     fee_name: "",
+                //     unit_measurement: "",
+                //     fee_amount: 0,
+                //     number_1: 0,
+                //     number_2: 0,
+                //     total_amount: 0,
+                //   }),
+                // }}
+                editable={{
+                  type: "multiple",
+                  editableKeys: additionalFee.map((values) => values.id),
+                  onSave: async (key, record) => {
+                    console.log(key, record);
+                    const index = additionalFee.findIndex(
+                      (values) => values.id === key
+                    );
+                    additionalFee[index] = record;
+                    setAdditionalFee([...additionalFee]);
+                  },
+                  onValuesChange: async (record, recordList) => {
+                    const index = additionalFee.findIndex(
+                      (values) => values.id === record.id
+                    );
+                    additionalFee[index].total_amount =
+                      record.fee_amount * record.number_1;
+
+                    setAdditionalFee([...additionalFee]);
+                  },
+                }}
+                onChange={(value) =>
+                  setAdditionalFee(value as AdditionalFeeType[])
+                }
+                value={additionalFee}
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
@@ -496,21 +536,25 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     title: "Код",
                     dataIndex: "fee_code",
                     key: "fee_code",
+                    editable: false,
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
                     key: "fee_name",
+                    editable: false,
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
+                    editable: false,
                   },
                   {
                     title: "Өртөг",
                     dataIndex: "fee_amount",
                     key: "fee_amount",
+                    editable: false,
                   },
                   {
                     title: "Тоо 1",
@@ -518,14 +562,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     key: "number_1",
                   },
                   {
-                    title: "Тоо 2",
-                    dataIndex: "number_2",
-                    key: "number_2",
-                  },
-                  {
                     title: "Дүн",
                     dataIndex: "total_amount",
                     key: "total_amount",
+                    editable: false,
                   },
                 ]}
               />
