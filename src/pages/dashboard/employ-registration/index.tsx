@@ -1,154 +1,59 @@
-import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
-import UserBadge from "components/badge/userbadge";
-import { PageCard } from "components/card";
-import { Label } from "components/label";
-import { ITable } from "components/table";
-import InitTableHeader from "components/table-header";
-import { GenderType } from "config";
-import { useEffect, useState } from "react";
-import { Admin } from "service/auth/type";
-import employRegistration from "service/employ-registration";
-import { initPagination } from "utils/index";
-import { CreateService } from "./actions/create";
-import { UpdateService } from "./actions/update";
+import { ProFormRadio } from "@ant-design/pro-form";
+import { IfCondition } from "components/condition";
+import {
+  FieldRegistrationTabtButton,
+  FininciarTab,
+  registerCustomerEnumTab,
+} from "config";
+import { useState } from "react";
+import Customer from "./customer";
+import Workers from "./employes";
 
 const EmployeRegistration = () => {
-  const [filter, setFilter] = useState(initPagination);
-  const [create, setCreate] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
-
-  const list = useRequest(employRegistration.list, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
-
-  const run = () => {
-    list.run({
-      ...filter,
-      search: search,
-    });
-  };
-
-  useEffect(() => {
-    run();
-  }, [filter]);
-
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
+  const [tab, setTab] = useState<any>(registerCustomerEnumTab.CustomerCompany);
+  const DocumentButtons: FieldRegistrationTabtButton[] = [
+    {
+      value: registerCustomerEnumTab.Worker,
+      label: "Ажилчдын жагсаалт",
+    },
+    {
+      value: registerCustomerEnumTab.CustomerCompany,
+      label: "Харилцагч компани жагсаалт",
+    },
+  ];
 
   return (
-    <PageCard xR>
-      <div className="px-2 pb-0">
-        <InitTableHeader
-          addButtonName="Нэмэх"
-          customHeaderTitle={<Label title="Ажилчдын жагсаалт" />}
-          fileName="Ажилчдын жагсаалт"
-          searchPlaceHolder="Овог, нэр , утасны дугаар "
-          setCreate={setCreate}
-          search={search}
-          setSearch={(e) => {
-            setSearch(e);
-            searchRun.run({ ...filter, search: e });
+    <>
+      <div className="mt-5">
+        <ProFormRadio.Group
+          name={"documentLine"}
+          radioType="button"
+          fieldProps={{
+            size: "large",
+            value: tab,
+            onChange: (e) => {
+              setTab(e.target.value);
+            },
           }}
-          refresh={() => list.run({ ...filter, search: search })}
+          options={DocumentButtons?.map((el) => ({
+            ...el,
+            onChange: (e) => {
+              setTab(e);
+            },
+          }))}
+          initialValue={FininciarTab.CustomerCompany}
         />
       </div>
-
-      <ITable<Admin>
-        total={list.data?.total}
-        loading={list.loading}
-        dataSource={list?.data?.items ?? []}
-        refresh={(values) => list.run({ ...filter, ...values })}
-        UpdateComponent={UpdateService}
-        form={filter}
-        setForm={setFilter}
-        columns={[
-          {
-            dataIndex: "last_name",
-            title: "Овог",
-            align: "left",
-            render: (value) => (
-              <div className="flex gap-2">
-                <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
-                </span>
-              </div>
-            ),
-          },
-          {
-            dataIndex: "first_name",
-            title: "Нэр",
-            align: "left",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "registration_number",
-            title: "Регистрийн дугаар",
-            width: "200",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "gender",
-            title: "Хүйс",
-            align: "center",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {value === GenderType.male ? "Эрэгтэй" : "Эмэгтэй"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "email",
-            title: "Цахим хаяг",
-            align: "left",
-            width: "10%",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "phone",
-            title: "Утасны дугаар",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "role_name",
-            title: "Албан тушаал",
-            render: (value) => {
-              return value ? <UserBadge status={value.toString()} /> : "-";
-            },
-          },
-        ]}
-        CreateComponent={CreateService}
-        create={create as boolean}
-        setCreate={setCreate}
-        RemoveModelConfig={{
-          action: employRegistration.deleteEmploy,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.first_name,
-            title: "Remove",
-          }),
-        }}
+      <IfCondition
+        condition={tab === registerCustomerEnumTab.Worker}
+        whenTrue={<Workers />}
       />
-    </PageCard>
+
+      <IfCondition
+        condition={tab === registerCustomerEnumTab.CustomerCompany}
+        whenTrue={<Customer />}
+      />
+    </>
   );
 };
 

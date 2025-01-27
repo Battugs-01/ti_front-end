@@ -262,14 +262,30 @@ export enum FininciarTab {
   CategoryType = 4,
 }
 
+export enum registerCustomerEnumTab {
+  Worker = "worker",
+  CustomerCompany = "customer_company",
+}
+
 export interface FininciarTabtButton {
   value: FininciarTab;
+  label: string;
+}
+
+export interface FieldRegistrationTabtButton {
+  value: registerCustomerEnumTab;
   label: string;
 }
 
 export enum CustomerAccountSettlementTab {
   ledger = "ledger",
   transaction = "transaction",
+}
+
+export enum transictionTypeEnum {
+  all = "all",
+  debit = "debit",
+  credit = "credit",
 }
 
 export interface CustomerAccountSettlementTabtButton {

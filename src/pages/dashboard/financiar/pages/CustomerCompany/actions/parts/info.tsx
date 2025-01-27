@@ -2,8 +2,12 @@ import { ProFormRadio, ProFormText } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
+import { FC } from "react";
 
-export const Info = () => {
+interface IInfoProps {
+  actionName: string;
+}
+export const Info: FC<IInfoProps> = ({ actionName }) => {
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
@@ -74,33 +78,35 @@ export const Info = () => {
           />
         </Col>
       </Row>
-      <Row gutter={[24, 24]}>
-        <Col span={12}>
-          <ProFormText
-            name={"email"}
-            placeholder={"sample@example.cг"}
-            label="Цахим шуудан"
-            rules={[
-              {
-                pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                message: "Энэ талбар и-мэйл хаяг байх ёстой",
-              },
-              ...FORM_ITEM_RULE(),
-            ]}
-          />
-        </Col>
-        <Col span={12}>
-          <ProFormText.Password
-            // rules={FORM_ITEM_RULE()}
-            name={"password"}
-            placeholder={"Нууц үг"}
-            label="Нууц үг"
-            fieldProps={{
-              type: "password",
-            }}
-          />
-        </Col>
-      </Row>
+      {actionName === "create" && (
+        <Row gutter={[24, 24]}>
+          <Col span={12}>
+            <ProFormText
+              name={"email"}
+              placeholder={"sample@example.cг"}
+              label="Цахим шуудан"
+              rules={[
+                {
+                  pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  message: "Энэ талбар и-мэйл хаяг байх ёстой",
+                },
+                ...FORM_ITEM_RULE(),
+              ]}
+            />
+          </Col>
+          <Col span={12}>
+            <ProFormText.Password
+              // rules={FORM_ITEM_RULE()}
+              name={"password"}
+              placeholder={"Нууц үг"}
+              label="Нууц үг"
+              fieldProps={{
+                type: "password",
+              }}
+            />
+          </Col>
+        </Row>
+      )}
     </SectionContainer>
   );
 };

@@ -1,8 +1,10 @@
+import { ProFormSelect } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import { transictionTypeEnum } from "config";
 import { useAuthContext } from "context/auth";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -62,6 +64,34 @@ const myWallet = () => {
                 ]}
               />
             </div>
+          }
+          filter={
+            <ProFormSelect
+              placeholder={"Сонгох"}
+              fieldProps={{
+                size: "large",
+                allowClear: true,
+                className: "select-focus",
+                style: { width: 200 },
+                onChange: (e) => {
+                  setFilter({ ...filter, transiction_type: e as any });
+                },
+              }}
+              options={[
+                {
+                  label: "Бүх",
+                  value: "all",
+                },
+                {
+                  label: "Орлого",
+                  value: transictionTypeEnum.debit,
+                },
+                {
+                  label: "Зарлага",
+                  value: transictionTypeEnum.credit,
+                },
+              ]}
+            />
           }
           searchPlaceHolder="Мөнгөн дүн"
           search={search}

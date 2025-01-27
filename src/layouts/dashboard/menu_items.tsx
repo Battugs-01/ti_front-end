@@ -10,7 +10,7 @@ import {
 export const menuItems = [
   {
     icon: <User01 />,
-    name: "Ажилтны бүртгэл",
+    name: "Хэрэглэгчдийн бүртгэл",
     path: "/dashboard/employ-registration",
   },
 ];

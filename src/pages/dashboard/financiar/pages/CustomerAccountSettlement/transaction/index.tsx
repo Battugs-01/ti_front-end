@@ -1,8 +1,10 @@
+import { ProFormSelect } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import { transictionTypeEnum } from "config";
 import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
@@ -67,6 +69,34 @@ const Transaction = () => {
                 ]}
               />
             </div>
+          }
+          filter={
+            <ProFormSelect
+              placeholder={"Сонгох"}
+              fieldProps={{
+                size: "large",
+                allowClear: true,
+                className: "select-focus",
+                style: { width: 200 },
+                onChange: (e) => {
+                  setFilter({ ...filter, transiction_type: e as any });
+                },
+              }}
+              options={[
+                {
+                  label: "Бүх",
+                  value: "all",
+                },
+                {
+                  label: "Орлого",
+                  value: transictionTypeEnum.debit,
+                },
+                {
+                  label: "Зарлага",
+                  value: transictionTypeEnum.credit,
+                },
+              ]}
+            />
           }
           setCreate={setCreate}
           searchPlaceHolder="Данс , Харилцагчийн нэр , Мөнгөн дүн"
@@ -144,7 +174,7 @@ const Transaction = () => {
             width: "200",
             render: (value: any) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value === "debit" ? "Орлого" : "Зарлага"}
+                {value === transictionTypeEnum.debit ? "Орлого" : "Зарлага"}
               </span>
             ),
           },

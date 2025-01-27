@@ -343,6 +343,7 @@ export const ledgerFilter = {
 
 export const transictionFilter = {
   current: 0,
+  transiction_type: "all",
   pageSize: 20,
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),

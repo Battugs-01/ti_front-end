@@ -2,7 +2,7 @@ import { ProFormDigit, ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
-import { FORM_ITEM_RULE, unitTonnArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import { useState } from "react";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import categoryType from "service/fininaciar/categoryType";
@@ -77,7 +77,7 @@ export const Info = () => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        <Col span={12}>
+        {/* <Col span={12}>
           <ProFormSelect
             name={"capacity"}
             options={unitTonnArray.map((el) => ({ ...el }))}
@@ -85,7 +85,7 @@ export const Info = () => {
             label="Даац"
             placeholder={"Даац сонгох"}
           />
-        </Col>
+        </Col> */}
       </Row>
     </SectionContainer>
   );

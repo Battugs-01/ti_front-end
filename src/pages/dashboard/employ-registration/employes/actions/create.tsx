@@ -1,27 +1,29 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
+import { notification } from "antd";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
-import customerCompany from "service/fininaciar/customerCompany";
+import workers from "service/employ-registration";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
+import { Label } from "components/label";
 
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
 
-  const create = useRequest(customerCompany.create, {
+  const createEmployee = useRequest(workers.createWorkers, {
     manual: true,
-    // onError: (err) => {
-    //   notification.error({
-    //     message: err.message,
-    //   });
-    // },
+    onError: (err) => {
+      notification.error({
+        message: err.message,
+      });
+    },
   });
 
   return (
     <IModalForm
       open={rest.open}
-      title="Харилцагч компани нэмэх"
+      title={<Label title="Ажилтан нэмэх" />}
       formRef={formRef}
       onOpenChange={() => {
         formRef.current?.resetFields();
@@ -35,7 +37,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       onRequest={async (values) => {
         if (!!values) {
           if (
-            await create.runAsync({
+            await createEmployee.runAsync({
               ...values,
             })
           ) {
@@ -45,7 +47,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       }}
       onSuccess={rest.onFinish}
     >
-      <Info actionName="create" />
+      <Info />
     </IModalForm>
   );
 };
