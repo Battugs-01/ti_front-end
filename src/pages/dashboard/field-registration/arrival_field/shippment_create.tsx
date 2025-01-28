@@ -4,26 +4,26 @@ import ProForm, {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
+import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
+import moment from "moment";
 import { useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
-import { downloadPDF } from "utils/pdf_generate";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
+import { TicketAdditionalFeeType } from "service/feild_registration/type";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
 import { PaymentMethod } from "utils/options";
-import { generatePDF } from "utils/pdf_generate";
-import moment from "moment";
-import { ActionType, EditableProTable } from "@ant-design/pro-table";
+import { downloadPDF, generatePDF } from "utils/pdf_generate";
 
 export const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -39,17 +39,13 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   detail,
 }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
-  const addAcrivalField = useRequest(fieldRegistration.create, {
+  const [dates, setDates] = useState(0);
+  const [ticketAdditional, setTicketAdditional] =
+    useState<TicketAdditionalFeeType>();
+  const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
-    onSuccess: () => {
-      notification.success({
-        message: "Амжилттай хадгалагдлаа",
-      });
-      onFinish?.();
-    },
     onError: (error: any) => {
       notification.error({
         message: error.message,
@@ -153,8 +149,21 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     <ModalForm
       form={form}
       onFinish={async (values) => {
-        await addAcrivalField.runAsync({
+        await updateArrivalField.runAsync(
+          {
+            ...values,
+            shipped_at: moment(values.shipped_at).toDate(),
+            // achilt hiij bgaa uyd zaaval yvuulnaa
+            shipping_or_assinment: "shipping",
+          },
+          detail?.id
+        );
+
+        await addAdditionalFeeDebit.runAsync({
           ...values,
+          date: moment(values.date).toDate(),
+          ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
+          total_amount: totalAmount,
         });
       }}
       title="Ачилт"
@@ -162,9 +171,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         container_code: detail?.container_code,
         capacity: detail?.capacity,
         broker_id: detail?.broker_id,
-        arrived_at_site: moment(detail?.arrived_at_site),
+        arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
-        date: moment(getTempAdditionalFee.data?.date),
+        date: getTempAdditionalFee.data?.date,
         cargo_weight: getTempAdditionalFee.data?.cargo_weight,
         category_fee_id: getTempAdditionalFee.data?.category_fee_id,
         payment_amount: totalAmount,
@@ -201,7 +210,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={addAcrivalField.loading}
+                loading={updateArrivalField.loading}
               >
                 Хадгалах
               </Button>
@@ -279,13 +288,21 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates(
+                            dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            )
+                          );
+                        },
                       }}
                       name={"shipped_at"}
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -539,6 +556,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       record?.fee_amount * record?.number_1;
                     record.total_amount = record?.fee_amount * record?.number_1;
 
+                    additionalFee[index] = {
+                      ...additionalFee[index],
+                      ...record,
+                    };
                     setAdditionalFee([...additionalFee]);
                   },
                 }}
@@ -549,7 +570,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   type="primary"
                   disabled={additionalFee.length === 0 || !additionalFee}
                   onClick={async () => {
-                    await ticketAdditionalFee.runAsync({
+                    const data = await ticketAdditionalFee.runAsync({
                       additional_fees: additionalFee.map((values) => {
                         return {
                           additional_fee_id: values.id,
@@ -569,6 +590,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
+                    setTicketAdditional(data);
                   }}
                 >
                   Түр хадгалах
@@ -603,6 +625,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             name="payment_amount"
                             placeholder="Мөнгөн дүн"
                             label="Мөнгөн дүн"
+                            disabled
                           />
                         </Col>
                         <Col span={5}>
@@ -639,11 +662,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                   form.getFieldValue("ticket_number"),
                                 payment_date:
                                   form.getFieldValue("payment_date"),
-                                payment_method:
-                                  form.getFieldValue("payment_method"),
+                                payment_type:
+                                  form.getFieldValue("payment_type"),
                                 payment_amount:
                                   form.getFieldValue("payment_amount"),
-                                bank_id: form.getFieldValue("bank_id"),
+                                ledger_id: form.getFieldValue("ledger_id"),
                                 payer_name: form.getFieldValue("payer_name"),
                               },
                             ]);
@@ -661,7 +684,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               headers: ["Орлогын төрөл", "Дүн"],
                               rows: paymentList.map((value) => {
                                 return [
-                                  value?.payment_method,
+                                  value?.payment_type,
                                   value?.payment_amount,
                                 ];
                               }),
@@ -695,11 +718,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Төлөлтийн хэлбэр",
-                    dataIndex: "payment_method",
-                    key: "payment_method",
+                    dataIndex: "payment_type",
+                    key: "payment_type",
                     render: (_, record) => {
                       return PaymentMethod.find(
-                        (item) => item.value === record.payment_method
+                        (item) => item.value === record.payment_type
                       )?.label;
                     },
                   },
@@ -710,8 +733,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Данс",
-                    dataIndex: "bank_id",
-                    key: "bank_id",
+                    dataIndex: "ledger_id",
+                    key: "ledger_id",
                   },
                   {
                     title: "Төлөгч",

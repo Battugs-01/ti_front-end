@@ -186,9 +186,9 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         container_code: detail?.container_code,
         capacity: detail?.capacity,
         broker_id: detail?.broker_id,
-        arrived_at_site: moment(detail?.arrived_at_site),
+        arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
-        date: moment(getTempAdditionalFee.data?.date),
+        date: getTempAdditionalFee.data?.date,
         cargo_weight: getTempAdditionalFee.data?.cargo_weight,
         category_fee_id: getTempAdditionalFee.data?.category_fee_id,
         payment_amount: totalAmount,
@@ -667,6 +667,11 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       record?.fee_amount * record?.number_1;
                     record.total_amount = record?.fee_amount * record?.number_1;
 
+                    additionalFee[index] = {
+                      ...additionalFee[index],
+                      ...record,
+                    };
+
                     setAdditionalFee([...additionalFee]);
                   },
                 }}
@@ -736,6 +741,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                             name="payment_amount"
                             placeholder="Мөнгөн дүн"
                             label="Мөнгөн дүн"
+                            disabled
                           />
                         </Col>
                         <Col span={5}>
