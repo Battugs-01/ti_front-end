@@ -9,7 +9,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { DirectionType, FORM_ITEM_RULE } from "config";
-import dayjs from "dayjs";
+import moment from "moment";
 import fieldRegistration from "service/feild_registration";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
@@ -49,7 +49,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       onFinish={async (values) => {
         await addCargo.runAsync({
           ...values,
-          approach_report_date: dayjs(values.approach_report_date).toDate(),
+          approach_report_date: moment(values.approach_report_date).toDate(),
         });
       }}
       initialValues={{

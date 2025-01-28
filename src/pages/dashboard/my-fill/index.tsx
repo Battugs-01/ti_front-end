@@ -1,5 +1,5 @@
-const myFill = () => {
+const MyFill = () => {
   return <div>sda2</div>;
 };
 
-export default myFill;
+export default MyFill;

@@ -9,7 +9,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { DirectionType, FORM_ITEM_RULE } from "config";
-import dayjs from "dayjs";
+import moment from "moment";
 import fieldRegistration from "service/feild_registration";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
@@ -51,15 +51,15 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
         await addCargo.runAsync(
           {
             ...values,
-            approach_report_date: dayjs(values.approach_report_date).toDate(),
-            arrived_at_site: dayjs(values.arrived_at_site).toDate(),
+            approach_report_date: moment(values.approach_report_date).toDate(),
+            arrived_at_site: moment(values.arrived_at_site).toDate(),
           },
           detail?.id
         );
       }}
       initialValues={{
         ...detail,
-        approach_report_date: dayjs(detail?.approach_report_date),
+        approach_report_date: moment(detail?.approach_report_date),
         arrived_at_site: null,
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
