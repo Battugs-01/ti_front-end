@@ -163,6 +163,12 @@ export const initPagination = {
   pageSize: 20,
 };
 
+export const EmployePagination = {
+  current: 0,
+  pageSize: 20,
+  is_user: true,
+};
+
 export const cargoApproachPaginate = {
   current: 0,
   pageSize: 20,
@@ -343,7 +349,7 @@ export const ledgerFilter = {
 
 export const transictionFilter = {
   current: 0,
-  transiction_type: "all",
+  transaction_type: "",
   pageSize: 20,
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),

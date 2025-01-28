@@ -2,6 +2,7 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { notification, Switch } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
+import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import customerCompany from "service/fininaciar/customerCompany";
@@ -9,7 +10,6 @@ import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
-import { Label } from "components/label";
 
 const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -121,9 +121,9 @@ const CustomerCompany = () => {
             title: "Цахим хаяг",
             align: "left",
             width: "10%",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
+                {record?.user?.email || "-"}
               </span>
             ),
           },

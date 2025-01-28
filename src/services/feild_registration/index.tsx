@@ -47,6 +47,11 @@ namespace fieldRegistration {
       hasAuth: true,
       body,
     });
+
+  export const getPublicDetailData = (id: number) =>
+    http.get<any>(`/transport-record/${id}`, {
+      hasAuth: true,
+    });
 }
 
 export default fieldRegistration;

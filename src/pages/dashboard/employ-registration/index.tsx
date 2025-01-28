@@ -6,7 +6,7 @@ import {
   registerCustomerEnumTab,
 } from "config";
 import { useState } from "react";
-import Customer from "./customer";
+import CustomerCompany from "./customer";
 import Workers from "./employes";
 
 const EmployeRegistration = () => {
@@ -51,7 +51,7 @@ const EmployeRegistration = () => {
 
       <IfCondition
         condition={tab === registerCustomerEnumTab.CustomerCompany}
-        whenTrue={<Customer />}
+        whenTrue={<CustomerCompany />}
       />
     </>
   );

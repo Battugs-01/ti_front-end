@@ -282,14 +282,25 @@ export enum CustomerAccountSettlementTab {
   transaction = "transaction",
 }
 
+export enum DetailTab {
+  container = "container",
+  grant = "grant",
+  shiping = "shiping",
+}
+
 export enum transictionTypeEnum {
-  all = "all",
+  all = "",
   debit = "debit",
   credit = "credit",
 }
 
 export interface CustomerAccountSettlementTabtButton {
   value: CustomerAccountSettlementTab;
+  label: string;
+}
+
+export interface DetailTabtButton {
+  value: DetailTab;
   label: string;
 }
 

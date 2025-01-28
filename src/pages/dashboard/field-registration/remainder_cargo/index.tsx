@@ -3,6 +3,7 @@ import { DatePicker } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
+import PublicDetail from "components/public-view";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
@@ -79,13 +80,13 @@ export const RemainderCargo: React.FC = () => {
         refresh={refreshList}
         hideCreate
         fileName="RemainderCargo"
-        hideDownload
       />
       <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}
         loading={fieldRegister.loading}
         refresh={refreshList}
         bordered
+        DetailComponent={PublicDetail}
         UpdateComponent={
           user.user?.role_name === UserRoleType.cashier
             ? AssignationCargoApproach

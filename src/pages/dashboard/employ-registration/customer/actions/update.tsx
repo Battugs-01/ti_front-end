@@ -1,7 +1,7 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { IModalForm } from "components/modal";
 import { useEffect, useRef } from "react";
-import workers from "service/employ-registration";
+import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
@@ -17,15 +17,7 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
-        first_name: detail?.first_name ?? undefined,
-        last_name: detail?.last_name,
-        registration_number: detail?.registration_number,
-        gender: detail?.gender ?? undefined,
-        email: detail?.email ?? undefined,
-        phone: detail?.phone,
-        role_name: detail?.role_name,
-        role_id: detail?.role_id,
-        password: detail?.password,
+        ledger_name: detail?.ledger?.name,
       });
     }
   }, [open]);
@@ -41,7 +33,7 @@ export const UpdateService = ({
       modalProps={{ maskClosable: false, onCancel }}
       onRequest={async (values) => {
         if (
-          await workers.updateWorkers(
+          await customerCompany.update(
             {
               ...values,
             },
@@ -53,7 +45,7 @@ export const UpdateService = ({
       }}
       onSuccess={onFinish}
     >
-      <Info />
+      <Info actionName="update" />
     </IModalForm>
   );
 };

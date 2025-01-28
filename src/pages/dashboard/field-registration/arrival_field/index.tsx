@@ -3,6 +3,7 @@ import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import { Label } from "components/label";
+import PublicDetail from "components/public-view";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { AuthContext } from "context/auth";
@@ -13,8 +14,8 @@ import { CargoApproachList } from "service/feild_registration/type";
 import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
 import { DirectionOptions, PaymentMethod } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
-import { ShippmentCreate } from "./shippment_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
+import { ShippmentCreate } from "./shippment_create";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -86,7 +87,6 @@ export const ArrivalField: React.FC = () => {
         hideCreate={user?.user?.role_name !== UserRoleType.cashier}
         setCreate={setCreateCargoApproach}
         fileName="ArrivalField"
-        hideDownload
         customAction={
           user?.user?.role_name === UserRoleType.cashier && (
             <div className="flex items-center gap-3">
@@ -134,6 +134,7 @@ export const ArrivalField: React.FC = () => {
             },
           }
         }
+        DetailComponent={PublicDetail}
         refresh={refreshList}
         CreateComponent={CreateCargoApproach}
         create={createCargoApproach}

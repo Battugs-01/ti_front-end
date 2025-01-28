@@ -1,22 +1,22 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
-import UserBadge from "components/badge/userbadge";
+import { notification, Switch } from "antd";
 import { PageCard } from "components/card";
+import { ITable } from "components/index";
 import { Label } from "components/label";
-import { ITable } from "components/table";
 import InitTableHeader from "components/table-header";
-import { GenderType } from "config";
 import { useEffect, useState } from "react";
-import { Admin } from "service/auth/type";
-import employRegistration from "service/employ-registration";
+import customerCompany from "service/fininaciar/customerCompany";
+import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
+import { CreateService } from "./actions/create";
+import { UpdateService } from "./actions/update";
 
-const Customer = () => {
+const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const list = useRequest(employRegistration.list, {
+  const list = useRequest(customerCompany.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -42,9 +42,10 @@ const Customer = () => {
       <div className="px-2 pb-0">
         <InitTableHeader
           addButtonName="Нэмэх"
-          customHeaderTitle={<Label title="Хэрэглэгчдийн жагсаалт" />}
-          fileName="Хэрэглэгчдийн жагсаалт"
-          searchPlaceHolder="Нэр "
+          customHeaderTitle={<Label title="Харилцагч компанийн жагсаалт" />}
+          searchPlaceHolder="Нэр, данс"
+          fileName="Харилцагч компанийн жагсаалт"
+          setCreate={setCreate}
           search={search}
           setSearch={(e) => {
             setSearch(e);
@@ -54,17 +55,18 @@ const Customer = () => {
         />
       </div>
 
-      <ITable<Admin>
+      <ITable<CustomerCompanyType>
         total={list.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
+        UpdateComponent={UpdateService}
         form={filter}
         setForm={setFilter}
         columns={[
           {
-            dataIndex: "last_name",
-            title: "Овог",
+            dataIndex: "shortcut_name",
+            title: "Товчлол",
             align: "left",
             render: (value) => (
               <div className="flex gap-2">
@@ -75,8 +77,8 @@ const Customer = () => {
             ),
           },
           {
-            dataIndex: "first_name",
-            title: "Нэр",
+            dataIndex: "name",
+            title: "Компаний нэр",
             align: "left",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
@@ -85,22 +87,32 @@ const Customer = () => {
             ),
           },
           {
-            dataIndex: "registration_number",
-            title: "Регистрийн дугаар",
+            dataIndex: "is_broker",
+            title: "Зууч эсэх",
             width: "200",
             render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+              <span className="text-sm text-[#475467] font-normal flex text-center ">
+                {<Switch disabled checked={!!value} />}
               </span>
             ),
           },
           {
-            dataIndex: "gender",
-            title: "Хүйс",
+            dataIndex: "ledger_name",
+            title: "Данс",
+            width: "200",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center">
+                {record?.ledger?.name || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "contact_number",
+            title: "Харилцах дугаар",
             align: "center",
             render: (value) => (
               <span className="text-sm text-[#475467] font-normal">
-                {value === GenderType.male ? "Эрэгтэй" : "Эмэгтэй"}
+                {value || "-"}
               </span>
             ),
           },
@@ -109,32 +121,27 @@ const Customer = () => {
             title: "Цахим хаяг",
             align: "left",
             width: "10%",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
+                {record?.user?.email || "-"}
               </span>
             ),
-          },
-          {
-            dataIndex: "phone",
-            title: "Утасны дугаар",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "role_name",
-            title: "Албан тушаал",
-            render: (value) => {
-              return value ? <UserBadge status={value.toString()} /> : "-";
-            },
           },
         ]}
+        CreateComponent={CreateService}
+        create={create as boolean}
+        setCreate={setCreate}
+        // RemoveModelConfig={{
+        //   action: customerCompany.deleteA,
+        //   config: (record) => ({
+        //     uniqueKey: record?.id,
+        //     display: record?.name,
+        //     title: "Remove",
+        //   }),
+        // }}
       />
     </PageCard>
   );
 };
 
-export default Customer;
+export default CustomerCompany;

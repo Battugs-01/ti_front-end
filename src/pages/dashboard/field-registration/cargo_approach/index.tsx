@@ -3,6 +3,7 @@ import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
+import PublicDetail from "components/public-view";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
@@ -82,7 +83,6 @@ export const CargoApproach: React.FC = () => {
         refresh={refreshList}
         addButtonName="Шинэ"
         fileName="CargoApproach"
-        hideDownload
         hideCreate={user?.user?.role_name !== UserRoleType.transport_manager}
       />
       <ITable<CargoApproachList>
@@ -95,15 +95,16 @@ export const CargoApproach: React.FC = () => {
             ? UpdateCargoApproach
             : undefined
         }
+        DetailComponent={PublicDetail}
         refresh={refreshList}
-        RemoveModelConfig={{
-          action: fieldRegistration.deleteRegistration,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.broker_name,
-            title: "Устгах",
-          }),
-        }}
+        // RemoveModelConfig={{
+        //   action: fieldRegistration.deleteRegistration,
+        //   config: (record) => ({
+        //     uniqueKey: record?.id,
+        //     display: record?.broker_name,
+        //     title: "Устгах",
+        //   }),
+        // }}
         create={create}
         setCreate={setCreate}
         className="p-0 remove-padding-table"

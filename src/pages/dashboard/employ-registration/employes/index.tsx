@@ -9,12 +9,12 @@ import { GenderType } from "config";
 import { useEffect, useState } from "react";
 import { Admin } from "service/auth/type";
 import employRegistration from "service/employ-registration";
-import { initPagination } from "utils/index";
+import { EmployePagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
 
 const Workers = () => {
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState(EmployePagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 

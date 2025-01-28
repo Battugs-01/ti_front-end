@@ -8,6 +8,7 @@ export interface CustomerCompanyType {
   name: string;
   is_broker: boolean;
   ledger_id: number;
+  user: any;
   ledger: LedgerType;
   contact_number: string;
 }

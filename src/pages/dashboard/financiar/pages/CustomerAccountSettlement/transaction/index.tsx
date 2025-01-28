@@ -27,7 +27,6 @@ const Transaction = () => {
       }),
   });
 
-  console.log(user, "sdauser");
   const run = () => {
     list.run({
       ...filter,
@@ -79,13 +78,13 @@ const Transaction = () => {
                 className: "select-focus",
                 style: { width: 200 },
                 onChange: (e) => {
-                  setFilter({ ...filter, transiction_type: e as any });
+                  setFilter({ ...filter, transaction_type: e as any });
                 },
               }}
               options={[
                 {
                   label: "Бүх",
-                  value: "all",
+                  value: "",
                 },
                 {
                   label: "Орлого",
