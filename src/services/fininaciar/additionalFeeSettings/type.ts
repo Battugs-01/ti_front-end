@@ -24,4 +24,5 @@ export interface AdditionalFeeType {
   number_1: number;
   number_2: number;
   total_amount: number;
+  is_new?: boolean;
 }

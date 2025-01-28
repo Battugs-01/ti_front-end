@@ -45,8 +45,9 @@ const CancellingTicket = () => {
               </div>
             </div>
           }
-          searchPlaceHolder="Дүн, ангилал код"
+          searchPlaceHolder="Э/Х тасалбарын №"
           search={search}
+          hideCreate
           setSearch={(e) => {
             setSearch(e);
             searchRun.run({ ...filter, search: e });

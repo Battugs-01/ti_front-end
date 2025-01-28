@@ -4,41 +4,48 @@ import ProForm, {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
+import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import moment from "moment";
+import { useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
-import { downloadPDF } from "utils/pdf_generate";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
+import { TicketAdditionalFeeType } from "service/feild_registration/type";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
 import { PaymentMethod } from "utils/options";
-import { generatePDF } from "utils/pdf_generate";
+import { downloadPDF, generatePDF } from "utils/pdf_generate";
 
+export const waitTime = (time: number = 100) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
 export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
   detail,
 }) => {
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
-  const addAcrivalField = useRequest(fieldRegistration.create, {
+  const [dates, setDates] = useState(0);
+  const [ticketAdditional, setTicketAdditional] =
+    useState<TicketAdditionalFeeType>();
+  const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
-    onSuccess: () => {
-      notification.success({
-        message: "Амжилттай хадгалагдлаа",
-      });
-      onFinish?.();
-    },
     onError: (error: any) => {
       notification.error({
         message: error.message,
@@ -110,6 +117,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     },
   });
 
+  const actionRef = useRef<ActionType>();
+
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -119,9 +128,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         ...res,
       });
       setAdditionalFee(
-        res?.additional_fee_ticket_calculated?.map((values) => {
+        res?.additional_fee_ticket_calculated?.map((values): any => {
           return {
-            ...values.additional_fee,
+            ...values,
             number_1: values.number_1,
             number_2: values.number_2,
             total_amount: values.total_amount,
@@ -140,8 +149,21 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     <ModalForm
       form={form}
       onFinish={async (values) => {
-        await addAcrivalField.runAsync({
+        await updateArrivalField.runAsync(
+          {
+            ...values,
+            shipped_at: moment(values.shipped_at).toDate(),
+            // achilt hiij bgaa uyd zaaval yvuulnaa
+            shipping_or_assinment: "shipping",
+          },
+          detail?.id
+        );
+
+        await addAdditionalFeeDebit.runAsync({
           ...values,
+          date: moment(values.date).toDate(),
+          ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
+          total_amount: totalAmount,
         });
       }}
       title="Ачилт"
@@ -150,6 +172,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         capacity: detail?.capacity,
         broker_id: detail?.broker_id,
         arrived_at_site: detail?.arrived_at_site,
+        ticket_number: getTempAdditionalFee.data?.ticket_number,
+        date: getTempAdditionalFee.data?.date,
+        cargo_weight: getTempAdditionalFee.data?.cargo_weight,
+        category_fee_id: getTempAdditionalFee.data?.category_fee_id,
+        payment_amount: totalAmount,
       }}
       open={open}
       modalProps={{
@@ -183,7 +210,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={addAcrivalField.loading}
+                loading={updateArrivalField.loading}
               >
                 Хадгалах
               </Button>
@@ -261,13 +288,21 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        onChange: (e: any) => {
+                          setDates(
+                            dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            )
+                          );
+                        },
                       }}
                       name={"shipped_at"}
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title="2" color="blue" />
+                    <IBadge title={dates} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -338,12 +373,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
               </Row>
-              <ITable<AdditionalFeeType>
-                rowSelection={{
-                  type: "checkbox",
-                  onChange: (_, selectedRows) => {},
-                }}
-                dataSource={additionalFee}
+              <EditableProTable<AdditionalFeeType>
+                rowKey="id"
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
@@ -358,7 +389,31 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Төлөлтийн жагсаалт нэмэх
                         </Button>
-                        <Button size="middle" type="default">
+                        <Button
+                          size="middle"
+                          type="default"
+                          onClick={() => {
+                            const id = (Math.random() * 1000000).toFixed(0);
+                            const newData: any = {
+                              id: Number(id),
+                              total_amount: 0,
+                              fee_amount: null,
+                              fee_code: null,
+                              fee_name: null,
+                              unit_measurement: null,
+                              number_1: 0,
+                              is_new: true,
+                            };
+                            setAdditionalFee([
+                              ...additionalFee,
+                              { ...newData },
+                            ]);
+                            setEditableRowKeys([...editableKeys, id]);
+                            // actionRef.current?.addEditRecord({
+                            //   id: Math.random() * 1000000,
+                            // });
+                          }}
+                        >
                           Э/Х нэмэх
                         </Button>
                         <Button size="middle" type="default">
@@ -368,44 +423,146 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     </div>
                   );
                 }}
+                scroll={{
+                  x: 960,
+                }}
+                actionRef={actionRef}
                 className="p-0 remove-padding-table"
+                bordered
+                recordCreatorProps={false}
+                loading={false}
                 columns={[
                   {
                     title: "Код",
                     dataIndex: "fee_code",
                     key: "fee_code",
+                    className: "p-3",
+                    editable: (text, record) => {
+                      return (
+                        record?.fee_code === undefined ||
+                        record?.fee_code === null
+                      );
+                    },
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
                     key: "fee_name",
+                    editable: (text, record) => {
+                      return (
+                        record?.fee_name === undefined ||
+                        record?.fee_name === null
+                      );
+                    },
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
+                    editable: (text, record) => {
+                      return (
+                        record?.unit_measurement === undefined ||
+                        record?.unit_measurement === null
+                      );
+                    },
                   },
                   {
                     title: "Өртөг",
                     dataIndex: "fee_amount",
                     key: "fee_amount",
+                    valueType: "money",
+                    editable: (text, record) => {
+                      return (
+                        record?.fee_amount === undefined ||
+                        record?.fee_amount === null
+                      );
+                    },
                   },
                   {
                     title: "Тоо 1",
                     dataIndex: "number_1",
                     key: "number_1",
-                  },
-                  {
-                    title: "Тоо 2",
-                    dataIndex: "number_2",
-                    key: "number_2",
+                    valueType: "digit",
                   },
                   {
                     title: "Дүн",
                     dataIndex: "total_amount",
                     key: "total_amount",
+                    valueType: "money",
+                    editable: false,
+                  },
+                  {
+                    title: "Үйлдэл",
+                    valueType: "option",
+                    width: 200,
+                    render: (text, record, _, action) => [
+                      <a
+                        onClick={() => {
+                          action?.startEditable?.(record.id);
+                        }}
+                      >
+                        Засах
+                      </a>,
+                      <a
+                        onClick={() => {
+                          setAdditionalFee(
+                            additionalFee.filter(
+                              (item) => item.id !== record.id
+                            )
+                          );
+                        }}
+                      >
+                        Хасах
+                      </a>,
+                    ],
                   },
                 ]}
+                request={async () => ({
+                  data: additionalFee,
+                  total: additionalFee.length,
+                  success: true,
+                })}
+                value={additionalFee}
+                onChange={(value) =>
+                  setAdditionalFee(value as AdditionalFeeType[])
+                }
+                editable={{
+                  type: "multiple",
+                  editableKeys,
+                  onSave: async (rowKey, data, row) => {
+                    console.log(rowKey, data, row);
+                    await waitTime(2000);
+                  },
+                  onChange: setEditableRowKeys,
+                  onValuesChange: async (record, data) => {
+                    const index = additionalFee.findIndex(
+                      (values) => values.id === record?.id
+                    );
+                    if (
+                      record?.fee_amount <= 0 ||
+                      record?.fee_amount === null ||
+                      record?.fee_amount === undefined
+                    ) {
+                      record.fee_amount = 1;
+                    }
+                    if (
+                      record?.number_1 <= 0 ||
+                      record?.number_1 === null ||
+                      record?.number_1 === undefined
+                    ) {
+                      record.number_1 = 1;
+                    }
+                    additionalFee[index].total_amount =
+                      record?.fee_amount * record?.number_1;
+                    record.total_amount = record?.fee_amount * record?.number_1;
+
+                    additionalFee[index] = {
+                      ...additionalFee[index],
+                      ...record,
+                    };
+                    setAdditionalFee([...additionalFee]);
+                  },
+                }}
               />
               <div className="flex justify-end">
                 <Button
@@ -413,13 +570,18 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   type="primary"
                   disabled={additionalFee.length === 0 || !additionalFee}
                   onClick={async () => {
-                    await ticketAdditionalFee.runAsync({
+                    const data = await ticketAdditionalFee.runAsync({
                       additional_fees: additionalFee.map((values) => {
                         return {
                           additional_fee_id: values.id,
                           number_1: values.number_1,
                           number_2: values.number_2,
                           total_amount: values.total_amount,
+                          fee_name: values.fee_name,
+                          fee_code: values.fee_code,
+                          unit_measurement: values.unit_measurement,
+                          fee_amount: values.fee_amount,
+                          is_new: values.is_new,
                         };
                       }),
                       cargo_weight: form.getFieldValue("cargo_weight"),
@@ -428,6 +590,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
+                    setTicketAdditional(data);
                   }}
                 >
                   Түр хадгалах
@@ -462,6 +625,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             name="payment_amount"
                             placeholder="Мөнгөн дүн"
                             label="Мөнгөн дүн"
+                            disabled
                           />
                         </Col>
                         <Col span={5}>
@@ -498,11 +662,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                   form.getFieldValue("ticket_number"),
                                 payment_date:
                                   form.getFieldValue("payment_date"),
-                                payment_method:
-                                  form.getFieldValue("payment_method"),
+                                payment_type:
+                                  form.getFieldValue("payment_type"),
                                 payment_amount:
                                   form.getFieldValue("payment_amount"),
-                                bank_id: form.getFieldValue("bank_id"),
+                                ledger_id: form.getFieldValue("ledger_id"),
                                 payer_name: form.getFieldValue("payer_name"),
                               },
                             ]);
@@ -520,7 +684,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               headers: ["Орлогын төрөл", "Дүн"],
                               rows: paymentList.map((value) => {
                                 return [
-                                  value?.payment_method,
+                                  value?.payment_type,
                                   value?.payment_amount,
                                 ];
                               }),
@@ -554,11 +718,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Төлөлтийн хэлбэр",
-                    dataIndex: "payment_method",
-                    key: "payment_method",
+                    dataIndex: "payment_type",
+                    key: "payment_type",
                     render: (_, record) => {
                       return PaymentMethod.find(
-                        (item) => item.value === record.payment_method
+                        (item) => item.value === record.payment_type
                       )?.label;
                     },
                   },
@@ -569,8 +733,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   {
                     title: "Данс",
-                    dataIndex: "bank_id",
-                    key: "bank_id",
+                    dataIndex: "ledger_id",
+                    key: "ledger_id",
                   },
                   {
                     title: "Төлөгч",
