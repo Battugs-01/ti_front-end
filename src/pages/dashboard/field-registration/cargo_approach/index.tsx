@@ -232,11 +232,10 @@ export const CargoApproach: React.FC = () => {
             children: [
               {
                 title: "Зууч код",
-                dataIndex: "carrier_code",
-              },
-              {
-                title: "Байр №",
-                dataIndex: "place_number",
+                dataIndex: "transport_give",
+                render: (_, record) => {
+                  return record?.transport_give?.transport_broker;
+                },
               },
               {
                 title: "Талбайд задарсан",

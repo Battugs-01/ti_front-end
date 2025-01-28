@@ -47,6 +47,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   detail,
 }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
+  const [ticketInvalidate, setTicketInvalidate] = useState<any>();
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
     opened: 0,
@@ -527,7 +528,13 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Э/Х нэмэх
                         </Button>
-                        <Button size="middle" type="default">
+                        <Button
+                          size="middle"
+                          type="default"
+                          onClick={() => {
+                            setTicketInvalidate(true);
+                          }}
+                        >
                           Э/Х цуцлах хүсэлт
                         </Button>
                       </div>
@@ -676,6 +683,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                 }}
               />
+              {ticketInvalidate && <div>ticketInvalidate</div>}
               <div className="flex justify-end">
                 <Button
                   size="middle"

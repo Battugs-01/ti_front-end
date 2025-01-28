@@ -210,10 +210,7 @@ const myFill: React.FC = () => {
                 title: "Зууч код",
                 dataIndex: "carrier_code",
               },
-              {
-                title: "Байр №",
-                dataIndex: "place_number",
-              },
+
               {
                 title: "Талбайд задарсан",
                 dataIndex: "opened_at",
