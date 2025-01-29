@@ -140,6 +140,7 @@ export const ArrivalField: React.FC = () => {
         create={createCargoApproach}
         setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"
+        tableAlertRender={false}
         columns={[
           {
             title: "Чингэлэг",
@@ -273,23 +274,41 @@ export const ArrivalField: React.FC = () => {
                 title: "Талбайд задарсан",
                 dataIndex: "opened_at",
                 render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
                   return dayjs(value).format("YYYY-MM-DD");
                 },
-              },
-              {
-                title: "Задарсан",
-                dataIndex: "",
               },
               {
                 title: "Суларсан",
                 dataIndex: "freed_at",
                 render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
                   return dayjs(value).format("YYYY-MM-DD");
                 },
               },
               {
-                title: "Ачилт хийсэн",
-                dataIndex: "worked",
+                title: "Талбайгаас явсан",
+                dataIndex: "left_site_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
+              },
+              {
+                title: "Буцаж ирсэн",
+                dataIndex: "returned_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
                 title: "Талбайд ирсэнээс хойш",

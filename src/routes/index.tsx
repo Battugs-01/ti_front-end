@@ -5,8 +5,9 @@ import { menuItems } from "layout/dashboard/menu_items";
 import { FC, lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import auhtRoutes from "routes/auth";
-import dashboardRoutes from "routes/dashboard";
 import { IRoute } from "./types";
+import DashboardRoutes from "routes/dashboard";
+import { getNavigateRoute } from "utils/index";
 const AuthLayout = lazy(() => import("layout/auth"));
 const DashboardLayout = lazy(() => import("layout/dashboard"));
 
@@ -18,9 +19,11 @@ const MainRoutes: FC = () => {
       path: "/dashboard",
       key: "dashboard",
       component: <DashboardLayout />,
-      children: dashboardRoutes,
+      children: DashboardRoutes(),
     },
   ];
+
+  const navigateRoute = getNavigateRoute(user?.role_name || "");
 
   if (!authorized) {
     routes.push({
@@ -64,7 +67,7 @@ const MainRoutes: FC = () => {
         path="*"
         element={
           authorized ? (
-            <Navigate to={menuItems[0].path} />
+            <Navigate to={navigateRoute} />
           ) : (
             <Navigate to="/auth/login" />
           )

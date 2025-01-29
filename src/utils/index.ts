@@ -1,4 +1,12 @@
+import { UserRoleType } from "config";
 import dayjs, { QUnitType } from "dayjs";
+import {
+  menuCashierItems,
+  menuCustomerItems,
+  menuFininciarItems,
+  menuItems,
+  menuManagerItems,
+} from "layout/dashboard/menu_items";
 import file from "service/file";
 import { FilterDeadline } from "types";
 
@@ -358,4 +366,21 @@ export const transictionFilter = {
   sorter: {
     created_at: "desc",
   },
+};
+
+export const getNavigateRoute = (role: string) => {
+  switch (role) {
+    case UserRoleType.admin:
+      return menuItems[0].path;
+    case UserRoleType.transport_manager:
+      return menuManagerItems[0].path;
+    case UserRoleType.cashier:
+      return menuCashierItems[0].path;
+    case UserRoleType.financier:
+      return menuFininciarItems[0].path;
+    case UserRoleType.customer:
+      return menuCustomerItems[0].path;
+    default:
+      return menuManagerItems[0].path;
+  }
 };
