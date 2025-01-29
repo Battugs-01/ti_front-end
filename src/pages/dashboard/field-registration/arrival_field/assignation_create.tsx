@@ -1,23 +1,16 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
-  ProFormDigit,
-  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
-import {
-  ActionType,
-  EditableProTable,
-  ProColumns,
-} from "@ant-design/pro-table";
+import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
 import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
-import { values } from "lodash";
 import moment from "moment";
 import { useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
@@ -28,7 +21,6 @@ import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
-import { Edit01 } from "untitledui-js-base";
 import { moneyFormat } from "utils/index";
 import { PaymentMethod } from "utils/options";
 import { downloadPDF, generatePDF } from "utils/pdf_generate";
@@ -319,7 +311,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       placeholder="Задарсан"
                       label="Задарсан"
                     />
-                    <IBadge title={dates.opened} color="blue" />
+                    <IBadge
+                      title={dates.opened <= 0 ? 0 : dates.opened}
+                      color="blue"
+                    />
                   </div>
                 </Col>
               </Row>
@@ -344,7 +339,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       label="Суларсан"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title={dates.freed} color="blue" />
+                    <IBadge
+                      title={dates.freed <= 0 ? 0 : dates.freed}
+                      color="blue"
+                    />
                   </div>
                 </Col>
                 <Col span={12}>
@@ -367,7 +365,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       label="Т-c явсан"
                       // rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title={dates?.left_site} color="blue" />
+                    <IBadge
+                      title={dates?.left_site <= 0 ? 0 : dates.left_site}
+                      color="blue"
+                    />
                   </div>
                 </Col>
               </Row>
@@ -392,7 +393,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                       label="Буцаж ирсэн"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title={dates?.returned} color="blue" />
+                    <IBadge
+                      title={dates?.returned <= 0 ? 0 : dates.returned}
+                      color="blue"
+                    />
                   </div>
                 </Col>
                 <Col span={12}>
