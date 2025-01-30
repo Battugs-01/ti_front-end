@@ -14,6 +14,11 @@ export enum GenderType {
   female = "female",
 }
 
+export enum PaymentType {
+  cash = "cash",
+  non_cash = "non_cash",
+}
+
 export const workersGenderArray = Object.freeze([
   {
     label: "Эрэгтэй",

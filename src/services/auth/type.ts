@@ -24,7 +24,7 @@ export interface Customer {
   updated_at: Date;
   first_name: string;
   last_name: string;
-
+  customer_company_id: number;
   email: string;
   phone: string;
   is_active: boolean;

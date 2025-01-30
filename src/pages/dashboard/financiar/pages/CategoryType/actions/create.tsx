@@ -1,6 +1,5 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { notification } from "antd";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
 import categoryType from "service/fininaciar/categoryType";
@@ -12,11 +11,6 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
 
   const create = useRequest(categoryType.create, {
     manual: true,
-    onError: (err) => {
-      notification.error({
-        message: err.message,
-      });
-    },
   });
 
   return (
@@ -38,7 +32,6 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
           if (
             await create.runAsync({
               ...values,
-              code: values?.category_code,
             })
           ) {
             return true;

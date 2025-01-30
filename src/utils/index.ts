@@ -197,6 +197,17 @@ export const fieldRegistrationPaginate = {
   ],
 };
 
+export const myFillPaginate = {
+  current: 0,
+  pageSize: 20,
+  status: "arrived_at_site",
+  between: [
+    dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+    dayjs().format("YYYY-MM-DD"),
+  ],
+  customer_company_id: "",
+};
+
 export const reportPaginate = {
   current: 0,
   pageSize: 20,

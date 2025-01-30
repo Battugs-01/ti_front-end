@@ -1,5 +1,4 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
 import { PageCard } from "components/card";
 import { Label } from "components/label";
 import { ITable } from "components/table";
@@ -17,10 +16,6 @@ const AdditionalFeeSettings = () => {
 
   const list = useRequest(addinitionalFeeSettings.list, {
     manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
   });
 
   const run = () => {

@@ -5,17 +5,18 @@ import { ITable } from "components/index";
 import { Label } from "components/label";
 import PublicDetail from "components/public-view";
 import InitTableHeader from "components/table-header";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
-import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
+import { moneyFormat, myFillPaginate } from "utils/index";
 import { DirectionOptions, PaymentMethod } from "utils/options";
 
 const myFill: React.FC = () => {
-  const [filter, setFilter] = useState(fieldRegistrationPaginate);
+  const [filter, setFilter] = useState(myFillPaginate);
   const [search, setSearch] = useState<string>("");
-
+  const [user] = useContext(AuthContext);
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
     onError: (err) => {
@@ -28,6 +29,7 @@ const myFill: React.FC = () => {
   useEffect(() => {
     fieldRegister.run({
       ...filter,
+      customer_company_id: user?.user?.customer_company_id,
     });
   }, [filter]);
 

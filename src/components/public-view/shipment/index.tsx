@@ -87,6 +87,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
           dataSource={
             detailData?.data?.ticket?.additional_fee_ticket_calculated ?? []
           }
+          hidePagination
           className="p-0 remove-padding-table"
           columns={[
             {
@@ -113,11 +114,6 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
               title: "Тоо 1",
               dataIndex: "number_1",
               key: "number_1",
-            },
-            {
-              title: "Тоо 2",
-              dataIndex: "number_2",
-              key: "number_2",
             },
             {
               title: "Дүн",
