@@ -137,6 +137,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         res?.additional_fee_ticket_calculated?.map((values): any => {
           return {
             ...values,
+            fee_amount: values?.fee_amount,
             number_1: values.number_1,
             number_2: values.number_2,
             total_amount: values.total_amount,
@@ -156,6 +157,30 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
     <ModalForm
       form={form}
       onFinish={async (values) => {
+        const data = await ticketAdditionalFee.runAsync({
+          additional_fees: additionalFee.map((values) => {
+            return {
+              additional_fee_id: values.id,
+              number_1: values.number_1,
+              number_2: values.number_2,
+              total_amount: values.total_amount,
+              fee_name: values.fee_name,
+              fee_code: values.fee_code,
+              unit_measurement: values.unit_measurement,
+              fee_amount: values.fee_amount,
+              is_new: values.is_new,
+            };
+          }),
+          shipping_or_assignment: "assignment",
+          cargo_weight: form.getFieldValue("cargo_weight"),
+          additional_fee_category_id: form.getFieldValue(
+            "additional_fee_category_id"
+          ),
+          date: dayjs(form.getFieldValue("date")).toDate(),
+          ticket_number: form.getFieldValue("ticket_number"),
+          container_transport_record_id: detail?.id,
+        });
+        setTicketAdditional(data);
         await updateArrivalField.runAsync(
           {
             ...values,
@@ -170,7 +195,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         await addAdditionalFeeDebit.runAsync({
           ...values,
           date: moment(values.date).toDate(),
-          ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
+          ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
         });
       }}
@@ -183,7 +208,8 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
         cargo_weight: getTempAdditionalFee.data?.cargo_weight,
-        category_fee_id: getTempAdditionalFee.data?.category_fee_id,
+        additional_fee_category_id:
+          getTempAdditionalFee.data?.additional_fee_category_id,
         payment_amount: totalAmount,
       }}
       open={open}
@@ -657,6 +683,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   onChange: setEditableRowKeys,
                   onValuesChange: async (record, data) => {
+                    console.log(record.fee_amount, "llll");
                     const index = additionalFee.findIndex(
                       (values) => values.id === record?.id
                     );
@@ -694,6 +721,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   type="primary"
                   disabled={additionalFee.length === 0 || !additionalFee}
                   onClick={async () => {
+                    console.log(additionalFee, "kkkk");
                     const data = await ticketAdditionalFee.runAsync({
                       additional_fees: additionalFee.map((values) => {
                         return {

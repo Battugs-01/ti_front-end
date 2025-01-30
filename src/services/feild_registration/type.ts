@@ -64,7 +64,7 @@ export interface GetTempAdditionalFeeType {
   container_transport_record_id: number;
   ticket_number: string;
   cargo_weight: number;
-  category_fee_id: number;
+  additional_fee_category_id: number;
   date: Date;
   additional_fee_ticket_calculated: TempAdditionalFee[];
 }
@@ -81,6 +81,7 @@ export interface TempAdditionalFee {
   number_1: number;
   number_2: number;
   total_amount: number;
+  fee_amount: number;
 }
 
 export interface TicketAdditionalFeeType {

@@ -131,9 +131,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         res?.additional_fee_ticket_calculated?.map((values): any => {
           return {
             ...values,
-            number_1: values.number_1,
-            number_2: values.number_2,
-            total_amount: values.total_amount,
+            fee_amount: values?.fee_amount,
+            number_1: values?.number_1,
+            number_2: values?.number_2,
+            total_amount: values?.total_amount,
           };
         }) || []
       );
@@ -149,6 +150,30 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     <ModalForm
       form={form}
       onFinish={async (values) => {
+        const data = await ticketAdditionalFee.runAsync({
+          additional_fees: additionalFee.map((values) => {
+            return {
+              additional_fee_id: values.id,
+              number_1: values.number_1,
+              number_2: values.number_2,
+              total_amount: values.total_amount,
+              fee_name: values.fee_name,
+              fee_code: values.fee_code,
+              unit_measurement: values.unit_measurement,
+              fee_amount: values.fee_amount,
+              is_new: values.is_new,
+            };
+          }),
+          shipping_or_assignment: "shipping",
+          cargo_weight: form.getFieldValue("cargo_weight"),
+          additional_fee_category_id: form.getFieldValue(
+            "additional_fee_category_id"
+          ),
+          date: dayjs(form.getFieldValue("date")).toDate(),
+          ticket_number: form.getFieldValue("ticket_number"),
+          container_transport_record_id: detail?.id,
+        });
+        setTicketAdditional(data);
         await updateArrivalField.runAsync(
           {
             ...values,
@@ -162,8 +187,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         await addAdditionalFeeDebit.runAsync({
           ...values,
           date: moment(values.date).toDate(),
-          ticket_id: ticketAdditional?.id || getTempAdditionalFee.data?.id,
+          ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
+          shipping_or_assinment: "shipping",
         });
       }}
       title="Ачилт"
@@ -175,7 +201,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
         cargo_weight: getTempAdditionalFee.data?.cargo_weight,
-        category_fee_id: getTempAdditionalFee.data?.category_fee_id,
+        additional_fee_category_id:
+          getTempAdditionalFee.data?.additional_fee_category_id,
         payment_amount: totalAmount,
       }}
       open={open}
@@ -351,7 +378,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         value: item.id,
                       }));
                     }}
-                    name="category_fee_id"
+                    name="additional_fee_category_id"
                     placeholder="Ангилал"
                     label={"Ангилал"}
                     rules={FORM_ITEM_RULE()}
@@ -584,8 +611,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           is_new: values.is_new,
                         };
                       }),
+                      shipping_or_assinment: "shipping",
                       cargo_weight: form.getFieldValue("cargo_weight"),
-                      category_fee_id: form.getFieldValue("category_fee_id"),
+                      additional_fee_category_id: form.getFieldValue(
+                        "additional_fee_category_id"
+                      ),
                       date: dayjs(form.getFieldValue("date")).toDate(),
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
