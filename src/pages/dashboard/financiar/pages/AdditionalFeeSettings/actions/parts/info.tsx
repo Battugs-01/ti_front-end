@@ -3,13 +3,10 @@ import { useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
-import { useState } from "react";
-import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+import { useEffect } from "react";
 import categoryType from "service/fininaciar/categoryType";
 
 export const Info = () => {
-  const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
-
   const categoryTypeList = useRequest(categoryType.list, {
     manual: true,
     onError: (error) => {
@@ -18,23 +15,36 @@ export const Info = () => {
       });
     },
   });
+
+  useEffect(() => {
+    categoryTypeList.runAsync({ is_all: true });
+  }, []);
+
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormSelect
             mode="multiple"
-            request={async () => {
-              const res = await categoryTypeList.runAsync({ is_all: true });
-              return res?.items.map((item) => ({
-                label: (
-                  <div className="flex gap-2">
-                    <div>{item.code}</div> - <div>{item.name}</div>
-                  </div>
-                ),
-                value: item.id,
-              }));
-            }}
+            // request={async () => {
+            //   const res = await categoryTypeList.runAsync({ is_all: true });
+            //   return res?.items.map((item) => ({
+            //     label: (
+            //       <div className="flex gap-2">
+            //         <div>{item.code}</div> - <div>{item.name}</div>
+            //       </div>
+            //     ),
+            //     value: item.id,
+            //   }));
+            // }}
+            options={categoryTypeList?.data?.items?.map((item) => ({
+              label: (
+                <div className="flex gap-2">
+                  <div>{item.code}</div> - <div>{item.name}</div>
+                </div>
+              ),
+              value: item.id,
+            }))}
             name="category_ids"
             placeholder="Ангилал код"
             label={"Ангилал код"}

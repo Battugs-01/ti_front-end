@@ -1,5 +1,4 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
 import { PageCard } from "components/card";
 import { Label } from "components/label";
 import { ITable } from "components/table";
@@ -19,10 +18,6 @@ const CategoryType = () => {
 
   const list = useRequest(categoryType.list, {
     manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
   });
 
   const run = () => {

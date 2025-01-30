@@ -10,7 +10,7 @@ import CustomerCompany from "./customer";
 import Workers from "./employes";
 
 const EmployeRegistration = () => {
-  const [tab, setTab] = useState<any>(registerCustomerEnumTab.CustomerCompany);
+  const [tab, setTab] = useState<any>(registerCustomerEnumTab.Worker);
   const DocumentButtons: FieldRegistrationTabtButton[] = [
     {
       value: registerCustomerEnumTab.Worker,

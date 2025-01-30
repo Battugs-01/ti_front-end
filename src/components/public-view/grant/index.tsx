@@ -6,7 +6,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { ITable } from "components/table";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, PaymentType } from "config";
 import { useEffect, useRef } from "react";
 import { CargoApproachList } from "service/feild_registration/type";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
@@ -26,7 +26,11 @@ const Grant: React.FC<GrantProps> = ({ data, detailData }) => {
       category_fee_id: detailData?.data?.ticket?.additional_fee_category_id,
       cargo_weight: detailData?.data?.ticket?.cargo_weight,
       payment_date: detailData?.data?.ticket?.debit?.created_at,
-      payment_type: detailData?.data?.ticket?.debit?.payment_type,
+      payment_type:
+        detailData?.data?.ticket?.debit?.payment_type &&
+        detailData?.data?.ticket?.debit?.payment_type === PaymentType.cash
+          ? "Бэлэн"
+          : "Бэлэн бус",
       payment_amount: detailData?.data?.ticket?.debit?.total_amount,
       payer_name: detailData?.data?.ticket?.debit?.payer_name,
     });
@@ -90,6 +94,7 @@ const Grant: React.FC<GrantProps> = ({ data, detailData }) => {
           dataSource={
             detailData?.data?.ticket?.additional_fee_ticket_calculated ?? []
           }
+          hidePagination
           className="p-0 remove-padding-table"
           columns={[
             {
@@ -116,11 +121,6 @@ const Grant: React.FC<GrantProps> = ({ data, detailData }) => {
               title: "Тоо 1",
               dataIndex: "number_1",
               key: "number_1",
-            },
-            {
-              title: "Тоо 2",
-              dataIndex: "number_2",
-              key: "number_2",
             },
             {
               title: "Дүн",
