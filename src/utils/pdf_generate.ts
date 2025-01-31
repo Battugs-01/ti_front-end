@@ -60,7 +60,7 @@ export const generatePDF = async ({
 
         table: {
           headerRows: 1,
-          widths: [150, 100, 100, 120],
+          widths: [150, 100],
           body: [
             header,
 
@@ -75,22 +75,6 @@ export const generatePDF = async ({
               {
                 text: " ",
                 margin: [5, 5, 5, 5],
-              },
-              {
-                text: totalDaily,
-                margin: [5, 5, 5, 5],
-                color: "#007FFF",
-
-                fontSize: 14,
-                bold: true,
-              },
-              {
-                text: totalMonthly,
-                margin: [5, 5, 5, 5],
-                color: "#007FFF",
-
-                fontSize: 14,
-                bold: true,
               },
             ],
           ],
@@ -211,10 +195,10 @@ export const downloadPDF = (data: TDocumentDefinitions) => {
   pdfMake
     .createPdf(data, undefined, {
       custom: {
-        normal: `${hostname}/Noto_Sans/NotoSans-Regular.ttf`,
-        bold: `${hostname}/Noto_Sans/NotoSans-Bold.ttf`,
-        italics: `${hostname}/Noto_Sans/NotoSans-Italic.ttf`,
-        bolditalics: `${hostname}/Noto_Sans/NotoSans-BoldItalic.ttf`,
+        normal: `${hostname}/Manrope/Manrope-Regular.ttf`,
+        bold: `${hostname}/Manrope/Manrope-Bold.ttf`,
+        italics: `${hostname}/Manrope/Manrope-Regular.ttf`,
+        bolditalics: `${hostname}/Manrope/Manrope-Bold.ttf`,
       },
     })
     .open();
