@@ -6,7 +6,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { ITable } from "components/index";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, PaymentType } from "config";
 import { useEffect, useRef } from "react";
 import {
   AdditionalFeeTicketCalculated,
@@ -29,6 +29,14 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
       date: shipmentData?.date,
       category_fee_id: shipmentData?.additional_fee_category_id,
       cargo_weight: shipmentData?.cargo_weight,
+      payment_date: shipmentData?.debit?.created_at,
+      payment_type:
+        shipmentData?.debit?.payment_type &&
+        shipmentData?.debit?.payment_type === PaymentType.cash
+          ? "Бэлэн"
+          : "Бэлэн бус",
+      payment_amount: shipmentData?.debit?.total_amount,
+      payer_name: shipmentData?.debit?.payer_name,
     });
   }, [data, shipmentData]);
 
@@ -130,6 +138,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
               name="payment_date"
               placeholder="Огноо"
               label="Огноо"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -141,6 +150,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
                 value: item.value,
               }))}
               label="Төлөлтийн хэлбэр"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -148,6 +158,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
               name="payment_amount"
               placeholder="Мөнгөн дүн"
               label="Мөнгөн дүн"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -158,6 +169,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
               name="payer_name"
               placeholder="Төлөгч"
               label="Төлөгч"
+              disabled
             />
           </Col>
         </Row>

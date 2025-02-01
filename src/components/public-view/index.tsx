@@ -59,9 +59,6 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
     }
   }, [detailData.data]);
 
-  console.log(assignation, "assignation");
-  console.log(shipment, "shipment");
-
   return (
     <IModalForm
       title="Дэлгэрэнгүй мэдээлэл"
