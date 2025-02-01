@@ -131,6 +131,13 @@ export const CargoApproach: React.FC = () => {
                 },
               },
               {
+                title: "Үүсгэсэн ажилтан",
+                dataIndex: "created_by",
+                render: (_, record) => {
+                  return record?.created_by?.email;
+                },
+              },
+              {
                 title: "Орох хил",
                 dataIndex: "direction",
                 render: (_, record) => {
@@ -239,45 +246,129 @@ export const CargoApproach: React.FC = () => {
               },
               {
                 title: "Талбайд задарсан",
-                dataIndex: "field_cleaned",
-              },
-              {
-                title: "Задарсан",
-                dataIndex: "cleaned",
+                dataIndex: "opened_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
                 title: "Суларсан",
-                dataIndex: "watered",
+                dataIndex: "freed_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
-                title: "Ачилт хийсэн",
-                dataIndex: "worked",
+                title: "Талбайгаас явсан",
+                dataIndex: "left_site_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
               {
-                title: "Талбайд ирсэнээс хойш",
-                dataIndex: "arrival_field",
-              },
-              {
-                title: "Задарснаас хойш суларсан",
-                dataIndex: "cleaned_watered",
+                title: "Буцаж ирсэн",
+                dataIndex: "returned_at",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
               },
             ],
           },
           {
-            title: "Хонох",
+            title: "Хоног",
             dataIndex: "id",
             children: [
               {
+                title: "Талбайд ирсэнээс хойш",
+                dataIndex: "arrival_field",
+                render: (_, record) => {
+                  if (
+                    record?.arrived_at_site.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.arrived_at_site).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
+              },
+              {
+                title: "Задарснаас хойш суларсан",
+                dataIndex: "cleaned_watered",
+                render: (_, record) => {
+                  if (
+                    record?.freed_at.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.freed_at).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
+              },
+              {
                 title: "Задарснаас хойш талбайгаас явсан",
                 dataIndex: "cleaned_field",
+                render: (_, record) => {
+                  if (
+                    record?.left_site_at.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.left_site_at).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
               },
               {
                 title: "Суларсанаас хойш ачилт хийсэн",
                 dataIndex: "watered_worked",
+                render: (_, record) => {
+                  if (
+                    record?.returned_at.includes("0001-01-01") ||
+                    record?.freed_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.freed_at),
+                    "days"
+                  );
+                },
               },
               {
                 title: "Буцаж ирсэнээс хойш ачилт хийсэн",
                 dataIndex: "returned_worked",
+                render: (_, record) => {
+                  if (
+                    record?.returned_at.includes("0001-01-01") ||
+                    record?.left_site_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.left_site_at),
+                    "days"
+                  );
+                },
               },
             ],
           },

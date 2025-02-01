@@ -1,8 +1,13 @@
+import { Customer } from "service/auth/type";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 
 export interface CargoApproachList {
   id: number;
+  created_by_id: number;
+  updated_by_id: number;
+  created_by: Customer;
+  created_at: Date;
   container_code: string;
   capacity: number;
   broker_name: string;
@@ -12,6 +17,8 @@ export interface CargoApproachList {
   arrived_at_site: string;
   opened_at: string;
   left_site: string;
+  freed_at: string;
+  left_site_at: string;
   returned_at: string;
   status: string;
   is_recieved_and_waggon_gone: boolean;
