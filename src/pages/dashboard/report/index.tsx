@@ -12,7 +12,6 @@ import { reportPaginate } from "utils/index";
 const ReportPage: React.FC = () => {
   const [filter, setFilter] = useState(reportPaginate);
   const [search, setSearch] = useState<string>("");
-
   const reportList = useRequest(additionalFeeDebit.list, {
     manual: true,
     onError: (err) => {

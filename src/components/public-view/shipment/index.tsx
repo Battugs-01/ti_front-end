@@ -6,28 +6,39 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
 import { ITable } from "components/index";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, PaymentType } from "config";
 import { useEffect, useRef } from "react";
-import { CargoApproachList } from "service/feild_registration/type";
-import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+import {
+  AdditionalFeeTicketCalculated,
+  CargoApproachList,
+  Ticket,
+} from "service/feild_registration/type";
 import { PaymentMethod } from "utils/options";
 
 interface ShippingProps {
   data: CargoApproachList;
-  detailData: any;
+  shipmentData: Ticket;
 }
-const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
+const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
   const form = useRef<ProFormInstance>();
 
   useEffect(() => {
     form.current?.setFieldsValue({
       ...data,
-      ticket_number: detailData?.data?.ticket?.ticket_number,
-      date: detailData?.data?.ticket?.date,
-      category_fee_id: detailData?.data?.ticket?.additional_fee_category_id,
-      cargo_weight: detailData?.data?.ticket?.cargo_weight,
+      ticket_number: shipmentData?.ticket_number,
+      date: shipmentData?.date,
+      category_fee_id: shipmentData?.additional_fee_category_id,
+      cargo_weight: shipmentData?.cargo_weight,
+      payment_date: shipmentData?.debit?.created_at,
+      payment_type:
+        shipmentData?.debit?.payment_type &&
+        shipmentData?.debit?.payment_type === PaymentType.cash
+          ? "Бэлэн"
+          : "Бэлэн бус",
+      payment_amount: shipmentData?.debit?.total_amount,
+      payer_name: shipmentData?.debit?.payer_name,
     });
-  }, [data, detailData]);
+  }, [data, shipmentData]);
 
   return (
     <ProForm initialValues={data} formRef={form} submitter={false}>
@@ -83,10 +94,8 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
           </Col>
         </Row>
 
-        <ITable<AdditionalFeeType>
-          dataSource={
-            detailData?.data?.ticket?.additional_fee_ticket_calculated ?? []
-          }
+        <ITable<AdditionalFeeTicketCalculated>
+          dataSource={shipmentData?.additional_fee_ticket_calculated ?? []}
           hidePagination
           className="p-0 remove-padding-table"
           columns={[
@@ -129,6 +138,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
               name="payment_date"
               placeholder="Огноо"
               label="Огноо"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -140,6 +150,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
                 value: item.value,
               }))}
               label="Төлөлтийн хэлбэр"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -147,6 +158,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
               name="payment_amount"
               placeholder="Мөнгөн дүн"
               label="Мөнгөн дүн"
+              disabled
             />
           </Col>
           <Col span={5}>
@@ -157,6 +169,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, detailData }) => {
               name="payer_name"
               placeholder="Төлөгч"
               label="Төлөгч"
+              disabled
             />
           </Col>
         </Row>

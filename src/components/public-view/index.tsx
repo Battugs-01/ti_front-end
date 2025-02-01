@@ -13,6 +13,8 @@ import Shiping from "./shipment";
 const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
   const [tab, setTab] = useState<any>(DetailTab.container);
+  const [assignation, setAssignation] = useState<any>();
+  const [shipment, setShipment] = useState<any>();
 
   const detailChooseButtons: DetailTabtButton[] = [
     {
@@ -42,7 +44,21 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
     }
   }, [rest.open]);
 
-  console.log(detailData, "restsdaaa");
+  useEffect(() => {
+    if (detailData.data) {
+      setAssignation(
+        detailData.data.ticket.find(
+          (el: any) => el.shipping_or_assignment === "assignment"
+        )
+      );
+      setShipment(
+        detailData.data.ticket.find(
+          (el: any) => el.shipping_or_assignment === "shipping"
+        )
+      );
+    }
+  }, [detailData.data]);
+
   return (
     <IModalForm
       title="Дэлгэрэнгүй мэдээлэл"
@@ -83,11 +99,11 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
 
       <IfCondition
         condition={tab === DetailTab.grant}
-        whenTrue={<Grant data={rest?.detail} detailData={detailData} />}
+        whenTrue={<Grant data={rest?.detail} assignationData={assignation} />}
       />
       <IfCondition
         condition={tab === DetailTab.shiping}
-        whenTrue={<Shiping data={rest?.detail} detailData={detailData} />}
+        whenTrue={<Shiping data={rest?.detail} shipmentData={shipment} />}
       />
     </IModalForm>
   );

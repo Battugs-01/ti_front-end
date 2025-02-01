@@ -8,33 +8,36 @@ import { Col, Row } from "antd";
 import { ITable } from "components/table";
 import { FORM_ITEM_RULE, PaymentType } from "config";
 import { useEffect, useRef } from "react";
-import { CargoApproachList } from "service/feild_registration/type";
-import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+import {
+  AdditionalFeeTicketCalculated,
+  CargoApproachList,
+  Ticket,
+} from "service/feild_registration/type";
 
 interface GrantProps {
   data: CargoApproachList;
-  detailData: any;
+  assignationData: Ticket;
 }
-const Grant: React.FC<GrantProps> = ({ data, detailData }) => {
+const Grant: React.FC<GrantProps> = ({ data, assignationData }) => {
   const form = useRef<ProFormInstance>();
 
   useEffect(() => {
     form.current?.setFieldsValue({
       ...data,
-      ticket_number: detailData?.data?.ticket?.ticket_number,
-      date: detailData?.data?.ticket?.date,
-      category_fee_id: detailData?.data?.ticket?.additional_fee_category_id,
-      cargo_weight: detailData?.data?.ticket?.cargo_weight,
-      payment_date: detailData?.data?.ticket?.debit?.created_at,
+      ticket_number: assignationData?.ticket_number,
+      date: assignationData?.date,
+      category_fee_id: assignationData?.additional_fee_category_id,
+      cargo_weight: assignationData?.cargo_weight,
+      payment_date: assignationData?.debit?.created_at,
       payment_type:
-        detailData?.data?.ticket?.debit?.payment_type &&
-        detailData?.data?.ticket?.debit?.payment_type === PaymentType.cash
+        assignationData?.debit?.payment_type &&
+        assignationData?.debit?.payment_type === PaymentType.cash
           ? "Бэлэн"
           : "Бэлэн бус",
-      payment_amount: detailData?.data?.ticket?.debit?.total_amount,
-      payer_name: detailData?.data?.ticket?.debit?.payer_name,
+      payment_amount: assignationData?.debit?.total_amount,
+      payer_name: assignationData?.debit?.payer_name,
     });
-  }, [data, detailData]);
+  }, [data, assignationData]);
 
   return (
     <ProForm initialValues={data} formRef={form} submitter={false}>
@@ -90,10 +93,8 @@ const Grant: React.FC<GrantProps> = ({ data, detailData }) => {
           </Col>
         </Row>
 
-        <ITable<AdditionalFeeType>
-          dataSource={
-            detailData?.data?.ticket?.additional_fee_ticket_calculated ?? []
-          }
+        <ITable<AdditionalFeeTicketCalculated>
+          dataSource={assignationData?.additional_fee_ticket_calculated ?? []}
           hidePagination
           className="p-0 remove-padding-table"
           columns={[

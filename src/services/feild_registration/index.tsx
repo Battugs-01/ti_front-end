@@ -2,6 +2,7 @@ import { PaginationResponse, SuccessResponse } from "types";
 import http from "..";
 import {
   CargoApproachList,
+  GetPublicView,
   GetTempAdditionalFeeType,
   TicketAdditionalFeeType,
 } from "./type";
@@ -49,7 +50,7 @@ namespace fieldRegistration {
     });
 
   export const getPublicDetailData = (id: number) =>
-    http.get<any>(`/transport-record/${id}`, {
+    http.get<GetPublicView>(`/transport-record/${id}`, {
       hasAuth: true,
     });
 }
