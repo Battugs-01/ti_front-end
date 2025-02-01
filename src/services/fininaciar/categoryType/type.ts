@@ -5,4 +5,5 @@ export interface CategoryTypeTypes {
   code: string;
   category_type: string;
   name: string;
+  created_by: any;
 }

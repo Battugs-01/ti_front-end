@@ -127,6 +127,17 @@ const CustomerCompany = () => {
               </span>
             ),
           },
+          {
+            dataIndex: "created_by",
+            title: "Бүртгэсэн ажилтан",
+            align: "left",
+            width: "10%",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center ">
+                {record?.created_by?.email || "-"}
+              </span>
+            ),
+          },
         ]}
         CreateComponent={CreateService}
         create={create as boolean}

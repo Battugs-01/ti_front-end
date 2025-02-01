@@ -9,7 +9,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Radio, Row } from "antd";
 import IBadge from "components/badge";
-import { FORM_ITEM_RULE, permissionArray } from "config";
+import { FORM_ITEM_RULE } from "config";
 import { useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
