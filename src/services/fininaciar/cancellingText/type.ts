@@ -68,7 +68,7 @@ export interface Ticket {
   updated_by_id: number;
   shipping_or_assignment: string;
   container_transport_record_id: number;
-  container_transport_record: null;
+  container_transport_record: any;
   debit: null;
   ticket_number: string;
   cargo_weight: number;

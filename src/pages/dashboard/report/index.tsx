@@ -1,10 +1,13 @@
+import { ProFormSelect } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
+import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import additionalFeeCategory from "service/additional_fee_record";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 import { CargoApproachList } from "service/feild_registration/type";
 import { reportPaginate } from "utils/index";
@@ -17,6 +20,15 @@ const ReportPage: React.FC = () => {
     onError: (err) => {
       notification.error({
         message: err.message,
+      });
+    },
+  });
+
+  const categoryList = useRequest(additionalFeeCategory.list, {
+    manual: true,
+    onError: (error) => {
+      notification.error({
+        message: error.message,
       });
     },
   });
@@ -60,6 +72,26 @@ const ReportPage: React.FC = () => {
               ]}
             />
           </div>
+        }
+        filter={
+          <ProFormSelect
+            fieldProps={{
+              size: "large",
+              onChange: (e) => {
+                setFilter({ ...filter, type: e as any });
+              },
+            }}
+            request={async () => {
+              const res = await categoryList.runAsync({ is_all: true });
+              return res?.items.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }));
+            }}
+            name="additional_fee_category_id"
+            placeholder="Сонгох"
+            rules={FORM_ITEM_RULE()}
+          />
         }
         hideTitle
         search={search}
