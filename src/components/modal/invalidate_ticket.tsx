@@ -5,34 +5,29 @@ import {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import fieldRegistration from "service/feild_registration";
 import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
 import { Trash01 } from "untitledui-js-base";
 
-type PropsRemove = ModalFormProps & {
-  onDone?: () => void;
-  uniqueKeys?: number[];
+interface InvalidateModalProps {
+  title: string;
+  remove: boolean;
   onCancel: () => void;
-  body?: any;
-  title?: string;
-  remove?: boolean;
-  cancelTitle?: string;
-  customTitle?: string;
-  ticket_id?: number;
-};
+  onDone: () => void;
+  open: boolean;
+  id: number;
+}
+
 export const InvalidateModal = ({
   onCancel,
   open,
   onDone,
-  uniqueKeys,
   title,
-  body,
   remove,
-  cancelTitle,
-  ticket_id,
-  customTitle,
+  id,
   ...rest
-}: PropsRemove) => {
+}: InvalidateModalProps) => {
   const formRef = useRef<ProFormInstance>();
   // create eldev huraamjiin huselt tsutslah deer nam=
   const submit = useRequest(invalidatingAdditionalFee.create, {
@@ -48,6 +43,18 @@ export const InvalidateModal = ({
         message: err.message,
       }),
   });
+  const getTempAdditionalFee = useRequest(
+    fieldRegistration.getTempAdditionalFee,
+    {
+      manual: true,
+    }
+  );
+
+  useEffect(() => {
+    if (id) {
+      getTempAdditionalFee.run(id);
+    }
+  }, [id]);
   return (
     <ModalForm
       {...rest}
@@ -101,8 +108,7 @@ export const InvalidateModal = ({
       onFinish={async () => {
         if (
           await submit.runAsync({
-            ticket_id: ticket_id,
-            calc_ids: uniqueKeys,
+            ticket_id: getTempAdditionalFee.data?.id,
           })
         ) {
           return true;

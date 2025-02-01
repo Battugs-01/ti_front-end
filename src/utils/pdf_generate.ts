@@ -7,15 +7,17 @@ export interface PDFContent {
   title: string;
   headers: string[];
   rows: string[][];
-  totalMonthly: string;
-  totalDaily: string;
+  ticketNumber: string;
+  totalMoney: number;
+  totalMonthly: number;
 }
 
 export const generatePDF = async ({
   title,
   headers,
   rows,
-  totalDaily,
+  ticketNumber,
+  totalMoney,
   totalMonthly,
 }: PDFContent): Promise<TDocumentDefinitions> => {
   const header = headers.map((header) => ({
@@ -45,6 +47,13 @@ export const generatePDF = async ({
         ],
       },
       {
+        text: `№: ${ticketNumber}`,
+        alignment: "right",
+        color: "#475467",
+        fontSize: 15,
+        style: "spaceTop",
+      },
+      {
         margin: [0, 40, 0, 0],
         // background: "#ebf5ff",
 
@@ -67,13 +76,13 @@ export const generatePDF = async ({
             ...body,
             [
               {
-                text: "Total price",
+                text: "Нийт дүн",
                 margin: [5, 5, 5, 5],
                 fontSize: 16,
                 bold: true,
               },
               {
-                text: " ",
+                text: totalMoney,
                 margin: [5, 5, 5, 5],
               },
             ],

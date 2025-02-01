@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { DatePicker, notification, Tooltip } from "antd";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import { Label } from "components/label";
@@ -16,10 +16,15 @@ import { DirectionOptions, PaymentMethod } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 import { ShippmentCreate } from "./shippment_create";
+import { FileX02, FileX03 } from "untitledui-js-base";
+import { InvalidateModal } from "components/modal/invalidate_ticket";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
+  const [ticketInvalidate, setTicketInvalidate] = useState<
+    CargoApproachList | undefined
+  >(undefined);
   const [search, setSearch] = useState<string>("");
   const [record, setRecord] = useState<CargoApproachList>();
   const [assignationCreate, setAssignationCreate] = useState(false);
@@ -118,36 +123,6 @@ export const ArrivalField: React.FC = () => {
                 }}
                 addButtonName="Ачилт"
               />
-              <CreateButton
-                disabled={
-                  !record ||
-                  !record?.assignation_status
-                    ?.is_assignation_additional_fee_paid ||
-                  record?.shipping_status?.is_shipping_additional_fee_paid
-                }
-                size="large"
-                type="default"
-                className="text-[#007AFF]"
-                onClick={() => {
-                  setShippmentCreate(true);
-                }}
-                addButtonName="Олголтын Э/Х цуцлах"
-              />
-              <CreateButton
-                disabled={
-                  !record ||
-                  !record?.assignation_status
-                    ?.is_assignation_additional_fee_paid ||
-                  record?.shipping_status?.is_shipping_additional_fee_paid
-                }
-                size="large"
-                type="default"
-                className="text-[#34C759]"
-                onClick={() => {
-                  setShippmentCreate(true);
-                }}
-                addButtonName="Ачилтын Э/Х цуцлах"
-              />
             </div>
           )
         }
@@ -171,6 +146,34 @@ export const ArrivalField: React.FC = () => {
         setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"
         tableAlertRender={false}
+        customActions={(record) => {
+          return (
+            <div className="flex items-center gap-1">
+              {record?.assignation_status
+                ?.is_assignation_additional_fee_paid && (
+                <Tooltip title="Олголтын элдэв хураамж цуцлах">
+                  <FileX03
+                    className="w-5 p-2 text-red-700"
+                    onClick={() => {
+                      setTicketInvalidate(record);
+                    }}
+                  />
+                </Tooltip>
+              )}
+              {record?.assignation_status?.is_assignation_additional_fee_paid &&
+                record?.shipping_status?.is_shipping_additional_fee_paid && (
+                  <Tooltip title="Ачилтын элдэв хураамж цуцлах">
+                    <FileX02
+                      className="w-5 p-2 text-red-700"
+                      onClick={() => {
+                        setTicketInvalidate(record);
+                      }}
+                    />
+                  </Tooltip>
+                )}
+            </div>
+          );
+        }}
         columns={[
           {
             title: "Чингэлэг",
@@ -191,6 +194,13 @@ export const ArrivalField: React.FC = () => {
                       {dayjs(value).format("YYYY/MM/DD")}
                     </div>
                   );
+                },
+              },
+              {
+                title: "Үүсгэсэн ажилтан",
+                dataIndex: "created_by",
+                render: (_, record) => {
+                  return record?.created_by?.email;
                 },
               },
               {
@@ -340,31 +350,91 @@ export const ArrivalField: React.FC = () => {
                   return dayjs(value).format("YYYY-MM-DD");
                 },
               },
+            ],
+          },
+          {
+            title: "Хоног",
+            dataIndex: "id",
+            children: [
               {
                 title: "Талбайд ирсэнээс хойш",
                 dataIndex: "arrival_field",
+                render: (_, record) => {
+                  if (
+                    record?.arrived_at_site.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.arrived_at_site).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
               },
               {
                 title: "Задарснаас хойш суларсан",
                 dataIndex: "cleaned_watered",
+                render: (_, record) => {
+                  if (
+                    record?.freed_at.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.freed_at).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
               },
-            ],
-          },
-          {
-            title: "Хонох",
-            dataIndex: "id",
-            children: [
               {
                 title: "Задарснаас хойш талбайгаас явсан",
                 dataIndex: "cleaned_field",
+                render: (_, record) => {
+                  if (
+                    record?.left_site_at.includes("0001-01-01") ||
+                    record?.opened_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.left_site_at).diff(
+                    dayjs(record?.opened_at),
+                    "days"
+                  );
+                },
               },
               {
                 title: "Суларсанаас хойш ачилт хийсэн",
                 dataIndex: "watered_worked",
+                render: (_, record) => {
+                  if (
+                    record?.returned_at.includes("0001-01-01") ||
+                    record?.freed_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.freed_at),
+                    "days"
+                  );
+                },
               },
               {
                 title: "Буцаж ирсэнээс хойш ачилт хийсэн",
                 dataIndex: "returned_worked",
+                render: (_, record) => {
+                  if (
+                    record?.returned_at.includes("0001-01-01") ||
+                    record?.left_site_at.includes("0001-01-01")
+                  ) {
+                    return "-";
+                  }
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.left_site_at),
+                    "days"
+                  );
+                },
               },
             ],
           },
@@ -395,6 +465,19 @@ export const ArrivalField: React.FC = () => {
             refreshList();
           }}
           detail={record}
+        />
+      )}
+      {ticketInvalidate && (
+        <InvalidateModal
+          title="Элдэв хураамжийн цуцлах хүсэлт"
+          remove
+          onCancel={() => setTicketInvalidate(undefined)}
+          onDone={() => {
+            refreshList();
+            setTicketInvalidate(undefined);
+          }}
+          open={!!ticketInvalidate}
+          id={ticketInvalidate?.id || 0}
         />
       )}
     </PageCard>

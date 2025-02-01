@@ -41,10 +41,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
-  const [ticketInvalidate, setTicketInvalidate] = useState<any>();
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState(0);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
@@ -182,7 +180,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
             ...values,
             shipped_at: moment(values.shipped_at).toDate(),
             // achilt hiij bgaa uyd zaaval yvuulnaa
-            shipping_or_assinment: "shipping",
+            shipping_or_assignment: "shipping",
           },
           detail?.id
         );
@@ -192,7 +190,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           date: moment(values.date).toDate(),
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
-          shipping_or_assinment: "shipping",
+          shipping_or_assignment: "shipping",
         });
       }}
       title="Ачилт"
@@ -446,31 +444,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Э/Х нэмэх
                         </Button>
-                        <Tooltip
-                          title={
-                            !ticketAdditional?.id ||
-                            !getTempAdditionalFee.data?.id
-                              ? "Элдэв хураамжийн тасалбар үүсгэнэ үү?"
-                              : "Элдэв хураамжийн тасалбар үүсгэх"
-                          }
-                        >
-                          <Button
-                            size="middle"
-                            type="default"
-                            disabled={
-                              selectedRowKeys.length <= 0 ||
-                              !(
-                                ticketAdditional?.id ||
-                                getTempAdditionalFee.data?.id
-                              )
-                            }
-                            onClick={() => {
-                              setTicketInvalidate(true);
-                            }}
-                          >
-                            Э/Х цуцлах хүсэлт
-                          </Button>
-                        </Tooltip>
                       </div>
                     </div>
                   );
@@ -578,12 +551,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 onChange={(value) =>
                   setAdditionalFee(value as AdditionalFeeType[])
                 }
-                rowSelection={{
-                  type: "checkbox",
-                  onChange: (selectedRowKeys) => {
-                    setSelectedRowKeys(selectedRowKeys as number[]);
-                  },
-                }}
                 editable={{
                   type: "multiple",
                   editableKeys,
@@ -622,18 +589,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                 }}
               />
-              {ticketInvalidate && (
-                <InvalidateModal
-                  title="Элдэв хураамжийн цуцлах хүсэлт"
-                  remove
-                  onCancel={() => setTicketInvalidate(false)}
-                  open={ticketInvalidate}
-                  uniqueKeys={selectedRowKeys}
-                  ticket_id={
-                    ticketAdditional?.id || getTempAdditionalFee.data?.id
-                  }
-                />
-              )}
               <div className="flex justify-end">
                 <Button
                   size="middle"
@@ -654,7 +609,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           is_new: values.is_new,
                         };
                       }),
-                      shipping_or_assinment: "shipping",
+                      shipping_or_assignment: "shipping",
                       cargo_weight: form.getFieldValue("cargo_weight"),
                       additional_fee_category_id: form.getFieldValue(
                         "additional_fee_category_id"
@@ -755,14 +710,15 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             const data = await generatePDF({
                               title: "Элдэв хураамж тасалбар талон үйлдвэр",
                               headers: ["Орлогын төрөл", "Дүн"],
-                              rows: paymentList.map((value) => {
+                              rows: additionalFee.map((value) => {
                                 return [
-                                  value?.payment_type,
-                                  value?.payment_amount,
+                                  value?.fee_name,
+                                  `${value?.fee_amount} * ${value?.number_1}`,
                                 ];
                               }),
-                              totalMonthly: "100000",
-                              totalDaily: "100000",
+                              ticketNumber: form.getFieldValue("ticket_number"),
+                              totalMonthly: totalAmount,
+                              totalMoney: totalAmount,
                             });
                             downloadPDF(data);
                           }}
