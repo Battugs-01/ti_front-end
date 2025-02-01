@@ -6,9 +6,10 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row } from "antd";
+import { Button, Col, Form, notification, Row, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
+import { InvalidateModal } from "components/modal/invalidate_ticket";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -40,8 +41,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
+  const [ticketInvalidate, setTicketInvalidate] = useState<any>();
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState(0);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
@@ -443,9 +446,31 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Э/Х нэмэх
                         </Button>
-                        <Button size="middle" type="default">
-                          Э/Х цуцлах хүсэлт
-                        </Button>
+                        <Tooltip
+                          title={
+                            !ticketAdditional?.id ||
+                            !getTempAdditionalFee.data?.id
+                              ? "Элдэв хураамжийн тасалбар үүсгэнэ үү?"
+                              : "Элдэв хураамжийн тасалбар үүсгэх"
+                          }
+                        >
+                          <Button
+                            size="middle"
+                            type="default"
+                            disabled={
+                              selectedRowKeys.length <= 0 ||
+                              !(
+                                ticketAdditional?.id ||
+                                getTempAdditionalFee.data?.id
+                              )
+                            }
+                            onClick={() => {
+                              setTicketInvalidate(true);
+                            }}
+                          >
+                            Э/Х цуцлах хүсэлт
+                          </Button>
+                        </Tooltip>
                       </div>
                     </div>
                   );
@@ -553,6 +578,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 onChange={(value) =>
                   setAdditionalFee(value as AdditionalFeeType[])
                 }
+                rowSelection={{
+                  type: "checkbox",
+                  onChange: (selectedRowKeys) => {
+                    setSelectedRowKeys(selectedRowKeys as number[]);
+                  },
+                }}
                 editable={{
                   type: "multiple",
                   editableKeys,
@@ -591,6 +622,18 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                 }}
               />
+              {ticketInvalidate && (
+                <InvalidateModal
+                  title="Элдэв хураамжийн цуцлах хүсэлт"
+                  remove
+                  onCancel={() => setTicketInvalidate(false)}
+                  open={ticketInvalidate}
+                  uniqueKeys={selectedRowKeys}
+                  ticket_id={
+                    ticketAdditional?.id || getTempAdditionalFee.data?.id
+                  }
+                />
+              )}
               <div className="flex justify-end">
                 <Button
                   size="middle"

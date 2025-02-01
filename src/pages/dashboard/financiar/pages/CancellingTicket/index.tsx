@@ -1,19 +1,30 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
+import IBadge from "components/badge";
 import { PageCard } from "components/card";
-import { ITable } from "components/index";
+import { DeleteButton, ITable } from "components/index";
 import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
+import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
+import { InvalidateTicketList } from "service/fininaciar/cancellingText/type";
 import { initPagination } from "utils/index";
+import { InvalidateModal } from "./invalidate";
+
+enum Status {
+  created = "created",
+  invalidated = "invalidated",
+}
 
 const CancellingTicket = () => {
   const [filter, setFilter] = useState(initPagination);
   const [search, setSearch] = useState<string>("");
+  const [invalidateRecord, setInvalidateRecord] = useState<
+    InvalidateTicketList | undefined
+  >(undefined);
 
-  const list = useRequest(addinitionalFeeSettings.list, {
+  const list = useRequest(invalidatingAdditionalFee.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -56,11 +67,20 @@ const CancellingTicket = () => {
         />
       </div>
 
-      <ITable<any>
+      <ITable<InvalidateTicketList>
         total={list.data?.total}
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
+        customActions={(record) => {
+          return (
+            <DeleteButton
+              onClick={() => {
+                setInvalidateRecord(record);
+              }}
+            />
+          );
+        }}
         form={filter}
         setForm={setFilter}
         columns={[
@@ -68,21 +88,21 @@ const CancellingTicket = () => {
             title: "ЭХ тасалбарын №",
             dataIndex: "id",
             align: "left",
-            render: (value) => (
+            render: (_, record) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
+                  {record?.ticket?.ticket_number || "-"}
                 </span>
               </div>
             ),
           },
           {
             title: "Код",
-            dataIndex: "code",
+            dataIndex: "fee_code",
             align: "left",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+                {record?.calc?.fee_code || "-"}
               </span>
             ),
           },
@@ -90,9 +110,9 @@ const CancellingTicket = () => {
             title: "Хураамжийн нэр",
             dataIndex: "fee_name",
             width: "200",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
+                {record?.calc?.fee_name || "-"}
               </span>
             ),
           },
@@ -100,9 +120,9 @@ const CancellingTicket = () => {
             title: "Ангилал",
             dataIndex: "category",
             width: "200",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+                {record?.ticket?.additional_fee_category?.name || "-"}
               </span>
             ),
           },
@@ -110,9 +130,9 @@ const CancellingTicket = () => {
             title: "Хүсэлт явуулсан кассир",
             dataIndex: "request_cassir",
             width: "200",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+                {record?.created_by?.email || "-"}
               </span>
             ),
           },
@@ -120,11 +140,14 @@ const CancellingTicket = () => {
             title: "Төлөв",
             dataIndex: "status",
             width: "200",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
+            align: "center",
+            render: (_, record) => {
+              const title = record?.status || "-";
+              if (title === Status.created) {
+                return <IBadge color="green" title="Үүссэн" />;
+              }
+              return <IBadge color="red" title="Цуцлагдсан" />;
+            },
           },
           {
             title: "Он сар өдөр",
@@ -137,15 +160,19 @@ const CancellingTicket = () => {
             ),
           },
         ]}
-        RemoveModelConfig={{
-          action: addinitionalFeeSettings.deleteA,
-          config: (record) => ({
-            uniqueKey: record?.id,
-            display: record?.name,
-            title: "Remove",
-          }),
-        }}
       />
+      {invalidateRecord && (
+        <InvalidateModal
+          title="Элдэв хураамжын тасалбар цуцлах"
+          open={!!invalidateRecord}
+          onCancel={() => setInvalidateRecord(undefined)}
+          onDone={() => {
+            run();
+            setInvalidateRecord(undefined);
+          }}
+          uniqueKey={invalidateRecord?.id}
+        />
+      )}
     </PageCard>
   );
 };

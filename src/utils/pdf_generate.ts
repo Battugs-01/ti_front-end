@@ -36,7 +36,7 @@ export const generatePDF = async ({
             alignment: "left",
           },
           {
-            text: "Price info",
+            text: "Үнийн мэдээлэл",
             alignment: "right",
             fontSize: 20,
             bold: true,
@@ -82,21 +82,21 @@ export const generatePDF = async ({
         layout: "lightHorizontalLines",
       },
       {
-        text: "The above prices include VAT.",
+        text: "Дээрх үнэд НӨАТ багтсан болно.",
         alignment: "right",
         color: "#475467",
         fontSize: 10,
         style: "spaceTop",
       },
       {
-        text: "(*Prices may vary depending on your usage.)",
+        text: "(*Таны хэрэглээнээс хамаарч үнэ өөр байж болно)",
         alignment: "right",
         color: "#475467",
         fontSize: 9,
       },
 
       {
-        text: "For more information, please contact us.",
+        text: "Дэлгэрэнгүй мэдээлэл авахыг хүсвэл бидэнтэй холбогдоно уу.",
         alignment: "center",
         color: "#262e51",
         // background: "#ebf5ff",
@@ -111,19 +111,19 @@ export const generatePDF = async ({
 
         columns: [
           {
-            text: "Contract",
+            text: "Холбогдох",
             alignment: "center",
             fontSize: 16,
             color: "#007FFF",
           },
           {
-            text: "Sales Department: 998 71 201 01 01",
+            text: "Утасны дугаар: +976 70189889",
             alignment: "center",
             fontSize: 16,
             color: "#262e51",
           },
           {
-            text: "cloud.uztelecom.uz",
+            text: "office@til.mn",
             alignment: "center",
             fontSize: 16,
             color: "#262e51",
@@ -131,14 +131,14 @@ export const generatePDF = async ({
         ],
       },
       {
-        text: "©cloud.uztelecom.uz, All rights reserved.",
+        text: "https://www.til.mn, All rights reserved.",
         alignment: "center",
         color: "#475467",
         fontSize: 10,
         style: "spaceTop",
       },
       {
-        text: "Tashkent, Mirzo-Ulugbek district, 4/2 Mumin street",
+        text: "Монгол улс, Улаанбаатар хот, Баянгол дүүрэг, 4-р хороо, Үйлдвэрийн төвийн бүс – 1, Ажилчны гудамж 16010, Ти Ай Бизнес Центр",
         alignment: "center",
         color: "#475467",
         fontSize: 10,
