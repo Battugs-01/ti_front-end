@@ -47,9 +47,9 @@ export const UpdateArrivalField: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        await updateAcrivalField.runAsync({
-          ...values,
-        });
+        // await updateAcrivalField.runAsync({
+        //   ...values,
+        // });
       }}
       title="Талбайн бүртгэл засах "
       open={open}
