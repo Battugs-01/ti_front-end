@@ -69,7 +69,7 @@ export const ITable = <T extends {}>({
   ...rest
 }: Props<T>) => {
   const [pageData, setPageData] = useState<{ page: number; pageSize: number }>({
-    page: 1,
+    page: 0,
     pageSize: limit ?? 20,
   });
   const actionRef = useRef<ActionType>();
@@ -101,12 +101,13 @@ export const ITable = <T extends {}>({
             pageSizeOptions: [20, 50, 100, 200, 500, 1000, 1500],
             showSizeChanger: true,
             onChange: (page, size) => {
+              const current = page - 1;
               setForm?.({
                 ...form,
-                current: page,
+                current: current,
                 pageSize: size,
               });
-              setPageData({ page, pageSize: size });
+              setPageData({ page: current, pageSize: size });
               !form &&
                 refresh?.({
                   ...form,
@@ -124,12 +125,13 @@ export const ITable = <T extends {}>({
             total,
             showLessItems: true,
             onShowSizeChange: (page, pageSize) => {
-              setForm?.({ current: page, pageSize: pageSize });
-              setPageData({ page, pageSize });
+              const current = page - 1;
+              setForm?.({ current: current, pageSize: pageSize });
+              setPageData({ page: current, pageSize });
               !form &&
                 refresh?.({
                   ...form,
-                  current: form ? (form.current ? form.current : 0) : page,
+                  current: form ? (form.current ? current : 0) : current,
                   pageSize: form?.pageSize || pageSize,
                 });
             },

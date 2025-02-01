@@ -5,6 +5,7 @@ import { PageCard } from "components/card";
 import { DeleteButton, ITable } from "components/index";
 import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
+import { DetailTab } from "config";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
@@ -56,7 +57,7 @@ const CancellingTicket = () => {
               </div>
             </div>
           }
-          searchPlaceHolder="Э/Х тасалбарын №"
+          searchPlaceHolder="Чингэлэг дугаар"
           search={search}
           hideCreate
           setSearch={(e) => {
@@ -85,49 +86,32 @@ const CancellingTicket = () => {
         setForm={setFilter}
         columns={[
           {
-            title: "ЭХ тасалбарын №",
+            title: "Чингэлэг дугаар",
             dataIndex: "id",
             align: "left",
             render: (_, record) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {record?.ticket?.ticket_number || "-"}
+                  {record?.ticket?.container_transport_record?.container_code ||
+                    "-"}
                 </span>
               </div>
             ),
           },
           {
-            title: "Код",
-            dataIndex: "fee_code",
+            title: "Төрөл",
+            dataIndex: "type",
             align: "left",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.calc?.fee_code || "-"}
+                {record?.ticket?.shipping_or_assignment === DetailTab.shiping
+                  ? "Ачилт"
+                  : "Олголт"}
               </span>
             ),
           },
           {
-            title: "Хураамжийн нэр",
-            dataIndex: "fee_name",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {record?.calc?.fee_name || "-"}
-              </span>
-            ),
-          },
-          {
-            title: "Ангилал",
-            dataIndex: "category",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ticket?.additional_fee_category?.name || "-"}
-              </span>
-            ),
-          },
-          {
-            title: "Хүсэлт явуулсан кассир",
+            title: "Хүсэлт явуулсан ажилтан",
             dataIndex: "request_cassir",
             width: "200",
             render: (_, record) => (

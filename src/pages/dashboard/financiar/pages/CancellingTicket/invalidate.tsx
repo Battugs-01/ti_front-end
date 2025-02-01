@@ -32,7 +32,7 @@ export const InvalidateModal = ({
   ...rest
 }: PropsRemove) => {
   const formRef = useRef<ProFormInstance>();
-  // create eldev huraamjiin huselt tsutslah deer nam=
+
   const submit = useRequest(invalidatingAdditionalFee.invalidate, {
     manual: true,
     onSuccess: () => {
@@ -46,6 +46,7 @@ export const InvalidateModal = ({
         message: err.message,
       }),
   });
+
   return (
     <ModalForm
       {...rest}

@@ -22,7 +22,7 @@ namespace invalidatingAdditionalFee {
     );
 
   export const invalidate = (id: number) =>
-    http.del<SuccessResponse>(
+    http.post<SuccessResponse>(
       `/additional-fee-ticket-invalidate-request/review/${id}`,
       {
         hasAuth: true,
