@@ -1,7 +1,6 @@
 import ProForm, {
   ProFormCheckbox,
   ProFormInstance,
-  ProFormRadio,
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
@@ -102,7 +101,7 @@ const Login: FC = () => {
         <div className="text-3xl font-semibold mb-3 ml-0 pl-0">
           <Label title="Нэвтрэх" />
         </div>
-        <ProFormRadio.Group
+        {/* <ProFormRadio.Group
           name="is_broker"
           radioType="radio"
           label="Нэвтрэх төрөл"
@@ -123,7 +122,7 @@ const Login: FC = () => {
             },
           ]}
           initialValue={true}
-        />
+        /> */}
         <div className="space-y-1">
           <ProFormText
             name="email"
