@@ -74,7 +74,10 @@ const myWallet = () => {
                 className: "select-focus",
                 style: { width: 200 },
                 onChange: (e) => {
-                  setFilter({ ...filter, transaction_type: e as any });
+                  setFilter({
+                    ...filter,
+                    transaction_type: e as any,
+                  });
                 },
               }}
               options={[
@@ -97,11 +100,21 @@ const myWallet = () => {
           search={search}
           setSearch={(e) => {
             setSearch(e);
-            searchRun.run({ ...filter, search: e });
+            searchRun.run({
+              ...filter,
+              search: e,
+              customer_company_id: user?.customer_company_id,
+            });
           }}
           hideCreate
           fileName="Миний гүйлгээний жагсаалт"
-          refresh={() => list.run({ ...filter, search: search })}
+          refresh={() =>
+            list.run({
+              ...filter,
+              search: search,
+              customer_company_id: user?.customer_company_id,
+            })
+          }
         />
       </div>
 

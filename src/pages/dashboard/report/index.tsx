@@ -4,17 +4,20 @@ import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, PaymentType } from "config";
 import dayjs from "dayjs";
+import { set } from "lodash";
 import { useEffect, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 import { CargoApproachList } from "service/feild_registration/type";
-import { reportPaginate } from "utils/index";
+import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
+import { moneyFormat, reportPaginate } from "utils/index";
 
 const ReportPage: React.FC = () => {
   const [filter, setFilter] = useState(reportPaginate);
   const [search, setSearch] = useState<string>("");
+  const [columnData, setColumnData] = useState<any>([]);
   const reportList = useRequest(additionalFeeDebit.list, {
     manual: true,
     onError: (err) => {
@@ -33,10 +36,22 @@ const ReportPage: React.FC = () => {
     },
   });
 
+  const additionalList = useRequest(addinitionalFeeSettings.list, {
+    manual: true,
+  });
+
   useEffect(() => {
     reportList.run({
       ...filter,
     });
+
+    categoryList.run({
+      is_all: true,
+    });
+
+    const columnData = sd();
+
+    console.log(columnData, "golog2");
   }, [filter]);
 
   const refreshList = () => {
@@ -44,7 +59,72 @@ const ReportPage: React.FC = () => {
       ...filter,
     });
   };
+
   const searchRun = useDebounceFn(reportList.run, { wait: 1000 });
+
+  // const fildArray = () => {
+  //   const feeMap = new Map<number, string>();
+
+  //   additionalList?.data?.items?.forEach((additionalItem) => {
+  //     additionalItem.categories.forEach((category) => {
+  //       feeMap.set(additionalItem.id, additionalItem.fee_name);
+  //     });
+  //   });
+
+  //   const result: string[] = [];
+
+  //   categoryList?.data?.items?.forEach((item) => {
+  //     const feeName = feeMap.get(item.id);
+  //     if (feeName) {
+  //       result.push(feeName);
+  //     } else {
+  //     }
+  //   });
+
+  //   return result;
+  // };
+
+  // fildArray();
+
+  const sd = async () => {
+    const data = await additionalList.runAsync({
+      is_all: true,
+    });
+
+    const columnData = data?.items?.map((item: any) => {
+      return {
+        title: item.fee_name,
+        dataIndex: item.fee_name,
+        render: (value: any) => {
+          if (typeof value === "number") {
+            return moneyFormat(value || 0) || "";
+          } else {
+            return "";
+          }
+        },
+      };
+    });
+    setColumnData(columnData);
+
+    return columnData;
+  };
+
+  // const tableData = reportList?.data?.items?.map((item) => {
+  //   return item?.ticket?.additional_fee_ticket_calculated?.map((one: any) => {
+  //     const columnData = fildArray();
+  //     const foundData = columnData.find((oneFild) => {
+  //       console.log("gichiii ymaa", one.fee_name, oneFild);
+  //       if (oneFild == one.fee_name) {
+  //         return one;
+  //       }
+  //     });
+  //     if (foundData) {
+  //       return one;
+  //     }
+  //   });
+  // });
+
+  // console.log("tableData", tableData);
 
   return (
     <PageCard xR>
@@ -78,16 +158,13 @@ const ReportPage: React.FC = () => {
             fieldProps={{
               size: "large",
               onChange: (e) => {
-                setFilter({ ...filter, type: e as any });
+                setFilter({ ...filter, additional_fee_category_id: e as any });
               },
             }}
-            request={async () => {
-              const res = await categoryList.runAsync({ is_all: true });
-              return res?.items.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }));
-            }}
+            options={categoryList?.data?.items?.map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))}
             name="additional_fee_category_id"
             placeholder="Сонгох"
             rules={FORM_ITEM_RULE()}
@@ -105,81 +182,51 @@ const ReportPage: React.FC = () => {
         hideDownload
       />
       <ITable<CargoApproachList>
-        dataSource={reportList.data?.items}
+        dataSource={
+          reportList?.data?.items?.map((el) => {
+            return el?.Flattened;
+          }) ?? []
+        }
         loading={reportList.loading}
         refresh={refreshList}
         className="p-0 remove-padding-table"
         columns={[
           {
-            title: "Төлөв",
-            dataIndex: "approach_report_date",
-            render: (value) => {
-              return <div>{dayjs(value as string).format("YYYY-MM-DD")}</div>;
-            },
-          },
-          {
-            title: "Төрөл",
-            dataIndex: "arrived_at_site",
-          },
-          {
-            title: "Баримтын дугаар",
+            title: "Баримт дугаар",
             dataIndex: "ticket_number",
           },
           {
-            title: "Огноо",
-            dataIndex: "created_at",
-            render: (value: any) => {
-              return dayjs(value).format("YYYY-MM-DD");
+            title: "Төлбөр үүсгэсэн огноо",
+            dataIndex: "date",
+            render: (_: any, record: any) => {
+              return dayjs(record?.date).format("YYYY-MM-DD");
             },
           },
           {
-            title: "Нийт төлсөн",
-            dataIndex: "total_amount",
+            title: "Төлбөр төлөгчийн нэр",
+            dataIndex: "payer_name",
           },
           {
-            title: "Бэлнээр",
-            dataIndex: "cash",
-          },
-          {
-            title: "Бэлэн бусаар",
-            dataIndex: "non_cash",
+            title: "Төлбөрийн төрөл",
+            dataIndex: "payer_name",
+            render: (_: any, record: any) => {
+              return record?.payment_type === PaymentType.cash
+                ? "Бэлэн"
+                : "Бэлэн бус";
+            },
           },
           {
             title: "Нийт төлбөр",
-            dataIndex: "for_sale",
+            dataIndex: "total_amount",
+            render: (value: any) => {
+              if (typeof value === "number") {
+                return moneyFormat(value);
+              } else {
+                return "";
+              }
+            },
           },
-          {
-            title: "Краны хөлс",
-            dataIndex: "price",
-          },
-          {
-            title: "Зам талбайн ашиглалт",
-            dataIndex: "carrier_code",
-          },
-          {
-            title: "Ачаа хадгаламж",
-            dataIndex: "place_number",
-          },
-          {
-            title: "Чингэлэг вагон цэвэрлэгээ",
-            dataIndex: "field_cleaned",
-          },
-          {
-            title: "TL Вагон ашиглалт",
-            dataIndex: "cleaned",
-          },
-          {
-            title: "Гаалийн үзлэг",
-            dataIndex: "watered",
-          },
-          {
-            title: "Авто ачигч",
-            dataIndex: "worked",
-          },
-          {
-            title: "Машин оролт",
-            dataIndex: "arrival_field",
-          },
+          ...columnData,
         ]}
       />
     </PageCard>

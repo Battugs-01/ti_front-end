@@ -104,7 +104,7 @@ const CancellingTicket = () => {
             align: "left",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ticket?.shipping_or_assignment === DetailTab.shiping
+                {record?.ticket?.shipping_or_assignment === DetailTab.shipping
                   ? "Ачилт"
                   : "Олголт"}
               </span>

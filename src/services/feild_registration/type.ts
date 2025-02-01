@@ -29,6 +29,8 @@ export interface CargoApproachList {
   assignation_status: AssignationStatus;
   shipping_status: ShippingStatus;
   broker: any;
+  shipping_ticket_id: number;
+  assignment_ticket_id: number;
 }
 
 export interface AssignationStatus {
@@ -188,7 +190,7 @@ export interface Ticket {
   ticket_number: string;
   cargo_weight: number;
   additional_fee_category_id: number;
-  additional_fee_category: null;
+  additional_fee_category: any;
   date: Date;
   additional_fee_ticket_calculated: AdditionalFeeTicketCalculated[];
 }
@@ -220,7 +222,7 @@ export interface Debit {
   ticket_id: number;
   ticket: null;
   ledger_id: number;
-  ledger: null;
+  ledger: any;
   transaction_id: number;
   transaction: null;
   total_amount: number;

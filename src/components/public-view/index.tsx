@@ -26,7 +26,7 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
       label: "Олголт",
     },
     {
-      value: DetailTab.shiping,
+      value: DetailTab.shipping,
       label: "Ачилт",
     },
   ];
@@ -102,7 +102,7 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
         whenTrue={<Grant data={rest?.detail} assignationData={assignation} />}
       />
       <IfCondition
-        condition={tab === DetailTab.shiping}
+        condition={tab === DetailTab.shipping}
         whenTrue={<Shiping data={rest?.detail} shipmentData={shipment} />}
       />
     </IModalForm>

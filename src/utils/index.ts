@@ -205,7 +205,7 @@ export const myFillPaginate = {
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
     dayjs().format("YYYY-MM-DD"),
   ],
-  customer_company_id: "",
+  customer_company_id: null,
 };
 
 export const reportPaginate = {
@@ -213,7 +213,7 @@ export const reportPaginate = {
   pageSize: 20,
   start_date: dayjs().subtract(3, "month").format("YYYY-MM-DD"),
   end_date: dayjs().format("YYYY-MM-DD"),
-  type: "",
+  additional_fee_category_id: null,
 };
 
 export const reminderFilter = {
@@ -358,10 +358,6 @@ export const getBase64ImageFromURL = (url: string): Promise<string> => {
 export const ledgerFilter = {
   current: 0,
   pageSize: 20,
-  between: [
-    dayjs().subtract(3, "month").format("YYYY-MM-DD"),
-    dayjs().format("YYYY-MM-DD"),
-  ],
   sorter: {
     created_at: "desc",
   },
@@ -371,6 +367,7 @@ export const transictionFilter = {
   current: 0,
   transaction_type: "",
   pageSize: 20,
+  customer_company_id: null,
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
     dayjs().format("YYYY-MM-DD"),

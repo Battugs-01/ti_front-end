@@ -26,7 +26,7 @@ const Grant: React.FC<GrantProps> = ({ data, assignationData }) => {
       ...data,
       ticket_number: assignationData?.ticket_number,
       date: assignationData?.date,
-      category_fee_id: assignationData?.additional_fee_category_id,
+      category_fee_id: assignationData?.additional_fee_category?.name,
       cargo_weight: assignationData?.cargo_weight,
       payment_date: assignationData?.debit?.created_at,
       payment_type:
@@ -36,6 +36,7 @@ const Grant: React.FC<GrantProps> = ({ data, assignationData }) => {
           : "Бэлэн бус",
       payment_amount: assignationData?.debit?.total_amount,
       payer_name: assignationData?.debit?.payer_name,
+      ledger_id: assignationData?.debit?.ledger?.name,
     });
   }, [data, assignationData]);
 
@@ -68,7 +69,7 @@ const Grant: React.FC<GrantProps> = ({ data, assignationData }) => {
             />
           </Col>
           <Col span={6}>
-            <ProFormSelect
+            <ProFormText
               fieldProps={{
                 size: "large",
               }}
@@ -157,7 +158,12 @@ const Grant: React.FC<GrantProps> = ({ data, assignationData }) => {
             />
           </Col>
           <Col span={5}>
-            <ProFormSelect name="ledger_id" placeholder="Данс" label="Данс" />
+            <ProFormText
+              name="ledger_id"
+              placeholder="Данс"
+              label="Данс"
+              disabled
+            />
           </Col>
           <Col span={5}>
             <ProFormText

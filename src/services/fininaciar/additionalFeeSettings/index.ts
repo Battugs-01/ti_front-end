@@ -1,10 +1,10 @@
 import { PaginationResponse, SuccessResponse } from "types";
 import http from "../..";
-import { AdditionalFeeType, CustomerCompanyType } from "./type";
+import { AddItem, AdditionalFeeType } from "./type";
 
 namespace addinitionalFeeSettings {
   export const list = (body: any) =>
-    http.post<PaginationResponse<CustomerCompanyType>>("/additional-fee/page", {
+    http.post<PaginationResponse<AddItem>>("/additional-fee/page", {
       hasAuth: true,
       body,
     });

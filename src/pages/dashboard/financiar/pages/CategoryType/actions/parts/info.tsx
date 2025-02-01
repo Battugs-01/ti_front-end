@@ -40,7 +40,7 @@ export const Info = () => {
               },
               {
                 label: "Ачилт",
-                value: CategoryTypeEnum.shiping,
+                value: CategoryTypeEnum.shipping,
               },
             ]}
             initialValue="assignation"

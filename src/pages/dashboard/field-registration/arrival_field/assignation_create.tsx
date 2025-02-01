@@ -16,7 +16,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
-import { TicketAdditionalFeeType } from "service/feild_registration/type";
+import {
+  CargoApproachList,
+  TicketAdditionalFeeType,
+} from "service/feild_registration/type";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
@@ -32,12 +35,9 @@ export const waitTime = (time: number = 100) => {
     }, time);
   });
 };
-export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
-  onCancel,
-  onFinish,
-  open,
-  detail,
-}) => {
+export const AssignationCreate: React.FC<
+  ActionComponentProps<CargoApproachList>
+> = ({ onCancel, onFinish, open, detail }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
@@ -49,6 +49,8 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   });
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
+
+  const [bankListData, setBankListData] = useState<any[]>([]);
 
   const actionRef = useRef<ActionType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
@@ -129,7 +131,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getTempAdditionalFee.runAsync(detail?.id);
+      const res = await getTempAdditionalFee.runAsync(
+        {
+          shipping_or_assignment: "assignment",
+        },
+        detail?.id as number
+      );
       form.setFieldsValue({
         ...res,
       });
@@ -190,7 +197,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
             returned_at: moment(values.returned_at).toDate(),
             shipped_at: moment(values.shipped_at).toDate(),
           },
-          detail?.id
+          detail?.id as number
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
@@ -203,7 +210,7 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         container_code: detail?.container_code,
         capacity: detail?.capacity,
-        broker_id: detail?.broker_id,
+        broker_name: detail?.broker?.name,
         arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
@@ -283,18 +290,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
                 <Col span={10}>
-                  <ProFormSelect
+                  <ProFormText
                     disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "TI Logistic", value: 1 }].map(
-                      (item) => ({
-                        label: item.label,
-                        value: item.value,
-                      })
-                    )}
-                    name="broker_id"
+                    name="broker_name"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
@@ -483,7 +484,13 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         const data = await additionalFeeByCategory.runAsync({
                           category_id: value,
                         });
-                        setAdditionalFee(data?.items || []);
+                        const resData = data?.items?.map((values) => {
+                          return {
+                            ...values,
+                            total_amount: values?.number_1 * values?.fee_amount,
+                          };
+                        });
+                        setAdditionalFee(resData || []);
                       },
                     }}
                     request={async () => {
@@ -504,7 +511,10 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "40 kg", value: 40 }].map((item) => ({
+                    options={[
+                      { label: "20", value: 20 },
+                      { label: "40", value: 40 },
+                    ].map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
@@ -782,7 +792,9 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                             request={async () => {
                               const res = await bankList.runAsync({
                                 is_all: true,
+                                is_broker: true,
                               });
+                              setBankListData(res?.items);
                               return res?.items.map((item) => ({
                                 label: `${item.customer_company?.name} - ${item.name}`,
                                 value: item.id,
@@ -821,7 +833,14 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Төлөлт нэмэх
                         </Button>
-                        <Button size="middle">Төлөлт хасах</Button>
+                        <Button
+                          size="middle"
+                          onClick={() => {
+                            setPaymentList([]);
+                          }}
+                        >
+                          Төлөлт хасах
+                        </Button>
                         <Button
                           size="middle"
                           onClick={async () => {
@@ -882,6 +901,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                     title: "Данс",
                     dataIndex: "ledger_id",
                     key: "ledger_id",
+                    render: (_, record) => {
+                      const ledger = bankListData.find(
+                        (item) => item.id === record.ledger_id
+                      );
+                      return `${ledger?.customer_company?.name} - ${ledger?.name}`;
+                    },
                   },
                   {
                     title: "Төлөгч",

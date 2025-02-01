@@ -1,12 +1,7 @@
-import {
-  ModalForm,
-  ModalFormProps,
-  ProFormInstance,
-} from "@ant-design/pro-form";
+import { ModalForm, ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
-import { useEffect, useRef } from "react";
-import fieldRegistration from "service/feild_registration";
+import { useRef } from "react";
 import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
 import { Trash01 } from "untitledui-js-base";
 
@@ -16,7 +11,7 @@ interface InvalidateModalProps {
   onCancel: () => void;
   onDone: () => void;
   open: boolean;
-  id: number;
+  ticket_id: number;
 }
 
 export const InvalidateModal = ({
@@ -25,7 +20,7 @@ export const InvalidateModal = ({
   onDone,
   title,
   remove,
-  id,
+  ticket_id,
   ...rest
 }: InvalidateModalProps) => {
   const formRef = useRef<ProFormInstance>();
@@ -43,18 +38,7 @@ export const InvalidateModal = ({
         message: err.message,
       }),
   });
-  const getTempAdditionalFee = useRequest(
-    fieldRegistration.getTempAdditionalFee,
-    {
-      manual: true,
-    }
-  );
 
-  useEffect(() => {
-    if (id) {
-      getTempAdditionalFee.run(id);
-    }
-  }, [id]);
   return (
     <ModalForm
       {...rest}
@@ -108,7 +92,7 @@ export const InvalidateModal = ({
       onFinish={async () => {
         if (
           await submit.runAsync({
-            ticket_id: getTempAdditionalFee.data?.id,
+            ticket_id: ticket_id,
           })
         ) {
           return true;

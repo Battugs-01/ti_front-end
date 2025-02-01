@@ -290,7 +290,7 @@ export enum CustomerAccountSettlementTab {
 export enum DetailTab {
   container = "container",
   grant = "grant",
-  shiping = "shiping",
+  shipping = "shipping",
 }
 
 export enum transictionTypeEnum {
@@ -316,5 +316,5 @@ export enum DirectionType {
 
 export enum CategoryTypeEnum {
   assignation = "assignation",
-  shiping = "shiping",
+  shipping = "shipping",
 }

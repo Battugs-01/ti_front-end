@@ -29,11 +29,12 @@ namespace fieldRegistration {
       }
     );
 
-  export const getTempAdditionalFee = (id: number) =>
-    http.get<GetTempAdditionalFeeType>(
+  export const getTempAdditionalFee = (body: any, id: number) =>
+    http.post<GetTempAdditionalFeeType>(
       `/transport-record/additional-fee-ticket/${id}`,
       {
         hasAuth: true,
+        body,
       }
     );
 

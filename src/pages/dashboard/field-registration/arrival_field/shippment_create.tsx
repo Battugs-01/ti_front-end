@@ -43,6 +43,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState(0);
+  const [bankListData, setBankListData] = useState<any[]>([]);
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
@@ -124,7 +125,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getTempAdditionalFee.runAsync(detail?.id);
+      const res = await getTempAdditionalFee.runAsync(
+        {
+          shipping_or_assignment: "shipping",
+        },
+        detail?.id
+      );
       form.setFieldsValue({
         ...res,
       });
@@ -197,7 +203,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         container_code: detail?.container_code,
         capacity: detail?.capacity,
-        broker_id: detail?.broker_id,
+        broker_name: detail?.broker?.name,
         arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
@@ -277,18 +283,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
                 <Col span={10}>
-                  <ProFormSelect
+                  <ProFormText
                     disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "TI Logistic", value: 1 }].map(
-                      (item) => ({
-                        label: item.label,
-                        value: item.value,
-                      })
-                    )}
-                    name="broker_id"
+                    name="broker_name"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}
                     rules={FORM_ITEM_RULE()}
@@ -369,7 +369,13 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         const data = await additionalFeeByCategory.runAsync({
                           category_id: value,
                         });
-                        setAdditionalFee(data?.items || []);
+                        const resData = data?.items?.map((values) => {
+                          return {
+                            ...values,
+                            total_amount: values?.number_1 * values?.fee_amount,
+                          };
+                        });
+                        setAdditionalFee(resData || []);
                       },
                     }}
                     request={async () => {
@@ -390,7 +396,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "40 kg", value: 40 }].map((item) => ({
+                    options={[
+                      { label: "20", value: 20 },
+                      { label: "40", value: 40 },
+                    ].map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
@@ -664,9 +673,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             request={async () => {
                               const res = await bankList.runAsync({
                                 is_all: true,
+                                is_broker: true,
                               });
+                              setBankListData(res?.items);
                               return res?.items.map((item) => ({
-                                label: item.name,
+                                label: `${item.customer_company?.name} - ${item.name}`,
                                 value: item.id,
                               }));
                             }}
@@ -703,7 +714,14 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Төлөлт нэмэх
                         </Button>
-                        <Button size="middle">Төлөлт хасах</Button>
+                        <Button
+                          size="middle"
+                          onClick={() => {
+                            setPaymentList([]);
+                          }}
+                        >
+                          Төлөлт хасах
+                        </Button>
                         <Button
                           size="middle"
                           onClick={async () => {
@@ -764,6 +782,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     title: "Данс",
                     dataIndex: "ledger_id",
                     key: "ledger_id",
+                    render: (_, record) => {
+                      const ledger = bankListData.find(
+                        (item) => item.id === record.ledger_id
+                      );
+                      return `${ledger?.customer_company?.name} - ${ledger?.name}`;
+                    },
                   },
                   {
                     title: "Төлөгч",

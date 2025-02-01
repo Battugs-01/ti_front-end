@@ -74,6 +74,7 @@ export const CargoApproach: React.FC = () => {
           </div>
         }
         hideTitle
+        searchPlaceHolder="Чингэлэг дугаар, чиглэл"
         search={search}
         setSearch={(e) => {
           setSearch(e);
@@ -82,7 +83,7 @@ export const CargoApproach: React.FC = () => {
         setCreate={setCreate}
         refresh={refreshList}
         addButtonName="Шинэ"
-        fileName="CargoApproach"
+        fileName="Ачаа дөхөлт"
         hideCreate={user?.user?.role_name !== UserRoleType.transport_manager}
       />
       <ITable<CargoApproachList>
@@ -125,7 +126,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return (
                     <div className="flex items-center">
-                      {dayjs(value).format("YYYY/MM/DD")}
+                      {dayjs(value).format("YYYY-MM-DD")}
                     </div>
                   );
                 },
@@ -245,6 +246,16 @@ export const CargoApproach: React.FC = () => {
                 },
               },
               {
+                title: "Талбайд ирсэн",
+                dataIndex: "arrived_at_site",
+                render: (value: any) => {
+                  if (value.includes("0001-01-01")) {
+                    return "-";
+                  }
+                  return dayjs(value).format("YYYY-MM-DD");
+                },
+              },
+              {
                 title: "Талбайд задарсан",
                 dataIndex: "opened_at",
                 render: (value: any) => {
@@ -300,8 +311,8 @@ export const CargoApproach: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.arrived_at_site).diff(
-                    dayjs(record?.opened_at),
+                  return dayjs(record?.opened_at).diff(
+                    dayjs(record?.arrived_at_site),
                     "days"
                   );
                 },
@@ -316,8 +327,8 @@ export const CargoApproach: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.freed_at).diff(
-                    dayjs(record?.opened_at),
+                  return dayjs(record?.opened_at).diff(
+                    dayjs(record?.freed_at),
                     "days"
                   );
                 },
@@ -332,8 +343,8 @@ export const CargoApproach: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.left_site_at).diff(
-                    dayjs(record?.opened_at),
+                  return dayjs(record?.opened_at).diff(
+                    dayjs(record?.left_site_at),
                     "days"
                   );
                 },
@@ -348,8 +359,8 @@ export const CargoApproach: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.returned_at).diff(
-                    dayjs(record?.freed_at),
+                  return dayjs(record?.freed_at).diff(
+                    dayjs(record?.returned_at),
                     "days"
                   );
                 },
@@ -364,8 +375,8 @@ export const CargoApproach: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.returned_at).diff(
-                    dayjs(record?.left_site_at),
+                  return dayjs(record?.left_site_at).diff(
+                    dayjs(record?.returned_at),
                     "days"
                   );
                 },

@@ -1,7 +1,6 @@
 import ProForm, {
   ProFormDatePicker,
   ProFormInstance,
-  ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { Col, Row } from "antd";
@@ -13,7 +12,6 @@ import {
   CargoApproachList,
   Ticket,
 } from "service/feild_registration/type";
-import { PaymentMethod } from "utils/options";
 
 interface ShippingProps {
   data: CargoApproachList;
@@ -27,7 +25,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
       ...data,
       ticket_number: shipmentData?.ticket_number,
       date: shipmentData?.date,
-      category_fee_id: shipmentData?.additional_fee_category_id,
+      category_fee_id: shipmentData?.additional_fee_category?.name,
       cargo_weight: shipmentData?.cargo_weight,
       payment_date: shipmentData?.debit?.created_at,
       payment_type:
@@ -37,9 +35,9 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
           : "Бэлэн бус",
       payment_amount: shipmentData?.debit?.total_amount,
       payer_name: shipmentData?.debit?.payer_name,
+      ledger_id: shipmentData?.debit?.ledger?.name,
     });
   }, [data, shipmentData]);
-
   return (
     <ProForm initialValues={data} formRef={form} submitter={false}>
       <>
@@ -69,7 +67,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
             />
           </Col>
           <Col span={6}>
-            <ProFormSelect
+            <ProFormText
               fieldProps={{
                 size: "large",
               }}
@@ -81,7 +79,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
             />
           </Col>
           <Col span={6}>
-            <ProFormSelect
+            <ProFormText
               fieldProps={{
                 size: "large",
               }}
@@ -142,13 +140,13 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
             />
           </Col>
           <Col span={5}>
-            <ProFormSelect
+            <ProFormText
               name="payment_type"
               placeholder="Төлөлтийн хэлбэр"
-              options={PaymentMethod.map((item) => ({
-                label: item.label,
-                value: item.value,
-              }))}
+              // options={PaymentMethod.map((item) => ({
+              //   label: item.label,
+              //   value: item.value,
+              // }))}
               label="Төлөлтийн хэлбэр"
               disabled
             />
@@ -162,7 +160,12 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
             />
           </Col>
           <Col span={5}>
-            <ProFormSelect name="ledger_id" placeholder="Данс" label="Данс" />
+            <ProFormText
+              name="ledger_id"
+              placeholder="Данс"
+              label="Данс"
+              disabled
+            />
           </Col>
           <Col span={5}>
             <ProFormText
