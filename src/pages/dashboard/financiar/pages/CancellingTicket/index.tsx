@@ -4,13 +4,13 @@ import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { DeleteButton, ITable } from "components/index";
 import { Label } from "components/label";
-import { InvalidateModal } from "components/modal/invalidate_ticket";
 import InitTableHeader from "components/table-header";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
 import { InvalidateTicketList } from "service/fininaciar/cancellingText/type";
 import { initPagination } from "utils/index";
+import { InvalidateModal } from "./invalidate";
 
 enum Status {
   created = "created",
@@ -91,7 +91,7 @@ const CancellingTicket = () => {
             render: (_, record) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {record?.invalidate_request?.ticket?.ticket_number || "-"}
+                  {record?.ticket?.ticket_number || "-"}
                 </span>
               </div>
             ),
@@ -100,9 +100,9 @@ const CancellingTicket = () => {
             title: "Код",
             dataIndex: "fee_code",
             align: "left",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
+                {record?.calc?.fee_code || "-"}
               </span>
             ),
           },
@@ -110,9 +110,9 @@ const CancellingTicket = () => {
             title: "Хураамжийн нэр",
             dataIndex: "fee_name",
             width: "200",
-            render: (value) => (
+            render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {value || "-"}
+                {record?.calc?.fee_name || "-"}
               </span>
             ),
           },
@@ -122,8 +122,7 @@ const CancellingTicket = () => {
             width: "200",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.invalidate_request?.ticket?.additional_fee_category
-                  ?.name || "-"}
+                {record?.ticket?.additional_fee_category?.name || "-"}
               </span>
             ),
           },
@@ -133,7 +132,7 @@ const CancellingTicket = () => {
             width: "200",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.invalidate_request?.created_by?.email || "-"}
+                {record?.created_by?.email || "-"}
               </span>
             ),
           },
@@ -143,7 +142,7 @@ const CancellingTicket = () => {
             width: "200",
             align: "center",
             render: (_, record) => {
-              const title = record?.invalidate_request?.status || "-";
+              const title = record?.status || "-";
               if (title === Status.created) {
                 return <IBadge color="green" title="Үүссэн" />;
               }
@@ -166,14 +165,12 @@ const CancellingTicket = () => {
         <InvalidateModal
           title="Элдэв хураамжын тасалбар цуцлах"
           open={!!invalidateRecord}
-          remove
           onCancel={() => setInvalidateRecord(undefined)}
           onDone={() => {
             run();
             setInvalidateRecord(undefined);
           }}
-          ticket_id={invalidateRecord?.additional_fee_ticket_id}
-          uniqueKeys={[invalidateRecord.id]}
+          uniqueKey={invalidateRecord?.id}
         />
       )}
     </PageCard>

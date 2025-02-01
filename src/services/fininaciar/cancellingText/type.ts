@@ -15,6 +15,20 @@ export interface InvalidateTicketList {
   created_at: Date;
   updated_at: Date;
   created_by_id: number;
+  created_by: CreatedBy;
+  updated_by_id: number;
+  ticket_id: number;
+  ticket: Ticket;
+  calc_id: number;
+  calc: Calc;
+  status: string;
+}
+
+export interface Calc {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
   updated_by_id: number;
   additional_fee_ticket_id: number;
   fee_code: string;
@@ -24,31 +38,14 @@ export interface InvalidateTicketList {
   number_1: number;
   number_2: number;
   total_amount: number;
-  invalidate_request_id: number;
-  invalidate_request: InvalidateRequest;
 }
 
-export interface InvalidateRequest {
+export interface CreatedBy {
   id: number;
   created_at: Date;
   updated_at: Date;
-  created_by_id: number;
-  created_by: AtedBy;
-  updated_by_id: number;
-  ticket_id: number;
-  ticket: Ticket;
-  calc_ids: number[];
-  status: string;
-}
-
-export interface AtedBy {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  created_by_id: number;
-  created_by?: AtedBy;
-  updated_by_id: number;
-  updated_by?: AtedBy;
+  creator_id: number;
+  modifier_id: number;
   first_name: string;
   last_name: string;
   phone: string;

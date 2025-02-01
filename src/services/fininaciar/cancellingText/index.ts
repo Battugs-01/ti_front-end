@@ -21,10 +21,13 @@ namespace invalidatingAdditionalFee {
       }
     );
 
-  export const deleteA = (id: number) =>
-    http.del<SuccessResponse>(`/additional-fee/${id}`, {
-      hasAuth: true,
-    });
+  export const invalidate = (id: number) =>
+    http.del<SuccessResponse>(
+      `/additional-fee-ticket-invalidate-request/review/${id}`,
+      {
+        hasAuth: true,
+      }
+    );
 
   export const update = (body: any, id: number) =>
     http.put<SuccessResponse>(`/additional-fee/${id}`, {

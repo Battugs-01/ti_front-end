@@ -11,31 +11,29 @@ import { Trash01 } from "untitledui-js-base";
 
 type PropsRemove = ModalFormProps & {
   onDone?: () => void;
-  uniqueKeys?: number[];
+  uniqueKey: number;
   onCancel: () => void;
   body?: any;
   title?: string;
   remove?: boolean;
   cancelTitle?: string;
   customTitle?: string;
-  ticket_id?: number;
 };
 export const InvalidateModal = ({
   onCancel,
   open,
   onDone,
-  uniqueKeys,
+  uniqueKey,
   title,
   body,
   remove,
   cancelTitle,
-  ticket_id,
   customTitle,
   ...rest
 }: PropsRemove) => {
   const formRef = useRef<ProFormInstance>();
   // create eldev huraamjiin huselt tsutslah deer nam=
-  const submit = useRequest(invalidatingAdditionalFee.create, {
+  const submit = useRequest(invalidatingAdditionalFee.invalidate, {
     manual: true,
     onSuccess: () => {
       onDone && onDone();
@@ -99,12 +97,7 @@ export const InvalidateModal = ({
         },
       }}
       onFinish={async () => {
-        if (
-          await submit.runAsync({
-            ticket_id: ticket_id,
-            calc_ids: uniqueKeys,
-          })
-        ) {
+        if (await submit.runAsync(uniqueKey)) {
           return true;
         }
         return false;
