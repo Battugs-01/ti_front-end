@@ -75,11 +75,13 @@ const CancellingTicket = () => {
         refresh={(values) => list.run({ ...filter, ...values })}
         customActions={(record) => {
           return (
-            <DeleteButton
-              onClick={() => {
-                setInvalidateRecord(record);
-              }}
-            />
+            record?.status === Status.created && (
+              <DeleteButton
+                onClick={() => {
+                  setInvalidateRecord(record);
+                }}
+              />
+            )
           );
         }}
         form={filter}
