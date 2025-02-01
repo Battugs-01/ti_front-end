@@ -6,9 +6,11 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row } from "antd";
+import { Button, Col, Form, notification, Row, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
+import { RemoveModal } from "components/modal";
+import { InvalidateModal } from "components/modal/invalidate_ticket";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -50,6 +52,8 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
   });
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const actionRef = useRef<ActionType>();
   const updateArrivalField = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
@@ -558,15 +562,29 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                         >
                           Э/Х нэмэх
                         </Button>
-                        <Button
-                          size="middle"
-                          type="default"
-                          onClick={() => {
-                            setTicketInvalidate(true);
-                          }}
+                        <Tooltip
+                          title={
+                            !ticketAdditional?.id ||
+                            !getTempAdditionalFee.data?.id
+                              ? "Элдэв хураамжийн тасалбар үүсгэнэ үү?"
+                              : "Элдэв хураамжийн тасалбар үүсгэх"
+                          }
                         >
-                          Э/Х цуцлах хүсэлт
-                        </Button>
+                          <Button
+                            size="middle"
+                            type="default"
+                            disabled={
+                              selectedRowKeys.length <= 0 ||
+                              !ticketAdditional?.id ||
+                              !getTempAdditionalFee.data?.id
+                            }
+                            onClick={() => {
+                              setTicketInvalidate(true);
+                            }}
+                          >
+                            Э/Х цуцлах хүсэлт
+                          </Button>
+                        </Tooltip>
                       </div>
                     </div>
                   );
@@ -674,6 +692,12 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                 onChange={(value) =>
                   setAdditionalFee(value as AdditionalFeeType[])
                 }
+                rowSelection={{
+                  type: "checkbox",
+                  onChange: (selectedRowKeys) => {
+                    setSelectedRowKeys(selectedRowKeys as number[]);
+                  },
+                }}
                 editable={{
                   type: "multiple",
                   editableKeys,
@@ -683,7 +707,6 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                   onChange: setEditableRowKeys,
                   onValuesChange: async (record, data) => {
-                    console.log(record.fee_amount, "llll");
                     const index = additionalFee.findIndex(
                       (values) => values.id === record?.id
                     );
@@ -714,7 +737,18 @@ export const AssignationCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                 }}
               />
-              {ticketInvalidate && <div>ticketInvalidate</div>}
+              {ticketInvalidate && (
+                <InvalidateModal
+                  title="Элдэв хураамжийн цуцлах хүсэлт"
+                  remove
+                  onCancel={() => setTicketInvalidate(false)}
+                  open={ticketInvalidate}
+                  uniqueKeys={selectedRowKeys}
+                  ticket_id={
+                    ticketAdditional?.id || getTempAdditionalFee.data?.id
+                  }
+                />
+              )}
               <div className="flex justify-end">
                 <Button
                   size="middle"
