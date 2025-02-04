@@ -5,6 +5,7 @@ import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import { useEffect } from "react";
 import categoryType from "service/fininaciar/categoryType";
+import { CreateCapacityOptions } from "utils/options";
 
 export const Info = () => {
   const categoryTypeList = useRequest(categoryType.list, {
@@ -87,15 +88,18 @@ export const Info = () => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        {/* <Col span={12}>
+        <Col span={12}>
           <ProFormSelect
             name={"capacity"}
-            options={unitTonnArray.map((el) => ({ ...el }))}
+            options={CreateCapacityOptions?.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+            placeholder="Даац"
+            label={"Даац"}
             rules={FORM_ITEM_RULE()}
-            label="Даац"
-            placeholder={"Даац сонгох"}
           />
-        </Col> */}
+        </Col>
       </Row>
     </SectionContainer>
   );

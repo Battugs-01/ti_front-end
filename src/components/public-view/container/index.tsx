@@ -10,7 +10,7 @@ import { Col, Row } from "antd";
 import { FORM_ITEM_RULE } from "config";
 import React, { useRef } from "react";
 import { CargoApproachList } from "service/feild_registration/type";
-import { DirectionOptions } from "utils/options";
+import { CapacityOptions, DirectionOptions } from "utils/options";
 
 interface ContainerProps {
   data: CargoApproachList;
@@ -56,11 +56,15 @@ const Container: React.FC<ContainerProps> = ({ data }) => {
         </Row>
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <ProFormDigit
+            <ProFormSelect
               fieldProps={{
                 size: "large",
               }}
               disabled
+              options={CapacityOptions?.map((item) => ({
+                label: item.label,
+                value: item.value,
+              }))}
               name={"capacity"}
               label={"Даац"}
               rules={FORM_ITEM_RULE()}
@@ -180,7 +184,7 @@ const Container: React.FC<ContainerProps> = ({ data }) => {
         <div className="text-xl font-medium mb-3">Олголт</div>
 
         <Row gutter={[16, 16]}>
-          <Col span={8}>
+          <Col span={12}>
             <ProFormText
               fieldProps={{
                 size: "large",
@@ -190,7 +194,7 @@ const Container: React.FC<ContainerProps> = ({ data }) => {
               label="Вагоны дугаар"
             />
           </Col>
-          <Col span={8}>
+          <Col span={12}>
             <ProFormText
               fieldProps={{
                 size: "large",
@@ -198,16 +202,6 @@ const Container: React.FC<ContainerProps> = ({ data }) => {
               disabled
               name={["assignation", "shipping_number"]}
               label="Илгээлтийн дугаар"
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormText
-              fieldProps={{
-                size: "large",
-              }}
-              disabled
-              name={["assignation", "sent_from"]}
-              label="Хаанаас илгээсэн /Өртөө/"
             />
           </Col>
         </Row>
@@ -252,38 +246,6 @@ const Container: React.FC<ContainerProps> = ({ data }) => {
               disabled
               name={["assignation", "gross_weight"]}
               label="Бохир жин"
-            />
-          </Col>
-        </Row>
-        <Row gutter={[16, 16]}>
-          <Col span={12}>
-            <ProFormText
-              fieldProps={{
-                size: "large",
-              }}
-              disabled
-              name={["assignation", "reciever_name"]}
-              label="Хүлээн авагч"
-            />
-          </Col>
-          <Col span={12}>
-            <ProFormText
-              fieldProps={{
-                size: "large",
-              }}
-              disabled
-              name={["assignation", "reciever_phone"]}
-              label="Утас"
-              rules={[
-                // {
-                //   required: true,
-                //   message: "Утас оруулах шаардлагатай!",
-                // },
-                {
-                  pattern: /^[0-9]{8}$/,
-                  message: "Утас буруу байна!",
-                },
-              ]}
             />
           </Col>
         </Row>

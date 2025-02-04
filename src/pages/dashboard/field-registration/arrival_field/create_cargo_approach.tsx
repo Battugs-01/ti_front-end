@@ -15,7 +15,7 @@ import fieldRegistration from "service/feild_registration";
 import assignation from "service/feild_registration/assignation";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
-import { DirectionOptions } from "utils/options";
+import { CapacityOptions, DirectionOptions } from "utils/options";
 import moment from "moment";
 
 export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
@@ -176,11 +176,15 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               </Row>
               <Row gutter={[16, 16]}>
                 <Col span={12}>
-                  <ProFormDigit
+                  <ProFormSelect
                     fieldProps={{
                       size: "large",
                     }}
                     name={"capacity"}
+                    options={CapacityOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     placeholder="Даац"
                     label={"Даац"}
                     rules={FORM_ITEM_RULE()}
@@ -209,9 +213,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name="approach_report_date"
                     fieldProps={{
                       size: "large",
-                      onChange: (e) => {
-                        console.log(e, "lll");
-                      },
                     }}
                     placeholder="Дөхөлтийн мэдээний огноо"
                     rules={FORM_ITEM_RULE()}
@@ -309,7 +310,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <div className="text-xl font-medium mb-3">Олголт</div>
 
               <Row gutter={[16, 16]}>
-                <Col span={8}>
+                <Col span={12}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
@@ -319,7 +320,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     label="Вагоны дугаар"
                   />
                 </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
@@ -329,28 +330,8 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     label="Илгээлтийн дугаар"
                   />
                 </Col>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "sent_from"]}
-                    placeholder="Хаанаас илгээсэн /Өртөө/"
-                    label="Хаанаас илгээсэн /Өртөө/"
-                  />
-                </Col>
               </Row>
               <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "direction"]}
-                    placeholder="Тээврийн чиглэл"
-                    label="Тээврийн чиглэл"
-                  />
-                </Col>
                 <Col span={12}>
                   <ProFormText
                     fieldProps={{
@@ -381,38 +362,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["assignation", "gross_weight"]}
                     placeholder="Бохир жин"
                     label="Бохир жин"
-                  />
-                </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "reciever_name"]}
-                    placeholder="Хүлээн авагч"
-                    label="Хүлээн авагч"
-                  />
-                </Col>
-                <Col span={12}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={["assignation", "reciever_phone"]}
-                    placeholder="Утас"
-                    label="Утас"
-                    rules={[
-                      // {
-                      //   required: true,
-                      //   message: "Утас оруулах шаардлагатай!",
-                      // },
-                      {
-                        pattern: /^[0-9]{8}$/,
-                        message: "Утас буруу байна!",
-                      },
-                    ]}
                   />
                 </Col>
               </Row>

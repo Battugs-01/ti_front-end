@@ -23,7 +23,7 @@ import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
-import { PaymentMethod } from "utils/options";
+import { CapacityOptions, PaymentMethod } from "utils/options";
 import { downloadPDF, generatePDF } from "utils/pdf_generate";
 
 export const waitTime = (time: number = 100) => {
@@ -42,7 +42,14 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
-  const [dates, setDates] = useState(0);
+  const [categoryData, setCategoryData] = useState<any>();
+  const [dates, setDates] = useState({
+    opened: 0,
+    freed: 0,
+    left_site: 0,
+    returned: 0,
+    shipped: 0,
+  });
   const [bankListData, setBankListData] = useState<any[]>([]);
   const [ticketAdditional, setTicketAdditional] =
     useState<TicketAdditionalFeeType>();
@@ -149,6 +156,17 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     fetch();
   }, [detail?.id]);
 
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await bankList.runAsync({
+        is_all: true,
+        is_broker: true,
+      });
+      setBankListData(data?.items);
+    };
+    fetch();
+  }, [categoryData]);
+
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
   }, [additionalFee]);
@@ -184,6 +202,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         await updateArrivalField.runAsync(
           {
             ...values,
+            left_site_at: moment(values.left_site_at).toDate(),
+            returned_at: moment(values.returned_at).toDate(),
             shipped_at: moment(values.shipped_at).toDate(),
             // achilt hiij bgaa uyd zaaval yvuulnaa
             shipping_or_assignment: "shipping",
@@ -207,7 +227,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
-        cargo_weight: getTempAdditionalFee.data?.cargo_weight,
+        cargo_weight:
+          getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
         additional_fee_category_id:
           getTempAdditionalFee.data?.additional_fee_category_id,
         payment_amount: totalAmount,
@@ -271,12 +292,16 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
                 <Col span={4}>
-                  <ProFormText
+                  <ProFormSelect
                     disabled
                     fieldProps={{
                       size: "large",
                     }}
                     name={"capacity"}
+                    options={CapacityOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     placeholder="Даац"
                     label={"Даац"}
                     rules={FORM_ITEM_RULE()}
@@ -311,18 +336,73 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
               </Row>
               <div className="text-xl font-medium mb-3">Ачилт</div>
               <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <div className="flex items-center gap-3">
+                    <ProFormDatePicker
+                      fieldProps={{
+                        size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            left_site: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
+                      }}
+                      name={"left_site_at"}
+                      placeholder="Т-c явсан"
+                      label="Т-c явсан"
+                      // rules={FORM_ITEM_RULE()}
+                    />
+                    <IBadge
+                      title={dates?.left_site <= 0 ? 0 : dates.left_site}
+                      color="blue"
+                    />
+                  </div>
+                </Col>
+                <Col span={12}>
+                  <div className="flex items-center gap-3">
+                    <ProFormDatePicker
+                      fieldProps={{
+                        size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            returned: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
+                      }}
+                      name={"returned_at"}
+                      placeholder="Буцаж ирсэн"
+                      label="Буцаж ирсэн"
+                      rules={FORM_ITEM_RULE()}
+                    />
+                    <IBadge
+                      title={dates?.returned <= 0 ? 0 : dates.returned}
+                      color="blue"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
                 <Col span={24}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
-                          setDates(
-                            dayjs(e).diff(
+                          setDates({
+                            ...dates,
+                            shipped: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
                               "day"
-                            )
-                          );
+                            ),
+                          });
                         },
                       }}
                       name={"shipped_at"}
@@ -330,7 +410,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       label="Ачилт хийсэн"
                       rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge title={dates} color="blue" />
+                    <IBadge
+                      title={dates?.shipped <= 0 ? 0 : dates?.shipped}
+                      color="blue"
+                    />
                   </div>
                 </Col>
               </Row>
@@ -368,7 +451,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       onChange: async (value) => {
                         const data = await additionalFeeByCategory.runAsync({
                           category_id: value,
+                          capacity: form.getFieldValue("cargo_weight"),
                         });
+
+                        setCategoryData(value);
+
                         const resData = data?.items?.map((values) => {
                           return {
                             ...values,
@@ -396,10 +483,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[
-                      { label: "20", value: 20 },
-                      { label: "40", value: 40 },
-                    ].map((item) => ({
+                    disabled
+                    options={CapacityOptions?.map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
@@ -670,24 +755,29 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             name="ledger_id"
                             placeholder="Данс"
                             label="Данс"
-                            request={async () => {
-                              const res = await bankList.runAsync({
-                                is_all: true,
-                                is_broker: true,
-                              });
-                              setBankListData(res?.items);
-                              return res?.items.map((item) => ({
-                                label: `${item.customer_company?.name} - ${item.name}`,
+                            options={bankListData?.map((item) => {
+                              return {
+                                label: `${item.customer_company?.name} - ${
+                                  categoryList?.data?.items?.find(
+                                    (value) => value.id === categoryData
+                                  )?.code
+                                }`,
                                 value: item.id,
-                              }));
-                            }}
+                              };
+                            })}
                           />
                         </Col>
                         <Col span={5}>
-                          <ProFormText
+                          <ProFormSelect
                             name="payer_name"
                             placeholder="Төлөгч"
                             label="Төлөгч"
+                            options={bankListData?.map((item) => {
+                              return {
+                                label: item.customer_company?.shortcut_name,
+                                value: item.customer_company?.shortcut_name,
+                              };
+                            })}
                           />
                         </Col>
                       </Row>

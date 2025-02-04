@@ -10,8 +10,8 @@ export const IClock = () => {
   };
   setInterval(UpdateTime);
   return (
-    <div className="flex justify-end pr-7">
-      <h3 className="font-semibold text-gray-700">{ctime}</h3>
+    <div className="flex justify-end bg-white px-2 rounded-lg shadow-md">
+      <p className="font-semibold text-gray-700">{ctime}</p>
     </div>
   );
 };

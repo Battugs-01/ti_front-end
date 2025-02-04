@@ -11,7 +11,11 @@ import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
 import { moneyFormat, myFillPaginate } from "utils/index";
-import { DirectionOptions, PaymentMethod } from "utils/options";
+import {
+  CapacityOptions,
+  DirectionOptions,
+  PaymentMethod,
+} from "utils/options";
 
 const myFill: React.FC = () => {
   const [filter, setFilter] = useState(myFillPaginate);
@@ -110,11 +114,8 @@ const myFill: React.FC = () => {
                 },
               },
               {
-                title: "Үүсгэсэн ажилтан",
-                dataIndex: "created_by",
-                render: (_, record) => {
-                  return record?.created_by?.email;
-                },
+                title: "Чингэлэг дугаар",
+                dataIndex: "container_code",
               },
               {
                 title: "Орох хил",
@@ -130,13 +131,26 @@ const myFill: React.FC = () => {
                 dataIndex: "transport_direction",
               },
               {
-                title: "Чингэлэг дугаар",
-                dataIndex: "container_code",
+                title: "Үүсгэсэн ажилтан",
+                dataIndex: "created_by",
+                render: (_, record) => {
+                  return record?.created_by?.email;
+                },
               },
               {
                 title: "Даац",
                 dataIndex: "capacity",
+                render: (value) => {
+                  return (
+                    <span className="text-sm text-[#475467] font-normal flex text-center">
+                      {CapacityOptions?.find(
+                        (capacity) => capacity.value === value
+                      )?.label || "-"}
+                    </span>
+                  );
+                },
               },
+
               {
                 title: "Зуучийн нэр",
                 dataIndex: "broker_name",
@@ -159,7 +173,7 @@ const myFill: React.FC = () => {
                 },
               },
               {
-                title: "Вальют",
+                title: "Валют",
                 dataIndex: "currency",
                 render: (_, record) => {
                   return record?.transport_recieve?.currency;

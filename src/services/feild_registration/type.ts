@@ -173,6 +173,7 @@ export interface TransportRecieve {
   currency: string;
   customer_company_id: number;
   customer_company: CustomerCompanyType;
+  customer_company_name: string;
   payment_method: string;
   additional_fee_note: string;
 }

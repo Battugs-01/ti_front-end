@@ -21,6 +21,7 @@ import {
 import { ChangePassword } from "./action/change_password";
 import { Logout } from "./action/logout";
 import { Menu } from "./menu";
+import { IClock } from "components/clock";
 
 const Navbar: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -75,6 +76,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-6">
+          <IClock />
           <div className="flex items-center">
             {theme === ThemeType.LIGHT ? (
               <Sun size="24" onClick={toggleTheme} />

@@ -43,6 +43,11 @@ export const menuCashierItems = [
     path: "/dashboard/field-registration",
   },
   {
+    icon: <PieChart02 />,
+    name: "Лавлах мэдээлэл",
+    path: "/dashboard/customer-account-settlement",
+  },
+  {
     icon: <File03 />,
     name: "Тайлан",
     path: "/dashboard/report",

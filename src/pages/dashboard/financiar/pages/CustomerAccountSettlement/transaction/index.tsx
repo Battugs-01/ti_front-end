@@ -4,7 +4,7 @@ import { DatePicker, notification } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { transictionTypeEnum } from "config";
+import { transictionTypeEnum, UserRoleType } from "config";
 import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
@@ -106,6 +106,7 @@ const Transaction = () => {
           }}
           fileName="Харилцагчийн дансны гүйлгээний жагсаалт"
           refresh={() => list.run({ ...filter, search: search })}
+          hideCreate={user?.user?.role_name !== UserRoleType.financier}
         />
       </div>
 
@@ -117,7 +118,11 @@ const Transaction = () => {
           list.run({ ...filter, created_by: user?.user?.id, ...values })
         }
         form={filter}
-        UpdateComponent={UpdateService}
+        UpdateComponent={
+          user?.user?.role_name === UserRoleType.financier
+            ? UpdateService
+            : undefined
+        }
         setForm={setFilter}
         columns={[
           {

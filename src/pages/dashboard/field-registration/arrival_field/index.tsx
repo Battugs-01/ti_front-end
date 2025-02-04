@@ -12,12 +12,18 @@ import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
 import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
-import { DirectionOptions, PaymentMethod } from "utils/options";
+import {
+  ArrilvelFieldPaymentMethod,
+  CapacityOptions,
+  DirectionOptions,
+  PaymentMethod,
+} from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 import { ShippmentCreate } from "./shippment_create";
 import { FileX02, FileX03 } from "untitledui-js-base";
 import { InvalidateModal } from "components/modal/invalidate_ticket";
+import IBadge from "components/badge";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -147,6 +153,7 @@ export const ArrivalField: React.FC = () => {
         className="p-0 remove-padding-table"
         tableAlertRender={false}
         customActions={(record) => {
+          if (user?.user?.role_name !== UserRoleType.cashier) return null;
           return (
             <div className="flex items-center gap-1">
               {record?.assignation_status
@@ -197,10 +204,26 @@ export const ArrivalField: React.FC = () => {
                 },
               },
               {
-                title: "Үүсгэсэн ажилтан",
-                dataIndex: "created_by",
+                title: "Чингэлэг дугаар",
+                dataIndex: "container_code",
+              },
+              {
+                title: "Статус",
+                dataIndex: "status",
+                align: "center",
                 render: (_, record) => {
-                  return record?.created_by?.email;
+                  return (
+                    <div className="flex items-center gap-2">
+                      {record?.assignation_status
+                        ?.is_assignation_additional_fee_paid && (
+                        <IBadge color="blue" title="Олголт" />
+                      )}
+                      {record?.shipping_status
+                        ?.is_shipping_additional_fee_paid && (
+                        <IBadge color="green" title="Ачилт" />
+                      )}
+                    </div>
+                  );
                 },
               },
               {
@@ -217,12 +240,24 @@ export const ArrivalField: React.FC = () => {
                 dataIndex: "transport_direction",
               },
               {
-                title: "Чингэлэг дугаар",
-                dataIndex: "container_code",
+                title: "Үүсгэсэн ажилтан",
+                dataIndex: "created_by",
+                render: (_, record) => {
+                  return record?.created_by?.email;
+                },
               },
               {
                 title: "Даац",
                 dataIndex: "capacity",
+                render: (value) => {
+                  return (
+                    <span className="text-sm text-[#475467] font-normal flex text-center">
+                      {CapacityOptions?.find(
+                        (capacity) => capacity.value === value
+                      )?.label || "-"}
+                    </span>
+                  );
+                },
               },
               {
                 title: "Зуучийн нэр",
@@ -246,7 +281,7 @@ export const ArrivalField: React.FC = () => {
                 },
               },
               {
-                title: "Вальют",
+                title: "Валют",
                 dataIndex: "currency",
                 render: (_, record) => {
                   return record?.transport_recieve?.currency;
@@ -256,14 +291,14 @@ export const ArrivalField: React.FC = () => {
                 title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company?.name;
+                  return record?.transport_recieve?.customer_company_name;
                 },
               },
               {
                 title: "Төлөх арга",
                 dataIndex: "payment_method",
                 render: (_, record) => {
-                  return PaymentMethod.find(
+                  return ArrilvelFieldPaymentMethod.find(
                     (item) =>
                       item.value === record?.transport_recieve?.payment_method
                   )?.label;

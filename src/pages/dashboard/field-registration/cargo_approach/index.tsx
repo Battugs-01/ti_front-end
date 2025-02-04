@@ -12,9 +12,15 @@ import { useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
 import { cargoApproachPaginate, moneyFormat } from "utils/index";
-import { DirectionOptions, PaymentMethod } from "utils/options";
+import {
+  CapacityOptions,
+  DirectionOptions,
+  ManagerPaymentMethod,
+  PaymentMethod,
+} from "utils/options";
 import { CreateCargoApproach } from "./create";
 import { UpdateCargoApproach } from "./update";
+import IBadge from "components/badge";
 
 export const CargoApproach: React.FC = () => {
   const [user, _] = useAuthContext();
@@ -132,10 +138,26 @@ export const CargoApproach: React.FC = () => {
                 },
               },
               {
-                title: "Үүсгэсэн ажилтан",
-                dataIndex: "created_by",
+                title: "Чингэлэг дугаар",
+                dataIndex: "container_code",
+              },
+              {
+                title: "Статус",
+                dataIndex: "status",
+                align: "center",
                 render: (_, record) => {
-                  return record?.created_by?.email;
+                  return (
+                    <div className="flex items-center gap-2">
+                      {record?.assignation_status
+                        ?.is_assignation_additional_fee_paid && (
+                        <IBadge color="blue" title="Олголт" />
+                      )}
+                      {record?.shipping_status
+                        ?.is_shipping_additional_fee_paid && (
+                        <IBadge color="green" title="Ачилт" />
+                      )}
+                    </div>
+                  );
                 },
               },
               {
@@ -152,13 +174,26 @@ export const CargoApproach: React.FC = () => {
                 dataIndex: "transport_direction",
               },
               {
-                title: "Чингэлэг дугаар",
-                dataIndex: "container_code",
+                title: "Үүсгэсэн ажилтан",
+                dataIndex: "created_by",
+                render: (_, record) => {
+                  return record?.created_by?.email;
+                },
               },
               {
                 title: "Даац",
                 dataIndex: "capacity",
+                render: (value) => {
+                  return (
+                    <span className="text-sm text-[#475467] font-normal flex text-center">
+                      {CapacityOptions?.find(
+                        (capacity) => capacity.value === value
+                      )?.label || "-"}
+                    </span>
+                  );
+                },
               },
+
               {
                 title: "Зуучийн нэр",
                 dataIndex: "broker_name",
@@ -181,7 +216,7 @@ export const CargoApproach: React.FC = () => {
                 },
               },
               {
-                title: "Вальют",
+                title: "Валют",
                 dataIndex: "currency",
                 render: (_, record) => {
                   return record?.transport_recieve?.currency;
@@ -191,14 +226,14 @@ export const CargoApproach: React.FC = () => {
                 title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company?.name;
+                  return record?.transport_recieve?.customer_company_name;
                 },
               },
               {
                 title: "Төлөх арга",
                 dataIndex: "payment_method",
                 render: (_, record) => {
-                  return PaymentMethod.find(
+                  return ManagerPaymentMethod.find(
                     (item) =>
                       item.value === record?.transport_recieve?.payment_method
                   )?.label;

@@ -8,8 +8,10 @@ import {
 import { useState } from "react";
 import Ledger from "./ledger";
 import Transaction from "./transaction";
+import { useLocation } from "react-router-dom";
 
 const CustomerAccountSettlement = () => {
+  const location = useLocation();
   const [tab, setTab] = useState<any>(CustomerAccountSettlementTab.ledger);
 
   const DocumentButtons: CustomerAccountSettlementTabtButton[] = [
@@ -25,7 +27,13 @@ const CustomerAccountSettlement = () => {
 
   return (
     <>
-      <div className="mt-5">
+      <div
+        className={`${
+          location.pathname.includes("customer-account-settlement")
+            ? ""
+            : "mt-5"
+        }`}
+      >
         <ProFormRadio.Group
           name={"documentLine"}
           radioType="button"

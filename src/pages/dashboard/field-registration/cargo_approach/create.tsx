@@ -11,9 +11,12 @@ import { Button, Col, notification, Row } from "antd";
 import { DirectionType, FORM_ITEM_RULE } from "config";
 import moment from "moment";
 import fieldRegistration from "service/feild_registration";
-import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
-import { CurrencyOptions, PaymentMethod } from "utils/options";
+import {
+  CapacityOptions,
+  CurrencyOptions,
+  ManagerPaymentMethod,
+} from "utils/options";
 
 export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
@@ -34,14 +37,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       });
       onCancel?.();
     },
-  });
-
-  const customerCompanyList = useRequest(customerCompany.list, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
   });
 
   return (
@@ -110,15 +105,25 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
-                    rules={FORM_ITEM_RULE()}
+                    rules={[
+                      ...FORM_ITEM_RULE(),
+                      {
+                        pattern: /^[A-Z]{4}[\d\W]{8}$/i,
+                        message: "Чингэлэг дугаар буруу байна!",
+                      },
+                    ]}
                   />
                 </Col>
                 <Col span={8}>
-                  <ProFormDigit
+                  <ProFormSelect
                     fieldProps={{
                       size: "large",
                     }}
                     name={"capacity"}
+                    options={CapacityOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     placeholder="Даац"
                     label={"Даац"}
                     rules={FORM_ITEM_RULE()}
@@ -262,29 +267,19 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       value: item.value,
                     }))}
                     name={["transport_recieve", "currency"]}
-                    placeholder="Вальют"
-                    label={"Вальют"}
+                    placeholder="Валют"
+                    label={"Валют"}
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={8}>
-                  <ProFormSelect
+                  <ProFormText
                     fieldProps={{
                       size: "large",
                     }}
-                    name={["transport_recieve", "customer_company_id"]}
+                    name={["transport_recieve", "customer_company_name"]}
                     placeholder="Харилцагч"
                     label="Харилцагч"
-                    request={async () => {
-                      const data = await customerCompanyList.runAsync({
-                        is_all: true,
-                        is_broker: true,
-                      });
-                      return data?.items.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                      }));
-                    }}
                     // rules={FORM_ITEM_RULE()}
                   />
                 </Col>
@@ -292,7 +287,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <ProFormSelect
-                    options={PaymentMethod.map((item) => ({
+                    options={ManagerPaymentMethod.map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
@@ -350,7 +345,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["transport_give", "transfer_broker_name"]}
                     placeholder="Төлбөр хариуцагчийн нэр"
                     label="Төлбөр хариуцагчийн нэр"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>

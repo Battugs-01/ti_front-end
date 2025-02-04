@@ -25,7 +25,7 @@ import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
 import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
-import { PaymentMethod } from "utils/options";
+import { CapacityOptions, PaymentMethod } from "utils/options";
 import { downloadPDF, generatePDF } from "utils/pdf_generate";
 
 export const waitTime = (time: number = 100) => {
@@ -40,6 +40,7 @@ export const AssignationCreate: React.FC<
 > = ({ onCancel, onFinish, open, detail }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
+  const [categoryData, setCategoryData] = useState<any>();
   const [dates, setDates] = useState({
     opened: 0,
     freed: 0,
@@ -155,6 +156,17 @@ export const AssignationCreate: React.FC<
     fetch();
   }, [detail?.id]);
 
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await bankList.runAsync({
+        is_all: true,
+        is_broker: true,
+      });
+      setBankListData(data?.items);
+    };
+    fetch();
+  }, [categoryData]);
+
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
   const totalAmount = useMemo(() => {
@@ -195,7 +207,7 @@ export const AssignationCreate: React.FC<
             freed_at: moment(values.freed_at).toDate(),
             left_site_at: moment(values.left_site_at).toDate(),
             returned_at: moment(values.returned_at).toDate(),
-            shipped_at: moment(values.shipped_at).toDate(),
+            // shipped_at: moment(values.shipped_at).toDate(),
           },
           detail?.id as number
         );
@@ -214,7 +226,8 @@ export const AssignationCreate: React.FC<
         arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
-        cargo_weight: getTempAdditionalFee.data?.cargo_weight,
+        cargo_weight:
+          getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
         additional_fee_category_id:
           getTempAdditionalFee.data?.additional_fee_category_id,
         payment_amount: totalAmount,
@@ -278,11 +291,15 @@ export const AssignationCreate: React.FC<
                   />
                 </Col>
                 <Col span={4}>
-                  <ProFormText
+                  <ProFormSelect
                     disabled
                     fieldProps={{
                       size: "large",
                     }}
+                    options={CapacityOptions?.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))}
                     name={"capacity"}
                     placeholder="Даац"
                     label={"Даац"}
@@ -377,6 +394,7 @@ export const AssignationCreate: React.FC<
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
+                        disabled: true,
                         onChange: (e: any) => {
                           setDates({
                             ...dates,
@@ -404,6 +422,7 @@ export const AssignationCreate: React.FC<
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
                       fieldProps={{
+                        disabled: true,
                         size: "large",
                         onChange: (e: any) => {
                           setDates({
@@ -418,7 +437,6 @@ export const AssignationCreate: React.FC<
                       name={"returned_at"}
                       placeholder="Буцаж ирсэн"
                       label="Буцаж ирсэн"
-                      rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates?.returned <= 0 ? 0 : dates.returned}
@@ -483,7 +501,11 @@ export const AssignationCreate: React.FC<
                       onChange: async (value) => {
                         const data = await additionalFeeByCategory.runAsync({
                           category_id: value,
+                          capacity: form.getFieldValue("cargo_weight"),
                         });
+
+                        setCategoryData(value);
+
                         const resData = data?.items?.map((values) => {
                           return {
                             ...values,
@@ -508,17 +530,15 @@ export const AssignationCreate: React.FC<
                 </Col>
                 <Col span={6}>
                   <ProFormSelect
+                    disabled
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[
-                      { label: "20", value: 20 },
-                      { label: "40", value: 40 },
-                    ].map((item) => ({
+                    name="cargo_weight"
+                    options={CapacityOptions?.map((item) => ({
                       label: item.label,
                       value: item.value,
                     }))}
-                    name="cargo_weight"
                     placeholder="Ачааны жин"
                     label={"Ачааны жин"}
                     rules={FORM_ITEM_RULE()}
@@ -720,7 +740,6 @@ export const AssignationCreate: React.FC<
                   type="primary"
                   disabled={additionalFee.length === 0 || !additionalFee}
                   onClick={async () => {
-                    console.log(additionalFee, "kkkk");
                     const data = await ticketAdditionalFee.runAsync({
                       additional_fees: additionalFee.map((values) => {
                         return {
@@ -789,24 +808,29 @@ export const AssignationCreate: React.FC<
                             name="ledger_id"
                             placeholder="Данс"
                             label="Данс"
-                            request={async () => {
-                              const res = await bankList.runAsync({
-                                is_all: true,
-                                is_broker: true,
-                              });
-                              setBankListData(res?.items);
-                              return res?.items.map((item) => ({
-                                label: `${item.customer_company?.name} - ${item.name}`,
+                            options={bankListData?.map((item) => {
+                              return {
+                                label: `${item.customer_company?.name} - ${
+                                  categoryList?.data?.items?.find(
+                                    (value) => value.id === categoryData
+                                  )?.code
+                                }`,
                                 value: item.id,
-                              }));
-                            }}
+                              };
+                            })}
                           />
                         </Col>
                         <Col span={5}>
-                          <ProFormText
+                          <ProFormSelect
                             name="payer_name"
                             placeholder="Төлөгч"
                             label="Төлөгч"
+                            options={bankListData?.map((item) => {
+                              return {
+                                label: item.customer_company?.shortcut_name,
+                                value: item.customer_company?.shortcut_name,
+                              };
+                            })}
                           />
                         </Col>
                       </Row>

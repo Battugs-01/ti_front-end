@@ -8,6 +8,7 @@ import addinitionalFeeSettings from "service/fininaciar/additionalFeeSettings";
 import { initPagination, moneyFormat } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { CapacityOptions } from "utils/options";
 
 const AdditionalFeeSettings = () => {
   const [filter, setFilter] = useState(initPagination);
@@ -100,16 +101,17 @@ const AdditionalFeeSettings = () => {
               </span>
             ),
           },
-          // {
-          //   dataIndex: "capacity",
-          //   title: "Даац",
-          //   width: "200",
-          //   render: (value) => (
-          //     <span className="text-sm text-[#475467] font-normal flex text-center">
-          //       {value || "-"}
-          //     </span>
-          //   ),
-          // },
+          {
+            dataIndex: "capacity",
+            title: "Даац",
+            width: "200",
+            render: (value) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center">
+                {CapacityOptions?.find((capacity) => capacity.value === value)
+                  ?.label || "-"}
+              </span>
+            ),
+          },
           {
             dataIndex: "fee_amount",
             title: "Хураамжийн дүн",

@@ -12,6 +12,10 @@ const FieldRegistration = lazy(
   () => import("pages/dashboard/field-registration/index")
 );
 
+const CustomerAccountSettlement = lazy(
+  () => import("pages/dashboard/financiar/pages/CustomerAccountSettlement")
+);
+
 const ReportPage = lazy(() => import("pages/dashboard/report/index"));
 
 const MyWallet = lazy(() => import("pages/dashboard/my-wallet/index"));
@@ -61,6 +65,11 @@ const DashboardRoutes = () => {
         key: "report",
         path: "report",
         component: <ReportPage />,
+      },
+      {
+        key: "customer-account-settlement",
+        path: "customer-account-settlement",
+        component: <CustomerAccountSettlement />,
       }
     );
   } else if (user.user?.role_name === UserRoleType.customer) {
