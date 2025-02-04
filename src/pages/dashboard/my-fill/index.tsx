@@ -183,7 +183,7 @@ const myFill: React.FC = () => {
                 title: "Харилцагчын нэр",
                 dataIndex: "customer_company_id",
                 render: (_, record) => {
-                  return record?.transport_recieve?.customer_company?.name;
+                  return record?.transport_recieve?.customer_company_name;
                 },
               },
               {
