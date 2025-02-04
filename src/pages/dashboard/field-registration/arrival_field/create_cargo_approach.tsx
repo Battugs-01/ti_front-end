@@ -149,7 +149,13 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={"container_code"}
                     placeholder="Чингэлэг дугаар"
                     label={"Чингэлэг дугаар"}
-                    rules={FORM_ITEM_RULE()}
+                    rules={[
+                      ...FORM_ITEM_RULE(),
+                      {
+                        pattern: /^[A-Z]{4}[\d\W]{8}$/i,
+                        message: "Чингэлэг дугаар буруу байна!",
+                      },
+                    ]}
                   />
                 </Col>
                 <Col span={10}>
