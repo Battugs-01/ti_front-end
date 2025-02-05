@@ -321,7 +321,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["transport_give", "transfer_fee"]}
                     placeholder="Шилжүүлэх тээврийн хөлс"
                     label="Шилжүүлэх тээврийн хөлс"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
                 <Col span={12}>
@@ -332,7 +331,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     name={["transport_give", "transport_broker"]}
                     placeholder="Гадаад тээвэр зууч"
                     label="Гадаад тээвэр зууч"
-                    rules={FORM_ITEM_RULE()}
                   />
                 </Col>
               </Row>
