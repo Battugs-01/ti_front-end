@@ -40,7 +40,6 @@ export const AssignationCreate: React.FC<
 > = ({ onCancel, onFinish, open, detail }) => {
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
-  const [categoryData, setCategoryData] = useState<any>();
   const [dates, setDates] = useState({
     opened: 0,
     freed: 0,
@@ -155,17 +154,6 @@ export const AssignationCreate: React.FC<
     };
     fetch();
   }, [detail?.id]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await bankList.runAsync({
-        is_all: true,
-        is_broker: true,
-      });
-      setBankListData(data?.items);
-    };
-    fetch();
-  }, [categoryData]);
 
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
@@ -504,8 +492,6 @@ export const AssignationCreate: React.FC<
                           capacity: form.getFieldValue("cargo_weight"),
                         });
 
-                        setCategoryData(value);
-
                         const resData = data?.items?.map((values) => {
                           return {
                             ...values,
@@ -807,17 +793,27 @@ export const AssignationCreate: React.FC<
                           <ProFormSelect
                             name="ledger_id"
                             placeholder="Данс"
+                            onChange={(value) => {
+                              const ledger = bankListData.find(
+                                (item) => item.id === value
+                              );
+                              form.setFieldsValue({
+                                payer_name:
+                                  ledger?.customer_company?.shortcut_name,
+                              });
+                            }}
                             label="Данс"
-                            options={bankListData?.map((item) => {
-                              return {
-                                label: `${item.customer_company?.name} - ${
-                                  categoryList?.data?.items?.find(
-                                    (value) => value.id === categoryData
-                                  )?.code
-                                }`,
+                            request={async () => {
+                              const res = await bankList.runAsync({
+                                is_all: true,
+                                is_broker: true,
+                              });
+                              setBankListData(res?.items);
+                              return res?.items.map((item) => ({
+                                label: `${item.customer_company?.name} - ${item.name}`,
                                 value: item.id,
-                              };
-                            })}
+                              }));
+                            }}
                           />
                         </Col>
                         <Col span={5}>
