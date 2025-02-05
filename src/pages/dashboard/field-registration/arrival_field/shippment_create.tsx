@@ -6,10 +6,9 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row, Tooltip } from "antd";
+import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
-import { InvalidateModal } from "components/modal/invalidate_ticket";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -236,7 +235,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       open={open}
       modalProps={{
         destroyOnClose: true,
-        width: "900px",
+        width: "1200px",
         onCancel,
         styles: {
           header: {

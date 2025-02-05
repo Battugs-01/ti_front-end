@@ -235,7 +235,7 @@ export const AssignationCreate: React.FC<
       open={open}
       modalProps={{
         destroyOnClose: true,
-        width: "900px",
+        width: "1200px",
         onCancel,
         styles: {
           header: {

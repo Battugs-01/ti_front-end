@@ -98,19 +98,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
           return (
             <>
               <Row gutter={[16, 16]}>
-                <Col span={8}>
-                  <ProFormSelect
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    options={[]}
-                    name={"type"}
-                    placeholder="Төрөл"
-                    label={"Төрөл"}
-                    rules={FORM_ITEM_RULE()}
-                  />
-                </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
@@ -121,7 +109,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
                     rules={FORM_ITEM_RULE()}
                   />
                 </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <ProFormSelect
                     fieldProps={{
                       size: "large",

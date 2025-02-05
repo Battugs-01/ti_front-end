@@ -10,13 +10,12 @@ import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { FORM_ITEM_RULE } from "config";
-import dayjs, { Dayjs } from "dayjs";
+import moment from "moment";
 import fieldRegistration from "service/feild_registration";
 import assignation from "service/feild_registration/assignation";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
 import { CapacityOptions, DirectionOptions } from "utils/options";
-import moment from "moment";
 
 export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
@@ -130,18 +129,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
           return (
             <>
               <Row gutter={[16, 16]}>
-                <Col span={4}>
-                  <ProFormText
-                    fieldProps={{
-                      size: "large",
-                    }}
-                    name={"category"}
-                    disabled
-                    placeholder="Төрөл"
-                    label={"Төрөл"}
-                  />
-                </Col>
-                <Col span={10}>
+                <Col span={12}>
                   <ProFormText
                     fieldProps={{
                       size: "large",
@@ -158,7 +146,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     ]}
                   />
                 </Col>
-                <Col span={10}>
+                <Col span={12}>
                   <ProFormSelect
                     fieldProps={{
                       size: "large",
