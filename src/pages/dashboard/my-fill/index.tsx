@@ -234,7 +234,7 @@ const myFill: React.FC = () => {
                 title: "Зууч код",
                 dataIndex: "transport_give",
                 render: (_, record) => {
-                  return record?.transport_give?.transport_broker;
+                  return record?.broker?.ledger?.name;
                 },
               },
               {

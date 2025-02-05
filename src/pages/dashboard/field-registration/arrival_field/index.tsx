@@ -1,8 +1,10 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification, Tooltip } from "antd";
+import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
 import { Label } from "components/label";
+import { InvalidateModal } from "components/modal/invalidate_ticket";
 import PublicDetail from "components/public-view";
 import InitTableHeader from "components/table-header";
 import { UserRoleType } from "config";
@@ -11,19 +13,16 @@ import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
+import { FileX02, FileX03 } from "untitledui-js-base";
 import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
 import {
   ArrilvelFieldPaymentMethod,
   CapacityOptions,
   DirectionOptions,
-  PaymentMethod,
 } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 import { ShippmentCreate } from "./shippment_create";
-import { FileX02, FileX03 } from "untitledui-js-base";
-import { InvalidateModal } from "components/modal/invalidate_ticket";
-import IBadge from "components/badge";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -342,7 +341,7 @@ export const ArrivalField: React.FC = () => {
                 title: "Зууч код",
                 dataIndex: "transport_give",
                 render: (_, record) => {
-                  return record?.transport_give?.transport_broker;
+                  return record?.broker?.ledger?.name;
                 },
               },
               {

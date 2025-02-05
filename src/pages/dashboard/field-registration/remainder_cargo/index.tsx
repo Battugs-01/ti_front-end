@@ -1,5 +1,6 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker } from "antd";
+import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
@@ -16,10 +17,8 @@ import {
   CapacityOptions,
   DirectionOptions,
   ManagerPaymentMethod,
-  PaymentMethod,
 } from "utils/options";
 import { AssignationCargoApproach } from "./assignation";
-import IBadge from "components/badge";
 
 export const RemainderCargo: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -262,7 +261,7 @@ export const RemainderCargo: React.FC = () => {
                 title: "Зууч код",
                 dataIndex: "transport_give",
                 render: (_, record) => {
-                  return record?.transport_give?.transport_broker;
+                  return record?.broker?.ledger?.name;
                 },
               },
               {
