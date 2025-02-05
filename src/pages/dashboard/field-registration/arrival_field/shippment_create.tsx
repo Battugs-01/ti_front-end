@@ -6,10 +6,9 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row, Tooltip } from "antd";
+import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
-import { InvalidateModal } from "components/modal/invalidate_ticket";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -42,7 +41,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
-  const [categoryData, setCategoryData] = useState<any>();
   const [dates, setDates] = useState({
     opened: 0,
     freed: 0,
@@ -155,17 +153,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     };
     fetch();
   }, [detail?.id]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await bankList.runAsync({
-        is_all: true,
-        is_broker: true,
-      });
-      setBankListData(data?.items);
-    };
-    fetch();
-  }, [categoryData]);
 
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
@@ -453,8 +440,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           category_id: value,
                           capacity: form.getFieldValue("cargo_weight"),
                         });
-
-                        setCategoryData(value);
 
                         const resData = data?.items?.map((values) => {
                           return {
@@ -753,18 +738,28 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         <Col span={5}>
                           <ProFormSelect
                             name="ledger_id"
+                            onChange={(value) => {
+                              const ledger = bankListData.find(
+                                (item) => item.id === value
+                              );
+                              form.setFieldsValue({
+                                payer_name:
+                                  ledger?.customer_company?.shortcut_name,
+                              });
+                            }}
                             placeholder="Данс"
                             label="Данс"
-                            options={bankListData?.map((item) => {
-                              return {
-                                label: `${item.customer_company?.name} - ${
-                                  categoryList?.data?.items?.find(
-                                    (value) => value.id === categoryData
-                                  )?.code
-                                }`,
+                            request={async () => {
+                              const res = await bankList.runAsync({
+                                is_all: true,
+                                is_broker: true,
+                              });
+                              setBankListData(res?.items);
+                              return res?.items.map((item) => ({
+                                label: `${item.customer_company?.name} - ${item.name}`,
                                 value: item.id,
-                              };
-                            })}
+                              }));
+                            }}
                           />
                         </Col>
                         <Col span={5}>
