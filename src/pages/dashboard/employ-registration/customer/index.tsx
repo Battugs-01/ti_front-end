@@ -98,7 +98,7 @@ const CustomerCompany = () => {
           },
           {
             dataIndex: "ledger_name",
-            title: "Данс",
+            title: "Харилцагчийн код",
             width: "200",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">

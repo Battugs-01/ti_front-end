@@ -1,6 +1,8 @@
 import { ModalForm, ProFormText } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
+import { AuthContext } from "context/auth";
+import { useContext } from "react";
 import profile from "service/profile";
 
 interface ChangePasswordProps {
@@ -14,6 +16,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
   onClose,
   onFinish,
 }) => {
+  const [user] = useContext(AuthContext);
   const updatePassword = useRequest(profile.editPassword, {
     manual: true,
     onSuccess: () => {
@@ -41,8 +44,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
           });
           return;
         }
-        await updatePassword.runAsync({
-          old_password: values?.old_password,
+        await updatePassword.runAsync(user.user?.id || 0, {
           password: values?.new_password,
         });
         onFinish?.();
@@ -80,24 +82,6 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({
         },
       }}
     >
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <ProFormText.Password
-            name="old_password"
-            label={"Хуучин нууц үг"}
-            rules={[
-              {
-                required: true,
-                message: "Хуучин нууц үгээ оруулна уу",
-              },
-            ]}
-            fieldProps={{
-              size: "large",
-            }}
-            placeholder={"Хуучин нууц үг"}
-          />
-        </Col>
-      </Row>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <ProFormText.Password
