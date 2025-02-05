@@ -89,16 +89,6 @@ const Workers = () => {
             ),
           },
           {
-            dataIndex: "registration_number",
-            title: "Регистрийн дугаар",
-            width: "200",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
             dataIndex: "gender",
             title: "Хүйс",
             align: "center",

@@ -26,20 +26,6 @@ export const Info = () => {
       </Row>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormText
-            name={"registration_number"}
-            placeholder={"Регистр"}
-            label="Регистрийн дугаар"
-            rules={[
-              {
-                pattern: /^[а-яА-Я]{2}[0-9]{1}[0-9]{7}$/,
-                message: "Энэ талбар РД байх ёстой",
-              },
-              ...FORM_ITEM_RULE(),
-            ]}
-          />
-        </Col>
-        <Col span={12}>
           <ProFormSelect
             name={"gender"}
             options={workersGenderArray.map((el) => ({ ...el }))}
@@ -48,8 +34,6 @@ export const Info = () => {
             placeholder={"Хүйс сонгох"}
           />
         </Col>
-      </Row>
-      <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormText
             name={"email"}
@@ -64,6 +48,8 @@ export const Info = () => {
             ]}
           />
         </Col>
+      </Row>
+      <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormText
             name={"phone"}
@@ -81,8 +67,6 @@ export const Info = () => {
             label="Утас"
           />
         </Col>
-      </Row>
-      <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormDigit
             name={"age"}
@@ -91,6 +75,8 @@ export const Info = () => {
             placeholder={"Нас"}
           />
         </Col>
+      </Row>
+      <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormSelect
             rules={FORM_ITEM_RULE()}
@@ -117,8 +103,6 @@ export const Info = () => {
             ]}
           />
         </Col>
-      </Row>
-      <Row gutter={[24, 24]} style={{ marginTop: 15 }}>
         <Col span={12}>
           <ProFormText.Password
             // rules={FORM_ITEM_RULE()}
