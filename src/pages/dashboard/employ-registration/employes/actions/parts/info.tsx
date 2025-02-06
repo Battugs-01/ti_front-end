@@ -3,7 +3,11 @@ import { Col, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE, UserRoleType, workersGenderArray } from "config";
 
-export const Info = () => {
+interface PropsInfo {
+  action: string;
+}
+
+export const Info: React.FC<PropsInfo> = ({ action }) => {
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
@@ -103,17 +107,19 @@ export const Info = () => {
             ]}
           />
         </Col>
-        <Col span={12}>
-          <ProFormText.Password
-            // rules={FORM_ITEM_RULE()}
-            name={"password"}
-            placeholder={"Нууц үг"}
-            label="Нууц үг"
-            fieldProps={{
-              type: "password",
-            }}
-          />
-        </Col>
+        {action === "create" && (
+          <Col span={12}>
+            <ProFormText.Password
+              // rules={FORM_ITEM_RULE()}
+              name={"password"}
+              placeholder={"Нууц үг"}
+              label="Нууц үг"
+              fieldProps={{
+                type: "password",
+              }}
+            />
+          </Col>
+        )}
       </Row>
     </SectionContainer>
   );
