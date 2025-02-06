@@ -55,8 +55,8 @@ export const Info: FC<IInfoProps> = ({ actionName }) => {
         <Col span={12}>
           <ProFormText
             name={"ledger_name"}
-            placeholder={"Харилцагчйн код"}
-            label="Харилцагчйн код"
+            placeholder={"Харилцагчийн код"}
+            label="Харилцагчийн код"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
@@ -90,7 +90,7 @@ export const Info: FC<IInfoProps> = ({ actionName }) => {
                   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                   message: "Энэ талбар и-мэйл хаяг байх ёстой",
                 },
-                ...FORM_ITEM_RULE(),
+                // ...FORM_ITEM_RULE(),
               ]}
             />
           </Col>

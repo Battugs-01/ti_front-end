@@ -55,8 +55,8 @@ export const Info: FC<IInfoProps> = ({ actionName }) => {
         <Col span={12}>
           <ProFormText
             name={"ledger_name"}
-            placeholder={"Харилцагчйн код"}
-            label="Харилцагчйн код"
+            placeholder={"Харилцагчийн код"}
+            label="Харилцагчийн код"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
