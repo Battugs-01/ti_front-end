@@ -134,7 +134,7 @@ const Workers = () => {
         setCreate={setCreate}
         customActions={(record) => {
           return (
-            <Tooltip title="Олголтын элдэв хураамж цуцлах">
+            <Tooltip title="Нууц үг солих">
               <Key01
                 className="w-5 p-2 text-red-700"
                 onClick={() => {
