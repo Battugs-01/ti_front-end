@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { notification, Tooltip } from "antd";
 import UserBadge from "components/badge/userbadge";
 import { PageCard } from "components/card";
 import { Label } from "components/label";
@@ -9,7 +9,9 @@ import { GenderType } from "config";
 import { useEffect, useState } from "react";
 import { Admin } from "service/auth/type";
 import employRegistration from "service/employ-registration";
+import { Key01 } from "untitledui-js-base";
 import { EmployePagination } from "utils/index";
+import { UpdatePass } from "../update-pass";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
 
@@ -18,6 +20,7 @@ const Workers = () => {
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
+  const [changePass, setChangePass] = useState<Admin>();
   const list = useRequest(employRegistration.list, {
     manual: true,
     onError: (err) =>
@@ -129,6 +132,18 @@ const Workers = () => {
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
+        customActions={(record) => {
+          return (
+            <Tooltip title="Олголтын элдэв хураамж цуцлах">
+              <Key01
+                className="w-5 p-2 text-red-700"
+                onClick={() => {
+                  setChangePass(record);
+                }}
+              />
+            </Tooltip>
+          );
+        }}
         RemoveModelConfig={{
           action: employRegistration.deleteEmploy,
           config: (record) => ({
@@ -138,6 +153,18 @@ const Workers = () => {
           }),
         }}
       />
+
+      {changePass && (
+        <UpdatePass
+          open={!!changePass}
+          onCancel={() => setChangePass(undefined)}
+          onFinish={() => {
+            run();
+            setChangePass(undefined);
+          }}
+          detail={changePass}
+        />
+      )}
     </PageCard>
   );
 };

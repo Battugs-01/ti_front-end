@@ -160,6 +160,7 @@ export const AssignationCreate: React.FC<
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
   }, [additionalFee]);
+
   return (
     <ModalForm
       form={form}

@@ -13,7 +13,6 @@ export const UpdateService = ({
 }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
 
-  console.log(detail, "xxaa");
   useEffect(() => {
     if (open) {
       formRef.current?.setFieldsValue({
@@ -54,7 +53,7 @@ export const UpdateService = ({
       }}
       onSuccess={onFinish}
     >
-      <Info />
+      <Info action="update" />
     </IModalForm>
   );
 };

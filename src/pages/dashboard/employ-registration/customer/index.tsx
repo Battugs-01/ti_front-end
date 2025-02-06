@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification, Switch } from "antd";
+import { notification, Switch, Tooltip } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
@@ -7,7 +7,9 @@ import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
 import customerCompany from "service/fininaciar/customerCompany";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
+import { Key01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
+import { UpdatePass } from "../update-pass";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
 
@@ -15,6 +17,8 @@ const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
+
+  const [changePass, setChangePass] = useState<CustomerCompanyType>();
 
   const list = useRequest(customerCompany.list, {
     manual: true,
@@ -131,6 +135,18 @@ const CustomerCompany = () => {
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
+        customActions={(record) => {
+          return (
+            <Tooltip title="Олголтын элдэв хураамж цуцлах">
+              <Key01
+                className="w-5 p-2 text-red-700"
+                onClick={() => {
+                  setChangePass(record);
+                }}
+              />
+            </Tooltip>
+          );
+        }}
         // RemoveModelConfig={{
         //   action: customerCompany.deleteA,
         //   config: (record) => ({
@@ -140,6 +156,18 @@ const CustomerCompany = () => {
         //   }),
         // }}
       />
+
+      {changePass && (
+        <UpdatePass
+          open={!!changePass}
+          onCancel={() => setChangePass(undefined)}
+          onFinish={() => {
+            run();
+            setChangePass(undefined);
+          }}
+          detail={changePass}
+        />
+      )}
     </PageCard>
   );
 };

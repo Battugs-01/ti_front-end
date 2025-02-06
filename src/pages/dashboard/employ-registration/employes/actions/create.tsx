@@ -1,12 +1,12 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { notification } from "antd";
+import { Label } from "components/label";
 import { IModalForm } from "components/modal";
 import { useRef } from "react";
 import workers from "service/employ-registration";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
-import { Label } from "components/label";
 
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
@@ -47,7 +47,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       }}
       onSuccess={rest.onFinish}
     >
-      <Info />
+      <Info action={"create"} />
     </IModalForm>
   );
 };
