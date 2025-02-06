@@ -38,125 +38,179 @@ export const generatePDF = async ({
             alignment: "left",
           },
           {
-            text: "Үнийн мэдээлэл",
-            alignment: "right",
-            fontSize: 20,
-            bold: true,
-            color: "#007FFF",
-          },
-        ],
-      },
-      {
-        text: `№: ${ticketNumber}`,
-        alignment: "right",
-        color: "#475467",
-        fontSize: 15,
-        style: "spaceTop",
-      },
-      {
-        margin: [0, 40, 0, 0],
-        // background: "#ebf5ff",
-
-        text: title,
-        fontSize: 20,
-        bold: true,
-        color: "#262e51",
-      },
-      {
-        margin: [0, 20, 0, 0],
-
-        style: "tableExample",
-
-        table: {
-          headerRows: 1,
-          widths: [150, 100],
-          body: [
-            header,
-
-            ...body,
-            [
+            stack: [
               {
-                text: "Нийт дүн",
-                margin: [5, 5, 5, 5],
-                fontSize: 16,
+                text: "ТИ АЙ ЛОЖИСТИК ХХК - ТЭЭВЭР ҮЙЛЧИЛГЭЭНИЙ ЦОГЦОЛБОР",
+                alignment: "right",
+                fontSize: 11,
                 bold: true,
+                color: "#475467",
               },
               {
-                text: totalMoney,
-                margin: [5, 5, 5, 5],
+                text: "ЭЛДЭВ ХУРААМЖ ТАСАЛБАР ТАЛОН ҮЙЛДВЭР",
+                alignment: "right",
+                fontSize: 13,
+                bold: true,
+                color: "#475467",
+                margin: [0, 5, 0, 0],
               },
             ],
-          ],
-        },
-        layout: "lightHorizontalLines",
-      },
-      {
-        text: "Дээрх үнэд НӨАТ багтсан болно.",
-        alignment: "right",
-        color: "#475467",
-        fontSize: 10,
-        style: "spaceTop",
-      },
-      {
-        text: "(*Таны хэрэглээнээс хамаарч үнэ өөр байж болно)",
-        alignment: "right",
-        color: "#475467",
-        fontSize: 9,
-      },
-
-      {
-        text: "Дэлгэрэнгүй мэдээлэл авахыг хүсвэл бидэнтэй холбогдоно уу.",
-        alignment: "center",
-        color: "#262e51",
-        // background: "#ebf5ff",
-
-        fontSize: 24,
-        bold: true,
-        margin: [0, 100, 0, 0],
-      },
-      {
-        alignment: "center",
-        style: "spaceTop",
-
-        columns: [
-          {
-            text: "Холбогдох",
-            alignment: "center",
-            fontSize: 16,
-            color: "#007FFF",
-          },
-          {
-            text: "Утасны дугаар: +976 70189889",
-            alignment: "center",
-            fontSize: 16,
-            color: "#262e51",
-          },
-          {
-            text: "office@til.mn",
-            alignment: "center",
-            fontSize: 16,
-            color: "#262e51",
           },
         ],
       },
       {
-        text: "https://www.til.mn, All rights reserved.",
-        alignment: "center",
+        alignment: "justify",
+        columns: [
+          {
+            text: `Он, сар, өдөр: ..................`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+          {
+            text: `№: _________________`,
+            alignment: "right",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+        ],
+      },
+      {
+        alignment: "justify",
+        columns: [
+          {
+            text: `Төлөгч байгууллага: ..................`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+          {
+            text: `НҮ №: _________________`,
+            alignment: "right",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+        ],
+      },
+      {
+        style: "tableExample",
+        table: {
+          headerRows: 1,
+          widths: ["5%", "50%", "45%"],
+          body: [
+            [
+              { text: "№", style: "tableHeader" },
+              { text: "Үйлчилгээний нэр", style: "tableHeader" },
+              { text: "Дүн", style: "tableHeader" },
+            ],
+            ...Array.from({ length: 9 }).map((row, index) => [
+              { text: index + 1, style: "tableItem" },
+              { text: "", style: "tableItem" },
+              { text: "", style: "tableItem", alignment: "right" },
+            ]),
+          ],
+        },
+        layout: {
+          hLineWidth: function (i: number, node: any) {
+            return i === 0 || i === node.table.body.length ? 1 : 0.5;
+          },
+          vLineWidth: function () {
+            return 1;
+          },
+          hLineColor: function () {
+            return "#aaa";
+          },
+          vLineColor: function () {
+            return "#aaa";
+          },
+        },
+      },
+      {
+        alignment: "justify",
+        columns: [
+          {
+            text: `Контайнер №: .....................`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+          {
+            text: `Бүгд дүн:.................................`,
+            alignment: "right",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+        ],
+      },
+      {
+        alignment: "justify",
+        columns: [
+          {
+            text: `Талбайд буусан огноо: ${Array.from({ length: 25 }).join(
+              "."
+            )}`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+          {
+            text: `Үүнээс бэлэн:${Array.from({ length: 25 }).join(".")}`,
+            alignment: "right",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+        ],
+      },
+      {
+        text: `Бэлэн бус: ${Array.from({ length: 25 }).join(".")}`,
+        alignment: "right",
         color: "#475467",
-        fontSize: 10,
+        fontSize: 11,
         style: "spaceTop",
       },
       {
-        text: "Монгол улс, Улаанбаатар хот, Баянгол дүүрэг, 4-р хороо, Үйлдвэрийн төвийн бүс – 1, Ажилчны гудамж 16010, Ти Ай Бизнес Центр",
-        alignment: "center",
+        text: `Үсгээр: ${Array.from({ length: 50 })
+          .map(() => "_")
+          .join("")}`,
+        alignment: "left",
         color: "#475467",
-        fontSize: 10,
+        fontSize: 11,
+        style: "spaceTop",
       },
-
-      // {
-      //   image: await getBase64ImageFromURL(Footer.src),
-      //   width: 500,
-      // },
+      {
+        alignment: "justify",
+        columns: [
+          {
+            text: `Огноо: .....................`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+          {
+            text: `Ачааны нярав: .....................`,
+            alignment: "right",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+        ],
+      },
+      {
+        text: `Тушаагч: ......................`,
+        alignment: "right",
+        color: "#475467",
+        fontSize: 11,
+        style: "spaceTop",
+      },
     ],
     styles: {
       center: {
@@ -179,7 +233,7 @@ export const generatePDF = async ({
         margin: [0, 10, 0, 5],
       },
       tableExample: {
-        margin: [0, 5, 0, 15],
+        margin: [0, 30, 0, 15],
       },
       tableHeader: {
         fontSize: 10,
