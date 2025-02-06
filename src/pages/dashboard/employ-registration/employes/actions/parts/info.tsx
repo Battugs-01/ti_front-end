@@ -85,7 +85,7 @@ export const Info = () => {
             label="Албан тушаал"
             options={[
               {
-                label: "Тээврийн манежер",
+                label: "Тээврийн менежер",
                 value: UserRoleType.transport_manager,
               },
               {
