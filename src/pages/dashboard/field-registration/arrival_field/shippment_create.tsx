@@ -10,9 +10,10 @@ import { Button, Col, Form, notification, Row } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
+import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
 import moment from "moment";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
@@ -38,6 +39,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   open,
   detail,
 }) => {
+  const [user] = useContext(AuthContext);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
@@ -811,17 +813,51 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           size="middle"
                           onClick={async () => {
                             const data = await generatePDF({
-                              title: "Элдэв хураамж тасалбар талон үйлдвэр",
-                              headers: ["Орлогын төрөл", "Дүн"],
-                              rows: additionalFee.map((value) => {
-                                return [
-                                  value?.fee_name,
-                                  `${value?.fee_amount} * ${value?.number_1}`,
-                                ];
+                              date: dayjs(form.getFieldValue("date")).format(
+                                "YYYY.MM.DD"
+                              ),
+                              items: additionalFee?.map((item) => {
+                                return {
+                                  name: item.fee_name || "",
+                                  amount: item.total_amount || 0,
+                                };
                               }),
-                              ticketNumber: form.getFieldValue("ticket_number"),
-                              totalMonthly: totalAmount,
-                              totalMoney: totalAmount,
+
+                              company:
+                                bankListData?.find(
+                                  (item) =>
+                                    item.id === form.getFieldValue("ledger_id")
+                                )?.customer_company?.name || "",
+                              serialNumber:
+                                form.getFieldValue("ticket_number") || "",
+                              title: "Ачилт",
+                              taxNumber: "100",
+                              containerInfo: {
+                                number: `${detail?.container_code} ${
+                                  CapacityOptions.find(
+                                    (capacity) =>
+                                      capacity.value === detail?.capacity
+                                  )?.label || ""
+                                }`,
+                                date:
+                                  dayjs(
+                                    form.getFieldValue("payment_date")
+                                  ).format("YYYY.MM.DD") || "",
+                              },
+                              totalAmount: totalAmount || 0,
+                              cashAmount:
+                                form.getFieldValue("payment_type") === "cash"
+                                  ? totalAmount
+                                  : 0,
+                              nonCashAmount:
+                                form.getFieldValue("payment_type") ===
+                                "non_cash"
+                                  ? totalAmount
+                                  : 0,
+                              amountInWords: "",
+                              submitter: `${
+                                user?.user?.last_name.substring(0, 1) || ""
+                              } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
                           }}

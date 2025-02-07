@@ -873,25 +873,33 @@ export const AssignationCreate: React.FC<
                               ),
                               items: additionalFee?.map((item) => {
                                 return {
-                                  name: item.fee_name,
-                                  amount: item.total_amount,
+                                  name: item.fee_name || "",
+                                  amount: item.total_amount || 0,
                                 };
                               }),
 
-                              company: bankListData?.find(
-                                (item) =>
-                                  item.id === form.getFieldValue("ledger_id")
-                              )?.customer_company?.name,
-                              serialNumber: form.getFieldValue("ticket_number"),
+                              company:
+                                bankListData?.find(
+                                  (item) =>
+                                    item.id === form.getFieldValue("ledger_id")
+                                )?.customer_company?.name || "",
+                              serialNumber:
+                                form.getFieldValue("ticket_number") || "",
                               title: "Олголт",
                               taxNumber: "100",
                               containerInfo: {
-                                number: `${detail?.container_code} ${CapacityOptions.find((capacity)=>capacity.value===detail?.capacity)?.label || ''}`,
-                                date: dayjs(
-                                  form.getFieldValue("payment_date")
-                                ).format("YYYY.MM.DD"),
+                                number: `${detail?.container_code} ${
+                                  CapacityOptions.find(
+                                    (capacity) =>
+                                      capacity.value === detail?.capacity
+                                  )?.label || ""
+                                }`,
+                                date:
+                                  dayjs(
+                                    form.getFieldValue("payment_date")
+                                  ).format("YYYY.MM.DD") || "",
                               },
-                              totalAmount: totalAmount,
+                              totalAmount: totalAmount || 0,
                               cashAmount:
                                 form.getFieldValue("payment_type") === "cash"
                                   ? totalAmount
@@ -902,10 +910,9 @@ export const AssignationCreate: React.FC<
                                   ? totalAmount
                                   : 0,
                               amountInWords: "",
-                              submitter: `${user?.user?.last_name.substring(
-                                0,
-                                1
-                              )} ${user?.user?.first_name}`,
+                              submitter: `${
+                                user?.user?.last_name.substring(0, 1) || ""
+                              } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
                           }}

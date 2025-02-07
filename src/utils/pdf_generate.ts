@@ -36,8 +36,7 @@ export const generatePDF = async ({
   amountInWords,
   submitter,
 }: PDFContent): Promise<TDocumentDefinitions> => {
-  const tableRows = items.map((item, index) => [
-    { text: (index + 1).toString(), style: "tableItem" },
+  const tableRows = items.map((item) => [
     { text: item.name, style: "tableItem" },
     {
       text: item.amount.toLocaleString(),
@@ -50,7 +49,6 @@ export const generatePDF = async ({
   if (emptyRows > 0) {
     for (let i = 0; i < emptyRows; i++) {
       tableRows.push([
-        { text: (items.length + i + 1).toString(), style: "tableItem" },
         { text: "", style: "tableItem" },
         { text: "", style: "tableItem", alignment: "right" },
       ]);
@@ -110,22 +108,15 @@ export const generatePDF = async ({
         style: "tableExample",
         table: {
           headerRows: 1,
-          widths: ["10%", "65%", "25%"],
-          body: [
-            [
-              { text: "№", style: "tableHeader" },
-              { text: "Үйлчилгээний нэр", style: "tableHeader" },
-              { text: "Дүн", style: "tableHeader" },
-            ],
-            ...tableRows,
-          ],
+          widths: ["70%", "30%"],
+          body: [...tableRows],
         },
         layout: {
           hLineWidth: function (i: number, node: any) {
-            return i === 0 || i === node.table.body.length ? 1 : 0.5;
+            return 0;
           },
           vLineWidth: function () {
-            return 1;
+            return 0;
           },
           hLineColor: function () {
             return "#aaa";
