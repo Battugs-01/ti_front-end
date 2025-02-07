@@ -9,7 +9,7 @@ export interface CargoApproachList {
   created_by: Customer;
   created_at: Date;
   container_code: string;
-  capacity: number;
+  capacity: string;
   broker_name: string;
   broker_id: number;
   direction: string;

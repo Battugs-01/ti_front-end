@@ -1,75 +1,84 @@
-import { TDocumentDefinitions } from "pdfmake/interfaces";
 import pdfMake from "pdfmake/build/pdfmake";
-import Logo from "/images/til-logo.jpg";
-import { getBase64ImageFromURL } from ".";
+import { TDocumentDefinitions } from "pdfmake/interfaces";
 
 export interface PDFContent {
+  date: string;
+  company: string;
+  serialNumber: string;
   title: string;
-  headers: string[];
-  rows: string[][];
-  ticketNumber: string;
-  totalMoney: number;
-  totalMonthly: number;
+  taxNumber: string;
+  items: {
+    name: string;
+    amount: number;
+  }[];
+  containerInfo: {
+    number: string;
+    date: string;
+  };
+  totalAmount: number;
+  cashAmount: number;
+  nonCashAmount: number;
+  amountInWords: string;
+  submitter: string;
 }
 
 export const generatePDF = async ({
+  date,
+  company,
+  serialNumber,
+  taxNumber,
   title,
-  headers,
-  rows,
-  ticketNumber,
-  totalMoney,
-  totalMonthly,
+  items,
+  containerInfo,
+  totalAmount,
+  cashAmount,
+  nonCashAmount,
+  amountInWords,
+  submitter,
 }: PDFContent): Promise<TDocumentDefinitions> => {
-  const header = headers.map((header) => ({
-    text: header,
-    style: "tableHeader",
-  }));
-  const body = rows.map((row) =>
-    row.map((item) => ({ text: item, style: "tableItem" }))
-  );
+  const tableRows = items.map((item, index) => [
+    { text: (index + 1).toString(), style: "tableItem" },
+    { text: item.name, style: "tableItem" },
+    {
+      text: item.amount.toLocaleString(),
+      style: "tableItem",
+      alignment: "right",
+    },
+  ]);
+
+  const emptyRows = 9 - items.length;
+  if (emptyRows > 0) {
+    for (let i = 0; i < emptyRows; i++) {
+      tableRows.push([
+        { text: (items.length + i + 1).toString(), style: "tableItem" },
+        { text: "", style: "tableItem" },
+        { text: "", style: "tableItem", alignment: "right" },
+      ]);
+    }
+  }
+
   return {
     content: [
       {
         alignment: "justify",
         columns: [
           {
-            image: await getBase64ImageFromURL(Logo),
-            width: 150,
-            alignment: "left",
-          },
-          {
-            stack: [
-              {
-                text: "ТИ АЙ ЛОЖИСТИК ХХК - ТЭЭВЭР ҮЙЛЧИЛГЭЭНИЙ ЦОГЦОЛБОР",
-                alignment: "right",
-                fontSize: 11,
-                bold: true,
-                color: "#475467",
-              },
-              {
-                text: "ЭЛДЭВ ХУРААМЖ ТАСАЛБАР ТАЛОН ҮЙЛДВЭР",
-                alignment: "right",
-                fontSize: 13,
-                bold: true,
-                color: "#475467",
-                margin: [0, 5, 0, 0],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        alignment: "justify",
-        columns: [
-          {
-            text: `Он, сар, өдөр: ..................`,
+            text: `${date}`,
             alignment: "left",
             color: "#475467",
             fontSize: 11,
             style: "spaceTop",
           },
           {
-            text: `№: _________________`,
+            text: `${title}`,
+            alignment: "left",
+            color: "#475467",
+            fontSize: 11,
+            style: "spaceTop",
+          },
+
+          {
+            text: `№: ${serialNumber}`,
             alignment: "right",
             color: "#475467",
             fontSize: 11,
@@ -81,37 +90,34 @@ export const generatePDF = async ({
         alignment: "justify",
         columns: [
           {
-            text: `Төлөгч байгууллага: ..................`,
+            text: `${company}`,
             alignment: "left",
             color: "#475467",
-            fontSize: 11,
-            style: "spaceTop",
-          },
-          {
-            text: `НҮ №: _________________`,
-            alignment: "right",
-            color: "#475467",
-            fontSize: 11,
+            fontSize: 13,
+            bold: true,
             style: "spaceTop",
           },
         ],
+      },
+      {
+        text: `НҮ №: Бланкын үнэ:   ${taxNumber}`,
+        alignment: "right",
+        color: "#475467",
+        fontSize: 11,
+        style: "spaceTop",
       },
       {
         style: "tableExample",
         table: {
           headerRows: 1,
-          widths: ["5%", "50%", "45%"],
+          widths: ["10%", "65%", "25%"],
           body: [
             [
               { text: "№", style: "tableHeader" },
               { text: "Үйлчилгээний нэр", style: "tableHeader" },
               { text: "Дүн", style: "tableHeader" },
             ],
-            ...Array.from({ length: 9 }).map((row, index) => [
-              { text: index + 1, style: "tableItem" },
-              { text: "", style: "tableItem" },
-              { text: "", style: "tableItem", alignment: "right" },
-            ]),
+            ...tableRows,
           ],
         },
         layout: {
@@ -133,14 +139,15 @@ export const generatePDF = async ({
         alignment: "justify",
         columns: [
           {
-            text: `Контайнер №: .....................`,
+            text: `Контайнер №: ${containerInfo.number}`,
             alignment: "left",
             color: "#475467",
+            bold: true,
             fontSize: 11,
             style: "spaceTop",
           },
           {
-            text: `Бүгд дүн:.................................`,
+            text: `Бүгд дүн: ${totalAmount.toLocaleString()}`,
             alignment: "right",
             color: "#475467",
             fontSize: 11,
@@ -152,16 +159,14 @@ export const generatePDF = async ({
         alignment: "justify",
         columns: [
           {
-            text: `Талбайд буусан огноо: ${Array.from({ length: 25 }).join(
-              "."
-            )}`,
+            text: `${containerInfo.date}`,
             alignment: "left",
             color: "#475467",
             fontSize: 11,
             style: "spaceTop",
           },
           {
-            text: `Үүнээс бэлэн:${Array.from({ length: 25 }).join(".")}`,
+            text: `Бэлэн: ${cashAmount.toLocaleString()}`,
             alignment: "right",
             color: "#475467",
             fontSize: 11,
@@ -170,16 +175,14 @@ export const generatePDF = async ({
         ],
       },
       {
-        text: `Бэлэн бус: ${Array.from({ length: 25 }).join(".")}`,
+        text: `Бэлэн бус: ${nonCashAmount.toLocaleString()}`,
         alignment: "right",
         color: "#475467",
         fontSize: 11,
         style: "spaceTop",
       },
       {
-        text: `Үсгээр: ${Array.from({ length: 50 })
-          .map(() => "_")
-          .join("")}`,
+        text: `${amountInWords}`,
         alignment: "left",
         color: "#475467",
         fontSize: 11,
@@ -189,14 +192,15 @@ export const generatePDF = async ({
         alignment: "justify",
         columns: [
           {
-            text: `Огноо: .....................`,
+            text: `Огноо: ${date}`,
             alignment: "left",
             color: "#475467",
+            bold: true,
             fontSize: 11,
             style: "spaceTop",
           },
           {
-            text: `Ачааны нярав: .....................`,
+            text: `/${submitter}/`,
             alignment: "right",
             color: "#475467",
             fontSize: 11,
@@ -204,17 +208,10 @@ export const generatePDF = async ({
           },
         ],
       },
-      {
-        text: `Тушаагч: ......................`,
-        alignment: "right",
-        color: "#475467",
-        fontSize: 11,
-        style: "spaceTop",
-      },
     ],
     styles: {
       center: {
-        alignment: `center`,
+        alignment: "center",
       },
       spaceTop: {
         margin: [0, 20, 0, 0],
