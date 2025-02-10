@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { DatePicker, notification, Select } from "antd";
 import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
@@ -16,6 +16,7 @@ import { cargoApproachPaginate, moneyFormat } from "utils/index";
 import {
   CapacityOptions,
   DirectionOptions,
+  DirectionSelect,
   ManagerPaymentMethod,
 } from "utils/options";
 import { CreateCargoApproach } from "./create";
@@ -90,6 +91,23 @@ export const CargoApproach: React.FC = () => {
         addButtonName="Шинэ"
         fileName="Ачаа дөхөлт"
         hideCreate={user?.user?.role_name !== UserRoleType.transport_manager}
+        filter={
+          <Select
+            className="w-48"
+            size="large"
+            defaultValue={null}
+            onChange={(e) => {
+              setFilter({
+                ...filter,
+                direction: e,
+              });
+            }}
+            options={DirectionSelect.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+          />
+        }
       />
       <ITable<CargoApproachList>
         dataSource={fieldRegister?.data?.items}
@@ -103,14 +121,19 @@ export const CargoApproach: React.FC = () => {
         }
         DetailComponent={PublicDetail}
         refresh={refreshList}
-        // RemoveModelConfig={{
-        //   action: fieldRegistration.deleteRegistration,
-        //   config: (record) => ({
-        //     uniqueKey: record?.id,
-        //     display: record?.broker_name,
-        //     title: "Устгах",
-        //   }),
-        // }}
+        RemoveModelConfig={
+          user.user?.role_name === UserRoleType.transport_manager ||
+          user.user?.role_name === UserRoleType.cashier
+            ? {
+                action: fieldRegistration.deleteRegistration,
+                config: (record) => ({
+                  uniqueKey: record?.id,
+                  display: record?.container_code,
+                  title: "Устгах",
+                }),
+              }
+            : undefined
+        }
         create={create}
         setCreate={setCreate}
         className="p-0 remove-padding-table"

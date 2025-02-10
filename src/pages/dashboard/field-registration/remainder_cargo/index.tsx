@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker } from "antd";
+import { DatePicker, Select } from "antd";
 import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
@@ -16,6 +16,7 @@ import { cargoApproachPaginate, moneyFormat } from "utils/index";
 import {
   CapacityOptions,
   DirectionOptions,
+  DirectionSelect,
   ManagerPaymentMethod,
 } from "utils/options";
 import { AssignationCargoApproach } from "./assignation";
@@ -86,6 +87,23 @@ export const RemainderCargo: React.FC = () => {
         hideCreate
         searchPlaceHolder="Чингэлэг дугаар, чиглэл"
         fileName="Үлдэгдэл чингэлэг"
+        filter={
+          <Select
+            className="w-48"
+            size="large"
+            defaultValue={null}
+            onChange={(e) => {
+              setFilter({
+                ...filter,
+                direction: e,
+              });
+            }}
+            options={DirectionSelect.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+          />
+        }
       />
       <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}

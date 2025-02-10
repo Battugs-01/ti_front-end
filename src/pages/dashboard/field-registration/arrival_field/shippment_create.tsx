@@ -42,6 +42,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const [user] = useContext(AuthContext);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
+  const [allAdditionalFee, setAllAdditionalFee] = useState<AdditionalFeeType[]>(
+    []
+  );
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
     opened: 0,
@@ -141,16 +144,20 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       form.setFieldsValue({
         ...res,
       });
-      setAdditionalFee(
+      const resData =
         res?.additional_fee_ticket_calculated?.map((values): any => {
           return {
             ...values,
             fee_amount: values?.fee_amount,
-            number_1: values?.number_1,
-            number_2: values?.number_2,
-            total_amount: values?.total_amount,
+            number_1: values.number_1,
+            number_2: values.number_2,
+            total_amount: values.total_amount,
           };
-        }) || []
+        }) || [];
+      setAdditionalFee(resData);
+      setAllAdditionalFee(resData);
+      setEditableRowKeys(
+        res?.additional_fee_ticket_calculated?.map((item) => item.id) || []
       );
     };
     fetch();
@@ -333,6 +340,59 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         onChange: (e: any) => {
                           setDates({
                             ...dates,
+                            opened: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
+                      }}
+                      name={"opened_at"}
+                      placeholder="Задарсан"
+                      label="Задарсан"
+                    />
+                    <IBadge
+                      title={dates.opened <= 0 ? 0 : dates.opened}
+                      color="blue"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <div className="flex items-center gap-3">
+                    <ProFormDatePicker
+                      fieldProps={{
+                        size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
+                            freed: dayjs(e).diff(
+                              dayjs(form.getFieldValue("arrived_at_site")),
+                              "day"
+                            ),
+                          });
+                        },
+                      }}
+                      name={"freed_at"}
+                      placeholder="Суларсан"
+                      label="Суларсан"
+                      rules={FORM_ITEM_RULE()}
+                    />
+                    <IBadge
+                      title={dates.freed <= 0 ? 0 : dates.freed}
+                      color="blue"
+                    />
+                  </div>
+                </Col>
+                <Col span={12}>
+                  <div className="flex items-center gap-3">
+                    <ProFormDatePicker
+                      fieldProps={{
+                        size: "large",
+                        onChange: (e: any) => {
+                          setDates({
+                            ...dates,
                             left_site: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
                               "day"
@@ -351,6 +411,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     />
                   </div>
                 </Col>
+              </Row>
+              <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
@@ -369,7 +431,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"returned_at"}
                       placeholder="Буцаж ирсэн"
                       label="Буцаж ирсэн"
-                      rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates?.returned <= 0 ? 0 : dates.returned}
@@ -377,9 +438,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     />
                   </div>
                 </Col>
-              </Row>
-              <Row gutter={[16, 16]}>
-                <Col span={24}>
+                <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
                       fieldProps={{
@@ -388,7 +447,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           setDates({
                             ...dates,
                             shipped: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("freed_at")),
                               "day"
                             ),
                           });
@@ -397,12 +456,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"shipped_at"}
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
-                      rules={FORM_ITEM_RULE()}
                     />
-                    <IBadge
-                      title={dates?.shipped <= 0 ? 0 : dates?.shipped}
-                      color="blue"
-                    />
+                    <IBadge title={dates?.shipped} color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -440,7 +495,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       onChange: async (value) => {
                         const data = await additionalFeeByCategory.runAsync({
                           category_id: value,
-                          capacity: form.getFieldValue("cargo_weight"),
+                          capacity: form.getFieldValue("cargo_weight") || 0,
                         });
 
                         const resData = data?.items?.map((values) => {
@@ -449,7 +504,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             total_amount: values?.number_1 * values?.fee_amount,
                           };
                         });
-                        setAdditionalFee(resData || []);
+                        const defaultAdditionalData = resData?.filter(
+                          (item) => item.is_default === true
+                        );
+                        setAdditionalFee(defaultAdditionalData || []);
+                        setAllAdditionalFee(resData || []);
                       },
                     }}
                     request={async () => {
@@ -560,6 +619,15 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         record?.fee_name === null
                       );
                     },
+                    valueType: "select",
+                    fieldProps: {
+                      options: allAdditionalFee?.map((item) => {
+                        return {
+                          label: item.fee_name,
+                          value: item.fee_name,
+                        };
+                      }),
+                    },
                   },
                   {
                     title: "Хэмжих нэгж",
@@ -588,6 +656,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     title: "Тоо 1",
                     dataIndex: "number_1",
                     key: "number_1",
+                    valueType: "digit",
+                  },
+                  {
+                    title: "Тоо 2",
+                    dataIndex: "number_2",
+                    key: "number_2",
                     valueType: "digit",
                   },
                   {
@@ -658,9 +732,17 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     ) {
                       record.number_1 = 1;
                     }
+                    if (
+                      record?.number_2 <= 0 ||
+                      record?.number_2 === null ||
+                      record?.number_2 === undefined
+                    ) {
+                      record.number_2 = 1;
+                    }
                     additionalFee[index].total_amount =
-                      record?.fee_amount * record?.number_1;
-                    record.total_amount = record?.fee_amount * record?.number_1;
+                      record?.fee_amount * record?.number_1 * record?.number_2;
+                    record.total_amount =
+                      record?.fee_amount * record?.number_1 * record?.number_2;
 
                     additionalFee[index] = {
                       ...additionalFee[index],

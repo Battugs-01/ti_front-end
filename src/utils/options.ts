@@ -132,3 +132,18 @@ export const DirectionOptions = Object.freeze([
     value: DirectionType.north,
   },
 ]);
+
+export const DirectionSelect = Object.freeze([
+  {
+    label: "Бүгд",
+    value: null,
+  },
+  {
+    label: "Замын-үүд",
+    value: DirectionType.south,
+  },
+  {
+    label: "Cүхбаатар",
+    value: DirectionType.north,
+  },
+]);

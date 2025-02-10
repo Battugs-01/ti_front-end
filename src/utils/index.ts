@@ -180,6 +180,7 @@ export const EmployePagination = {
 export const cargoApproachPaginate = {
   current: 0,
   pageSize: 20,
+  direction: null,
   status: "created",
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
@@ -190,6 +191,7 @@ export const cargoApproachPaginate = {
 export const fieldRegistrationPaginate = {
   current: 0,
   pageSize: 20,
+  direction: null,
   status: "arrived_at_site",
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),

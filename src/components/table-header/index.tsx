@@ -93,7 +93,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
         </div>
         <div className="flex items-end gap-2 flex-wrap ant-form-item-margin-remove custom-ant-form-item">
           {customAction && customAction}
-          {filter}
+          {filter && filter}
           <ProFormText
             name={"text"}
             placeholder={searchPlaceHolder || "Хайлт хийх утгаа оруулна уу"}

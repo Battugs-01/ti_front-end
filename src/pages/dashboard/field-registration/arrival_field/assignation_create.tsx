@@ -41,6 +41,10 @@ export const AssignationCreate: React.FC<
 > = ({ onCancel, onFinish, open, detail }) => {
   const [user] = useContext(AuthContext);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
+  const [allAdditionalFee, setAllAdditionalFee] = useState<AdditionalFeeType[]>(
+    []
+  );
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
     opened: 0,
@@ -142,7 +146,7 @@ export const AssignationCreate: React.FC<
       form.setFieldsValue({
         ...res,
       });
-      setAdditionalFee(
+      const resData =
         res?.additional_fee_ticket_calculated?.map((values): any => {
           return {
             ...values,
@@ -151,13 +155,15 @@ export const AssignationCreate: React.FC<
             number_2: values.number_2,
             total_amount: values.total_amount,
           };
-        }) || []
+        }) || [];
+      setAdditionalFee(resData);
+      setAllAdditionalFee(resData);
+      setEditableRowKeys(
+        res?.additional_fee_ticket_calculated?.map((item) => item.id) || []
       );
     };
     fetch();
   }, [detail?.id]);
-
-  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
@@ -372,7 +378,6 @@ export const AssignationCreate: React.FC<
                       name={"freed_at"}
                       placeholder="Суларсан"
                       label="Суларсан"
-                      rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates.freed <= 0 ? 0 : dates.freed}
@@ -385,7 +390,6 @@ export const AssignationCreate: React.FC<
                     <ProFormDatePicker
                       fieldProps={{
                         size: "large",
-                        disabled: true,
                         onChange: (e: any) => {
                           setDates({
                             ...dates,
@@ -413,7 +417,6 @@ export const AssignationCreate: React.FC<
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
                       fieldProps={{
-                        disabled: true,
                         size: "large",
                         onChange: (e: any) => {
                           setDates({
@@ -445,7 +448,7 @@ export const AssignationCreate: React.FC<
                           setDates({
                             ...dates,
                             shipped: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("freed_at")),
                               "day"
                             ),
                           });
@@ -501,7 +504,11 @@ export const AssignationCreate: React.FC<
                             total_amount: values?.number_1 * values?.fee_amount,
                           };
                         });
-                        setAdditionalFee(resData || []);
+                        const defaultAdditionalData = resData?.filter(
+                          (item) => item.is_default === true
+                        );
+                        setAdditionalFee(defaultAdditionalData || []);
+                        setAllAdditionalFee(resData || []);
                       },
                     }}
                     request={async () => {
@@ -536,6 +543,35 @@ export const AssignationCreate: React.FC<
               </Row>
               <EditableProTable<AdditionalFeeType>
                 rowKey="id"
+                // onValuesChange={(value, record) => {
+                //   console.log(value, record, "llllll");
+                //   console.log(allAdditionalFee, "allAdditionalFee");
+
+                //   const index =
+                //     allAdditionalFee?.find((item: any) => {
+                //       return item.id === record.fee_name;
+                //     })?.id || 0;
+                //   console.log(index, "kkkk");
+                //   console.log(additionalFee, "additionalFee BEFORE");
+
+                //   additionalFee[index].fee_code =
+                //     allAdditionalFee[index].fee_code || "";
+                //   additionalFee[index].fee_name =
+                //     allAdditionalFee[index].fee_name;
+                //   additionalFee[index].unit_measurement =
+                //     allAdditionalFee[index].unit_measurement;
+                //   additionalFee[index].fee_amount =
+                //     allAdditionalFee[index].fee_amount;
+                //   additionalFee[index].number_1 =
+                //     allAdditionalFee[index].number_1;
+                //   additionalFee[index].number_2 =
+                //     allAdditionalFee[index].number_2;
+                //   additionalFee[index].total_amount =
+                //     allAdditionalFee[index].total_amount;
+                //   console.log(additionalFee, "additionalFee AFTER");
+                //   setAdditionalFee([...additionalFee]);
+                //   // const data = allAdditionalFee[index].;
+                // }}
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
@@ -595,51 +631,66 @@ export const AssignationCreate: React.FC<
                     dataIndex: "fee_code",
                     key: "fee_code",
                     className: "p-3",
-                    editable: (text, record) => {
-                      return (
-                        record?.fee_code === undefined ||
-                        record?.fee_code === null
-                      );
-                    },
+                    // editable: (text, record) => {
+                    //   return (
+                    //     record?.fee_code === undefined ||
+                    //     record?.fee_code === null
+                    //   );
+                    // },
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
                     key: "fee_name",
-                    editable: (text, record) => {
-                      return (
-                        record?.fee_name === undefined ||
-                        record?.fee_name === null
-                      );
+                    // editable: (text, record) => {
+                    //   return (
+                    //     record?.fee_name === undefined ||
+                    //     record?.fee_name === null
+                    //   );
+                    // },
+                    valueType: "select",
+                    fieldProps: {
+                      options: allAdditionalFee?.map((item) => {
+                        return {
+                          label: item.fee_name,
+                          value: item.id,
+                        };
+                      }),
                     },
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
-                    editable: (text, record) => {
-                      return (
-                        record?.unit_measurement === undefined ||
-                        record?.unit_measurement === null
-                      );
-                    },
+                    // editable: (text, record) => {
+                    //   return (
+                    //     record?.unit_measurement === undefined ||
+                    //     record?.unit_measurement === null
+                    //   );
+                    // },
                   },
                   {
                     title: "Өртөг",
                     dataIndex: "fee_amount",
                     key: "fee_amount",
                     valueType: "money",
-                    editable: (text, record) => {
-                      return (
-                        record?.fee_amount === undefined ||
-                        record?.fee_amount === null
-                      );
-                    },
+                    // editable: (text, record) => {
+                    //   return (
+                    //     record?.fee_amount === undefined ||
+                    //     record?.fee_amount === null
+                    //   );
+                    // },
                   },
                   {
                     title: "Тоо 1",
                     dataIndex: "number_1",
                     key: "number_1",
+                    valueType: "digit",
+                  },
+                  {
+                    title: "Тоо 2",
+                    dataIndex: "number_2",
+                    key: "number_2",
                     valueType: "digit",
                   },
                   {

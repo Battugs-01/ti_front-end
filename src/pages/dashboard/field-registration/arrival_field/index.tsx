@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification, Tooltip } from "antd";
+import { DatePicker, notification, Select, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { CreateButton, ITable } from "components/index";
@@ -19,6 +19,7 @@ import {
   ArrilvelFieldPaymentMethod,
   CapacityOptions,
   DirectionOptions,
+  DirectionSelect,
 } from "utils/options";
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
@@ -101,10 +102,7 @@ export const ArrivalField: React.FC = () => {
           user?.user?.role_name === UserRoleType.cashier && (
             <div className="flex items-center gap-3">
               <CreateButton
-                disabled={
-                  !record ||
-                  record?.assignation_status?.is_assignation_additional_fee_paid
-                }
+                disabled={!record}
                 size="large"
                 type="default"
                 className="text-[#007AFF]"
@@ -130,6 +128,23 @@ export const ArrivalField: React.FC = () => {
               />
             </div>
           )
+        }
+        filter={
+          <Select
+            className="w-48"
+            size="large"
+            defaultValue={null}
+            onChange={(e) => {
+              setFilter({
+                ...filter,
+                direction: e,
+              });
+            }}
+            options={DirectionSelect.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+          />
         }
       />
       <ITable<CargoApproachList>
