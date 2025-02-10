@@ -1,4 +1,9 @@
-import { ProFormDigit, ProFormSelect, ProFormText } from "@ant-design/pro-form";
+import {
+  ProFormDigit,
+  ProFormRadio,
+  ProFormSelect,
+  ProFormText,
+} from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
@@ -98,6 +103,29 @@ export const Info = () => {
             placeholder="Даац"
             label={"Даац"}
             rules={FORM_ITEM_RULE()}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={12}>
+          <ProFormRadio.Group
+            name="is_default"
+            radioType="radio"
+            label="Тогтмол эсэх"
+            fieldProps={{
+              size: "middle",
+            }}
+            options={[
+              {
+                label: "Тийм",
+                value: "true",
+              },
+              {
+                label: "Үгүй",
+                value: "false",
+              },
+            ]}
+            initialValue="assignation"
           />
         </Col>
       </Row>

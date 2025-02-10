@@ -265,6 +265,7 @@ export enum FininciarTab {
   CustomerAccountSettlement = 2,
   CancellingTicket = 3,
   CategoryType = 4,
+  ForeignCustomer = 5,
 }
 
 export enum registerCustomerEnumTab {

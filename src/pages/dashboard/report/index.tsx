@@ -1,12 +1,11 @@
 import { ProFormSelect } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { DatePicker, notification, Typography } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
 import { FORM_ITEM_RULE, PaymentType } from "config";
 import dayjs from "dayjs";
-import { set } from "lodash";
 import { useEffect, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
@@ -85,7 +84,7 @@ const ReportPage: React.FC = () => {
   // };
 
   // fildArray();
-
+  const { Text } = Typography;
   const sd = async () => {
     const data = await additionalList.runAsync({
       is_all: true,
@@ -126,6 +125,14 @@ const ReportPage: React.FC = () => {
 
   // console.log("tableData", tableData);
 
+  const tableData =
+    reportList?.data?.items?.map((el) => {
+      return el?.Flattened;
+    }) ?? [];
+
+  const customColumn = tableData.push();
+
+  console.log(tableData, "tableData");
   return (
     <PageCard xR>
       <InitTableHeader
@@ -187,6 +194,27 @@ const ReportPage: React.FC = () => {
             return el?.Flattened;
           }) ?? []
         }
+        // summary={(pageData) => {
+        //   let totalBorrow = 0;
+        //   let totalRepayment = 0;
+        //   pageData.forEach(({ borrow, repayment }) => {
+        //     totalBorrow += borrow;
+        //     totalRepayment += repayment;
+        //   });
+        //   return (
+        //     <>
+        //       <Table.Summary.Row>
+        //         <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
+        //         <Table.Summary.Cell index={1}>
+        //           <Text type="danger">{totalBorrow}</Text>
+        //         </Table.Summary.Cell>
+        //         <Table.Summary.Cell index={2}>
+        //           <Text>{totalRepayment}</Text>
+        //         </Table.Summary.Cell>
+        //       </Table.Summary.Row>
+        //     </>
+        //   );
+        // }}
         loading={reportList.loading}
         refresh={refreshList}
         className="p-0 remove-padding-table"

@@ -1,7 +1,9 @@
 import { ModalForm, ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Row } from "antd";
+import { useRequest } from "ahooks";
+import { Button, Col, Form, notification, Row } from "antd";
 import { FORM_ITEM_RULE } from "config";
 import React from "react";
+import profile from "service/profile";
 import { ActionComponentProps } from "types";
 
 export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
@@ -12,11 +14,32 @@ export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
 }) => {
   const [form] = Form.useForm();
 
+  const updatePassword = useRequest(profile.editPassword, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: "Амжилттай хадгалагдлаа",
+      });
+      onFinish?.();
+    },
+    onError: (error: any) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
+
+  console.log(detail.id, "dsa");
   return (
     <ModalForm
       form={form}
       title="Нууц үг солих"
       open={open}
+      onFinish={async (values) => {
+        await updatePassword.runAsync(detail?.id || 0, {
+          password: values?.password,
+        });
+      }}
       modalProps={{
         destroyOnClose: true,
         width: "1200px",
@@ -58,7 +81,7 @@ export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
       }}
     >
       <Row gutter={[24, 24]}>
-        <Col span={12}>
+        <Col span={24}>
           <ProFormText
             fieldProps={{
               size: "large",
@@ -69,18 +92,6 @@ export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-        {/* <Col span={12}>
-          <ProFormText
-            disabled
-            fieldProps={{
-              size: "large",
-            }}
-            name="broker_name"
-            placeholder="Зуучийн нэр"
-            label={"Зуучийн нэр"}
-            rules={FORM_ITEM_RULE()}
-          />
-        </Col> */}
       </Row>
     </ModalForm>
   );

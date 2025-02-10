@@ -241,7 +241,7 @@ export const RemainderCargo: React.FC = () => {
                 title: "Гадаад тээвэр зууч",
                 dataIndex: "transport_broker",
                 render: (_, record) => {
-                  return record?.transport_give?.transport_broker;
+                  return record?.transport_give?.foreign_customer_company?.name;
                 },
               },
               {
@@ -261,7 +261,7 @@ export const RemainderCargo: React.FC = () => {
                 title: "Зууч код",
                 dataIndex: "transport_give",
                 render: (_, record) => {
-                  return record?.broker?.ledger?.name;
+                  return record?.transport_give?.foreign_customer_company?.code;
                 },
               },
               {
