@@ -50,6 +50,7 @@ export interface ContainerCargo {
 }
 
 export interface TransportGive {
+  foreign_customer_company: any;
   transfer_fee: number;
   transport_broker: string;
   transfer_broker_name: string;

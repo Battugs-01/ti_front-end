@@ -10,7 +10,9 @@ import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { DirectionType, FORM_ITEM_RULE } from "config";
 import moment from "moment";
+import { useEffect } from "react";
 import fieldRegistration from "service/feild_registration";
+import foreign from "service/fininaciar/foreign";
 import { ActionComponentProps } from "types";
 import {
   CapacityOptions,
@@ -39,6 +41,19 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
       onCancel?.();
     },
   });
+
+  const listForeign = useRequest(foreign.list, {
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
+
+  useEffect(() => {
+    listForeign.run({
+      is_all: true,
+    });
+  }, [open]);
 
   return (
     <ModalForm
@@ -354,14 +369,18 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                   />
                 </Col>
                 <Col span={12}>
-                  <ProFormText
+                  <ProFormSelect
                     fieldProps={{
                       size: "large",
                     }}
-                    disabled
-                    name={["transport_give", "transport_broker"]}
+                    name={["transport_give", "foreign_customer_company_id"]}
                     placeholder="Гадаад тээвэр зууч"
                     label="Гадаад тээвэр зууч"
+                    options={listForeign.data?.items?.map((item) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))}
+                    disabled
                   />
                 </Col>
               </Row>

@@ -7,6 +7,7 @@ import CancellingTicket from "./pages/CancellingTicket";
 import CategoryType from "./pages/CategoryType";
 import CustomerAccountSettlement from "./pages/CustomerAccountSettlement";
 import CustomerCompany from "./pages/CustomerCompany";
+import ForeignCustomer from "./pages/ForeignCustomer";
 
 export const Fininciar: React.FC<any> = ({ data }) => {
   const [tab, setTab] = useState<any>(FininciarTab.CustomerCompany);
@@ -15,6 +16,10 @@ export const Fininciar: React.FC<any> = ({ data }) => {
     {
       value: FininciarTab.CustomerCompany,
       label: "Харилцагч компани",
+    },
+    {
+      value: FininciarTab.ForeignCustomer,
+      label: "Гадаад тээвэр зууч",
     },
     {
       value: FininciarTab.CategoryType,
@@ -59,6 +64,10 @@ export const Fininciar: React.FC<any> = ({ data }) => {
       <IfCondition
         condition={tab === FininciarTab.CustomerCompany}
         whenTrue={<CustomerCompany />}
+      />
+      <IfCondition
+        condition={tab === FininciarTab.ForeignCustomer}
+        whenTrue={<ForeignCustomer />}
       />
 
       <IfCondition
