@@ -213,9 +213,9 @@ const Transaction = () => {
             dataIndex: "payer",
             title: "Төлөгч",
             align: "center",
-            render: (value: any) => (
+            render: (value: any, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {value || "-"}
+                {record?.ledger?.customer_company?.shortcut_name || "-"}
               </span>
             ),
           },

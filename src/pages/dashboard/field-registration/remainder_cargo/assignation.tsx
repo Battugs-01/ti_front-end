@@ -58,6 +58,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
+        console.log(values, "sda");
         await addCargo.runAsync(
           {
             ...values,
@@ -70,7 +71,7 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         ...detail,
         approach_report_date: moment(detail?.approach_report_date),
-        arrived_at_site: null,
+        arrived_at_site: moment().startOf("day"),
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
       open={open}
