@@ -508,7 +508,7 @@ export const AssignationCreate: React.FC<
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
-                          (item) => item.is_default === true
+                          (item) => item.is_default === "true"
                         );
                         setAdditionalFee(defaultAdditionalData || []);
                         setAllAdditionalFee(resData || []);
@@ -547,25 +547,6 @@ export const AssignationCreate: React.FC<
               <EditableProTable<AdditionalFeeType>
                 rowKey="id"
                 onValuesChange={(value, record) => {
-                  const index = allAdditionalFee?.findIndex((item: any) => {
-                    return item.id === record.fee_name;
-                  });
-                  const data = allAdditionalFee[index];
-
-                  const newData = {
-                    ...data,
-                    total_amount:
-                      allAdditionalFee[index].fee_amount *
-                      allAdditionalFee[index].number_1 *
-                      allAdditionalFee[index].number_2,
-                  };
-                  additionalFee[additionalFee.length - 1] = {
-                    ...newData,
-                  };
-                  setAdditionalFee([...additionalFee]);
-                  actionRef.current?.startEditable?.(
-                    additionalFee[additionalFee.length - 1]?.id
-                  );
                   actionRef.current?.reload();
                 }}
                 title={() => {
@@ -615,7 +596,7 @@ export const AssignationCreate: React.FC<
                   );
                 }}
                 scroll={{
-                  x: 960,
+                  x: 1360,
                 }}
                 actionRef={actionRef}
                 className="p-0 remove-padding-table"
@@ -638,6 +619,7 @@ export const AssignationCreate: React.FC<
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
+                    width: 250,
                     key: "fee_name",
                     // editable: (text, record) => {
                     //   return (
@@ -653,6 +635,31 @@ export const AssignationCreate: React.FC<
                           value: item.id,
                         };
                       }),
+                      onChange: (value) => {
+                        const index = allAdditionalFee?.findIndex(
+                          (item: any) => {
+                            return item.id === value;
+                          }
+                        );
+                        const data = allAdditionalFee[index];
+
+                        const newData = {
+                          ...data,
+                          total_amount:
+                            allAdditionalFee[index].fee_amount *
+                            allAdditionalFee[index].number_1 *
+                            allAdditionalFee[index].number_2,
+                        };
+                        additionalFee[additionalFee.length - 1] = {
+                          ...newData,
+                        };
+                        setAdditionalFee([...additionalFee]);
+                        actionRef.current?.startEditable?.(
+                          additionalFee[additionalFee.length - 1].id
+                        );
+
+                        actionRef.current?.reload();
+                      },
                     },
                   },
                   {
@@ -740,10 +747,12 @@ export const AssignationCreate: React.FC<
                     await waitTime(2000);
                   },
                   onChange: setEditableRowKeys,
-                  onValuesChange: async (record, data) => {
+                  onValuesChange: async (record: any, data) => {
+                    console.log(record, "kkkk");
                     const index = additionalFee.findIndex(
-                      (values) => values.id === record?.id
+                      (values) => values.id === record.id
                     );
+
                     if (
                       record?.fee_amount <= 0 ||
                       record?.fee_amount === null ||

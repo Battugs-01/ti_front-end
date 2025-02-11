@@ -25,7 +25,7 @@ export interface AdditionalFeeType {
   number_2: number;
   total_amount: number;
   is_new?: boolean;
-  is_default: boolean;
+  is_default: string;
 }
 
 export interface AddItem {
