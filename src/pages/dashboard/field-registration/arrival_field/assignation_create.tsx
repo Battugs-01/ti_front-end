@@ -547,27 +547,26 @@ export const AssignationCreate: React.FC<
               <EditableProTable<AdditionalFeeType>
                 rowKey="id"
                 onValuesChange={(value, record) => {
-                  const index =
-                    allAdditionalFee?.find((item: any) => {
-                      return item.id === record.fee_name;
-                    })?.id || 0;
+                  const index = allAdditionalFee?.findIndex((item: any) => {
+                    return item.id === record.fee_name;
+                  });
+                  const data = allAdditionalFee[index];
 
-                  additionalFee[index].fee_code =
-                    allAdditionalFee[index].fee_code || "";
-                  additionalFee[index].fee_name =
-                    allAdditionalFee[index].fee_name;
-                  additionalFee[index].unit_measurement =
-                    allAdditionalFee[index].unit_measurement;
-                  additionalFee[index].fee_amount =
-                    allAdditionalFee[index].fee_amount;
-                  additionalFee[index].number_1 =
-                    allAdditionalFee[index].number_1;
-                  additionalFee[index].number_2 =
-                    allAdditionalFee[index].number_2;
-                  additionalFee[index].total_amount =
-                    allAdditionalFee[index].total_amount;
+                  const newData = {
+                    ...data,
+                    total_amount:
+                      allAdditionalFee[index].fee_amount *
+                      allAdditionalFee[index].number_1 *
+                      allAdditionalFee[index].number_2,
+                  };
+                  additionalFee[additionalFee.length - 1] = {
+                    ...newData,
+                  };
                   setAdditionalFee([...additionalFee]);
-                  // const data = allAdditionalFee[index].;
+                  actionRef.current?.startEditable?.(
+                    additionalFee[additionalFee.length - 1]?.id
+                  );
+                  actionRef.current?.reload();
                 }}
                 title={() => {
                   return (
@@ -759,9 +758,17 @@ export const AssignationCreate: React.FC<
                     ) {
                       record.number_1 = 1;
                     }
+                    if (
+                      record?.number_2 <= 0 ||
+                      record?.number_2 === null ||
+                      record?.number_2 === undefined
+                    ) {
+                      record.number_2 = 1;
+                    }
                     additionalFee[index].total_amount =
-                      record?.fee_amount * record?.number_1;
-                    record.total_amount = record?.fee_amount * record?.number_1;
+                      record?.fee_amount * record?.number_1 * record?.number_2;
+                    record.total_amount =
+                      record?.fee_amount * record?.number_1 * record?.number_2;
 
                     additionalFee[index] = {
                       ...additionalFee[index],
