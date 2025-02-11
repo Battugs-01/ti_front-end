@@ -932,8 +932,7 @@ export const AssignationCreate: React.FC<
                               {
                                 ticket_number:
                                   form.getFieldValue("ticket_number"),
-                                payment_date:
-                                  form.getFieldValue("payment_date"),
+                                payment_date: form.getFieldValue("opened_at"),
                                 payment_type:
                                   form.getFieldValue("payment_type"),
                                 payment_amount:
