@@ -501,7 +501,10 @@ export const AssignationCreate: React.FC<
                         const resData = data?.items?.map((values) => {
                           return {
                             ...values,
-                            total_amount: values?.number_1 * values?.fee_amount,
+                            total_amount:
+                              values?.number_1 *
+                              values?.fee_amount *
+                              values?.number_2,
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
@@ -543,35 +546,29 @@ export const AssignationCreate: React.FC<
               </Row>
               <EditableProTable<AdditionalFeeType>
                 rowKey="id"
-                // onValuesChange={(value, record) => {
-                //   console.log(value, record, "llllll");
-                //   console.log(allAdditionalFee, "allAdditionalFee");
+                onValuesChange={(value, record) => {
+                  const index =
+                    allAdditionalFee?.find((item: any) => {
+                      return item.id === record.fee_name;
+                    })?.id || 0;
 
-                //   const index =
-                //     allAdditionalFee?.find((item: any) => {
-                //       return item.id === record.fee_name;
-                //     })?.id || 0;
-                //   console.log(index, "kkkk");
-                //   console.log(additionalFee, "additionalFee BEFORE");
-
-                //   additionalFee[index].fee_code =
-                //     allAdditionalFee[index].fee_code || "";
-                //   additionalFee[index].fee_name =
-                //     allAdditionalFee[index].fee_name;
-                //   additionalFee[index].unit_measurement =
-                //     allAdditionalFee[index].unit_measurement;
-                //   additionalFee[index].fee_amount =
-                //     allAdditionalFee[index].fee_amount;
-                //   additionalFee[index].number_1 =
-                //     allAdditionalFee[index].number_1;
-                //   additionalFee[index].number_2 =
-                //     allAdditionalFee[index].number_2;
-                //   additionalFee[index].total_amount =
-                //     allAdditionalFee[index].total_amount;
-                //   console.log(additionalFee, "additionalFee AFTER");
-                //   setAdditionalFee([...additionalFee]);
-                //   // const data = allAdditionalFee[index].;
-                // }}
+                  additionalFee[index].fee_code =
+                    allAdditionalFee[index].fee_code || "";
+                  additionalFee[index].fee_name =
+                    allAdditionalFee[index].fee_name;
+                  additionalFee[index].unit_measurement =
+                    allAdditionalFee[index].unit_measurement;
+                  additionalFee[index].fee_amount =
+                    allAdditionalFee[index].fee_amount;
+                  additionalFee[index].number_1 =
+                    allAdditionalFee[index].number_1;
+                  additionalFee[index].number_2 =
+                    allAdditionalFee[index].number_2;
+                  additionalFee[index].total_amount =
+                    allAdditionalFee[index].total_amount;
+                  setAdditionalFee([...additionalFee]);
+                  // const data = allAdditionalFee[index].;
+                }}
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
@@ -599,6 +596,7 @@ export const AssignationCreate: React.FC<
                               fee_name: null,
                               unit_measurement: null,
                               number_1: 0,
+                              number_2: 0,
                               is_new: true,
                             };
                             setAdditionalFee([

@@ -501,7 +501,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         const resData = data?.items?.map((values) => {
                           return {
                             ...values,
-                            total_amount: values?.number_1 * values?.fee_amount,
+                            total_amount:
+                              values?.number_1 *
+                              values?.fee_amount *
+                              values?.number_2,
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
@@ -570,6 +573,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               fee_name: null,
                               unit_measurement: null,
                               number_1: 0,
+                              number_2: 0,
                               is_new: true,
                             };
                             setAdditionalFee([
