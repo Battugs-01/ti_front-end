@@ -20,6 +20,7 @@ export interface CargoApproachList {
   freed_at: string;
   left_site_at: string;
   returned_at: string;
+  shipped_at: string;
   status: string;
   is_recieved_and_waggon_gone: boolean;
   for_sale: boolean;
