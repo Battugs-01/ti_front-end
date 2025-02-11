@@ -575,8 +575,8 @@ export const AssignationCreate: React.FC<
                               fee_code: null,
                               fee_name: null,
                               unit_measurement: null,
-                              number_1: 0,
-                              number_2: 0,
+                              number_1: 1,
+                              number_2: 1,
                               is_new: true,
                             };
                             setAdditionalFee([
@@ -690,12 +690,18 @@ export const AssignationCreate: React.FC<
                     dataIndex: "number_1",
                     key: "number_1",
                     valueType: "digit",
+                    fieldProps: {
+                      min: 1,
+                    },
                   },
                   {
                     title: "Тоо 2",
                     dataIndex: "number_2",
                     key: "number_2",
                     valueType: "digit",
+                    fieldProps: {
+                      min: 1,
+                    },
                   },
                   {
                     title: "Дүн",
