@@ -192,7 +192,7 @@ export const AssignationCreate: React.FC<
           additional_fee_category_id: form.getFieldValue(
             "additional_fee_category_id"
           ),
-          date: dayjs(form.getFieldValue("date")).toDate(),
+          date: moment(form.getFieldValue("opened_at")).toDate(),
           ticket_number: form.getFieldValue("ticket_number"),
           container_transport_record_id: detail?.id,
         });
@@ -210,7 +210,7 @@ export const AssignationCreate: React.FC<
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          date: moment(values.date).toDate(),
+          date: moment(values.opened_at).toDate(),
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
         });
@@ -482,7 +482,8 @@ export const AssignationCreate: React.FC<
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"date"}
+                    disabled
+                    name={"opened_at"}
                     placeholder="Он сар өдөр"
                     label={"Он сар өдөр"}
                     rules={FORM_ITEM_RULE()}
@@ -813,7 +814,7 @@ export const AssignationCreate: React.FC<
                       additional_fee_category_id: form.getFieldValue(
                         "additional_fee_category_id"
                       ),
-                      date: dayjs(form.getFieldValue("date")).toDate(),
+                      date: moment(form.getFieldValue("opened_at")).toDate(),
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
@@ -833,7 +834,8 @@ export const AssignationCreate: React.FC<
                       <Row gutter={[16, 16]}>
                         <Col span={4}>
                           <ProFormDatePicker
-                            name="payment_date"
+                            name="opened_at"
+                            disabled
                             placeholder="Огноо"
                             label="Огноо"
                           />
