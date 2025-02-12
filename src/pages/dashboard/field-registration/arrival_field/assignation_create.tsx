@@ -47,10 +47,19 @@ export const AssignationCreate: React.FC<
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
-    opened: 0,
-    freed: 0,
-    left_site: 0,
-    returned: 0,
+    opened: dayjs(detail?.opened_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
+    freed: dayjs(detail?.freed_at).diff(dayjs(detail?.arrived_at_site), "day"),
+    left_site: dayjs(detail?.left_site_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
+    returned: dayjs(detail?.returned_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
     shipped: 0,
   });
   const [ticketAdditional, setTicketAdditional] =
@@ -476,7 +485,7 @@ export const AssignationCreate: React.FC<
                       placeholder="Ачилт хийсэн"
                       label="Ачилт хийсэн"
                     />
-                    <IBadge title={dates?.shipped} color="blue" />
+                    {/* <IBadge title={dates?.shipped} color="blue" /> */}
                   </div>
                 </Col>
               </Row>
@@ -654,7 +663,7 @@ export const AssignationCreate: React.FC<
                           value: item.id,
                         };
                       }),
-                      onChange: (value) => {
+                      onChange: (value: number) => {
                         const index = allAdditionalFee?.findIndex(
                           (item: any) => {
                             return item.id === value;

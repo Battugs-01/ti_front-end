@@ -32,6 +32,7 @@ export interface CargoApproachList {
   broker: any;
   shipping_ticket_id: number;
   assignment_ticket_id: number;
+  tickets: Ticket[];
 }
 
 export interface AssignationStatus {

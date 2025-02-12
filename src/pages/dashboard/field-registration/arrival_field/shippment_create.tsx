@@ -47,10 +47,19 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   );
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
-    opened: 0,
-    freed: 0,
-    left_site: 0,
-    returned: 0,
+    opened: dayjs(detail?.opened_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
+    freed: dayjs(detail?.freed_at).diff(dayjs(detail?.arrived_at_site), "day"),
+    left_site: dayjs(detail?.left_site_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
+    returned: dayjs(detail?.returned_at).diff(
+      dayjs(detail?.arrived_at_site),
+      "day"
+    ),
     shipped: 0,
   });
   const [bankListData, setBankListData] = useState<any[]>([]);
@@ -217,10 +226,27 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       }}
       title="Ачилт"
       initialValues={{
+        arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
+          ? null
+          : detail?.arrived_at_site,
+        opened_at: detail?.opened_at.includes("0001-01-01")
+          ? null
+          : detail?.opened_at,
+        freed_at: detail?.freed_at.includes("0001-01-01")
+          ? null
+          : detail?.freed_at,
+        left_site_at: detail?.left_site_at.includes("0001-01-01")
+          ? null
+          : detail?.left_site_at,
+        returned_at: detail?.returned_at.includes("0001-01-01")
+          ? null
+          : detail?.returned_at,
+        shipped_at: detail?.shipped_at.includes("0001-01-01")
+          ? null
+          : detail?.shipped_at,
         container_code: detail?.container_code,
         capacity: detail?.capacity,
         broker_name: detail?.broker?.name,
-        arrived_at_site: detail?.arrived_at_site,
         ticket_number: getTempAdditionalFee.data?.ticket_number,
         date: getTempAdditionalFee.data?.date,
         cargo_weight:
@@ -508,7 +534,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
-                          (item) => item.is_default === true
+                          (item) => item.is_default === "true"
                         );
                         setAdditionalFee(defaultAdditionalData || []);
                         setAllAdditionalFee(resData || []);

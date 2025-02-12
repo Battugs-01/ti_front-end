@@ -102,7 +102,10 @@ export const ArrivalField: React.FC = () => {
           user?.user?.role_name === UserRoleType.cashier && (
             <div className="flex items-center gap-3">
               <CreateButton
-                disabled={!record}
+                disabled={
+                  !record ||
+                  record?.shipping_status?.is_shipping_additional_fee_paid
+                }
                 size="large"
                 type="default"
                 className="text-[#007AFF]"
@@ -224,14 +227,27 @@ export const ArrivalField: React.FC = () => {
               {
                 title: "Статус",
                 dataIndex: "status",
+                width: 150,
                 align: "center",
                 render: (_, record) => {
                   return (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap p-2">
                       {record?.assignation_status
                         ?.is_assignation_additional_fee_paid && (
                         <IBadge color="blue" title="Олголт" />
                       )}
+                      {record?.tickets.map((ticket, index) => {
+                        if (index >= record?.tickets.length - 2) {
+                          return;
+                        }
+                        return (
+                          <IBadge
+                            key={index}
+                            color="blue"
+                            title={`Сунгалт олголт-${index + 1}`}
+                          />
+                        );
+                      })}
                       {record?.shipping_status
                         ?.is_shipping_additional_fee_paid && (
                         <IBadge color="green" title="Ачилт" />
