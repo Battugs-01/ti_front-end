@@ -9,12 +9,14 @@ import { ActionComponentProps } from "types";
 import Container from "./container";
 import Grant from "./grant";
 import Shiping from "./shipment";
+import TicketDetails from "./ticket";
+import { Divider } from "antd";
 
 const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
   const [tab, setTab] = useState<any>(DetailTab.container);
-  const [assignation, setAssignation] = useState<any>();
-  const [shipment, setShipment] = useState<any>();
+  const [assignationTickets, setAssignationTickets] = useState<any[]>([]);
+  const [shipmentTickets, setShipmentTickets] = useState<any[]>([]);
 
   const detailChooseButtons: DetailTabtButton[] = [
     {
@@ -46,18 +48,27 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
 
   useEffect(() => {
     if (detailData.data) {
-      setAssignation(
-        detailData.data.ticket.find(
-          (el: any) => el.shipping_or_assignment === "assignment"
-        )
+      setAssignationTickets(
+        detailData.data.ticket.map((el: any) => {
+          if (el.shipping_or_assignment === "assignment") {
+            return el;
+          }
+        })
       );
-      setShipment(
-        detailData.data.ticket.find(
-          (el: any) => el.shipping_or_assignment === "shipping"
-        )
+
+      setShipmentTickets(
+        detailData.data.ticket.map((el: any) => {
+          if (el.shipping_or_assignment === "shipping") {
+            return el;
+          }
+        })
       );
     }
   }, [detailData.data]);
+
+  useEffect(() => {
+    console.log("assignationTickets", assignationTickets);
+  }, [assignationTickets]);
 
   return (
     <IModalForm
@@ -97,13 +108,54 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
         whenTrue={<Container data={rest?.detail} />}
       />
 
-      <IfCondition
+      {/* <IfCondition
         condition={tab === DetailTab.grant}
-        whenTrue={<Grant data={rest?.detail} assignationData={assignation} />}
+        whenTrue={
+          <Grant data={rest?.detail} assignationData={assignationTickets} />
+        }
       />
       <IfCondition
         condition={tab === DetailTab.shipping}
         whenTrue={<Shiping data={rest?.detail} shipmentData={shipment} />}
+      /> */}
+
+      <IfCondition
+        condition={tab === DetailTab.grant}
+        whenTrue={
+          <div>
+            {assignationTickets.length > 0 ? (
+              assignationTickets?.map((el) => (
+                <div>
+                  <TicketDetails ticket={el} />
+                  <Divider />
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center text-lg">
+                Олголтын элдэв хураамжын тасалбар байхгүй байна.
+              </div>
+            )}
+          </div>
+        }
+      />
+      <IfCondition
+        condition={tab === DetailTab.shipping}
+        whenTrue={
+          <div>
+            {shipmentTickets.length > 0 ? (
+              shipmentTickets?.map((el) => (
+                <div>
+                  <TicketDetails ticket={el} />
+                  <Divider />
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center text-lg">
+                Ачилтын элдэв хураамжын тасалбар байхгүй байна.
+              </div>
+            )}
+          </div>
+        }
       />
     </IModalForm>
   );
