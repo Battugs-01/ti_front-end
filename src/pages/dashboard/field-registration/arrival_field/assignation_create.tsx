@@ -1,12 +1,13 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row } from "antd";
+import { Button, Col, Form, Input, notification, Row, Select } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
@@ -177,6 +178,21 @@ export const AssignationCreate: React.FC<
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
   }, [additionalFee]);
+
+  // calc total amount function
+  const calcTotalAmount = (record: any, values: any) => {
+    const index = additionalFee.findIndex((item) => item.id === record.id);
+    additionalFee[index] = {
+      ...additionalFee[index],
+      ...values,
+    };
+
+    additionalFee[index].total_amount =
+      (additionalFee[index].fee_amount || 0) *
+      (additionalFee[index].number_1 || 0) *
+      (additionalFee[index].number_2 || 0);
+    setAdditionalFee([...additionalFee]);
+  };
 
   return (
     <ModalForm
@@ -574,9 +590,6 @@ export const AssignationCreate: React.FC<
               </Row>
               <EditableProTable<AdditionalFeeType>
                 rowKey="id"
-                onValuesChange={(value, record) => {
-                  actionRef.current?.reload();
-                }}
                 title={() => {
                   return (
                     <div className="bg-[#f9fafb] p-3 flex justify-between items-center text-[#475467]">
@@ -626,7 +639,6 @@ export const AssignationCreate: React.FC<
                 scroll={{
                   x: 1360,
                 }}
-                actionRef={actionRef}
                 className="p-0 remove-padding-table"
                 bordered
                 recordCreatorProps={false}
@@ -637,81 +649,101 @@ export const AssignationCreate: React.FC<
                     dataIndex: "fee_code",
                     key: "fee_code",
                     className: "p-3",
-                    // editable: (text, record) => {
-                    //   return (
-                    //     record?.fee_code === undefined ||
-                    //     record?.fee_code === null
-                    //   );
-                    // },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormText
+                          fieldProps={{
+                            value: record?.fee_code,
+                          }}
+                          name="fee_code"
+                          placeholder="Код"
+                          noStyle
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
                     width: 250,
                     key: "fee_name",
-                    // editable: (text, record) => {
-                    //   return (
-                    //     record?.fee_name === undefined ||
-                    //     record?.fee_name === null
-                    //   );
-                    // },
-                    valueType: "select",
-                    fieldProps: {
-                      options: allAdditionalFee?.map((item) => {
-                        return {
-                          label: item.fee_name,
-                          value: item.id,
-                        };
-                      }),
-                      onChange: (value: number) => {
-                        const index = allAdditionalFee?.findIndex(
-                          (item: any) => {
-                            return item.id === value;
-                          }
-                        );
-                        const data = allAdditionalFee[index];
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <Select
+                          options={allAdditionalFee?.map((item) => {
+                            return {
+                              label: item.fee_name,
+                              value: item.id,
+                            };
+                          })}
+                          onChange={(e) => {
+                            const index = allAdditionalFee?.findIndex(
+                              (item: any) => {
+                                return item.id === e;
+                              }
+                            );
 
-                        const newData = {
-                          ...data,
-                          total_amount:
-                            allAdditionalFee[index].fee_amount *
-                            allAdditionalFee[index].number_1 *
-                            allAdditionalFee[index].number_2,
-                        };
-                        additionalFee[additionalFee.length - 1] = {
-                          ...newData,
-                        };
-                        setAdditionalFee([...additionalFee]);
-                        actionRef.current?.startEditable?.(
-                          additionalFee[additionalFee.length - 1].id
-                        );
+                            record = {
+                              ...allAdditionalFee[index],
+                              ...record,
+                            };
 
-                        actionRef.current?.reload();
-                      },
+                            calcTotalAmount(record, {
+                              fee_name: allAdditionalFee[index].fee_name,
+                              fee_code: allAdditionalFee[index].fee_code,
+                              fee_amount: allAdditionalFee[index].fee_amount,
+                              unit_measurement:
+                                allAdditionalFee[index].unit_measurement,
+                            });
+                          }}
+                        />
+                      );
                     },
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
-                    // editable: (text, record) => {
-                    //   return (
-                    //     record?.unit_measurement === undefined ||
-                    //     record?.unit_measurement === null
-                    //   );
-                    // },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormText
+                          noStyle
+                          fieldProps={{
+                            value: record?.unit_measurement,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                unit_measurement: e.target.value,
+                              });
+                            },
+                          }}
+                          name="unit_measurement"
+                          placeholder="Хэмжих нэгж"
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Өртөг",
                     dataIndex: "fee_amount",
                     key: "fee_amount",
                     valueType: "money",
-                    // editable: (text, record) => {
-                    //   return (
-                    //     record?.fee_amount === undefined ||
-                    //     record?.fee_amount === null
-                    //   );
-                    // },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.fee_amount,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                fee_amount: e,
+                              });
+                            },
+                          }}
+                          name="fee_amount"
+                          placeholder="Өртөг"
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Тоо 1",
@@ -721,6 +753,23 @@ export const AssignationCreate: React.FC<
                     fieldProps: {
                       min: 1,
                     },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.number_1,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                number_1: e,
+                              });
+                            },
+                          }}
+                          name="number_1"
+                          placeholder="Тоо 1"
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Тоо 2",
@@ -729,6 +778,23 @@ export const AssignationCreate: React.FC<
                     valueType: "digit",
                     fieldProps: {
                       min: 1,
+                    },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.number_2,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                number_2: e,
+                              });
+                            },
+                          }}
+                          name="number_2"
+                          placeholder="Тоо 2"
+                        />
+                      );
                     },
                   },
                   {
@@ -764,65 +830,20 @@ export const AssignationCreate: React.FC<
                     ],
                   },
                 ]}
-                request={async () => ({
-                  data: additionalFee,
-                  total: additionalFee.length,
-                  success: true,
-                })}
-                value={additionalFee}
-                onChange={(value) =>
-                  setAdditionalFee(value as AdditionalFeeType[])
-                }
+                value={[...additionalFee]}
+                // onChange={(value) =>
+                //   setAdditionalFee(value as AdditionalFeeType[])
+                // }
                 editable={{
                   type: "multiple",
-                  editableKeys,
+                  editableKeys: additionalFee.map((item) => item.id),
                   onSave: async (rowKey, data, row) => {
                     console.log(rowKey, data, row);
                     await waitTime(2000);
                   },
-                  onChange: setEditableRowKeys,
-                  onValuesChange: async (record: any, data) => {
-                    console.log(record, "kkkk");
-                    const index = additionalFee.findIndex(
-                      (values) => values.id === record.id
-                    );
-
-                    if (
-                      record?.fee_amount <= 0 ||
-                      record?.fee_amount === null ||
-                      record?.fee_amount === undefined
-                    ) {
-                      record.fee_amount = 1;
-                    }
-                    if (
-                      record?.number_1 <= 0 ||
-                      record?.number_1 === null ||
-                      record?.number_1 === undefined
-                    ) {
-                      record.number_1 = 1;
-                    }
-                    if (
-                      record?.number_2 <= 0 ||
-                      record?.number_2 === null ||
-                      record?.number_2 === undefined
-                    ) {
-                      record.number_2 = 1;
-                    }
-                    additionalFee[index].total_amount =
-                      record?.fee_amount * record?.number_1 * record?.number_2;
-                    record.total_amount =
-                      record?.fee_amount * record?.number_1 * record?.number_2;
-
-                    additionalFee[index] = {
-                      ...additionalFee[index],
-                      ...record,
-                    };
-
-                    setAdditionalFee([...additionalFee]);
-                  },
                 }}
               />
-              <div className="flex justify-end">
+              {/* <div className="flex justify-end">
                 <Button
                   size="middle"
                   type="primary"
@@ -857,7 +878,7 @@ export const AssignationCreate: React.FC<
                 >
                   Түр хадгалах
                 </Button>
-              </div>
+              </div> */}
               <div className="text-xl font-medium mb-3">Төлөлтийн жагсаалт</div>
               <ITable<any>
                 bordered
