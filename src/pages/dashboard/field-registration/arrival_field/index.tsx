@@ -457,8 +457,8 @@ export const ArrivalField: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.opened_at).diff(
-                    dayjs(record?.freed_at),
+                  return dayjs(record?.freed_at).diff(
+                    dayjs(record?.opened_at),
                     "days"
                   );
                 },
@@ -473,8 +473,8 @@ export const ArrivalField: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.opened_at).diff(
-                    dayjs(record?.left_site_at),
+                  return dayjs(record?.left_site_at).diff(
+                    dayjs(record?.opened_at),
                     "days"
                   );
                 },
@@ -489,8 +489,8 @@ export const ArrivalField: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.freed_at).diff(
-                    dayjs(record?.returned_at),
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.freed_at),
                     "days"
                   );
                 },
@@ -505,8 +505,8 @@ export const ArrivalField: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.left_site_at).diff(
-                    dayjs(record?.returned_at),
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.left_site_at),
                     "days"
                   );
                 },

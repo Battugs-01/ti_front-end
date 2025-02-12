@@ -1,5 +1,6 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification } from "antd";
+import IBadge from "components/badge";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
@@ -12,6 +13,7 @@ import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
 import { moneyFormat, myFillPaginate } from "utils/index";
 import {
+  ArrilvelFieldPaymentMethod,
   CapacityOptions,
   DirectionOptions,
   PaymentMethod,
@@ -118,6 +120,37 @@ const myFill: React.FC = () => {
                 dataIndex: "container_code",
               },
               {
+                title: "Статус",
+                dataIndex: "status",
+                align: "center",
+                render: (_, record) => {
+                  return (
+                    <div className="flex items-center gap-2 flex-wrap p-2">
+                      {record?.assignation_status
+                        ?.is_assignation_additional_fee_paid && (
+                        <IBadge color="blue" title="Олголт" />
+                      )}
+                      {record?.tickets.map((ticket, index) => {
+                        if (index >= record?.tickets.length - 2) {
+                          return;
+                        }
+                        return (
+                          <IBadge
+                            key={index}
+                            color="blue"
+                            title={`Сунгалт олголт-${index + 1}`}
+                          />
+                        );
+                      })}
+                      {record?.shipping_status
+                        ?.is_shipping_additional_fee_paid && (
+                        <IBadge color="green" title="Ачилт" />
+                      )}
+                    </div>
+                  );
+                },
+              },
+              {
                 title: "Орох хил",
                 dataIndex: "direction",
                 render: (_, record) => {
@@ -150,7 +183,6 @@ const myFill: React.FC = () => {
                   );
                 },
               },
-
               {
                 title: "Зуучийн нэр",
                 dataIndex: "broker_name",
@@ -190,7 +222,7 @@ const myFill: React.FC = () => {
                 title: "Төлөх арга",
                 dataIndex: "payment_method",
                 render: (_, record) => {
-                  return PaymentMethod.find(
+                  return ArrilvelFieldPaymentMethod.find(
                     (item) =>
                       item.value === record?.transport_recieve?.payment_method
                   )?.label;
@@ -319,8 +351,8 @@ const myFill: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.opened_at).diff(
-                    dayjs(record?.freed_at),
+                  return dayjs(record?.freed_at).diff(
+                    dayjs(record?.opened_at),
                     "days"
                   );
                 },
@@ -335,8 +367,8 @@ const myFill: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.opened_at).diff(
-                    dayjs(record?.left_site_at),
+                  return dayjs(record?.left_site_at).diff(
+                    dayjs(record?.opened_at),
                     "days"
                   );
                 },
@@ -351,8 +383,8 @@ const myFill: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.freed_at).diff(
-                    dayjs(record?.returned_at),
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.freed_at),
                     "days"
                   );
                 },
@@ -367,8 +399,8 @@ const myFill: React.FC = () => {
                   ) {
                     return "-";
                   }
-                  return dayjs(record?.left_site_at).diff(
-                    dayjs(record?.returned_at),
+                  return dayjs(record?.returned_at).diff(
+                    dayjs(record?.left_site_at),
                     "days"
                   );
                 },
