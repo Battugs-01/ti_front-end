@@ -296,8 +296,8 @@ export enum DetailTab {
 
 export enum transictionTypeEnum {
   all = "",
-  debit = "debit",
-  credit = "credit",
+  // debit = "debit",
+  // credit = "credit",
 }
 
 export interface CustomerAccountSettlementTabtButton {
@@ -306,7 +306,7 @@ export interface CustomerAccountSettlementTabtButton {
 }
 
 export interface DetailTabtButton {
-  value: DetailTab;
+  value: any;
   label: string;
 }
 

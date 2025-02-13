@@ -38,6 +38,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
       ledger_id: shipmentData?.debit?.ledger?.name,
     });
   }, [data, shipmentData]);
+
   return (
     <ProForm initialValues={data} formRef={form} submitter={false}>
       <>
