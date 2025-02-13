@@ -199,7 +199,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           additional_fee_category_id: form.getFieldValue(
             "additional_fee_category_id"
           ),
-          date: dayjs(form.getFieldValue("date")).toDate(),
+          date: dayjs(form.getFieldValue("opened_at")).toDate(),
           ticket_number: form.getFieldValue("ticket_number"),
           container_transport_record_id: detail?.id,
         });
@@ -508,7 +508,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    name={"date"}
+                    name={"opened_at"}
+                    disabled
                     placeholder="Он сар өдөр"
                     label={"Он сар өдөр"}
                     rules={FORM_ITEM_RULE()}
@@ -807,7 +808,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       additional_fee_category_id: form.getFieldValue(
                         "additional_fee_category_id"
                       ),
-                      date: dayjs(form.getFieldValue("date")).toDate(),
+                      date: dayjs(form.getFieldValue("opened_at")).toDate(),
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
@@ -825,9 +826,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       <Row gutter={[16, 16]}>
                         <Col span={4}>
                           <ProFormDatePicker
-                            name="payment_date"
+                            name="opened_at"
                             placeholder="Огноо"
                             label="Огноо"
+                            disabled
                           />
                         </Col>
                         <Col span={5}>
@@ -899,7 +901,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                 ticket_number:
                                   form.getFieldValue("ticket_number"),
                                 payment_date:
-                                  form.getFieldValue("payment_date"),
+                                  form.getFieldValue("opened_at"),
                                 payment_type:
                                   form.getFieldValue("payment_type"),
                                 payment_amount:
@@ -925,9 +927,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           size="middle"
                           onClick={async () => {
                             const data = await generatePDF({
-                              date: dayjs(form.getFieldValue("date")).format(
-                                "YYYY.MM.DD"
-                              ),
+                              date: dayjs(
+                                form.getFieldValue("opened_at")
+                              ).format("YYYY.MM.DD"),
                               items: additionalFee?.map((item) => {
                                 return {
                                   name: item.fee_name || "",
@@ -953,7 +955,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                 }`,
                                 date:
                                   dayjs(
-                                    form.getFieldValue("payment_date")
+                                    form.getFieldValue("opened_at")
                                   ).format("YYYY.MM.DD") || "",
                               },
                               totalAmount: totalAmount || 0,

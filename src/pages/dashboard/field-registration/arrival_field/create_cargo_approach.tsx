@@ -237,7 +237,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       placeholder="Задарсан"
                       label="Задарсан"
                     />
-                    <IBadge title="2" color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -253,7 +252,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       placeholder="Суларсан"
                       label="Суларсан"
                     />
-                    <IBadge title="2" color="blue" />
                   </div>
                 </Col>
                 <Col span={12}>
@@ -267,7 +265,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
                     />
-                    <IBadge title="2" color="blue" />
                   </div>
                 </Col>
               </Row>
@@ -283,7 +280,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       placeholder="Буцаж ирсэн"
                       label="Буцаж ирсэн"
                     />
-                    <IBadge title="2" color="blue" />
                   </div>
                 </Col>
                 <Col span={12}>
@@ -297,7 +293,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       disabled
                       label="Ачилт хийсэн"
                     />
-                    <IBadge title="2" color="blue" />
                   </div>
                 </Col>
               </Row>
