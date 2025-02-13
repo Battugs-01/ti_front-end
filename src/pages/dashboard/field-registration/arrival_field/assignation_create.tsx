@@ -810,16 +810,9 @@ export const AssignationCreate: React.FC<
                   },
                   {
                     title: "Үйлдэл",
-                    valueType: "option",
+                    editable: false,
                     width: 200,
                     render: (text, record, _, action) => [
-                      <a
-                        onClick={() => {
-                          action?.startEditable?.(record.id);
-                        }}
-                      >
-                        Засах
-                      </a>,
                       <a
                         onClick={() => {
                           setAdditionalFee(
