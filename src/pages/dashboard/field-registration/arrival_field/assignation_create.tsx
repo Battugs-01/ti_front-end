@@ -243,22 +243,22 @@ export const AssignationCreate: React.FC<
       title="Олголт "
       initialValues={{
         arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.arrived_at_site,
         opened_at: detail?.opened_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.opened_at,
         freed_at: detail?.freed_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.freed_at,
         left_site_at: detail?.left_site_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.left_site_at,
         returned_at: detail?.returned_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.returned_at,
         shipped_at: detail?.shipped_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.shipped_at,
         container_code: detail?.container_code,
         capacity: detail?.capacity,

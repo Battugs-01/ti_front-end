@@ -223,6 +223,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           {
             ...values,
             left_site_at: moment(values.left_site_at).toDate(),
+            opened_at: moment(values.opened_at).toDate(),
+            freed_at: moment(values.freed_at).toDate(),
             returned_at: moment(values.returned_at).toDate(),
             shipped_at: moment(values.shipped_at).toDate(),
             // achilt hiij bgaa uyd zaaval yvuulnaa
@@ -242,22 +244,22 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       title="Ачилт"
       initialValues={{
         arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.arrived_at_site,
         opened_at: detail?.opened_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.opened_at,
         freed_at: detail?.freed_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.freed_at,
         left_site_at: detail?.left_site_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.left_site_at,
         returned_at: detail?.returned_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.returned_at,
         shipped_at: detail?.shipped_at.includes("0001-01-01")
-          ? null
+          ? undefined
           : detail?.shipped_at,
         container_code: detail?.container_code,
         capacity: detail?.capacity,
@@ -829,15 +831,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     ],
                   },
                 ]}
-                request={async () => ({
-                  data: additionalFee,
-                  total: additionalFee.length,
-                  success: true,
-                })}
                 value={[...additionalFee]}
-                onChange={(value) =>
-                  setAdditionalFee(value as AdditionalFeeType[])
-                }
                 editable={{
                   type: "multiple",
                   editableKeys: additionalFee.map((item) => item.id),
@@ -847,7 +841,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   },
                 }}
               />
-              <div className="flex justify-end">
+              {/* <div className="flex justify-end">
                 <Button
                   size="middle"
                   type="primary"
@@ -881,7 +875,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                 >
                   Түр хадгалах
                 </Button>
-              </div>
+              </div> */}
               <div className="text-xl font-medium mb-3">Төлөлтийн жагсаалт</div>
               <ITable<any>
                 title={() => {
@@ -964,8 +958,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               {
                                 ticket_number:
                                   form.getFieldValue("ticket_number"),
-                                payment_date:
-                                  form.getFieldValue("opened_at"),
+                                payment_date: form.getFieldValue("opened_at"),
                                 payment_type:
                                   form.getFieldValue("payment_type"),
                                 payment_amount:
@@ -1018,9 +1011,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                   )?.label || ""
                                 }`,
                                 date:
-                                  dayjs(
-                                    form.getFieldValue("opened_at")
-                                  ).format("YYYY.MM.DD") || "",
+                                  dayjs(form.getFieldValue("opened_at")).format(
+                                    "YYYY.MM.DD"
+                                  ) || "",
                               },
                               totalAmount: totalAmount || 0,
                               cashAmount:
