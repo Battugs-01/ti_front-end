@@ -237,7 +237,7 @@ export const ArrivalField: React.FC = () => {
                         <IBadge color="blue" title="Олголт" />
                       )}
                       {record?.tickets.map((ticket, index) => {
-                        if (index >= record?.tickets.length - 2) {
+                        if (index >= record?.tickets.length - 1) {
                           return;
                         }
                         return (
