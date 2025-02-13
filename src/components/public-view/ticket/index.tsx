@@ -1,46 +1,98 @@
 import ProForm, {
   ProFormDatePicker,
   ProFormInstance,
+  ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
-import { Col, Row } from "antd";
-import { ITable } from "components/index";
+import { useRequest } from "ahooks";
+import { Col, notification, Row } from "antd";
+import { ITable } from "components/table";
 import { FORM_ITEM_RULE, PaymentType } from "config";
+import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
+import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 import {
   AdditionalFeeTicketCalculated,
-  CargoApproachList,
   Ticket,
 } from "service/feild_registration/type";
 
-interface ShippingProps {
-  data: CargoApproachList;
-  shipmentData: Ticket;
+import { downloadPDF, generatePDF } from "utils/pdf_generate";
+
+interface TicketDataProps {
+  ticket: Ticket;
 }
-const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
+const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
   const form = useRef<ProFormInstance>();
 
   useEffect(() => {
     form.current?.setFieldsValue({
-      ...data,
-      ticket_number: shipmentData?.ticket_number,
-      date: shipmentData?.date,
-      category_fee_id: shipmentData?.additional_fee_category?.name,
-      cargo_weight: shipmentData?.cargo_weight,
-      payment_date: shipmentData?.debit?.created_at,
+      ticket_number: ticket?.ticket_number,
+      date: ticket?.date,
+      category_fee_id: ticket?.additional_fee_category?.name,
+      cargo_weight: ticket?.cargo_weight,
+      payment_date: ticket?.debit?.created_at,
       payment_type:
-        shipmentData?.debit?.payment_type &&
-        shipmentData?.debit?.payment_type === PaymentType.cash
+        ticket?.debit?.payment_type &&
+        ticket?.debit?.payment_type === PaymentType.cash
           ? "Бэлэн"
           : "Бэлэн бус",
-      payment_amount: shipmentData?.debit?.total_amount,
-      payer_name: shipmentData?.debit?.payer_name,
-      ledger_id: shipmentData?.debit?.ledger?.name,
+      payment_amount: ticket?.debit?.total_amount,
+      payer_name: ticket?.debit?.payer_name,
+      ledger_id: ticket?.debit?.ledger?.name,
     });
-  }, [data, shipmentData]);
+  }, [ticket]);
+
+  const addAdditionalFeeDebit = useRequest(additionalFeeDebit.create, {
+    manual: true,
+    onSuccess: () => {
+      notification.success({
+        message: "Амжилттай хадгалагдлаа",
+      });
+    },
+    onError: (error) => {
+      notification.error({
+        message: error.message,
+      });
+    },
+  });
+
+  const onClickGeneratePDF = async () => {
+    const data = await generatePDF({
+      date: ticket?.date ? dayjs(ticket.date).format("YYYY.MM.DD") : "",
+      items:
+        ticket?.additional_fee_ticket_calculated?.map((item) => {
+          return {
+            name: item?.fee_name || "",
+            amount: item?.total_amount || 0,
+          };
+        }) || [],
+      company: ticket?.debit?.ledger?.customer_company?.name || "",
+      serialNumber: ticket?.ticket_number || "",
+      title: "Олголт",
+      taxNumber: "100",
+      containerInfo: {
+        number: `${ticket?.container_transport_record?.container_code || ""} ${
+          ticket?.cargo_weight || ""
+        }`,
+        date: ticket?.date ? dayjs(ticket.date).format("YYYY.MM.DD") : "",
+      },
+      totalAmount: ticket?.debit?.total_amount || 0,
+      cashAmount:
+        ticket?.debit?.transaction?.payment_type === "cash"
+          ? ticket?.debit?.total_amount || 0
+          : 0,
+      nonCashAmount:
+        ticket?.debit?.transaction?.payment_type === "non_cash"
+          ? ticket?.debit?.total_amount || 0
+          : 0,
+      amountInWords: "",
+      submitter: ticket?.debit?.payer_name || "",
+    });
+    downloadPDF(data);
+  };
 
   return (
-    <ProForm initialValues={data} formRef={form} submitter={false}>
+    <ProForm formRef={form} submitter={false}>
       <>
         <Row gutter={[16, 16]}>
           <Col span={6}>
@@ -80,7 +132,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
             />
           </Col>
           <Col span={6}>
-            <ProFormText
+            <ProFormSelect
               fieldProps={{
                 size: "large",
               }}
@@ -94,7 +146,7 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
         </Row>
 
         <ITable<AdditionalFeeTicketCalculated>
-          dataSource={shipmentData?.additional_fee_ticket_calculated ?? []}
+          dataSource={ticket?.additional_fee_ticket_calculated ?? []}
           hidePagination
           className="p-0 remove-padding-table"
           columns={[
@@ -135,29 +187,25 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
           <Col span={4}>
             <ProFormDatePicker
               name="payment_date"
+              disabled
               placeholder="Огноо"
               label="Огноо"
-              disabled
             />
           </Col>
           <Col span={5}>
-            <ProFormText
+            <ProFormSelect
               name="payment_type"
               placeholder="Төлөлтийн хэлбэр"
-              // options={PaymentMethod.map((item) => ({
-              //   label: item.label,
-              //   value: item.value,
-              // }))}
-              label="Төлөлтийн хэлбэр"
               disabled
+              label="Төлөлтийн хэлбэр"
             />
           </Col>
           <Col span={5}>
             <ProFormText
               name="payment_amount"
               placeholder="Мөнгөн дүн"
-              label="Мөнгөн дүн"
               disabled
+              label="Мөнгөн дүн"
             />
           </Col>
           <Col span={5}>
@@ -171,15 +219,25 @@ const Shiping: React.FC<ShippingProps> = ({ data, shipmentData }) => {
           <Col span={5}>
             <ProFormText
               name="payer_name"
+              disabled
               placeholder="Төлөгч"
               label="Төлөгч"
-              disabled
             />
           </Col>
         </Row>
+
+        {/* <div className="grid grid-cols-4 gap-2 mb-3">
+          <Button
+            className="col-start-4"
+            size="middle"
+            onClick={onClickGeneratePDF}
+          >
+            Хэвлэх
+          </Button>
+        </div> */}
       </>
     </ProForm>
   );
 };
 
-export default Shiping;
+export default TicketDetails;

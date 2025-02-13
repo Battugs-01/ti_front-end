@@ -1,5 +1,6 @@
 import { ProFormInstance, ProFormRadio } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
+import { Divider } from "antd";
 import { IfCondition } from "components/condition";
 import { IModalForm } from "components/modal";
 import { DetailTab, DetailTabtButton } from "config";
@@ -7,27 +8,16 @@ import { useEffect, useRef, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { ActionComponentProps } from "types";
 import Container from "./container";
-import Grant from "./grant";
-import Shiping from "./shipment";
+import TicketDetails from "./ticket";
 
 const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
   const [tab, setTab] = useState<any>(DetailTab.container);
-  const [assignation, setAssignation] = useState<any>();
-  const [shipment, setShipment] = useState<any>();
-
+  const [value, setValue] = useState<any>({});
   const detailChooseButtons: DetailTabtButton[] = [
     {
       value: DetailTab.container,
       label: "Чингэлгийн мэдээлэл",
-    },
-    {
-      value: DetailTab.grant,
-      label: "Олголт",
-    },
-    {
-      value: DetailTab.shipping,
-      label: "Ачилт",
     },
   ];
 
@@ -44,20 +34,20 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
     }
   }, [rest.open]);
 
+  detailData?.data?.ticket?.map((oneTicket) =>
+    detailChooseButtons?.push({
+      value: oneTicket.id,
+      label: oneTicket.additional_fee_category?.name,
+    })
+  );
+
   useEffect(() => {
-    if (detailData.data) {
-      setAssignation(
-        detailData.data.ticket.find(
-          (el: any) => el.shipping_or_assignment === "assignment"
-        )
-      );
-      setShipment(
-        detailData.data.ticket.find(
-          (el: any) => el.shipping_or_assignment === "shipping"
-        )
-      );
-    }
-  }, [detailData.data]);
+    detailData?.data?.ticket?.find((el: any) => {
+      if (el.id === tab) {
+        setValue(el);
+      }
+    });
+  }, [detailChooseButtons]);
 
   return (
     <IModalForm
@@ -98,12 +88,13 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
       />
 
       <IfCondition
-        condition={tab === DetailTab.grant}
-        whenTrue={<Grant data={rest?.detail} assignationData={assignation} />}
-      />
-      <IfCondition
-        condition={tab === DetailTab.shipping}
-        whenTrue={<Shiping data={rest?.detail} shipmentData={shipment} />}
+        condition={tab === value.id}
+        whenTrue={
+          <div>
+            <TicketDetails ticket={value} />
+            <Divider />
+          </div>
+        }
       />
     </IModalForm>
   );

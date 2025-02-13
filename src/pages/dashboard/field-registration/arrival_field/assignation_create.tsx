@@ -554,6 +554,10 @@ export const AssignationCreate: React.FC<
                         const defaultAdditionalData = resData?.filter(
                           (item) => item.is_default === "true"
                         );
+                        console.log(
+                          "defaultAdditionalData",
+                          defaultAdditionalData
+                        );
                         setAdditionalFee(defaultAdditionalData || []);
                         setAllAdditionalFee(resData || []);
                       },

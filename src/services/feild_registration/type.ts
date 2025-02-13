@@ -1,6 +1,6 @@
-import { Customer } from "service/auth/type";
-import { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
-import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
+import type { Customer } from "service/auth/type";
+import type { AdditionalFeeType } from "service/fininaciar/additionalFeeSettings/type";
+import type { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 
 export interface CargoApproachList {
   id: number;
@@ -189,8 +189,8 @@ export interface Ticket {
   updated_by_id: number;
   shipping_or_assignment: string;
   container_transport_record_id: number;
-  container_transport_record: null;
-  debit: Debit;
+  container_transport_record: ContainerTranportRecord;
+  debit?: Debit;
   ticket_number: string;
   cargo_weight: number;
   additional_fee_category_id: number;
@@ -226,9 +226,9 @@ export interface Debit {
   ticket_id: number;
   ticket: null;
   ledger_id: number;
-  ledger: any;
+  ledger: Ledger;
   transaction_id: number;
-  transaction: null;
+  transaction: Transaction;
   total_amount: number;
   payment_type: string;
   crane_fee: number;
@@ -237,4 +237,31 @@ export interface Debit {
   container_wagon_cleaning_fee: number;
   waggon_usage_fee: number;
   tl_waggon_use_fee: number;
+}
+
+export interface Ledger {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  name: string;
+  balance: number;
+  initial_balance: number;
+  customer_company: CustomerCompanyType;
+}
+export interface Transaction {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  ledger_id: number;
+  ledger: Ledger;
+  transaction_type: string;
+  amount: number;
+  payment_type: string;
+  payer: string;
+  barimt: number;
+  ledger_amount: number;
 }
