@@ -1,12 +1,13 @@
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row } from "antd";
+import { Button, Col, Form, notification, Row, Select } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
@@ -175,6 +176,20 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const totalAmount = useMemo(() => {
     return additionalFee.reduce((acc, curr) => acc + curr.total_amount, 0);
   }, [additionalFee]);
+
+  const calcTotalAmount = (record: any, values: any) => {
+    const index = additionalFee.findIndex((item) => item.id === record.id);
+    additionalFee[index] = {
+      ...additionalFee[index],
+      ...values,
+    };
+
+    additionalFee[index].total_amount =
+      (additionalFee[index].fee_amount || 0) *
+      (additionalFee[index].number_1 || 0) *
+      (additionalFee[index].number_2 || 0);
+    setAdditionalFee([...additionalFee]);
+  };
 
   return (
     <ModalForm
@@ -633,41 +648,76 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     dataIndex: "fee_code",
                     key: "fee_code",
                     className: "p-3",
-                    editable: (text, record) => {
+                    renderFormItem: (_, { record }: any) => {
                       return (
-                        record?.fee_code === undefined ||
-                        record?.fee_code === null
+                        <ProFormText
+                          fieldProps={{
+                            value: record?.fee_code,
+                          }}
+                          name="fee_code"
+                          placeholder="Код"
+                          noStyle
+                        />
                       );
                     },
                   },
                   {
                     title: "Хураамжийн нэр",
                     dataIndex: "fee_name",
+                    width: 250,
                     key: "fee_name",
-                    editable: (text, record) => {
+                    renderFormItem: (_, { record }: any) => {
                       return (
-                        record?.fee_name === undefined ||
-                        record?.fee_name === null
+                        <Select
+                          options={allAdditionalFee?.map((item) => {
+                            return {
+                              label: item.fee_name,
+                              value: item.id,
+                            };
+                          })}
+                          onChange={(e) => {
+                            const index = allAdditionalFee?.findIndex(
+                              (item: any) => {
+                                return item.id === e;
+                              }
+                            );
+
+                            record = {
+                              ...allAdditionalFee[index],
+                              ...record,
+                            };
+
+                            calcTotalAmount(record, {
+                              fee_name: allAdditionalFee[index].fee_name,
+                              fee_code: allAdditionalFee[index].fee_code,
+                              fee_amount: allAdditionalFee[index].fee_amount,
+                              unit_measurement:
+                                allAdditionalFee[index].unit_measurement,
+                            });
+                          }}
+                        />
                       );
-                    },
-                    valueType: "select",
-                    fieldProps: {
-                      options: allAdditionalFee?.map((item) => {
-                        return {
-                          label: item.fee_name,
-                          value: item.fee_name,
-                        };
-                      }),
                     },
                   },
                   {
                     title: "Хэмжих нэгж",
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
-                    editable: (text, record) => {
+                    renderFormItem: (_, { record }: any) => {
                       return (
-                        record?.unit_measurement === undefined ||
-                        record?.unit_measurement === null
+                        <ProFormText
+                          noStyle
+                          fieldProps={{
+                            value: record?.unit_measurement,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                unit_measurement: e.target.value,
+                              });
+                            },
+                          }}
+                          name="unit_measurement"
+                          placeholder="Хэмжих нэгж"
+                        />
                       );
                     },
                   },
@@ -676,10 +726,21 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     dataIndex: "fee_amount",
                     key: "fee_amount",
                     valueType: "money",
-                    editable: (text, record) => {
+                    renderFormItem: (_, { record }: any) => {
                       return (
-                        record?.fee_amount === undefined ||
-                        record?.fee_amount === null
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.fee_amount,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                fee_amount: e,
+                              });
+                            },
+                          }}
+                          name="fee_amount"
+                          placeholder="Өртөг"
+                        />
                       );
                     },
                   },
@@ -688,12 +749,52 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     dataIndex: "number_1",
                     key: "number_1",
                     valueType: "digit",
+                    fieldProps: {
+                      min: 1,
+                    },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.number_1,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                number_1: e,
+                              });
+                            },
+                          }}
+                          name="number_1"
+                          placeholder="Тоо 1"
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Тоо 2",
                     dataIndex: "number_2",
                     key: "number_2",
                     valueType: "digit",
+                    fieldProps: {
+                      min: 1,
+                    },
+                    renderFormItem: (_, { record }: any) => {
+                      return (
+                        <ProFormDigit
+                          noStyle
+                          fieldProps={{
+                            value: record?.number_2,
+                            onChange: (e) => {
+                              calcTotalAmount(record, {
+                                number_2: e,
+                              });
+                            },
+                          }}
+                          name="number_2"
+                          placeholder="Тоо 2"
+                        />
+                      );
+                    },
                   },
                   {
                     title: "Дүн",
@@ -733,53 +834,16 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                   total: additionalFee.length,
                   success: true,
                 })}
-                value={additionalFee}
+                value={[...additionalFee]}
                 onChange={(value) =>
                   setAdditionalFee(value as AdditionalFeeType[])
                 }
                 editable={{
                   type: "multiple",
-                  editableKeys,
+                  editableKeys: additionalFee.map((item) => item.id),
                   onSave: async (rowKey, data, row) => {
                     console.log(rowKey, data, row);
                     await waitTime(2000);
-                  },
-                  onChange: setEditableRowKeys,
-                  onValuesChange: async (record, data) => {
-                    const index = additionalFee.findIndex(
-                      (values) => values.id === record?.id
-                    );
-                    if (
-                      record?.fee_amount <= 0 ||
-                      record?.fee_amount === null ||
-                      record?.fee_amount === undefined
-                    ) {
-                      record.fee_amount = 1;
-                    }
-                    if (
-                      record?.number_1 <= 0 ||
-                      record?.number_1 === null ||
-                      record?.number_1 === undefined
-                    ) {
-                      record.number_1 = 1;
-                    }
-                    if (
-                      record?.number_2 <= 0 ||
-                      record?.number_2 === null ||
-                      record?.number_2 === undefined
-                    ) {
-                      record.number_2 = 1;
-                    }
-                    additionalFee[index].total_amount =
-                      record?.fee_amount * record?.number_1 * record?.number_2;
-                    record.total_amount =
-                      record?.fee_amount * record?.number_1 * record?.number_2;
-
-                    additionalFee[index] = {
-                      ...additionalFee[index],
-                      ...record,
-                    };
-                    setAdditionalFee([...additionalFee]);
                   },
                 }}
               />
