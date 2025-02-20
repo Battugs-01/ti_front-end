@@ -1,5 +1,6 @@
 import { ConfigProvider } from "antd";
 import { useThemeContext } from "context/theme";
+import mnIntl from "antd/lib/locale/mn_MN";
 import { ThemeType } from "context/type";
 import dayjs from "dayjs";
 import "dayjs/locale/mn";
@@ -15,6 +16,32 @@ const App: React.FC = () => {
   dayjs.locale("mn");
 
   dayjs.tz.setDefault("Asia/Ulaanbaatar");
+
+  if (mnIntl.DatePicker && mnIntl.DatePicker.lang) {
+    mnIntl.DatePicker.lang.shortMonths = [
+      "1 сар",
+      "2 сар",
+      "3 сар",
+      "4 сар",
+      "5 сар",
+      "6 сар",
+      "7 сар",
+      "8 сар",
+      "9 сар",
+      "10 сар",
+      "11 сар",
+      "12 сар",
+    ];
+    mnIntl.DatePicker.lang.shortWeekDays = [
+      "Да",
+      "Мя",
+      "Лх",
+      "Пү",
+      "Ба",
+      "Бя",
+      "Ня",
+    ];
+  }
 
   const antdTheme =
     theme === ThemeType.LIGHT
@@ -123,7 +150,7 @@ const App: React.FC = () => {
           },
         };
   return (
-    <ConfigProvider theme={antdTheme}>
+    <ConfigProvider theme={antdTheme} locale={mnIntl}>
       <BrowserRouter>
         <MainRoutes />
       </BrowserRouter>
