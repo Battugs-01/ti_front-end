@@ -37,6 +37,19 @@ export const waitTime = (time: number = 100) => {
     }, time);
   });
 };
+
+export const computeDate = (date1?: string, date2?: string) => {
+  if (
+    date1?.includes("0001-01-01") ||
+    date2?.includes("0001-01-01") ||
+    !date1 ||
+    !date2
+  ) {
+    return 0;
+  }
+  return dayjs(date1).diff(dayjs(date2), "day");
+};
+
 export const AssignationCreate: React.FC<
   ActionComponentProps<CargoApproachList>
 > = ({ onCancel, onFinish, open, detail }) => {
@@ -48,19 +61,10 @@ export const AssignationCreate: React.FC<
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
-    opened: dayjs(detail?.opened_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
-    freed: dayjs(detail?.freed_at).diff(dayjs(detail?.arrived_at_site), "day"),
-    left_site: dayjs(detail?.left_site_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
-    returned: dayjs(detail?.returned_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
+    opened: computeDate(detail?.opened_at, detail?.arrived_at_site) || 0,
+    freed: computeDate(detail?.freed_at, detail?.opened_at) || 0,
+    left_site: computeDate(detail?.left_site_at, detail?.opened_at) || 0,
+    returned: computeDate(detail?.returned_at, detail?.left_site_at) || 0,
     shipped: 0,
   });
   const [ticketAdditional, setTicketAdditional] =
@@ -192,6 +196,27 @@ export const AssignationCreate: React.FC<
       (additionalFee[index].number_1 || 0) *
       (additionalFee[index].number_2 || 0);
     setAdditionalFee([...additionalFee]);
+  };
+
+  const calcDateNumberAdditionalFee = (diff: number) => {
+    const data = additionalFee.map((item) => {
+      if (item.fee_name.includes("Краны өргөлт")) {
+        return {
+          ...item,
+          number_1: 2,
+          total_amount: item.fee_amount * 2,
+        };
+      }
+      if (item.fee_name.includes("Ачаа хадгаламж")) {
+        return {
+          ...item,
+          number_1: diff,
+          total_amount: item.fee_amount * diff,
+        };
+      }
+      return item;
+    });
+    setAdditionalFee(data);
   };
 
   return (
@@ -382,6 +407,9 @@ export const AssignationCreate: React.FC<
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
                           setDates({
                             ...dates,
                             opened: dayjs(e).diff(
@@ -406,9 +434,18 @@ export const AssignationCreate: React.FC<
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
+                      disabled={dates.left_site > 0 || dates.opened <= 0}
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+                          let diff = dayjs(e).diff(
+                            dayjs(form.getFieldValue("opened_at")),
+                            "day"
+                          );
+                          calcDateNumberAdditionalFee(diff);
                           setDates({
                             ...dates,
                             freed: dayjs(e).diff(
@@ -431,15 +468,21 @@ export const AssignationCreate: React.FC<
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
+                      disabled={dates.freed > 0 || dates.opened <= 0}
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+                          let diff = dayjs(e).diff(
+                            dayjs(form.getFieldValue("opened_at")),
+                            "day"
+                          );
+                          calcDateNumberAdditionalFee(diff);
                           setDates({
                             ...dates,
-                            left_site: dayjs(e).diff(
-                              dayjs(form.getFieldValue("opened_at")),
-                              "day"
-                            ),
+                            left_site: diff,
                           });
                         },
                       }}
@@ -462,10 +505,13 @@ export const AssignationCreate: React.FC<
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
                           setDates({
                             ...dates,
                             returned: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("left_site_at")),
                               "day"
                             ),
                           });
@@ -554,11 +600,34 @@ export const AssignationCreate: React.FC<
                         const defaultAdditionalData = resData?.filter(
                           (item) => item.is_default === "true"
                         );
-                        console.log(
-                          "defaultAdditionalData",
-                          defaultAdditionalData
+
+                        const finalAdditionalData = defaultAdditionalData?.map(
+                          (values) => {
+                            if (values.fee_name.includes("Краны өргөлт")) {
+                              return {
+                                ...values,
+                                number_1: 2,
+                                total_amount: values.fee_amount * 2,
+                              };
+                            }
+                            if (values.fee_name.includes("Ачаа хадгаламж")) {
+                              let day =
+                                dates.left_site > 0
+                                  ? dates.left_site
+                                  : dates.freed <= 0
+                                  ? 1
+                                  : dates.freed;
+                              return {
+                                ...values,
+                                number_1: day,
+                                total_amount: values.fee_amount * day,
+                              };
+                            }
+                            return values;
+                          }
                         );
-                        setAdditionalFee(defaultAdditionalData || []);
+
+                        setAdditionalFee(finalAdditionalData || []);
                         setAllAdditionalFee(resData || []);
                       },
                     }}
@@ -647,6 +716,7 @@ export const AssignationCreate: React.FC<
                 bordered
                 recordCreatorProps={false}
                 loading={false}
+                actionRef={actionRef}
                 columns={[
                   {
                     title: "Код",
@@ -654,10 +724,13 @@ export const AssignationCreate: React.FC<
                     key: "fee_code",
                     className: "p-3",
                     renderFormItem: (_, { record }: any) => {
+                      const currentRecord =
+                        additionalFee.find((item) => item.id === record.id) ||
+                        record;
                       return (
                         <ProFormText
                           fieldProps={{
-                            value: record?.fee_code,
+                            value: currentRecord?.fee_code,
                           }}
                           name="fee_code"
                           placeholder="Код"
@@ -709,11 +782,14 @@ export const AssignationCreate: React.FC<
                     dataIndex: "unit_measurement",
                     key: "unit_measurement",
                     renderFormItem: (_, { record }: any) => {
+                      const currentRecord =
+                        additionalFee.find((item) => item.id === record.id) ||
+                        record;
                       return (
                         <ProFormText
                           noStyle
                           fieldProps={{
-                            value: record?.unit_measurement,
+                            value: currentRecord?.unit_measurement,
                             onChange: (e) => {
                               calcTotalAmount(record, {
                                 unit_measurement: e.target.value,
@@ -732,11 +808,14 @@ export const AssignationCreate: React.FC<
                     key: "fee_amount",
                     valueType: "money",
                     renderFormItem: (_, { record }: any) => {
+                      const currentRecord =
+                        additionalFee.find((item) => item.id === record.id) ||
+                        record;
                       return (
                         <ProFormDigit
                           noStyle
                           fieldProps={{
-                            value: record?.fee_amount,
+                            value: currentRecord?.fee_amount,
                             onChange: (e) => {
                               calcTotalAmount(record, {
                                 fee_amount: e,
@@ -758,11 +837,14 @@ export const AssignationCreate: React.FC<
                       min: 1,
                     },
                     renderFormItem: (_, { record }: any) => {
+                      const currentRecord =
+                        additionalFee.find((item) => item.id === record?.id) ||
+                        record;
                       return (
                         <ProFormDigit
                           noStyle
                           fieldProps={{
-                            value: record?.number_1,
+                            value: currentRecord?.number_1,
                             onChange: (e) => {
                               calcTotalAmount(record, {
                                 number_1: e,
@@ -784,11 +866,14 @@ export const AssignationCreate: React.FC<
                       min: 1,
                     },
                     renderFormItem: (_, { record }: any) => {
+                      const currentRecord =
+                        additionalFee.find((item) => item.id === record?.id) ||
+                        record;
                       return (
                         <ProFormDigit
                           noStyle
                           fieldProps={{
-                            value: record?.number_2,
+                            value: currentRecord?.number_2,
                             onChange: (e) => {
                               calcTotalAmount(record, {
                                 number_2: e,

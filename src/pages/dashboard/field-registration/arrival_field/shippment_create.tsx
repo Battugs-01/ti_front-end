@@ -26,6 +26,7 @@ import { ActionComponentProps } from "types";
 import { moneyFormat } from "utils/index";
 import { CapacityOptions, PaymentMethod } from "utils/options";
 import { downloadPDF, generatePDF } from "utils/pdf_generate";
+import { computeDate } from "./assignation_create";
 
 export const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -48,19 +49,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   );
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
-    opened: dayjs(detail?.opened_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
-    freed: dayjs(detail?.freed_at).diff(dayjs(detail?.arrived_at_site), "day"),
-    left_site: dayjs(detail?.left_site_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
-    returned: dayjs(detail?.returned_at).diff(
-      dayjs(detail?.arrived_at_site),
-      "day"
-    ),
+    opened: computeDate(detail?.opened_at, detail?.arrived_at_site) || 0,
+    freed: computeDate(detail?.freed_at, detail?.opened_at) || 0,
+    left_site: computeDate(detail?.left_site_at, detail?.opened_at) || 0,
+    returned: computeDate(detail?.returned_at, detail?.left_site_at) || 0,
     shipped: 0,
   });
   const [bankListData, setBankListData] = useState<any[]>([]);
@@ -465,7 +457,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           setDates({
                             ...dates,
                             returned: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("left_site_at")),
                               "day"
                             ),
                           });

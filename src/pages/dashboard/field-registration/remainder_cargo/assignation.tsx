@@ -58,7 +58,6 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        console.log(values, "sda");
         await addCargo.runAsync(
           {
             ...values,
