@@ -412,7 +412,7 @@ export const AssignationCreate: React.FC<
                           setDates({
                             ...dates,
                             freed: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("opened_at")),
                               "day"
                             ),
                           });
@@ -437,7 +437,7 @@ export const AssignationCreate: React.FC<
                           setDates({
                             ...dates,
                             left_site: dayjs(e).diff(
-                              dayjs(form.getFieldValue("arrived_at_site")),
+                              dayjs(form.getFieldValue("opened_at")),
                               "day"
                             ),
                           });
@@ -895,10 +895,12 @@ export const AssignationCreate: React.FC<
                           <ProFormSelect
                             name="payment_type"
                             placeholder="Төлөлтийн хэлбэр"
-                            options={PaymentMethod.map((item) => ({
-                              label: item.label,
-                              value: item.value,
-                            }))}
+                            options={[
+                              {
+                                value: "non_cash",
+                                label: "Бэлэн бус",
+                              },
+                            ]}
                             label="Төлөлтийн хэлбэр"
                           />
                         </Col>
