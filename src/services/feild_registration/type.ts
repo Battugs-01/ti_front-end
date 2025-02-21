@@ -15,12 +15,12 @@ export interface CargoApproachList {
   direction: string;
   approach_report_date: Date;
   arrived_at_site: string;
-  opened_at: string;
   left_site: string;
-  freed_at: string;
-  left_site_at: string;
-  returned_at: string;
-  shipped_at: string;
+  opened_at?: string;
+  freed_at?: string;
+  left_site_at?: string;
+  returned_at?: string;
+  shipped_at?: string;
   status: string;
   is_recieved_and_waggon_gone: boolean;
   for_sale: boolean;

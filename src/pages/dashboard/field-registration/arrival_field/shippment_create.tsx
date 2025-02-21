@@ -13,7 +13,6 @@ import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import moment from "moment";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
@@ -45,7 +44,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [allAdditionalFee, setAllAdditionalFee] = useState<AdditionalFeeType[]>(
-    []
+    [],
   );
   const [paymentList, setPaymentList] = useState<any[]>([]);
   const [dates, setDates] = useState({
@@ -85,7 +84,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           message: error.message,
         });
       },
-    }
+    },
   );
 
   const ticketAdditionalFee = useRequest(
@@ -97,14 +96,14 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           message: error.message,
         });
       },
-    }
+    },
   );
 
   const getTempAdditionalFee = useRequest(
     fieldRegistration.getTempAdditionalFee,
     {
       manual: true,
-    }
+    },
   );
 
   const bankList = useRequest(ledger.list, {
@@ -141,7 +140,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         {
           shipping_or_assignment: "shipping",
         },
-        detail?.id
+        detail?.id,
       );
       form.setFieldsValue({
         ...res,
@@ -159,7 +158,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       setAdditionalFee(resData);
       setAllAdditionalFee(resData);
       setEditableRowKeys(
-        res?.additional_fee_ticket_calculated?.map((item) => item.id) || []
+        res?.additional_fee_ticket_calculated?.map((item) => item.id) || [],
       );
     };
     fetch();
@@ -204,7 +203,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           shipping_or_assignment: "shipping",
           cargo_weight: form.getFieldValue("cargo_weight"),
           additional_fee_category_id: form.getFieldValue(
-            "additional_fee_category_id"
+            "additional_fee_category_id",
           ),
           date: dayjs(form.getFieldValue("opened_at")).toDate(),
           ticket_number: form.getFieldValue("ticket_number"),
@@ -213,21 +212,19 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         setTicketAdditional(data);
         await updateArrivalField.runAsync(
           {
-            ...values,
-            left_site_at: moment(values.left_site_at).toDate(),
-            opened_at: moment(values.opened_at).toDate(),
-            freed_at: moment(values.freed_at).toDate(),
-            returned_at: moment(values.returned_at).toDate(),
-            shipped_at: moment(values.shipped_at).toDate(),
-            // achilt hiij bgaa uyd zaaval yvuulnaa
+            opened_at: values.opened_at,
+            left_site_at: values.left_site_at,
+            freed_at: values.freed_at,
+            returned_at: values.returned_at,
+            shipped_at: values.shipped_at,
             shipping_or_assignment: "shipping",
           },
-          detail?.id
+          detail?.id,
         );
 
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          date: moment(values.date).toDate(),
+          date: values.opened_at,
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
           shipping_or_assignment: "shipping",
@@ -235,24 +232,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       }}
       title="Ачилт"
       initialValues={{
-        arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
-          ? undefined
-          : detail?.arrived_at_site,
-        opened_at: detail?.opened_at.includes("0001-01-01")
-          ? undefined
-          : detail?.opened_at,
-        freed_at: detail?.freed_at.includes("0001-01-01")
-          ? undefined
-          : detail?.freed_at,
-        left_site_at: detail?.left_site_at.includes("0001-01-01")
-          ? undefined
-          : detail?.left_site_at,
-        returned_at: detail?.returned_at.includes("0001-01-01")
-          ? undefined
-          : detail?.returned_at,
-        shipped_at: detail?.shipped_at.includes("0001-01-01")
-          ? undefined
-          : detail?.shipped_at,
+        arrived_at_site: detail?.arrived_at_site,
+        opened_at: detail?.opened_at,
+        freed_at: detail?.freed_at,
+        left_site_at: detail?.left_site_at,
+        returned_at: detail?.returned_at,
+        shipped_at: detail?.shipped_at,
         container_code: detail?.container_code,
         capacity: detail?.capacity,
         broker_name: detail?.broker?.name,
@@ -377,7 +362,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             ...dates,
                             opened: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -404,7 +389,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             ...dates,
                             freed: dayjs(e).diff(
                               dayjs(form.getFieldValue("opened_at")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -430,7 +415,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             ...dates,
                             left_site: dayjs(e).diff(
                               dayjs(form.getFieldValue("opened_at")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -458,7 +443,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             ...dates,
                             returned: dayjs(e).diff(
                               dayjs(form.getFieldValue("left_site_at")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -483,7 +468,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             ...dates,
                             shipped: dayjs(e).diff(
                               dayjs(form.getFieldValue("freed_at")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -544,7 +529,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
-                          (item) => item.is_default === "true"
+                          (item) => item.is_default === "true",
                         );
                         setAdditionalFee(defaultAdditionalData || []);
                         setAllAdditionalFee(resData || []);
@@ -673,7 +658,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             const index = allAdditionalFee?.findIndex(
                               (item: any) => {
                                 return item.id === e;
-                              }
+                              },
                             );
 
                             record = {
@@ -806,8 +791,8 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         onClick={() => {
                           setAdditionalFee(
                             additionalFee.filter(
-                              (item) => item.id !== record.id
-                            )
+                              (item) => item.id !== record.id,
+                            ),
                           );
                         }}
                       >
@@ -901,7 +886,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             name="ledger_id"
                             onChange={(value) => {
                               const ledger = bankListData.find(
-                                (item) => item.id === value
+                                (item) => item.id === value,
                               );
                               form.setFieldsValue({
                                 payer_name:
@@ -972,7 +957,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           onClick={async () => {
                             const data = await generatePDF({
                               date: dayjs(
-                                form.getFieldValue("opened_at")
+                                form.getFieldValue("opened_at"),
                               ).format("YYYY.MM.DD"),
                               items: additionalFee?.map((item) => {
                                 return {
@@ -984,7 +969,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               company:
                                 bankListData?.find(
                                   (item) =>
-                                    item.id === form.getFieldValue("ledger_id")
+                                    item.id === form.getFieldValue("ledger_id"),
                                 )?.customer_company?.name || "",
                               serialNumber:
                                 form.getFieldValue("ticket_number") || "",
@@ -994,12 +979,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                 number: `${detail?.container_code} ${
                                   CapacityOptions.find(
                                     (capacity) =>
-                                      capacity.value === detail?.capacity
+                                      capacity.value === detail?.capacity,
                                   )?.label || ""
                                 }`,
                                 date:
                                   dayjs(form.getFieldValue("opened_at")).format(
-                                    "YYYY.MM.DD"
+                                    "YYYY.MM.DD",
                                   ) || "",
                               },
                               totalAmount: totalAmount || 0,
@@ -1048,7 +1033,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     key: "payment_type",
                     render: (_, record) => {
                       return PaymentMethod.find(
-                        (item) => item.value === record.payment_type
+                        (item) => item.value === record.payment_type,
                       )?.label;
                     },
                   },
@@ -1063,7 +1048,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     key: "ledger_id",
                     render: (_, record) => {
                       const ledger = bankListData.find(
-                        (item) => item.id === record.ledger_id
+                        (item) => item.id === record.ledger_id,
                       );
                       return `${ledger?.customer_company?.name} - ${ledger?.name}`;
                     },

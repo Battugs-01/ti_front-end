@@ -171,7 +171,7 @@ export const RemainderCargo: React.FC = () => {
                 dataIndex: "direction",
                 render: (_, record) => {
                   return DirectionOptions.find(
-                    (item) => item.value === record?.direction
+                    (item) => item.value === record?.direction,
                   )?.label;
                 },
               },
@@ -193,7 +193,7 @@ export const RemainderCargo: React.FC = () => {
                   return (
                     <span className="text-sm text-[#475467] font-normal flex text-center">
                       {CapacityOptions?.find(
-                        (capacity) => capacity.value === value
+                        (capacity) => capacity.value === value,
                       )?.label || "-"}
                     </span>
                   );
@@ -240,7 +240,7 @@ export const RemainderCargo: React.FC = () => {
                 render: (_, record) => {
                   return ArrilvelFieldPaymentMethod.find(
                     (item) =>
-                      item.value === record?.transport_recieve?.payment_method
+                      item.value === record?.transport_recieve?.payment_method,
                   )?.label;
                 },
               },
@@ -288,51 +288,51 @@ export const RemainderCargo: React.FC = () => {
               {
                 title: "Талбайд ирсэн",
                 dataIndex: "arrived_at_site",
-                render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                render: (_, record: any) => {
+                  if (!record.arrived_at_site) {
                     return "-";
                   }
-                  return dayjs(value).format("YYYY-MM-DD");
+                  return dayjs(record.arrived_at_site).format("YYYY-MM-DD");
                 },
               },
               {
                 title: "Талбайд задарсан",
                 dataIndex: "opened_at",
-                render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                render: (_, record: any) => {
+                  if (!record.opened_at) {
                     return "-";
                   }
-                  return dayjs(value).format("YYYY-MM-DD");
+                  return dayjs(record.opened_at).format("YYYY-MM-DD");
                 },
               },
               {
                 title: "Суларсан",
                 dataIndex: "freed_at",
-                render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                render: (_, record: any) => {
+                  if (!record.freed_at) {
                     return "-";
                   }
-                  return dayjs(value).format("YYYY-MM-DD");
+                  return dayjs(record.freed_at).format("YYYY-MM-DD");
                 },
               },
               {
                 title: "Талбайгаас явсан",
                 dataIndex: "left_site_at",
-                render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                render: (_, record: any) => {
+                  if (!record.left_site_at) {
                     return "-";
                   }
-                  return dayjs(value).format("YYYY-MM-DD");
+                  return dayjs(record.left_site_at).format("YYYY-MM-DD");
                 },
               },
               {
                 title: "Буцаж ирсэн",
                 dataIndex: "returned_at",
-                render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                render: (_, record: any) => {
+                  if (!record.returned_at) {
                     return "-";
                   }
-                  return dayjs(value).format("YYYY-MM-DD");
+                  return dayjs(record.returned_at).format("YYYY-MM-DD");
                 },
               },
             ],
@@ -345,15 +345,12 @@ export const RemainderCargo: React.FC = () => {
                 title: "Талбайд ирсэнээс хойш",
                 dataIndex: "arrival_field",
                 render: (_, record) => {
-                  if (
-                    record?.arrived_at_site.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
+                  if (!record?.arrived_at_site || !record?.opened_at) {
                     return "-";
                   }
                   return dayjs(record?.opened_at).diff(
                     dayjs(record?.arrived_at_site),
-                    "days"
+                    "days",
                   );
                 },
               },
@@ -361,15 +358,12 @@ export const RemainderCargo: React.FC = () => {
                 title: "Задарснаас хойш суларсан",
                 dataIndex: "cleaned_watered",
                 render: (_, record) => {
-                  if (
-                    record?.freed_at.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
+                  if (!record?.opened_at || !record?.freed_at) {
                     return "-";
                   }
                   return dayjs(record?.freed_at).diff(
                     dayjs(record?.opened_at),
-                    "days"
+                    "days",
                   );
                 },
               },
@@ -377,15 +371,12 @@ export const RemainderCargo: React.FC = () => {
                 title: "Задарснаас хойш талбайгаас явсан",
                 dataIndex: "cleaned_field",
                 render: (_, record) => {
-                  if (
-                    record?.left_site_at.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
+                  if (!record?.left_site_at || !record?.opened_at) {
                     return "-";
                   }
-                  return dayjs(record?.left_site_at).diff(
+                  return dayjs(record?.left_site_at)?.diff(
                     dayjs(record?.opened_at),
-                    "days"
+                    "days",
                   );
                 },
               },
@@ -393,15 +384,12 @@ export const RemainderCargo: React.FC = () => {
                 title: "Суларсанаас хойш ачилт хийсэн",
                 dataIndex: "watered_worked",
                 render: (_, record) => {
-                  if (
-                    record?.returned_at.includes("0001-01-01") ||
-                    record?.freed_at.includes("0001-01-01")
-                  ) {
+                  if (!record?.freed_at || !record?.returned_at) {
                     return "-";
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.freed_at),
-                    "days"
+                    "days",
                   );
                 },
               },
@@ -409,15 +397,12 @@ export const RemainderCargo: React.FC = () => {
                 title: "Буцаж ирсэнээс хойш ачилт хийсэн",
                 dataIndex: "returned_worked",
                 render: (_, record) => {
-                  if (
-                    record?.returned_at.includes("0001-01-01") ||
-                    record?.left_site_at.includes("0001-01-01")
-                  ) {
+                  if (!record?.left_site_at || !record?.returned_at) {
                     return "-";
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.left_site_at),
-                    "days"
+                    "days",
                   );
                 },
               },

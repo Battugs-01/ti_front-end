@@ -59,6 +59,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
+        console.log("values", values);
         const data = await createCargo.runAsync({
           ...values,
           approach_report_date: moment(values.approach_report_date).toDate(),
@@ -66,18 +67,12 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         });
         if (values.assignation) {
           await createAssign.runAsync({
-            waggon_number: values.assignation.waggon_number,
-            shipping_number: values.assignation.shipping_number,
-            sent_from: values.assignation.sent_from,
-            direction: values.assignation.direction,
-            cargo_name: values.assignation.cargo_name,
-            reciever_email: values.assignation.reciever_email,
-            reciever_phone: values.assignation.reciever_phone,
-            net_weight: values.assignation.net_weight,
-            gross_weight: values.assignation.gross_weight,
+            ...values.assignation,
             container_transport_id: data?.id,
           });
+          return true;
         }
+        return false;
       }}
       title="Талбайн бүртгэл"
       initialValues={{

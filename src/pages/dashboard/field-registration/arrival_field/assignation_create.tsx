@@ -13,7 +13,6 @@ import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
 import { AuthContext } from "context/auth";
 import dayjs from "dayjs";
-import moment from "moment";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import additionalFeeCategory from "service/additional_fee_record";
 import fieldRegistration from "service/feild_registration";
@@ -39,12 +38,7 @@ export const waitTime = (time: number = 100) => {
 };
 
 export const computeDate = (date1?: string, date2?: string) => {
-  if (
-    date1?.includes("0001-01-01") ||
-    date2?.includes("0001-01-01") ||
-    !date1 ||
-    !date2
-  ) {
+  if (!date1 || !date2) {
     return 0;
   }
   return dayjs(date1).diff(dayjs(date2), "day");
@@ -56,7 +50,7 @@ export const AssignationCreate: React.FC<
   const [user] = useContext(AuthContext);
   const [additionalFee, setAdditionalFee] = useState<AdditionalFeeType[]>([]);
   const [allAdditionalFee, setAllAdditionalFee] = useState<AdditionalFeeType[]>(
-    []
+    [],
   );
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [paymentList, setPaymentList] = useState<any[]>([]);
@@ -101,7 +95,7 @@ export const AssignationCreate: React.FC<
           message: error.message,
         });
       },
-    }
+    },
   );
 
   const ticketAdditionalFee = useRequest(
@@ -113,14 +107,14 @@ export const AssignationCreate: React.FC<
           message: error.message,
         });
       },
-    }
+    },
   );
 
   const getTempAdditionalFee = useRequest(
     fieldRegistration.getTempAdditionalFee,
     {
       manual: true,
-    }
+    },
   );
 
   const bankList = useRequest(ledger.list, {
@@ -155,7 +149,7 @@ export const AssignationCreate: React.FC<
         {
           shipping_or_assignment: "assignment",
         },
-        detail?.id as number
+        detail?.id as number,
       );
       form.setFieldsValue({
         ...res,
@@ -173,10 +167,14 @@ export const AssignationCreate: React.FC<
       setAdditionalFee(resData);
       setAllAdditionalFee(resData);
       setEditableRowKeys(
-        res?.additional_fee_ticket_calculated?.map((item) => item.id) || []
+        res?.additional_fee_ticket_calculated?.map((item) => item.id) || [],
       );
     };
     fetch();
+    form.setFieldsValue({
+      ...detail,
+      broker_name: detail?.broker?.name,
+    });
   }, [detail?.id]);
 
   const totalAmount = useMemo(() => {
@@ -240,63 +238,51 @@ export const AssignationCreate: React.FC<
           shipping_or_assignment: "assignment",
           cargo_weight: form.getFieldValue("cargo_weight"),
           additional_fee_category_id: form.getFieldValue(
-            "additional_fee_category_id"
+            "additional_fee_category_id",
           ),
-          date: moment(form.getFieldValue("opened_at")).toDate(),
+          date: dayjs(form.getFieldValue("opened_at")),
           ticket_number: form.getFieldValue("ticket_number"),
           container_transport_record_id: detail?.id,
         });
+
         setTicketAdditional(data);
+
+        console.log("FREED_AT", values.freed_at);
         await updateArrivalField.runAsync(
           {
-            ...values,
-            opened_at: moment(values.opened_at).toDate(),
-            freed_at: moment(values.freed_at).toDate(),
-            left_site_at: moment(values.left_site_at).toDate(),
-            returned_at: moment(values.returned_at).toDate(),
-            // shipped_at: moment(values.shipped_at).toDate(),
+            opened_at: values.opened_at,
+            returned_at: values.returned_at,
           },
-          detail?.id as number
+          detail?.id as number,
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          date: moment(values.opened_at).toDate(),
+          date: values.opened_at,
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
         });
       }}
       title="Олголт "
-      initialValues={{
-        arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
-          ? undefined
-          : detail?.arrived_at_site,
-        opened_at: detail?.opened_at.includes("0001-01-01")
-          ? undefined
-          : detail?.opened_at,
-        freed_at: detail?.freed_at.includes("0001-01-01")
-          ? undefined
-          : detail?.freed_at,
-        left_site_at: detail?.left_site_at.includes("0001-01-01")
-          ? undefined
-          : detail?.left_site_at,
-        returned_at: detail?.returned_at.includes("0001-01-01")
-          ? undefined
-          : detail?.returned_at,
-        shipped_at: detail?.shipped_at.includes("0001-01-01")
-          ? undefined
-          : detail?.shipped_at,
-        container_code: detail?.container_code,
-        capacity: detail?.capacity,
-        broker_name: detail?.broker?.name,
-        // arrived_at_site: detail?.arrived_at_site,
-        ticket_number: getTempAdditionalFee.data?.ticket_number,
-        date: getTempAdditionalFee.data?.date,
-        cargo_weight:
-          getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
-        additional_fee_category_id:
-          getTempAdditionalFee.data?.additional_fee_category_id,
-        payment_amount: totalAmount,
-      }}
+      // initialValues={
+      // {
+      // arrived_at_site: detail?.arrived_at_site,
+      // opened_at: detail?.opened_at,
+      // freed_at: detail?.freed_at,
+      // left_site_at: detail?.left_site_at,
+      // returned_at: detail?.returned_at,
+      // shipped_at: detail?.shipped_at,
+      // container_code: detail?.container_code,
+      // capacity: detail?.capacity,
+      // broker_name: detail?.broker?.name,
+      // ticket_number: getTempAdditionalFee.data?.ticket_number,
+      // date: getTempAdditionalFee.data?.date,
+      // cargo_weight:
+      //   getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
+      // additional_fee_category_id:
+      //   getTempAdditionalFee.data?.additional_fee_category_id,
+      // payment_amount: totalAmount,
+      // }
+      // }
       open={open}
       modalProps={{
         destroyOnClose: true,
@@ -414,7 +400,7 @@ export const AssignationCreate: React.FC<
                             ...dates,
                             opened: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
@@ -434,6 +420,9 @@ export const AssignationCreate: React.FC<
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
+                      name="freed_at"
+                      placeholder="Суларсан"
+                      label="Суларсан"
                       disabled={dates.left_site > 0 || dates.opened <= 0}
                       fieldProps={{
                         size: "large",
@@ -443,21 +432,18 @@ export const AssignationCreate: React.FC<
                           }
                           let diff = dayjs(e).diff(
                             dayjs(form.getFieldValue("opened_at")),
-                            "day"
+                            "day",
                           );
                           calcDateNumberAdditionalFee(diff);
                           setDates({
                             ...dates,
                             freed: dayjs(e).diff(
                               dayjs(form.getFieldValue("opened_at")),
-                              "day"
+                              "day",
                             ),
                           });
                         },
                       }}
-                      name={"freed_at"}
-                      placeholder="Суларсан"
-                      label="Суларсан"
                     />
                     <IBadge
                       title={dates.freed <= 0 ? 0 : dates.freed}
@@ -477,7 +463,7 @@ export const AssignationCreate: React.FC<
                           }
                           let diff = dayjs(e).diff(
                             dayjs(form.getFieldValue("opened_at")),
-                            "day"
+                            "day",
                           );
                           calcDateNumberAdditionalFee(diff);
                           setDates({
@@ -502,6 +488,9 @@ export const AssignationCreate: React.FC<
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
+                      name={"returned_at"}
+                      placeholder="Буцаж ирсэн"
+                      label="Буцаж ирсэн"
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
@@ -510,16 +499,14 @@ export const AssignationCreate: React.FC<
                           }
                           setDates({
                             ...dates,
-                            returned: dayjs(e).diff(
-                              dayjs(form.getFieldValue("left_site_at")),
-                              "day"
-                            ),
+                            returned:
+                              dayjs(e).diff(
+                                dayjs(form.getFieldValue("left_site_at")),
+                                "day",
+                              ) || 0,
                           });
                         },
                       }}
-                      name={"returned_at"}
-                      placeholder="Буцаж ирсэн"
-                      label="Буцаж ирсэн"
                     />
                     <IBadge
                       title={dates?.returned <= 0 ? 0 : dates.returned}
@@ -536,10 +523,11 @@ export const AssignationCreate: React.FC<
                         onChange: (e: any) => {
                           setDates({
                             ...dates,
-                            shipped: dayjs(e).diff(
-                              dayjs(form.getFieldValue("freed_at")),
-                              "day"
-                            ),
+                            shipped:
+                              dayjs(e).diff(
+                                dayjs(form.getFieldValue("freed_at")),
+                                "day",
+                              ) || 0,
                           });
                         },
                       }}
@@ -598,7 +586,7 @@ export const AssignationCreate: React.FC<
                           };
                         });
                         const defaultAdditionalData = resData?.filter(
-                          (item) => item.is_default === "true"
+                          (item) => item.is_default === "true",
                         );
 
                         const finalAdditionalData = defaultAdditionalData?.map(
@@ -615,8 +603,8 @@ export const AssignationCreate: React.FC<
                                 dates.left_site > 0
                                   ? dates.left_site
                                   : dates.freed <= 0
-                                  ? 1
-                                  : dates.freed;
+                                    ? 1
+                                    : dates.freed;
                               return {
                                 ...values,
                                 number_1: day,
@@ -624,7 +612,7 @@ export const AssignationCreate: React.FC<
                               };
                             }
                             return values;
-                          }
+                          },
                         );
 
                         setAdditionalFee(finalAdditionalData || []);
@@ -757,7 +745,7 @@ export const AssignationCreate: React.FC<
                             const index = allAdditionalFee?.findIndex(
                               (item: any) => {
                                 return item.id === e;
-                              }
+                              },
                             );
 
                             record = {
@@ -902,8 +890,8 @@ export const AssignationCreate: React.FC<
                         onClick={() => {
                           setAdditionalFee(
                             additionalFee.filter(
-                              (item) => item.id !== record.id
-                            )
+                              (item) => item.id !== record.id,
+                            ),
                           );
                         }}
                       >
@@ -950,7 +938,6 @@ export const AssignationCreate: React.FC<
                       additional_fee_category_id: form.getFieldValue(
                         "additional_fee_category_id"
                       ),
-                      date: moment(form.getFieldValue("opened_at")).toDate(),
                       ticket_number: form.getFieldValue("ticket_number"),
                       container_transport_record_id: detail?.id,
                     });
@@ -1004,7 +991,7 @@ export const AssignationCreate: React.FC<
                             placeholder="Данс"
                             onChange={(value) => {
                               const ledger = bankListData.find(
-                                (item) => item.id === value
+                                (item) => item.id === value,
                               );
                               form.setFieldsValue({
                                 payer_name:
@@ -1074,7 +1061,7 @@ export const AssignationCreate: React.FC<
                           onClick={async () => {
                             const data = await generatePDF({
                               date: dayjs(form.getFieldValue("date")).format(
-                                "YYYY.MM.DD"
+                                "YYYY.MM.DD",
                               ),
                               items: additionalFee?.map((item) => {
                                 return {
@@ -1086,7 +1073,7 @@ export const AssignationCreate: React.FC<
                               company:
                                 bankListData?.find(
                                   (item) =>
-                                    item.id === form.getFieldValue("ledger_id")
+                                    item.id === form.getFieldValue("ledger_id"),
                                 )?.customer_company?.name || "",
                               serialNumber:
                                 form.getFieldValue("ticket_number") || "",
@@ -1096,12 +1083,12 @@ export const AssignationCreate: React.FC<
                                 number: `${detail?.container_code} ${
                                   CapacityOptions.find(
                                     (capacity) =>
-                                      capacity.value === detail?.capacity
+                                      capacity.value === detail?.capacity,
                                   )?.label || ""
                                 }`,
                                 date:
                                   dayjs(
-                                    form.getFieldValue("payment_date")
+                                    form.getFieldValue("payment_date"),
                                   ).format("YYYY.MM.DD") || "",
                               },
                               totalAmount: totalAmount || 0,
@@ -1150,7 +1137,7 @@ export const AssignationCreate: React.FC<
                     key: "payment_type",
                     render: (_, record) => {
                       return PaymentMethod.find(
-                        (item) => item.value === record.payment_type
+                        (item) => item.value === record.payment_type,
                       )?.label;
                     },
                   },
@@ -1165,7 +1152,7 @@ export const AssignationCreate: React.FC<
                     key: "ledger_id",
                     render: (_, record) => {
                       const ledger = bankListData.find(
-                        (item) => item.id === record.ledger_id
+                        (item) => item.id === record.ledger_id,
                       );
                       return `${ledger?.customer_company?.name} - ${ledger?.name}`;
                     },

@@ -8,6 +8,14 @@ import "./styles/custom.less";
 import "./styles/global.less";
 import "./styles/tailwind.css";
 
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.locale("mn");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const domNode = document.getElementById("root") as any;
 const root = createRoot(domNode);
 
@@ -21,5 +29,5 @@ root.render(
     <AuthProvider>
       <App />
     </AuthProvider>
-  </ThemeProvider>
+  </ThemeProvider>,
 );

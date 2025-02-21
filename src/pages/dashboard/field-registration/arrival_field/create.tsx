@@ -26,7 +26,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
   open,
 }) => {
   const [tab, setTab] = useState<FieldRegistrationTab>(
-    FieldRegistrationTab.grant
+    FieldRegistrationTab.grant,
   );
   const addAcrivalField = useRequest(fieldRegistration.create, {
     manual: true,
@@ -47,9 +47,10 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
   return (
     <ModalForm
       onFinish={async (values) => {
-        await addAcrivalField.runAsync({
-          ...values,
-        });
+        console.log("VALS", values);
+        // await addAcrivalField.runAsync({
+        //   ...values,
+        // });
       }}
       title="Талбайн бүртгэл "
       open={open}
@@ -195,7 +196,7 @@ export const CreateArrivalField: React.FC<ActionComponentProps<any>> = ({
                       name={"date_4"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      // rules={FORM_ITEM_RULE()}
+                    // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge title="2" color="blue" />
                   </div>

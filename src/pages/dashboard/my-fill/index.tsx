@@ -264,7 +264,7 @@ const myFill: React.FC = () => {
                 title: "Талбайд ирсэн",
                 dataIndex: "arrived_at_site",
                 render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                  if (!value) {
                     return "-";
                   }
                   return dayjs(value).format("YYYY-MM-DD");
@@ -274,7 +274,7 @@ const myFill: React.FC = () => {
                 title: "Талбайд задарсан",
                 dataIndex: "opened_at",
                 render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                  if (!value) {
                     return "-";
                   }
                   return dayjs(value).format("YYYY-MM-DD");
@@ -284,7 +284,7 @@ const myFill: React.FC = () => {
                 title: "Суларсан",
                 dataIndex: "freed_at",
                 render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                  if (!value) {
                     return "-";
                   }
                   return dayjs(value).format("YYYY-MM-DD");
@@ -294,7 +294,7 @@ const myFill: React.FC = () => {
                 title: "Талбайгаас явсан",
                 dataIndex: "left_site_at",
                 render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                  if (!value) {
                     return "-";
                   }
                   return dayjs(value).format("YYYY-MM-DD");
@@ -304,7 +304,7 @@ const myFill: React.FC = () => {
                 title: "Буцаж ирсэн",
                 dataIndex: "returned_at",
                 render: (value: any) => {
-                  if (value.includes("0001-01-01")) {
+                  if (!value) {
                     return "-";
                   }
                   return dayjs(value).format("YYYY-MM-DD");
@@ -320,12 +320,7 @@ const myFill: React.FC = () => {
                 title: "Талбайд ирсэнээс хойш",
                 dataIndex: "arrival_field",
                 render: (_, record) => {
-                  if (
-                    record?.arrived_at_site.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
-                    return "-";
-                  }
+
                   return dayjs(record?.opened_at).diff(
                     dayjs(record?.arrived_at_site),
                     "days"
@@ -336,12 +331,7 @@ const myFill: React.FC = () => {
                 title: "Задарснаас хойш суларсан",
                 dataIndex: "cleaned_watered",
                 render: (_, record) => {
-                  if (
-                    record?.freed_at.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
-                    return "-";
-                  }
+
                   return dayjs(record?.freed_at).diff(
                     dayjs(record?.opened_at),
                     "days"
@@ -352,12 +342,7 @@ const myFill: React.FC = () => {
                 title: "Задарснаас хойш талбайгаас явсан",
                 dataIndex: "cleaned_field",
                 render: (_, record) => {
-                  if (
-                    record?.left_site_at.includes("0001-01-01") ||
-                    record?.opened_at.includes("0001-01-01")
-                  ) {
-                    return "-";
-                  }
+
                   return dayjs(record?.left_site_at).diff(
                     dayjs(record?.opened_at),
                     "days"
@@ -368,12 +353,7 @@ const myFill: React.FC = () => {
                 title: "Суларсанаас хойш ачилт хийсэн",
                 dataIndex: "watered_worked",
                 render: (_, record) => {
-                  if (
-                    record?.returned_at.includes("0001-01-01") ||
-                    record?.freed_at.includes("0001-01-01")
-                  ) {
-                    return "-";
-                  }
+  
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.freed_at),
                     "days"
@@ -384,12 +364,10 @@ const myFill: React.FC = () => {
                 title: "Буцаж ирсэнээс хойш ачилт хийсэн",
                 dataIndex: "returned_worked",
                 render: (_, record) => {
-                  if (
-                    record?.returned_at.includes("0001-01-01") ||
-                    record?.left_site_at.includes("0001-01-01")
-                  ) {
+                  if (!record.returned_at || !record.freed_at) {
                     return "-";
                   }
+
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.left_site_at),
                     "days"
