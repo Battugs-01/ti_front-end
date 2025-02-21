@@ -14,6 +14,7 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
   const [tab, setTab] = useState<any>(DetailTab.container);
   const [value, setValue] = useState<any>({});
+
   const detailChooseButtons: DetailTabtButton[] = [
     {
       value: DetailTab.container,

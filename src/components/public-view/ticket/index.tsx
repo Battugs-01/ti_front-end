@@ -5,7 +5,7 @@ import ProForm, {
   ProFormText,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Col, notification, Row } from "antd";
+import { Button, Col, notification, Row } from "antd";
 import { ITable } from "components/table";
 import { FORM_ITEM_RULE, PaymentType } from "config";
 import dayjs from "dayjs";
@@ -68,7 +68,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
         }) || [],
       company: ticket?.debit?.ledger?.customer_company?.name || "",
       serialNumber: ticket?.ticket_number || "",
-      title: "Олголт",
+      title: form.current?.getFieldValue("category_fee_id") || "",
       taxNumber: "100",
       containerInfo: {
         number: `${ticket?.container_transport_record?.container_code || ""} ${
@@ -226,7 +226,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
           </Col>
         </Row>
 
-        {/* <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-4 gap-2 mb-3">
           <Button
             className="col-start-4"
             size="middle"
@@ -234,7 +234,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
           >
             Хэвлэх
           </Button>
-        </div> */}
+        </div>
       </>
     </ProForm>
   );

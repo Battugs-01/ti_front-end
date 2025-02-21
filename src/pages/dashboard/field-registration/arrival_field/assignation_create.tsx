@@ -7,7 +7,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, Input, notification, Row, Select } from "antd";
+import { Button, Col, Form, notification, Row, Select } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
@@ -980,6 +980,7 @@ export const AssignationCreate: React.FC<
                           <ProFormSelect
                             name="payment_type"
                             placeholder="Төлөлтийн хэлбэр"
+                            initialValue={"non_cash"}
                             options={[
                               {
                                 value: "non_cash",
