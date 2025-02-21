@@ -7,7 +7,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { ITable } from "components/table";
-import { FORM_ITEM_RULE, PaymentType } from "config";
+import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
@@ -31,11 +31,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
       category_fee_id: ticket?.additional_fee_category?.name,
       cargo_weight: ticket?.cargo_weight,
       payment_date: ticket?.debit?.created_at,
-      payment_type:
-        ticket?.debit?.payment_type &&
-        ticket?.debit?.payment_type === PaymentType.cash
-          ? "Бэлэн"
-          : "Бэлэн бус",
+      payment_type: ticket?.debit?.payment_type,
       payment_amount: ticket?.debit?.total_amount,
       payer_name: ticket?.debit?.payer_name,
       ledger_id: ticket?.debit?.ledger?.name,
@@ -81,10 +77,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
         ticket?.debit?.transaction?.payment_type === "cash"
           ? ticket?.debit?.total_amount || 0
           : 0,
-      nonCashAmount:
-        ticket?.debit?.transaction?.payment_type === "non_cash"
-          ? ticket?.debit?.total_amount || 0
-          : 0,
+      nonCashAmount: ticket?.debit?.total_amount || 0,
       amountInWords: "",
       submitter: ticket?.debit?.payer_name || "",
     });

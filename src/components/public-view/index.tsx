@@ -1,6 +1,6 @@
-import { ProFormInstance, ProFormRadio } from "@ant-design/pro-form";
+import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
-import { Divider } from "antd";
+import { Divider, Tabs } from "antd";
 import { IfCondition } from "components/condition";
 import { IModalForm } from "components/modal";
 import { DetailTab, DetailTabtButton } from "config";
@@ -50,6 +50,11 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
     });
   }, [detailChooseButtons]);
 
+  var items = detailChooseButtons.map((el) => ({
+    label: el.label,
+    key: el.value,
+  }));
+
   return (
     <IModalForm
       title="Дэлгэрэнгүй мэдээлэл"
@@ -59,20 +64,21 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
         formRef.current?.resetFields();
       }}
       width={1000}
+      destroyOnClose={true}
       scrollToFirstError={true}
       modalProps={{ maskClosable: false, onCancel: rest.onCancel }}
       cancelText={"Буцах"}
       className="px-3"
     >
-      <ProFormRadio.Group
+      {/* <ProFormRadio.Group
         name={"documentLine"}
         radioType="button"
         fieldProps={{
           size: "large",
           value: tab,
-          onChange: (e) => {
-            setTab(e.target.value);
-          },
+          // onChange: (e) => {
+          //   setTab(e.target.value);
+          // },
         }}
         options={detailChooseButtons?.map((el) => ({
           ...el,
@@ -80,14 +86,14 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
             setTab(e);
           },
         }))}
-        initialValue={DetailTab.container}
-      />
+        // initialValue={DetailTab.container}
+      /> */}
 
+      <Tabs defaultActiveKey="1" items={items} onChange={(e) => setTab(e)} />
       <IfCondition
         condition={tab === DetailTab.container}
         whenTrue={<Container data={rest?.detail} />}
       />
-
       <IfCondition
         condition={tab === value.id}
         whenTrue={

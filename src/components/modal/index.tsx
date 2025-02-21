@@ -19,12 +19,14 @@ type Props = ModalFormProps & {
   successData?: () => void;
   isCustomFooter?: boolean;
   isValid?: boolean;
+  destroyOnClose?: boolean;
 };
 
 export const IModalForm = ({
   onRequest,
   onSuccess: onDone,
   title,
+  destroyOnClose,
   footer,
   cancelText,
   okText,
@@ -90,6 +92,7 @@ export const IModalForm = ({
       }}
       modalProps={{
         maskClosable: false,
+        destroyOnClose: destroyOnClose ? true : false,
         ...rest.modalProps,
         closable: false,
         className: `${rest.className} custom-ant-modal-footer-remove `,

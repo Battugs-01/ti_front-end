@@ -232,26 +232,17 @@ export const ArrivalField: React.FC = () => {
                 render: (_, record) => {
                   return (
                     <div className="flex items-center gap-2 flex-wrap p-2">
-                      {record?.assignation_status
-                        ?.is_assignation_additional_fee_paid && (
-                        <IBadge color="blue" title="Олголт" />
-                      )}
                       {record?.tickets.map((ticket, index) => {
-                        if (index >= record?.tickets.length - 1) {
-                          return;
-                        }
                         return (
                           <IBadge
                             key={index}
                             color="blue"
-                            title={`Сунгалт олголт-${index + 1}`}
+                            title={
+                              ticket?.additional_fee_category?.name || " s"
+                            }
                           />
                         );
                       })}
-                      {record?.shipping_status
-                        ?.is_shipping_additional_fee_paid && (
-                        <IBadge color="green" title="Ачилт" />
-                      )}
                     </div>
                   );
                 },

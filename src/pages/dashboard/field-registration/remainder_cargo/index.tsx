@@ -18,7 +18,6 @@ import {
   CapacityOptions,
   DirectionOptions,
   DirectionSelect,
-  ManagerPaymentMethod,
 } from "utils/options";
 import { AssignationCargoApproach } from "./assignation";
 
@@ -147,30 +146,22 @@ export const RemainderCargo: React.FC = () => {
               {
                 title: "Статус",
                 dataIndex: "status",
+                width: 150,
                 align: "center",
                 render: (_, record) => {
                   return (
                     <div className="flex items-center gap-2 flex-wrap p-2">
-                      {record?.assignation_status
-                        ?.is_assignation_additional_fee_paid && (
-                        <IBadge color="blue" title="Олголт" />
-                      )}
                       {record?.tickets.map((ticket, index) => {
-                        if (index >= record?.tickets.length - 2) {
-                          return;
-                        }
                         return (
                           <IBadge
                             key={index}
                             color="blue"
-                            title={`Сунгалт олголт-${index + 1}`}
+                            title={
+                              ticket?.additional_fee_category?.name || " s"
+                            }
                           />
                         );
                       })}
-                      {record?.shipping_status
-                        ?.is_shipping_additional_fee_paid && (
-                        <IBadge color="green" title="Ачилт" />
-                      )}
                     </div>
                   );
                 },
