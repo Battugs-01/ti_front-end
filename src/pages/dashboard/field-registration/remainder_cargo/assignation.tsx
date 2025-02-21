@@ -70,7 +70,9 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         ...detail,
         approach_report_date: moment(detail?.approach_report_date),
-        arrived_at_site: moment().startOf("day"),
+        arrived_at_site: detail?.arrived_at_site.includes("0001-01-01")
+          ? undefined
+          : moment(detail?.arrived_at_site),
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
       open={open}
