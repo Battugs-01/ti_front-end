@@ -174,6 +174,7 @@ export const AssignationCreate: React.FC<
     form.setFieldsValue({
       ...detail,
       broker_name: detail?.broker?.name,
+      cargo_weight: detail?.capacity,
     });
   }, [detail?.id]);
 
@@ -250,8 +251,17 @@ export const AssignationCreate: React.FC<
         console.log("FREED_AT", values.freed_at);
         await updateArrivalField.runAsync(
           {
-            opened_at: values.opened_at,
-            returned_at: values.returned_at,
+            opened_at: values.opened_at ? dayjs(values.opened_at) : undefined,
+            left_site_at: values.left_site_at
+              ? dayjs(values.left_site_at)
+              : undefined,
+            freed_at: values.freed_at ? dayjs(values.freed_at) : undefined,
+            returned_at: values.returned_at
+              ? dayjs(values.returned_at)
+              : undefined,
+            shipped_at: values.shipped_at
+              ? dayjs(values.shipped_at)
+              : undefined,
           },
           detail?.id as number,
         );
@@ -423,7 +433,7 @@ export const AssignationCreate: React.FC<
                       name="freed_at"
                       placeholder="Суларсан"
                       label="Суларсан"
-                      disabled={dates.left_site > 0 || dates.opened <= 0}
+                      // disabled={dates.left_site > 0 || dates.opened <= 0}
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
@@ -454,7 +464,7 @@ export const AssignationCreate: React.FC<
                 <Col span={12}>
                   <div className="flex items-center gap-3">
                     <ProFormDatePicker
-                      disabled={dates.freed > 0 || dates.opened <= 0}
+                      // disabled={dates.freed > 0 || dates.opened <= 0}
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
@@ -475,7 +485,7 @@ export const AssignationCreate: React.FC<
                       name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      // rules={FORM_ITEM_RULE()}
+                    // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates?.left_site <= 0 ? 0 : dates.left_site}
@@ -1080,12 +1090,11 @@ export const AssignationCreate: React.FC<
                               title: "Олголт",
                               taxNumber: "100",
                               containerInfo: {
-                                number: `${detail?.container_code} ${
-                                  CapacityOptions.find(
-                                    (capacity) =>
-                                      capacity.value === detail?.capacity,
-                                  )?.label || ""
-                                }`,
+                                number: `${detail?.container_code} ${CapacityOptions.find(
+                                  (capacity) =>
+                                    capacity.value === detail?.capacity,
+                                )?.label || ""
+                                  }`,
                                 date:
                                   dayjs(
                                     form.getFieldValue("payment_date"),
@@ -1098,13 +1107,12 @@ export const AssignationCreate: React.FC<
                                   : 0,
                               nonCashAmount:
                                 form.getFieldValue("payment_type") ===
-                                "non_cash"
+                                  "non_cash"
                                   ? totalAmount
                                   : 0,
                               amountInWords: "",
-                              submitter: `${
-                                user?.user?.last_name.substring(0, 1) || ""
-                              } ${user?.user?.first_name || ""}`,
+                              submitter: `${user?.user?.last_name.substring(0, 1) || ""
+                                } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
                           }}

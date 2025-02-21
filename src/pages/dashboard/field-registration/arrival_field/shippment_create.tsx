@@ -212,11 +212,17 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         setTicketAdditional(data);
         await updateArrivalField.runAsync(
           {
-            opened_at: values.opened_at,
-            left_site_at: values.left_site_at,
-            freed_at: values.freed_at,
-            returned_at: values.returned_at,
-            shipped_at: values.shipped_at,
+            opened_at: values.opened_at ? dayjs(values.opened_at) : undefined,
+            left_site_at: values.left_site_at
+              ? dayjs(values.left_site_at)
+              : undefined,
+            freed_at: values.freed_at ? dayjs(values.freed_at) : undefined,
+            returned_at: values.returned_at
+              ? dayjs(values.returned_at)
+              : undefined,
+            shipped_at: values.shipped_at
+              ? dayjs(values.shipped_at)
+              : undefined,
             shipping_or_assignment: "shipping",
           },
           detail?.id,
@@ -224,7 +230,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
 
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          date: values.opened_at,
+          date: values.opened_at ? dayjs(values.opened_at) : undefined,
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
           shipping_or_assignment: "shipping",
@@ -397,7 +403,6 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"freed_at"}
                       placeholder="Суларсан"
                       label="Суларсан"
-                      rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates.freed <= 0 ? 0 : dates.freed}
@@ -423,7 +428,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       name={"left_site_at"}
                       placeholder="Т-c явсан"
                       label="Т-c явсан"
-                      // rules={FORM_ITEM_RULE()}
+                    // rules={FORM_ITEM_RULE()}
                     />
                     <IBadge
                       title={dates?.left_site <= 0 ? 0 : dates.left_site}
@@ -864,6 +869,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                           <ProFormSelect
                             name="payment_type"
                             placeholder="Төлөлтийн хэлбэр"
+                            initialValue="non_cash"
                             options={[
                               {
                                 value: "non_cash",
@@ -976,12 +982,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               title: "Ачилт",
                               taxNumber: "100",
                               containerInfo: {
-                                number: `${detail?.container_code} ${
-                                  CapacityOptions.find(
-                                    (capacity) =>
-                                      capacity.value === detail?.capacity,
-                                  )?.label || ""
-                                }`,
+                                number: `${detail?.container_code} ${CapacityOptions.find(
+                                  (capacity) =>
+                                    capacity.value === detail?.capacity,
+                                )?.label || ""
+                                  }`,
                                 date:
                                   dayjs(form.getFieldValue("opened_at")).format(
                                     "YYYY.MM.DD",
@@ -994,13 +999,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                                   : 0,
                               nonCashAmount:
                                 form.getFieldValue("payment_type") ===
-                                "non_cash"
+                                  "non_cash"
                                   ? totalAmount
                                   : 0,
                               amountInWords: "",
-                              submitter: `${
-                                user?.user?.last_name.substring(0, 1) || ""
-                              } ${user?.user?.first_name || ""}`,
+                              submitter: `${user?.user?.last_name.substring(0, 1) || ""
+                                } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
                           }}
