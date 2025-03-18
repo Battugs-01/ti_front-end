@@ -186,7 +186,7 @@ const ReportPage: React.FC = () => {
         refresh={refreshList}
         hideCreate
         fileName="RemainderCargo"
-        hideDownload
+        // hideDownload
       />
       <ITable<CargoApproachList>
         dataSource={
