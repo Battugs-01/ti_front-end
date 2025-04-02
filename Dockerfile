@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:20 AS builder
 
 ARG VITE_API_URL
 ARG VITE_FILE_GET_URL
@@ -10,7 +10,7 @@ ENV VITE_PASSPHASE=$VITE_PASSPHASE
 WORKDIR /next/app
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn
+RUN yarn install
 COPY . .
 # COPY prod_env ./.env
 RUN yarn build
