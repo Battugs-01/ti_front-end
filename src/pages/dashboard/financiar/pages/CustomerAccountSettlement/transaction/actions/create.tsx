@@ -1,7 +1,7 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { IModalForm } from "components/modal";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useRef } from "react";
 import transaction from "service/fininaciar/accountSettlement/transaction";
 import { ActionComponentProps } from "types";
@@ -33,7 +33,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
           if (
             await create.runAsync({
               ...values,
-              created_at: moment(values.created_at).toDate(),
+              created_at: dayjs(values.created_at),
               transaction_type: "debit",
             })
           ) {

@@ -49,7 +49,7 @@ const Transaction = () => {
             <div className="flex gap-3 items-end">
               <DatePicker.RangePicker
                 className="w-max"
-                placeholder={["Эхлэх огноо", "Дуусах огноо"]} 
+                placeholder={["Эхлэх огноо", "Дуусах огноо"]}
                 onChange={(values) => {
                   setFilter({
                     ...filter,
@@ -59,15 +59,11 @@ const Transaction = () => {
                     ],
                   });
                 }}
-                // defaultValue={[
-                //   filter.between[0]
-                //     ? dayjs(filter.between[0])
-                //     : dayjs().subtract(3, "month"),
-                //   filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
-                // ]}
                 defaultValue={[
-                  dayjs().subtract(3, "month"),
-                  dayjs(),
+                  filter.between[0]
+                    ? dayjs(filter.between[0])
+                    : dayjs().subtract(3, "month"),
+                  filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
                 ]}
               />
             </div>

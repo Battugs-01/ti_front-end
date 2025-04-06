@@ -1,14 +1,31 @@
 import { ConfigProvider } from "antd";
-import { useThemeContext } from "context/theme";
 import mnIntl from "antd/lib/locale/mn_MN";
+import { useThemeContext } from "context/theme";
 import { ThemeType } from "context/type";
 import dayjs from "dayjs";
 import "dayjs/locale/mn";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import localeData from "dayjs/plugin/localeData";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import weekday from "dayjs/plugin/weekday";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import weekYear from "dayjs/plugin/weekYear";
 import { BrowserRouter } from "react-router-dom";
 import MainRoutes from "routes";
 
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
+dayjs.extend(weekday);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(weekYear);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.locale("mn");
+dayjs.tz.setDefault("Asia/Ulaanbaatar");
 const App: React.FC = () => {
   const { theme, toggleTheme } = useThemeContext();
   // dayjs.extend(utc);

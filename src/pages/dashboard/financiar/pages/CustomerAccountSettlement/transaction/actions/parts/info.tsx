@@ -1,5 +1,5 @@
 import {
-  ProFormDatePicker,
+  ProFormDateTimePicker,
   ProFormDigit,
   ProFormSelect
 } from "@ant-design/pro-form";
@@ -7,6 +7,7 @@ import { useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE, PaymentType } from "config";
+import dayjs from "dayjs";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { PaymentMethod } from "utils/options";
 
@@ -22,10 +23,11 @@ export const Info = () => {
     <SectionContainer>
       <Row gutter={[24, 24]}>
         <Col span={12}>
-          <ProFormDatePicker
+          <ProFormDateTimePicker
             fieldProps={{
               size: "large",
             }}
+            initialValue={dayjs()}
             name="created_at"
             label={<div className="text-gray-700 font-medium ">Огноо</div>}
           />
@@ -72,8 +74,10 @@ export const Info = () => {
           <ProFormDigit
             name={"amount"}
             placeholder={"Мөнгөн дүн"}
+            fieldProps={{
+              min: -1000000000000000000,
+            }}
             label="Мөнгөн дүн"
-            min={0}
             rules={FORM_ITEM_RULE()}
           />
         </Col>

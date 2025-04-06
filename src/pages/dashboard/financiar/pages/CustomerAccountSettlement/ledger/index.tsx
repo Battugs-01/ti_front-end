@@ -1,5 +1,5 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification } from "antd";
+import { notification, Table, Typography } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -11,7 +11,7 @@ import { ledgerFilter, moneyFormat } from "utils/index";
 const Ledger = () => {
   const [filter, setFilter] = useState(ledgerFilter);
   const [search, setSearch] = useState<string>("");
-
+  const { Text } = Typography;
   const list = useRequest(ledger.list, {
     manual: true,
     onError: (err) =>
@@ -138,6 +138,28 @@ const Ledger = () => {
             ),
           },
         ]}
+        summary={() => (
+            <>
+              <Table.Summary.Row>
+                <Table.Summary.Cell index={0}></Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>
+                  <Text>Нийт</Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>
+                  <Text></Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={3}>
+                  <Text></Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4} className="text-center">
+                  <Text type="danger" className="font-bold">
+                    {moneyFormat(list?.data?.meta?.total_balance || 0)}
+                  </Text>
+                </Table.Summary.Cell>
+              </Table.Summary.Row>
+            </>
+        )}
+        
       />
     </PageCard>
   );
