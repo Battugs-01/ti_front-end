@@ -159,6 +159,7 @@ export const AssignationCreate: React.FC<
       );
       form.setFieldsValue({
         ...res,
+        discount_description: res?.discount_description,
       });
       const resData =
         res?.additional_fee_ticket_calculated?.map((values): any => {
@@ -247,6 +248,7 @@ export const AssignationCreate: React.FC<
       date: dayjs(form.getFieldValue("opened_at")),
       ticket_number: form.getFieldValue("ticket_number"),
       container_transport_record_id: detail?.id,
+      discount_description: form.getFieldValue("discount_description"),
     });
 
     setTicketAdditional(data);
@@ -277,9 +279,10 @@ export const AssignationCreate: React.FC<
         );
         await addAdditionalFeeDebit.runAsync({
           ...values,
-          date: values.opened_at,
+          date: dayjs(values.opened_at),
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
+          discount_description: values.discount_description,
         });
       }}
       title="Олголт "
@@ -937,7 +940,7 @@ export const AssignationCreate: React.FC<
               <Row>
                 <Col span={8}>
                   <ProFormTextArea
-                    name="description"
+                    name="discount_description"
                     placeholder="Зардлын хөнгөлөлтийн тайлбар бичих"
                     label="Зардлын хөнгөлөлтийн тайлбар"
                   />

@@ -17,12 +17,13 @@ import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
 import { CapacityOptions, DirectionOptions } from "utils/options";
 
-export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
+export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   onCancel,
   onFinish,
   open,
+  detail,
 }) => {
-  const createCargo = useRequest(fieldRegistration.create, {
+  const updateCargo = useRequest(fieldRegistration.updateRegistration, {
     manual: true,
     onError: (error: any) => {
       notification.error({
@@ -32,7 +33,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
     },
   });
 
-  const createAssign = useRequest(assignation.create, {
+  const createAssign = useRequest(assignation.updateRegistration, {
     manual: true,
     onSuccess: () => {
       notification.success({
@@ -56,6 +57,8 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       }),
   });
 
+  console.log(detail, "jjjjj");
+
   const cargoTypeList = useRequest(cargoName.list, {
     manual: true,
     onError: (err) =>
@@ -67,22 +70,29 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
     <ModalForm
       onFinish={async (values) => {
         console.log("values", values);
-        const data = await createCargo.runAsync({
-          ...values,
-          approach_report_date: moment(values.approach_report_date).toDate(),
-          arrived_at_site: moment(values.arrived_at_site).toDate(),
-        });
+        const data = await updateCargo.runAsync(
+          {
+            ...values,
+            approach_report_date: moment(values.approach_report_date).toDate(),
+            arrived_at_site: moment(values.arrived_at_site).toDate(),
+          },
+          detail.id
+        );
         if (values.assignation) {
-          await createAssign.runAsync({
-            ...values.assignation,
-            container_transport_id: data?.id,
-          });
+          await createAssign.runAsync(
+            {
+              ...values.assignation,
+              container_transport_id: data?.id,
+            },
+            detail.assignation.id
+          );
           return true;
         }
         return false;
       }}
       title="Талбайн бүртгэл"
       initialValues={{
+        ...detail,
         category: "3",
         approach_report_date: moment().toDate(),
       }}
@@ -118,7 +128,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                 onClick={props.submit}
                 size="large"
                 type="primary"
-                loading={createCargo.loading}
+                loading={updateCargo.loading}
               >
                 Хадгалах
               </Button>

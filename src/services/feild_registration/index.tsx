@@ -44,7 +44,7 @@ namespace fieldRegistration {
     });
 
   export const updateRegistration = (body: any, id: number) =>
-    http.put<SuccessResponse>(`/transport-record/update/${id}`, {
+    http.put<CargoApproachList>(`/transport-record/update/${id}`, {
       hasAuth: true,
       body,
     });

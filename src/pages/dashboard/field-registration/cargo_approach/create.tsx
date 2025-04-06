@@ -12,6 +12,7 @@ import { DirectionType, FORM_ITEM_RULE } from "config";
 import moment from "moment";
 import { useEffect } from "react";
 import fieldRegistration from "service/feild_registration";
+import customerCompany from "service/fininaciar/customerCompany";
 import foreign from "service/fininaciar/foreign";
 import { ActionComponentProps } from "types";
 import {
@@ -42,6 +43,14 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
   });
 
   const listForeign = useRequest(foreign.list, {
+    onError: (err) =>
+      notification.error({
+        message: err.message,
+      }),
+  });
+
+  const customerCompanyList = useRequest(customerCompany.list, {
+    manual: true,
     onError: (err) =>
       notification.error({
         message: err.message,
@@ -150,13 +159,17 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
-                    options={[{ label: "TI Logistic", value: 1 }].map(
-                      (item) => ({
-                        label: item.label,
-                        value: item.value,
-                      })
-                    )}
-                    initialValue={1}
+                    request={async () => {
+                      const data = await customerCompanyList.runAsync({
+                        is_all: true,
+                        is_broker: true,
+                        is_default: true,
+                      });
+                      return data?.items.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    }}
                     name="broker_id"
                     placeholder="Зуучийн нэр"
                     label={"Зуучийн нэр"}

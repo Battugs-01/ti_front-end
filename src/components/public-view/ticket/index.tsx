@@ -3,6 +3,7 @@ import ProForm, {
   ProFormInstance,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
@@ -35,6 +36,7 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
       payment_amount: ticket?.debit?.total_amount,
       payer_name: ticket?.debit?.payer_name,
       ledger_id: ticket?.debit?.ledger?.name,
+      discount_description: ticket?.discount_description,
     });
   }, [ticket]);
 
@@ -215,6 +217,16 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
               disabled
               placeholder="Төлөгч"
               label="Төлөгч"
+            />
+          </Col>
+        </Row>
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            <ProFormTextArea
+              name="discount_description"
+              placeholder="Зардлын хөнгөлөлтийн тайлбар бичих"
+              label="Зардлын хөнгөлөлтийн тайлбар"
+              disabled
             />
           </Col>
         </Row>

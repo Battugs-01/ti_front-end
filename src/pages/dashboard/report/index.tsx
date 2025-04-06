@@ -92,8 +92,8 @@ const ReportPage: React.FC = () => {
 
     const columnData = data?.items?.map((item: any) => {
       return {
-        title: item.fee_name,
-        dataIndex: item.fee_name,
+        title: `${item.fee_name}_${item.capacity}`,
+        dataIndex: `${item.fee_name}_${item.capacity}`,
         render: (value: any) => {
           if (typeof value === "number") {
             return moneyFormat(value || 0) || "";
@@ -133,6 +133,7 @@ const ReportPage: React.FC = () => {
   const customColumn = tableData.push();
 
   console.log(tableData, "tableData");
+  console.log(columnData, "kkkkkkk");
   return (
     <PageCard xR>
       <InitTableHeader

@@ -24,6 +24,7 @@ import {
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 import { ShippmentCreate } from "./shippment_create";
+import { UpdateCargoApproach } from "./update_cargo_approach";
 
 export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
@@ -173,6 +174,21 @@ export const ArrivalField: React.FC = () => {
         DetailComponent={PublicDetail}
         refresh={refreshList}
         CreateComponent={CreateCargoApproach}
+        UpdateComponent={
+          !record?.broker?.is_default ? UpdateCargoApproach : undefined
+        }
+        RemoveModelConfig={
+          !record?.broker?.is_default
+            ? {
+                action: fieldRegistration.deleteRegistration,
+                config: (record) => ({
+                  uniqueKey: record?.id,
+                  display: record?.container_code,
+                  title: "Устгах",
+                }),
+              }
+            : undefined
+        }
         create={createCargoApproach}
         setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"

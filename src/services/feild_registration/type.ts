@@ -29,10 +29,36 @@ export interface CargoApproachList {
   transport_give: TransportGive;
   assignation_status: AssignationStatus;
   shipping_status: ShippingStatus;
-  broker: any;
+  broker: Broker;
   shipping_ticket_id: number;
   assignment_ticket_id: number;
   tickets: Ticket[];
+}
+
+export interface Broker {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  shortcut_name: string;
+  name: string;
+  contact_number: string;
+  is_broker: boolean;
+  ledger_id: number;
+  updated_by_id: number;
+  ledger: Ledger;
+  is_default: boolean;
+}
+
+export interface Ledger {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by_id: number;
+  updated_by_id: number;
+  name: string;
+  balance: number;
+  initial_balance: number;
 }
 
 export interface AssignationStatus {
@@ -79,6 +105,7 @@ export interface GetTempAdditionalFeeType {
   additional_fee_category_id: number;
   date: Date;
   additional_fee_ticket_calculated: TempAdditionalFee[];
+  discount_description: string;
 }
 
 export interface TempAdditionalFee {
@@ -194,6 +221,7 @@ export interface Ticket {
   ticket_number: string;
   cargo_weight: number;
   additional_fee_category_id: number;
+  discount_description: string;
   additional_fee_category: any;
   date: Date;
   additional_fee_ticket_calculated: AdditionalFeeTicketCalculated[];

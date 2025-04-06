@@ -145,6 +145,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       );
       form.setFieldsValue({
         ...res,
+        discount_description: res?.discount_description,
       });
       const resData =
         res?.additional_fee_ticket_calculated?.map((values): any => {
@@ -183,34 +184,42 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     setAdditionalFee([...additionalFee]);
   };
 
+  const fetchAdditionalFee = async () => {
+    const data = await ticketAdditionalFee.runAsync({
+      additional_fees: additionalFee.map((values) => {
+        return {
+          additional_fee_id: values.id,
+          number_1: values.number_1,
+          number_2: values.number_2,
+          total_amount: values.total_amount,
+          fee_name: values.fee_name,
+          fee_code: values.fee_code,
+          unit_measurement: values.unit_measurement,
+          fee_amount: values.fee_amount,
+          is_new: values.is_new,
+        };
+      }),
+      shipping_or_assignment: "assignment",
+      cargo_weight: form.getFieldValue("cargo_weight"),
+      additional_fee_category_id: form.getFieldValue(
+        "additional_fee_category_id"
+      ),
+      date: dayjs(form.getFieldValue("opened_at")),
+      ticket_number: form.getFieldValue("ticket_number"),
+      container_transport_record_id: detail?.id,
+      discount_description: form.getFieldValue("discount_description"),
+    });
+
+    setTicketAdditional(data);
+    return data;
+  };
+
   return (
     <ModalForm
       form={form}
       onFinish={async (values) => {
-        const data = await ticketAdditionalFee.runAsync({
-          additional_fees: additionalFee.map((values) => {
-            return {
-              additional_fee_id: values.id,
-              number_1: values.number_1,
-              number_2: values.number_2,
-              total_amount: values.total_amount,
-              fee_name: values.fee_name,
-              fee_code: values.fee_code,
-              unit_measurement: values.unit_measurement,
-              fee_amount: values.fee_amount,
-              is_new: values.is_new,
-            };
-          }),
-          shipping_or_assignment: "shipping",
-          cargo_weight: form.getFieldValue("cargo_weight"),
-          additional_fee_category_id: form.getFieldValue(
-            "additional_fee_category_id"
-          ),
-          date: dayjs(form.getFieldValue("opened_at")).toDate(),
-          ticket_number: form.getFieldValue("ticket_number"),
-          container_transport_record_id: detail?.id,
-        });
-        setTicketAdditional(data);
+        const data = await fetchAdditionalFee();
+
         await updateArrivalField.runAsync(
           {
             opened_at: values.opened_at ? dayjs(values.opened_at) : undefined,
@@ -235,6 +244,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
           shipping_or_assignment: "shipping",
+          discount_description: values.discount_description,
         });
       }}
       title="Ачилт"
@@ -1019,6 +1029,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
+                            await fetchAdditionalFee();
                           }}
                         >
                           Хэвлэх
