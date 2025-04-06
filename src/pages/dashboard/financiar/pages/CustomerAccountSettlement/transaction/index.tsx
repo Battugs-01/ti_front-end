@@ -12,7 +12,6 @@ import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { PaymentMethod } from "utils/options";
 import { CreateService } from "./actions/create";
-import { UpdateService } from "./actions/update";
 
 const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
@@ -50,7 +49,7 @@ const Transaction = () => {
             <div className="flex gap-3 items-end">
               <DatePicker.RangePicker
                 className="w-max"
-                placeholder={["Эхлэх огноо", "Дуусах огноо"]}
+                placeholder={["Эхлэх огноо", "Дуусах огноо"]} 
                 onChange={(values) => {
                   setFilter({
                     ...filter,
@@ -60,11 +59,15 @@ const Transaction = () => {
                     ],
                   });
                 }}
+                // defaultValue={[
+                //   filter.between[0]
+                //     ? dayjs(filter.between[0])
+                //     : dayjs().subtract(3, "month"),
+                //   filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
+                // ]}
                 defaultValue={[
-                  filter.between[0]
-                    ? dayjs(filter.between[0])
-                    : dayjs().subtract(3, "month"),
-                  filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
+                  dayjs().subtract(3, "month"),
+                  dayjs(),
                 ]}
               />
             </div>
@@ -118,11 +121,11 @@ const Transaction = () => {
           list.run({ ...filter, created_by: user?.user?.id, ...values })
         }
         form={filter}
-        UpdateComponent={
-          user?.user?.role_name === UserRoleType.financier
-            ? UpdateService
-            : undefined
-        }
+        // UpdateComponent={
+        //   user?.user?.role_name === UserRoleType.financier
+        //     ? UpdateService
+        //     : undefined
+        // }
         setForm={setFilter}
         columns={[
           {
@@ -200,25 +203,25 @@ const Transaction = () => {
               </span>
             ),
           },
-          {
-            dataIndex: "barimt",
-            title: "Баримт",
-            render: (value: any) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "payer",
-            title: "Төлөгч",
-            align: "center",
-            render: (value: any, record) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {record?.ledger?.customer_company?.shortcut_name || "-"}
-              </span>
-            ),
-          },
+          // {
+          //   dataIndex: "barimt",
+          //   title: "Баримт",
+          //   render: (value: any) => (
+          //     <span className="text-sm text-[#475467] font-normal">
+          //       {value || "-"}
+          //     </span>
+          //   ),
+          // },
+          // {
+          //   dataIndex: "payer",
+          //   title: "Төлөгч",
+          //   align: "center",
+          //   render: (value: any, record) => (
+          //     <span className="text-sm text-[#475467] font-normal">
+          //       {record?.ledger?.customer_company?.shortcut_name || "-"}
+          //     </span>
+          //   ),
+          // },
         ]}
         CreateComponent={CreateService}
         create={create as boolean}

@@ -6,9 +6,9 @@ import {
 } from "config";
 
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Ledger from "./ledger";
 import Transaction from "./transaction";
-import { useLocation } from "react-router-dom";
 
 const CustomerAccountSettlement = () => {
   const location = useLocation();

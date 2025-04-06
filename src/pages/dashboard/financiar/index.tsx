@@ -4,6 +4,7 @@ import { FininciarTab, FininciarTabtButton } from "config";
 import { useState } from "react";
 import AdditionalFeeSettings from "./pages/AdditionalFeeSettings";
 import CancellingTicket from "./pages/CancellingTicket";
+import CargoName from "./pages/CargoName";
 import CategoryType from "./pages/CategoryType";
 import CustomerAccountSettlement from "./pages/CustomerAccountSettlement";
 import CustomerCompany from "./pages/CustomerCompany";
@@ -36,6 +37,10 @@ export const Fininciar: React.FC<any> = ({ data }) => {
     {
       value: FininciarTab.CancellingTicket,
       label: "Э/Х тасалбар хүчингүй болгох",
+    },
+    {
+      value: FininciarTab.CargoName,
+      label: "Ачааны нэр төрөл",
     },
   ];
 
@@ -85,6 +90,10 @@ export const Fininciar: React.FC<any> = ({ data }) => {
       <IfCondition
         condition={tab === FininciarTab.CategoryType}
         whenTrue={<CategoryType />}
+      />
+      <IfCondition
+        condition={tab === FininciarTab.CargoName}
+        whenTrue={<CargoName />}
       />
     </>
   );
