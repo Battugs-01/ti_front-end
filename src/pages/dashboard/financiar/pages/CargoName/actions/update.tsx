@@ -1,7 +1,7 @@
 import { ProFormInstance } from "@ant-design/pro-form";
 import { IModalForm } from "components/modal";
 import { useEffect, useRef } from "react";
-import transaction from "service/fininaciar/accountSettlement/transaction";
+import cargoName from "service/fininaciar/CargoName";
 import { ActionComponentProps } from "types";
 import { Info } from "./parts/info";
 
@@ -12,6 +12,7 @@ export const UpdateService = ({
   detail,
 }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
+
   useEffect(() => {
     if (open) {
       formRef.current?.setFieldsValue({
@@ -31,7 +32,7 @@ export const UpdateService = ({
       modalProps={{ maskClosable: false, onCancel }}
       onRequest={async (values) => {
         if (
-          await transaction.update(
+          await cargoName.update(
             {
               ...values,
             },
@@ -43,7 +44,7 @@ export const UpdateService = ({
       }}
       onSuccess={onFinish}
     >
-      <Info />
+      <Info actionName="update" />
     </IModalForm>
   );
 };

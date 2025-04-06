@@ -1,13 +1,12 @@
 import {
   ProFormDatePicker,
   ProFormDigit,
-  ProFormSelect,
-  ProFormText,
+  ProFormSelect
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
-import { FORM_ITEM_RULE } from "config";
+import { FORM_ITEM_RULE, PaymentType } from "config";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { PaymentMethod } from "utils/options";
 
@@ -65,6 +64,7 @@ export const Info = () => {
               label: item.label,
               value: item.value,
             }))}
+            initialValue={PaymentType.non_cash}
             label="Төлөлтийн хэлбэр"
           />
         </Col>
@@ -78,7 +78,7 @@ export const Info = () => {
           />
         </Col>
       </Row>
-      <Row gutter={[24, 24]}>
+      {/* <Row gutter={[24, 24]}>
         <Col span={12}>
           <ProFormDigit
             name={"barimt"}
@@ -95,7 +95,7 @@ export const Info = () => {
             rules={FORM_ITEM_RULE()}
           />
         </Col>
-      </Row>
+      </Row> */}
     </SectionContainer>
   );
 };

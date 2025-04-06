@@ -82,6 +82,7 @@ export enum FininciarTab {
   CancellingTicket = 3,
   CategoryType = 4,
   ForeignCustomer = 5,
+  CargoName = 6,
 }
 
 export enum registerCustomerEnumTab {
@@ -112,8 +113,8 @@ export enum DetailTab {
 
 export enum transictionTypeEnum {
   all = "",
-  // debit = "debit",
-  // credit = "credit",
+  debit = "debit",
+  credit = "credit",
 }
 
 export interface CustomerAccountSettlementTabtButton {
