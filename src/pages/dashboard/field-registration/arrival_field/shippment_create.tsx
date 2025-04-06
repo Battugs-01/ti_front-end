@@ -830,7 +830,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
               <Row>
                 <Col span={8}>
                   <ProFormTextArea
-                    name="description"
+                    name="discount_description"
                     placeholder="Зардлын хөнгөлөлтийн тайлбар бичих"
                     label="Зардлын хөнгөлөлтийн тайлбар"
                   />
