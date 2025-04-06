@@ -29,7 +29,7 @@ export const ArrivalField: React.FC = () => {
   const [user] = useContext(AuthContext);
   const [filter, setFilter] = useState(fieldRegistrationPaginate);
   const [ticketInvalidate, setTicketInvalidate] = useState<number | undefined>(
-    undefined,
+    undefined
   );
   const [search, setSearch] = useState<string>("");
   const [record, setRecord] = useState<CargoApproachList>();
@@ -82,8 +82,8 @@ export const ArrivalField: React.FC = () => {
               defaultValue={[
                 filter.between[0]
                   ? dayjs(filter.between[0])
-                  : dayjs().subtract(3, "month"),
-                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
+                  : (dayjs().subtract(3, "month") as any),
+                filter.between[1] ? dayjs(filter.between[1]) : (dayjs() as any),
               ]}
             />
           </div>
@@ -153,6 +153,14 @@ export const ArrivalField: React.FC = () => {
       <ITable<CargoApproachList>
         dataSource={fieldRegister.data?.items}
         bordered
+        setForm={(values: any) => {
+          setFilter({
+            ...filter,
+            current: values?.current,
+            pageSize: values?.pageSize,
+          });
+        }}
+        total={fieldRegister.data?.total}
         loading={fieldRegister.loading}
         rowSelection={
           user?.user?.role_name === UserRoleType.cashier && {
@@ -175,15 +183,15 @@ export const ArrivalField: React.FC = () => {
             <div className="flex items-center gap-1">
               {record?.assignation_status
                 ?.is_assignation_additional_fee_paid && (
-                  <Tooltip title="Олголтын элдэв хураамж цуцлах">
-                    <FileX03
-                      className="w-5 p-2 text-red-700"
-                      onClick={() => {
-                        setTicketInvalidate(record?.assignment_ticket_id);
-                      }}
-                    />
-                  </Tooltip>
-                )}
+                <Tooltip title="Олголтын элдэв хураамж цуцлах">
+                  <FileX03
+                    className="w-5 p-2 text-red-700"
+                    onClick={() => {
+                      setTicketInvalidate(record?.assignment_ticket_id);
+                    }}
+                  />
+                </Tooltip>
+              )}
               {record?.assignation_status?.is_assignation_additional_fee_paid &&
                 record?.shipping_status?.is_shipping_additional_fee_paid && (
                   <Tooltip title="Ачилтын элдэв хураамж цуцлах">
@@ -237,9 +245,7 @@ export const ArrivalField: React.FC = () => {
                           <IBadge
                             key={index}
                             color="blue"
-                            title={
-                              ticket?.additional_fee_category?.name || " s"
-                            }
+                            title={ticket?.additional_fee_category?.name || ""}
                           />
                         );
                       })}
@@ -252,7 +258,7 @@ export const ArrivalField: React.FC = () => {
                 dataIndex: "direction",
                 render: (_, record) => {
                   return DirectionOptions.find(
-                    (item) => item.value === record?.direction,
+                    (item) => item.value === record?.direction
                   )?.label;
                 },
               },
@@ -274,7 +280,7 @@ export const ArrivalField: React.FC = () => {
                   return (
                     <span className="text-sm text-[#475467] font-normal flex text-center">
                       {CapacityOptions?.find(
-                        (capacity) => capacity.value === value,
+                        (capacity) => capacity.value === value
                       )?.label || "-"}
                     </span>
                   );
@@ -321,7 +327,7 @@ export const ArrivalField: React.FC = () => {
                 render: (_, record) => {
                   return ArrilvelFieldPaymentMethod.find(
                     (item) =>
-                      item.value === record?.transport_recieve?.payment_method,
+                      item.value === record?.transport_recieve?.payment_method
                   )?.label;
                 },
               },
@@ -431,7 +437,7 @@ export const ArrivalField: React.FC = () => {
                   }
                   return dayjs(record?.opened_at).diff(
                     dayjs(record?.arrived_at_site),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -444,7 +450,7 @@ export const ArrivalField: React.FC = () => {
                   }
                   return dayjs(record?.freed_at).diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -457,7 +463,7 @@ export const ArrivalField: React.FC = () => {
                   }
                   return dayjs(record?.left_site_at)?.diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -470,7 +476,7 @@ export const ArrivalField: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.freed_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -483,7 +489,7 @@ export const ArrivalField: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.left_site_at),
-                    "days",
+                    "days"
                   );
                 },
               },

@@ -59,7 +59,7 @@ export const RemainderCargo: React.FC = () => {
             <DatePicker.RangePicker
               className="w-max"
               placeholder={["Эхлэх огноо", "Дуусах огноо"]}
-              onChange={(values) => {
+              onChange={(values: any) => {
                 setFilter({
                   ...filter,
                   between: [
@@ -71,8 +71,8 @@ export const RemainderCargo: React.FC = () => {
               defaultValue={[
                 filter.between[0]
                   ? dayjs(filter.between[0])
-                  : dayjs().subtract(3, "month"),
-                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
+                  : (dayjs().subtract(3, "month") as any),
+                filter.between[1] ? dayjs(filter.between[1]) : (dayjs() as any),
               ]}
             />
           </div>
@@ -110,6 +110,14 @@ export const RemainderCargo: React.FC = () => {
         loading={fieldRegister.loading}
         refresh={refreshList}
         bordered
+        total={fieldRegister.data?.total}
+        setForm={(values: any) => {
+          setFilter({
+            ...filter,
+            current: values?.current,
+            pageSize: values?.pageSize,
+          });
+        }}
         DetailComponent={PublicDetail}
         UpdateComponent={
           user.user?.role_name === UserRoleType.cashier
@@ -171,7 +179,7 @@ export const RemainderCargo: React.FC = () => {
                 dataIndex: "direction",
                 render: (_, record) => {
                   return DirectionOptions.find(
-                    (item) => item.value === record?.direction,
+                    (item) => item.value === record?.direction
                   )?.label;
                 },
               },
@@ -193,7 +201,7 @@ export const RemainderCargo: React.FC = () => {
                   return (
                     <span className="text-sm text-[#475467] font-normal flex text-center">
                       {CapacityOptions?.find(
-                        (capacity) => capacity.value === value,
+                        (capacity) => capacity.value === value
                       )?.label || "-"}
                     </span>
                   );
@@ -240,7 +248,7 @@ export const RemainderCargo: React.FC = () => {
                 render: (_, record) => {
                   return ArrilvelFieldPaymentMethod.find(
                     (item) =>
-                      item.value === record?.transport_recieve?.payment_method,
+                      item.value === record?.transport_recieve?.payment_method
                   )?.label;
                 },
               },
@@ -350,7 +358,7 @@ export const RemainderCargo: React.FC = () => {
                   }
                   return dayjs(record?.opened_at).diff(
                     dayjs(record?.arrived_at_site),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -363,7 +371,7 @@ export const RemainderCargo: React.FC = () => {
                   }
                   return dayjs(record?.freed_at).diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -376,7 +384,7 @@ export const RemainderCargo: React.FC = () => {
                   }
                   return dayjs(record?.left_site_at)?.diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -389,7 +397,7 @@ export const RemainderCargo: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.freed_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -402,7 +410,7 @@ export const RemainderCargo: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.left_site_at),
-                    "days",
+                    "days"
                   );
                 },
               },

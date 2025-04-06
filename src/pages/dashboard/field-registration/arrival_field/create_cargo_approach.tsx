@@ -77,6 +77,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       title="Талбайн бүртгэл"
       initialValues={{
         category: "3",
+        approach_report_date: moment().toDate(),
       }}
       open={open}
       modalProps={{
@@ -310,8 +311,8 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       size: "large",
                     }}
                     name={["assignation", "shipping_number"]}
-                    placeholder="Илгээлтийн дугаар"
-                    label="Илгээлтийн дугаар"
+                    placeholder="Манифестийн дугаар"
+                    label="Манифестийн дугаар"
                   />
                 </Col>
               </Row>

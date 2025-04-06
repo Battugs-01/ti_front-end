@@ -61,7 +61,7 @@ export const CargoApproach: React.FC = () => {
             <DatePicker.RangePicker
               className="w-max"
               placeholder={["Эхлэх огноо", "Дуусах огноо"]}
-              onChange={(values) => {
+              onChange={(values: any) => {
                 setFilter({
                   ...filter,
                   between: [
@@ -73,8 +73,8 @@ export const CargoApproach: React.FC = () => {
               defaultValue={[
                 filter.between[0]
                   ? dayjs(filter.between[0])
-                  : dayjs().subtract(3, "month"),
-                filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
+                  : (dayjs().subtract(3, "month") as any),
+                filter.between[1] ? dayjs(filter.between[1]) : (dayjs() as any),
               ]}
             />
           </div>
@@ -113,25 +113,33 @@ export const CargoApproach: React.FC = () => {
         dataSource={fieldRegister?.data?.items}
         loading={fieldRegister.loading}
         bordered
+        total={fieldRegister.data?.total}
+        setForm={(values: any) => {
+          setFilter({
+            ...filter,
+            current: values?.current,
+            pageSize: values?.pageSize,
+          });
+        }}
         CreateComponent={CreateCargoApproach}
         UpdateComponent={
-          user.user?.role_name === UserRoleType.transport_manager
+          user.user?.role_name === UserRoleType.transport_manager ||
+          user.user?.role_name === UserRoleType.cashier
             ? UpdateCargoApproach
             : undefined
         }
         DetailComponent={PublicDetail}
         refresh={refreshList}
         RemoveModelConfig={
-          user.user?.role_name === UserRoleType.transport_manager ||
-            user.user?.role_name === UserRoleType.cashier
+          user.user?.role_name === UserRoleType.transport_manager
             ? {
-              action: fieldRegistration.deleteRegistration,
-              config: (record) => ({
-                uniqueKey: record?.id,
-                display: record?.container_code,
-                title: "Устгах",
-              }),
-            }
+                action: fieldRegistration.deleteRegistration,
+                config: (record) => ({
+                  uniqueKey: record?.id,
+                  display: record?.container_code,
+                  title: "Устгах",
+                }),
+              }
             : undefined
         }
         create={create}
@@ -191,7 +199,7 @@ export const CargoApproach: React.FC = () => {
                 dataIndex: "direction",
                 render: (_, record) => {
                   return DirectionOptions.find(
-                    (item) => item.value === record?.direction,
+                    (item) => item.value === record?.direction
                   )?.label;
                 },
               },
@@ -213,7 +221,7 @@ export const CargoApproach: React.FC = () => {
                   return (
                     <span className="text-sm text-[#475467] font-normal flex text-center">
                       {CapacityOptions?.find(
-                        (capacity) => capacity.value === value,
+                        (capacity) => capacity.value === value
                       )?.label || "-"}
                     </span>
                   );
@@ -260,7 +268,7 @@ export const CargoApproach: React.FC = () => {
                 render: (_, record) => {
                   return ArrilvelFieldPaymentMethod.find(
                     (item) =>
-                      item.value === record?.transport_recieve?.payment_method,
+                      item.value === record?.transport_recieve?.payment_method
                   )?.label;
                 },
               },
@@ -370,7 +378,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return dayjs(record?.opened_at).diff(
                     dayjs(record?.arrived_at_site),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -383,7 +391,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return dayjs(record?.freed_at).diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -396,7 +404,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return dayjs(record?.left_site_at)?.diff(
                     dayjs(record?.opened_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -409,7 +417,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.freed_at),
-                    "days",
+                    "days"
                   );
                 },
               },
@@ -422,7 +430,7 @@ export const CargoApproach: React.FC = () => {
                   }
                   return dayjs(record?.returned_at).diff(
                     dayjs(record?.left_site_at),
-                    "days",
+                    "days"
                   );
                 },
               },

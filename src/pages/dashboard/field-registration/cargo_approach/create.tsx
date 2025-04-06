@@ -64,6 +64,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       }}
       initialValues={{
         direction: DirectionType.south,
+        approach_report_date: moment().toDate(),
       }}
       title="Ачаа чингэлэг тээврийн бүртгэл "
       open={open}
@@ -348,6 +349,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       label: item.name,
                       value: item.id,
                     }))}
+                    showSearch
                     placeholder="Гадаад тээвэр зууч"
                     label="Гадаад тээвэр зууч"
                   />
