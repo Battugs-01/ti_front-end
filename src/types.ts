@@ -78,6 +78,7 @@ export interface BaseResponse<T> {
 export interface PaginationResponse<T> {
   total: number;
   items: Array<T>;
+  meta?: any;
 }
 
 export interface SearchResponse<T> {

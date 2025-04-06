@@ -13,3 +13,7 @@ export interface LedgerType {
   initial_balance: number;
   customer_company?: CustomerCompanyType;
 }
+
+export interface LedgerMetaType {
+  total_balance: number;
+}
