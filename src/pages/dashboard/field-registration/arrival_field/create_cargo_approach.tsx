@@ -329,6 +329,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
+                    showSearch
                     name={["assignation", "transport_category_id"]}
                     placeholder="Ачааны нэр төрөл"
                     label="Ачааны нэр төрөл"

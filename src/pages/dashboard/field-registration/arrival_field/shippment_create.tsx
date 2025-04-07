@@ -8,7 +8,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row, Select } from "antd";
+import { Button, Col, Form, notification, Row, Select, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
@@ -294,14 +294,22 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
               <Button onClick={onCancel} size="large" type="default">
                 Болих
               </Button>
-              <Button
-                onClick={props.submit}
-                size="large"
-                type="primary"
-                loading={updateArrivalField.loading}
+              <Tooltip
+                title={
+                  paymentList.length === 0
+                    ? "Төлбөрийн жагсаалт үүсгэхгүй бол хадгалагдахгүй"
+                    : "Хадгалах"
+                }
               >
-                Хадгалах
-              </Button>
+                <Button
+                  onClick={props.submit}
+                  size="large"
+                  type="primary"
+                  loading={updateArrivalField.loading}
+                >
+                  Хадгалах
+                </Button>
+              </Tooltip>
             </div>
           );
         },
@@ -664,6 +672,12 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                     renderFormItem: (_, { record }: any) => {
                       return (
                         <Select
+                          showSearch
+                          filterOption={(input, option) =>
+                            (option?.label ?? "")
+                              .toLowerCase()
+                              .includes(input.toLowerCase())
+                          }
                           options={allAdditionalFee?.map((item) => {
                             return {
                               label: item.fee_name,
@@ -951,6 +965,9 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       <div className="flex justify-end gap-3">
                         <Button
                           size="middle"
+                          disabled={
+                            additionalFee.length === 0 || !additionalFee
+                          }
                           onClick={() => {
                             setPaymentList([
                               {
