@@ -63,7 +63,7 @@ const Ledger = () => {
             </div>
           }
           fileName="Харилцагчийн дансны жагсаалт"
-          searchPlaceHolder="Үлдэгдэл, Дебит , Кредит"
+          searchPlaceHolder="Данс, Нэр , Үлдэгдэл"
           search={search}
           setSearch={(e) => {
             setSearch(e);

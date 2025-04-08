@@ -195,6 +195,7 @@ const ReportPage: React.FC = () => {
             return el?.Flattened;
           }) ?? []
         }
+        total={reportList?.data?.total}
         // summary={(pageData) => {
         //   let totalBorrow = 0;
         //   let totalRepayment = 0;
@@ -216,6 +217,8 @@ const ReportPage: React.FC = () => {
         //     </>
         //   );
         // }}
+        form={filter}
+        setForm={setFilter}
         loading={reportList.loading}
         refresh={refreshList}
         className="p-0 remove-padding-table"
