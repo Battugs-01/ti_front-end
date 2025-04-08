@@ -924,6 +924,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         <Col span={5}>
                           <ProFormSelect
                             name="ledger_id"
+                            showSearch
                             onChange={(value) => {
                               const ledger = bankListData.find(
                                 (item) => item.id === value
