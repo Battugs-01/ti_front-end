@@ -154,6 +154,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
+                    showSearch
                     request={async () => {
                       const data = await customerCompanyList.runAsync({
                         is_all: true,
