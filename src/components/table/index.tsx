@@ -23,6 +23,7 @@ type Props<T> = ProTableProps<T, any, any> & {
   RemoveModelConfig?: RemoveModelConfig<T>;
   onPaginationChange?: (page: number, pageSize: number) => void;
   hideEditButton?: (record: any) => boolean;
+  hideDeleteButton?: (record: any) => boolean;
   hideInActiveButton?: (record: any) => boolean;
   showDetailButton?: (record: any) => boolean;
   noShadow?: boolean;
@@ -59,6 +60,7 @@ export const ITable = <T extends {}>({
   RemoveModelConfig,
   onPaginationChange,
   hideEditButton,
+  hideDeleteButton,
   showDetailButton,
   noShadow = false,
   page,
@@ -181,7 +183,7 @@ export const ITable = <T extends {}>({
                     {UpdateComponent && (
                       <EditButton
                         style={{
-                          opacity: hideEditButton?.(record) ? 0.5 : 1,
+                          opacity: hideEditButton?.(record) ? 0.2 : 1,
                           cursor: hideEditButton?.(record)
                             ? "not-allowed"
                             : "pointer",
@@ -193,8 +195,14 @@ export const ITable = <T extends {}>({
                     )}
                     {(RemoveModelConfig || RemoveComponent) && (
                       <DeleteButton
+                        style={{
+                          opacity: hideDeleteButton?.(record) ? 0.2 : 1,
+                          cursor: hideDeleteButton?.(record)
+                            ? "not-allowed"
+                            : "pointer",
+                        }}
                         onClick={() => {
-                          setRemove(record);
+                          hideDeleteButton?.(record) ? null : setRemove(record);
                         }}
                       />
                     )}

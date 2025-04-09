@@ -174,21 +174,21 @@ export const ArrivalField: React.FC = () => {
         DetailComponent={PublicDetail}
         refresh={refreshList}
         CreateComponent={CreateCargoApproach}
-        UpdateComponent={
-          !record?.broker?.is_default ? UpdateCargoApproach : undefined
-        }
-        RemoveModelConfig={
-          !record?.broker?.is_default
-            ? {
-                action: fieldRegistration.deleteRegistration,
-                config: (record) => ({
-                  uniqueKey: record?.id,
-                  display: record?.container_code,
-                  title: "Устгах",
-                }),
-              }
-            : undefined
-        }
+        hideEditButton={(record) => {
+          return record?.broker?.is_default;
+        }}
+        hideDeleteButton={(record) => {
+          return record?.broker?.is_default;
+        }}
+        UpdateComponent={UpdateCargoApproach}
+        RemoveModelConfig={{
+          action: fieldRegistration.deleteRegistration,
+          config: (record) => ({
+            uniqueKey: record?.id,
+            display: record?.container_code,
+            title: "Устгах",
+          }),
+        }}
         create={createCargoApproach}
         setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"
