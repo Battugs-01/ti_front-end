@@ -9,6 +9,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE } from "config";
+import dayjs from "dayjs";
 import moment from "moment";
 import fieldRegistration from "service/feild_registration";
 import assignation from "service/feild_registration/assignation";
@@ -69,8 +70,12 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         console.log("values", values);
         const data = await createCargo.runAsync({
           ...values,
-          approach_report_date: moment(values.approach_report_date).toDate(),
-          arrived_at_site: moment(values.arrived_at_site).toDate(),
+          approach_report_date: values.approach_report_date
+            ? dayjs(values.approach_report_date)
+            : undefined,
+          arrived_at_site: values.arrived_at_site
+            ? dayjs(values.arrived_at_site)
+            : undefined,
         });
         if (values.assignation) {
           await createAssign.runAsync({
@@ -84,7 +89,7 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       title="Талбайн бүртгэл"
       initialValues={{
         category: "3",
-        approach_report_date: moment().toDate(),
+        approach_report_date: dayjs(),
       }}
       open={open}
       modalProps={{
