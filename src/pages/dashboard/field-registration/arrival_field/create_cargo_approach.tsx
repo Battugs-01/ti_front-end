@@ -10,7 +10,6 @@ import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
-import moment from "moment";
 import fieldRegistration from "service/feild_registration";
 import assignation from "service/feild_registration/assignation";
 import cargoName from "service/fininaciar/CargoName";

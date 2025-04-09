@@ -9,7 +9,7 @@ import ProForm, {
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
 import { FORM_ITEM_RULE } from "config";
-import moment from "moment";
+import dayjs from "dayjs";
 import fieldRegistration from "service/feild_registration";
 import assignation from "service/feild_registration/assignation";
 import cargoName from "service/fininaciar/CargoName";
@@ -71,8 +71,12 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         const data = await updateCargo.runAsync(
           {
             ...values,
-            approach_report_date: moment(values.approach_report_date).toDate(),
-            arrived_at_site: moment(values.arrived_at_site).toDate(),
+            approach_report_date: values.approach_report_date
+              ? dayjs(values.approach_report_date)
+              : undefined,
+            arrived_at_site: values.arrived_at_site
+              ? dayjs(values.arrived_at_site)
+              : undefined,
           },
           detail.id
         );
@@ -92,7 +96,12 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       initialValues={{
         ...detail,
         category: "3",
-        approach_report_date: moment().toDate(),
+        approach_report_date: detail?.approach_report_date
+          ? dayjs(detail?.approach_report_date)
+          : undefined,
+        arrived_at_site: detail?.arrived_at_site
+          ? dayjs(detail?.arrived_at_site)
+          : undefined,
       }}
       open={open}
       modalProps={{
