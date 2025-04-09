@@ -131,7 +131,8 @@ export const CargoApproach: React.FC = () => {
         DetailComponent={PublicDetail}
         refresh={refreshList}
         RemoveModelConfig={
-          user.user?.role_name === UserRoleType.transport_manager
+          user.user?.role_name === UserRoleType.transport_manager ||
+          user.user?.role_name === UserRoleType.cashier
             ? {
                 action: fieldRegistration.deleteRegistration,
                 config: (record) => ({
