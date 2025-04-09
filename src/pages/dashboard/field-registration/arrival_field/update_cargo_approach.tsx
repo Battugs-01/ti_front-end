@@ -57,8 +57,6 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
       }),
   });
 
-  console.log(detail, "jjjjj");
-
   const cargoTypeList = useRequest(cargoName.list, {
     manual: true,
     onError: (err) =>
@@ -164,6 +162,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     fieldProps={{
                       size: "large",
                     }}
+                    showSearch
                     request={async () => {
                       const data = await customerCompanyList.runAsync({
                         is_all: true,

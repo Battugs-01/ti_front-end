@@ -89,14 +89,14 @@ const CargoName = () => {
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
-        // RemoveModelConfig={{
-        //   action: customerCompany.deleteA,
-        //   config: (record) => ({
-        //     uniqueKey: record?.id,
-        //     display: record?.name,
-        //     title: "Remove",
-        //   }),
-        // }}
+        RemoveModelConfig={{
+          action: cargoName.deleteA,
+          config: (record) => ({
+            uniqueKey: record?.id,
+            display: record?.name,
+            title: "Remove",
+          }),
+        }}
       />
     </PageCard>
   );

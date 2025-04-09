@@ -142,14 +142,14 @@ const CustomerCompany = () => {
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
-        // RemoveModelConfig={{
-        //   action: customerCompany.deleteA,
-        //   config: (record) => ({
-        //     uniqueKey: record?.id,
-        //     display: record?.name,
-        //     title: "Remove",
-        //   }),
-        // }}
+        RemoveModelConfig={{
+          action: customerCompany.deleteA,
+          config: (record) => ({
+            uniqueKey: record?.id,
+            display: record?.name,
+            title: "Remove",
+          }),
+        }}
       />
     </PageCard>
   );

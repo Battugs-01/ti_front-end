@@ -3,7 +3,7 @@ import {
   ProFormDigit,
   ProFormSelect
 } from "@ant-design/pro-form";
-import { useRequest } from "ahooks";
+import { useDebounceFn, useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
 import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE, PaymentType } from "config";
@@ -19,6 +19,22 @@ export const Info = () => {
         message: err.message,
       }),
   });
+
+  const debouncedSearch = useDebounceFn(
+    (value) => {
+      if (value) {
+        list.run({
+          is_all: true,
+          search: value
+        });
+      }
+    },
+    {
+      wait: 5000 // 2 seconds delay
+    }
+  );
+
+
   return (
     <SectionContainer>
       <Row gutter={[24, 24]}>
@@ -43,11 +59,15 @@ export const Info = () => {
               loading: list.loading,
               filterOption: false,
               size: "large",
+              onSearch: (value) => {
+                debouncedSearch.run(value);
+              }
             }}
             placeholder={"Данс"}
             request={async (value) => {
               const res = await list.runAsync({
                 is_all: true,
+                search: value.keyWords 
               });
               return res?.items?.map((item: any) => ({
                 label: `${item?.customer_company?.name} - ${item?.name}`,
