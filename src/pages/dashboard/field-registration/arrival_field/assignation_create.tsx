@@ -283,6 +283,7 @@ export const AssignationCreate: React.FC<
           ticket_id: data?.id || getTempAdditionalFee.data?.id,
           total_amount: totalAmount,
           discount_description: values.discount_description,
+          transaction_type: "credit",
         });
       }}
       title="Олголт "
@@ -1180,7 +1181,41 @@ export const AssignationCreate: React.FC<
                             });
                             downloadPDF(data);
 
-                            await fetchAdditionalFee();
+                            const additionalFeeData =
+                              await fetchAdditionalFee();
+
+                            await updateArrivalField.runAsync(
+                              {
+                                opened_at: form.getFieldValue("opened_at")
+                                  ? dayjs(form.getFieldValue("opened_at"))
+                                  : undefined,
+                                left_site_at: form.getFieldValue("left_site_at")
+                                  ? dayjs(form.getFieldValue("left_site_at"))
+                                  : undefined,
+                                freed_at: form.getFieldValue("freed_at")
+                                  ? dayjs(form.getFieldValue("freed_at"))
+                                  : undefined,
+                                returned_at: form.getFieldValue("returned_at")
+                                  ? dayjs(form.getFieldValue("returned_at"))
+                                  : undefined,
+                                shipped_at: form.getFieldValue("shipped_at")
+                                  ? dayjs(form.getFieldValue("shipped_at"))
+                                  : undefined,
+                              },
+                              detail?.id as number
+                            );
+                            await addAdditionalFeeDebit.runAsync({
+                              ...form.getFieldsValue(),
+                              date: dayjs(form.getFieldValue("opened_at")),
+                              ticket_id:
+                                additionalFeeData?.id ||
+                                getTempAdditionalFee.data?.id,
+                              total_amount: totalAmount,
+                              discount_description: form.getFieldValue(
+                                "discount_description"
+                              ),
+                              transaction_type: "credit",
+                            });
                           }}
                         >
                           Хэвлэх

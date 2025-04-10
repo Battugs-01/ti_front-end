@@ -53,7 +53,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     freed: computeDate(detail?.freed_at, detail?.opened_at) || 0,
     left_site: computeDate(detail?.left_site_at, detail?.opened_at) || 0,
     returned: computeDate(detail?.returned_at, detail?.left_site_at) || 0,
-    shipped: 0,
+    shipped: computeDate(detail?.shipped_at, detail?.returned_at) || 0,
   });
   const [bankListData, setBankListData] = useState<any[]>([]);
   const [ticketAdditional, setTicketAdditional] =
@@ -271,6 +271,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
           total_amount: totalAmount,
           shipping_or_assignment: "shipping",
           discount_description: values.discount_description,
+          transaction_type: "credit",
         });
       }}
       title="Ачилт"
@@ -563,6 +564,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+
                           setDates({
                             ...dates,
                             shipped: dayjs(e).diff(
@@ -1123,7 +1128,41 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                               } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
-                            await fetchAdditionalFee();
+                            const additionalFeeData =
+                              await fetchAdditionalFee();
+
+                            await updateArrivalField.runAsync(
+                              {
+                                opened_at: form.getFieldValue("opened_at")
+                                  ? dayjs(form.getFieldValue("opened_at"))
+                                  : undefined,
+                                left_site_at: form.getFieldValue("left_site_at")
+                                  ? dayjs(form.getFieldValue("left_site_at"))
+                                  : undefined,
+                                freed_at: form.getFieldValue("freed_at")
+                                  ? dayjs(form.getFieldValue("freed_at"))
+                                  : undefined,
+                                returned_at: form.getFieldValue("returned_at")
+                                  ? dayjs(form.getFieldValue("returned_at"))
+                                  : undefined,
+                                shipped_at: form.getFieldValue("shipped_at")
+                                  ? dayjs(form.getFieldValue("shipped_at"))
+                                  : undefined,
+                              },
+                              detail?.id as number
+                            );
+                            await addAdditionalFeeDebit.runAsync({
+                              ...form.getFieldsValue(),
+                              date: dayjs(form.getFieldValue("opened_at")),
+                              ticket_id:
+                                additionalFeeData?.id ||
+                                getTempAdditionalFee.data?.id,
+                              total_amount: totalAmount,
+                              discount_description: form.getFieldValue(
+                                "discount_description"
+                              ),
+                              transaction_type: "credit",
+                            });
                           }}
                         >
                           Хэвлэх
