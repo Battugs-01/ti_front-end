@@ -1,6 +1,6 @@
 import { ProFormSelect } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
-import { DatePicker, notification } from "antd";
+import { DatePicker, notification, Table, Typography } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
@@ -26,6 +26,9 @@ const Transaction = () => {
       }),
   });
 
+
+  const { Text } = Typography;
+  
   const run = () => {
     list.run({
       ...filter,
@@ -219,6 +222,30 @@ const Transaction = () => {
           //   ),
           // },
         ]}
+        summary={() => (
+          <>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={0}></Table.Summary.Cell>
+              <Table.Summary.Cell index={1}>
+                <Text>Нийт</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={2}/>
+              <Table.Summary.Cell index={3}/>
+              <Table.Summary.Cell index={4}/>
+              <Table.Summary.Cell index={5}/>
+              <Table.Summary.Cell index={6} className="text-center">
+                <Text type="danger" className="font-bold">
+                  {moneyFormat(list?.data?.meta?.transaction_balance || 0)}
+                </Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={7} className="text-center">
+                <Text type="danger" className="font-bold">
+                  {moneyFormat(list?.data?.meta?.ledger_balance || 0)}
+                </Text>
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </>
+      )}
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
