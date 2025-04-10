@@ -90,19 +90,25 @@ const ReportPage: React.FC = () => {
       is_all: true,
     });
 
-    const columnData = data?.items?.map((item: any) => {
-      return {
-        title: `${item.fee_name}_${item.capacity}`,
-        dataIndex: `${item.fee_name}_${item.capacity}`,
-        render: (value: any) => {
-          if (typeof value === "number") {
-            return moneyFormat(value || 0) || "";
-          } else {
-            return "";
-          }
-        },
-      };
-    });
+    // Use a Set to track unique fee names
+    const uniqueFeeNames = new Set();
+    const columnData = data?.items?.reduce((acc: any[], item: any) => {
+      if (!uniqueFeeNames.has(item.fee_name)) {
+        uniqueFeeNames.add(item.fee_name);
+        acc.push({
+          title: `${item.fee_name}`,
+          dataIndex: `${item.fee_name}`,
+          render: (value: any) => {
+            if (typeof value === "number") {
+              return moneyFormat(value || 0) || "";
+            } else {
+              return "";
+            }
+          },
+        });
+      }
+      return acc;
+    }, []);
     setColumnData(columnData);
 
     return columnData;
