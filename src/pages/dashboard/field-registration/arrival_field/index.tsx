@@ -197,17 +197,6 @@ export const ArrivalField: React.FC = () => {
           if (user?.user?.role_name !== UserRoleType.cashier) return null;
           return (
             <div className="flex items-center gap-1">
-              {record?.assignation_status
-                ?.is_assignation_additional_fee_paid && (
-                <Tooltip title="Олголтын элдэв хураамж цуцлах">
-                  <FileX03
-                    className="w-5 p-2 text-red-700"
-                    onClick={() => {
-                      setTicketInvalidate(record?.assignment_ticket_id);
-                    }}
-                  />
-                </Tooltip>
-              )}
               {record?.assignation_status?.is_assignation_additional_fee_paid &&
                 record?.shipping_status?.is_shipping_additional_fee_paid && (
                   <Tooltip title="Ачилтын элдэв хураамж цуцлах">
