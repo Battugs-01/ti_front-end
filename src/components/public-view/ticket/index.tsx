@@ -7,10 +7,11 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, notification, Row } from "antd";
+import { InvalidateModal } from "components/modal/invalidate_ticket";
 import { ITable } from "components/table";
 import { FORM_ITEM_RULE } from "config";
 import dayjs from "dayjs";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import additionalFeeDebit from "service/feild_registration/additionalFeeDebit";
 import {
   AdditionalFeeTicketCalculated,
@@ -24,7 +25,8 @@ interface TicketDataProps {
 }
 const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
   const form = useRef<ProFormInstance>();
-
+  const [cancelTicket, setCancelTicket] = useState<boolean>(false);
+  
   useEffect(() => {
     form.current?.setFieldsValue({
       ticket_number: ticket?.ticket_number,
@@ -53,6 +55,20 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
       });
     },
   });
+
+  // useEffect(() => {
+  //   if (cancelTicket) {
+  //     <InvalidateModal
+  //       title="Элдэв хураамжийн цуцлах хүсэлт"
+  //       remove
+  //       onCancel={() => setCancelTicket(false)}
+  //       onDone={() => {}}
+  //       open={cancelTicket}
+  //       ticket_id={ticket?.id}
+  //     />
+  //   }
+  // }, [cancelTicket]);
+
 
   const onClickGeneratePDF = async () => {
     const data = await generatePDF({
@@ -231,7 +247,15 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
           </Col>
         </Row>
 
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="flex flex-row gap-2 mb-3 justify-end">
+          <Button
+            size="middle"
+            onClick={() => 
+              setCancelTicket(!cancelTicket)
+            }
+          >
+            Элдэв хураамжийн тасалбар цуцлах
+          </Button>
           <Button
             className="col-start-4"
             size="middle"
@@ -241,6 +265,19 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
           </Button>
         </div>
       </>
+
+      {cancelTicket && (
+        <InvalidateModal
+          title="Элдэв хураамжийн цуцлах хүсэлт"
+          remove
+          onCancel={() => setCancelTicket(false)}
+          onDone={() => {
+            setCancelTicket(false);
+          }}
+          open={cancelTicket}
+          ticket_id={ticket?.id}
+        />
+      )}
     </ProForm>
   );
 };
