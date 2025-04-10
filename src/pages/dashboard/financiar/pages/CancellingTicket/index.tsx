@@ -2,7 +2,7 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { notification } from "antd";
 import IBadge from "components/badge";
 import { PageCard } from "components/card";
-import { DeleteButton, ITable } from "components/index";
+import { ApproveButton, DeleteButton, EditButton, ITable } from "components/index";
 import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import { DetailTab } from "config";
@@ -76,7 +76,7 @@ const CancellingTicket = () => {
         customActions={(record) => {
           return (
             record?.status === Status.created && (
-              <DeleteButton
+              <ApproveButton
                 onClick={() => {
                   setInvalidateRecord(record);
                 }}
@@ -101,14 +101,22 @@ const CancellingTicket = () => {
             ),
           },
           {
+            title: "Тасалбар дугаар",
+            dataIndex: "ticket_number",
+            align: "left",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center">
+                {record?.ticket?.ticket_number || "-"}
+              </span>
+            ),
+          },
+          {
             title: "Төрөл",
             dataIndex: "type",
             align: "left",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ticket?.shipping_or_assignment === DetailTab.shipping
-                  ? "Ачилт"
-                  : "Олголт"}
+                {record?.ticket?.additional_fee_category?.name}
               </span>
             ),
           },
@@ -149,7 +157,7 @@ const CancellingTicket = () => {
       />
       {invalidateRecord && (
         <InvalidateModal
-          title="Элдэв хураамжын тасалбар цуцлах"
+          title="Элдэв хураамжын тасалбар цуцлах хүсэлт зөвшөөрөх"
           open={!!invalidateRecord}
           onCancel={() => setInvalidateRecord(undefined)}
           onDone={() => {
