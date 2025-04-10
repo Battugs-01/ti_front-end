@@ -1,9 +1,11 @@
 import { useDebounceFn, useRequest } from "ahooks";
-import { notification, Table, Typography } from "antd";
+import { DatePicker, notification, Table, Typography } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
+import { AuthContext } from "context/auth";
+import dayjs from "dayjs";
+import { useContext, useEffect, useState } from "react";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { LedgerType } from "service/fininaciar/accountSettlement/ledger/type";
 import { ledgerFilter, moneyFormat } from "utils/index";
@@ -11,6 +13,7 @@ import { ledgerFilter, moneyFormat } from "utils/index";
 const Ledger = () => {
   const [filter, setFilter] = useState(ledgerFilter);
   const [search, setSearch] = useState<string>("");
+  const [user] = useContext(AuthContext);
   const { Text } = Typography;
   const list = useRequest(ledger.list, {
     manual: true,
@@ -41,7 +44,7 @@ const Ledger = () => {
           hideTitle
           leftContent={
             <div className="flex gap-2">
-              {/* <DatePicker.RangePicker
+              <DatePicker.RangePicker
                 className="w-max"
                 placeholder={["Эхлэх огноо", "Дуусах огноо"]}
                 onChange={(values) => {
@@ -59,7 +62,7 @@ const Ledger = () => {
                     : dayjs().subtract(3, "month"),
                   filter.between[1] ? dayjs(filter.between[1]) : dayjs(),
                 ]}
-              /> */}
+              />
             </div>
           }
           fileName="Харилцагчийн дансны жагсаалт"
@@ -129,6 +132,26 @@ const Ledger = () => {
           // },
           {
             dataIndex: "contact_number",
+            title: "Орлого",
+            align: "center",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal">
+                {moneyFormat(record?.debit_sum) || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "contact_number",
+            title: "Зарлага",
+            align: "center",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal">
+                {moneyFormat(record?.credit_sum) || "-"}
+              </span>
+            ),
+          },
+          {
+            dataIndex: "contact_number",
             title: "Эцсийн үлдэгдэл",
             align: "center",
             render: (_, record) => (
@@ -151,7 +174,15 @@ const Ledger = () => {
                 <Table.Summary.Cell index={3}>
                   <Text></Text>
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={4} className="text-center">
+                <Table.Summary.Cell index={4}>
+                  <Text> {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}</Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={5}>
+                <Text type="danger" className="font-bold">
+                    {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
+                  </Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={6} className="text-center">
                   <Text type="danger" className="font-bold">
                     {moneyFormat(list?.data?.meta?.total_balance || 0)}
                   </Text>
@@ -159,7 +190,6 @@ const Ledger = () => {
               </Table.Summary.Row>
             </>
         )}
-        
       />
     </PageCard>
   );

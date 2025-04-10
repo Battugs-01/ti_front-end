@@ -239,6 +239,13 @@ const ReportPage: React.FC = () => {
             render: (_: any, record: any) => {
               return dayjs(record?.date).format("YYYY-MM-DD");
             },
+          },          
+          {
+            title: "Тайлбар",
+            dataIndex: "discount_description",
+            render: (_: any, record: any) => {
+              return record?.discount_description || "-";
+            },
           },
           {
             title: "Төлбөр төлөгчийн нэр",

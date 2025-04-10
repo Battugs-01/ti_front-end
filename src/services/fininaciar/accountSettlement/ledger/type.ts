@@ -9,6 +9,8 @@ export interface LedgerType {
   name: string;
   debit: number;
   credit: number;
+  credit_sum: number;
+  debit_sum: number;
   balance: number;
   initial_balance: number;
   customer_company?: CustomerCompanyType;

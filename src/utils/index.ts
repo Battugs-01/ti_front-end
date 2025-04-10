@@ -363,6 +363,10 @@ export const ledgerFilter = {
   sorter: {
     created_at: "desc",
   },
+  between: [
+    dayjs().subtract(3, "month").format("YYYY-MM-DD"),
+    dayjs().format("YYYY-MM-DD"),
+  ],
 };
 
 export const transictionFilter = {
