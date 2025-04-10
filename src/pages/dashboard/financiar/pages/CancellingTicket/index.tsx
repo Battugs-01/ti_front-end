@@ -94,19 +94,19 @@ const CancellingTicket = () => {
             render: (_, record) => (
               <div className="flex gap-2">
                 <span className="text-sm text-[#475467] font-normal">
-                  {record?.ticket?.container_transport_record?.container_code ||
+                  {record?.transport_record?.container_code ||
                     "-"}
                 </span>
               </div>
             ),
           },
           {
-            title: "Тасалбар дугаар",
+            title:  "Тасалбар дугаар",
             dataIndex: "ticket_number",
             align: "left",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ticket?.ticket_number || "-"}
+                {record.ticket ? record?.ticket?.ticket_number : record?.deleted_ticket_number}
               </span>
             ),
           },
@@ -138,9 +138,9 @@ const CancellingTicket = () => {
             render: (_, record) => {
               const title = record?.status || "-";
               if (title === Status.created) {
-                return <IBadge color="green" title="Үүссэн" />;
+                return <IBadge color="blue" title="Үүссэн" />;
               }
-              return <IBadge color="red" title="Цуцлагдсан" />;
+              return <IBadge color="green" title="Зөвшөөрсөн" />;
             },
           },
           {

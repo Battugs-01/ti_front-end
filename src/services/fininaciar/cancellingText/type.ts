@@ -1,3 +1,5 @@
+import { ContainerTranportRecord } from "service/feild_registration/type";
+
 export interface CustomerCompanyType {
   id: number;
   created_at: Date;
@@ -18,7 +20,10 @@ export interface InvalidateTicketList {
   created_by: CreatedBy;
   updated_by_id: number;
   ticket_id: number;
+  transport_record_id: number;
+  transport_record: ContainerTranportRecord;
   ticket: Ticket;
+  deleted_ticket_number?: string;
   calc_id: number;
   calc: Calc;
   status: string;
