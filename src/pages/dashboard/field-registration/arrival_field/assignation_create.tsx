@@ -428,12 +428,27 @@ export const AssignationCreate: React.FC<
                           if (e === null || e === undefined) {
                             return;
                           }
+
+                          let diff = form.getFieldValue("left_site_at")
+                            ? dayjs(form.getFieldValue("left_site_at")).diff(
+                                dayjs(e),
+                                "day"
+                              )
+                            : 0;
+                          calcDateNumberAdditionalFee(diff);
                           setDates({
                             ...dates,
                             opened: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
                               "day"
                             ),
+                            freed: form.getFieldValue("freed_at")
+                              ? dayjs(form.getFieldValue("freed_at")).diff(
+                                  dayjs(e),
+                                  "day"
+                                )
+                              : 0,
+                            left_site: diff,
                           });
                         },
                       }}
@@ -462,11 +477,6 @@ export const AssignationCreate: React.FC<
                           if (e === null || e === undefined) {
                             return;
                           }
-                          let diff = dayjs(e).diff(
-                            dayjs(form.getFieldValue("opened_at")),
-                            "day"
-                          );
-                          calcDateNumberAdditionalFee(diff);
                           setDates({
                             ...dates,
                             freed: dayjs(e).diff(
@@ -501,6 +511,12 @@ export const AssignationCreate: React.FC<
                           setDates({
                             ...dates,
                             left_site: diff,
+                            returned: form.getFieldValue("returned_at")
+                              ? dayjs(form.getFieldValue("returned_at")).diff(
+                                  dayjs(e),
+                                  "day"
+                                )
+                              : 0,
                           });
                         },
                       }}
@@ -553,6 +569,9 @@ export const AssignationCreate: React.FC<
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
                           setDates({
                             ...dates,
                             shipped:

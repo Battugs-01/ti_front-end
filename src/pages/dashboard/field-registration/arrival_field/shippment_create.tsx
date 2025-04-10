@@ -214,6 +214,27 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
     return data;
   };
 
+  const calcDateNumberAdditionalFee = (diff: number) => {
+    const data = additionalFee.map((item) => {
+      if (item.fee_name.includes("Краны өргөлт")) {
+        return {
+          ...item,
+          number_1: 2,
+          total_amount: item.fee_amount * 2,
+        };
+      }
+      if (item.fee_name.includes("Ачаа хадгаламж")) {
+        return {
+          ...item,
+          number_1: diff,
+          total_amount: item.fee_amount * diff,
+        };
+      }
+      return item;
+    });
+    setAdditionalFee(data);
+  };
+
   return (
     <ModalForm
       form={form}
@@ -383,12 +404,31 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+
+                          let diff = form.getFieldValue("left_site_at")
+                            ? dayjs(form.getFieldValue("left_site_at")).diff(
+                                dayjs(e),
+                                "day"
+                              )
+                            : 0;
+                          calcDateNumberAdditionalFee(diff);
+
                           setDates({
                             ...dates,
                             opened: dayjs(e).diff(
                               dayjs(form.getFieldValue("arrived_at_site")),
                               "day"
                             ),
+                            freed: form.getFieldValue("freed_at")
+                              ? dayjs(form.getFieldValue("freed_at")).diff(
+                                  dayjs(e),
+                                  "day"
+                                )
+                              : 0,
+                            left_site: diff,
                           });
                         },
                       }}
@@ -410,6 +450,10 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+
                           setDates({
                             ...dates,
                             freed: dayjs(e).diff(
@@ -435,12 +479,28 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
+
+                          let diff = form.getFieldValue("left_site_at")
+                            ? dayjs(form.getFieldValue("left_site_at")).diff(
+                                dayjs(e),
+                                "day"
+                              )
+                            : 0;
+
+                          calcDateNumberAdditionalFee(diff);
+
                           setDates({
                             ...dates,
-                            left_site: dayjs(e).diff(
-                              dayjs(form.getFieldValue("opened_at")),
-                              "day"
-                            ),
+                            left_site: diff,
+                            returned: form.getFieldValue("returned_at")
+                              ? dayjs(form.getFieldValue("returned_at")).diff(
+                                  dayjs(e),
+                                  "day"
+                                )
+                              : 0,
                           });
                         },
                       }}
@@ -463,12 +523,16 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                       fieldProps={{
                         size: "large",
                         onChange: (e: any) => {
+                          if (e === null || e === undefined) {
+                            return;
+                          }
                           setDates({
                             ...dates,
-                            returned: dayjs(e).diff(
-                              dayjs(form.getFieldValue("left_site_at")),
-                              "day"
-                            ),
+                            returned:
+                              dayjs(e).diff(
+                                dayjs(form.getFieldValue("left_site_at")),
+                                "day"
+                              ) || 0,
                           });
                         },
                       }}
