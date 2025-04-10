@@ -1,7 +1,8 @@
 import {
   ProFormDateTimePicker,
   ProFormDigit,
-  ProFormSelect
+  ProFormSelect,
+  ProFormText,
 } from "@ant-design/pro-form";
 import { useDebounceFn, useRequest } from "ahooks";
 import { Col, notification, Row } from "antd";
@@ -9,9 +10,9 @@ import { SectionContainer } from "components/index";
 import { FORM_ITEM_RULE, PaymentType } from "config";
 import dayjs from "dayjs";
 import ledger from "service/fininaciar/accountSettlement/ledger";
-import { PaymentMethod } from "utils/options";
+import { PaymentMethod, TransactionType } from "utils/options";
 
-export const Info = () => {
+export const Info = ({ isUpdate }: { isUpdate?: boolean }) => {
   const list = useRequest(ledger.list, {
     manual: true,
     onError: (err) =>
@@ -25,15 +26,14 @@ export const Info = () => {
       if (value) {
         list.run({
           is_all: true,
-          search: value
+          search: value,
         });
       }
     },
     {
-      wait: 5000 // 2 seconds delay
+      wait: 5000, // 2 seconds delay
     }
   );
-
 
   return (
     <SectionContainer>
@@ -61,13 +61,13 @@ export const Info = () => {
               size: "large",
               onSearch: (value) => {
                 debouncedSearch.run(value);
-              }
+              },
             }}
             placeholder={"Данс"}
             request={async (value) => {
               const res = await list.runAsync({
                 is_all: true,
-                search: value.keyWords 
+                search: value.keyWords,
               });
               return res?.items?.map((item: any) => ({
                 label: `${item?.customer_company?.name} - ${item?.name}`,
@@ -102,24 +102,21 @@ export const Info = () => {
           />
         </Col>
       </Row>
-      {/* <Row gutter={[24, 24]}>
-        <Col span={12}>
-          <ProFormDigit
-            name={"barimt"}
-            placeholder={"Баримт"}
-            label="Баримт"
-            rules={FORM_ITEM_RULE()}
-          />
-        </Col>
-        <Col span={12}>
-          <ProFormText
-            name={"payer"}
-            placeholder={"Төлөгч"}
-            label="Төлөгч"
-            rules={FORM_ITEM_RULE()}
-          />
-        </Col>
-      </Row> */}
+      {isUpdate && (
+        <Row gutter={[24, 24]}>
+          <Col span={12}>
+            <ProFormSelect
+              name={"transaction_type"}
+              placeholder={"Гүйлгээний төрөл"}
+              label="Гүйлгээний төрөл"
+              options={TransactionType.map((item) => ({
+                label: item.label,
+                value: item.value,
+              }))}
+            />
+          </Col>
+        </Row>
+      )}
     </SectionContainer>
   );
 };

@@ -34,8 +34,7 @@ export const ApproveButton = ({ ...rest }: ButtonProps) => {
       className="flex items-center justify-center font-medium gap-1 bg-green-600"
       icon={<BiCheckCircle size={20} />}
       type="primary"
-    >
-    </Button>
+    ></Button>
   );
 };
 export const DeleteButton = ({ ...rest }: ButtonProps) => {

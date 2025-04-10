@@ -1062,6 +1062,7 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                         </Button>
                         <Button
                           size="middle"
+                          disabled={!form.getFieldValue("ledger_id")}
                           onClick={async () => {
                             const data = await generatePDF({
                               date: dayjs(

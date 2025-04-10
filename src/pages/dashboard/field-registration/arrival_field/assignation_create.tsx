@@ -1129,6 +1129,7 @@ export const AssignationCreate: React.FC<
                         </Button>
                         <Button
                           size="middle"
+                          disabled={!form.getFieldValue("ledger_id")}
                           onClick={async () => {
                             const data = await generatePDF({
                               date: dayjs(form.getFieldValue("date")).format(
@@ -1178,6 +1179,7 @@ export const AssignationCreate: React.FC<
                               } ${user?.user?.first_name || ""}`,
                             });
                             downloadPDF(data);
+
                             await fetchAdditionalFee();
                           }}
                         >

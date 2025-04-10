@@ -2,7 +2,8 @@ import { useDebounceFn, useRequest } from "ahooks";
 import { DatePicker, notification, Select, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { PageCard } from "components/card";
-import { CreateButton, ITable } from "components/index";
+import { CreateButton, EditButton, ITable } from "components/index";
+
 import { Label } from "components/label";
 import { InvalidateModal } from "components/modal/invalidate_ticket";
 import PublicDetail from "components/public-view";
@@ -13,7 +14,7 @@ import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import fieldRegistration from "service/feild_registration";
 import { CargoApproachList } from "service/feild_registration/type";
-import { FileX02, FileX03 } from "untitledui-js-base";
+import { Edit04, FileX02 } from "untitledui-js-base";
 import { fieldRegistrationPaginate, moneyFormat } from "utils/index";
 import {
   ArrilvelFieldPaymentMethod,
@@ -24,6 +25,7 @@ import {
 import { AssignationCreate } from "./assignation_create";
 import { CreateCargoApproach } from "./create_cargo_approach";
 import { ShippmentCreate } from "./shippment_create";
+import { UpdateCargoApproach as TransportManagerUpdateCargoApproach } from "../cargo_approach/update";
 import { UpdateCargoApproach } from "./update_cargo_approach";
 
 export const ArrivalField: React.FC = () => {
@@ -37,6 +39,12 @@ export const ArrivalField: React.FC = () => {
   const [assignationCreate, setAssignationCreate] = useState(false);
   const [shippmentCreate, setShippmentCreate] = useState(false);
   const [createCargoApproach, setCreateCargoApproach] = useState(false);
+  const [
+    transportManagerUpdateCargoApproach,
+    setTransportManagerUpdateCargoApproach,
+  ] = useState<CargoApproachList>();
+  const [updateCargoApproach, setUpdateCargoApproach] =
+    useState<CargoApproachList>();
 
   const fieldRegister = useRequest(fieldRegistration.list, {
     manual: true,
@@ -60,6 +68,7 @@ export const ArrivalField: React.FC = () => {
   };
   const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
 
+  console.log(updateCargoApproach, "kkkk");
   return (
     <PageCard xR>
       <InitTableHeader
@@ -174,13 +183,6 @@ export const ArrivalField: React.FC = () => {
         DetailComponent={PublicDetail}
         refresh={refreshList}
         CreateComponent={CreateCargoApproach}
-        hideEditButton={(record) => {
-          return record?.broker?.is_default;
-        }}
-        hideDeleteButton={(record) => {
-          return record?.broker?.is_default;
-        }}
-        UpdateComponent={UpdateCargoApproach}
         RemoveModelConfig={{
           action: fieldRegistration.deleteRegistration,
           config: (record) => ({
@@ -193,6 +195,12 @@ export const ArrivalField: React.FC = () => {
         setCreate={setCreateCargoApproach}
         className="p-0 remove-padding-table"
         tableAlertRender={false}
+        hideDeleteButton={(record) => {
+          return (
+            user?.user?.role_name !== UserRoleType.cashier &&
+            user?.user?.role_name !== UserRoleType.transport_manager
+          );
+        }}
         customActions={(record) => {
           if (user?.user?.role_name !== UserRoleType.cashier) return null;
           return (
@@ -208,6 +216,15 @@ export const ArrivalField: React.FC = () => {
                     />
                   </Tooltip>
                 )}
+              <Edit04
+                size="20"
+                className="p-1"
+                onClick={() => {
+                  record?.broker?.is_default
+                    ? setTransportManagerUpdateCargoApproach(record)
+                    : setUpdateCargoApproach(record);
+                }}
+              />
             </div>
           );
         }}
@@ -542,6 +559,30 @@ export const ArrivalField: React.FC = () => {
           }}
           open={!!ticketInvalidate}
           ticket_id={ticketInvalidate}
+        />
+      )}
+      {transportManagerUpdateCargoApproach && (
+        <TransportManagerUpdateCargoApproach
+          open={!!transportManagerUpdateCargoApproach}
+          onCancel={() => setTransportManagerUpdateCargoApproach(undefined)}
+          onFinish={() => {
+            setRecord(undefined);
+            setTransportManagerUpdateCargoApproach(undefined);
+            refreshList();
+          }}
+          detail={transportManagerUpdateCargoApproach}
+        />
+      )}
+      {updateCargoApproach && (
+        <UpdateCargoApproach
+          open={!!updateCargoApproach}
+          onCancel={() => setUpdateCargoApproach(undefined)}
+          onFinish={() => {
+            setRecord(undefined);
+            setUpdateCargoApproach(undefined);
+            refreshList();
+          }}
+          detail={updateCargoApproach}
         />
       )}
     </PageCard>

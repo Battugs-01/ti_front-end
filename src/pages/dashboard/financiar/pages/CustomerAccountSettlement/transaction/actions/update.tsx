@@ -16,6 +16,7 @@ export const UpdateService = ({
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
+        transaction_type: detail?.transaction_type,
       });
     }
   }, [open]);
@@ -43,7 +44,7 @@ export const UpdateService = ({
       }}
       onSuccess={onFinish}
     >
-      <Info />
+      <Info isUpdate />
     </IModalForm>
   );
 };

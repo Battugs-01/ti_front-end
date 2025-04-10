@@ -92,7 +92,7 @@ export const UpdateCargoApproach: React.FC<ActionComponentProps<any>> = ({
         }
         return false;
       }}
-      title="Талбайн бүртгэл"
+      title="Талбайн бүртгэл засах"
       initialValues={{
         ...detail,
         category: "3",

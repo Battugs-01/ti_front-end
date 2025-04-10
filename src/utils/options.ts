@@ -147,3 +147,14 @@ export const DirectionSelect = Object.freeze([
     value: DirectionType.north,
   },
 ]);
+
+export const TransactionType = Object.freeze([
+  {
+    value: "debit",
+    label: "Орлого",
+  },
+  {
+    value: "credit",
+    label: "Зарлага",
+  },
+]);

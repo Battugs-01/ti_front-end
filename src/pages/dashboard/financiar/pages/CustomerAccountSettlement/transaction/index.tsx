@@ -12,6 +12,7 @@ import transaction from "service/fininaciar/accountSettlement/transaction";
 import { moneyFormat, transictionFilter } from "utils/index";
 import { PaymentMethod } from "utils/options";
 import { CreateService } from "./actions/create";
+import { UpdateService } from "./actions/update";
 
 const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
@@ -117,11 +118,11 @@ const Transaction = () => {
           list.run({ ...filter, created_by: user?.user?.id, ...values })
         }
         form={filter}
-        // UpdateComponent={
-        //   user?.user?.role_name === UserRoleType.financier
-        //     ? UpdateService
-        //     : undefined
-        // }
+        UpdateComponent={
+          user?.user?.role_name === UserRoleType.financier
+            ? UpdateService
+            : undefined
+        }
         setForm={setFilter}
         columns={[
           {
