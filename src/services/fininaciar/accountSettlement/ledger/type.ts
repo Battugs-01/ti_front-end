@@ -11,6 +11,7 @@ export interface LedgerType {
   credit: number;
   credit_sum: number;
   debit_sum: number;
+  transaction_balance: number;
   balance: number;
   initial_balance: number;
   customer_company?: CustomerCompanyType;

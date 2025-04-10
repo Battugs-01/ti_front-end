@@ -130,6 +130,16 @@ const Ledger = () => {
           //     </span>
           //   ),
           // },
+          // {
+          //   dataIndex: "contact_number",
+          //   title: "Одоогийн үлдэгдэл",
+          //   align: "center",
+          //   render: (_, record) => (
+          //     <span className="text-sm text-[#475467] font-normal">
+          //       {moneyFormat(record?.balance) || "-"}
+          //     </span>
+          //   ),
+          // },
           {
             dataIndex: "contact_number",
             title: "Орлого",
@@ -156,7 +166,7 @@ const Ledger = () => {
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.balance) || "-"}
+                {moneyFormat(record?.transaction_balance) || "-"}
               </span>
             ),
           },
@@ -174,13 +184,13 @@ const Ledger = () => {
                 <Table.Summary.Cell index={3}>
                   <Text></Text>
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
-                  <Text> {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}</Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={5}>
-                <Text type="danger" className="font-bold">
+                <Table.Summary.Cell index={4} className="text-center">
+                  <Text type="danger" className="font-bold  text-right ">
                     {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
                   </Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={5} className="text-center">
+                  <Text type="danger" className="font-bold  text-right"> {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={6} className="text-center">
                   <Text type="danger" className="font-bold">
