@@ -116,7 +116,7 @@ const CancellingTicket = () => {
             align: "left",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ticket?.additional_fee_category?.name}
+                {record?.ticket ? record?.ticket?.additional_fee_category?.name : record?.deleted_ticket_category?.name}
               </span>
             ),
           },

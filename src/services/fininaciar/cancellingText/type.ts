@@ -24,6 +24,8 @@ export interface InvalidateTicketList {
   transport_record: ContainerTranportRecord;
   ticket: Ticket;
   deleted_ticket_number?: string;
+  deleted_ticket_category_id?: number;
+  deleted_ticket_category?: AdditionalFeeCategory;
   calc_id: number;
   calc: Calc;
   status: string;
