@@ -31,11 +31,10 @@ export const ApproveButton = ({ ...rest }: ButtonProps) => {
   return (
     <Button
       {...rest}
-      className="flex items-center  font-medium gap-1"
+      className="flex items-center justify-center font-medium gap-1 bg-green-600"
       icon={<BiCheckCircle size={20} />}
       type="primary"
     >
-      Approve
     </Button>
   );
 };

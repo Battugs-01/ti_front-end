@@ -7,7 +7,7 @@ import { useRequest } from "ahooks";
 import { Button, notification } from "antd";
 import { useRef } from "react";
 import invalidatingAdditionalFee from "service/fininaciar/cancellingText";
-import { Trash01 } from "untitledui-js-base";
+import { File01, Trash01 } from "untitledui-js-base";
 
 type PropsRemove = ModalFormProps & {
   onDone?: () => void;
@@ -87,11 +87,11 @@ export const InvalidateModal = ({
               </Button>
               <Button
                 size="large"
-                className="w-1/2  bg-error-600 text-sm"
+                className="w-1/2  bg-green-600 text-sm"
                 type="primary"
                 onClick={submit}
               >
-                Илгээх
+                Тийм 
               </Button>
             </div>
           );
@@ -105,10 +105,9 @@ export const InvalidateModal = ({
       }}
     >
       <div className="space-y-2 text-lg font-semibold text-gray-900  mb-2">
-        <Trash01 className="text-error-600 w-5" />
         <div className="text-xl font-medium text-gray-900">{title}</div>
         <div className="text-gray-600 text-sm">
-          Та уг хүсэлтүүдийг зөвшөөрч устгахдаа итгэлтэй байна уу?
+          Та уг хүсэлтийг зөвшөөрч байна уу?
         </div>
       </div>
     </ModalForm>
