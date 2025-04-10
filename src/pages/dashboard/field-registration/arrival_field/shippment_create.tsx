@@ -164,6 +164,11 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
       );
     };
     fetch();
+    form.setFieldsValue({
+      ...detail,
+      broker_name: detail?.broker?.name,
+      cargo_weight: detail?.capacity,
+    });
   }, [detail?.id]);
 
   const totalAmount = useMemo(() => {
@@ -269,24 +274,24 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
         });
       }}
       title="Ачилт"
-      initialValues={{
-        arrived_at_site: detail?.arrived_at_site,
-        opened_at: detail?.opened_at,
-        freed_at: detail?.freed_at,
-        left_site_at: detail?.left_site_at,
-        returned_at: detail?.returned_at,
-        shipped_at: detail?.shipped_at,
-        container_code: detail?.container_code,
-        capacity: detail?.capacity,
-        broker_name: detail?.broker?.name,
-        ticket_number: getTempAdditionalFee.data?.ticket_number,
-        date: getTempAdditionalFee.data?.date,
-        cargo_weight:
-          getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
-        additional_fee_category_id:
-          getTempAdditionalFee.data?.additional_fee_category_id,
-        payment_amount: totalAmount,
-      }}
+      // initialValues={{
+      //   arrived_at_site: detail?.arrived_at_site,
+      //   opened_at: detail?.opened_at,
+      //   freed_at: detail?.freed_at,
+      //   left_site_at: detail?.left_site_at,
+      //   returned_at: detail?.returned_at,
+      //   shipped_at: detail?.shipped_at,
+      //   container_code: detail?.container_code,
+      //   capacity: detail?.capacity,
+      //   broker_name: detail?.broker?.name,
+      //   ticket_number: getTempAdditionalFee.data?.ticket_number,
+      //   date: getTempAdditionalFee.data?.date,
+      //   cargo_weight:
+      //     getTempAdditionalFee.data?.cargo_weight || detail?.capacity,
+      //   additional_fee_category_id:
+      //     getTempAdditionalFee.data?.additional_fee_category_id,
+      //   payment_amount: totalAmount,
+      // }}
       open={open}
       modalProps={{
         destroyOnClose: true,
@@ -483,12 +488,18 @@ export const ShippmentCreate: React.FC<ActionComponentProps<any>> = ({
                             return;
                           }
 
+                          console.log(
+                            "left_site_at",
+                            form.getFieldValue("left_site_at")
+                          );
                           let diff = form.getFieldValue("left_site_at")
                             ? dayjs(form.getFieldValue("left_site_at")).diff(
                                 dayjs(e),
                                 "day"
                               )
                             : 0;
+
+                          console.log(diff, "kkkk");
 
                           calcDateNumberAdditionalFee(diff);
 
