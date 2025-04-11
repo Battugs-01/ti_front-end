@@ -16,6 +16,7 @@
     "@ant-design/icons": "^5.2.6",
     "@ant-design/plots": "^2.2.8",
     "@ant-design/pro-card": "2.5.27",
+    "@ant-design/pro-components": "^2.8.7",
     "@ant-design/pro-descriptions": "2.5.27",
     "@ant-design/pro-form": "2.23.1",
     "@ant-design/pro-layout": "^7.17.16",

@@ -12,6 +12,11 @@ namespace customerCompany {
       }
     );
 
+  export const getDetail = (id: number) =>
+    http.get<CustomerCompanyType>(`/customer-company/${id}`, {
+      hasAuth: true,
+    });
+
   export const create = (body: any) =>
     http.post<SuccessResponse>("/customer-company/create", {
       hasAuth: true,

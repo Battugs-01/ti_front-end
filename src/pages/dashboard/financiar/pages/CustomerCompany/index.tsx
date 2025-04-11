@@ -10,10 +10,12 @@ import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import CustomerCompanyView from "pages/domain/customer_company/view";
 
 const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
+  const [view, setView] = useState<CustomerCompanyType>();
   const [search, setSearch] = useState<string>("");
 
   const list = useRequest(customerCompany.list, {
@@ -61,6 +63,7 @@ const CustomerCompany = () => {
         dataSource={list?.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
         UpdateComponent={UpdateService}
+        DetailComponent={CustomerCompanyView}
         form={filter}
         setForm={setFilter}
         columns={[

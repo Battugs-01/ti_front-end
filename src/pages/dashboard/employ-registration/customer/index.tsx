@@ -1,7 +1,7 @@
 import { useDebounceFn, useRequest } from "ahooks";
 import { notification, Switch, Tooltip } from "antd";
 import { PageCard } from "components/card";
-import { ITable } from "components/index";
+import { DetailButton, ITable } from "components/index";
 import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
 import { useEffect, useState } from "react";
@@ -12,12 +12,14 @@ import { initPagination } from "utils/index";
 import { UpdatePass } from "../update-pass";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import { EyeOutlined } from "@ant-design/icons";
+import CustomerCompanyView from "pages/domain/customer_company/view";
 
 const CustomerCompany = () => {
   const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
-
+  const [view, setView] = useState<CustomerCompanyType>();
   const [changePass, setChangePass] = useState<CustomerCompanyType>();
 
   const list = useRequest(customerCompany.list, {
@@ -137,6 +139,7 @@ const CustomerCompany = () => {
         setCreate={setCreate}
         customActions={(record) => {
           return (
+            <>
             <Tooltip title="Нууц үг солих">
               <Key01
                 className="w-5 p-2 text-red-700"
@@ -145,6 +148,12 @@ const CustomerCompany = () => {
                 }}
               />
             </Tooltip>
+              <DetailButton
+                onClick={() => {
+                  setView(record);
+                }}
+              />
+            </>
           );
         }}
         // RemoveModelConfig={{
@@ -166,6 +175,17 @@ const CustomerCompany = () => {
             setChangePass(undefined);
           }}
           detail={changePass}
+        />
+      )}
+      {view && (
+      <CustomerCompanyView
+        open={!!view}
+        detail={view}
+        onCancel={() => setView(undefined)}
+        onFinish={() => {
+          run();
+          setView(undefined);
+        }}
         />
       )}
     </PageCard>
