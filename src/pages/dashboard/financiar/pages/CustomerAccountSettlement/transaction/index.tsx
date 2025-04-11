@@ -13,6 +13,8 @@ import { moneyFormat, transictionFilter } from "utils/index";
 import { PaymentMethod } from "utils/options";
 import { CreateService } from "./actions/create";
 import { UpdateService } from "./actions/update";
+import Remove from "./actions/remove";
+import TransactionRemove from "./actions/remove";
 
 const Transaction = () => {
   const [filter, setFilter] = useState(transictionFilter);
@@ -121,6 +123,7 @@ const Transaction = () => {
           list.run({ ...filter, created_by: user?.user?.id, ...values })
         }
         form={filter}
+        RemoveComponent={TransactionRemove}
         UpdateComponent={
           user?.user?.role_name === UserRoleType.financier
             ? UpdateService
