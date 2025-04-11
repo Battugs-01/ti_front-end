@@ -120,16 +120,16 @@ const Ledger = () => {
               </div>
             ),
           },
-          // {
-          //   dataIndex: "is_broker",
-          //   title: "Эхний үлдэгдэл",
-          //   width: "200",
-          //   render: (_, record) => (
-          //     <span className="text-sm text-[#475467] font-normal flex text-center">
-          //       {moneyFormat(record?.initial_balance) || "-"}
-          //     </span>
-          //   ),
-          // },
+          {
+            dataIndex: "balance",
+            title: "Эхний үлдэгдэл",
+            width: "200",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal flex text-center">
+                {moneyFormat(record?.balance) || "-"}
+              </span>
+            ),
+          },
           // {
           //   dataIndex: "contact_number",
           //   title: "Одоогийн үлдэгдэл",
@@ -161,12 +161,11 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "contact_number",
             title: "Эцсийн үлдэгдэл",
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.ledger_balance_sum) || "-"}
+                {moneyFormat(record?.debit_sum - record?.credit_sum) || "-"}
               </span>
             ),
           },
@@ -184,15 +183,20 @@ const Ledger = () => {
                 <Table.Summary.Cell index={3}>
                   <Text></Text>
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={4} className="text-center">
+                <Table.Summary.Cell index={4}>
+                  <Text type="danger" className="font-bold text-right">
+                    {moneyFormat(list?.data?.meta?.total_balance || 0)}
+                  </Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={5} className="text-center">
                   <Text type="danger" className="font-bold  text-right ">
                     {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
                   </Text>
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={5} className="text-center">
+                <Table.Summary.Cell index={6} className="text-center">
                   <Text type="danger" className="font-bold  text-right"> {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}</Text>
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={6} className="text-center">
+                <Table.Summary.Cell index={7} className="text-center">
                   <Text type="danger" className="font-bold">
                     {moneyFormat(list?.data?.meta?.total_balance || 0)}
                   </Text>
