@@ -20,9 +20,10 @@ namespace transaction {
       body,
     });
 
-  export const deleteA = (id: number) =>
+  export const deleteA = (id: number, body: any) =>
     http.del<SuccessResponse>(`/transaction/delete/${id}`, {
       hasAuth: true,
+      body,
     });
 
   export const update = (body: any, id: number) =>
