@@ -166,7 +166,7 @@ const Ledger = () => {
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.transaction_balance) || "-"}
+                {moneyFormat(record?.ledger_balance_sum) || "-"}
               </span>
             ),
           },

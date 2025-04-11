@@ -94,21 +94,25 @@ export const Info = ({ isUpdate }: { isUpdate?: boolean }) => {
           <ProFormDigit
             name={"amount"}
             placeholder={"Мөнгөн дүн"}
+            tooltip="Мөнгөн дүн заавал 0-ээс их байна"
             fieldProps={{
-              min: -1000000000000000000,
+              min: 0,
             }}
             label="Мөнгөн дүн"
             rules={FORM_ITEM_RULE()}
           />
         </Col>
       </Row>
-      {isUpdate && (
         <Row gutter={[24, 24]}>
           <Col span={12}>
             <ProFormSelect
               name={"transaction_type"}
               placeholder={"Гүйлгээний төрөл"}
               label="Гүйлгээний төрөл"
+              tooltip="Гүйлгээний төрөл буюу орлого эсвэл зарлагаас хамаарч данснаас бодолт хийнэ"
+              initialValue={TransactionType.find(
+                (item) => item.value === "debit"
+              )}
               options={TransactionType.map((item) => ({
                 label: item.label,
                 value: item.value,
@@ -116,7 +120,6 @@ export const Info = ({ isUpdate }: { isUpdate?: boolean }) => {
             />
           </Col>
         </Row>
-      )}
     </SectionContainer>
   );
 };
