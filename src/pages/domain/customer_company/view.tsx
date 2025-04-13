@@ -11,6 +11,8 @@ import CreateLedger from "../ledger.tsx/create";
 import { Edit01 } from "untitledui-js-base";
 import { UpdateUser } from "../user/update";
 import CreateUser from "../user/create";
+import { UpdateCustomerCompany } from "pages/dashboard/financiar/pages/CustomerCompany/actions/update";
+import UpdateLedger from "../ledger.tsx/update";
 interface Props {
   open?: boolean;
   detail?: CustomerCompanyType;
@@ -35,6 +37,8 @@ const CustomerCompanyView = ({
   });
 
   const [isEditUser, setIsEditUser] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isEditLedger, setIsEditLedger] = useState(false);
 
   useEffect(() => {
     if (open && detail?.id) {
@@ -56,6 +60,7 @@ const CustomerCompanyView = ({
     return <div>Мэдээлэл олдсонгүй</div>;
   }
 
+
   return (
     <>
       <Modal
@@ -66,7 +71,14 @@ const CustomerCompanyView = ({
         footer={null}
       >
         <div className="my-6">
-          <Card type="inner" title="Дэлгэрэнгүй" className="mb-4">
+          <Card type="inner" title={
+            <div className="flex justify-between">
+              <div>Дэлгэрэнгүй</div>
+              <Button type="link" size="small" className="text-gray-500" onClick={() => setIsEdit(true)}>
+                <Edit01 />
+              </Button>
+            </div>
+          } className="mb-4">
             <ProDescriptions dataSource={getDetail.data} column={2}>
               <ProDescriptions.Item label="Нэр" dataIndex="name" />
               <ProDescriptions.Item label="Товчлол" dataIndex="shortcut_name" />
@@ -76,7 +88,7 @@ const CustomerCompanyView = ({
                 render={(value) => (value ? "Зууч" : "Зууч биш")}
               />
               <ProDescriptions.Item
-                label="Цахим шуудан"
+                label="Харилцах дугаар"
                 dataIndex="contact_number"
               />
               <ProDescriptions.Item
@@ -140,9 +152,14 @@ const CustomerCompanyView = ({
           <Card
             type="inner"
             title={
-              getDetail.data?.ledger
-                ? "Харилцагч компанийн данс"
-                : "Харилцагч компанийн данс байхгүй байна"
+              <div className="flex justify-between">
+                {getDetail.data?.ledger
+                  ? "Харилцагч компанийн данс"
+                  : "Харилцагч компанийн данс байхгүй байна"}
+                <Button type="link" size="small" className="text-gray-500" onClick={() => setIsEditLedger(true)}>
+                  <Edit01 />
+                </Button>
+              </div>
             }
             className="mb-4"
           >
@@ -178,6 +195,24 @@ const CustomerCompanyView = ({
         onCancel={() => setIsEditUser(false)}
         onFinish={() => {
           setIsEditUser(false);
+          reload();
+        }}
+      />
+      <UpdateCustomerCompany
+        open={isEdit}
+        detail={getDetail.data}
+        onCancel={() => setIsEdit(false)}
+        onFinish={() => {
+          setIsEdit(false);
+          reload();
+        }}
+      />
+      <UpdateLedger
+        open={isEditLedger}
+        detail={getDetail.data?.ledger}
+        onCancel={() => setIsEditLedger(false)}
+        onFinish={() => {
+          setIsEditLedger(false);
           reload();
         }}
       />

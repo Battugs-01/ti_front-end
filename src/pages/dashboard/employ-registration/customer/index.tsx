@@ -11,8 +11,6 @@ import { Key01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
 import { UpdatePass } from "../update-pass";
 import { CreateService } from "./actions/create";
-import { UpdateService } from "./actions/update";
-import { EyeOutlined } from "@ant-design/icons";
 import CustomerCompanyView from "pages/domain/customer_company/view";
 
 const CustomerCompany = () => {
@@ -66,7 +64,6 @@ const CustomerCompany = () => {
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
-        UpdateComponent={UpdateService}
         form={filter}
         setForm={setFilter}
         columns={[

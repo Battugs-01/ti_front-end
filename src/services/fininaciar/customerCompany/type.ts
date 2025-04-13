@@ -1,3 +1,4 @@
+import { Ledger } from "service/feild_registration/type";
 import type { LedgerType } from "../accountSettlement/ledger/type";
 
 export interface CustomerCompanyType {
@@ -10,6 +11,6 @@ export interface CustomerCompanyType {
   is_broker: boolean;
   ledger_id: number;
   user: any;
-  ledger: LedgerType;
+  ledger: Ledger;
   contact_number: string;
 }

@@ -9,7 +9,7 @@ import customerCompany from "service/fininaciar/customerCompany";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
-import { UpdateService } from "./actions/update";
+import { UpdateCustomerCompany } from "./actions/update";
 import CustomerCompanyView from "pages/domain/customer_company/view";
 
 const CustomerCompany = () => {
@@ -62,7 +62,6 @@ const CustomerCompany = () => {
         loading={list.loading}
         dataSource={list?.data?.items ?? []}
         refresh={(values) => list.run({ ...filter, ...values })}
-        UpdateComponent={UpdateService}
         DetailComponent={CustomerCompanyView}
         form={filter}
         setForm={setFilter}

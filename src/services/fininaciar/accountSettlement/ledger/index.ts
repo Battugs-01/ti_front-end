@@ -21,7 +21,7 @@ namespace ledger {
       body,
     });
 
-  export const update = (body: any, id: number) =>
+  export const update = (id: number, body: any) =>
     http.put<SuccessResponse>(`/ledger/update/${id}`, {
       hasAuth: true,
       body,
