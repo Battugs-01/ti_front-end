@@ -15,9 +15,10 @@ namespace ledger {
       body,
     });
 
-  export const deleteA = (id: number) =>
+  export const deleteA = (id: number, body: any) =>
     http.del<SuccessResponse>(`/ledger/delete/${id}`, {
       hasAuth: true,
+      body,
     });
 
   export const update = (body: any, id: number) =>

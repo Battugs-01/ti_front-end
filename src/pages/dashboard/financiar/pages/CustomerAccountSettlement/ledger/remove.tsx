@@ -60,7 +60,7 @@ const LedgerRemove: FC<ActionComponentProps<any>> = ({
         },
       }}
       onFinish={async (_values) => {
-        if (detail) await remove.run(detail.id);
+        if (detail) await remove.run(detail.id, _values);
         return true;
       }}
     >
