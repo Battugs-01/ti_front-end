@@ -12,13 +12,14 @@ export const UpdateService = ({
   detail,
 }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
+  console.log(detail, "detail");
 
   useEffect(() => {
     if (open) {
       formRef.current?.setFieldsValue({
         ...detail,
         first_name: detail?.first_name ?? undefined,
-        last_name: detail?.last_name,
+          last_name: detail?.last_name,
         registration_number: detail?.registration_number,
         gender: detail?.gender ?? undefined,
         email: detail?.email ?? undefined,

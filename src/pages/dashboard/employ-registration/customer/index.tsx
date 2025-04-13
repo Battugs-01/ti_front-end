@@ -9,7 +9,6 @@ import customerCompany from "service/fininaciar/customerCompany";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { Key01 } from "untitledui-js-base";
 import { initPagination } from "utils/index";
-import { UpdatePass } from "../update-pass";
 import { CreateService } from "./actions/create";
 import CustomerCompanyView from "pages/domain/customer_company/view";
 
@@ -18,7 +17,6 @@ const CustomerCompany = () => {
   const [create, setCreate] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [view, setView] = useState<CustomerCompanyType>();
-  const [changePass, setChangePass] = useState<CustomerCompanyType>();
 
   const list = useRequest(customerCompany.list, {
     manual: true,
@@ -136,21 +134,11 @@ const CustomerCompany = () => {
         setCreate={setCreate}
         customActions={(record) => {
           return (
-            <>
-            <Tooltip title="Нууц үг солих">
-              <Key01
-                className="w-5 p-2 text-red-700"
-                onClick={() => {
-                  setChangePass(record);
-                }}
-              />
-            </Tooltip>
-              <DetailButton
-                onClick={() => {
-                  setView(record);
-                }}
-              />
-            </>
+            <DetailButton
+              onClick={() => {
+                setView(record);
+              }}
+            />
           );
         }}
         // RemoveModelConfig={{
@@ -163,17 +151,6 @@ const CustomerCompany = () => {
         // }}
       />
 
-      {changePass && (
-        <UpdatePass
-          open={!!changePass}
-          onCancel={() => setChangePass(undefined)}
-          onFinish={() => {
-            run();
-            setChangePass(undefined);
-          }}
-          detail={changePass}
-        />
-      )}
       {view && (
       <CustomerCompanyView
         open={!!view}

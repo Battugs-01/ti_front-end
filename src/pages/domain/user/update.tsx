@@ -83,16 +83,6 @@ export const UpdateUser = ({
             label="Утас"
           />
         </Col>
-        <Col span={24}>
-          <ProFormText.Password
-            name={"update_password"}
-            placeholder={"Нууц үг"}
-            label="Нууц үг"
-            fieldProps={{
-              type: "password",
-            }}
-          />
-        </Col>
       </Row>
     </SectionContainer>
     </IModalForm>

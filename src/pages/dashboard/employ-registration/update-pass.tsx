@@ -29,7 +29,6 @@ export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
     },
   });
 
-  console.log(detail.id, "dsa");
   return (
     <ModalForm
       form={form}
@@ -82,7 +81,7 @@ export const UpdatePass: React.FC<ActionComponentProps<any>> = ({
     >
       <Row gutter={[24, 24]}>
         <Col span={24}>
-          <ProFormText
+          <ProFormText.Password
             fieldProps={{
               size: "large",
             }}
