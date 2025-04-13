@@ -12,9 +12,9 @@ import { FC, useRef } from "react";
 import { ActionComponentProps, DeleteConfirm } from "types";
 import { useRequest } from "ahooks";
 import { message } from "antd";
-import transaction from "service/fininaciar/accountSettlement/transaction";
+import ledger from "service/fininaciar/accountSettlement/ledger";
 
-const TransactionRemove: FC<ActionComponentProps<any>> = ({
+const LedgerRemove: FC<ActionComponentProps<any>> = ({
   detail,
   onFinish,
   onCancel,
@@ -22,7 +22,7 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
 }) => {
   const formRef = useRef<ProFormInstance<DeleteConfirm>>();
 
-  const remove = useRequest(transaction.deleteA, {
+  const remove = useRequest(ledger.deleteA, {
     manual: true,
     onSuccess: () => {
       message.success({
@@ -60,7 +60,7 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
         },
       }}
       onFinish={async (_values) => {
-        if (detail) await remove.run(detail.id, _values);
+        if (detail) await remove.run(detail.id);
         return true;
       }}
     >
@@ -70,40 +70,38 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
           label={
             <div>
               <div className="mb-2">
-                Та "<strong>{detail?.amount}</strong>" -ний дүнтэй{" "}
-                <strong>{detail?.transaction_type}</strong> төрөлтэй{" "}
-                <strong>{detail?.ledger?.name}</strong> данс -г сонгосон байна.
+                Та "<strong>{detail?.name}</strong>" данс -г сонгосон байна.
                 Сонголтоо баталгаажуулна уу. Энэ үйлдлийг буцаах боломжгүй.
-                Хэрэв та итгэлтэй байгаа бол "<strong>{deleteConfirm}</strong>"
+                Хэрэв та итгэлтэй байгаа бол "<strong>{detail?.name}</strong>"
                 гэж оруулна уу.
-              </div>
-              <div>
-                Хэрэв та энэ гүйлгээг устгавал{" "}
-                <strong>{detail?.ledger?.name}</strong> данстай{" "}
-                <strong>{detail?.ledger?.customer_company?.name}</strong>{" "}
-                харилцагч компанийн данс руу <strong>{detail?.amount}</strong>{" "}
-                -ний дүн буцаалт хийгдэнэ.
               </div>
             </div>
           }
-          placeholder={deleteConfirm}
+          placeholder={"данc"}
           rules={[
             {
               required: true,
               whitespace: false,
-              pattern: deleteConfirmReg,
-              message: `Устгахдаа итгэлтэй байвал "${deleteConfirm}" гэж бөглөнө үү`,
+              pattern: new RegExp(`${detail?.name}`),
+              message: `Та дансны нэрээ оруулна уу`
             },
           ]}
         />
 
         <ProFormSelect
-          name="is_refund"
-          label="Буцаалт хийх эсэх"
-          initialValue={{ label: "Буцаалт хийх", value: "refund" }}
+          name="delete_transaction"
+          tooltip="Устгах гүйлгээг сонговол дансны бүх гүйлгээг устгана"
+          label="Дансны бүх гүйлгээг устгах"
+          initialValue={{ label: "Устгахгүй", value: "not_delete" }}
           options={[
-            { label: "Буцаалт хийх", value: "refund" },
-            { label: "Буцаалт хийхгүй", value: "no_refund" },
+            {
+              label: "Устгах",
+              value: "delete",
+            },
+            {
+              label: "Устгахгүй",
+              value: "not_delete",
+            },
           ]}
         />
       </div>
@@ -111,4 +109,4 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
   );
 };
 
-export default TransactionRemove;
+export default LedgerRemove;

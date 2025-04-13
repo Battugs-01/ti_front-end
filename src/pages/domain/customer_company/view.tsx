@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import customerCompany from "service/fininaciar/customerCompany";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import dayjs from "dayjs";
+import { IfCondition } from "components/condition";
+import CreateLedger from "../ledger.tsx/create";
 interface Props {
   open?: boolean;
   detail?: CustomerCompanyType;
@@ -29,6 +31,12 @@ const CustomerCompanyView = ({ open, detail, onCancel, onFinish = () => {} }: Pr
       getDetail.run(detail.id);
     }
   }, [open]);
+
+  const reload = () => {
+    if (detail?.id) {
+      getDetail.run(detail?.id);
+    }
+  }
 
   return (<Modal
     title="Харилцагч компанийн мэдээлэл"
@@ -55,10 +63,14 @@ const CustomerCompanyView = ({ open, detail, onCancel, onFinish = () => {} }: Pr
             </ProDescriptions>
         </Card>
         <Card type="inner" title={getDetail.data?.ledger ? "Харилцагч компанийн данс" : "Харилцагч компанийн данс байхгүй байна"} className="mb-4">
+          <IfCondition condition={!!getDetail.data?.ledger} whenTrue={
             <ProDescriptions  dataSource={getDetail.data} column={2}>
                 <ProDescriptions.Item label="Одоогийн үлдэгдэл" dataIndex={["ledger", "balance"]} />
                 <ProDescriptions.Item label="Дансны код" dataIndex={["ledger", "name"]} />
             </ProDescriptions>
+          } whenFalse={
+            <CreateLedger customerCompanyId={getDetail.data?.id ?? 0} onCancel={onCancel} onFinish={reload} />
+          } />
         </Card>
       </div>
     </Modal>

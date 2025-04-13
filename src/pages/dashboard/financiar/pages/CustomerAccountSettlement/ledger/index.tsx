@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import ledger from "service/fininaciar/accountSettlement/ledger";
 import { LedgerType } from "service/fininaciar/accountSettlement/ledger/type";
 import { ledgerFilter, moneyFormat } from "utils/index";
+import LedgerRemove from "./remove";
 
 const Ledger = () => {
   const [filter, setFilter] = useState(ledgerFilter);
@@ -83,6 +84,7 @@ const Ledger = () => {
         refresh={(values) => list.run({ ...filter, ...values })}
         form={filter}
         setForm={setFilter}
+        RemoveComponent={LedgerRemove}
         columns={[
           {
             dataIndex: "initial_balance",
