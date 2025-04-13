@@ -4,8 +4,12 @@ import { IModalForm } from "components/modal";
 import { useRef } from "react";
 import customerCompany from "service/fininaciar/customerCompany";
 import { ActionComponentProps } from "types";
-import { Info } from "./parts/info";
+import { CustomerCompanyForm } from "../components";
+import { MODAL_TITLES, BUTTON_TEXTS } from "../constants";
 
+/**
+ * Component for creating a new customer company
+ */
 export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   const formRef = useRef<ProFormInstance>();
 
@@ -21,7 +25,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
   return (
     <IModalForm
       open={rest.open}
-      title="Харилцагч компани нэмэх"
+      title={MODAL_TITLES.CREATE}
       formRef={formRef}
       onOpenChange={() => {
         formRef.current?.resetFields();
@@ -29,8 +33,8 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       width={1000}
       scrollToFirstError={true}
       modalProps={{ maskClosable: false, onCancel: rest.onCancel }}
-      cancelText={"Буцах"}
-      okText={"Хадгалах"}
+      cancelText={BUTTON_TEXTS.CANCEL}
+      okText={BUTTON_TEXTS.SAVE}
       className="px-3"
       onRequest={async (values) => {
         if (!!values) {
@@ -45,7 +49,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
       }}
       onSuccess={rest.onFinish}
     >
-      <Info actionName="create" />
+      <CustomerCompanyForm isCreate={true} />
     </IModalForm>
   );
 };

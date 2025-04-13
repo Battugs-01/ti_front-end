@@ -5,7 +5,7 @@ import { IfCondition } from "components/condition";
 import CreateUser from "../../user/create";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { UserRoleType } from "config";
-
+import { useAuthContext } from "context/auth";
 interface UserAccountCardProps {
   data: CustomerCompanyType;
   onEdit: () => void;
@@ -25,6 +25,8 @@ const UserAccountCard = ({
   onFinish 
 }: UserAccountCardProps) => {
   const hasUser = !!data?.user;
+
+  const [{ authorized, user: authUser }] = useAuthContext();
   
   return (
     <Card
@@ -46,7 +48,7 @@ const UserAccountCard = ({
             {hasUser && (
               <Tooltip
                 title={
-                  data?.user?.role_name !== UserRoleType.admin
+                authUser?.role_name !== UserRoleType.admin
                     ? "Зөвхөн админ хэрэглэгч нууц үг солих боломжтой"
                     : "Нууц үг солих"
                 }
@@ -55,7 +57,7 @@ const UserAccountCard = ({
                   type="link"
                   size="small"
                   disabled={
-                    data?.user?.role_name !== UserRoleType.admin
+                    authUser?.role_name !== UserRoleType.admin
                   }
                   className="text-gray-500"
                   onClick={() => onChangePassword(data?.user)}

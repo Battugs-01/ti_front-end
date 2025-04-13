@@ -8,6 +8,7 @@ import { UpdateCustomerCompany } from "pages/dashboard/financiar/pages/CustomerC
 import UpdateLedger from "../ledger.tsx/update";
 import { UpdatePass } from "pages/dashboard/employ-registration/update-pass";
 import { CompanyDetailsCard, UserAccountCard, LedgerCard } from "./components";
+import { useAuthContext } from "context/auth";
 
 interface Props {
   open?: boolean;

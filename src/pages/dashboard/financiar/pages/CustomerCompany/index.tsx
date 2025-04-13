@@ -1,59 +1,44 @@
-import { useDebounceFn, useRequest } from "ahooks";
-import { notification, Switch } from "antd";
 import { PageCard } from "components/card";
 import { ITable } from "components/index";
 import { Label } from "components/label";
 import InitTableHeader from "components/table-header";
-import { useEffect, useState } from "react";
-import customerCompany from "service/fininaciar/customerCompany";
+import { useState } from "react";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
-import { initPagination } from "utils/index";
 import { CreateService } from "./actions/create";
 import { UpdateCustomerCompany } from "./actions/update";
 import CustomerCompanyView from "pages/domain/customer_company/view";
+import { getCustomerCompanyColumns } from "./components";
+import { BUTTON_TEXTS, EXPORT_FILENAME, MODAL_TITLES, SEARCH_PLACEHOLDER } from "./constants";
+import { useCustomerCompanyData } from "./hooks";
 
+/**
+ * CustomerCompany component displays a list of customer companies
+ * with options to create, view, and update them
+ */
 const CustomerCompany = () => {
-  const [filter, setFilter] = useState(initPagination);
   const [create, setCreate] = useState<boolean>(false);
-  const [view, setView] = useState<CustomerCompanyType>();
-  const [search, setSearch] = useState<string>("");
-
-  const list = useRequest(customerCompany.list, {
-    manual: true,
-    onError: (err) =>
-      notification.error({
-        message: err.message,
-      }),
-  });
-
-  const run = () => {
-    list.run({
-      ...filter,
-      search: search,
-    });
-  };
-
-  useEffect(() => {
-    run();
-  }, [filter]);
-
-  const searchRun = useDebounceFn(list.run, { wait: 1000 });
+  
+  const { 
+    filter, 
+    setFilter, 
+    search, 
+    list, 
+    handleSearch, 
+    handleRefresh 
+  } = useCustomerCompanyData();
 
   return (
     <PageCard xR>
       <div className="px-2 pb-0">
         <InitTableHeader
-          addButtonName="Нэмэх"
-          customHeaderTitle={<Label title="Харилцагч компанийн жагсаалт" />}
-          searchPlaceHolder="Нэр, данс"
-          fileName="Харилцагч компанийн жагсаалт"
+          addButtonName={BUTTON_TEXTS.ADD}
+          customHeaderTitle={<Label title={MODAL_TITLES.VIEW} />}
+          searchPlaceHolder={SEARCH_PLACEHOLDER}
+          fileName={EXPORT_FILENAME}
           setCreate={setCreate}
           search={search}
-          setSearch={(e) => {
-            setSearch(e);
-            searchRun.run({ ...filter, search: e });
-          }}
-          refresh={() => list.run({ ...filter, search: search })}
+          setSearch={handleSearch}
+          refresh={handleRefresh}
         />
       </div>
 
@@ -65,93 +50,10 @@ const CustomerCompany = () => {
         DetailComponent={CustomerCompanyView}
         form={filter}
         setForm={setFilter}
-        columns={[
-          {
-            dataIndex: "shortcut_name",
-            title: "Товчлол",
-            align: "left",
-            render: (value) => (
-              <div className="flex gap-2">
-                <span className="text-sm text-[#475467] font-normal">
-                  {value || "-"}
-                </span>
-              </div>
-            ),
-          },
-          {
-            dataIndex: "name",
-            title: "Компаний нэр",
-            align: "left",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "is_broker",
-            title: "Зууч эсэх",
-            width: "200",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {<Switch disabled checked={!!value} />}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "ledger_name",
-            title: "Харилцагчийн код",
-            width: "200",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {record?.ledger?.name || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "contact_number",
-            title: "Харилцах дугаар",
-            align: "center",
-            render: (value) => (
-              <span className="text-sm text-[#475467] font-normal">
-                {value || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "email",
-            title: "Цахим хаяг",
-            align: "left",
-            width: "10%",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {record?.user?.email || "-"}
-              </span>
-            ),
-          },
-          {
-            dataIndex: "created_by",
-            title: "Бүртгэсэн ажилтан",
-            align: "left",
-            width: "10%",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center ">
-                {record?.created_by?.email || "-"}
-              </span>
-            ),
-          },
-        ]}
+        columns={getCustomerCompanyColumns()}
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
-        // RemoveModelConfig={{
-        //   action: customerCompany.deleteA,
-        //   config: (record) => ({
-        //     uniqueKey: record?.id,
-        //     display: record?.name,
-        //     title: "Remove",
-        //   }),
-        // }}
       />
     </PageCard>
   );

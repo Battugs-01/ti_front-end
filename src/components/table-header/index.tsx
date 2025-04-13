@@ -107,7 +107,7 @@ const InitTableHeader: React.FC<TableHeaderProps> = ({
             }}
           />
           <Button
-            icon={<ReloadOutlined rev />}
+            icon={<ReloadOutlined />}
             onClick={refresh}
             size="large"
           />
