@@ -8,7 +8,7 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import { ActionType, EditableProTable } from "@ant-design/pro-table";
 import { useRequest } from "ahooks";
-import { Button, Col, Form, notification, Row, Select, Tooltip } from "antd";
+import { Button, Col, Form, message, notification, Row, Select, Tooltip } from "antd";
 import IBadge from "components/badge";
 import { ITable } from "components/index";
 import { FORM_ITEM_RULE } from "config";
@@ -1102,6 +1102,10 @@ export const AssignationCreate: React.FC<
                             additionalFee.length === 0 || !additionalFee
                           }
                           onClick={() => {
+                            if (!form.getFieldValue("ledger_id")) {
+                              message.error("Данс сонгоно уу");
+                              return 
+                            }
                             setPaymentList([
                               {
                                 ticket_number:
