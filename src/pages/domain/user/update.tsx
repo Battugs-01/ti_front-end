@@ -31,6 +31,9 @@ export const UpdateUser = ({
 
     const updateUser = useRequest(user.update, {
     manual: true,
+    onSuccess: () => {
+      onFinish?.();
+    },
   });
 
   return (
@@ -53,6 +56,7 @@ export const UpdateUser = ({
         ) {
           return true;
         }
+        return false;
       }}
       onSuccess={onFinish}
     >
@@ -73,6 +77,13 @@ export const UpdateUser = ({
           />
         </Col>
         <Col span={12}>
+          <ProFormText
+            name={"phone"}
+            placeholder={"099999999"}
+            label="Утас"
+          />
+        </Col>
+        <Col span={24}>
           <ProFormText.Password
             name={"update_password"}
             placeholder={"Нууц үг"}
