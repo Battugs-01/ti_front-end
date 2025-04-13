@@ -113,6 +113,11 @@ export const Info = ({ isUpdate }: { isUpdate?: boolean }) => {
               initialValue={TransactionType.find(
                 (item) => item.value === "debit"
               )}
+              fieldProps={{
+                defaultValue: TransactionType.find(
+                  (item) => item.value === "debit"
+                ),
+              }}
               options={TransactionType.map((item) => ({
                 label: item.label,
                 value: item.value,

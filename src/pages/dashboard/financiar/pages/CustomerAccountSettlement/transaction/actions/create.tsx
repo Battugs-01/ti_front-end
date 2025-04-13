@@ -34,7 +34,7 @@ export const CreateService = ({ ...rest }: ActionComponentProps<any>) => {
             await create.runAsync({
               ...values,
               created_at: dayjs(values.created_at),
-              transaction_type: values.transaction_type.value,
+              transaction_type: values.transaction_type,
             })
           ) {
             return true;

@@ -59,7 +59,8 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
           danger: true,
         },
       }}
-      onFinish={async (_values) => {
+      onFinish={async (_values: any) => {
+        _values.is_refund = _values?.is_refund.value;
         if (detail) await remove.run(detail.id, _values);
         return true;
       }}
