@@ -60,7 +60,6 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
         },
       }}
       onFinish={async (_values: any) => {
-        _values.is_refund = _values?.is_refund.value;
         if (detail) await remove.run(detail.id, _values);
         return true;
       }}
@@ -101,7 +100,7 @@ const TransactionRemove: FC<ActionComponentProps<any>> = ({
         <ProFormSelect
           name="is_refund"
           label="Буцаалт хийх эсэх"
-          initialValue={{ label: "Буцаалт хийх", value: "refund" }}
+          initialValue={"refund"}
           options={[
             { label: "Буцаалт хийх", value: "refund" },
             { label: "Буцаалт хийхгүй", value: "no_refund" },
