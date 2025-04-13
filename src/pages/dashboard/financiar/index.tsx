@@ -6,7 +6,7 @@ import AdditionalFeeSettings from "./pages/AdditionalFeeSettings";
 import CancellingTicket from "./pages/CancellingTicket";
 import CargoName from "./pages/CargoName";
 import CategoryType from "./pages/CategoryType";
-import CustomerAccountSettlement from "./pages/CustomerAccountSettlement";
+import CustomerLedger from "./pages/CustomerAccountSettlement";
 import CustomerCompany from "./pages/CustomerCompany";
 import ForeignCustomer from "./pages/ForeignCustomer";
 
@@ -31,7 +31,7 @@ export const Fininciar: React.FC<any> = ({ data }) => {
       label: "Элдэв хураамж тохиргоо",
     },
     {
-      value: FininciarTab.CustomerAccountSettlement,
+      value: FininciarTab.CustomerLedger,
       label: "Харилцагчдын дансны тооцоо",
     },
     {
@@ -80,8 +80,8 @@ export const Fininciar: React.FC<any> = ({ data }) => {
         whenTrue={<AdditionalFeeSettings />}
       />
       <IfCondition
-        condition={tab === FininciarTab.CustomerAccountSettlement}
-        whenTrue={<CustomerAccountSettlement />}
+        condition={tab === FininciarTab.CustomerLedger}
+        whenTrue={<CustomerLedger />}
       />
       <IfCondition
         condition={tab === FininciarTab.CancellingTicket}

@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import Ledger from "./ledger";
 import Transaction from "./transaction";
 
-const CustomerAccountSettlement = () => {
+const CustomerLedger = () => {
   const location = useLocation();
   const [tab, setTab] = useState<any>(CustomerAccountSettlementTab.ledger);
 
@@ -67,4 +67,4 @@ const CustomerAccountSettlement = () => {
   );
 };
 
-export default CustomerAccountSettlement;
+export default CustomerLedger;

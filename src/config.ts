@@ -78,7 +78,7 @@ export enum FieldRegistrationTab {
 export enum FininciarTab {
   CustomerCompany = 0,
   AdditionalFeeSettings = 1,
-  CustomerAccountSettlement = 2,
+  CustomerLedger = 2,
   CancellingTicket = 3,
   CategoryType = 4,
   ForeignCustomer = 5,

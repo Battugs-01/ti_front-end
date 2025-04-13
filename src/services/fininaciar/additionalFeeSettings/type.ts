@@ -1,3 +1,6 @@
+import { Ledger, Transaction } from "service/feild_registration/type";
+import { Base } from "service/type";
+
 export interface CustomerCompanyType {
   id: number;
   created_at: Date;

@@ -168,6 +168,18 @@ const Transaction = () => {
             ),
           },
           {
+            dataIndex: "debit_id",
+            title: "Э/Х тасалбарын дугаар",
+            align: "left",
+            render: (value: any) => (
+              <div className="flex gap-2">
+                <span className="text-sm text-[#475467] font-normal">
+                  {value?.debit?.ticket?.ticket_number || "-"}
+                </span>
+              </div>
+            ),
+          },
+          {
             dataIndex: "payment_type",
             title: "Төлөлтийн хэлбэр",
             width: "200",

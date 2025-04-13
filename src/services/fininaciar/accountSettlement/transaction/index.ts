@@ -1,5 +1,6 @@
 import http from "service/index";
 import { PaginationResponse, SuccessResponse } from "types";
+import { Transaction } from "./type";
 
 namespace transaction {
   export const list = (body: any) =>
@@ -9,7 +10,7 @@ namespace transaction {
     });
 
   export const customerPaymentlist = (body: any) =>
-    http.post<PaginationResponse<any>>("/transaction/page", {
+    http.post<PaginationResponse<Transaction>>("/transaction/page", {
       hasAuth: true,
       body,
     });
