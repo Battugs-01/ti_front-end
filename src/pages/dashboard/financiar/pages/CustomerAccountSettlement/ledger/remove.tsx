@@ -59,7 +59,7 @@ const LedgerRemove: FC<ActionComponentProps<any>> = ({
           danger: true,
         },
       }}
-      onFinish={async (_values) => {
+      onFinish={async (_values: any) => {
         if (detail) await remove.run(detail.id, _values);
         return true;
       }}
@@ -92,7 +92,7 @@ const LedgerRemove: FC<ActionComponentProps<any>> = ({
           name="delete_transaction"
           tooltip="Устгах гүйлгээг сонговол дансны бүх гүйлгээг устгана"
           label="Дансны бүх гүйлгээг устгах"
-          initialValue={{ label: "Устгахгүй", value: "not_delete" }}
+          initialValue={"not_delete"}
           options={[
             {
               label: "Устгах",

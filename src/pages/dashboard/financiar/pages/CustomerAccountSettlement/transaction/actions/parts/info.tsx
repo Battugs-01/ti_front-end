@@ -110,14 +110,7 @@ export const Info = ({ isUpdate }: { isUpdate?: boolean }) => {
               placeholder={"Гүйлгээний төрөл"}
               label="Гүйлгээний төрөл"
               tooltip="Гүйлгээний төрөл буюу орлого эсвэл зарлагаас хамаарч данснаас бодолт хийнэ"
-              initialValue={TransactionType.find(
-                (item) => item.value === "debit"
-              )}
-              fieldProps={{
-                defaultValue: TransactionType.find(
-                  (item) => item.value === "debit"
-                ),
-              }}
+              initialValue={"debit"}
               options={TransactionType.map((item) => ({
                 label: item.label,
                 value: item.value,
