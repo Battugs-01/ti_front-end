@@ -1,6 +1,7 @@
 import { ModalForm, ProFormText } from "@ant-design/pro-form";
 import { useRequest } from "ahooks";
 import { Button, Col, Row } from "antd";
+import { UserRoleType } from "config";
 import user from "service/user/user";
 
 interface Props {
@@ -22,6 +23,7 @@ const CreateUser = ({ customerCompanyId, onCancel, onFinish }: Props) => {
       trigger={<Button type="primary" >Нэвтрэх бүртгэл үүсгэх</Button>}
       onFinish={async (values) => {
         if (customerCompanyId) {
+          values.role_name = UserRoleType.customer;
           values.customer_company_id = customerCompanyId;
         }
         await createUser.runAsync(values);

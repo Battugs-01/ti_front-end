@@ -3,6 +3,7 @@ import { lazy, useContext } from "react";
 import { IRoute } from "./types";
 import { AuthContext } from "context/auth";
 import { UserRoleType } from "config";
+import NoRole from "pages/no_role";
 
 const EmployeRegistration = lazy(
   () => import("pages/dashboard/employ-registration/index")
@@ -85,6 +86,12 @@ const DashboardRoutes = () => {
         component: <MyFill />,
       }
     );
+  } else {
+    dashboardRoutes.push({
+      key: "no-role",
+      path: "no-role",
+      component: <NoRole />,
+    });
   }
   return dashboardRoutes;
 };
