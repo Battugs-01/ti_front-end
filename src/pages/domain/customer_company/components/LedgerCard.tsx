@@ -26,14 +26,16 @@ const LedgerCard = ({ data, onEdit, onCancel, onFinish }: LedgerCardProps) => {
           {hasLedger
             ? "Харилцагч компанийн данс"
             : "Харилцагч компанийн данс байхгүй байна"}
-          <Button
-            type="link"
-            size="small"
-            className="text-gray-500"
-            onClick={onEdit}
-          >
-            <Edit01 />
-          </Button>
+          {hasLedger && (
+            <Button
+              type="link"
+              size="small"
+              className="text-gray-500"
+              onClick={onEdit}
+            >
+              <Edit01 />
+            </Button>
+          )}
         </div>
       }
       className="mb-4"

@@ -6,6 +6,15 @@ import CreateUser from "../../user/create";
 import { CustomerCompanyType } from "service/fininaciar/customerCompany/type";
 import { UserRoleType } from "config";
 import { useAuthContext } from "context/auth";
+
+// Constants for text strings
+const CARD_TITLE_WITH_USER = "Систем-д нэвтрэх бүртгэл";
+const CARD_TITLE_WITHOUT_USER = "Систем-д нэвтрэх бүртгэл байхгүй байна";
+const TOOLTIP_ADMIN_ONLY = "Зөвхөн админ хэрэглэгч нууц үг солих боломжтой";
+const TOOLTIP_CHANGE_PASSWORD = "Нууц үг солих";
+const EMAIL_LABEL = "Нэвтрэх нэр";
+const PHONE_LABEL = "Утас";
+
 interface UserAccountCardProps {
   data: CustomerCompanyType;
   onEdit: () => void;
@@ -17,56 +26,48 @@ interface UserAccountCardProps {
 /**
  * Displays user account information for a customer company
  */
-const UserAccountCard = ({ 
-  data, 
-  onEdit, 
-  onChangePassword, 
-  onCancel, 
-  onFinish 
+const UserAccountCard = ({
+  data,
+  onEdit,
+  onChangePassword,
+  onCancel,
+  onFinish,
 }: UserAccountCardProps) => {
   const hasUser = !!data?.user;
+  const [{ user: authUser }] = useAuthContext();
+  const isAdmin = authUser?.role_name === UserRoleType.admin;
 
-  const [{ authorized, user: authUser }] = useAuthContext();
-  
   return (
     <Card
       type="inner"
       title={
         <div className="flex justify-between">
-          {hasUser
-            ? "Систем-д нэвтрэх бүртгэл"
-            : "Систем-д нэвтрэх бүртгэл байхгүй байна"}
-          <div className="flex gap-2 items-center">
-            <Button
-              type="link"
-              size="small"
-              className="text-gray-500"
-              onClick={onEdit}
-            >
-              <Edit01 />
-            </Button>
-            {hasUser && (
+          {hasUser ? CARD_TITLE_WITH_USER : CARD_TITLE_WITHOUT_USER}
+          {hasUser && (
+            <div className="flex gap-2 items-center">
+              <Button
+                type="link"
+                size="small"
+                className="text-gray-500"
+                onClick={onEdit}
+              >
+                <Edit01 />
+              </Button>
               <Tooltip
-                title={
-                authUser?.role_name !== UserRoleType.admin
-                    ? "Зөвхөн админ хэрэглэгч нууц үг солих боломжтой"
-                    : "Нууц үг солих"
-                }
+                title={isAdmin ? TOOLTIP_CHANGE_PASSWORD : TOOLTIP_ADMIN_ONLY}
               >
                 <Button
                   type="link"
                   size="small"
-                  disabled={
-                    authUser?.role_name !== UserRoleType.admin
-                  }
+                  disabled={!isAdmin}
                   className="text-gray-500"
                   onClick={() => onChangePassword(data?.user)}
                 >
                   <Key01 className="text-red-700" />
                 </Button>
               </Tooltip>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       }
       className="mb-4"
@@ -76,12 +77,12 @@ const UserAccountCard = ({
         whenTrue={
           <ProDescriptions dataSource={data} column={2}>
             <ProDescriptions.Item
-              label="Нэвтрэх нэр"
+              label={EMAIL_LABEL}
               dataIndex={["user", "email"]}
             />
-            <ProDescriptions.Item
-              label="Утас"
-              dataIndex={["user", "phone"]}
+            <ProDescriptions.Item 
+              label={PHONE_LABEL} 
+              dataIndex={["user", "phone"]} 
             />
           </ProDescriptions>
         }
@@ -97,4 +98,4 @@ const UserAccountCard = ({
   );
 };
 
-export default UserAccountCard; 
+export default UserAccountCard;
