@@ -17,7 +17,7 @@ interface LedgerCardProps {
  */
 const LedgerCard = ({ data, onEdit, onCancel, onFinish }: LedgerCardProps) => {
   const hasLedger = !!data?.ledger;
-  
+
   return (
     <Card
       type="inner"
@@ -43,6 +43,7 @@ const LedgerCard = ({ data, onEdit, onCancel, onFinish }: LedgerCardProps) => {
         whenTrue={
           <ProDescriptions dataSource={data} column={2}>
             <ProDescriptions.Item
+              valueType="money"
               label="Одоогийн үлдэгдэл"
               dataIndex={["ledger", "balance"]}
             />
@@ -64,4 +65,4 @@ const LedgerCard = ({ data, onEdit, onCancel, onFinish }: LedgerCardProps) => {
   );
 };
 
-export default LedgerCard; 
+export default LedgerCard;
