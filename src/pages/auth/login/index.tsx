@@ -33,6 +33,12 @@ const Login: FC = () => {
     onSuccess: (data) => {
       auth.saveToken(data.token);
       setAuth([Action.SIGN_IN, data.user]);
+
+      if (data.user.role_name === "") {
+        navigate("/dashboard/no-role");
+        return;
+      }
+
       if (data.user.role_name === UserRoleType.transport_manager) {
         navigate(menuManagerItems[0].path);
       } else if (data.user.role_name === UserRoleType.cashier) {

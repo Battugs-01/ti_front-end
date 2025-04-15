@@ -96,7 +96,6 @@ export const Info: FC<IInfoProps> = ({ actionName }) => {
         {/* {actionName === "create" && ( */}
         <Col span={12}>
           <ProFormText.Password
-            // rules={FORM_ITEM_RULE()}
             name={"password"}
             placeholder={"Нууц үг"}
             label="Нууц үг"
@@ -105,7 +104,6 @@ export const Info: FC<IInfoProps> = ({ actionName }) => {
             }}
           />
         </Col>
-        {/* )} */}
       </Row>
     </SectionContainer>
   );

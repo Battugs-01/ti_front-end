@@ -104,7 +104,6 @@ export const CustomerCompanyForm: FC<CustomerCompanyFormProps> = ({ isCreate = f
               name={"password"}
               placeholder={"Нууц үг"}
               label="Нууц үг"
-              rules={FORM_ITEM_RULE()}
             />
           </Col>
         </Row>
