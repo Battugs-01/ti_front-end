@@ -19,6 +19,7 @@ const CreateLedger = ({ customerCompanyId, onCancel, onFinish = () => {} }: Prop
     }, [customerCompanyId]);
 
     const create = useRequest(ledger.create, {
+        manual: true,
         onSuccess: () => {
             message.success("Амжилттай үүслээ");
             onFinish();

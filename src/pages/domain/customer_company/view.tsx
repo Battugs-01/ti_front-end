@@ -58,7 +58,7 @@ const CustomerCompanyView = ({
   }
 
   if (!getDetail.data) {
-    return <div>Мэдээлэл олдсонгүй</div>;
+    return <></>
   }
 
   return (
