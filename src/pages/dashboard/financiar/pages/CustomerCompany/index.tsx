@@ -10,6 +10,7 @@ import CustomerCompanyView from "pages/domain/customer_company/view";
 import { getCustomerCompanyColumns } from "./components";
 import { BUTTON_TEXTS, EXPORT_FILENAME, MODAL_TITLES, SEARCH_PLACEHOLDER } from "./constants";
 import { useCustomerCompanyData } from "./hooks";
+import CustomerCompanyRemove from "pages/domain/customer_company/remove";
 
 /**
  * CustomerCompany component displays a list of customer companies
@@ -52,6 +53,7 @@ const CustomerCompany = () => {
         setForm={setFilter}
         columns={getCustomerCompanyColumns()}
         CreateComponent={CreateService}
+        RemoveComponent={CustomerCompanyRemove}
         create={create as boolean}
         setCreate={setCreate}
       />
