@@ -222,7 +222,6 @@ export const AssignationCargoApproach: React.FC<ActionComponentProps<any>> = ({
                     }}
                     disabled
                     placeholder="Дөхөлтийн мэдээний огноо"
-                    rules={FORM_ITEM_RULE()}
                     label="Дөхөлтийн мэдээний огноо"
                   />
                 </Col>

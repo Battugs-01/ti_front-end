@@ -217,7 +217,6 @@ export const CreateCargoApproach: React.FC<ActionComponentProps<any>> = ({
                       size: "large",
                     }}
                     placeholder="Дөхөлтийн мэдээний огноо"
-                    rules={FORM_ITEM_RULE()}
                     label="Дөхөлтийн мэдээний огноо"
                   />
                 </Col>
