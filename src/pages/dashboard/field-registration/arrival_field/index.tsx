@@ -112,10 +112,10 @@ export const ArrivalField: React.FC = () => {
           user?.user?.role_name === UserRoleType.cashier && (
             <div className="flex items-center gap-3">
               <CreateButton
-                disabled={
-                  !record ||
-                  record?.shipping_status?.is_shipping_additional_fee_paid
-                }
+                // disabled={
+                //   !record ||
+                //   record?.shipping_status?.is_shipping_additional_fee_paid
+                // }
                 size="large"
                 type="default"
                 className="text-[#007AFF]"
@@ -125,12 +125,12 @@ export const ArrivalField: React.FC = () => {
                 addButtonName="Олголт"
               />
               <CreateButton
-                disabled={
-                  !record ||
-                  !record?.assignation_status
-                    ?.is_assignation_additional_fee_paid ||
-                  record?.shipping_status?.is_shipping_additional_fee_paid
-                }
+                // disabled={
+                //   !record ||
+                //   !record?.assignation_status
+                //     ?.is_assignation_additional_fee_paid ||
+                //   record?.shipping_status?.is_shipping_additional_fee_paid
+                // }
                 size="large"
                 type="default"
                 className="text-[#34C759]"
