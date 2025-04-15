@@ -9,7 +9,10 @@ import { initPagination } from "utils/index";
  * Custom hook for fetching and managing customer company data
  */
 export const useCustomerCompanyData = () => {
-  const [filter, setFilter] = useState(initPagination);
+  const [filter, setFilter] = useState({
+    ...initPagination,
+    sorter: { created_at: "desc" },
+  });
   const [search, setSearch] = useState<string>("");
 
   const list = useRequest(customerCompany.list, {
@@ -54,6 +57,6 @@ export const useCustomerCompanyData = () => {
     list,
     handleSearch,
     handleRefresh,
-    handleFilterChange
+    handleFilterChange,
   };
-}; 
+};
