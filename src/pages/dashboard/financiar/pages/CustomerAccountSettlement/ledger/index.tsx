@@ -123,6 +123,16 @@ const Ledger = () => {
             ),
           },
           {
+            dataIndex: "balance",
+            title: "Одоогийн үлдэгдэл",
+            align: "center",
+            render: (_, record) => (
+              <span className="text-sm text-[#475467] font-normal flex justify-center">
+                {moneyFormat(record?.balance) || "-"}
+              </span>
+            ),
+          },
+          {
             dataIndex: "today_balance",
             title: "Эхний үлдэгдэл",
             width: "200",
