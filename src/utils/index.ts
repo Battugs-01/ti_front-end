@@ -207,7 +207,7 @@ export const myFillPaginate = {
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
     dayjs().format("YYYY-MM-DD"),
   ],
-  customer_company_id: null,
+  customer_company_id: undefined,
 };
 
 export const reportPaginate = {
@@ -371,9 +371,9 @@ export const ledgerFilter = {
 
 export const transictionFilter = {
   current: 0,
-  transaction_type: "",
+  transaction_type: undefined,
   pageSize: 20,
-  customer_company_id: null,
+  customer_company_id: undefined,
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
     dayjs().format("YYYY-MM-DD"),

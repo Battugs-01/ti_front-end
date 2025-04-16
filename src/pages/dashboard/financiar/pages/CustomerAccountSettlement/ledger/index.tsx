@@ -16,7 +16,7 @@ const Ledger = () => {
   const [search, setSearch] = useState<string>("");
   const [user] = useContext(AuthContext);
   const { Text } = Typography;
-  const list = useRequest(ledger.listMeta, {
+  const list = useRequest(ledger.list, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -123,42 +123,22 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "balance",
-            title: "Одоогийн үлдэгдэл",
-            align: "center",
-            render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex justify-center">
-                {moneyFormat(record?.balance) || "-"}
-              </span>
-            ),
-          },
-          {
             dataIndex: "today_balance",
             title: "Эхний үлдэгдэл",
             width: "200",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal flex justify-center">
-                {moneyFormat(record?.today_balance) || "-"}
+                {moneyFormat(record?.init_day_balance) || "-"}
               </span>
             ),
           },
-          // {
-          //   dataIndex: "contact_number",
-          //   title: "Одоогийн үлдэгдэл",
-          //   align: "center",
-          //   render: (_, record) => (
-          //     <span className="text-sm text-[#475467] font-normal">
-          //       {moneyFormat(record?.balance) || "-"}
-          //     </span>
-          //   ),
-          // },
           {
             dataIndex: "today_debit_sum",
             title: "Орлого",
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.today_debit_sum) || "-"}
+                {moneyFormat(record?.debit_sum) || "-"}
               </span>
             ),
           },
@@ -168,7 +148,7 @@ const Ledger = () => {
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.today_credit_sum) || "-"}
+                {moneyFormat(record?.credit_sum) || "-"}
               </span>
             ),
           },
@@ -177,7 +157,7 @@ const Ledger = () => {
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.today_balance) || "-"}
+                {moneyFormat(record?.last_day_balance) || "-"}
               </span>
             ),
           },

@@ -82,8 +82,8 @@ const Transaction = () => {
                 allowClear: true,
                 className: "select-focus",
                 style: { width: 200 },
-                onChange: (e) => {
-                  setFilter({ ...filter, transaction_type: e as any });
+                onChange: (e: any) => {
+                  setFilter({ ...filter, transaction_type: e ? e : undefined });
                 },
               }}
               options={[
@@ -105,12 +105,12 @@ const Transaction = () => {
           setCreate={setCreate}
           searchPlaceHolder="Данс , Харилцагчийн нэр , Мөнгөн дүн"
           search={search}
-          setSearch={(e) => {
+          setSearch={(e: any) => {
             setSearch(e);
-            searchRun.run({ ...filter, search: e });
+            searchRun.run({ ...filter, search: e ? e : undefined });
           }}
           fileName="Харилцагчийн дансны гүйлгээний жагсаалт"
-          refresh={() => list.run({ ...filter, search: search })}
+          refresh={() => list.run({ ...filter, search: search ? search : undefined })}
           hideCreate={user?.user?.role_name !== UserRoleType.financier}
         />
       </div>

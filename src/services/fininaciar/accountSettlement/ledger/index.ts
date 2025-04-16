@@ -3,8 +3,8 @@ import { PaginationResponse, SuccessResponse } from "types";
 import { LedgerType } from "./type";
 
 namespace ledger {
-  export const listMeta = (body: any) =>
-    http.post<PaginationResponse<LedgerType>>("/ledger/paged", {
+  export const statement = (body: any) =>
+    http.post<PaginationResponse<LedgerType>>("/ledger/statement", {
       hasAuth: true,
       body,
     });
