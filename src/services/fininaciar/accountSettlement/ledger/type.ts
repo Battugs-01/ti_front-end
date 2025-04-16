@@ -16,6 +16,10 @@ export interface LedgerType {
   balance: number;
   initial_balance: number;
   customer_company?: CustomerCompanyType;
+  today_balance: number;
+  today_debit_sum: number;
+  today_credit_sum: number;
+  yesterday_balance: number;
 }
 
 export interface LedgerMetaType {

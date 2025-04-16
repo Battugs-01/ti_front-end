@@ -44,6 +44,11 @@ export const exportAsExcelFile = (
   );
 };
 
+type tplotOptions = {
+  [key: string]: any;
+};
+
+
 export const exportFromTable = async (
   filename: string[],
   tableWrapper?: HTMLElement,
@@ -55,26 +60,27 @@ export const exportFromTable = async (
       return;
     }
     let table = tableWrapper.querySelector("table") as HTMLTableElement;
-    let keys: string[] = [];
-    let rowArray = Array.from(table?.rows || []);
+
+    const keys: string[] = [];
+    const rowArray = Array.from(table?.rows || []);
     Array.from(rowArray[0]?.cells).forEach((cell) => {
       keys.push(cell.innerText);
     });
-
-    let maindata: any[] = [];
+    const maindata: tplotOptions[] = [];
     let i = 2;
-    for (i; i < rowArray.length; i++) {
-      let record: any = {};
-      let row = rowArray[i];
-      let cells = Array.from(row.cells);
-      let j: number = 0;
-      for (j; j < cells.length; j++) {
-        let cell = cells[j];
+    for (i; i < rowArray.length; i += 1) {
+      const record: tplotOptions = {};
+      const row = rowArray[i];
+      const cells = Array.from(row.cells);
+      let j = 0;
+      for (j; j < cells.length; j += 1) {
+        const cell = cells[j];
         record[keys[j]] = cell.innerText;
       }
       maindata.push(record);
     }
 
+    console.log(maindata, "maindata");
     await exportXLSX(maindata, filename);
     resolve(true);
   });
@@ -246,22 +252,17 @@ const getName = (obj?: any) => {
   }
 };
 
-export const exportXLSX: ExportType<any> = (
+export const exportXLSX: ExportType<any> = async (
   dataSource = [],
-  label = ["party"],
-  cols = []
+  label = ["Logistic"],
+  cols = [],
 ) =>
   new Promise((resolve, reject) => {
-    let realData = [];
-    for (let obj of dataSource) {
+    const realData = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const obj of dataSource) {
       let one = {};
       Object.entries(obj).forEach(([key, value]) => {
-        if (value && typeof value === "string" && value.includes("₮")) {
-          value = parseFloat(value.split("₮")[0].replace(/,/g, ""));
-        }
-        if (value && typeof value === "string" && value.includes("Preview")) {
-          value = value.substring(8);
-        }
         if (
           key.search("_path") !== -1 ||
           key.search("_id") !== -1 ||
@@ -275,45 +276,31 @@ export const exportXLSX: ExportType<any> = (
             ...one,
             [key]: value,
           };
-        } else {
-          if (value && typeof value === "object") {
-            one = {
-              ...one,
-              [`${key}_name`]: getName(value),
-            };
-          }
+        } else if (value && typeof value === "object") {
+          one = {
+            ...one,
+            [`${key}_name`]: getName(value),
+          };
         }
       });
       realData.push(one);
     }
     dataSource = realData;
+    // console.log("realData", realData);
     try {
-      const source = [];
-      source.push([
-        label.join("-") +
-          " | Exported Date: " +
-          dayjs().format("YYYY-MM-DD HH:mm"),
-      ]);
-      const headers = Object.keys(dataSource[0]);
-      source.push(headers);
-      const datasourceRaw = dataSource.map((e) => Object.values(e));
-      source.push(...datasourceRaw);
-      const ws = utils.aoa_to_sheet(source);
-
-      const wb = {
-        Sheets: { data: ws },
-        SheetNames: ["data"],
-      };
+      const ws = utils.json_to_sheet(dataSource);
+      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
       if (typeof cols === "object" && cols.length > 0) {
-        cols.length > 0 && addFormula(wb, dataSource, cols);
+        addFormula(wb, dataSource, cols);
       }
+      // console.log("ws", ws);
       const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
       const data = new Blob([excelBuffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
       });
       FileSaver.saveAs(
         data,
-        `${`${label[0]}-${dayjs().format("YYYY-MM-DD")}`}.xlsx`
+        `${`${label}-${dayjs().format("YYYY-MM-DD")}`}.xlsx`,
       );
       resolve();
     } catch (error) {
@@ -324,7 +311,7 @@ export const exportXLSX: ExportType<any> = (
 const addFormula = (
   wb: WorkBook,
   dataSource: any[],
-  cols: { idx: number; code: string }[]
+  cols: { idx: number; code: string }[],
 ) => {
   const firstSheetName = wb.SheetNames[0];
   const sheet = wb.Sheets[firstSheetName];
@@ -338,7 +325,7 @@ const addFormula = (
         [[{ t: "n", f: `SUM(${e.code}2:${e.code}${dataSource.length + 1})` }]],
         {
           origin: cellRef,
-        }
+        },
       );
     }
   });

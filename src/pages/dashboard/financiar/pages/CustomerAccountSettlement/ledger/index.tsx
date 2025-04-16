@@ -16,7 +16,7 @@ const Ledger = () => {
   const [search, setSearch] = useState<string>("");
   const [user] = useContext(AuthContext);
   const { Text } = Typography;
-  const list = useRequest(ledger.list, {
+  const list = useRequest(ledger.listMeta, {
     manual: true,
     onError: (err) =>
       notification.error({
@@ -99,7 +99,7 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "initial_balance",
+            dataIndex: "customer_company.name",
             title: "Харилцагчийн нэр ",
             align: "left",
             render: (_, record) => (
@@ -111,7 +111,7 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "initial_balance",
+            dataIndex: "name",
             title: "Данс",
             align: "left",
             render: (_, record) => (
@@ -123,12 +123,12 @@ const Ledger = () => {
             ),
           },
           {
-            dataIndex: "balance",
+            dataIndex: "today_balance",
             title: "Эхний үлдэгдэл",
             width: "200",
             render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex text-center">
-                {moneyFormat(record?.balance) || "-"}
+              <span className="text-sm text-[#475467] font-normal flex justify-center">
+                {moneyFormat(record?.today_balance) || "-"}
               </span>
             ),
           },
@@ -143,22 +143,22 @@ const Ledger = () => {
           //   ),
           // },
           {
-            dataIndex: "contact_number",
+            dataIndex: "today_debit_sum",
             title: "Орлого",
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.debit_sum) || "-"}
+                {moneyFormat(record?.today_debit_sum) || "-"}
               </span>
             ),
           },
           {
-            dataIndex: "contact_number",
+            dataIndex: "today_credit_sum",
             title: "Зарлага",
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.credit_sum) || "-"}
+                {moneyFormat(record?.today_credit_sum) || "-"}
               </span>
             ),
           },
@@ -167,7 +167,7 @@ const Ledger = () => {
             align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
-                {moneyFormat(record?.debit_sum - record?.credit_sum) || "-"}
+                {moneyFormat(record?.today_balance) || "-"}
               </span>
             ),
           },
