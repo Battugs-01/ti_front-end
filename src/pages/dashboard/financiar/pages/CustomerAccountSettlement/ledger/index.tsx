@@ -177,7 +177,7 @@ const Ledger = () => {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={4}>
                   <Text type="danger" className="font-bold text-right">
-                    {moneyFormat(list?.data?.meta?.total_balance || 0)}
+                    {moneyFormat(list?.data?.meta?.init_day_balance_sum || 0)}
                   </Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={5} className="text-center">
@@ -190,7 +190,7 @@ const Ledger = () => {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={7} className="text-center">
                   <Text type="danger" className="font-bold">
-                    {moneyFormat(list?.data?.meta?.total_debit_sum - list?.data?.meta?.total_credit_sum || 0)}
+                    {moneyFormat(list?.data?.meta?.last_day_balance_sum || 0)}
                   </Text>
                 </Table.Summary.Cell>
               </Table.Summary.Row>
