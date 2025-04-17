@@ -132,7 +132,7 @@ const Ledger = () => {
             title: "Эхний үлдэгдэл",
             width: "200",
             render: (_, record) => (
-              <span className="text-sm text-[#475467] font-normal flex justify-center">
+              <span className="text-sm text-[#475467] font-normal">
                 {moneyFormat(record?.init_day_balance) || "-"}
               </span>
             ),
@@ -140,7 +140,6 @@ const Ledger = () => {
           {
             dataIndex: "today_debit_sum",
             title: "Орлого",
-            align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
                 {moneyFormat(record?.debit_sum) || "-"}
@@ -150,7 +149,6 @@ const Ledger = () => {
           {
             dataIndex: "today_credit_sum",
             title: "Зарлага",
-            align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
                 {moneyFormat(record?.credit_sum) || "-"}
@@ -159,7 +157,6 @@ const Ledger = () => {
           },
           {
             title: "Эцсийн үлдэгдэл",
-            align: "center",
             render: (_, record) => (
               <span className="text-sm text-[#475467] font-normal">
                 {moneyFormat(record?.last_day_balance) || "-"}
@@ -181,23 +178,22 @@ const Ledger = () => {
                 <Text></Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={4}>
-                <Text type="danger" className="font-bold text-right">
+                <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.init_day_balance_sum || 0)}
                 </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={5} className="text-center">
-                <Text type="danger" className="font-bold  text-right ">
+              <Table.Summary.Cell index={5}>
+                <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
                 </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={6} className="text-center">
-                <Text type="danger" className="font-bold  text-right">
-                  {" "}
+              <Table.Summary.Cell index={6}>
+                <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}
                 </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={7} className="text-center">
-                <Text type="danger" className="font-bold">
+              <Table.Summary.Cell index={7}>
+                  <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.last_day_balance_sum || 0)}
                 </Text>
               </Table.Summary.Cell>

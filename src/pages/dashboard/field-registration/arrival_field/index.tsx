@@ -68,7 +68,6 @@ export const ArrivalField: React.FC = () => {
   };
   const searchRun = useDebounceFn(fieldRegister.run, { wait: 1000 });
 
-  console.log(updateCargoApproach, "kkkk");
   return (
     <PageCard xR>
       <InitTableHeader

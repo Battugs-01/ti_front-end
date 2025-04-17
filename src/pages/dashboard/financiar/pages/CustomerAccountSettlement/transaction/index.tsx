@@ -249,12 +249,13 @@ const Transaction = () => {
               <Table.Summary.Cell index={3}/>
               <Table.Summary.Cell index={4}/>
               <Table.Summary.Cell index={5}/>
-              <Table.Summary.Cell index={6} className="text-center">
+              <Table.Summary.Cell index={6}/>
+              <Table.Summary.Cell index={7} >
                 <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.transaction_balance || 0)}
                 </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={7} className="text-center">
+              <Table.Summary.Cell index={8} >
                 <Text type="danger" className="font-bold">
                   {moneyFormat(list?.data?.meta?.ledger_balance || 0)}
                 </Text>
