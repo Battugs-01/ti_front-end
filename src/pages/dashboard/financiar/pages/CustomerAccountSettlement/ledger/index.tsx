@@ -10,6 +10,7 @@ import ledger from "service/fininaciar/accountSettlement/ledger";
 import { LedgerType } from "service/fininaciar/accountSettlement/ledger/type";
 import { ledgerFilter, moneyFormat } from "utils/index";
 import LedgerRemove from "./remove";
+import { UserRoleType } from "config";
 
 const Ledger = () => {
   const [filter, setFilter] = useState(ledgerFilter);
@@ -84,7 +85,11 @@ const Ledger = () => {
         refresh={(values) => list.run({ ...filter, ...values })}
         form={filter}
         setForm={setFilter}
-        RemoveComponent={LedgerRemove}
+        RemoveComponent={
+          user?.user?.role_name === UserRoleType.cashier
+            ? undefined
+            : LedgerRemove
+        }
         columns={[
           {
             dataIndex: "initial_balance",
@@ -163,38 +168,41 @@ const Ledger = () => {
           },
         ]}
         summary={() => (
-            <>
-              <Table.Summary.Row>
-                <Table.Summary.Cell index={0}></Table.Summary.Cell>
-                <Table.Summary.Cell index={1}>
-                  <Text>Нийт</Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={2}>
-                  <Text></Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>
-                  <Text></Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
-                  <Text type="danger" className="font-bold text-right">
-                    {moneyFormat(list?.data?.meta?.init_day_balance_sum || 0)}
-                  </Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={5} className="text-center">
-                  <Text type="danger" className="font-bold  text-right ">
-                    {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
-                  </Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={6} className="text-center">
-                  <Text type="danger" className="font-bold  text-right"> {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}</Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={7} className="text-center">
-                  <Text type="danger" className="font-bold">
-                    {moneyFormat(list?.data?.meta?.last_day_balance_sum || 0)}
-                  </Text>
-                </Table.Summary.Cell>
-              </Table.Summary.Row>
-            </>
+          <>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={0}></Table.Summary.Cell>
+              <Table.Summary.Cell index={1}>
+                <Text>Нийт</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={2}>
+                <Text></Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={3}>
+                <Text></Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={4}>
+                <Text type="danger" className="font-bold text-right">
+                  {moneyFormat(list?.data?.meta?.init_day_balance_sum || 0)}
+                </Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={5} className="text-center">
+                <Text type="danger" className="font-bold  text-right ">
+                  {moneyFormat(list?.data?.meta?.total_debit_sum || 0)}
+                </Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={6} className="text-center">
+                <Text type="danger" className="font-bold  text-right">
+                  {" "}
+                  {moneyFormat(list?.data?.meta?.total_credit_sum || 0)}
+                </Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={7} className="text-center">
+                <Text type="danger" className="font-bold">
+                  {moneyFormat(list?.data?.meta?.last_day_balance_sum || 0)}
+                </Text>
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </>
         )}
       />
     </PageCard>
