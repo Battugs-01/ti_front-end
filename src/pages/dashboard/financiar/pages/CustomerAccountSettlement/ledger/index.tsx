@@ -16,7 +16,7 @@ const Ledger = () => {
   const [search, setSearch] = useState<string>("");
   const [user] = useContext(AuthContext);
   const { Text } = Typography;
-  const list = useRequest(ledger.list, {
+  const list = useRequest(ledger.statement, {
     manual: true,
     onError: (err) =>
       notification.error({

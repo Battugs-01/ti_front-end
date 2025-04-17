@@ -4,7 +4,7 @@ import { LedgerType } from "./type";
 
 namespace ledger {
   export const statement = (body: any) =>
-    http.post<PaginationResponse<LedgerType>>("/ledger/statement", {
+    http.post<PaginationResponse<LedgerType>>("/ledger/page-statement", {
       hasAuth: true,
       body,
     });
