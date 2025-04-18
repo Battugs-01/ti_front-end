@@ -123,7 +123,7 @@ const Transaction = () => {
           list.run({ ...filter, created_by: user?.user?.id, ...values })
         }
         form={filter}
-        RemoveComponent={user?.user?.role_name === UserRoleType.cashier ? TransactionRemove : undefined}
+        RemoveComponent={user?.user?.role_name === UserRoleType.financier ? TransactionRemove : undefined}
         UpdateComponent={
           user?.user?.role_name === UserRoleType.financier
             ? UpdateService

@@ -86,9 +86,9 @@ const Ledger = () => {
         form={filter}
         setForm={setFilter}
         RemoveComponent={
-          user?.user?.role_name === UserRoleType.cashier
-            ? undefined
-            : LedgerRemove
+          user?.user?.role_name === UserRoleType.financier
+            ? LedgerRemove
+            : undefined
         }
         columns={[
           {
