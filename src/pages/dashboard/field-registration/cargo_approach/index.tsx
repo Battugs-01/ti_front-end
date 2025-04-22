@@ -151,19 +151,10 @@ export const CargoApproach: React.FC = () => {
             children: [
               {
                 title: "Дөхөлт огноо",
-                dataIndex: "approach_report_date",
                 render: (value: any) => {
-                  if (
-                    !value ||
-                    dayjs(value).format("YYYY-MM-DD") === "0001-01-01"
-                  ) {
-                    return <div className="flex items-center">-</div>;
-                  }
-                  return (
-                    <div className="flex items-center">
-                      {dayjs(value).format("YYYY-MM-DD")}
-                    </div>
-                  );
+                  return value?.approach_report_date
+                    ? dayjs(value?.approach_report_date).format("YYYY-MM-DD")
+                    : "-";
                 },
               },
               {
