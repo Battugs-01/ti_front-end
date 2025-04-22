@@ -56,18 +56,6 @@ const TicketDetails: React.FC<TicketDataProps> = ({ ticket }) => {
     },
   });
 
-  // useEffect(() => {
-  //   if (cancelTicket) {
-  //     <InvalidateModal
-  //       title="Элдэв хураамжийн цуцлах хүсэлт"
-  //       remove
-  //       onCancel={() => setCancelTicket(false)}
-  //       onDone={() => {}}
-  //       open={cancelTicket}
-  //       ticket_id={ticket?.id}
-  //     />
-  //   }
-  // }, [cancelTicket]);
 
 
   const onClickGeneratePDF = async () => {

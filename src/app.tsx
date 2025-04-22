@@ -26,13 +26,14 @@ dayjs.extend(timezone);
 
 dayjs.locale("mn");
 dayjs.tz.setDefault("Asia/Ulaanbaatar");
+
 const App: React.FC = () => {
   const { theme, toggleTheme } = useThemeContext();
-  // dayjs.extend(utc);
-  // dayjs.extend(timezone);
-  // dayjs.locale("mn");
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  dayjs.locale("mn");
 
-  // dayjs.tz.setDefault("Asia/Ulaanbaatar");
+  dayjs.tz.setDefault("Asia/Ulaanbaatar");
 
   if (mnIntl.DatePicker && mnIntl.DatePicker.lang) {
     mnIntl.DatePicker.lang.shortMonths = [

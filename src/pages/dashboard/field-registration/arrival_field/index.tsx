@@ -112,10 +112,6 @@ export const ArrivalField: React.FC = () => {
             <div className="flex items-center gap-3">
               <CreateButton
                 disabled={!record}
-                // disabled={
-                //   !record ||
-                //   record?.shipping_status?.is_shipping_additional_fee_paid
-                // }
                 size="large"
                 type="default"
                 className="text-[#007AFF]"
@@ -126,12 +122,6 @@ export const ArrivalField: React.FC = () => {
               />
               <CreateButton
                 disabled={!record}
-                // disabled={
-                //   !record ||
-                //   !record?.assignation_status
-                //     ?.is_assignation_additional_fee_paid ||
-                //   record?.shipping_status?.is_shipping_additional_fee_paid
-                // }
                 size="large"
                 type="default"
                 className="text-[#34C759]"
@@ -206,17 +196,6 @@ export const ArrivalField: React.FC = () => {
           if (user?.user?.role_name !== UserRoleType.cashier) return null;
           return (
             <div className="flex items-center gap-1">
-              {record?.assignation_status?.is_assignation_additional_fee_paid &&
-                record?.shipping_status?.is_shipping_additional_fee_paid && (
-                  <Tooltip title="Ачилтын элдэв хураамж цуцлах">
-                    <FileX02
-                      className="w-5 p-2 text-red-700"
-                      onClick={() => {
-                        setTicketInvalidate(record?.shipping_ticket_id);
-                      }}
-                    />
-                  </Tooltip>
-                )}
               <Edit04
                 size="20"
                 className="p-1"

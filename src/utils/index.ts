@@ -374,6 +374,7 @@ export const transictionFilter = {
   transaction_type: undefined,
   pageSize: 20,
   customer_company_id: undefined,
+  is_have_debit: undefined,
   between: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD"),
     dayjs().format("YYYY-MM-DD"),

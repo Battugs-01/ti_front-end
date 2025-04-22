@@ -1,4 +1,4 @@
-import { Ledger } from "service/feild_registration/type";
+import { Debit, Ledger } from "service/feild_registration/type";
 
 export interface Transaction {
   id: number;
@@ -14,4 +14,6 @@ export interface Transaction {
   payer: string;
   barimt: number;
   ledger_amount: number;
+  debit_id: string;
+  debit: Debit;
 }

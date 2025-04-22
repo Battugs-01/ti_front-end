@@ -75,6 +75,7 @@ const Transaction = () => {
             </div>
           }
           filter={
+            <div className="flex gap-2">
             <ProFormSelect
               placeholder={"Сонгох"}
               fieldProps={{
@@ -101,6 +102,23 @@ const Transaction = () => {
                 },
               ]}
             />
+            <ProFormSelect
+              name="is_have_debit"
+              fieldProps={{
+                size: "large",
+                allowClear: true,
+                className: "select-focus",
+                style: { width: 200 },
+                onChange: (e: any) => {
+                  setFilter({ ...filter, is_have_debit: e ? e : undefined });
+                },
+              }}
+              options={[
+                { label: "Э/Х тасалбартай", value: true },
+                { label: "Э/Х тасалбаргүй", value: false },
+              ]}
+            />
+            </div>
           }
           setCreate={setCreate}
           searchPlaceHolder="Данс , Харилцагчийн нэр , Мөнгөн дүн"
@@ -168,8 +186,7 @@ const Transaction = () => {
             ),
           },
           {
-            dataIndex: "debit_id",
-            title: "Э/Х тасалбарын дугаар",
+            title: "Э/Х Тасалбар",
             align: "left",
             render: (value: any) => (
               <div className="flex gap-2">
