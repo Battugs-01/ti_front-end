@@ -60,8 +60,11 @@ const PublicDetail = ({ ...rest }: ActionComponentProps<any>) => {
       title="Дэлгэрэнгүй мэдээлэл"
       open={rest.open}
       formRef={formRef}
-      onOpenChange={() => {
+      onOpenChange={(open) => {
         formRef.current?.resetFields();
+        if (!open) {
+          formRef.current?.resetFields();
+        }
       }}
       width={1000}
       destroyOnClose={true}
