@@ -234,29 +234,16 @@ const Transaction = () => {
                 {moneyFormat(record?.ledger_amount) || "-"}
               </span>
             ),
-          },
-          // {
-          //   dataIndex: "barimt",
-          //   title: "Баримт",
-          //   render: (value: any) => (
-          //     <span className="text-sm text-[#475467] font-normal">
-          //       {value || "-"}
-          //     </span>
-          //   ),
-          // },
-          // {
-          //   dataIndex: "payer",
-          //   title: "Төлөгч",
-          //   align: "center",
-          //   render: (value: any, record) => (
-          //     <span className="text-sm text-[#475467] font-normal">
-          //       {record?.ledger?.customer_company?.shortcut_name || "-"}
-          //     </span>
-          //   ),
-          // },
+          }
         ]}
-        summary={() => (
-          <>
+        summary={(pageData) => {
+          let totalTransactionBalance = 0;
+          let totalLedgerBalance = 0;
+          pageData.forEach((item: any) => {
+            totalTransactionBalance += item.amount;
+            totalLedgerBalance += item.ledger_amount;
+          });
+          return (
             <Table.Summary.Row>
               <Table.Summary.Cell index={0}></Table.Summary.Cell>
               <Table.Summary.Cell index={1}>
@@ -267,19 +254,19 @@ const Transaction = () => {
               <Table.Summary.Cell index={4}/>
               <Table.Summary.Cell index={5}/>
               <Table.Summary.Cell index={6}/>
-              <Table.Summary.Cell index={7} >
+              <Table.Summary.Cell index={7}>
                 <Text type="danger" className="font-bold">
-                  {moneyFormat(list?.data?.meta?.transaction_balance || 0)}
+                  {moneyFormat(totalTransactionBalance || 0)}
                 </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={8} >
+              <Table.Summary.Cell index={8}>
                 <Text type="danger" className="font-bold">
-                  {moneyFormat(list?.data?.meta?.ledger_balance || 0)}
+                  {moneyFormat(totalLedgerBalance || 0)}
                 </Text>
               </Table.Summary.Cell>
             </Table.Summary.Row>
-          </>
-      )}
+          );
+        }}
         CreateComponent={CreateService}
         create={create as boolean}
         setCreate={setCreate}
