@@ -74,6 +74,10 @@ export const CapacityOptions = Object.freeze([
 
 export const CreateCapacityOptions = Object.freeze([
   {
+    value: "5",
+    label: "5",
+  },
+  {
     value: "3",
     label: "3",
   },
