@@ -43,6 +43,10 @@ export const ArrilvelFieldPaymentMethod = Object.freeze([
 
 export const CapacityOptions = Object.freeze([
   {
+    value: "5",
+    label: "5",
+  },
+  {
     value: "3",
     label: "3",
   },
